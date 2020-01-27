@@ -4,7 +4,6 @@ date: "2015-05-01T22:12:03.284Z"
 description: "Last updated: Jan 20th 2020"
 ---
 
-# First heading
 ## Subheading
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero provident neque temporibus ipsum at perspiciatis tempore nihil doloremque similique ipsam.
