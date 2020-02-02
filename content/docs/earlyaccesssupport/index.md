@@ -4,7 +4,7 @@ date: "2015-05-01T22:12:03.284Z"
 description: ""
 ---
 
-# Support and Maintenance Plan
+## Support and Maintenance Plan
 
 During the Initial Term, and subject to payment of the applicable
 Support Fees, Vectorized will provide Customer with support and
@@ -18,21 +18,6 @@ Support hours are 7:00 am to 5:00 pm PST during Business Days.
 
 Vectorized will use commercially reasonable efforts to respond to those
 issues according to the severity level indicated in the chart below:
-
-<style>
-table {
-    width:100%;
-    border-collapse: collapse;
-    border: 1px solid black;
-}
-th, td {
-    min-width: 300px;
-    padding: 15px;
-}
-td {
-    padding-top: 60px;
-}
-</style>
 
 | **Severity Level** | **Description**                                                                                                                                                                                           | **Target Initial Response Time** |
 |:-------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------:|
