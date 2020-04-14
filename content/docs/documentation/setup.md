@@ -3,7 +3,8 @@ title: Redpanda Setup Guide
 introduction: This guide will lead you through initial setup and testing.
 order: 1
 ---
-Redpanda is a Kafka replacement for mission critical systems. This guide will lead you through initial setup and testing.
+Redpanda is a Kafka replacement for mission critical systems. This guide will 
+lead you through initial setup and testing.
 
 
 
@@ -18,8 +19,9 @@ Redpanda is a Kafka replacement for mission critical systems. This guide will le
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh 
-| sudo bash &&  dnf install redpanda -y && systemctl start redpanda
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.rpm.sh | sudo bash &&  dnf install redpanda -y &&
+   systemctl start redpanda
 ```
 
 
@@ -28,8 +30,9 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorize
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh 
-| sudo bash &&  apt install redpanda -y && systemctl start redpanda
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.deb.sh | sudo bash &&  apt install redpanda -y && 
+   systemctl start redpanda
 ```
 
 
@@ -51,8 +54,8 @@ Requirements:
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh
- | sudo bash && sudo dnf install redpanda -y
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
 
@@ -61,8 +64,8 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorize
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh
- | sudo bash && sudo apt install redpanda -y
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.deb.sh | sudo bash && sudo apt install redpanda -y
 ```
 
 
@@ -99,7 +102,8 @@ sudo systemctl start redpanda
 
 # Multi Node Production Setup
 <a name="Multi_Node"></a>
-Running redpanda in a multi-node setup requires only one extra step per node. No awk, grep or `command-line-fu` needed. 
+Running redpanda in a multi-node setup requires only one extra step per node. 
+No awk, grep or `command-line-fu` needed. 
 
 Requirements:
 
@@ -107,10 +111,14 @@ Requirements:
 
 *   XFS Must be the filesystem for the data directory (`/var/lib/redpanda`)
 *   The following ports must be open:
-    *   `33145` - Internal RPC Port - ensure your firewall allows node-to-node communication over TCP  on this port
+    *   `33145` - Internal RPC Port - ensure your firewall allows node-to-node 
+                  communication over TCP  on this port
     *   `9092`  - Kafka API Port
-    *   `9644` - Prometheus & HTTP Admin port
-*   Allow outbound traffic to <code>[https://m.rp.vectorized.io](https://m.rp.vectorized.io)</code> - allows us to optimize code paths based on production use - see <strong>Autotuning</strong> section.
+    *   `9644`  - Prometheus & HTTP Admin port
+*   Allow outbound traffic to <code>
+    [https://m.rp.vectorized.io](https://m.rp.vectorized.io)</code> - allows us
+    to optimize code paths based on production use - see <strong>Autotuning
+    </strong> section.
 
 
 ## <strong>Step 1</strong>:  Install the binary
@@ -120,8 +128,8 @@ Requirements:
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh
- | sudo bash && sudo dnf install redpanda -y
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
 
@@ -130,16 +138,19 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorize
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh
- | sudo bash && sudo dnf install redpanda -y
+curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+   vectorizedio/v/script.deb.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
 
 **Step 2: **Start the root node
 
-To get started, choose one node in your cluster to be the root node. The root node will start as a standalone node, and every other one will join it, forming a cluster along the way.
+To get started, choose one node in your cluster to be the root node. The root
+node will start as a standalone node, and every other one will join it, forming 
+a cluster along the way.
 
-For the root node we’ll choose 0 as its ID. --self tells the node which interface address to bind to. Usually you want that to be its private IP.
+For the root node we’ll choose 0 as its ID. --self tells the node which 
+interface address to bind to. Usually you want that to be its private IP.
 
 
 ```
@@ -150,7 +161,8 @@ sudo systemctl start redpanda-tuner redpanda
 
 **Step 3: **Start the other nodes
 
-For every other node, we just have to choose a unique integer id for it and let it know where to reach the root node.
+For every other node, we just have to choose a unique integer id for it and let 
+it know where to reach the root node.
 
 
 <table>
