@@ -5,13 +5,6 @@ order: 1
 ---
 Redpanda is a Kafka replacement for mission critical systems. This guide will 
 lead you through initial setup and testing.
-
-
-
-*   [Quick Start - 60 Seconds Time To Wow](#bookmark=id.kztlmwtzncny)
-*   [Single Node Production Setup](#bookmark=id.1e9jonuebw7i)
-*   [Multi-Node Production Setup](#bookmark=id.7dy6z0b7blxs)
-
         
 # Quick Start - 60 Seconds Time To Wow
 <a name="Quick_Start"></a>
@@ -174,10 +167,6 @@ it know where to reach the root node.
 <code>  --ips &lt;root node ip> &&                  \</code>
 <p>
 <code>sudo systemctl start redpanda-tuner redpanda</code>
-   </td>
-  </tr>
-  <tr>
-   <td>
    </td>
   </tr>
 </table>
