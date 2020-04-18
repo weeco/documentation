@@ -12,7 +12,7 @@ lead you through initial setup and testing.
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.rpm.sh | sudo bash &&  dnf install redpanda -y &&
    systemctl start redpanda
 ```
@@ -23,7 +23,7 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.deb.sh | sudo bash &&  apt install redpanda -y && 
    systemctl start redpanda
 ```
@@ -36,7 +36,7 @@ Requirements:
 
 
 
-*   XFS Must be the filesystem for the data directory (/var/lib/redpanda)
+*   XFS Must be the filesystem for the data directory (/var/lib/redpanda/data)
 *   Ensure port 9092  - Kafka API - is open and can be reached
 
 
@@ -47,7 +47,7 @@ Requirements:
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
@@ -57,7 +57,7 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.deb.sh | sudo bash && sudo apt install redpanda -y
 ```
 
@@ -102,7 +102,7 @@ Requirements:
 
 
 
-*   XFS Must be the filesystem for the data directory (`/var/lib/redpanda`)
+*   XFS Must be the filesystem for the data directory (`/var/lib/redpanda/data`)
 *   The following ports must be open:
     *   `33145` - Internal RPC Port - ensure your firewall allows node-to-node 
                   communication over TCP  on this port
@@ -121,7 +121,7 @@ Requirements:
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
@@ -131,7 +131,7 @@ curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
 
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/
+curl -s https://<master_token>:@packagecloud.io/install/repositories/
    vectorizedio/v/script.deb.sh | sudo bash && sudo dnf install redpanda -y
 ```
 
