@@ -37,7 +37,7 @@ Requirements:
 - XFS Must be the filesystem for the data directory (/var/lib/redpanda/data)
 - Ensure port 9092 - Kafka API - is open and can be reached
 
-## **Step 1**: Install the binary
+## Step 1: Install the binary
 
 #### On Fedora/RedHat Systems
 
@@ -54,7 +54,7 @@ curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorize
 ```
 
 
-## **Step 2**: Tune the hardware & Linux Kernel
+## Step 2: Tune the hardware and Linux Kernel
 
 #### Automatically optimize the hardware
 
@@ -75,7 +75,7 @@ Linux Kernel version is often the easiest way to work around bad devices.
 sudo rpk iotune # takes 10mins
 ```
 
-## **Step 3**: Profit!
+## Step 3: Profit!
 
 ```
 sudo systemctl start redpanda
@@ -99,7 +99,7 @@ Requirements:
   us to optimize code paths based on production use - see
   <strong>Autotuning</strong> section.
 
-## <strong>Step 1</strong>: Install the binary
+## Step 1: Install the binary
 
 #### On Fedora/RedHat Systems
 
@@ -115,7 +115,7 @@ curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorize
     | sudo bash && sudo apt install redpanda -y
 ```
 
-**Step 2: **Start the root node
+## Step 2: Start the root node
 
 To get started, choose one node in your cluster to be the root node. The root
 node will start as a standalone node, and every other one will join it, forming
@@ -129,7 +129,7 @@ sudo rpk config bootstrap --id 0 --self <ip> && \
 sudo systemctl start redpanda-tuner redpanda
 ```
 
-**Step 3: **Start the other nodes
+## Step 3: Start the other nodes
 
 For every other node, we just have to choose a unique integer id for it and let
 it know where to reach the root node.
