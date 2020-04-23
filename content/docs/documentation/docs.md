@@ -9,17 +9,25 @@ Redpanda is a Kafka replacement for mission critical systems. This guide will
 lead you through initial setup and testing.
 
 
-# Quick Start - 60 Seconds Time To Wow
-#### On Fedora/RedHat Systems:
+# Quick Start - 60 Seconds 
+
+The following oneliner should get you up and running on your linux laptop in seconds.
+It is design to let you experiment with `redpanda` locally to get a feel for the system.
+If you are planning on benchmarking locally, make sure to check out our
+**Single Node Production Setup** section below
+
+#### On Fedora/RedHat Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y && sudo systemctl start redpanda
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
+    | sudo bash && sudo dnf install redpanda -y && sudo systemctl start redpanda
 ```
 
-#### On Debian Systems:
+#### On Debian Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh | sudo bash && sudo apt install redpanda -y && sudo systemctl start redpanda
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
+    | sudo bash && sudo apt install redpanda -y && sudo systemctl start redpanda
 ```
 
 # Single Node Production Setup
@@ -31,28 +39,37 @@ Requirements:
 
 ## **Step 1**: Install the binary
 
-#### On Fedora/RedHat Systems:
+#### On Fedora/RedHat Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \ 
+    | sudo bash && sudo dnf install redpanda -y
 ```
 
-#### On Debian Systems:
+#### On Debian Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh | sudo bash && sudo apt install redpanda -y
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
+    | sudo bash && sudo apt install redpanda -y
 ```
 
 
 ## **Step 2**: Tune the hardware & Linux Kernel
 
-#### Automatically optimize the hardware:
+#### Automatically optimize the hardware
 
 ```
 sudo rpk tune all
 ```
 
-#### Optionally benchmark your SSD IOPS (IO Per Second):
+#### Optionally benchmark your SSD
+
+`rpk` comes with a program to allow you to test the actual hardware you are about to use - note you
+only need to run it once. For reference, a decent local NVMe SSD should yield around
+1GB/s sustained writes. `iotune` will capture SSD wear and tear and give accurate measurements
+of what your hardware is actually capable of delivering. It is recommended you run this before benchmarking. 
+If you are on AWS, GCP or Azure, creating a new instance and upgrading to an image with a recent
+Linux Kernel version is often the easiest way to work around bad devices.
 
 ```
 sudo rpk iotune # takes 10mins
@@ -84,16 +101,18 @@ Requirements:
 
 ## <strong>Step 1</strong>: Install the binary
 
-#### On Fedora/RedHat Systems:
+#### On Fedora/RedHat Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh | sudo bash && sudo dnf install redpanda -y
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
+    | sudo bash && sudo dnf install redpanda -y
 ```
 
-#### On Debian Systems:
+#### On Debian Systems
 
 ```
-curl -s https://{{master_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh | sudo bash && sudo apt install redpanda -y
+curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
+    | sudo bash && sudo apt install redpanda -y
 ```
 
 **Step 2: **Start the root node
