@@ -16,14 +16,14 @@ It is design to let you experiment with `redpanda` locally to get a feel for the
 If you are planning on benchmarking locally, make sure to check out our
 **Single Node Production Setup** section below
 
-#### On Fedora/RedHat Systems
+#### On Fedora/RedHat Systems {#qs-fedora}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
     | sudo bash && sudo dnf install redpanda -y && sudo systemctl start redpanda
 ```
 
-#### On Debian Systems
+#### On Debian Systems {#qs-debian}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
@@ -39,14 +39,14 @@ Requirements:
 
 ## Step 1: Install the binary
 
-#### On Fedora/RedHat Systems
+#### On Fedora/RedHat Systems {#single-node-fedora}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \ 
     | sudo bash && sudo dnf install redpanda -y
 ```
 
-#### On Debian Systems
+#### On Debian Systems {#single-node-debian}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
@@ -101,14 +101,14 @@ Requirements:
 
 ## Step 1: Install the binary
 
-#### On Fedora/RedHat Systems
+#### On Fedora/RedHat Systems {#multi-node-fedora}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
     | sudo bash && sudo dnf install redpanda -y
 ```
 
-#### On Debian Systems
+#### On Debian Systems {#multi-node-debian}
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.deb.sh \
