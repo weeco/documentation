@@ -241,8 +241,58 @@ memory, ensuring predictable latency.
 
 ## Monitoring
 
-Redpanda comes with a built in Prometheus metrics endpoint on
-`http://<host>:9644/metrics`
+### Prometheus Configuration
+
+Redpanda exports Prometheus metrics on ``<node ip>:9644/metrics`. If you have an
+existing Prometheus instance, you can generate the relevant configuration using
+
+```
+rpk generate prometheus-config
+```
+
+The command will output a YAML object you can add to the `scrape_configs` list
+in your Prometheus config file:
+
+```
+- job_name: redpanda-node
+  static_configs:
+  - targets:
+    - 172.31.18.239:9644
+    - 172.31.18.238:9643
+    - 172.31.18.237:9642
+```
+
+If you run the command on a node where redpanda is running, it will use
+redpanda's Kafka API to discover the other nodes. Otherwise, you can pass
+`seed-addr` to specify a remote redpanda node from which to discover the other
+ones, or `--node-addrs` with a comma-separated list of all known cluster node
+addresses.
+
+### Grafana Configuration
+
+You can generate a comprehensive Grafana dashboard with
+```
+rpk generate grafana-dashboard --datasource <name> --prometheus-url <url>
+```
+
+`--prometheus-url` is the address to a redpanda node's metrics endpoint
+(`<node ip>:9644/metrics`, by default).
+
+`<name>` is the name of the Prometheus datasource configured in your
+Grafana instance.
+
+Right out of the box, it will generate panels tracking latency for p50, p95 and
+p99, throughput, and errors segmentated by type.
+
+Simply pipe the commmand's output to a file and import it in Grafana.
+
+```
+rpk generate grafana-dashboard \
+  --datasource prometheus \
+  --prometheus-url 172.32.89.236:9644/metrics > redpanda-dashboard.json
+```
+
+### Stats Reporting
 
 Redpanda ships with an additional `systemd` service which executes periodically
 and reports resource usage and configuration data to Vectorized's metrics API.
@@ -529,5 +579,49 @@ Flags:
   -h, --help                  help for iotune
       --redpanda-cfg string   Redpanda config file, if not set the file will be searched for in default locations
       --timeout duration      The maximum time after --duration to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)
+```
+
+```
+generate grafana-dashboard
+```
+
+Generate a Grafana dashboard for redpanda metrics.
+
+```
+Usage:
+  rpk generate grafana-dashboard [flags]
+
+Flags:
+      --datasource string       The name of the Prometheus datasource as configured in your grafana instance.
+  -h, --help                    help for grafana-dashboard
+      --prometheus-url string   The redpanda Prometheus URL from where to get the metrics metadata (default "http://localhost:9644/metrics")
+ ```
+
+```
+generate prometheus-config
+```
+
+Generate the Prometheus configuration to scrape redpanda nodes. This command's
+output should be added to the 'scrape_configs' array in your Prometheus
+instance's YAML config file.
+
+If --seed-addr is passed, it will be used to discover the rest of the cluster
+hosts via redpanda's Kafka API. If --node-addrs is passed, they will be used
+directly. Otherwise, 'rpk generate prometheus-conf' will read the redpanda
+config file and use the node IP configured there. --config may be passed to
+especify an arbitrary config file.
+
+```
+Usage:
+  rpk generate prometheus-config [flags]
+
+Flags:
+      --config string        The path to the redpanda config file (default "/etc/redpanda/redpanda.yaml")
+  -h, --help                 help for prometheus-config
+      --job-name string      The prometheus job name by which to identify the redpanda nodes (default "redpanda")
+      --node-addrs strings   A comma-delimited list of the addresses (<host:port>) of all the redpanda nodes
+                             in a cluster. The port must be the one configured for the nodes' admin API
+                             (9644 by default)
+      --seed-addr string     The URL of a redpanda node with which to discover the rest
 ```
 
