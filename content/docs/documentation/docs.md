@@ -314,7 +314,7 @@ To opt out of all metrics reporting, set `rpk.enable_usage_stats` to false via
 rpk config set rpk.enable_usage_stats false
 ```
 
-Well Known IO
+## Well Known IO
 
 Redpanda relies on its own disk IO scheduler, and by default tells the kernel to
 use the `noop` scheduler. To give the users near optimal performance by default,
@@ -362,7 +362,7 @@ In the case where a certain cloud vendor, machine type or storage type isn’t
 found, or if the metadata isn’t available and no hint is given, rpk will print a
 warning pointing out the issue and continue using the default values.
 
-rpk Modes
+## rpk Modes
 
 Usability is paramount to us. We know the delta from downloading and running
 something from the internet and running in production is large. `redpanda`
@@ -480,7 +480,7 @@ rpk:
   well_known_io: "aws:i3.xlarge:default"
 ```
 
-rpk Commands
+## rpk Commands
 
 ```
 tune
