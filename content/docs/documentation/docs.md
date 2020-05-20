@@ -133,23 +133,12 @@ sudo systemctl start redpanda-tuner redpanda
 
 For every other node, we just have to choose a unique integer id for it and let
 it know where to reach the root node.
-
-<table>
-  <tr>
-   <td><code>sudo rpk config bootstrap --id <unique id> \</code>
-<p>
-<code>  --self <private ip>                      \</code>
-<p>
-<code>  --ips <root node ip> &&                  \</code>
-<p>
-<code>sudo systemctl start redpanda-tuner redpanda</code>
-   </td>
-  </tr>
-  <tr>
-   <td>
-   </td>
-  </tr>
-</table>
+```
+sudo rpk config bootstrap --id <unique id> \
+--self <private ip>                        \
+--ips <root node ip> &&                    \
+sudo systemctl start redpanda-tuner redpanda
+```
 
 You can verify that the cluster is up and running by checking the logs:
 
@@ -239,9 +228,9 @@ pinning such memory to the specified NUMA domain (specific CPU socket). We do
 this to have predictable memory allocations without having to go to the system
 memory, ensuring predictable latency.
 
-## Monitoring
+# Monitoring
 
-### Prometheus Configuration
+## Prometheus Configuration
 
 Redpanda exports Prometheus metrics on ``<node ip>:9644/metrics`. If you have an
 existing Prometheus instance, you can generate the relevant configuration using
@@ -268,7 +257,7 @@ redpanda's Kafka API to discover the other nodes. Otherwise, you can pass
 ones, or `--node-addrs` with a comma-separated list of all known cluster node
 addresses.
 
-### Grafana Configuration
+## Grafana Configuration
 
 You can generate a comprehensive Grafana dashboard with
 ```
@@ -292,7 +281,7 @@ rpk generate grafana-dashboard \
   --prometheus-url 172.32.89.236:9644/metrics > redpanda-dashboard.json
 ```
 
-### Stats Reporting
+## Stats Reporting
 
 Redpanda ships with an additional `systemd` service which executes periodically
 and reports resource usage and configuration data to Vectorized's metrics API.
@@ -314,7 +303,7 @@ To opt out of all metrics reporting, set `rpk.enable_usage_stats` to false via
 rpk config set rpk.enable_usage_stats false
 ```
 
-## Well Known IO
+# Well Known IO
 
 Redpanda relies on its own disk IO scheduler, and by default tells the kernel to
 use the `noop` scheduler. To give the users near optimal performance by default,
@@ -362,7 +351,7 @@ In the case where a certain cloud vendor, machine type or storage type isn’t
 found, or if the metadata isn’t available and no hint is given, rpk will print a
 warning pointing out the issue and continue using the default values.
 
-## rpk Modes
+# rpk Modes
 
 Usability is paramount to us. We know the delta from downloading and running
 something from the internet and running in production is large. `redpanda`
@@ -382,7 +371,7 @@ of the kernel and can take effect immediately **if followed **by a
 `rpk tune all.` Users can also review and edit redpanda.yaml and enable or
 disable any individual setting manually, or to enable experimental flags.
 
-## Configuration
+# Configuration
 
 The redpanda configuration is by default loaded from and persisted to
 `/etc/redpanda/redpanda.yaml`. It is broadly divided into 2 sections, `redpanda`
@@ -480,11 +469,9 @@ rpk:
   well_known_io: "aws:i3.xlarge:default"
 ```
 
-## rpk Commands
+# rpk Commands
 
-```
-tune
-```
+## tune
 
 Run all (`rpk tune all`) or some (i.e. `rpk tune cpu network`) of the tuners
 available on **rpk.**
@@ -507,9 +494,7 @@ Flags:
       --timeout duration       The maximum time to wait for the tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10s)
 ```
 
-```
-start
-```
+## start
 
 Start redpanda.
 
@@ -528,9 +513,7 @@ Flags:
       --well-known-io string   The cloud vendor and VM type, in the format <vendor>:<vm type>:<storage type>
 ```
 
-```
-mode
-```
+## mode
 
 Enable a default configuration mode (development, production). See the **rpk
 Modes** section below.
@@ -545,9 +528,7 @@ Flags:
       --redpanda-cfg string   Redpanda config file, if not set the file will be searched for in default locations
 ```
 
-```
-config set
-```
+## config set
 
 Edit the configuration.
 
@@ -562,9 +543,7 @@ Flags:
   -h, --help            help for set
 ```
 
-```
-iotune
-```
+## iotune
 
 Measure filesystem performance and create IO configuration file.
 
@@ -581,9 +560,7 @@ Flags:
       --timeout duration      The maximum time after --duration to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)
 ```
 
-```
-generate grafana-dashboard
-```
+## generate grafana-dashboard
 
 Generate a Grafana dashboard for redpanda metrics.
 
@@ -595,11 +572,9 @@ Flags:
       --datasource string       The name of the Prometheus datasource as configured in your grafana instance.
   -h, --help                    help for grafana-dashboard
       --prometheus-url string   The redpanda Prometheus URL from where to get the metrics metadata (default "http://localhost:9644/metrics")
- ```
+```
 
-```
-generate prometheus-config
-```
+## generate prometheus-config
 
 Generate the Prometheus configuration to scrape redpanda nodes. This command's
 output should be added to the 'scrape_configs' array in your Prometheus
