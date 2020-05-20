@@ -387,7 +387,7 @@ Here’s a sample of what the config file looks like.
 # organization and cluster_id help Vectorized identify your system.
 organization: ""
 cluster_id: ""
-pid_file: "/var/lib/redpanda/pid"
+
 redpanda:
   # The directory where the data will be stored. It must reside on an XFS
   # partition.
@@ -418,6 +418,18 @@ redpanda:
   admin:
     address: "0.0.0.0"
     port: 9644
+
+  # Target quota byte rate (bytes/ sec) - 64MB default
+  target_quota_byte_rate: 64000000
+
+  # How often (in ms) the background compaction is triggered
+  log_compaction_interval: 600000
+
+  # Max bytes per partition on disk before triggering a compaction
+  retention_bytes: null
+
+  # delete segments older than this - default 1 week
+  delete_retention_ms: 604800000000,
 
 rpk:
   # Available tuners. Set to true to enable, false to disable.
