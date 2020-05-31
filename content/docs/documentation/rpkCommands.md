@@ -1,5 +1,5 @@
 ---
-title: RPK Commands
+title: rpk Commands
 order: 6
 ---
 # rpk Commands

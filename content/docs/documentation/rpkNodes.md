@@ -1,5 +1,5 @@
 ---
-title: RPK Modes
+title: rpk Modes
 order: 4
 ---
 # rpk Modes
