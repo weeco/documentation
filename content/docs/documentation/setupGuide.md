@@ -11,7 +11,7 @@ lead you through initial setup and testing.
 # Quick Start - 60 Seconds 
 
 The following oneliner should get you up and running on your linux laptop in seconds.
-It is design to let you experiment with `redpanda` locally to get a feel for the system.
+It is designed to let you experiment with `redpanda` locally to get a feel for the system.
 If you are planning on benchmarking locally, make sure to check out our
 **Single Node Production Setup** section below
 
