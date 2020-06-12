@@ -6,7 +6,7 @@ order: 2
 
 ## Prometheus Configuration
 
-Redpanda exports Prometheus metrics on ``<node ip>:9644/metrics`. If you have an
+Redpanda exports Prometheus metrics on `<node ip>:9644/metrics`. If you have an
 existing Prometheus instance, you can generate the relevant configuration using
 
 ```
