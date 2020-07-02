@@ -18,6 +18,6 @@ developer’s laptops. We keep a set of auto-tunables in big groups:
 
 These commands are idempotent, they’re safe to run multiple times. Some settings
 might require restart of redpanda, others are injected into the runtime settings
-of the kernel and can take effect immediately **if followed **by a
+of the kernel and can take effect immediately **if followed** by a
 `rpk tune all.` Users can also review and edit redpanda.yaml and enable or
 disable any individual setting manually, or to enable experimental flags.

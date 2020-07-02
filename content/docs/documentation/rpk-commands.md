@@ -48,8 +48,8 @@ Flags:
 
 ## mode
 
-Enable a default configuration mode (development, production). See the **rpk
-Modes** section below.
+Enable a default configuration mode (development, production). See the [**rpk
+Modes**](http://localhost:8000/documentation/rpk-modes/) section.
 
 ```
 
@@ -110,13 +110,13 @@ Flags:
 ## generate prometheus-config
 
 Generate the Prometheus configuration to scrape redpanda nodes. This command's
-output should be added to the 'scrape_configs' array in your Prometheus
+output should be added to the `scrape_configs` array in your Prometheus
 instance's YAML config file.
 
-If --seed-addr is passed, it will be used to discover the rest of the cluster
-hosts via redpanda's Kafka API. If --node-addrs is passed, they will be used
-directly. Otherwise, 'rpk generate prometheus-conf' will read the redpanda
-config file and use the node IP configured there. --config may be passed to
+If `--seed-addr` is passed, it will be used to discover the rest of the cluster
+hosts via redpanda's Kafka API. If `--node-addrs` is passed, they will be used
+directly. Otherwise, `rpk generate prometheus-conf` will read the redpanda
+config file and use the node IP configured there. `--config` may be passed to
 especify an arbitrary config file.
 
 ```
