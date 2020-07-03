@@ -162,7 +162,7 @@ can use `telnet` or `ncat** to check that the node is reachable from the rest,
 and that it can reach the other nodes. Check your firewall rules to discard any
 misconfigurations.
 
-### The `redpanda` APT or RPM repository couldn't be configured
+### The 'redpanda' APT or RPM repository couldn't be configured
 
 If the installation command in our
 [Quick Start guide](https://vectorized.io/documentation/setup-guide#Quick-Start---60-Seconds)
@@ -174,12 +174,12 @@ If your token is correct, it might be expired. In that case, please ask your
 team lead for the latest one, or send us a message in your team's shared Slack
 channel.
 
-### The `redpanda` package wasn't found
+### The 'redpanda' package wasn't found
 
 Make sure that you added our repo to your package manager as explained in our
 [Quick Start guide](https://vectorized.io/documentation/setup-guide#Quick-Start---60-Seconds).
 
-### The `redpanda` package can't be downloaded
+### The 'redpanda' package can't be downloaded
 
 If the `redpanda` package was found, but can't be downloaded, make sure your
 rules for outbound traffic haven't changed and allow requests to our repo.
