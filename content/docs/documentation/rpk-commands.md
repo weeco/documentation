@@ -93,6 +93,72 @@ Flags:
       --self string     Hint at this node's IP address from within the list passed in --ips
 ```
 
+## api
+
+Interact with the Redpanda API.
+
+```
+Global flags: --brokers strings   Comma-separated list of broker ip:port pair
+```
+
+### api topic create
+
+Create a topic.
+
+```
+Usage:
+  rpk api topic create <topic name> [flags]
+
+Flags:
+      --compact            Enable topic compaction
+  -p, --partitions int32   Number of partitions (default 1)
+  -r, --replicas int16     Number of replicas (default 1)
+```
+
+### api topic delete
+
+Delete a topic.
+
+```
+Usage:
+  rpk api topic delete <topic name> [flags]
+```
+
+### api topic describe
+
+Describe a topic. Default values of the configuration are omitted.
+
+```
+Usage:
+  rpk api topic describe <topic> [flags]
+
+Flags:
+      --page int        The partitions page to display. If negative, all partitions will be shown
+      --page-size int   The number of partitions displayed per page (default 20)
+      --watermarks      If enabled, will display the topic's partitions' high watermarks (default true)
+```
+
+### api topic list
+
+List topics.
+
+```
+Usage:
+  rpk api topic list [flags]
+  
+Aliases:
+  list, ls
+```
+
+### api topic set-config
+
+Set the topic's config key/value pairs
+
+```
+Usage:
+  rpk api topic set-config <topic> <key> [<value>] [flags]
+```
+
 ## iotune
 
 Measure filesystem performance and create IO configuration file.
