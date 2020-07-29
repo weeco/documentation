@@ -59,9 +59,13 @@ Flags:
       --config string   Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
 ```
 
-## config set
+## config
 
-Edit the configuration.
+Edit configuration.
+
+### config set
+
+Set configuration values, such as the node IDs or the list of seed servers
 
 ```
 
@@ -71,6 +75,22 @@ Usage:
 Flags:
       --config string   Redpanda config file, if not set the file will be searched for in default location (default "/etc/redpanda/redpanda.yaml")
       --format string   The value format. Can be 'single', for single values such as '/etc/redpanda' or 100; and 'json', 'toml', 'yaml','yml', 'properties', 'props', 'prop', or 'hcl' when partially or completely setting config objects (default "single")
+```
+
+### config bootstrap
+
+Initialize the configuration to bootstrap a cluster. --id is mandatory. `bootstrap` will expect the machine it's running on to have only one non-loopback IP address associated to it, and use it in the configuration as the node's address. If it has multiple IPs, --self must be specified. In that case, the given IP will be used without checking whether it's among the machine's addresses or not. The elements in --ips must be separated by a comma, no spaces. If omitted, the node will be configured as a root node, that otherones can join later.
+
+```
+
+Usage:
+  rpk config bootstrap --id <id> [--self <ip>] [--ips <ip1,ip2,...>] [flags]
+
+Flags:
+      --config string   Redpanda config file, if not set the file will be searched for in the default location (default "/etc/redpanda/redpanda.yaml")
+      --id int          This node's ID (required). (default -1)
+      --ips strings     The list of known node addresses or hostnames
+      --self string     Hint at this node's IP address from within the list passed in --ips
 ```
 
 ## iotune
