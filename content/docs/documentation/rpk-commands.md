@@ -110,7 +110,11 @@ Flags:
       --timeout duration      The maximum time after --duration to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)
 ```
 
-## generate grafana-dashboard
+## generate
+
+Generate a configuration template for related services.
+
+### generate grafana-dashboard
 
 Generate a Grafana dashboard for redpanda metrics.
 
@@ -124,7 +128,7 @@ Flags:
       --prometheus-url string   The redpanda Prometheus URL from where to get the metrics metadata (default "http://localhost:9644/metrics")
 ```
 
-## generate prometheus-config
+### generate prometheus-config
 
 Generate the Prometheus configuration to scrape redpanda nodes. This command's
 output should be added to the `scrape_configs` array in your Prometheus
