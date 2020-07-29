@@ -19,7 +19,6 @@ Flags:
       --cpu-set string         Set of CPUs for tuner to use in cpuset(7) format if not specified tuner will use all available CPUs (default "all")
   -r, --dirs strings           List of *data* directories. or places to store data. i.e.: '/var/vectorized/redpanda/', usually your XFS filesystem on an NVMe SSD device
   -d, --disks strings          Lists of devices to tune f.e. 'sda1'
-  -h, --help                   help for tune
       --interactive            Ask for confirmation on every step (e.g. tuner execution, configuration generation)
   -m, --mode string            Operation Mode: one of: [sq, sq_split, mq]
   -n, --nic strings            Network Interface Controllers to tune
@@ -40,7 +39,6 @@ Usage:
 Flags:
       --check                  When set to false will disable system checking before starting redpanda (default true)
       --config string          Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
-  -h, --help                   help for start
       --install-dir string     Directory where redpanda has been installed
       --timeout duration       The maximum time to wait for the checks and tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10s)
       --tune                   When present will enable tuning before starting redpanda
@@ -59,7 +57,6 @@ Usage:
 
 Flags:
       --config string   Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
-  -h, --help            help for mode
 ```
 
 ## config set
@@ -74,7 +71,6 @@ Usage:
 Flags:
       --config string   Redpanda config file, if not set the file will be searched for in default location (default "/etc/redpanda/redpanda.yaml")
       --format string   The value format. Can be 'single', for single values such as '/etc/redpanda' or 100; and 'json', 'toml', 'yaml','yml', 'properties', 'props', 'prop', or 'hcl' when partially or completely setting config objects (default "single")
-  -h, --help            help for set
 ```
 
 ## iotune
@@ -90,7 +86,6 @@ Flags:
       --config string         Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
       --directories strings   List of directories to evaluate
       --duration duration     Duration of tests.The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10m0s)
-  -h, --help                  help for iotune
       --out string            The file path where the IO config will be written (default "/var/lib/redpanda/data/io-config.yaml")
       --timeout duration      The maximum time after --duration to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)
 ```
@@ -105,7 +100,6 @@ Usage:
 
 Flags:
       --datasource string       The name of the Prometheus datasource as configured in your grafana instance.
-  -h, --help                    help for grafana-dashboard
       --job-name string         The prometheus job name by which to identify the redpanda nodes (default "redpanda")
       --prometheus-url string   The redpanda Prometheus URL from where to get the metrics metadata (default "http://localhost:9644/metrics")
 ```
@@ -128,7 +122,6 @@ Usage:
 
 Flags:
       --config string        The path to the redpanda config file (default "/etc/redpanda/redpanda.yaml")
-  -h, --help                 help for prometheus-config
       --job-name string      The prometheus job name by which to identify the redpanda nodes (default "redpanda")
       --node-addrs strings   A comma-delimited list of the addresses (<host:port>) of all the redpanda nodes
                              in a cluster. The port must be the one configured for the nodes' admin API
