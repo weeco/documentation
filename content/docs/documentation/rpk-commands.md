@@ -15,15 +15,15 @@ Usage:
   rpk tune <list_of_elements_to_tune> [flags]
 
 Flags:
+      --config string          Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
       --cpu-set string         Set of CPUs for tuner to use in cpuset(7) format if not specified tuner will use all available CPUs (default "all")
   -r, --dirs strings           List of *data* directories. or places to store data. i.e.: '/var/vectorized/redpanda/', usually your XFS filesystem on an NVMe SSD device
   -d, --disks strings          Lists of devices to tune f.e. 'sda1'
-  -h, --help                   help for tune
+      --interactive            Ask for confirmation on every step (e.g. tuner execution, configuration generation)
   -m, --mode string            Operation Mode: one of: [sq, sq_split, mq]
   -n, --nic strings            Network Interface Controllers to tune
       --output-script string   If set tuners will generate tuning file that can later be used to tune the system
       --reboot-allowed         If set will allow tuners to tune boot paramters  and request system reboot
-      --redpanda-cfg string    If set, pointed redpanda config file will be used to populate tuner parameters
       --timeout duration       The maximum time to wait for the tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10s)
 ```
 
@@ -38,9 +38,8 @@ Usage:
 
 Flags:
       --check                  When set to false will disable system checking before starting redpanda (default true)
-  -h, --help                   help for start
+      --config string          Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
       --install-dir string     Directory where redpanda has been installed
-      --redpanda-cfg string     Redpanda config file, if not set the file will be searched forin default locations
       --timeout duration       The maximum time to wait for the checks and tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10s)
       --tune                   When present will enable tuning before starting redpanda
       --well-known-io string   The cloud vendor and VM type, in the format <vendor>:<vm type>:<storage type>
@@ -57,13 +56,16 @@ Usage:
   rpk mode {development, production} [flags]
 
 Flags:
-  -h, --help                  help for mode
-      --redpanda-cfg string   Redpanda config file, if not set the file will be searched for in default locations
+      --config string   Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
 ```
 
-## config set
+## config
 
-Edit the configuration.
+Edit configuration.
+
+### config set
+
+Set configuration values, such as the node IDs or the list of seed servers
 
 ```
 
@@ -73,7 +75,88 @@ Usage:
 Flags:
       --config string   Redpanda config file, if not set the file will be searched for in default location (default "/etc/redpanda/redpanda.yaml")
       --format string   The value format. Can be 'single', for single values such as '/etc/redpanda' or 100; and 'json', 'toml', 'yaml','yml', 'properties', 'props', 'prop', or 'hcl' when partially or completely setting config objects (default "single")
-  -h, --help            help for set
+```
+
+### config bootstrap
+
+Initialize the configuration to bootstrap a cluster. --id is mandatory. `bootstrap` will expect the machine it's running on to have only one non-loopback IP address associated to it, and use it in the configuration as the node's address. If it has multiple IPs, --self must be specified. In that case, the given IP will be used without checking whether it's among the machine's addresses or not. The elements in --ips must be separated by a comma, no spaces. If omitted, the node will be configured as a root node, that otherones can join later.
+
+```
+
+Usage:
+  rpk config bootstrap --id <id> [--self <ip>] [--ips <ip1,ip2,...>] [flags]
+
+Flags:
+      --config string   Redpanda config file, if not set the file will be searched for in the default location (default "/etc/redpanda/redpanda.yaml")
+      --id int          This node's ID (required). (default -1)
+      --ips strings     The list of known node addresses or hostnames
+      --self string     Hint at this node's IP address from within the list passed in --ips
+```
+
+## api
+
+Interact with the Redpanda API.
+
+```
+Global flags: --brokers strings   Comma-separated list of broker ip:port pair
+```
+
+### api topic create
+
+Create a topic.
+
+```
+Usage:
+  rpk api topic create <topic name> [flags]
+
+Flags:
+      --compact            Enable topic compaction
+  -p, --partitions int32   Number of partitions (default 1)
+  -r, --replicas int16     Number of replicas (default 1)
+```
+
+### api topic delete
+
+Delete a topic.
+
+```
+Usage:
+  rpk api topic delete <topic name> [flags]
+```
+
+### api topic describe
+
+Describe a topic. Default values of the configuration are omitted.
+
+```
+Usage:
+  rpk api topic describe <topic> [flags]
+
+Flags:
+      --page int        The partitions page to display. If negative, all partitions will be shown
+      --page-size int   The number of partitions displayed per page (default 20)
+      --watermarks      If enabled, will display the topic's partitions' high watermarks (default true)
+```
+
+### api topic list
+
+List topics.
+
+```
+Usage:
+  rpk api topic list [flags]
+  
+Aliases:
+  list, ls
+```
+
+### api topic set-config
+
+Set the topic's config key/value pairs
+
+```
+Usage:
+  rpk api topic set-config <topic> <key> [<value>] [flags]
 ```
 
 ## iotune
@@ -86,14 +169,18 @@ Usage:
   rpk iotune [flags]
 
 Flags:
+      --config string         Redpanda config file, if not set the file will be searched for in the default locations (default "/etc/redpanda/redpanda.yaml")
       --directories strings   List of directories to evaluate
-      --duration    duration  Duration of tests (default 10 minutes). The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h'
-  -h, --help                  help for iotune
-      --redpanda-cfg string   Redpanda config file, if not set the file will be searched for in default locations
+      --duration duration     Duration of tests.The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10m0s)
+      --out string            The file path where the IO config will be written (default "/var/lib/redpanda/data/io-config.yaml")
       --timeout duration      The maximum time after --duration to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)
 ```
 
-## generate grafana-dashboard
+## generate
+
+Generate a configuration template for related services.
+
+### generate grafana-dashboard
 
 Generate a Grafana dashboard for redpanda metrics.
 
@@ -103,11 +190,11 @@ Usage:
 
 Flags:
       --datasource string       The name of the Prometheus datasource as configured in your grafana instance.
-  -h, --help                    help for grafana-dashboard
+      --job-name string         The prometheus job name by which to identify the redpanda nodes (default "redpanda")
       --prometheus-url string   The redpanda Prometheus URL from where to get the metrics metadata (default "http://localhost:9644/metrics")
 ```
 
-## generate prometheus-config
+### generate prometheus-config
 
 Generate the Prometheus configuration to scrape redpanda nodes. This command's
 output should be added to the `scrape_configs` array in your Prometheus
@@ -125,7 +212,6 @@ Usage:
 
 Flags:
       --config string        The path to the redpanda config file (default "/etc/redpanda/redpanda.yaml")
-  -h, --help                 help for prometheus-config
       --job-name string      The prometheus job name by which to identify the redpanda nodes (default "redpanda")
       --node-addrs strings   A comma-delimited list of the addresses (<host:port>) of all the redpanda nodes
                              in a cluster. The port must be the one configured for the nodes' admin API
