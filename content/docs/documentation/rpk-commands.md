@@ -1,6 +1,6 @@
 ---
 title: rpk Commands
-order: 6
+order: 7
 ---
 # rpk Commands
 
