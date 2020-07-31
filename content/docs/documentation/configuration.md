@@ -14,7 +14,7 @@ contains configuration related to tuning the machine that redpanda will run on.
 
 Here’s a sample of what the config file looks like.
 
-```
+```yaml
 # organization and cluster_id help Vectorized identify your system.
 organization: ""
 cluster_id: ""
