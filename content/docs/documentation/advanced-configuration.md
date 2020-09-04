@@ -12,6 +12,17 @@ organization: ""
 cluster_id: ""
 
 rpk:
+  # TLS configuration to allow rpk to make requests to the redpanda API.
+  tls:
+    # The path to the root CA certificate (PEM).
+    truststore_file: ""
+    # The path to the client certificate (PEM). Only required if client authentication is
+    # enabled in the broker.
+    cert_file: ""
+    # The path to the client certificate key (PEM). Only required if client authentication is
+    # enabled in the broker.
+    key_file: ""
+
   # Available tuners. Set to true to enable, false to disable.
 
   # Setup NIC IRQs affinity, sets up NIC RPS and RFS, sets up NIC XPS, increases socket
@@ -113,6 +124,36 @@ redpanda:
   kafka_api:
     address: "0.0.0.0"
     port: 33145
+   
+  # TLS configuration for the RPC server.
+  # Default: null
+  rpc_server_tls:
+    # Whether to enable TLS for the RPC server.
+    enabled: false
+    # Require client authentication
+    require_client_auth: false
+    # The path to the server certificate PEM file.
+    cert_file: ""
+    # The path to the server key PEM file
+    key_file: ""
+    # The path to the truststore PEM file. Only required if client authentication
+    # is enabled.
+    truststore_file: ""
+  
+  # TLS configuration for the Kafka API.
+  # Default: null
+  kafka_api_tls:
+    # Whether to enable TLS for the Kafka API.
+    enabled: false
+    # Require client authentication
+    require_client_auth: false
+    # The path to the server certificate PEM file.
+    cert_file: ""
+    # The path to the server key PEM file
+    key_file: ""
+    # The path to the truststore PEM file. Only required if client authentication
+    # is enabled.
+    truststore_file: ""
   
   # Address and port of admin server.
   # Default: 127.0.0.1:9644
