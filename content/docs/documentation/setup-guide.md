@@ -19,7 +19,7 @@ If you are planning on benchmarking locally, make sure to check out our
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
-    | sudo bash && sudo dnf install redpanda -y && sudo systemctl start redpanda
+    | sudo bash && sudo yum install redpanda -y && sudo systemctl start redpanda
 ```
 
 #### On Debian Systems {#qs-debian}
@@ -42,7 +42,7 @@ Requirements:
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \ 
-    | sudo bash && sudo dnf install redpanda -y
+    | sudo bash && sudo yum install redpanda -y
 ```
 
 #### On Debian Systems {#single-node-debian}
@@ -104,7 +104,7 @@ Requirements:
 
 ```
 curl -s https://{{client_token}}:@packagecloud.io/install/repositories/vectorizedio/v/script.rpm.sh \
-    | sudo bash && sudo dnf install redpanda -y
+    | sudo bash && sudo yum install redpanda -y
 ```
 
 #### On Debian Systems {#multi-node-debian}
