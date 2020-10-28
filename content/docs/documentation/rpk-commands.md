@@ -159,6 +159,40 @@ Usage:
   rpk api topic set-config <topic> <key> [<value>] [flags]
 ```
 
+## container
+
+Manage a local container cluster
+
+### container start
+
+Start a local container cluster
+
+```
+Usage:
+  rpk container start [flags]
+  
+Flags:
+  -n, --nodes uint   The number of nodes to start (default 1)
+```
+
+### container stop
+
+Stop an existing local container cluster
+
+```
+Usage:
+  rpk container stop
+```
+
+### container purge
+
+Stop and remove an existing local container cluster's data
+
+```
+Usage:
+  rpk container purge
+```
+
 ## iotune
 
 Measure filesystem performance and create IO configuration file.
