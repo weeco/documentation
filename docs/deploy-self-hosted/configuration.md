@@ -27,7 +27,7 @@ This is not a valid Redpanda configuration file, but it shows the parameters tha
 Only include the sections that you want to customize.
 
 ```yaml
-# organization and cluster_id help Vectorized identify your system.
+# organization and cluster_id help Redpanda identify your system.
 organization: ""
 cluster_id: ""
 
