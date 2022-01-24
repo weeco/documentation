@@ -7,7 +7,7 @@ sidebar_position: 8
 
 Talking over the internet with no encryption is something unthinkable these days. With Redpanda you can help secure your data by enabling [Transport Layer Security (TLS)](https://en.wikipedia.org/wiki/Transport_Layer_Security) across your clusters, with just a few configurations. 
 
-If you haven’t, check our guide about [Encryption, authorization & authentication](https://vectorized.io/docs/acls/).
+If you haven’t, check our guide about [Encryption, authorization & authentication](/docs/features/acls).
 
 Here we will dive deeper into how we can configure TLS inside a Kubernetes cluster.
 
@@ -59,7 +59,7 @@ spec:
    developerMode: true
 ```
 
-We’ll use the Kafka API to go through the TLS configuration, but you can use similar settings to set up TLS for the other APIs. For this guide, we assume external connectivity is disabled unless otherwise stated. If you want to enable external connectivity, check [this guide](https://vectorized.io/docs/kubernetes-external-connect/) that we wrote about it. 
+We’ll use the Kafka API to go through the TLS configuration, but you can use similar settings to set up TLS for the other APIs. For this guide, we assume external connectivity is disabled unless otherwise stated. If you want to enable external connectivity, check [this guide](/docs/deploy-self-hosted/kubernetes-external-connect) that we wrote about it. 
 
 The operator supports a single listener with TLS per API. Additionally, if you have two listeners for the same API and one of them has external connectivity enabled, the operator assumes that the other listener also has TLS enabled.
 
@@ -267,7 +267,7 @@ X509v3 Subject Alternative Name:
 
 The non-wildcard DNS is typically used for bootstrapping. The wildcarded name lets you access instances directly.
 
-This assumes that the external connectivity is disabled. When external connectivity is enabled and a subdomain is provided, the certificates are produced for external use. For example, the SAN entries would become `*.<subdomain>` and `<subdomain>`. See the [Using names instead of external IPs](https://vectorized.io/docs/kubernetes-connectivity/#Using-names-instead-of-external-IPs) documentation for more information.
+This assumes that the external connectivity is disabled. When external connectivity is enabled and a subdomain is provided, the certificates are produced for external use. For example, the SAN entries would become `*.<subdomain>` and `<subdomain>`. See the [Using names instead of external IPs](/docs/features/kubernetes-connectivity/#Using-names-instead-of-external-IPs) documentation for more information.
 
 Depending on where the client is located in relation to the Kubernetes cluster running Redpanda, the client certificate secrets may be mounted to local pods or be exported and used directly (as files) inside or outside of the Kubernetes cluster, as long as the Kafka API is exposed to the external network.
 
@@ -329,7 +329,7 @@ You can find a working example with mTLS here: [https://github.com/vectorizedio/
 
 If the client pod runs in a separate namespace within the same Kubernetes cluster, the secret needs to be copied over.
 
-Similarly, if the client is on a separate network, but accessible through an external IP address or name (see [https://vectorized.io/docs/kubernetes-connectivity](https://vectorized.io/docs/kubernetes-connectivity)) the secrets need to become available by copying over the resource or exporting the CA `ca.crt` and key-pair `tls.crt` and `tls.key` as files. For example, to retrieve tls.crt:
+Similarly, if the client is on a separate network, but accessible through an external IP address or name (see [Kubernetes Connectivity guide](/docs/features/kubernetes-connectivity)) the secrets need to become available by copying over the resource or exporting the CA `ca.crt` and key-pair `tls.crt` and `tls.key` as files. For example, to retrieve tls.crt:
 
 ```
 kubectl get secret |cluster|-user-client -o go-template='{{index .data "ca.crt"}}' | base64 -d - > tls.crt

@@ -4,7 +4,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'Redpanda Docs',
   tagline: 'A modern streaming platform for mission critical workloads',
-  url: 'https://docs.vectorized.io',
+  url: 'https://docs.redpanda.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -30,7 +30,7 @@ module.exports = {
         { href: 'https://vectorized.io/cloud', label: 'Cloud', position: 'right' },
         { href: '/', label: 'Docs', position: 'right' },
         { href: 'https://vectorized.io/team', label: 'Team', position: 'right' },
-        { href: '/', label: 'Career', position: 'right' },        
+        { href: 'https://vectorized.io/careers', label: 'Career', position: 'right' },        
         { href: 'https://vectorized.io/blog', label: 'Blog', position: 'right' },
         { 
           href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', 
@@ -56,7 +56,7 @@ module.exports = {
           items: [
             { label: 'Redpanda', to: 'https://vectorized.io/redpanda' },
             { label: 'Cloud', to: 'https://vectorized.io/cloud' },
-            { label: 'Documentation', to: '/docs' },
+            { label: 'Documentation', to: '/' },
             { label: 'Blog', to: 'https://vectorized.io/blog' },
             { label: 'Events', to: 'https://vectorized.io/events' },
             { label: 'Support', to: 'https://support.vectorized.io' },

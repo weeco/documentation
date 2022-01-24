@@ -17,7 +17,7 @@ All concepts described here are compatible with Kafka® and its client libraries
 
 - A running Redpanda node.
 
-You can follow our [Getting Started guides](https://vectorized.io/docs/) to learn how to get started with Redpanda.
+You can follow our [Getting Started guides](/) to learn how to get started with Redpanda.
 
 - TLS certificates.
 
@@ -33,7 +33,7 @@ TLS encrypts network traffic between a client and a server, but does not protect
 
 Mutual TLS, or 2-way TLS, is an authentication method in which both the server and the client verify each other's private keys. A thorough description of mTLS can be read [here](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
 
-If you're on Kubernetes, be sure to set up the [connectivity in the Kubernetes network](https://vectorized.io/docs/kubernetes-connectivity/).
+If you're on Kubernetes, be sure to set up the [connectivity in the Kubernetes network](/docs/features/kubernetes-connectivity/).
 
 To enable TLS, set the `require_client_auth` field to `true` in the required listener's configuration. For example, to enable mTLS for the "external" API listener:
 
