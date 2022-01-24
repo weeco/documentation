@@ -11,11 +11,10 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'vectorizedio', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
-  //i18n: {
-  //  defaultLocale: 'en',
-  //  locales: ['en', 'fr', 'pt'],
-  //},
   themeConfig: {
+    colorMode: {
+      disableSwitch: true
+    },
     navbar: {
       title: '',
       hideOnScroll: true,
@@ -30,11 +29,9 @@ module.exports = {
         { href: 'https://vectorized.io/redpanda', label: 'Redpanda', position: 'right' },
         { href: 'https://vectorized.io/cloud', label: 'Cloud', position: 'right' },
         { href: '/', label: 'Docs', position: 'right' },
-        { href: '/docs/getting-started/index', label: 'Quick Start', position: 'right' },
         { href: 'https://vectorized.io/team', label: 'Team', position: 'right' },
         { href: '/', label: 'Career', position: 'right' },        
         { href: 'https://vectorized.io/blog', label: 'Blog', position: 'right' },
-        // Right
         { 
           href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', 
           position: 'right',
@@ -50,17 +47,6 @@ module.exports = {
           'aria-label': 'GitHub repository',
         },
       ],
-      // General Nav
-      // items: [
-      //   { href: 'https://vectorized.io/redpanda', label: 'Redpanda', position: 'right' },
-      //   { href: 'https://vectorized.io/cloud', label: 'Cloud', position: 'right' },
-      //   { href: '/docs/intro', label: 'Docs', position: 'right' },
-      //   { href: 'https://vectorized.io/team', label: 'Team', position: 'right' },
-      //   { href: 'https://vectorized.io/careers', label: 'Careers', position: 'right' },
-      //   { href: 'https://vectorized.io/blog', label: 'Blog', position: 'right' },
-      //   { href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', label: 'Slack', position: 'right' },
-      //   { href: 'https://github.com/vectorizedio/redpanda', label: 'Github', position: 'right' },
-      // ],
     },
     footer: {
       style: 'dark',
@@ -70,7 +56,7 @@ module.exports = {
           items: [
             { label: 'Redpanda', to: 'https://vectorized.io/redpanda' },
             { label: 'Cloud', to: 'https://vectorized.io/cloud' },
-            // { label: 'Documentation', to: 'https://vectorized.io/docs' },
+            { label: 'Documentation', to: '/docs' },
             { label: 'Blog', to: 'https://vectorized.io/blog' },
             { label: 'Events', to: 'https://vectorized.io/events' },
             { label: 'Support', to: 'https://support.vectorized.io' },
