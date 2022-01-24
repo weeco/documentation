@@ -20,8 +20,8 @@ module.exports = {
       hideOnScroll: true,
       logo: {
         alt: 'Vectorized Logo',
-        src: 'img/VectorizedDocsLogo.svg',
-        srcDark: 'img/VectorizedDocsLogoInverted.svg',
+        src: 'img/RedpandaLogo.svg',
+        srcDark: 'img/RedpandaLogoInverted.svg',
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
