@@ -5,7 +5,7 @@ sidebar_position: 7
 ---
 # Windows Quick Start Guide
 
-Redpanda is a modern [streaming platform](/blog/intelligent-data-api/) for mission critical workloads.
+Redpanda is a modern [streaming platform](https://vectorized.io/blog/intelligent-data-api/) for mission critical workloads.
 With Redpanda you can get up and running with streaming quickly
 and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem).
 
@@ -180,7 +180,7 @@ You can also check Docker for Desktop for any container errors.
 ## Start streaming
 
 We're going to use the `rpk` to run our commands.
-`rpk` is essentially a CLI tool that you can use to run [management and data commands](https://vectorized.io/docs/rpk-commands/) on the cluster.
+`rpk` is essentially a CLI tool that you can use to run [management and data commands](/docs/reference/rpk-commands) on the cluster.
 
 Check the information about the cluster. 
 
@@ -246,6 +246,6 @@ docker network rm redpandanet
 
 - Our [FAQ](/docs/reference/faq) page shows all of the clients that you can use to do streaming with Redpanda.
     (Spoiler: Any Kafka-compatible client!)
-- Get a multi-node cluster up and running using [`rpk container`](/docs/deploy-self-hosted/guide-rpk-container).
+- Get a multi-node cluster up and running using [`rpk container`](/docs/features/guide-rpk-container).
 - Use the [Quick Start Docker Guide](/docs/getting-started/quick-start-docker) to try out Redpanda using Docker.
 - Want to setup a production cluster? Check out our [Production Deployment Guide](/docs/deploy-self-hosted/production-deployment).

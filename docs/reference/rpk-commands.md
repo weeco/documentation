@@ -10,7 +10,7 @@ sidebar_position: 5
 ## What is RPK?
 `rpk` is a CLI utility that helps you manage Redpanda.   
 You can use `rpk` commands to manage Redpanda, for example to [tune for performance](#redpanda-tune), or to manage topics, for example to [create and read topics](#topic) from the CLI.
-`rpk` can even spin up a Docker container for you to get running with Redpanda easily with [`rpk container`](/docs/deploy-self-hosted/guide-rpk-container/).
+`rpk` can even spin up a Docker container for you to get running with Redpanda easily with [`rpk container`](/docs/features/guide-rpk-container/).
 
 Here are all of the `rpk` commands.
 
