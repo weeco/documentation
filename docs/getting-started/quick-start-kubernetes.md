@@ -12,7 +12,7 @@ This quick start guide can help you get started with Redpanda for development an
 To get up and running you need to create a cluster and deploy the Redpanda operator on the cluster.
 
 - For production or benchmarking, set up a [production deployment](/docs/deploy-self-hosted/production-deployment).
-- You can also set up a [Kubernetes cluster with external access](/docs/deploy-self-hosted/kubernetes-external-connect).
+- You can also set up a [Kubernetes cluster with external access](/docs/features/kubernetes-external-connect).
 
 > **_Note_** - Run a container inside the Kubernetes cluster to communicate with the Redpanda cluster.
 > Currently, a load balancer is not automatically created during deployment by default.
