@@ -1,7 +1,5 @@
 ---
 title: Designed for performance
-order: 1
-sidebar_position: 1
 ---
 
 # Designed for performance

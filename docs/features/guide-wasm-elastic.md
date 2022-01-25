@@ -1,6 +1,5 @@
 ---
 title: Transforming data with WebAssembly (Wasm)
-sidebar_position: 7
 ---
 
 # Transforming data with WebAssembly (Wasm)

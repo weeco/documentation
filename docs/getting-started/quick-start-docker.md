@@ -1,7 +1,5 @@
 ---
 title: Docker
-order: 0
-sidebar_position: 1
 ---
 
 # Docker Quick Start Guide

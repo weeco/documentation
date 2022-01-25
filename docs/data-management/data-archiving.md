@@ -1,7 +1,5 @@
 ---
 title: Data archiving
-order: 0
-sidebar_position: 3
 ---
 
 # Data archiving

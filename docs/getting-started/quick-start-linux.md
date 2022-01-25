@@ -1,7 +1,5 @@
 ---
 title: Linux
-order: 0
-sidebar_position: 5
 ---
 # Linux Quick Start Guide
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: -1
+title: 'Features guides'
 ---
 
 # Dive in into Redpanda features

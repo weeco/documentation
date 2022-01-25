@@ -1,7 +1,5 @@
 ---
 title: Starting a local cluster
-order: 0
-sidebar_position: 1
 ---
 # Starting a local cluster
 

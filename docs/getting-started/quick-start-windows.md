@@ -1,7 +1,5 @@
 ---
 title: Windows
-order: 0
-sidebar_position: 7
 ---
 # Windows Quick Start Guide
 

@@ -1,7 +1,5 @@
 ---
 title: MacOS
-order: 0
-sidebar_position: 6
 ---
 # MacOS Quick Start Guide
 

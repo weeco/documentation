@@ -1,7 +1,5 @@
 ---
 title: How events improve your app - An intro to events and streaming
-order: 0
-sidebar_position: 0
 ---
 
 # How events improve your app: An intro to events and streaming
