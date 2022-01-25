@@ -1,6 +1,5 @@
 ---
 title: Shadow Indexing
-sidebar_position: 2
 ---
 
 ## Shadow Indexing

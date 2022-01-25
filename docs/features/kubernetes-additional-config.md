@@ -1,6 +1,5 @@
 ---
 title: Custom configuration in Kubernetes
-sidebar_position: 4
 ---
 # Using configuration parameters with a Custom Resource
 

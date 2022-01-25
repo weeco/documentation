@@ -1,7 +1,5 @@
 ---
-title: Using NodeJS with Redpanda (some text)
-order: 1
-sidebar_position: 2
+title: Using NodeJS with Redpanda
 ---
 
 # Using NodeJS with Redpanda

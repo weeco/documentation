@@ -1,6 +1,5 @@
 ---
 title: Migrating data to Redpanda
-sidebar_position: 1
 ---
 
 # Migrating data to Redpanda

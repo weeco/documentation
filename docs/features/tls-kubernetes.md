@@ -1,6 +1,5 @@
 ---
 title: TLS for Kubernetes
-sidebar_position: 8
 ---
 
 # TLS for Kubernetes

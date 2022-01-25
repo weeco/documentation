@@ -1,7 +1,5 @@
 ---
 title: Kubernetes
-order: 0
-sidebar_position: 3
 ---
 
 # Kubernetes Quick Start Guide
