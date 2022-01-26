@@ -22,6 +22,8 @@ module.exports = {
         alt: 'Vectorized Logo',
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
+        width: '144',
+        height: '24'
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
