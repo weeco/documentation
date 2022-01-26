@@ -37,6 +37,7 @@ module.exports = {
         'features/guide-rpk-container',
         'features/guide-nodejs',
         'features/kubernetes-connectivity',
+        'features/kubernetes-external-connect',
         'features/kubernetes-additional-config',
         'features/guide-wasm-elastic',
         'features/acls',
