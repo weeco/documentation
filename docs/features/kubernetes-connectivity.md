@@ -1,7 +1,5 @@
 ---
 title: Configuring Kubernetes operator for connectivity
-order: 0
-sidebar_position: 3
 ---
 # Configuring Redpanda operator for connectivity
 

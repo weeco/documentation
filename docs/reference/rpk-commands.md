@@ -1,7 +1,5 @@
 ---
 title: RPK commands
-order: 5
-sidebar_position: 5
 ---
 <!-- References for links to OS icons -->
 [linux]: https://vectorized.io/images/icon-linux.svg "Available on Linux"

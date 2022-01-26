@@ -2,7 +2,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 module.exports = {
-  title: 'Redpanda Docs',
+  title: 'Redpanda Documentation',
   tagline: 'A modern streaming platform for mission critical workloads',
   url: 'https://docs.redpanda.com',
   baseUrl: '/',
@@ -22,16 +22,18 @@ module.exports = {
         alt: 'Vectorized Logo',
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
+        width: '144',
+        height: '24'
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
-        { href: 'https://vectorized.io/redpanda', label: 'Redpanda', position: 'right' },
-        { href: 'https://vectorized.io/cloud', label: 'Cloud', position: 'right' },
+        { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right' },
+        { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right' },
         { href: '/', label: 'Docs', position: 'right' },
-        { href: 'https://vectorized.io/team', label: 'Team', position: 'right' },
-        { href: 'https://vectorized.io/careers', label: 'Careers', position: 'right' },        
-        { href: 'https://vectorized.io/blog', label: 'Blog', position: 'right' },
+        { href: 'https://redpanda.com/team', label: 'Team', position: 'right' },
+        { href: 'https://redpanda.com/careers', label: 'Careers', position: 'right' },        
+        { href: 'https://redpanda.com/blog', label: 'Blog', position: 'right' },
         { 
           href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', 
           position: 'right',
@@ -54,29 +56,29 @@ module.exports = {
         {
           title: 'Product',
           items: [
-            { label: 'Redpanda', to: 'https://vectorized.io/redpanda' },
-            { label: 'Cloud', to: 'https://vectorized.io/cloud' },
+            { label: 'Redpanda', to: 'https://redpanda.com/redpanda/' },
+            { label: 'Cloud', to: 'https://redpanda.com/cloud' },
             { label: 'Documentation', to: '/' },
-            { label: 'Blog', to: 'https://vectorized.io/blog' },
-            { label: 'Events', to: 'https://vectorized.io/events' },
-            { label: 'Support', to: 'https://support.vectorized.io' },
+            { label: 'Blog', to: 'https://redpanda.com/blog' },
+            { label: 'Events', to: 'https://redpanda.com/events' },
+            { label: 'Support', to: 'https://support.redpanda.com' },
           ],
         },
         {
           title: 'Company',
           items: [
-            { label: 'Team', to: 'https://vectorized.io/team' },
-            { label: 'Careers', to: 'https://vectorized.io/careers' },
-            { label: 'Press & Media', to: 'https://vectorized.io/press' },
-            { label: 'Privacy Policy', to: 'https://vectorized.io/privacy-policy' },
+            { label: 'Team', to: 'https://redpanda.com/team' },
+            { label: 'Careers', to: 'https://redpanda.com/careers' },
+            { label: 'Press & Media', to: 'https://redpanda.com/press' },
+            { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy' },
           ],
         },
         {
           title: 'Connect',
           items: [
-            { label: 'Contact', to: 'https://vectorized.io/contact' },
-            { label: 'Feedback', to: 'https://vectorized.io/feedback' },
-            { label: 'h4ck::73h::pl4n37 scholarship', to: 'https://vectorized.io/scholarship' },
+            { label: 'Contact', to: 'https://redpanda.com/contact' },
+            { label: 'Feedback', to: 'https://redpanda.com/feedback' },
+            { label: 'h4ck::73h::pl4n37 scholarship', to: 'https://redpanda.com/scholarship' },
           ],
         },
       ],
@@ -92,15 +94,9 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/vectorizedio/documentation/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/vectorizedio/www/tree/main/content/subpages/blog',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

@@ -9,7 +9,7 @@
 :root {
   /* Vectorized variables */
   --v-black: #2F2C2C;
-  --v-white: #FFFFFF;
+  --v-white: #F8F8F8;
   --v-red:   #F15D61;
   --v-red2:  #D85556;
   --v-gray1: #828282;
@@ -18,7 +18,7 @@
   --v-gray3: #F3F3F3;
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
-  --v-background: #f9f7f6;
+  --v-background: #FFFFFF;
   --v-font: KumbhSans, sans-serif;
   --v-font-mono: 'Courier Prime', Courier, monospace;
 
@@ -72,20 +72,25 @@ html[data-theme='dark'] {
   letter-spacing: .025rem;
 }
 
-.theme-edit-this-page {
-  display: none;
-}
 
 .navbar {
+  width: 100vw;
   height: 86px;
-  padding-left: 110px;
-  padding-right: 110px;
-  padding-top: 22px;
-  padding-bottom: 22px;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 75ms ease;
+  box-shadow: none;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
 }
 
 .navbar__inner {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: auto;
+  padding-right: auto;
+  width: 100%;
   background-image: initial;
   background-position-x: initial;
   background-position-y: initial;
@@ -96,6 +101,26 @@ html[data-theme='dark'] {
   background-origin: initial;
   background-clip: initial;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
+}
+
+.navbar__items, .navbar__items--right {
+  color: #2f2c2c;
+  font-size: 17px;
+  letter-spacing: .060rem;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+div.navbar__items a {
+  padding-left: 0.25em;
+}
+
+.navbarHidden_node_modules-\@docusaurus-theme-classic-lib-next-theme-Navbar-styles-module {
+  transform: none !important;
+}
+
+div[class^="navbarHideable"] {
+  transform: none !important;
 }
 
 html[data-theme='dark'] .docusaurus-highlight-code-line {

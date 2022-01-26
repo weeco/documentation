@@ -1,7 +1,5 @@
 ---
 title: Cloud IO optimization
-order: 3
-sidebar_position: 0
 ---
 
 # Cloud IO optimization

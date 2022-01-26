@@ -1,6 +1,5 @@
 ---
 title: Getting started
-sidebar_position: 0
 ---
 
 # Getting started with Redpanda
