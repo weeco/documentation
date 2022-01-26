@@ -9,7 +9,7 @@
 :root {
   /* Vectorized variables */
   --v-black: #2F2C2C;
-  --v-white: #FFFFFF;
+  --v-white: #F8F8F8;
   --v-red:   #F15D61;
   --v-red2:  #D85556;
   --v-gray1: #828282;
@@ -18,7 +18,7 @@
   --v-gray3: #F3F3F3;
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
-  --v-background: #f9f7f6;
+  --v-background: #FFFFFF;
   --v-font: KumbhSans, sans-serif;
   --v-font-mono: 'Courier Prime', Courier, monospace;
 
@@ -80,6 +80,7 @@ html[data-theme='dark'] {
   left: 0;
   right: 0;
   transition: all 75ms ease;
+  box-shadow: none;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
 }
 
@@ -104,8 +105,8 @@ html[data-theme='dark'] {
 
 .navbar__items, .navbar__items--right {
   color: #2f2c2c;
-  font-size: 18px;
-  letter-spacing: .025rem;
+  font-size: 17px;
+  letter-spacing: .060rem;
   line-height: 30px;
   font-weight: bold;
 }
@@ -114,12 +115,11 @@ div.navbar__items a {
   padding-left: 0.25em;
 }
 
-
 .navbarHidden_node_modules-\@docusaurus-theme-classic-lib-next-theme-Navbar-styles-module {
   transform: none !important;
 }
 
-div[class^=".navbarHideable"] {
+div[class^="navbarHideable"] {
   transform: none !important;
 }
 
