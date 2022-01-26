@@ -92,15 +92,9 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/vectorizedio/documentation/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/vectorizedio/www/tree/main/content/subpages/blog',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

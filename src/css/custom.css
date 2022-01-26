@@ -72,9 +72,6 @@ html[data-theme='dark'] {
   letter-spacing: .025rem;
 }
 
-.theme-edit-this-page {
-  display: none;
-}
 
 .navbar {
   height: 86px;
