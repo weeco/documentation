@@ -74,15 +74,22 @@ html[data-theme='dark'] {
 
 
 .navbar {
+  width: 100vw;
   height: 86px;
-  padding-left: 110px;
-  padding-right: 110px;
-  padding-top: 22px;
-  padding-bottom: 22px;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 75ms ease;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
 }
 
 .navbar__inner {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: auto;
+  padding-right: auto;
+  width: 100%;
   background-image: initial;
   background-position-x: initial;
   background-position-y: initial;
@@ -93,6 +100,23 @@ html[data-theme='dark'] {
   background-origin: initial;
   background-clip: initial;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
+}
+
+.navbar__items, .navbar__items--right {
+  color: #2f2c2c;
+  font-size: 18px;
+  letter-spacing: .025rem;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+div.navbar__items a {
+  padding-left: 0.25em;
+}
+
+
+.navbarHidden_node_modules-\@docusaurus-theme-classic-lib-next-theme-Navbar-styles-module {
+  transform: none !important;
 }
 
 html[data-theme='dark'] .docusaurus-highlight-code-line {
