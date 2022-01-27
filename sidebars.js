@@ -24,6 +24,7 @@ module.exports = {
         'getting-started/quick-start-linux',
         'getting-started/quick-start-macos',
         'getting-started/quick-start-windows',
+        'getting-started/install-preview',
       ]
     },
     {
@@ -64,6 +65,7 @@ module.exports = {
       items: [
         'data-management/shadow-indexing',
         'data-management/data-archiving',
+        'data-management/data-transform',
         'data-management/data-migration',
       ]
     },
