@@ -52,6 +52,10 @@
 
   /* Hero */
   --ifm-hero-background-color: var(--v-gray2);
+
+  /* Search */
+  /* --search-local-highlight-color: var(--v-gray1); */
+  --ifm-navbar-search-input-background-color: var(--v-background);
 }
 
 html[data-theme='dark'] {
