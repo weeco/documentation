@@ -9,7 +9,6 @@ Shadow Indexing is a multi-tiered remote storage solution that provides the abil
 
 ---
 **_Note:_** 
-* This feature is in technical preview; a cluster with this feature enabled is not yet supported for production.
 * Shadow Indexing is available for Redpanda 21.11.3 and later.
 ---
 
