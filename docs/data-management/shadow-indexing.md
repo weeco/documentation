@@ -124,7 +124,7 @@ To enable Shadow Indexing on a topic, you can set the `redpanda.remote.write` an
 
 
 ```
-rpk topic create *<topic_name>* -c redpanda.remote.read=true -c redpanda.remote.write=true
+rpk topic create <topic_name> -c redpanda.remote.read=true -c redpanda.remote.write=true
 ```
 
 
@@ -132,7 +132,7 @@ And use this command to enable Shadow Indexing on an existing topic:
 
 
 ```
-rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true --set redpanda.remote.write=true
+rpk topic alter-config <topic_name> --set redpanda.remote.read=true --set redpanda.remote.write=true
 ```
 
 
@@ -147,7 +147,7 @@ To create a topic with remote write enabled, use this command:
 
 
 ```
-rpk topic create *<topic_name>* -c -c redpanda.remote.write=true
+rpk topic create <topic_name> -c -c redpanda.remote.write=true
 ```
 
 
@@ -155,7 +155,7 @@ And to enable remote write on an existing topic, use this command:
 
 
 ```
-rpk topic alter-config *<topic_name>* --set redpanda.remote.write=true
+rpk topic alter-config <topic_name> --set redpanda.remote.write=true
 ```
 
 
@@ -203,7 +203,7 @@ To create a topic with remote read enabled, use this command:
 
 
 ```
-rpk topic create *<topic_name>* -c -c redpanda.remote.read=true
+rpk topic create <topic_name> -c -c redpanda.remote.read=true
 ```
 
 
@@ -211,7 +211,7 @@ And to enable remote read on an existing topic, use this command:
 
 
 ```
-rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true
+rpk topic alter-config <topic_name> --set redpanda.remote.read=true
 ```
 
 
@@ -222,7 +222,7 @@ When the Kafka client fetches an offset range that isn’t available locally in 
 
 If you don’t specify a cache location in the `redpanda.yaml` file, the cache directory will be created here: 
 
-`*<redpanda_data_directory>*/cloud_storage_cache`. 
+`<redpanda_data_directory>/cloud_storage_cache`. 
 
 Use the `cloud_storage_cache_directory` parameter in the `redpanda.yaml` file to specify a different location for the cache directory. You must specify the full path. 
 
@@ -246,7 +246,7 @@ Use the following command to create a new topic using remote recovery:
 
 
 ```
-rpk topic create *<topic_name>* -c redpanda.remote.recovery=true
+rpk topic create <topic_name> -c redpanda.remote.recovery=true
 ```
 
 
@@ -254,7 +254,7 @@ You can also create a new topic using remote recovery and enable Shadow Indexing
 
 
 ```
-rpk topic create *<topic_name>* -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
+rpk topic create <topic_name> -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
 ```
 
 
