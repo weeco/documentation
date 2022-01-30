@@ -34,14 +34,13 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 4. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` parameters in the `redpanda.yaml` file. 
 5. The sections below give detailed information on all of the cloud storage configuration options, but the parameters listed here are the minimum required parameters that you must configure in the `redpanda.yaml` file to use Shadow Indexing for Amazon S3: 
 
-        ```
-        cloud_storage_enabled: true
-        cloud_storage_access_key: ***
-        cloud_storage_secret_key: ***
-        cloud_storage_region: eu-north-1
-        cloud_storage_bucket: pandabucket
-
-        ```
+```
+cloud_storage_enabled: true
+cloud_storage_access_key: ***
+cloud_storage_secret_key: ***
+cloud_storage_region: eu-north-1
+cloud_storage_bucket: pandabucket
+```
 
 ### Configuring Google Cloud Storage
 
@@ -53,15 +52,14 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` parameters in the `redpanda.yaml` file.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the parameters listed here are the minimum required parameters to use Shadow Indexing for Google Cloud Storage:
 
-        ```
-        cloud_storage_access_key: ***
-        cloud_storage_api_endpoint: storage.googleapis.com
-        cloud_storage_bucket: pandabucket
-        cloud_storage_enabled: true
-        cloud_storage_region: eu-north-1
-        cloud_storage_secret_key: ***
-
-        ```
+```
+cloud_storage_access_key: ***
+cloud_storage_api_endpoint: storage.googleapis.com
+cloud_storage_bucket: pandabucket
+cloud_storage_enabled: true
+cloud_storage_region: eu-north-1
+cloud_storage_secret_key: ***
+```
 
 ### Enabling Shadow Indexing for a cluster
 
@@ -126,7 +124,7 @@ To enable Shadow Indexing on a topic, you can set the `redpanda.remote.write` an
 
 
 ```
-    rpk topic create *<topic_name>* -c redpanda.remote.read=true -c redpanda.remote.write=true
+rpk topic create *<topic_name>* -c redpanda.remote.read=true -c redpanda.remote.write=true
 ```
 
 
@@ -134,7 +132,7 @@ And use this command to enable Shadow Indexing on an existing topic:
 
 
 ```
-    rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true --set redpanda.remote.write=true
+rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true --set redpanda.remote.write=true
 ```
 
 
@@ -149,7 +147,7 @@ To create a topic with remote write enabled, use this command:
 
 
 ```
-    rpk topic create *<topic_name>* -c -c redpanda.remote.write=true
+rpk topic create *<topic_name>* -c -c redpanda.remote.write=true
 ```
 
 
@@ -157,7 +155,7 @@ And to enable remote write on an existing topic, use this command:
 
 
 ```
-    rpk topic alter-config *<topic_name>* --set redpanda.remote.write=true
+rpk topic alter-config *<topic_name>* --set redpanda.remote.write=true
 ```
 
 
@@ -205,7 +203,7 @@ To create a topic with remote read enabled, use this command:
 
 
 ```
-    rpk topic create *<topic_name>* -c -c redpanda.remote.read=true
+rpk topic create *<topic_name>* -c -c redpanda.remote.read=true
 ```
 
 
@@ -213,7 +211,7 @@ And to enable remote read on an existing topic, use this command:
 
 
 ```
-    rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true
+rpk topic alter-config *<topic_name>* --set redpanda.remote.read=true
 ```
 
 
@@ -256,7 +254,7 @@ You can also create a new topic using remote recovery and enable Shadow Indexing
 
 
 ```
-    rpk topic create *<topic_name>* -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
+rpk topic create *<topic_name>* -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
 ```
 
 
