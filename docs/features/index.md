@@ -12,4 +12,3 @@ Choose which feature you're looking for:
 - [Monitoring](/docs/deploy-self-hosted/monitoring) 
 - [RPK commands](/docs/reference/rpk-commands)
 - [Shadow indexing](/docs/data-management/shadow-indexing)
-- [Transforming data with WebAssembly](./guide-wasm-elastic)
