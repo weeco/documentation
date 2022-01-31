@@ -170,6 +170,8 @@ If you delete a topic that has been uploaded to cloud storage, the data in cloud
 
 You can configure Redpanda to start a remote write periodically. This is useful if the ingestion rate is low and the segments are kept open for long periods of time. You specify a number of seconds for the timeout, and if that time has passed since the previous write and the partition has new data, Redpanda will start a new write. This limits data loss in the event of catastrophic failure and adds a guarantee that you will only lose the specified number of seconds of data. 
 
+Setting idle timeout to a very short interval can result in the creation of a lot of small files, which can affect throughput. If you decide to set a value for idle timeout, we recommend starting with 600 seconds, which will prevent the creation of so many small files that throughput is affected when you recover the files. 
+
 Use the `cloud_storage_segment_max_upload_interval_sec` parameter in the `redpanda.yaml` file to set the number of seconds for idle timeout. If this parameter is empty, Redpanda will upload metadata to the cloud storage, but the segment will not be uploaded until it reaches the `segment.bytes` size. By default, the parameter is empty. 
 
 
