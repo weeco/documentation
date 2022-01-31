@@ -39,7 +39,6 @@ module.exports = {
         'features/kubernetes-connectivity',
         'features/kubernetes-external-connect',
         'features/kubernetes-additional-config',
-        'features/guide-wasm-elastic',
         'features/acls',
         'features/tls-kubernetes',
       ]
