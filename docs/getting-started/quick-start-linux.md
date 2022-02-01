@@ -1,6 +1,7 @@
 ---
-title: Linux Quick Start Guide
+title: Linux
 order: 0
+sidebar_position: 5
 ---
 # Linux Quick Start Guide
 
@@ -9,7 +10,7 @@ With Redpanda you can get up and running with streaming quickly
 and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem).
 
 This quick start guide can help you get started with Redpanda for development and testing purposes.
-For production or benchmarking, set up a [production deployment](/docs/production-deployment).
+For production or benchmarking, set up a [production deployment](/docs/deploy-self-hosted/production-deployment).
 
 ## Install and run Redpanda
 
@@ -90,8 +91,8 @@ You've just installed Redpanda and done streaming in a few easy steps.
 
 ## What's Next?
 
-- Our [FAQ](/docs/faq) page shows all of the clients that you can use to do streaming with Redpanda.
+- Our [FAQ](/docs/reference/faq) page shows all of the clients that you can use to do streaming with Redpanda.
      (Spoiler: Any Kafka-compatible client!)
-- Get a multi-node cluster up and running using [`rpk container`](/docs/guide-rpk-container).
-- Use the [Quick Start Docker Guide](/docs/quick-start-docker) to try out Redpanda using Docker.
-- Want to setup a production cluster? Check out our [Production Deployment Guide](/docs/production-deployment).
+- Get a multi-node cluster up and running using [`rpk container`](/docs/deploy-self-hosted/guide-rpk-container).
+- Use the [Quick Start Docker Guide](/docs/getting-started/quick-start-docker) to try out Redpanda using Docker.
+- Want to setup a production cluster? Check out our [Production Deployment Guide](/docs/deploy-self-hosted/production-deployment).

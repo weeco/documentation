@@ -1,11 +1,12 @@
 ---
 title: Using Terraform and Ansible to deploy Redpanda
 order: 0
+sidebar_position: 6
 ---
 
 # Using Terraform and Ansible to deploy Redpanda
 
-You can easily deploy Redpanda for production on [bare-metal with the Redpanda installation binary](/docs/production-deployment).
+You can easily deploy Redpanda for production on [bare-metal with the Redpanda installation binary](/docs/deploy-self-hosted/production-deployment).
 
 If you use automation tools in your environment, like Terraform and Ansible, you can use those tools for your Redpanda production deployment.
 
@@ -24,8 +25,8 @@ Then change into the directory:
 cd deployment-automation
 ```
 
-From here, follow the specific instructions for [AWS](#AWS) or
-[GCP](#GCP).
+From here, follow the specific instructions for [AWS](#aws) or
+[GCP](#gcp).
 
 ### AWS
 
@@ -120,12 +121,12 @@ terraform apply -var nodes=3 -var subnet=redpanda-cluster-subnet -var public_key
 
 From here, you can install Redpanda either:
 
-- With the [Redpanda installation binary](/docs/production-deployment)
+- With the [Redpanda installation binary](/docs/deploy-self-hosted/production-deployment)
 - With Ansible
 
 ## Installing Redpanda with Ansible
 
-Whether you are using [bare-metal servers](/docs/production-deployment) or Terraform, you can use Ansible to install Redpanda.
+Whether you are using [bare-metal servers](/docs/deploy-self-hosted/production-deployment) or Terraform, you can use Ansible to install Redpanda.
 
 ### Requirements
 

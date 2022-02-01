@@ -1,6 +1,7 @@
 ---
 title: Data archiving
 order: 0
+sidebar_position: 3
 ---
 
 # Data archiving
@@ -15,7 +16,9 @@ After you configure data archiving, your data is uploaded to cloud storage.
 In the event of a data center failure, data corruption, or cluster migration,
 your data is safe in the cloud for you to recover to your cluster.
 
-> **_Note:_** Archiving to Amazon S3 and Google Cloud Storage is supported.
+> **_Notes:_**
+> - Archiving to Amazon AWS S3 and Google Cloud Storage is tested and supported.
+> - The ability to rehydrate data to a cluster is in development, targeted for second half of 2021.
 
 ## How it works
 
@@ -102,3 +105,4 @@ We recommend that you keep topic manifests in order to recover the corresponding
     |-----------------------------------------------|--------------|---------------------------------------------------------|
     | `cloud_storage_reconciliation_interval_ms`    | milliseconds | Reconciliation period (Default: 10s)                   |
     | `cloud_storage_max_connections`               | integer      | Number of simultaneous uploads per shard (Default: 20) |
+    

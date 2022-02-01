@@ -1,7 +1,9 @@
 ---
-title: Kubernetes Quick Start Guide
+title: Kubernetes
 order: 0
+sidebar_position: 3
 ---
+
 # Kubernetes Quick Start Guide
 
 Redpanda is a modern [streaming platform](/blog/intelligent-data-api/) for mission critical workloads.
@@ -11,17 +13,11 @@ and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/conf
 This quick start guide can help you get started with Redpanda for development and testing purposes.
 To get up and running you need to create a cluster and deploy the Redpanda operator on the cluster.
 
-- For production or benchmarking, set up a [production deployment](/docs/production-deployment).
-- You can also set up a [Kubernetes cluster with external access](/docs/kubernetes-external-connect).
+- For production or benchmarking, set up a [production deployment](/docs/deploy-self-hosted/production-deployment).
+- You can also set up a [Kubernetes cluster with external access](/docs/deploy-self-hosted/kubernetes-external-connect).
 
-**_Note_** - Run a container inside the Kubernetes cluster to communicate with the Redpanda cluster.
-Currently, a load balancer is not automatically created during deployment by default.
-
-**_Note_** - In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. 
-If you you want to set `developerMode: false`, for optimal configuration we recommend that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster.
-You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](https://redpanda.com/docs/production-deployment/#Step-2-Set-Redpanda-production-mode) documentation. 
-If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. 
-You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`. 
+> **_Note_** - Run a container inside the Kubernetes cluster to communicate with the Redpanda cluster.
+> Currently, a load balancer is not automatically created during deployment by default.
 
 ## Prerequisites
 
@@ -54,9 +50,9 @@ To run locally
 
 You can either create a Kubernetes cluster on your local machine or on a cloud provider.
 
-<tabs>
+<Tabs>
 
-  <tab id="Kind">
+  <TabItem value="kind" label="Kind" default>
 
   [Kind](https://kind.sigs.k8s.io) is a tool that lets you create local Kubernetes clusters using Docker.
     After you install Kind, set up a cluster with:
@@ -65,9 +61,9 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   kind create cluster
   ```
 
-  </tab>
+  </TabItem>
 
-  <tab id="AWS EKS">
+  <TabItem value="awsEks" label="AWS EKS">
 
   Use the [EKS Getting Started](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) guide to set up EKS.
   When you finish, you'll have `eksctl` installed so that you can create and delete clusters in EKS.
@@ -85,9 +81,9 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
 
   It will take about 10-15 minutes for the process to finish.
 
-  </tab>
+  </TabItem>
 
-  <tab id="Google GKE">
+  <TabItem value="googleGke" label="Google GKE">
 
   First complete the "Before You Begin" steps describe in [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
   Then, create a cluster with:
@@ -98,9 +94,9 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
 
   **_Note_** - You may need to add a `--region` or `--zone` to this command.
 
-  </tab>
+  </TabItem>
 
-  <tab id="Digital Ocean">
+  <TabItem value="digitalOcean" label="Digital Ocean">
 
   First, set up your [Digital Ocean account](https://docs.digitalocean.com/products/getting-started/) and install [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/).
 
@@ -115,8 +111,8 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
   ```
 
-  </tab>
-</tabs>
+  </TabItem>
+</Tabs>
 
 ## Kubectl context
 Most cloud utility tools will automatically change your `kubectl` config file.   
@@ -152,7 +148,7 @@ helm install \
 ```
 
 We recommend that you use [the verification procedure](https://cert-manager.io/docs/installation/verify/#manual-verification) in the cert-manager docs
-to verify that cert-manager is working correctly.
+to verify that cert-manager is working correcly.
 
 ## Use Helm to install Redpanda operator
 
@@ -172,44 +168,44 @@ to verify that cert-manager is working correctly.
     **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/vectorizedio/redpanda/releases).   
     We're using `jq` to help us. If you don't have it installed run this command:
 
-    <tabs>
-      <tab id="apt">
+    <Tabs>
+      <TabItem value="apt" label="apt" default>
 
     ```bash
     sudo apt-get update && \
     sudo apt-get install jq
     ```
-      </tab>
-      <tab id="brew">
+      </TabItem>
+      <TabItem value="brew" label="brew">
 
     ```bash
     brew install jq
     ```
-      </tab>
-    </tabs>
+      </TabItem>
+    </Tabs>
 
 3. Install the Redpanda operator CRD:
 
-<tabs group="shell">
+    <Tabs groupId="shell">
 
-  <tab id="bash">
+      <TabItem value="bash" label="bash" default>
 
-```
-kubectl apply \
--k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
-```
-  </tab>
+    ```
+    kubectl apply \
+    -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
+    ```
+      </TabItem>
 
-  <tab id="zsh">
+      <TabItem value="zhs" label="zsh">
 
-```
-noglob kubectl apply \
--k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
-```
+    ```
+    noglob kubectl apply \
+    -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
+    ```
 
-  </tab>
+      </TabItem>
 
-</tabs>
+    </Tabs>
 
 4. Install the Redpanda operator on your Kubernetes cluster with:
 
@@ -274,5 +270,5 @@ As you can see, the commands from the "rpk" pod created a 5-partition topic in f
 
 ## Next steps
 
-- Check out our in-depth explanation of how to [connect external clients](/docs/kubernetes-connectivity) to a Redpanda Kubernetes deployment.
+- Check out our in-depth explanation of how to [connect external clients](/docs/features/kubernetes-connectivity) to a Redpanda Kubernetes deployment.
 - Contact us in our [Slack](https://vectorized.io/slack) community so we can work together to implement your Kubernetes use cases.

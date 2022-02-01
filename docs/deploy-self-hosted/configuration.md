@@ -1,6 +1,7 @@
 ---
 title: Custom configuration
 order: 5
+sidebar_position: 2
 ---
 # Custom configuration
 
@@ -20,7 +21,7 @@ rpk config init
 
 ## Sample configuration
 
-Here’s a sample of the config. The [configuration reference](#Config-parameter-reference) shows a more complete list of the configuration options.
+Here’s a sample of the config. The [configuration reference](#config-parameter-reference) shows a more complete list of the configuration options.
 
 This is not a valid Redpanda configuration file, but it shows the parameters that you can configure in the config file.
 Only include the sections that you want to customize.
@@ -392,10 +393,6 @@ pandaproxy:
     - address: "redpanda-rest-0.my.domain.com."
       name: external
       port: 8083
-
-  # How long to wait for an idle consumer before removing it.
-  # Default: 60000
-  consumer_instance_timeout_ms: 60000
 
 # The REST API client
 pandaproxy_client:

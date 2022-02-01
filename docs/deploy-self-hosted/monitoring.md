@@ -1,6 +1,7 @@
 ---
 title: Monitoring
 order: 2
+sidebar_position: 4
 ---
 # Monitoring
 

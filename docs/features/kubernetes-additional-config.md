@@ -1,6 +1,6 @@
 ---
-title: Using configuration parameters with a Custom Resource
-order: 5
+title: Custom configuration in Kubernetes
+sidebar_position: 4
 ---
 # Using configuration parameters with a Custom Resource
 
@@ -8,9 +8,9 @@ You can use the Redpanda operator to create clusters based on custom resource (C
 After you install the Redpanda operator, you can apply the cluster CR that contains the basic specifications of the Redpanda cluster,
 including the cluster name and namespace, and the configuration for the APIs like the Admin, Kafka, and Pandaproxy API.
 
-The [Kubernetes Quick Start Guide](/docs/quick-start-kubernetes) walks you through the steps to set up the Redpanda operator and a Redpanda cluster.
+The [Kubernetes Quick Start Guide](/docs/getting-started/quick-start-kubernetes) walks you through the steps to set up the Redpanda operator and a Redpanda cluster.
 
-In addition to the basic cluster specifications, you can add other parameters that are typically defined in the Redpanda [configuration file](/docs/configuration).
+In addition to the basic cluster specifications, you can add other parameters that are typically defined in the Redpanda [configuration file](/docs/deploy-self-hosted/configuration).
 The custom parameters are added to the `additionalConfiguration` section of the CR.
 
 For example, using the `single-node` sample from [our CR sample files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples), here we add some custom parameters in the `additionalConfiguration` section:

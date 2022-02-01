@@ -1,11 +1,11 @@
 ---
 title: Migrating data to Redpanda
-order: 2
+sidebar_position: 1
 ---
 
 # Migrating data to Redpanda
 
-One of the more elegant aspects of Redpanda is that it is compatible with the [Kafka API and ecosystem](/docs/faq).
+One of the more elegant aspects of Redpanda is that it is compatible with the [Kafka API and ecosystem](/docs/reference/faq).
 So when you want to migrate data from Kafka or replicate data between Redpanda clusters,
 the MirrorMaker 2 tool bundled in the [Kafka download package](https://kafka.apache.org/downloads) is a natural solution.
 
@@ -19,7 +19,7 @@ For all of the details on MirrorMaker and its options, check out the [Kafka docu
 
 To set up the replication, we'll need:
 
-- 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](/docs/quick-start-kubernetes), [Docker](/docs/quick-start-docker), [Linux](/docs/quick-start-linux), or [MacOS](/docs/quick-start-macos).
+- 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](/docs/getting-started/quick-start-kubernetes), [Docker](/docs/getting-started/quick-start-docker), [Linux](/docs/getting-started/quick-start-linux), or [MacOS](/docs/getting-started/quick-start-macos).
 
 - MirrorMaker host - You install MirrorMaker on a separate system or on one of the Redpanda clusters, as long as the IP addresses and ports on each cluster are accessible from the MirrorMaker host.
 You must install the [Java Runtime Engine (JRE)](https://docs.oracle.com/javase/10/install/toc.htm) on the MirrorMaker host.

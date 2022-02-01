@@ -1,7 +1,9 @@
 ---
 title: Cloud IO optimization
 order: 3
+sidebar_position: 0
 ---
+
 # Cloud IO optimization
 
 Redpanda relies on its own disk IO scheduler, and by default tells the kernel to

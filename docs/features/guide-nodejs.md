@@ -1,6 +1,7 @@
 ---
-title: Using NodeJS with Redpanda
+title: Using NodeJS with Redpanda (some text)
 order: 1
+sidebar_position: 2
 ---
 
 # Using NodeJS with Redpanda
@@ -32,9 +33,9 @@ tsc --init
 
 ## Setting up Redpanda and creating a topic
 
-If you are on MacOS, check out [this post](https://vectorized.io/docs/quick-start-macos).
+If you are on MacOS, check out [this post](/docs/getting-started/quick-start-macos).
 If you’re on linux, follow the instructions in the
-[Quick start section](https://vectorized.io/docs/quick-start-linux)
+[Quick start section](/docs/getting-started/quick-start-linux)
 Note: please follow only this section. If you do the production section, it
 will optimize your machine for Redpanda, which might affect your experience
 with desktop applications and other services. Be especially careful with

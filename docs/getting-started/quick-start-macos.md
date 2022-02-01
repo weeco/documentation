@@ -1,6 +1,7 @@
 ---
-title: MacOS Quick Start Guide
+title: MacOS
 order: 0
+sidebar_position: 6
 ---
 # MacOS Quick Start Guide
 
@@ -9,14 +10,14 @@ With Redpanda you can get up and running with streaming quickly
 and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem).
 
 This quick start guide can help you get started with Redpanda for development and testing purposes.
-For production or benchmarking, set up a [production deployment](/docs/production-deployment).
+For production or benchmarking, set up a [production deployment](/docs/deploy-self-hosted/production-deployment).
 
 ## Getting Redpanda running
 
 To run Redpanda on MacOS, we'll use `rpk` to bring up Redpanda nodes in Docker containers.
 Make sure that you install [Docker](https://docs.docker.com/docker-for-mac/install/) first.
 
-If you want to customize the containers, you can also set up your own [Redpanda containers in Docker](/docs/quick-start-docker).
+If you want to customize the containers, you can also set up your own [Redpanda containers in Docker](/docs/getting-started/quick-start-docker).
 
 ### Installing rpk
 
@@ -103,7 +104,7 @@ rpk container purge
 
 ## What's Next?
 
-- Our [FAQ](/docs/faq) page shows all of the clients that you can use to do streaming with Redpanda.
+- Our [FAQ](/docs/reference/faq) page shows all of the clients that you can use to do streaming with Redpanda.
     (Spoiler: Any Kafka-compatible client!)
-- Use the [Quick Start Docker Guide](/docs/quick-start-docker) to try out Redpanda using Docker.
-- Want to setup a production cluster? Check out our [Production Deployment Guide](/docs/production-deployment).
+- Use the [Quick Start Docker Guide](/docs/getting-started/quick-start-docker) to try out Redpanda using Docker.
+- Want to setup a production cluster? Check out our [Production Deployment Guide](/docs/deploy-self-hosted/production-deployment).
