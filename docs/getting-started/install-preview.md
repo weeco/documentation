@@ -30,10 +30,10 @@ sudo yum install redpanda
 
 ## Beta releases on Docker
 
-For example, let's install `v21.3.5-beta3`.
+For example, to pull the docker image:
 
 ```bash
-docker.vectorized.io/vectorized/redpanda:v21.3.5-beta3
+docker pull docker.vectorized.io/vectorized/redpanda:v21.12.1-wasm-beta1
 ```
 
 ## Checking the installed version
