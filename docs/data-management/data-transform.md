@@ -11,7 +11,7 @@ This feature is in technical preview and is not supported for production.
 For installation instructions, check our guide on [how to install beta versions](/docs/getting-started/install-preview).
 :::
 
-Redpanda Data Transforms enable users to perform simple data transformations on topics without leaving the platform, such as capitalizing strings, filtering messages to adhere to GDPR, and etc. This eliminates data going back and forth by removing the need to consume data streams from a separate system for simple transformations.
+Redpanda Data Transforms enable users to perform simple data transformations on topics without leaving the platform, such as capitalizing strings, and filtering messages to adhere to GDPR. This eliminates data going back and forth by removing the need to consume data streams from a separate system for simple transformations.
 
 Redpanda allows you to deploy custom Node.js programs to handle the entire consume-transform-produce cycle for you. This is handled by a transformation engine built on top of [Wasm](https://developer.mozilla.org/en-US/docs/WebAssembly) technology.
 
@@ -19,7 +19,7 @@ You can jump-start your data transformation development with `rpk`. Redpanda pro
 
 Under the hood, Redpanda reads from an immutable Apache Kafka® topic, applies a data transformation process, and then produces another immutable Kafka topic. That way, the data is transformed into a new topic and we preserve the original topic without any data loss.
 
-> **_Note_** - The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code that you trust the authors.
+> **_Note_** - The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
 
 ## Prerequisites
 Verify the following before you configure data transformations and start the Wasm engine:
@@ -31,7 +31,7 @@ Verify the following before you configure data transformations and start the Was
 
 ## Set up
 
-In this section, we're going to go over how to setup your transformations in Redpanda. 
+In this section, we'll cover how to setup your transformations in Redpanda. 
 
 ### Enable data transforms
 
@@ -39,7 +39,7 @@ In this section, we're going to go over how to setup your transformations in Red
 
 To enable the coprocessor that runs the data transformation, you must enable the engine in the Redpanda configuration file, `redpanda.yaml`.
 
-The default location of `redpanda.yaml` is *`/etc/redpanda/redpanda.yaml`*.
+The default location of `redpanda.yaml` is `/etc/redpanda/redpanda.yaml`.
 
 Add the following flags under `redpanda`: 
 
@@ -57,7 +57,7 @@ coproc_supervisor_server:
     port: <new_port>
 ```
 
-The default location of the Data Transforms log file is: *`/var/lib/redpanda/coprocessor/wasm_engine.log`*. You can configure the location of the log file in redpanda.yaml with this parameter:
+The default location of the Data Transforms log file is: `/var/lib/redpanda/coprocessor/wasm_engine.log`. You can configure the location of the log file in `redpanda.yaml` with this parameter:
 
 ```yaml
 coproc_engine:
@@ -163,7 +163,7 @@ It will return something similar to this:
 
 ## Run the data transform
 
-In this section, we're going to go over how to run your transformations in Redpanda. 
+In this section, we're going to cover how to run your transformations in Redpanda. 
 
 ### Generate the data transform package
 
@@ -175,7 +175,7 @@ To create the template project, run:
 rpk wasm generate <project_name>
 ```
 
-Remember to change the `project name`.
+Remember to change the `project_name`.
 
 **Example transformation**
 
@@ -199,8 +199,8 @@ A directory is created with the project name. The directory contains the followi
 
 Take note of the following files in the project: :
 
-- /src/main.js - This file contains your transform logic and hooks into the API to define the event inputs.
-- /src/package.json - If your transform requires Node.js dependencies, you must add them to this file.
+- `/src/main.js` - This file contains your transform logic and hooks into the API to define the event inputs.
+- `/src/package.json` - If your transform requires Node.js dependencies, you must add them to this file.
 
 **The sample project**
 
@@ -264,7 +264,7 @@ It then creates a constant variable to hold the function `SimpleTransform`. This
 const transform = new SimpleTransform();
 ```
 
-It fills the subscribe list with the topic and the policy that it will use to  process new messages.
+It fills the `subscribe` list with the topic and the policy that it will use to  process new messages.
 
 ```js
 transform.subscribe([["test-topic", PolicyInjection.Stored]]);
@@ -315,7 +315,7 @@ const uppercase = (record) => {
 }
 ```
 
-The logic is applied to the processRecord function. The `transformedRecord` variable obtains a `recordBatch` from the topic that we subscribed to, applies the `uppercase` function, and stores a map called `records`.
+The logic is applied to the `processRecord` function. The `transformedRecord` variable obtains a `recordBatch` from the topic that we subscribed to, applies the `uppercase` function, and stores a map called `records`.
 
 The generated `transformedRecord` is set into the topic named `result-topic`.
 
@@ -364,7 +364,7 @@ npm install
 npm run build
 ```
 
-The build command creates the `main.js` JavaScript file in the *`/dist`* directory that contains the compiled transform bundle.
+The build command creates the `main.js` JavaScript file in the `/dist` directory that contains the compiled transform bundle.
 
 ### Deploy the transform
 
