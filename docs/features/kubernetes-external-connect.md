@@ -5,7 +5,7 @@ order: 0
 
 # Kubernetes Quick Start Guide with external connectivity
 
-The [Kubernetes Quick Start guide](/docs/quick-start-kubernetes) describes how to quickly get up and running with a Kubernetes cluster.
+The [Kubernetes Quick Start guide](/docs/getting-started/quick-start-kubernetes) describes how to quickly get up and running with a Kubernetes cluster.
 Those instructions only provide access to the cluster from within the Kuberenetes network.
 
 Here we'll show you an example of how to set up Kubernetes in
@@ -274,5 +274,5 @@ Now you know how to set up a Kubernetes cluster in a cloud and access it from a 
 
 ## Next steps
 
-- Check out our in-depth explanation of [Kubernetes connectivity](/docs/kubernetes-connectivity).
+- Check out our in-depth explanation of [Kubernetes connectivity](/docs/features/kubernetes-connectivity).
 - Contact us in our [Slack](https://vectorized.io/slack) community so we can work together to implement your Kubernetes use cases.
