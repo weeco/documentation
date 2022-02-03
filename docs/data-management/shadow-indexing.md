@@ -2,9 +2,6 @@
 title: Shadow Indexing
 ---
 
-## Shadow Indexing
-
-
 Shadow Indexing is a multi-tiered remote storage solution that provides the ability to archive log segments to a cloud object store in real time as the topic is being produced. You can recover a topic that no longer exists in the cluster, and replay and read log data as a stream directly from cloud storage even if it doesn’t exist in the cluster. Shadow Indexing provides a disaster recovery plan that takes advantage of infinitely scalable storage systems, is easy to configure, and works in real time.
 
 ---
@@ -22,7 +19,6 @@ The image below illustrates the Shadow Indexing architecture. Remote write uploa
 Shadow Indexing is supported for Amazon S3 and Google Cloud Storage. Before you enable Shadow Indexing for a topic, you must configure cloud storage in the `redpanda.yaml` file. 
 
 After cloud storage is enabled and configured, you can either enable Shadow Indexing on a cluster, or simply enable Shadow Indexing on a topic with a single command. 
-
 
 ### Configuring Amazon S3
 
@@ -69,18 +65,13 @@ When you enable Shadow Indexing on a cluster, it will become enabled for already
 
 To enable Shadow Indexing on a cluster, set the following parameters in the `redpanda.yaml` file:  
 
-
-
 * `cloud_storage_enable_remote_write` - Enables data upload from Redpanda to cloud storage. Set to `true`. 
 * `cloud_storage_enable_remote_read` - Enables Redpanda to fetch data from cloud storage. Set to `true`. 
 * `cloud_storage_enabled` - Global flag that enables Shadow Indexing. Set to `true` to enable Shadow Indexing. Note that this parameter must be set to `true` to enable Shadow Indexing at the cluster level or the topic level. Default is `false`.
 
-
 ### Enabling Shadow Indexing for a topic
 
 Shadow Indexing also uses the following topic configuration flags, which are described in detail in the sections below: 
-
-
 
 * `redpanda.remote.write` - Uploads data from Redpanda to cloud storage. Overrides the cluster-level `cloud_storage_enable_remote_write` configuration for the topic. 
 * `redpanda.remote.read` - Fetches data from cloud storage to Redpanda. Overrides the cluster-level `cloud_storage_enable_reamote_read` configuration for the topic.
@@ -103,8 +94,6 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 | <code>false</code> | <code>false</code> | Disabled |
 | <code>false</code> | <code>true</code>  | Enabled  |
 
-
-
 **Table 2: Remote read configuration**
 
 | Cluster-level configuration <br />(<code>cloud_storage_remote_read</code>) | Topic-level configuration <br />(<code>redpanda.remote.read</code>) | Outcome <br />(whether remote read is enabled <br />or disabled on the topic) |
@@ -116,26 +105,19 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 | <code>false</code> | <code>false</code> | Disabled |
 | <code>false</code> | <code>true</code>  | Enabled  |
 
-
-
 Note that the cluster-level `cloud_storage_enabled` parameter must be set to `true` to enable Shadow Indexing at the cluster level or the topic level. If you want to have Shadow Indexing turned off at the cluster level and enable it on specific topics, you must enable the `cloud_storage_enabled` parameter. If this parameter is set to `false`, nothing will be added to cloud storage, whether or not the other Shadow Indexing parameters are enabled. If this parameter is set to `true` and the other Shadow Indexing parameters are disabled, the Shadow Indexing subsystem will be initialized, but will not be used until you enable Shadow Indexing for a topic or at the cluster level. 
 
 To enable Shadow Indexing on a topic, you can set the `redpanda.remote.write` and `redpanda.remote.read` flags on a new topic or an existing topic. Use the following command to create a new topic with Shadow Indexing enabled: 
-
 
 ```
 rpk topic create <topic_name> -c redpanda.remote.read=true -c redpanda.remote.write=true
 ```
 
-
 And use this command to enable Shadow Indexing on an existing topic: 
-
 
 ```
 rpk topic alter-config <topic_name> --set redpanda.remote.read=true --set redpanda.remote.write=true
 ```
-
-
 
 ## Remote write
 
@@ -145,24 +127,19 @@ To enable Shadow Indexing, use remote write in conjunction with remote read. If 
 
 To create a topic with remote write enabled, use this command: 
 
-
 ```
 rpk topic create <topic_name> -c -c redpanda.remote.write=true
 ```
 
-
 And to enable remote write on an existing topic, use this command: 
-
 
 ```
 rpk topic alter-config <topic_name> --set redpanda.remote.write=true
 ```
 
-
 If remote write is enabled, log segments will not be deleted until they’re uploaded to remote storage. Because of this, the log segments may exceed the configured retention period until they’re uploaded, so the topic might require more disk space. This prevents data loss if segments cannot be uploaded fast enough or if the retention period is very short. 
 
 If you delete a topic that has been uploaded to cloud storage, the data in cloud storage will not be affected. This is useful if a topic is unintentionally deleted. The topic can be recovered with the `redpanda.remote.recovery` topic configuration flag. 
-
 
 ### Idle timeout
 
@@ -172,7 +149,6 @@ Setting idle timeout to a very short interval can result in the creation of a lo
 
 Use the `cloud_storage_segment_max_upload_interval_sec` parameter in the `redpanda.yaml` file to set the number of seconds for idle timeout. If this parameter is empty, Redpanda will upload metadata to the cloud storage, but the segment will not be uploaded until it reaches the `segment.bytes` size. By default, the parameter is empty. 
 
-
 ### Reconciliation 
 
 Reconciliation is a Redpanda process that runs periodically on every node. It monitors partitions and decides which partitions will be uploaded on each Redpanda node to guarantee that the data is uploaded only once. It also balances the workload evenly between the nodes. 
@@ -181,17 +157,13 @@ When leadership rebalancing occurs, the reconciliation process might stop upload
 
 The reconciliation process is configured with the following parameter in the `redpanda.yaml` file: 
 
-
-
 * `cloud_storage_reconciliation_interval_ms` - Sets the interval, in milliseconds, that is used to reconcile partitions that need to be uploaded. A long reconciliation interval can result in a delayed reaction to topic creation, topic deletion, or leadership rebalancing events. A short reconciliation interval guarantees that new partitions are picked up quickly, but the process uses more resources. Default is 10000ms.
-
 
 ### Upload controller
 
 Remote write uses a proportional derivative (PD) controller to minimize the backlog size for the write. The backlog consists of the data that has not been uploaded to cloud storage but must be uploaded eventually. 
 
 The upload controller prevents Redpanda from running out of disk space. If `remote.write` is set to `true`, Redpanda cannot evict log segments that have not been uploaded to cloud storage. If the remote write process cannot keep up with the amount of data that needs to be uploaded to cloud storage, the upload controller increases priority for the upload process. The upload controller measures the size of the upload periodically and tunes the priority of the remote write process. 
-
 
 ## Remote read
 
@@ -203,20 +175,15 @@ When data is available remotely and Shadow Indexing is enabled, the client can s
 
 To create a topic with remote read enabled, use this command: 
 
-
 ```
 rpk topic create <topic_name> -c -c redpanda.remote.read=true
 ```
 
-
 And to enable remote read on an existing topic, use this command: 
-
 
 ```
 rpk topic alter-config <topic_name> --set redpanda.remote.read=true
 ```
-
-
 
 ### Caching 
 
@@ -232,11 +199,8 @@ Redpanda checks the cache periodically, and if the size of the stored data is la
 
 Use the following parameters in the `redpanda.yaml` file to set the maximum cache size and cache check interval: 
 
-
-
 * `cloud_storage_cache_size` - Maximum size of the disk cache that is used by Shadow Indexing. Default is 20GiB.
 * `cloud_storage_cache_check_interval` - The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they will consume a lot of resources. Default is 30000ms. 
-
 
 ## Remote recovery 
 
@@ -246,28 +210,21 @@ You can use remote recovery to restore a topic that was deleted from a cluster, 
 
 Use the following command to create a new topic using remote recovery: 
 
-
 ```
 rpk topic create <topic_name> -c redpanda.remote.recovery=true
 ```
 
-
 You can also create a new topic using remote recovery and enable Shadow Indexing on the new topic by adding the `redpanda.remote.write` and `redpanda.remote.read` flags: 
-
 
 ```
 rpk topic create <topic_name> -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
 ```
-
-
 
 ## Retries and backoff 
 
 If the cloud provider replies with an error message that the server is busy, Redpanda will retry the request. Redpanda always uses exponential backoff with cloud connections. 
 
 Redpanda retries the request if it receives any the following errors: 
-
-
 
 * Connection refused
 * Connection reset by peer
@@ -278,7 +235,6 @@ For other errors, Redpanda will not retry the request. For example, Redpanda wil
 
 In the `redpanda.yaml` file, you can configure the `cloud_storage_initial_backup_ms` parameter to set the time, in milliseconds, that is used as an initial backoff interval in the exponential backoff algorithm that is used to handle an error. The default is 100ms. 
 
-
 ## Transport 
 
 Shadow Indexing creates a connection pool for each CPU that limits simultaneous connections to the cloud storage provider. It also uses persistent HTTP connections with a configurable maximum idle time. A custom S3 client is used to send and receive data. 
@@ -287,8 +243,6 @@ For normal usage, you will not need to configure the transport parameters. The R
 
 Redpanda uses the following parameters in the `redpanda.yaml` file to configure transport: 
 
-
-
 * `cloud_storage_max_connections` - The maximum number of connections to cloud storage on a node per CPU. Remote read and remote write share the same pool of connections. This means that if a connection is being used to upload a segment, it cannot be used to download another segment. If this value is too small, some workloads might starve for connections, which results in delayed uploads and downloads. If this value is too large, Redpanda will try to upload a lot of files at the same time and might overwhelm the system. Default is 20. 
 * `cloud_storage_segment_upload_timeout_ms` - Timeout for segment upload. Redpanda retries the upload after the timeout. Default is 30000ms. 
 * `cloud_storage_manifest_upload_timeout_ms` - Timeout for manifest upload. Redpanda retries the upload after the timeout. Default is 10000ms. 
@@ -296,14 +250,11 @@ Redpanda uses the following parameters in the `redpanda.yaml` file to configure 
 * `cloud_storage_segment_max_upload_interval_sec` - Sets the number of seconds for idle timeout. If this parameter is empty, Redpanda will upload metadata to the cloud storage, but the segment will not be uploaded until it reaches the `segment.bytes` size. By default, the parameter is empty. 
 * `cloud_storage_trust_file` - The public certificate that is used to validate the TLS connection to cloud storage. If this is empty, Redpanda will use your operating system's CA cert pool.
 
-
 ## Configuration parameters
 
 The list below contains all the available configuration parameters for Shadow Indexing in the `redpanda.yaml` file. 
 
 You must configure the following parameters before you use Shadow Indexing: 
-
-
 
 * `cloud_storage_enabled` - Global flag that enables Shadow Indexing. Set to true to enable Shadow Indexing. Default is false. 
 * `cloud_storage_access_key` - Cloud storage access key. Required. 
@@ -316,8 +267,6 @@ You must configure the following parameters before you use Shadow Indexing:
 
 You may want to configure these parameters: 
 
-
-
 * `cloud_storage_max_connections` - The maximum number of connections to cloud storage on a node per CPU. Remote read and remote write share the same pool of connections. This means that if a connection is being used to upload a segment, it cannot be used to download another segment. If this value is too small, some workloads might starve for connections, which results in delayed uploads and downloads. If this value is too large, Redpanda will try to upload a lot of files at the same time and might overwhelm the system. Default is 20. 
 * `cloud_storage_initial_backoff_ms` - The time, in milliseconds, that is used as an initial backoff interval in the exponential backoff algorithm that is used to handle an error. The default is 100ms. 
 * `cloud_storage_segment_upload_timeout_ms` - Timeout for segment upload. Redpanda retries the upload after the timeout. Default is 30000ms. 
@@ -327,8 +276,6 @@ You may want to configure these parameters:
 * `cloud_storage_cache_check_interval` - The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they will consume a lot of resources. Default is 30000ms. 
 
 Under normal circumstances, you should not need to configure these parameters: 
-
-
 
 * `cloud_storage_upload_ctrl_update_interval_ms` - The recompute interval for the upload controller. Default is 60000ms.
 * `cloud_storage_upload_ctrl_p_coeff` - The proportional coefficient for the upload controller. Default is -2. 
