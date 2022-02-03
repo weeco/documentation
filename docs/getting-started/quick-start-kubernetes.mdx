@@ -169,10 +169,10 @@ to verify that cert-manager is working correcly.
 2. Just to simplify the commands, create a variable to hold the latest version number:
 
     ```
-    export VERSION=$(curl -s https://api.github.com/repos/vectorizedio/redpanda/releases/latest | jq -r .tag_name)
+    export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
     ```
 
-    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/vectorizedio/redpanda/releases).   
+    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
     We're using `jq` to help us. If you don't have it installed run this command:
 
     <Tabs>
@@ -199,7 +199,7 @@ to verify that cert-manager is working correcly.
 
     ```
     kubectl apply \
-    -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
+    -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION
     ```
       </TabItem>
 
@@ -207,7 +207,7 @@ to verify that cert-manager is working correcly.
 
     ```
     noglob kubectl apply \
-    -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION
+    -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION
     ```
 
       </TabItem>
@@ -237,15 +237,15 @@ Let's try setting up a Redpanda topic to handle a stream of events from a chat a
     kubectl create ns chat-with-me
     ```
 
-2. Install a cluster from [our sample files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples), for example the single-node cluster:
+2. Install a cluster from [our sample files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples), for example the single-node cluster:
                 
     ```
     kubectl apply \
     -n chat-with-me \
-    -f https://raw.githubusercontent.com/vectorizedio/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
+    -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
     ```
 
-    You can see the resource configuration options in the [cluster_types file](https://github.com/vectorizedio/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go).
+    You can see the resource configuration options in the [cluster_types file](https://github.com/redpanda-data/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go).
 
 3. Use `rpk` to work with your Redpanda nodes, for example:
 

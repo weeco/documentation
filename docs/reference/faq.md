@@ -20,9 +20,9 @@ which we have tested with:
 
 ## Is Redpanda Fully Kafka API Compatible?
 
-We support all parts of the Kafka API, including the transactions API that we added in [release 21.8.1](https://github.com/vectorizedio/redpanda/releases/tag/v21.8.1).
+We support all parts of the Kafka API, including the transactions API that we added in [release 21.8.1](https://github.com/redpanda-data/redpanda/releases/tag/v21.8.1).
 
-If you run into any issues while working with a Kafka tool, please let us know! [File an issue](https://github.com/vectorizedio/redpanda/issues/new)
+If you run into any issues while working with a Kafka tool, please let us know! [File an issue](https://github.com/redpanda-data/redpanda/issues/new)
 
 ## Does Redpanda use Zookeeper?
 

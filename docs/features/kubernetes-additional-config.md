@@ -12,7 +12,7 @@ The [Kubernetes Quick Start Guide](/docs/getting-started/quick-start-kubernetes)
 In addition to the basic cluster specifications, you can add other parameters that are typically defined in the Redpanda [configuration file](/docs/deploy-self-hosted/configuration).
 The custom parameters are added to the `additionalConfiguration` section of the CR.
 
-For example, using the `single-node` sample from [our CR sample files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples), here we add some custom parameters in the `additionalConfiguration` section:
+For example, using the `single-node` sample from [our CR sample files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples), here we add some custom parameters in the `additionalConfiguration` section:
 
 > **_Notes_**
   - Versioning is not supported for the `additionalConfiguration` parameters

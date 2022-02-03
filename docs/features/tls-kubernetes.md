@@ -324,7 +324,7 @@ spec:
               name: _tlscert_
 ```
 
-You can find a working example with mTLS here: [https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-with-client-auth](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-with-client-auth)
+You can find a working example with mTLS here: [https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-with-client-auth](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-with-client-auth)
 
 If the client pod runs in a separate namespace within the same Kubernetes cluster, the secret needs to be copied over.
 
@@ -365,5 +365,5 @@ rpk cluster info --config rpk-config.yaml
 ```
 
 You can find more examples in our GitHub folder:
-* [https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-cert-secret](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-cert-secret)
-* [https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-issuer-with-client-auth](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-issuer-with-client-auth)
+* [https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-cert-secret](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-cert-secret)
+* [https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-issuer-with-client-auth](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/tests/e2e/create-topic-given-issuer-with-client-auth)

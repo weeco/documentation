@@ -84,7 +84,7 @@ module.exports = {
     {
       type: 'link',
       label: 'Release notes',
-      href: 'https://github.com/vectorizedio/redpanda/releases'
+      href: 'https://github.com/redpanda-data/redpanda/releases'
     },
     {
       type: 'doc',

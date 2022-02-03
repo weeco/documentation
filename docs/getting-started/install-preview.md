@@ -52,5 +52,5 @@ v21.12.1-wasm-beta1 (rev ed9a450)
 
 ## Troubleshooting
 
-If you face any errors during your installation or upgrading process, feel free to reach us in our [Slack Community](https://join.slack.com/t/redpandacommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA/) or on [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions).
+If you face any errors during your installation or upgrading process, feel free to reach us in our [Slack Community](https://join.slack.com/t/redpandacommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA/) or on [GitHub Discussions](https://github.com/redpanda-data/redpanda/discussions).
 
