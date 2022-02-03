@@ -9,7 +9,7 @@ First let's look at configuring for internal connectivity.
 
 ## Internal connectivity
 
-In this section we'll use a modified version of the [one node cluster](https://raw.githubusercontent.com/vectorizedio/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml) example with *3 nodes*.
+In this section we'll use a modified version of the [one node cluster](https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml) example with *3 nodes*.
 
 ### Custom Resource
 
@@ -120,7 +120,7 @@ Regardless of the API, the internal addresses can only be used by clients within
 
 ## External connectivity
 
-In this section, we'll use the [external connectivity](https://raw.githubusercontent.com/vectorizedio/redpanda/dev/src/go/k8s/config/samples/external_connectivity.yaml) specification as a base.
+In this section, we'll use the [external connectivity](https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/external_connectivity.yaml) specification as a base.
 
 ### Custom Resource
 Let's create a cluster that is externally accessible.

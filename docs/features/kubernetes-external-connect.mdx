@@ -110,10 +110,10 @@ We'll use Helm to install cert-manager:
 1. Just to simplify the commands, create a variable to hold the latest version number:
 
     ```
-    export VERSION=$(curl -s https://api.github.com/repos/vectorizedio/redpanda/releases/latest | jq -r .tag_name)
+    export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
     ```
 
-    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/vectorizedio/redpanda/releases).   
+    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
     We're using `jq` to help us. If you don't have it installed run this command:   
     <Tabs>
       <TabItem value="apt" label="apt" default>
@@ -138,7 +138,7 @@ We'll use Helm to install cert-manager:
     <TabItem value="bash" label="bash" default>
 
     ```
-    kubectl apply -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
+    kubectl apply -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
     helm repo add redpanda https://charts.vectorized.io/ && \
     helm repo update && \
     helm install \
@@ -153,7 +153,7 @@ We'll use Helm to install cert-manager:
     <TabItem value="zsh" label="zsh">
 
     ```
-    noglob kubectl apply -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
+    noglob kubectl apply -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
     helm repo add redpanda https://charts.vectorized.io/ && \
     helm repo update && \
     helm install \
@@ -170,7 +170,7 @@ We'll use Helm to install cert-manager:
 3. Install a cluster with external connectivity:
 
   ```
-  kubectl apply -f https://raw.githubusercontent.com/vectorizedio/redpanda/$VERSION/src/go/k8s/config/samples/external_connectivity.yaml
+  kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda/$VERSION/src/go/k8s/config/samples/external_connectivity.yaml
   ```
 
 4. Get the addresses of the brokers:

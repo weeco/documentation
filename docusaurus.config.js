@@ -9,7 +9,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'vectorizedio', // Usually your GitHub org/user name.
+  organizationName: 'redpanda-data', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
     colorMode: {
@@ -42,7 +42,7 @@ module.exports = {
           'aria-label': 'Slack',
         },
         {
-          href: 'https://github.com/vectorizedio/redpanda',
+          href: 'https://github.com/redpanda-data/redpanda',
           position: 'right',
           label: 'Github',
           className: 'header-icon header-icon-github',

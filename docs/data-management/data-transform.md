@@ -435,7 +435,7 @@ There is a global control topic for each Redpanda cluster with the name `coproce
 
 ### Source code
 
-You can view the possible export values in Redpanda’s [GitHub repository](https://github.com/vectorizedio/redpanda/blob/dev/src/js/modules/public/Coprocessor.ts).
+You can view the possible export values in Redpanda’s [GitHub repository](https://github.com/redpanda-data/redpanda/blob/dev/src/js/modules/public/Coprocessor.ts).
 
 The [API package](https://www.npmjs.com/package/@vectorizedio/wasm-api) is published under `npm`.
 

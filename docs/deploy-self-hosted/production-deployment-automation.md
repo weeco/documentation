@@ -16,7 +16,7 @@ First, install Terraform using the [Terraform Installation Tutorial](https://lea
 Then clone the `deployment-automation` repo:
 
 ```
-git clone git@github.com:vectorizedio/deployment-automation.git
+git clone git@github.com:redpanda-data/deployment-automation.git
 ```
 
 Then change into the directory:
@@ -137,7 +137,7 @@ Whether you are using [bare-metal servers](/docs/deploy-self-hosted/production-d
 First we need to clone the repo:
 
 ```
-git clone git@github.com:vectorizedio/deployment-automation.git
+git clone git@github.com:redpanda-data/deployment-automation.git
 ```
 
 Then change into the directory:
