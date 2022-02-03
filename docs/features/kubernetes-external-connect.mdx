@@ -135,7 +135,7 @@ We'll use Helm to install cert-manager:
 
 <tabs group="shell">
 
-  <tab id="bash">
+  <TabItem id="bash">
 
   ```
   kubectl apply -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
@@ -148,10 +148,9 @@ We'll use Helm to install cert-manager:
     redpanda/redpanda-operator
   ```
 
-  </tab>
+  </TabItem>
 
-  <tab id="zsh">
-
+  <TabItem id="zsh">
 
   ```
   noglob kubectl apply -k https://github.com/vectorizedio/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
@@ -164,7 +163,7 @@ We'll use Helm to install cert-manager:
     redpanda/redpanda-operator
   ```
 
-  </tab>
+  </TabItem>
 
 </tabs>
 
