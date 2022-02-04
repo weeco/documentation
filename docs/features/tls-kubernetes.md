@@ -60,7 +60,7 @@ spec:
 
 We’ll use the Kafka API to go through the TLS configuration, but you can use similar settings to set up TLS for the other APIs. For this guide, we assume external connectivity is disabled unless otherwise stated. If you want to enable external connectivity, check [this guide](/docs/features/kubernetes-external-connect) that we wrote about it. 
 
-The operator supports a single listener with TLS per API. Additionally, if you have two listeners for the same API and one of them has external connectivity enabled, the operator assumes that the other listener also has TLS enabled.
+You can have up to two listeners per API, but only one listener can have TLS enabled. You can specify which listener has TLS enabled in the cluster custom resource. 
 
 Providing an issuer or certificate to the operator is only available for the Kafka API. 
 
