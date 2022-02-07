@@ -60,10 +60,10 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   [Kind](https://kind.sigs.k8s.io) is a tool that lets you create local Kubernetes clusters using Docker.
     After you install Kind, verify that port 30001 is free on your machine before you set up a cluster or cluster creation will fail. Set up a cluster with:
 
-    ```
+```
     kind create cluster --config docs/kind-external.yaml
-    ```
-    ```
+```
+```
     kind: Cluster
     apiVersion: kind.x-k8s.io/v1alpha4
     nodes:
