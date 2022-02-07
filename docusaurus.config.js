@@ -53,7 +53,7 @@ module.exports = {
     footer: {
       style: 'dark',
       logo: {
-        alt: 'Vectorized Logo',
+        alt: 'Redpanda Logo',
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
         width: '144',
