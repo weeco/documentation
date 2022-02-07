@@ -9,7 +9,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'redpanda-data', // Usually your GitHub org/user name.
+  organizationName: 'vectorizedio', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
     colorMode: {
@@ -42,7 +42,7 @@ module.exports = {
           'aria-label': 'Slack',
         },
         {
-          href: 'https://github.com/redpanda-data/redpanda',
+          href: 'https://github.com/vectorizedio/redpanda',
           position: 'right',
           label: 'Github',
           className: 'header-icon header-icon-github',
@@ -52,11 +52,18 @@ module.exports = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'Vectorized Logo',
+        src: 'img/RedpandaLogo.svg',
+        srcDark: 'img/RedpandaLogoInverted.svg',
+        width: '144',
+        height: '24'
+      },
       links: [
         {
           title: 'Product',
           items: [
-            { label: 'Redpanda', to: 'https://redpanda.com/redpanda/' },
+            { label: 'Platform', to: 'https://redpanda.com/redpanda/' },
             { label: 'Cloud', to: 'https://redpanda.com/cloud' },
             { label: 'Documentation', to: '/' },
             { label: 'Blog', to: 'https://redpanda.com/blog' },
@@ -73,15 +80,8 @@ module.exports = {
             { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy' },
           ],
         },
-        {
-          title: 'Connect',
-          items: [
-            { label: 'Contact', to: 'https://redpanda.com/contact' },
-            { label: 'Feedback', to: 'https://redpanda.com/feedback' },
-            { label: 'h4ck::73h::pl4n37 scholarship', to: 'https://redpanda.com/scholarship' },
-          ],
-        },
       ],
+      copyright: `<p style="font-size:10px;margin-bottom:0px;">© 2022 Redpanda Data Inc. All Rights Reserved.</p>`,
     },
     prism: {
       theme: lightCodeTheme,
@@ -107,19 +107,4 @@ module.exports = {
       },
     ],
   ],
-  plugins: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        // ... Your options.
-        // `hashed` is recommended as long-term-cache of index file is possible.
-        hashed: true,
-        // For Docs using Chinese, The `language` is recommended to set to:
-        // ```
-        // language: ["en", "zh"],
-        // ```
-        // When applying `zh` in language, please install `nodejieba` in your project.
-      },
-    ],
-  ]
 };
