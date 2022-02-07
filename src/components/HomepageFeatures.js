@@ -26,7 +26,17 @@ const FeatureList = [
     ),
     url: '/docs/deploy-self-hosted/production-deployment',
   },
-  ];
+  {
+    title: 'Deeper dive into Redpanda',
+    Svg: require('../../static/img/Redpanda Transporter.svg').default,
+    description: (
+      <>
+        When you want to use the more advanced Redpanda features...
+      </>
+    ),
+    url: '/docs/features/',
+  },
+];
 
 function Feature({Svg, title, description, url}) {
   return (
