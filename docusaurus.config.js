@@ -9,7 +9,7 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'vectorizedio', // Usually your GitHub org/user name.
+  organizationName: 'redpanda-data', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
     colorMode: {
@@ -42,7 +42,7 @@ module.exports = {
           'aria-label': 'Slack',
         },
         {
-          href: 'https://github.com/vectorizedio/redpanda',
+          href: 'https://github.com/redpanda-data/redpanda',
           position: 'right',
           label: 'Github',
           className: 'header-icon header-icon-github',
@@ -107,4 +107,19 @@ module.exports = {
       },
     ],
   ],
+  plugins: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // ... Your options.
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        hashed: true,
+        // For Docs using Chinese, The `language` is recommended to set to:
+        // ```
+        // language: ["en", "zh"],
+        // ```
+        // When applying `zh` in language, please install `nodejieba` in your project.
+      },
+    ],
+  ]
 };

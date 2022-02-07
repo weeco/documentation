@@ -15,7 +15,7 @@ All concepts described here are compatible with Kafka® and its client libraries
 
 - A running Redpanda node.
 
-You can follow our [Getting Started guides](/) to learn how to get started with Redpanda.
+You can follow our [Getting Started guides](https://vectorized.io/docs/) to learn how to get started with Redpanda.
 
 - TLS certificates.
 
@@ -29,9 +29,11 @@ bash <(curl -s https://gist.githubusercontent.com/0x5d/56422a0c447e58d8ccbfa0ce1
 
 TLS encrypts network traffic between a client and a server, but does not protect against access to a server. With TLS alone (not mTLS), you need to use ACLs to gate access to your brokers.
 
-Mutual TLS, or 2-way TLS, is an authentication method in which both the server and the client verify each other's private keys. A thorough description of mTLS can be read [here](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
+mTLS, or 2-way TLS, is an authentication method in which the client and the server must both present certificates. This way both can decide whether the other party can be trusted by ensuring they are who they claim to be.
 
-If you're on Kubernetes, be sure to set up the [connectivity in the Kubernetes network](/docs/features/kubernetes-connectivity/).
+Cloudfare made a very good description of what mTLS is. If you want [you can check their website for more info on that](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
+
+If you're on Kubernetes, [we wrote a TLS guide exclusive for it](https://vectorized.io/docs/tls-kubernetes/).
 
 To enable TLS, set the `require_client_auth` field to `true` in the required listener's configuration. For example, to enable mTLS for the "external" API listener:
 
@@ -106,11 +108,11 @@ redpanda:
 ```
 
 <Tabs>
-  <TabItem value="localRedPanda" label="Local Redpanda" default>
+  <TabItem value="local" label="Local Redpanda" default>
 You can modify the configuration file at `/etc/redpanda/redpanda.yaml`. After you modify the file, restart Redpanda for your changes to take effect.
   </TabItem>
 
-  <TabItem value="dockerContainer" label="Docker Container">
+  <TabItem value="docker" label="Docker Container">  To change these configurations you can add this part in your docker-compose file:
 
 ```bash 
 #start of config
@@ -196,7 +198,6 @@ schema_registry: {}
   </TabItem>
 
   <TabItem value="kubernetes" label="Kubernetes">
-
 Change your configuration file in the YAML for the cluster. If you are using our [external-connectivity sample](https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/external_connectivity.yaml), specify the `redpanda.enable_sasl` and `superuser` values in the cluster spec YAML file. For example: 
 
 ```yaml
@@ -260,7 +261,7 @@ Since no ACLs exist at the start, you need a super user to bypass the requiremen
 You can create users and set passwords by running the following command:
 
 <Tabs>
-  <TabItem value="localRedpanda" label="Local Redpanda" default>
+  <TabItem value="local" label="Local Redpanda" default>
 
 ```bash
 rpk acl user create admin \
@@ -286,7 +287,7 @@ kubectl exec -c redpanda external-connectivity-0 -- rpk acl user create admin \
 You can use the newly created user to interact with Redpanda with the Kafka protocol:
 
 <Tabs>
-  <TabItem value="localRedpanda" label="Local Redpanda" default>
+  <TabItem value="local" label="Local Redpanda" default>
 
 ```bash
 rpk topic describe test-topic \
