@@ -52,11 +52,18 @@ module.exports = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'Redpanda Logo',
+        src: 'img/RedpandaLogo.svg',
+        srcDark: 'img/RedpandaLogoInverted.svg',
+        width: '144',
+        height: '24'
+      },
       links: [
         {
           title: 'Product',
           items: [
-            { label: 'Redpanda', to: 'https://redpanda.com/redpanda/' },
+            { label: 'Platform', to: 'https://redpanda.com/redpanda/' },
             { label: 'Cloud', to: 'https://redpanda.com/cloud' },
             { label: 'Documentation', to: '/' },
             { label: 'Blog', to: 'https://redpanda.com/blog' },
@@ -73,15 +80,8 @@ module.exports = {
             { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy' },
           ],
         },
-        {
-          title: 'Connect',
-          items: [
-            { label: 'Contact', to: 'https://redpanda.com/contact' },
-            { label: 'Feedback', to: 'https://redpanda.com/feedback' },
-            { label: 'h4ck::73h::pl4n37 scholarship', to: 'https://redpanda.com/scholarship' },
-          ],
-        },
       ],
+      copyright: `<p style="font-size:10px;margin-bottom:0px;">© 2022 Redpanda Data Inc. All Rights Reserved.</p>`,
     },
     prism: {
       theme: lightCodeTheme,
