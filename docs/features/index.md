@@ -2,9 +2,9 @@
 title: 'Features guides'
 ---
 
-# Dive in into Redpanda features
+# Dive into Redpanda features
 
-Choose which feature you're looking for:
+Choose the feature you're looking for:
 
 - [Authorization & authentication](./acls) 
 - [Custom configuration](/docs/deploy-self-hosted/configuration) 
