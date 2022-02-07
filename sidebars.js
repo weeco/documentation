@@ -29,7 +29,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Features guides',
+      label: 'Feature guides',
       collapsible: true,
       collapsed: true,
       link: { type: 'doc', id: 'features/index'},
@@ -59,7 +59,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Data Management',
+      label: 'Data management',
       collapsible: true,
       collapsed: true,
       items: [

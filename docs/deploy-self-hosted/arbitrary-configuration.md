@@ -1,5 +1,5 @@
 ---
-title: Arbtrary configuration parameters for the Redpanda Operator
+title: Arbitrary configuration parameters for the Redpanda operator
 order: 5
 sidebar_position: 0
 ---

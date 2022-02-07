@@ -14,7 +14,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title"><Translate>{siteConfig.title}</Translate></h1>
         <p className="hero__subtitle">
-          <Translate>A modern streaming platform for mission critical workloads</Translate>
+          <Translate>A modern streaming platform for mission-critical workloads</Translate>
         </p>
         <div className={styles.buttons}>
           <Link

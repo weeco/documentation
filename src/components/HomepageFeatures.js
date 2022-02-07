@@ -21,17 +21,17 @@ const FeatureList = [
     href: `/docs/deploy-self-hosted/production-deployment`,
     description: (
       <>
-        After you see its power, put Redpanda to the real test in production.
+        After you see its power, put Redpanda to the test in production.
       </>
     ),
     url: '/docs/deploy-self-hosted/production-deployment',
   },
   {
-    title: 'Deeper dive into Redpanda',
+    title: 'Dive deeper into Redpanda',
     Svg: require('../../static/img/Redpanda Transporter.svg').default,
     description: (
       <>
-        When you want to use the more advanced Redpanda features...
+        Use the more advanced Redpanda features...
       </>
     ),
     url: '/docs/features/',
