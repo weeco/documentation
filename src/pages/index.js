@@ -16,6 +16,7 @@ function HomepageHeader() {
         <p className="hero__subtitle">
           <Translate>A modern streaming platform for mission critical workloads</Translate>
         </p>
+      </div>
     </header>
   );
 }
