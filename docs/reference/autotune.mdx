@@ -33,7 +33,11 @@ to its use of sparse file system support to flush concurrent, non-overlapping pa
 Although other file systems might work, they may have limitations that prevent
 you from getting the most value out of your hardware.
 
-> **_Note:_** We recommend not using networked block devices because of their inherent performance limitations.
+:::note
+
+We recommend not using network-blocked devices because of their inherent performance limitations.
+
+:::
 
 For multi-disk setups we recommend using Raid-0 with XFS on
 top. Future releases will manage multi-disk virtualization without user
