@@ -279,6 +279,25 @@ Here are some sample commands to produce and consume streams:
 
     Type text into the topic and press Ctrl + D to separate between messages.
 
+   Press Ctrl + C to exit the produce command.
+
+1. Consume (or read) the messages in the topic:
+
+    ```bash
+    rpk topic consume twitch_chat --brokers=0.local.rp:30001
+    ```
+
+    Each message is shown with its metadata, like this:
+
+    ```bash
+    {
+    "message": "How do you stream with Redpanda?\n",
+    "partition": 0,
+    "offset": 1,
+    "timestamp": "2021-02-10T15:52:35.251+02:00"
+    }
+    ```
+
 ## Next steps
 
 - Check out our in-depth explanation of how to [connect external clients](/docs/features/kubernetes-connectivity) to a Redpanda Kubernetes deployment.
