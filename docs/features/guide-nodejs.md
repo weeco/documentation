@@ -10,7 +10,7 @@ your OS [here](https://nodejs.org/en/download/package-manager/).
 As you may have heard by now, Redpanda is Kafka® API-compatible, which means
 that although Redpanda is relatively new, you can leverage the countless client
 libraries created for Kafka® (if you find something that is not supported,
-reach out to our team on our [slack](https://vectorized.io/slack)).
+reach out to our team on our [slack](https://redpanda.com/slack)).
 In this case we will use [kafkajs](https://kafka.js.org/).
 
 ```bash
