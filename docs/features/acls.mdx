@@ -95,21 +95,21 @@ Access Control Lists (ACLs) allow you to provision users and provide each user f
 
 ### Enabling SASL/SCRAM
 
-To enable SASL/SCRAM, set `redpanda.enable_sasl` to `true` in the Redpanda configuration file and specify at least one "superuser" that will be used to bootstrap permissions for other users in the cluster.
+To enable SASL/SCRAM, set `redpanda.enable_sasl` to `true` in the Redpanda configuration file and specify at least one "super user" that will be used to bootstrap permissions for other users in the cluster.
 
 Your config should look something like this:
 
 ```yaml
 redpanda:
   enable_sasl: true
-  superusers:
+  superUsers:
   - admin
   # The rest of the config...
 ```
 
 <Tabs>
   <TabItem value="local" label="Local Redpanda" default>
-You can modify the configuration file at `/etc/redpanda/redpanda.yaml`. After you modify the file, restart Redpanda for your changes to take effect.
+You can modify the configuration file at `etc/redpanda/redpanda.yaml`. After you modify the file, restart Redpanda for your changes to take effect.
   </TabItem>
 
   <TabItem value="docker" label="Docker Container">  To change these configurations you can add this part in your docker-compose file:
@@ -121,7 +121,7 @@ You can modify the configuration file at `/etc/redpanda/redpanda.yaml`. After yo
     - redpanda
     - start
     - --set redpanda.enable_sasl=true
-    - --set redpanda.superusers=["admin"]
+    - --set redpanda.superUsers=["admin"]
 
 #rest of config
 ```
@@ -172,7 +172,7 @@ redpanda:
     address: 0.0.0.0
     port: 33145
   seed_servers: []
-  superusers:
+  superUsers:
   - admin
 rpk:
   coredump_dir: /var/lib/redpanda/coredump
@@ -198,7 +198,7 @@ schema_registry: {}
   </TabItem>
 
   <TabItem value="kubernetes" label="Kubernetes">
-Change your configuration file in the YAML for the cluster. If you are using our [external-connectivity sample](https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/external_connectivity.yaml), specify the `redpanda.enable_sasl` and `superuser` values in the cluster spec YAML file. For example: 
+Change your configuration file in the YAML for the cluster. If you are using our [external-connectivity sample](https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/external_connectivity.yaml), specify the `redpanda.enable_sasl` and `superUsers` values in the cluster spec YAML file. For example: 
 
 ```yaml
 apiVersion: redpanda.vectorized.io/v1alpha1
@@ -210,7 +210,7 @@ spec:
   version: "latest"
   replicas: 3
   enableSasl: true
-  superusers:
+  superUsers:
   - admin
   resources:
     requests:
@@ -248,7 +248,7 @@ kubectl get clusters external-connectivity -o=jsonpath='{.spec}'
 
 #### Users
 
-The `superusers` section in your `redpanda.yaml` is the user that you will use to bootstrap other users and ACLs. 
+The `superUsers` section in your `redpanda.yaml` is the user that you will use to bootstrap other users and ACLs. 
 
 For example, if you used super user `admin`, Redpanda _allows_ the `admin` user to do anything, but Redpanda does _not_ create the `admin` user. You must now create this super user. 
 
