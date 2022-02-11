@@ -265,7 +265,7 @@ You can create users and set passwords by running the following command:
 
 ```bash
 rpk acl user create admin \
---p <password> \
+-p <password> \
 --api-urls localhost:9644
 ```
 
@@ -274,7 +274,7 @@ rpk acl user create admin \
 
 ```bash
 kubectl exec -c redpanda external-connectivity-0 -- rpk acl user create admin \
---p <password> \
+-p <password> \
 --api-urls localhost:9644 \
 --brokers external-connectivity-0.external-connectivity.default.svc.cluster.local:9644
 ```
@@ -293,6 +293,7 @@ You can use the newly created user to interact with Redpanda with the Kafka prot
 rpk topic describe test-topic \
 --user admin \
 --password <password> \
+--sasl-mechanism SCRAM-SHA-256 \
 --brokers localhost:9092
 ```
 
@@ -303,6 +304,7 @@ rpk topic describe test-topic \
 kubectl exec -c redpanda external-connectivity-0 -- rpk topic describe test-topic \
 --user admin \
 --password <password> \
+--sasl-mechanism SCRAM-SHA-256 \
 --brokers external-connectivity-0.external-connectivity.default.svc.cluster.local:9092
 ```
 
