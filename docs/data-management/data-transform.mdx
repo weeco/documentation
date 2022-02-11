@@ -19,7 +19,11 @@ You can jump-start your data transformation development with `rpk`. Redpanda pro
 
 Under the hood, Redpanda reads from an immutable Apache Kafka® topic, applies a data transformation process, and then produces another immutable Kafka topic. That way, the data is transformed into a new topic and we preserve the original topic without any data loss.
 
-> **_Note_** - The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
+:::note
+
+The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
+
+:::
 
 ## Prerequisites
 Verify the following before you configure data transformations and start the Wasm engine:
