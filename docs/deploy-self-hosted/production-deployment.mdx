@@ -1,6 +1,5 @@
 ---
 title: Deploying Redpanda for production
-sidebar_position: 2
 ---
 
 # Deploying for production
@@ -66,22 +65,24 @@ on each node:
 sudo rpk redpanda tune all
 ```
 
-> **_Optional: Benchmark your SSD_**
->
-> On taller machines we recommend benchmarking your SSD. This can be done
-> with `rpk iotune`. You only need to run this once. For reference, a decent
-> local NVMe SSD should yield around 1GB/s sustained writes.
-> `rpk iotune` will capture SSD wear and tear and give accurate measurements
-> of what your hardware is actually capable of delivering. It is recommended
-> you run this before benchmarking.
->
-> If you are on AWS, GCP or Azure, creating a new instance and upgrading to
-> an image with a recent Linux Kernel version is often the easiest way to
-> work around bad devices.
->
-> ```
-> sudo rpk iotune # takes 10mins
-> ```
+:::note Optional: Benchmark your SSD
+
+On taller machines we recommend benchmarking your SSD. This can be done
+with `rpk iotune`. You only need to run this once. For reference, a decent
+local NVMe SSD should yield around 1GB/s sustained writes.
+`rpk iotune` will capture SSD wear and tear and give accurate measurements
+of what your hardware is actually capable of delivering. It is recommended
+you run this before benchmarking.
+
+If you are on AWS, GCP or Azure, creating a new instance and upgrading to
+an image with a recent Linux Kernel version is often the easiest way to
+work around bad devices.
+
+```
+sudo rpk iotune # takes 10mins
+```
+
+:::
 
 ### Step 3: Configure and start the root node
 
