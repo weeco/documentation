@@ -3,7 +3,7 @@ title: MacOS
 ---
 # MacOS Quick Start Guide
 
-Redpanda is a modern [streaming platform](https://vectorized.io/blog/intelligent-data-api/) for mission critical workloads.
+Redpanda is a modern [streaming platform](https://redpanda.com/blog/intelligent-data-api/) for mission critical workloads.
 With Redpanda you can get up and running with streaming quickly
 and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem).
 
@@ -21,7 +21,7 @@ If you want to customize the containers, you can also set up your own [Redpanda 
 
 You can install `rpk` on MacOS either with [Homebrew](https://brew.sh/) or you can just download the binary.
 
-- To install `rpk` with Homebrew, run: `brew install vectorizedio/tap/redpanda`
+- To install `rpk` with Homebrew, run: `brew install redpanda-data/tap/redpanda`
 - To download the `rpk` binary:
 
     1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip) with: `curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip`
