@@ -4,7 +4,7 @@ title: Docker
 
 # Docker Quick Start Guide
 
-Redpanda is a modern [streaming platform](https://vectorized.io/blog/intelligent-data-api/) for mission critical workloads.
+Redpanda is a modern [streaming platform](https://redpanda.com/blog/intelligent-data-api/) for mission critical workloads.
 With Redpanda you can get up and running with streaming quickly
 and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem).
 
@@ -15,17 +15,23 @@ For production or benchmarking, setup a [production deployment](/docs/deploy-sel
 
 To get a cluster ready for streaming, either run a single docker container with Redpanda running or a cluster of 3 containers.
 
-> **_Note_** - You can also use [`rpk container`](/docs/features/guide-rpk-container) to run Redpanda in containers
+:::note
+
+ - You can also use [`rpk container`](/docs/features/guide-rpk-container) to run Redpanda in containers
     without having to interact with Docker at all.
+
+:::
 
 ### Single command for a 1-node cluster
 
 With a 1-node cluster you can test out a simple implementation of Redpanda.
 
-**_Notes_**:
+:::note Notes
 
 - `--overprovisioned` is used to accommodate docker resource limitations.
 - `--pull=always` makes sure that you are always working with the latest version.
+
+:::
 
 ```bash
 docker run -d --pull=always --name=redpanda-1 --rm \
