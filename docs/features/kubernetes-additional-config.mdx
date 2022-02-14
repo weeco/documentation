@@ -14,10 +14,13 @@ The custom parameters are added to the `additionalConfiguration` section of the 
 
 For example, using the `single-node` sample from [our CR sample files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples), here we add some custom parameters in the `additionalConfiguration` section:
 
-> **_Notes_**
+:::note Notes
+
   - Versioning is not supported for the `additionalConfiguration` parameters
   - Unsupported key names cause Redpanda to fail on start
   - When you update the parameters you must manually restart the Redpanda pods for the changes to take effect.
+
+:::
 
 ## CR with additional parameters
 
