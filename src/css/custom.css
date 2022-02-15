@@ -75,6 +75,19 @@
   width: 100%;
 }
 
+.container code {
+  max-width: 100%;
+}
+
+code > span > span {
+    white-space: pre-wrap;
+}
+
+.container code > span {
+  display: block;
+}
+
+
 html[data-theme='dark'] {
   --ifm-toc-border-color: var(--v-black);
 }
