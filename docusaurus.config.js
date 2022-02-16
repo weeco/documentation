@@ -23,7 +23,8 @@ module.exports = {
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
         width: '144',
-        height: '24'
+        height: '24',
+        href: 'https://redpanda.com'
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
@@ -57,7 +58,8 @@ module.exports = {
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
         width: '144',
-        height: '24'
+        height: '24',
+        href: 'https://redpanda.com'
       },
       links: [
         {

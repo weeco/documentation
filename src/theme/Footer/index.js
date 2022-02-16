@@ -139,9 +139,8 @@
                  <div className="col footer__col logo__col">
                  {logo && (logo.src || logo.srcDark) && (
                  <div className="margin-bottom--sm">
-                   <a href='https://redpanda.com/'>
                    {logo.href ? (
-                     <Link href={logo.href} className={styles.footerLogoLink}>
+                     <Link href={logo.href}>
                        <FooterLogo
                          alt={logo.alt}
                          sources={sources}
@@ -151,7 +150,6 @@
                      ) : (
                        <FooterLogo alt={logo.alt} sources={sources} />
                      )}
-                     </a>
                  </div>
                  )}
                  {copyright ? (
