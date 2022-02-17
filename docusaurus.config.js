@@ -31,7 +31,6 @@ module.exports = {
         // { type: 'localeDropdown',position: 'right'},
         { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right' },
         { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right' },
-        { href: '/', label: 'Docs', position: 'right' },
         { href: 'https://redpanda.com/team', label: 'Team', position: 'right' },
         { href: 'https://redpanda.com/careers', label: 'Careers', position: 'right' },        
         { href: 'https://redpanda.com/blog', label: 'Blog', position: 'right' },

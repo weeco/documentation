@@ -13,6 +13,11 @@ module.exports = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
     {
+      type: 'link',
+      label: 'Docs home',
+      href: 'https://docs.redpanda.com/',
+    },
+    {
       type: 'category',
       label: 'Getting started',
       collapsible: true,
