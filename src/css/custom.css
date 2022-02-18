@@ -92,6 +92,13 @@ html[data-theme='dark'] {
   --ifm-toc-border-color: var(--v-black);
 }
 
+div .admonition-content > p > a {
+  color: #f15d61 !important;
+}
+
+div .admonition-content > ul > li > a {
+  color: #f15d61 !important;
+}
 
 .logo__col {
   display: flex;

@@ -140,7 +140,7 @@
                  {logo && (logo.src || logo.srcDark) && (
                  <div className="margin-bottom--sm">
                    {logo.href ? (
-                     <Link href={logo.href}>
+                     <Link href={logo.href} target="_self">
                        <FooterLogo
                          alt={logo.alt}
                          sources={sources}
