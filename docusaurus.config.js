@@ -42,13 +42,6 @@ module.exports = {
           className: 'header-icon header-icon-slack',
           'aria-label': 'Slack',
         },
-        {
-          href: 'https://github.com/redpanda-data/redpanda',
-          position: 'right',
-          label: 'Github',
-          className: 'header-icon header-icon-github',
-          'aria-label': 'GitHub repository',
-        },
       ],
     },
     footer: {
