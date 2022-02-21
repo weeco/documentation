@@ -267,7 +267,7 @@ code {
   background: var(--v-white);
 }
 .container code span:not(.comment) {
-  color: var(--v-black) !important;
+  
 }
 html[data-theme='dark'] .container code {
   background: var(--ifm-navbar-background-color);

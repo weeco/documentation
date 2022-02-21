@@ -19,7 +19,7 @@ You now have a 3-node cluster running Redpanda!
 
 The command output shows the addresses of the cluster nodes:
 
-```
+```bash
 $ rpk container start -n 3
 Starting cluster
 Waiting for the cluster to be ready...
@@ -43,14 +43,14 @@ Additionally, all of the `rpk topic` subcommands will detect the local cluster a
 
 For example, you can run `rpk topic create` and it will work!
 
-```
+```bash
 $ rpk topic create -p 6 -r 3 new-topic --brokers <broker1_address>,<broker2_address>...
 Created topic 'new-topic'. Partitions: 6, replicas: 3, cleanup policy: 'delete'
 ```
 
 You can also stop the cluster using:
 
-```
+```bash
 rpk container stop
 ```
 

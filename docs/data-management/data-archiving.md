@@ -14,7 +14,10 @@ After you configure data archiving, your data is uploaded to cloud storage.
 In the event of a data center failure, data corruption, or cluster migration,
 your data is safe in the cloud for you to recover to your cluster.
 
- **_Note:_** Archiving to Amazon S3 and Google Cloud Storage is supported.
+ 
+:::note
+Archiving to Amazon S3 and Google Cloud Storage is supported.
+:::
 
 ## How it works
 
@@ -79,7 +82,9 @@ We recommend that you keep topic manifests in order to recover the corresponding
         - Set the custom API endpoint (`cloud_storage_api_endpoint`) and port (`cloud_storage_api_endpoint_port`) and either:
           - Require TLS - Set `cloud_storage_disable_tls` to `disabled` to disable TLS.
 
-    > **_Note:_** The secret and access keys are stored in plain text in configuration files.
+    :::note
+    The secret and access keys are stored in plain text in configuration files.
+    :::
 
 2. Configure these parameters in the Redpanda configuration:
 

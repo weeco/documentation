@@ -54,14 +54,14 @@ sudo -E bash && sudo apt install redpanda -y
 By default Redpanda is installed in **development** mode, which turns off hardware optimization.
 To enable hardware optimization, set Redpanda to run in **production** mode:
 
-```
+```bash
 sudo rpk redpanda mode production
 ```
 
 We then need to tune the hardware, which can be done by running the following
 on each node:
 
-```
+```bash
 sudo rpk redpanda tune all
 ```
 
@@ -78,7 +78,7 @@ If you are on AWS, GCP or Azure, creating a new instance and upgrading to
 an image with a recent Linux Kernel version is often the easiest way to
 work around bad devices.
 
-```
+```bash
 sudo rpk iotune # takes 10mins
 ```
 
@@ -92,7 +92,7 @@ every other one will join it, forming a cluster along the way.
 
 For the root node we’ll choose 0 as its ID. `--self` tells the node which interface address to bind to. Usually you want that to be its private IP.
 
-```
+```bash
 sudo rpk config bootstrap --id 0 --self <ip> && \
 sudo systemctl start redpanda-tuner redpanda
 ```
@@ -102,7 +102,7 @@ sudo systemctl start redpanda-tuner redpanda
 For every other node, we just have to choose a unique integer id for it and let
 it know where to reach the root node.
 
-```
+```bash
 sudo rpk config bootstrap --id <unique id> \
 --self <private ip>                        \
 --ips <root node ip> &&                    \
@@ -113,12 +113,12 @@ sudo systemctl start redpanda-tuner redpanda
 
 You can verify that the cluster is up and running by checking the logs:
 
-```
+```bash
 journalctl -u redpanda
 ```
 
 You should also be able to create a topic with the following command:
 
-```
+```bash
 rpk topic create panda
 ```

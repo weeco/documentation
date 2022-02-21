@@ -47,7 +47,11 @@ Make sure you also have these common tools installed:
 To run locally
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/) v0.12 or above
 
-**_Note_** Make sure that you have kind configured in your path. [This reference in the GO documentation](https://golang.org/doc/code#GOPATH) can help you configure the path.
+:::note
+
+Make sure that you have kind configured in your path. [This reference in the GO documentation](https://golang.org/doc/code#GOPATH) can help you configure the path.
+
+:::
 
 ### Create a Kubernetes cluster
 
@@ -60,17 +64,17 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   [Kind](https://kind.sigs.k8s.io) is a tool that lets you create local Kubernetes clusters using Docker.
     After you install Kind, verify that port 30001 is free on your machine before you set up a cluster or cluster creation will fail. Set up a cluster with:
 
+```bash
+kind create cluster --config docs/kind-external.yaml
 ```
-    kind create cluster --config docs/kind-external.yaml
-```
-```
-    kind: Cluster
-    apiVersion: kind.x-k8s.io/v1alpha4
-    nodes:
-    - role: control-plane
-        extraPortMappings:
-        - containerPort: 30001
-          hostPort: 30001
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+    extraPortMappings:
+    - containerPort: 30001
+      hostPort: 30001
 ```
 
 
@@ -82,7 +86,7 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   When you finish, you'll have `eksctl` installed so that you can create and delete clusters in EKS.
   Then, create an EKS cluster with:
 
-  ```
+  ```bash
   eksctl create cluster \
   --name redpanda \
   --nodegroup-name standard-workers \
@@ -101,11 +105,15 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
   First complete the "Before You Begin" steps describe in [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
   Then, create a cluster with:
 
-  ```
+  ```bash
   gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=1
   ```
 
-  **_Note_** - You may need to add a `--region` or `--zone` to this command.
+:::note
+    
+  You may need to add a `--region` or `--zone` to this command.
+
+:::
 
   </TabItem>
 
@@ -120,7 +128,7 @@ You can either create a Kubernetes cluster on your local machine or on a cloud p
 
   Then you can create a cluster for your Redpanda deployment:
 
-  ```
+  ```bash
   doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
   ```
 
@@ -149,7 +157,7 @@ The Redpanda operator requires cert-manager to create certificates for TLS commu
 You can [install cert-manager with a CRD](https://cert-manager.io/docs/installation/kubernetes/#installing-with-helm),
 but here's the command to install using helm:
 
-```
+```bash
 helm repo add jetstack https://charts.jetstack.io && \
 helm repo update && \
 helm install \
@@ -167,62 +175,70 @@ to verify that cert-manager is working correcly.
 
 1. Using Helm, add the Redpanda chart repository and update it:
 
-    ```
+    ```bash
     helm repo add redpanda https://charts.vectorized.io/ && \
     helm repo update
     ```
 
 2. Just to simplify the commands, create a variable to hold the latest version number:
 
-    ```
+    ```bash
     export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
     ```
 
-    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
+  :::note
+    You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
     We're using `jq` to help us. If you don't have it installed run this command:
+  :::
 
-    <Tabs>
-      <TabItem value="apt" label="apt" default>
+    <Tabs groupId="shell">
+
+    <TabItem value="apt" label="apt" default>
 
     ```bash
     sudo apt-get update && \
     sudo apt-get install jq
     ```
-      </TabItem>
-      <TabItem value="brew" label="brew">
+    
+    </TabItem>
+    
+    <TabItem value="zhs" label="zsh">
 
     ```bash
-    brew install jq
+    brew install jq    
     ```
-      </TabItem>
-    </Tabs>
+
+    </TabItem>
+
+  </Tabs>
 
 3. Install the Redpanda operator CRD:
 
-    <Tabs groupId="shell">
+  <Tabs groupId="shell">
 
-      <TabItem value="bash" label="bash" default>
+    <TabItem value="bash" label="bash" default>
 
-    ```
+    ```bash
     kubectl apply \
     -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION
     ```
-      </TabItem>
+    
+    </TabItem>
+    
+    <TabItem value="zhs" label="zsh">
 
-      <TabItem value="zhs" label="zsh">
-
-    ```
+    ```bash
     noglob kubectl apply \
     -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION
     ```
 
-      </TabItem>
+    </TabItem>
 
-    </Tabs>
+  </Tabs>
 
 4. Install the Redpanda operator on your Kubernetes cluster with:
 
-    ```
+    ```bash
     helm install \
     redpanda-operator \
     redpanda/redpanda-operator \
