@@ -26,7 +26,7 @@ Create a 3-node cluster on the platform of your choice:
   When you finish, you'll have `eksctl` installed so that you can create and delete clusters in EKS.
   Then, create an EKS cluster with:
 
-  ```
+  ```bash
   eksctl create cluster \
   --name redpanda \
   --nodegroup-name standard-workers \
@@ -45,12 +45,14 @@ Create a 3-node cluster on the platform of your choice:
   First complete the "Before You Begin" steps described in [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
   Then, create a cluster with:
 
-  ```
+  ```bash
   gcloud container clusters create redpanda --machine-type e2-standard-4 --cluster-version 1.19 && \
   gcloud container clusters get-credentials redpanda
   ```
 
-  **_Note_** - You may need to add a `--region`, `--zone`, or `--project` to this command.
+:::note
+- You may need to add a `--region`, `--zone`, or `--project` to this command.
+:::
 
   </TabItem>
   <TabItem value="digitalOceanPlatform" label="Digital Ocean">

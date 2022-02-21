@@ -31,14 +31,14 @@ the desired setup by passing the --well-known-io flag to rpk start with the
 cloud vendor, VM type and storage type surrounded by quotes and separated by
 colons:
 
-```
+```bash
 rpk start --well-known-io 'aws:i3.xlarge:default'
 ```
 
 It can also be specified in the redpanda YAML configuration file, under the rpk
 object:
 
-```
+```yaml
 rpk:
   well_known_io: 'gcp:c2-standard-16:nvme'
 ```

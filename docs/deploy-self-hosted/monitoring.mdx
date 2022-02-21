@@ -8,14 +8,14 @@ title: Monitoring
 Redpanda exports Prometheus metrics on `<node ip>:9644/metrics`. If you have an
 existing Prometheus instance, you can generate the relevant configuration using
 
-```
+```bash
 rpk generate prometheus-config
 ```
 
 The command will output a YAML object you can add to the `scrape_configs` list
 in your Prometheus config file:
 
-```
+```yaml
 - job_name: redpanda-node
   static_configs:
   - targets:
@@ -33,7 +33,7 @@ addresses.
 ## Grafana Configuration
 
 You can generate a comprehensive Grafana dashboard with
-```
+```bash
 rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url>
 ```
 
@@ -48,7 +48,7 @@ p99, throughput, and errors segmentated by type.
 
 Simply pipe the commmand's output to a file and import it in Grafana.
 
-```
+```bash
 rpk generate grafana-dashboard \
   --datasource prometheus \
   --metrics-endpoint 172.32.89.236:9644/metrics > redpanda-dashboard.json
@@ -64,7 +64,7 @@ possible issues, please set the `organization` (your company's domain) and
 `cluster_id` (usually your team's or project's name) configuration fields. For
 example:
 
-```
+```bash
 rpk config set organization 'vectorized.io'
 rpk config set cluster_id 'us-west-2'
 ```
@@ -72,7 +72,7 @@ rpk config set cluster_id 'us-west-2'
 To opt out of all metrics reporting, set `rpk.enable_usage_stats` to false via
 `rpk`
 
-```
+```bash
 rpk config set rpk.enable_usage_stats false
 ```
 

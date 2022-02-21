@@ -294,21 +294,21 @@ After that we can run our `rpk` commands.
 
 If we only have TLS enabled, we just need to provide the CA: 
 
-```
+```bash
 kubectl exec cluster-sample-tls-0 -- \
 rpk cluster info  --brokers $BROKERS --tls-truststore=/etc/tls/certs/ca.crt 
 ```
 
 For mTLS, we need to provide both the CA and the key-pair:
 
-```
+```bash
 kubectl exec cluster-sample-tls-0 -- \
 rpk cluster info  --brokers $BROKERS --tls-truststore=/etc/tls/certs/ca.crt --tls-key=/etc/tls/certs/tls.key --tls-cert=/etc/tls/certs/tls.crt
 ```
 
 Typically, a client runs in a separate pod. If that pod is within the same Kubernetes cluster and namespace, the client pod can directly mount the certificate secrets:
 
-```
+```yaml
 spec:
   template:
     spec:
@@ -330,13 +330,13 @@ If the client pod runs in a separate namespace within the same Kubernetes cluste
 
 Similarly, if the client is on a separate network, but accessible through an external IP address or name (see [Kubernetes Connectivity guide](/docs/features/kubernetes-connectivity)) the secrets need to become available by copying over the resource or exporting the CA `ca.crt` and key-pair `tls.crt` and `tls.key` as files. For example, to retrieve tls.crt:
 
-```
+```bash
 kubectl get secret |cluster|-user-client -o go-template='{{index .data "ca.crt"}}' | base64 -d - > tls.crt
 ```
 
 Alternatively, you can retrieve the whole resource:
 
-```
+```bash
 kubectl get secret |cluster|-_user-client_ --namespace=default -o yaml
 ```
 
@@ -345,7 +345,7 @@ Once the secrets are available as files, it is possible to use `rpk` to connect 
 For convenience, let's create a file and store our values there. We can pass this whole file as an argument for `rpk` instead of having to retype it all over again as flags. Let's name it `rpk-config.yaml`:
 
 
-```
+```yaml
 rpk:
   kafka_api:
     brokers:
@@ -360,7 +360,7 @@ rpk:
 
 Pass your saved `rpk-config.yaml` as a flag to `rpk` in order to talk to Redpanda:
 
-```
+```bash
 rpk cluster info --config rpk-config.yaml
 ```
 

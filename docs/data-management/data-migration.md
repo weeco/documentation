@@ -32,13 +32,13 @@ To install MirrorMaker 2 on the machine that you want to run the replication bet
 
     For example:
 
-    ```
+    ```bash
     curl -O https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
     ```
 
 2. Extract the files from the archive:
 
-    ```
+    ```bash
     tar -xvf kafka_2.13-3.0.0.tgz
     ```
 
@@ -60,7 +60,7 @@ The sample configuration is a great place to understand a number of the settings
 
 To create a basic configuration file, go to the `config` and run this command:
 
-```
+```bash
 cat << EOF > mm2.properties
 // Name the clusters
 clusters = redpanda1, redpanda2
@@ -82,14 +82,16 @@ EOF
 
 To start MirrorMaker in the `kafka_2.13-3.0.0/bin/` directory, run:
 
-```
+```bash
 ./kafka_2.13-3.0.0/bin/connect-mirror-maker.sh mm2.properties
 ```
 
 With this command, MirrorMaker consumes all topics from the redpanda1 cluster and replicates them into the redpanda2 cluster.
 MirrorMaker adds the prefix `redpanda1` to the names of replicated topics.
 
-> **_Note:_** MirrorMaker uses the `__consumer_offsets` topic to replicate consumer offsets between clusters. This is currently not supported in Redpanda, but you can follow the progress of this issue at: https://github.com/redpanda-data/redpanda/issues/1752
+:::note
+MirrorMaker uses the `__consumer_offsets` topic to replicate consumer offsets between clusters. This is currently not supported in Redpanda, but you can follow the progress of this issue at: https://github.com/redpanda-data/redpanda/issues/1752
+:::
 
 ## See migration in action
 
@@ -119,12 +121,12 @@ Here are the basic commands to produce and consume streams:
     
     Each message is shown with its metadata, like this:
     
-    ```bash
+    ```json
     {
-    "message": "How do you stream with Redpanda?\n",
-    "partition": 0,
-    "offset": 1,
-    "timestamp": "2021-02-10T15:52:35.251+02:00"
+        "message": "How do you stream with Redpanda?\n",
+        "partition": 0,
+        "offset": 1,
+        "timestamp": "2021-02-10T15:52:35.251+02:00"
     }
     ```
 

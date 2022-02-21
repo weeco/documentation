@@ -13,13 +13,13 @@ If you use automation tools in your environment, like Terraform and Ansible, you
 First, install Terraform using the [Terraform Installation Tutorial](https://learn.hashicorp.com/tutorials/terraform/install-cli).
 Then clone the `deployment-automation` repo:
 
-```
+```bash
 git clone git@github.com:redpanda-data/deployment-automation.git
 ```
 
 Then change into the directory:
 
-```
+```bash
 cd deployment-automation
 ```
 
@@ -30,7 +30,7 @@ From here, follow the specific instructions for [AWS](#aws) or
 
 Within the `deployment-automation` folder change into the `aws` directory
 
-```
+```bash
 cd aws
 ```
 
@@ -43,7 +43,7 @@ to set this which is covered here: https://registry.terraform.io/providers/hashi
 
 Before using Terraform to deploy the cluster we need to run the following:
 
-```
+```bash
 terraform init
 ```
 
@@ -66,7 +66,7 @@ These have to be changed with according to the chosen AWS region.
 The following is an example of creating a three node cluster using i3.large
 instances.
 
-```
+```bash
 terraform apply -var="instance_type=i3.large" -var="nodes=3"
 ```
 
@@ -74,7 +74,7 @@ terraform apply -var="instance_type=i3.large" -var="nodes=3"
 
 Within the `deployment-automation` folder change into the `gcp` directory
 
-```
+```bash
 cd gcp
 ```
 
@@ -89,7 +89,7 @@ which can be used as the target tag for the firewall rule.
 
 Before using Terraform to deploy the cluster we need to run the following:
 
-```
+```bash
 terraform init
 ```
 
@@ -111,7 +111,7 @@ configuration options which can be specified when creating the cluster:
 The following is an example of creating a three node cluster using the subnet
 named `redpanda-cluster-subnet`
 
-```
+```bash
 terraform apply -var nodes=3 -var subnet=redpanda-cluster-subnet -var public_key_path=~/.ssh/id_rsa.pub -var ssh_user=$USER
 ```
 
@@ -134,20 +134,20 @@ Whether you are using [bare-metal servers](/docs/deploy-self-hosted/production-d
 
 First we need to clone the repo:
 
-```
+```bash
 git clone git@github.com:redpanda-data/deployment-automation.git
 ```
 
 Then change into the directory:
 
-```
+```bash
 cd deployment-automation
 ```
 
 You will want install the required roles needed by Ansible with the following
 command:
 
-```
+```bash
 ansible-galaxy install -r ansible/requirements.yml
 ```
 
@@ -160,7 +160,7 @@ manually.
 
 If you need to update it manually, first open the file and you will see something like:
 
-```
+```ini
 [redpanda]
 ip ansible_user=ssh_user ansible_become=True private_ip=pip id=0
 ip ansible_user=ssh_user ansible_become=True private_ip=pip id=1
@@ -185,7 +185,7 @@ on a give host. If you wish to not have this deployed then remove the
 You can now setup Redpanda on your selected nodes by running the following
 command:
 
-```
+```bash
 ansible-playbook --private-key <your_private_key> -i hosts.ini -v ansible/playbooks/provision-node.yml
 ```
 

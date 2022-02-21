@@ -16,7 +16,7 @@ In this section we'll use a modified version of the [one node cluster](https://r
 The Cluster Custom Resource (CR) allows us to configure a listener per API with each listener containing the desired port number.
 For example:
 
-```
+```yaml
   configuration:
     kafkaApi:
     - port: 9092
@@ -32,7 +32,7 @@ The above example results in the creation of a single, headless Kubernetes Servi
 It is important for a Kafka client to have direct access to individual brokers, hence the choice of a headless service (clusterIP: None).
 That's instead of load balancing requests across the brokers. The service has a port per listener:
 
-```
+```bash
 $ kubectl describe svc three-node-cluster 
 Name:              three-node-cluster
 ..
@@ -61,7 +61,7 @@ For more information on Services, look at the [Kubernetes documentation](https:/
 In addition to creating the headless service, the Redpanda operator prepares a `redpanda.yaml` configuration file for Redpanda.
 The configuration is read during startup and contains the advertised addresses, which in this case are set to the FQDN of each broker:
 
-```
+```bash
 $ kubectl logs three-node-cluster-0
 ..
 advertised_kafka_api:
@@ -79,7 +79,7 @@ advertised_kafka_api:
 
 Similarly, the CR status contains the advertised internal addresses:
 
-```
+```bash
 $ kubectl describe cluster three-node-cluster
 ..
 Status:
@@ -95,13 +95,13 @@ Status:
 The configuration we went over provides internal connectivity.
 A client in the internal network can use the following addresses to communicate with the brokers using the Kafka API:
 
-```
+```bash
 BROKERS=`kubectl get clusters three-node-cluster -o=jsonpath='{.status.nodes.internal}'  | jq -r 'join(",")'`
 ```
 
 The result should show this FQDN list:
 
-```
+```bash
 $ echo $BROKERS
 three-node-cluster-0.three-node-cluster.default.svc.cluster.local.,\
 three-node-cluster-1.three-node-cluster.default.svc.cluster.local.,\
@@ -110,7 +110,7 @@ three-node-cluster-2.three-node-cluster.default.svc.cluster.local.
 
 Using rpk we can check the cluster info:
 
-```
+```bash
 rpk --brokers $BROKERS cluster info
 ```
 
@@ -128,7 +128,7 @@ The CR allows us to enable external connectivity by adding a second listener for
 In particular, you can use TLS/mTLS on the external port and keep the internal port open.
 Let’s enable external connectivity for all supported APIs:
 
-```
+```yaml
   configuration:
     kafkaApi:
      - port: 9092
@@ -164,7 +164,7 @@ Each external listener is provided with a nodeport that is automatically selecte
 A benefit of not specifying one explicitly is the prevention of port collisions.
 Each nodeport has a corresponding internal port, which is set by convention to the internal-port +1. As a result, port 9092 becomes 9093 and the port name has “-external” appended to it.
 
-```
+```bash
 $ kubectl describe svc external-connectivity-external
 ...
 Port:                     kafka-external  9093/TCP
@@ -183,7 +183,7 @@ The ClusterIP service load-balanced load-balances requests by Kubernetes to the 
 As you can see from the service description below, in a 3-node Redpanda cluster we have three endpoints.
 The `-cluster` service is currently used by Pandaproxy as a bootstrap point.
 
-```
+```bash
 $ kubectl describe svc external-connectivity-cluster
 
 Name:              external-connectivity-cluster
@@ -203,7 +203,7 @@ Endpoints:         10.0.0.8:8083,10.0.1.8:8083,10.0.2.4:8083
 The `-external` service is responsible for setting up nodeports for each API.
 Because we enable external connectivity for all three APIs in the description below, we have three nodeports each one point to a target port with the port number of the original port + 1.
 
-```
+```bash
 $ kubectl describe svc external-connectivity-external
 Name:                     external-connectivity-external
 ..
@@ -231,19 +231,19 @@ Endpoints:                <none>
 
 Assuming a client has network access to the node and the nodeports are open, a client can use the following addresses to communicate with the brokers using the configured APIs:
 
-```
+```bash
 BROKERS=`kubectl get clusters external-connectivity -o=jsonpath='{.status.nodes.external}'  | jq -r 'join(",")'`
 ```
 
 The result contains a list of external IPs with the broker port:
 
-```
+```bash
 $ echo $BROKERS
 <node-0-external-ip>:31848,<node-1-external-ip>:31848,<node-2-external-ip>:31848
 ```
 
 Given the list of addresses, we can use rpk (or a Kafka client) to test the connection:
-```
+```bash
 rpk --brokers $BROKERS cluster info
 ```
 
@@ -257,7 +257,7 @@ Similar to the “internal” listener case, the Redpanda operator prepares a co
 For each API the configuration file contains an additional external listener and its corresponding advertised address.
 The second advertised address points to the external IP of each node and the nodeport of that API, for example:
 
-```
+```bash
 $ kubectl exec external-connectivity -- cat /etc/redpanda/redpanda.yaml 
   advertised_kafka_api:
     - address: external-connectivity-0.external-connectivity.default.svc.cluster.local.
@@ -276,7 +276,7 @@ The operator does not create an external port for RPC.
 
 By running `kubectl describe pod external-connectivity-0` we can see the ports and the mapping to the node ports created through the nodeport service:
 
-```
+```bash
 $ kubectl describe pod external-connectivity-0 
 ...
 Containers:
@@ -300,7 +300,7 @@ Containers:
 The CRD includes a subdomain field that allows to specify the advertised address of external listeners.
 Here’s an example for the Kafka API:
 
-```
+```yaml
   configuration:
     kafkaApi:
     - port: 9092
@@ -314,7 +314,7 @@ Note that the DNS configuration is *not* handled by the Redpanda operator.
 
 The Redpanda configuration reflects this in the advertised addresses: 
 
-```
+```bash
 $ kubectl exec external-connectivity -- cat /etc/redpanda/redpanda.yaml 
 ...
 redpanda:
@@ -329,7 +329,7 @@ redpanda:
 
 Finally, the CR contains the addresses in its status:
 
-```
+```bash
 $ kubectl describe cluster external-connectivity
 ...
 Status:

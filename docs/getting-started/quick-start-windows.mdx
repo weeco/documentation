@@ -27,7 +27,7 @@ The [Docker image for Redpanda](https://hub.docker.com/r/vectorized/redpanda) is
 ### Setting a 1-node cluster
 You can copy and paste this command to create a 1-node cluster:
 
-```console
+```powershell
 docker run -d --pull=always --name=redpanda-1 --rm ^
 -p 9092:9092 ^
 -p 9644:9644 ^
@@ -50,7 +50,7 @@ First we need to set up a bridge network so that the Redpanda instances can comm
 but still allow for the Kafka API to be available on the localhost.
 We'll also create the persistent volumes that let the Redpanda instances keep state during instance restarts.
 
-```bash
+```powershell
 docker network create -d bridge redpandanet && ^
 docker volume create redpanda1 && ^
 docker volume create redpanda2 && ^
@@ -61,7 +61,7 @@ docker volume create redpanda3
 
 We then need to start the nodes for the Redpanda cluster.
 
-```bash
+```powershell
 docker run -d ^
 --pull=always ^
 --name=redpanda-1 ^
@@ -136,7 +136,7 @@ docker.vectorized.io/vectorized/redpanda redpanda start ^
 Another way to spin up a Redpanda cluster is with a docker-compose file.
 Copy the code here and save it as `docker-compose.yaml`:
 
-```console 
+```yaml 
 version: '3.7'
 services:
   redpanda:
@@ -164,11 +164,11 @@ services:
   
 In the directory that you saved the file, open your CMD and execute this command:     
  
-```console
+```powershell
 docker-compose up –d
 ```
 If everything is correct, you’ll see this:
-```console
+```powershell
 Creating redpanda-1 ... done
 ```
 
@@ -182,20 +182,20 @@ We're going to use the `rpk` to run our commands.
 
 Check the information about the cluster. 
 
-```
+```powershell
 docker exec -it redpanda-1 rpk cluster info
 ```
 
 1. Create a topic. We’ll call it “twitch_chat”:
 
-```
+```powershell
 docker exec -it redpanda-1 ^
 rpk topic create twitch_chat --brokers=localhost:9092
 ```
 
 2. Produce messages to the topic:
 
-```
+```powershell
 docker exec -it redpanda-1 ^
 rpk topic produce twitch_chat --brokers=localhost:9092
 ``` 
@@ -206,19 +206,19 @@ Press Ctrl + C to exit the produce command.
 
 3. Consume (or read) the messages in the topic:
 
-```
+```powershell
 docker exec -it redpanda-1 ^
 rpk topic consume twitch_chat --brokers=localhost:9092
 ```
 
 Each message is shown with its metadata, like this:
 
-```
+```json
 {
-"message": "How do you stream with Redpanda?\n",
-"partition": 0,
-"offset": 1,
-"timestamp": "2021-02-10T15:52:35.251+02:00"
+  "message": "How do you stream with Redpanda?\n",
+  "partition": 0,
+  "offset": 1,
+  "timestamp": "2021-02-10T15:52:35.251+02:00"
 }
 ```
 
@@ -228,14 +228,14 @@ Each message is shown with its metadata, like this:
 When you are finished with the cluster, you can shutdown and delete the containers.
 Change the commands below accordingly if you used the 1-cluster option or the 3-cluster option.
 
-```
+```powershell
 docker stop redpanda-1 redpanda-2 redpanda-3 && ^
 docker rm redpanda-1 redpanda-2 redpanda-3
 ```
 
 If you set up volumes and a network, delete them with:
 
-```
+```powershell
 docker volume rm redpanda1 redpanda2 redpanda3 && ^
 docker network rm redpandanet
 ```
