@@ -13,7 +13,7 @@ module.exports = {
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
     colorMode: {
-      disableSwitch: true
+      disableSwitch: false
     },
     navbar: {
       title: '',

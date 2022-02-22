@@ -269,11 +269,18 @@ code {
 .container code span:not(.comment) {
   
 }
+html[data-theme='dark'] .navbar {
+  background: var(--ifm-navbar-background-color) !important;
+}
+html[data-theme='dark'] .navbar__inner {
+  background: var(--ifm-navbar-background-color) !important;
+}
+html[data-theme='dark'] .navbar__toggle {
+  color: var(--ifm-font-color-base);
+}
+
 html[data-theme='dark'] .container code {
   background: var(--ifm-navbar-background-color);
-}
-html[data-theme='dark'] .container code span:not(.comment) {
-  color: var(--v-white) !important;
 }
 html[data-theme='dark'] .container code span.comment {
   color: var(--v-gray1) !important;
