@@ -47,6 +47,8 @@ spec:
     - port: 9092
     pandaproxyApi:
     - port: 8082
+    schemaRegistry:
+      port: 8081
     adminApi:
     - port: 9644
     developerMode: true
@@ -54,7 +56,7 @@ spec:
     redpanda.enable_idempotence: "true"
     redpanda.default_topic_partitions: "3"
     pandaproxy_client.retries: "10"
-    schema_registry.schema_registry_api: "[{'name':'external','address':'0.0.0.0','port':8081}]"
+    schema_registry.schema_registry_replication_factor: "3"
 ```
 
  At the bottom we see a map, `additionalConfiguration`. These are parameters that are currently not part of the Custom Resource, but are passed to the Redpanda configuration (`redpanda.yaml`).
