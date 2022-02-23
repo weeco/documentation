@@ -32,6 +32,7 @@ module.exports = {
         'getting-started/quick-start-macos',
         'getting-started/quick-start-windows',
         'getting-started/install-preview',
+        'getting-started/what-is-next',
       ]
     },
     {
@@ -90,6 +91,7 @@ module.exports = {
         },
         'reference/autotune',
         'reference/well-known-io',
+        'reference/version-upgrade',
         'reference/faq',
       ]
     },
