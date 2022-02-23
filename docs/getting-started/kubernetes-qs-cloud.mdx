@@ -80,7 +80,7 @@ You may need to add a `--region` or `--zone` to this command if defaults are not
 
   <TabItem  value="Amazon EKS" label="Amazon EKS">
 
-Use the [EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. When you finish, you'll have `eksctl` installed so that you can create and delete clusters in Amazon EKS. Then, create an EKS cluster with:
+Use the [Amazon EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. When you finish, you'll have `eksctl` installed so that you can create and delete clusters in Amazon EKS. Then, create an Amazon EKS cluster with:
 
 ```
 eksctl create cluster \
@@ -92,11 +92,7 @@ eksctl create cluster \
 --nodes-max 1
 ```
 
-  </TabItem>
-
-  <TabItem  value="Amazon EKS bootstrap" label="Amazon EKS bootstrap">
-
-To create an Amazon EKS bootstrap, copy the following text and save it as `eks-bootstrap.yaml`: 
+Alternatively, if you want to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
 
   ```
   apiVersion: eksctl.io/v1alpha5
@@ -122,13 +118,11 @@ The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, i
 - `instanceType: m5.xlarge`
 - `desiredCapacity: 1` - This sets the number of nodes that you want to create
 
-Finally, create the EKS cluster with the following command: 
+Finally, create the Amazon EKS cluster with the following command: 
 
 ```
 eksctl create cluster -f eks-bootstrap.yaml
 ```
-
-Skip the **Configure the kubectl context** step below and continue to the **Install cert-manager step**.
 
   </TabItem>
 
