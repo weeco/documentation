@@ -1,14 +1,4 @@
 node_modules
 .docusaurus
-build/assets
-build/blog
-build/docs
-build/img
-build/markdown-page
-build/search
-build/sitemap.xml
-build/search-index.json
-build/.nojekyll
-build/404.html
-build/index.html
-build/robots.txt
+build/*
+!build/_redirects
