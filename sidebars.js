@@ -25,7 +25,9 @@ module.exports = {
       link: { type: 'doc', id: 'getting-started/index'},
       items: [
         'getting-started/quick-start-docker',
-        'getting-started/quick-start-kubernetes',
+        'getting-started/kubernetes-qs-cloud',
+        'getting-started/kubernetes-qs-local-access',
+        'getting-started/kubernetes-qs-minikube',
         'getting-started/quick-start-linux',
         'getting-started/quick-start-macos',
         'getting-started/quick-start-windows',
