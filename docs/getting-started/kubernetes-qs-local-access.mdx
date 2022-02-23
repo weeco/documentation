@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Kubernetes quickstart with local access
 
-This guide will help you set up Redpanda locally for development and testing purposes on macOS, Windows, or Linux. Start here if you want to set up Redpanda quickly to try it out or for CI/CD purposes. If you want to use Amazon EKS or GKE, see the [Kubernetes quickstart for cloud](https://docs.redpanda.com/docs/getting-started/kubernetes-qs-cloud). If you want to use minikube, see the [Kubernetes quickstart with minikube](https://docs.redpanda.com/docs/getting-started/kubernetes-qs-minikube).
+This guide will help you set up Redpanda locally for development and testing purposes on macOS, Windows, or Linux. Start here if you want to set up Redpanda quickly to try it out or for CI/CD purposes. If you want to use Amazon EKS or GKE, see the [Kubernetes quickstart for cloud](kubernetes-qs-cloud). If you want to use minikube, see the [Kubernetes quickstart with minikube](kubernetes-qs-minikube).
 
 This guide uses kind to create a local Kubernetes cluster in which Redpanda is deployed. It also verifies that the Kafka API port is exposed to your local network so that you can interact with Redpanda from your local machine and not just from inside the Kubernetes cluster.
 
@@ -24,11 +24,11 @@ This quickstart guide walks you through the following steps:
 7. Start streaming
 8. Clean up
 
-The steps in this guide limit the number of nodes to one because multi-node local clusters are not currently supported. For details on how to access Redpanda outside the Kubernetes network, see the [Connecting remotely to Kubernetes](https://docs.redpanda.com/docs/features/kubernetes-external-connect) guide. 
+The steps in this guide limit the number of nodes to one because multi-node local clusters are not currently supported. For details on how to access Redpanda outside the Kubernetes network, see the [Connecting remotely to Kubernetes](/docs/features/kubernetes-external-connect) guide. 
 
 :::note 
 
-In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. If you want to set `developerMode: false`, for optimal configuration we recommend that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](https://redpanda.com/docs/production-deployment/#Step-2-Set-Redpanda-production-mode) documentation. If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
+In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. If you want to set `developerMode: false`, for optimal configuration we recommend that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/deploy-self-hosted/production-deployment/#Step-2-Set-Redpanda-production-mode) documentation. If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
 
 :::
 
@@ -214,7 +214,7 @@ C:\Windows\System32\drivers\etc\hosts
 
 ## Step 7: Do some streaming
 
-The Redpanda image contains the `rpk` and `redpanda` binaries. `rpk` is a CLI utility that you can use to work with your Redpanda nodes. See the [rpk commands](https://docs.redpanda.com/docs/reference/rpk-commands) documentation for a full list of commands. 
+The Redpanda image contains the `rpk` and `redpanda` binaries. `rpk` is a CLI utility that you can use to work with your Redpanda nodes. See the [rpk commands](/docs/reference/rpk-commands) documentation for a full list of commands. 
 
 Follow these steps to start working with the `panda-chat` cluster you created in the previous section. 
 
