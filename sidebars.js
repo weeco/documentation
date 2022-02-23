@@ -90,6 +90,7 @@ module.exports = {
         },
         'reference/autotune',
         'reference/well-known-io',
+        'reference/version-upgrade',
         'reference/faq',
       ]
     },
