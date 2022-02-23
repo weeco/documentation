@@ -81,6 +81,11 @@ module.exports = {
       collapsed: true,
       items: [
         'reference/rpk-commands',
+        {
+          type: 'link',
+          label: 'CRD Operator',
+          href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
+        },
         'reference/autotune',
         'reference/well-known-io',
         'reference/faq',
