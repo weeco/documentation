@@ -32,6 +32,7 @@ module.exports = {
         'getting-started/quick-start-macos',
         'getting-started/quick-start-windows',
         'getting-started/install-preview',
+        'getting-started/what-is-next',
       ]
     },
     {
