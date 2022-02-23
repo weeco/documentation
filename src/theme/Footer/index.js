@@ -167,7 +167,7 @@
                  <ul className="footer__items">
                    <li class="footer__item">
                      <a href="https://redpanda.com/contact" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          Contact
@@ -175,7 +175,7 @@
                    </li>
                    <li class="footer__item">
                      <a href="https://redpanda.com/feedback" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          Feedback
@@ -183,7 +183,7 @@
                    </li>
                    <li class="footer__item">
                      <a href="https://redpanda.com/scholarship" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          h4ck::73h::pl4n37 scholarship
