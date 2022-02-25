@@ -50,13 +50,13 @@ After saving the file, you will need to apply the changes with the following com
 kubectl apply -f <file_path/file_name>
 ```
 
-Once the changes are applied, the cluster will perform a rolling upgrade, restarting one pod at a time. During the upgrade, the status field will show as `upgrading` is *true*. You will be able to see the status of the cluster by running the following command:
+Once the changes are applied, the cluster will perform a rolling upgrade, restarting one pod at a time. During the upgrade, the status field `upgrading` is _true_. You will be able to see the status of the cluster by running the following command:
 
 ```bash
 kubectl describe cluster <cluster_name>
 ```
 
-The `upgrading` status will show as *false* once the upgrade is complete.
+The `upgrading` status will show as _false_ once the upgrade is complete.
 
 To validate the individual pod details, and the image tag (version), use the following command:
 
@@ -73,7 +73,7 @@ First, check which image version is currently running on your Docker:
 docker images
 ```
 
-After running the command, you will see a  list of images, including Redpanda. Now it’s time to check the available versions on the [release notes page](https://github.com/vectorizedio/redpanda/releases).
+After running the command, you will see a  list of images, including Redpanda. Now it's time to check the available versions on the [release notes page](https://github.com/vectorizedio/redpanda/releases).
 Before beginning the upgrade, you will need to backup Redpanda's configuration file in order to avoid configuration losses. 
 
 ```bash
