@@ -15,7 +15,7 @@ module.exports = {
     {
       type: 'link',
       label: 'Docs home',
-      href: 'https://docs.redpanda.com/',
+      href: '/',
     },
     {
       type: 'category',
