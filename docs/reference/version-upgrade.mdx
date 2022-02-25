@@ -5,17 +5,17 @@ title: Version upgrade
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-As part of Redpanda's evolution, new versions are released over time to deliver new features, enhancements and improvements.
+As part of Redpanda's evolution, new versions are released over time to deliver new features, enhancements, and improvements.
 Due to that, it's essential to keep Redpanda up to date. This guide details how to upgrade versions relevant to the environment that Redpanda is currently running in.
 
 :::info
-It's always important to read the [release notes](https://github.com/vectorizedio/redpanda/releases) before upgrading to alternate versions in order to anticipate and deal with any breaking changes.
+Please refer to the [release notes](https://github.com/vectorizedio/redpanda/releases) before upgrading to alternate versions in order to anticipate and deal with any breaking changes.
 :::
 
 ## Checking the current version
 
 Before changing to a different version, you will first need to determine which version is currently running in your environment.
-In order to determine the current version you will need to utilize the rpk command as shown below:
+In order to determine the current version, you will need to utilize the rpk command as shown below:
 
 ```bash
 rpk version
@@ -30,7 +30,7 @@ v21.11.5 (rev af88fa1)
 ## Kubernetes
 
 :::caution
-Be advised for Kubernetes locally executed, there could be a loss of the data and topics. To avoid data loss make sure to use persistent volumes.
+In order to prevent any potential data loss when Kubernetes is locally executed, you will need to utilize persistent volumes.
 :::
 
 All applications running in Kubernetes require deployment files to execute, including Redpanda.
@@ -50,13 +50,13 @@ After saving the file, you will need to apply the changes with the following com
 kubectl apply -f <file_path/file_name>
 ```
 
-Once the changes are applied, the cluster will perform a rolling upgrade, restarting one pod at a time. During the upgrade, the status field will show as  “upgrading” is true. You will be able to see the status of the cluster by running the following command:
+Once the changes are applied, the cluster will perform a rolling upgrade, restarting one pod at a time. During the upgrade, the status field will show as `upgrading` is *true*. You will be able to see the status of the cluster by running the following command:
 
 ```bash
 kubectl describe cluster <cluster_name>
 ```
 
-The “upgrading” status will show as false once the upgrade is complete.
+The `upgrading` status will show as *false* once the upgrade is complete.
 
 To validate the individual pod details, and the image tag (version), use the following command:
 
@@ -66,28 +66,28 @@ kubectl describe pod <pod_name>
 
 ## Docker
 
-Because docker relies on images, you will need to replace the current image value with a new one.
-First, check which image version is currently running on your docker:
+Because Docker relies on images, you will need to replace the current image value with a new one.
+First, check which image version is currently running on your Docker:
 
 ```bash
 docker images
 ```
 
-After running the command, you will see a  list of  images, including Redpanda. Now it’s time to check the available versions on the [release notes page](https://github.com/vectorizedio/redpanda/releases).
-Before beginning the upgrade, you will need to  backup Redpanda's configuration file in order to avoid configuration losses. 
+After running the command, you will see a  list of images, including Redpanda. Now it’s time to check the available versions on the [release notes page](https://github.com/vectorizedio/redpanda/releases).
+Before beginning the upgrade, you will need to backup Redpanda's configuration file in order to avoid configuration losses. 
 
 ```bash
 docker cp <containerId>:/etc/redpanda/redpanda.yaml <preferred location>
 ```
 
-Also, you will need to make certain that there is not a Redpanda container up and running:
+Also, you will need to verify that there is no Redpanda container up and running:
 
 ```bash
 docker ps
 ```
 
 :::caution
-Be advised concerning Docker locally executed, there could be a potential loss of the data and topics. In order to avoid any data loss you will need to utilize [persistent volumes](/docs/getting-started/quick-start-docker#create-network-and-persistent-volumes).
+In order to prevent any potential data loss when Docker is locally executed, you will need to utilize persistent volumes. You will find the steps to do that here: [persistent volumes](/docs/getting-started/quick-start-docker#create-network-and-persistent-volumes).
 :::
 
 Stop and remove Redpanda's container(s):
@@ -110,8 +110,8 @@ The next step is to pull the desired Redpanda's version, or you can adjust the s
 docker pull docker.vectorized.io/vectorized/redpanda:<version>
 ```
 
-Finally, you’ll need to follow the steps in the [docker getting started](/docs/getting-started/quick-start-docker) to start Redpanda.
-If you are using  a previous `redpanda.yaml` configuration file, make sure to apply it to the configuration folder `/etc/redpanda` inside the container. Once completed, restart the cluster:
+Finally, you'll need to follow the steps in the [docker getting started](/docs/getting-started/quick-start-docker) to start Redpanda.
+If you are using a previous `redpanda.yaml` configuration file, make sure to apply it to the configuration folder `/etc/redpanda` inside the container.
 
 ```bash
 docker cp <path_to_saved_yaml_file>/redpanda.yaml <container_id>:/etc/redpanda
@@ -123,11 +123,11 @@ Once completed, restart the cluster:
 docker restart <container_name>
 ```
 
-Now you will have the desired version of Redpanda running.
+Now, you will have the desired version of Redpanda running.
 
 ## Linux
 
-For Linux distributions, the process is simple, however, it changes according to the distribution:
+For Linux distributions, the process is simple; however, it changes according to the distribution:
 
 <Tabs>
 <TabItem value="fedoraRedhat" label="Fedora/RedHat" default>
@@ -167,15 +167,15 @@ Installations from binary files require you to download the preferred version fr
 
 ## Windows
 
-Currently, it’s only possible to run Redpanda on Docker. Therefore, the [Docker guide](/docs/getting-started/quick-start-docker) would be applicable here.
+Currently, it's only possible to run Redpanda on Docker. Therefore, the [Docker guide](/docs/getting-started/quick-start-docker) would be applicable here.
 
 ## Post-upgrade applications
 
 Once the upgrade is complete, you will need to ensure that the cluster is healthy.
-To verify that the cluster is running properly, implement the following  command:
+To verify that the cluster is running properly, implement the following command:
 
 ```bash
 rpk cluster status
 ```
 
-You’ll also want to set up a real-time dashboard to monitor your cluster health; That’s easily done by following the steps in our [monitoring guide](/docs/deploy-self-hosted/monitoring).
+You'll also want to set up a real-time dashboard to monitor your cluster health. That can be  done by following the steps in our [monitoring guide](/docs/deploy-self-hosted/monitoring).
