@@ -71,23 +71,53 @@ module.exports = {
         },
         'quickstart/what-is-next',
       ]
-    },
+    },    
+    {
+      type: 'category',
+      label: 'Development',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'deployment/guide-nodejs',
+      ]
+    }, 
     {
       type: 'category',
       label: 'Deployment',
       collapsible: true,
       collapsed: true,
       items: [
-        'deployment/production-deployment',
         'deployment/production-deployment-automation',
         'deployment/guide-rpk-container',
-        'deployment/guide-nodejs',
-        'deployment/kubernetes-connectivity',
-        'deployment/kubernetes-external-connect',
-        'deployment/kubernetes-additional-config',
+        {
+          type: 'category',
+          label: 'Kubernetes',
+          items: [
+            {
+              type: 'doc',
+              label: 'Configuring Redpanda operator for connectivity',
+              id: 'deployment/kubernetes-connectivity',
+            },            
+            'deployment/kubernetes-external-connect',
+            {
+              type: 'doc',
+              label: 'Using configuration parameters with a custom resource',
+              id: 'deployment/kubernetes-additional-config',
+            },
+            {
+              type: 'doc',
+              label: 'Arbitrary configuration',
+              id: 'deployment/arbitrary-configuration',
+            },            
+          ]
+        },
         'deployment/configuration',
-        'deployment/arbitrary-configuration',
         'deployment/well-known-io',
+        {
+          type: 'doc',
+          label: 'Deploying for production',
+          id: 'deployment/production-deployment',
+        },         
       ]
     },    
     {
@@ -119,11 +149,7 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        {
-          type: 'doc',
-          label: 'Authorization and authentication',
-          id: 'security/acls',
-        },          
+        'security/acls',
         {
           type: 'category',
           label: 'Kubernetes',
@@ -139,10 +165,14 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        'reference/rpk-commands',
+        {
+          type: 'doc',
+          label: 'rpk commands',
+          id: 'reference/rpk-commands',
+        },        
         {
           type: 'link',
-          label: 'CRD Operator',
+          label: 'CRD operator',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },        
         'reference/faq',
