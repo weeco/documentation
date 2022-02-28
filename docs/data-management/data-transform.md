@@ -1,8 +1,7 @@
 ---
-title: Data Transformation with WebAssembly
+title: Data transformation with WebAssembly
 order: 0
 ---
-# Data Transformation with WebAssembly
 
 :::caution
 

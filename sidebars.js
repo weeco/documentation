@@ -23,20 +23,24 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        'introduction/intro-to-events',
+        {
+          type: 'doc',
+          label: 'An introduction to events and streaming',
+          id: 'introduction/intro-to-events',
+        },        
         'introduction/autotune',
       ],
     },
     {
       type: 'category',
-      label: 'Quickstart',
+      label: 'Quickstarts',
       collapsible: true,
       collapsed: true,
       link: { type: 'doc', id: 'quickstart/index'},
       items: [
         {
           type: 'category',
-          label: 'Local',
+          label: 'Local access',
           items: [
             'quickstart/quick-start-docker', 
             'quickstart/quick-start-linux',
@@ -48,9 +52,21 @@ module.exports = {
           type: 'category',
           label: 'Kubernetes',
           items: [
-            'quickstart/kubernetes-qs-cloud',
-            'quickstart/kubernetes-qs-local-access',
-            'quickstart/kubernetes-qs-minikube',
+            {
+              type: 'doc',
+              label: 'cloud',
+              id: 'quickstart/kubernetes-qs-cloud',
+            },
+            {
+              type: 'doc',
+              label: 'kind',
+              id: 'quickstart/kubernetes-qs-local-access',
+            },
+            {
+              type: 'doc',
+              label: 'minikube',
+              id: 'quickstart/kubernetes-qs-minikube',
+            },            
           ],
         },
         'quickstart/what-is-next',
@@ -76,7 +92,7 @@ module.exports = {
     },    
     {
       type: 'category',
-      label: 'Cluster Management',
+      label: 'Cluster administration',
       collapsible: true,
       collapsed: true,
       items: [
@@ -103,7 +119,11 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        'security/acls',
+        {
+          type: 'doc',
+          label: 'Authorization and authentication',
+          id: 'security/acls',
+        },          
         {
           type: 'category',
           label: 'Kubernetes',
