@@ -206,7 +206,7 @@ Use the following parameters in the `redpanda.yaml` file to set the maximum cach
 
 When you create a topic, you can use remote recovery to download the topic data from cloud storage. Only the data that matches the retention policy of the topic will be downloaded. The data that is not downloaded from cloud storage will still be accessible through remote read. 
 
-You can use remote recovery to restore a topic that was deleted from a cluster, or you can replicate a topic in another cluster. 
+You can use remote recovery to restore a topic that was deleted from a cluster. 
 
 Use the following command to create a new topic using remote recovery: 
 
