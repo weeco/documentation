@@ -13,7 +13,7 @@ const FeatureList = [
         to get streaming up and running quickly.
       </Translate>
     ),
-    url: '/docs/getting-started/',
+    url: '/docs/quickstart/',
   },
   {
     title: 'Deploy Redpanda in production',
@@ -24,7 +24,7 @@ const FeatureList = [
         After you see its power, put Redpanda to the test in production.
       </>
     ),
-    url: '/docs/deploy-self-hosted/production-deployment',
+    url: '/docs/deployment/production-deployment',
   },
   {
     title: 'Dive deeper into Redpanda',
@@ -34,7 +34,7 @@ const FeatureList = [
         Use the more advanced Redpanda features...
       </>
     ),
-    url: '/docs/features/',
+    url: '/docs/features-guide',
   },
 ];
 

@@ -31,13 +31,13 @@ tsc --init
 
 ## Setting up Redpanda and creating a topic
 
-If you are on MacOS, check out [this post](/docs/getting-started/quick-start-macos).
-If you’re on linux, follow the instructions in the
-[Quick start section](/docs/getting-started/quick-start-linux)
+If you are on MacOS, check out [this post](/docs/quickstart/quick-start-macos).
+If you're on linux, follow the instructions in the
+[Quick start section](/docs/quickstart/quick-start-linux)
 Note: please follow only this section. If you do the production section, it
 will optimize your machine for Redpanda, which might affect your experience
 with desktop applications and other services. Be especially careful with
-`sudo rpk redpanda tune all` you probably don’t want to run that on your personal
+`sudo rpk redpanda tune all` you probably don't want to run that on your personal
 workstation.
 
 
@@ -124,7 +124,7 @@ export function disconnect() {
 ```
 There you have it. This will get all produced messages and print them. You can
 have as many consumer groups as you want, but bear in mind that each group will
-get a message only once. That’s why we have the uuid generated.
+get a message only once. That's why we have the uuid generated.
 
 ## Putting everything together
 
