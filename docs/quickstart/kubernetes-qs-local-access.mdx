@@ -1,11 +1,9 @@
 ---
-title: Kubernetes with local access
+title: Kubernetes quickstart with local access
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Kubernetes quickstart with local access
 
 This guide will help you set up Redpanda locally for development and testing purposes on macOS, Windows, or Linux. Start here if you want to set up Redpanda quickly to try it out or for CI/CD purposes. If you want to use Amazon EKS or GKE, see the [Kubernetes quickstart for cloud](kubernetes-qs-cloud). If you want to use minikube, see the [Kubernetes quickstart with minikube](kubernetes-qs-minikube).
 
@@ -24,11 +22,11 @@ This quickstart guide walks you through the following steps:
 7. Start streaming
 8. Clean up
 
-The steps in this guide limit the number of nodes to one because multi-node local clusters are not currently supported. For details on how to access Redpanda outside the Kubernetes network, see the [Connecting remotely to Kubernetes](/docs/features/kubernetes-external-connect) guide. 
+The steps in this guide limit the number of nodes to one because multi-node local clusters are not currently supported. For details on how to access Redpanda outside the Kubernetes network, see the [Connecting remotely to Kubernetes](/docs/deployment/kubernetes-external-connect) guide. 
 
 :::note 
 
-In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. If you want to set `developerMode: false`, for optimal configuration we recommend that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/deploy-self-hosted/production-deployment/#Step-2-Set-Redpanda-production-mode) documentation. If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
+In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. If you want to set `developerMode: false`, for optimal configuration we recommend that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/deployment/production-deployment/#Step-2-Set-Redpanda-production-mode) documentation. If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
 
 :::
 

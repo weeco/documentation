@@ -1,14 +1,13 @@
 ---
-title: Data Transformation with WebAssembly
+title: Data transformation with WebAssembly
 order: 0
 ---
-# Data Transformation with WebAssembly
 
 :::caution
 
 This feature is in technical preview and is not supported for production.
 
-For installation instructions, check our guide on [how to install beta versions](/docs/getting-started/install-preview).
+For installation instructions, check our guide on [how to install beta versions](/docs/cluster-management/install-preview).
 :::
 
 Redpanda Data Transforms enable users to perform simple data transformations on topics without leaving the platform, such as capitalizing strings, and filtering messages to adhere to GDPR. This eliminates data going back and forth by removing the need to consume data streams from a separate system for simple transformations.

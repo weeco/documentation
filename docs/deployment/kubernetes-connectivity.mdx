@@ -1,7 +1,6 @@
 ---
-title: Configuring Kubernetes operator for connectivity
+title: Configuring the Kubernetes operator for connectivity
 ---
-# Configuring Redpanda operator for connectivity
 
 The Redpanda operator supports configuration for internal and external connectivity.
 In the folllowing sections we'll go over the corresponding configuration settings, the main actions the operator takes, the resouces created, and the expected outputs.
@@ -151,7 +150,7 @@ The operator will create the headless service as in the internal connectivity ca
 and will also create two services to support external connectivity:
 
 1. A load-balanced ClusterIP service that is used as an entrypoint for the Pandaproxy.
-2. A Nodeport service used to expose each API to the node’s external network.
+2. A Nodeport service used to expose each API to the node's external network.
     Make sure that the node is externally accesible.
 
 |   | \<cluster-name\> <br/> headless  | \<cluster-name\>-cluster <br /> load-balanced | \<cluster-name\>-external <br /> nodeports |
@@ -175,8 +174,7 @@ Endpoints:                <none>
 
 Make sure that your the generated nodeports are open and reachable.
 
-Let’s go over the two new services.
-
+Let's go over the two new services.
 #### ClusterIP service
 
 The ClusterIP service load-balanced load-balances requests by Kubernetes to the Redpanda nodes with the help of a selector.
@@ -298,7 +296,7 @@ Containers:
 ### Using names instead of external IPs
 
 The CRD includes a subdomain field that allows to specify the advertised address of external listeners.
-Here’s an example for the Kafka API:
+Here's an example for the Kafka API:
 
 ```yaml
   configuration:
