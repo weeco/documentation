@@ -25,11 +25,14 @@
       link: { type: 'doc', id: 'quickstart/index'},
       items: [
         'quickstart/quick-start-docker',
-        'quickstart/quick-start-kubernetes',
+        'quickstart/kubernetes-qs-cloud',
+        'quickstart/kubernetes-qs-local-access',
+        'quickstart/kubernetes-qs-minikube',
         'quickstart/quick-start-linux',
         'quickstart/quick-start-macos',
         'quickstart/quick-start-windows',
         'cluster-management/install-preview',
+        'quickstart/what-is-next',
       ]
     },
     {
@@ -81,6 +84,11 @@
       collapsed: true,
       items: [
         'reference/rpk-commands',
+        {
+          type: 'link',
+          label: 'CRD Operator',
+          href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
+        },
         'introduction/autotune',
         'deployment/well-known-io',
         'cluster-management/version-upgrade',
