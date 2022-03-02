@@ -123,6 +123,8 @@ rpk topic alter-config <topic_name> --set redpanda.remote.read=true --set redpan
 
 Remote write is the process that constantly uploads log segments to cloud storage. The process is created for each partition and runs on the leader node of the partition. It only uploads the segments that contain only offsets that are smaller than the last stable offset. This is the largest offset that the client can read. 
 
+To ensure all data is uploaded, you must enable remote write before any data is produced to the topic. If remote write is not enabled, data may be deleted due to retention settings. 
+
 To enable Shadow Indexing, use remote write in conjunction with remote read. If you only enable remote write on a topic, you will have a simple backup that you will still be able to run recovery on. 
 
 To create a topic with remote write enabled, use this command: 
