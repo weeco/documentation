@@ -9,17 +9,17 @@ import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import SearchBar from '@theme/SearchBar';
 import Toggle from '@theme/Toggle';
-import useThemeContext from '@theme/hooks/useThemeContext';
 import {
   useThemeConfig,
   useMobileSecondaryMenuRenderer,
   usePrevious,
   useHistoryPopHandler,
+  useHideableNavbar,
+  useLockBodyScroll,
+  useWindowSize,
+  useColorMode,
 } from '@docusaurus/theme-common';
-import useHideableNavbar from '@theme/hooks/useHideableNavbar';
-import useLockBodyScroll from '@theme/hooks/useLockBodyScroll';
-import useWindowSize from '@theme/hooks/useWindowSize';
-import {useActivePlugin} from '@theme/hooks/useDocs';
+import {useActivePlugin} from '@docusaurus/plugin-content-docs/client';
 import NavbarItem from '@theme/NavbarItem';
 import Logo from '@theme/Logo';
 import IconMenu from '@theme/IconMenu';
@@ -85,7 +85,7 @@ function useColorModeToggle() {
   const {
     colorMode: {disableSwitch},
   } = useThemeConfig();
-  const {isDarkTheme, setLightTheme, setDarkTheme} = useThemeContext();
+  const {isDarkTheme, setLightTheme, setDarkTheme} = useColorMode();
   const toggle = useCallback(
     (e) => (e.target.checked ? setDarkTheme() : setLightTheme()),
     [setLightTheme, setDarkTheme],
@@ -207,7 +207,7 @@ function NavbarMobileSidebar({sidebarShown, toggleSidebar}) {
   );
 }
 
-function Navbar() {
+export default function Navbar() {
   const {
     navbar: {hideOnScroll, style},
   } = useThemeConfig();
@@ -282,5 +282,3 @@ function Navbar() {
     </nav>
   );
 }
-
-export default Navbar;
