@@ -74,15 +74,6 @@
     },    
     {
       type: 'category',
-      label: 'Development',
-      collapsible: false,
-      collapsed: false,
-      items: [
-        'development/guide-nodejs',
-      ]
-    }, 
-    {
-      type: 'category',
       label: 'Deployment',
       collapsible: false,
       collapsed: false,
@@ -145,6 +136,15 @@
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Development',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'development/guide-nodejs',
       ]
     },
     {
