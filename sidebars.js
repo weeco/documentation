@@ -15,66 +15,152 @@
     {
       type: 'link',
       label: 'Docs home',
-      href: 'https://docs.redpanda.com/',
+      href: '/',
     },
     {
       type: 'category',
-      label: 'Getting started',
-      collapsible: true,
-      collapsed: true,
+      label: 'Introduction',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          label: 'An introduction to events and streaming',
+          id: 'introduction/intro-to-events',
+        },        
+        'introduction/autotune',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Quickstarts',
+      collapsible: false,
+      collapsed: false,
       link: { type: 'doc', id: 'quickstart/index'},
       items: [
-        'quickstart/quick-start-docker',
-        'quickstart/kubernetes-qs-cloud',
-        'quickstart/kubernetes-qs-local-access',
-        'quickstart/kubernetes-qs-minikube',
-        'quickstart/quick-start-linux',
-        'quickstart/quick-start-macos',
-        'quickstart/quick-start-windows',
-        'cluster-management/install-preview',
+        {
+          type: 'category',
+          label: 'Local',
+          items: [
+            'quickstart/quick-start-docker', 
+            'quickstart/quick-start-linux',
+            'quickstart/quick-start-macos',
+            'quickstart/quick-start-windows',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Kubernetes',
+          items: [
+            {
+              type: 'doc',
+              label: 'Cloud',
+              id: 'quickstart/kubernetes-qs-cloud',
+            },
+            {
+              type: 'doc',
+              label: 'kind',
+              id: 'quickstart/kubernetes-qs-local-access',
+            },
+            {
+              type: 'doc',
+              label: 'minikube',
+              id: 'quickstart/kubernetes-qs-minikube',
+            },            
+          ],
+        },
         'quickstart/what-is-next',
       ]
-    },
-    {
-      type: 'category',
-      label: 'Feature guides',
-      collapsible: true,
-      collapsed: true,
-      link: { type: 'doc', id: 'features-guide'},
-      items: [
-        'introduction/intro-to-events',
-        'deployment/guide-rpk-container',
-        'deployment/guide-nodejs',
-        'deployment/kubernetes-connectivity',
-        'deployment/kubernetes-external-connect',
-        'deployment/kubernetes-additional-config',
-        'security/acls',
-        'security/tls-kubernetes',
-      ]
-    },
+    },    
     {
       type: 'category',
       label: 'Deployment',
-      collapsible: true,
-      collapsed: true,
+      collapsible: false,
+      collapsed: false,
       items: [
-        'deployment/production-deployment',
+        'deployment/production-deployment-automation',
+        'deployment/guide-rpk-container',
+        {
+          type: 'category',
+          label: 'Kubernetes',
+          items: [
+            {
+              type: 'doc',
+              label: 'Configuring Redpanda operator for connectivity',
+              id: 'deployment/kubernetes-connectivity',
+            },            
+            'deployment/kubernetes-external-connect',
+            {
+              type: 'doc',
+              label: 'Using configuration parameters with a custom resource',
+              id: 'deployment/kubernetes-additional-config',
+            },
+            {
+              type: 'doc',
+              label: 'Arbitrary configuration',
+              id: 'deployment/arbitrary-configuration',
+            },            
+          ]
+        },
+        'deployment/well-known-io',
+        {
+          type: 'doc',
+          label: 'Deploying for production',
+          id: 'deployment/production-deployment',
+        },
+        'deployment/install-preview',
+      ]
+    },    
+    {
+      type: 'category',
+      label: 'Cluster administration',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          label: 'Custom configuration',
+          id: 'cluster-management/configuration',
+        },        
         'cluster-management/monitoring',
-        'deployment/configuration',
-        'deployment/arbitrary-configuration',
-        'deployment/production-deployment-automation',        
+        'cluster-management/version-upgrade',        
       ]
     },
     {
       type: 'category',
       label: 'Data management',
-      collapsible: true,
-      collapsed: true,
+      collapsible: false,
+      collapsed: false,
       items: [
         'data-management/shadow-indexing',
-        'data-management/data-archiving',
         'data-management/data-transform',
         'data-management/data-migration',
+        'data-management/data-archiving',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Development',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'development/guide-nodejs',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Security',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'security/acls',
+        {
+          type: 'category',
+          label: 'Kubernetes',
+          items: [
+            'security/tls-kubernetes',
+          ],
+        },
       ]
     },
     {
@@ -83,22 +169,23 @@
       collapsible: true,
       collapsed: true,
       items: [
-        'reference/rpk-commands',
+        {
+          type: 'doc',
+          label: 'rpk commands',
+          id: 'reference/rpk-commands',
+        },        
         {
           type: 'link',
-          label: 'CRD Operator',
+          label: 'CRD operator',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
-        },
-        'introduction/autotune',
-        'deployment/well-known-io',
-        'cluster-management/version-upgrade',
+        },        
         'reference/faq',
+        {
+          type: 'link',
+          label: 'Release notes',
+          href: 'https://github.com/redpanda-data/redpanda/releases'
+        }
       ]
-    },
-    {
-      type: 'link',
-      label: 'Release notes',
-      href: 'https://github.com/redpanda-data/redpanda/releases'
     },
     {
       type: 'doc',
