@@ -54,7 +54,7 @@
           items: [
             {
               type: 'doc',
-              label: 'cloud',
+              label: 'Cloud',
               id: 'quickstart/kubernetes-qs-cloud',
             },
             {
