@@ -26,6 +26,7 @@ import IconMenu from '@theme/IconMenu';
 import IconClose from '@theme/IconClose';
 import styles from './styles.module.css'; // retrocompatible with v1
 import useGithubStars from './useGithubStars'
+import useScript from './useScript';
 
 const DefaultNavItemPosition = 'right';
 
@@ -219,7 +220,9 @@ export default function Navbar() {
   const hasSearchNavbarItem = items.some((item) => item.type === 'search');
   const {leftItems, rightItems} = splitNavItemsByPosition(items);
   const { stars } = useGithubStars('redpanda-data', 'redpanda');
+  useScript('//js.hs-scripts.com/7733588.js');
   return (
+    
     <nav
       ref={navbarRef}
       className={clsx('navbar', 'navbar--fixed-top', {
