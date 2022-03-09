@@ -34,7 +34,7 @@ const FeatureList = [
         Use the more advanced Redpanda features...
       </>
     ),
-    url: '/docs/features-guide',
+    url: '/docs/reference/rpk-commands',
   },
 ];
 

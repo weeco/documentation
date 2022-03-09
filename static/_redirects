@@ -29,10 +29,13 @@
 /docs/reference/well-known-io   /docs/deployment/well-known-io  301!
 /docs/getting-started/install-preview   /docs/deployment/install-preview  301!
 
-# Cluster Management
-/docs/deploy-self-hosted/configuration   /docs/cluster-management/configuration  301!
-/docs/deploy-self-hosted/monitoring   /docs/cluster-management/monitoring  301!
-/docs/reference/version-upgrade   /docs/cluster-management/version-upgrade  301!
+# Cluster Administration
+/docs/deploy-self-hosted/configuration   /docs/cluster-administration/configuration  301!
+/docs/deploy-self-hosted/monitoring   /docs/cluster-administration/monitoring  301!
+/docs/reference/version-upgrade   /docs/cluster-administration/version-upgrade  301!
+/docs/cluster-management/configuration   /docs/cluster-administration/configuration  301!
+/docs/cluster-management/monitoring   /docs/cluster-administration/monitoring  301!
+/docs/cluster-management/version-upgrade   /docs/cluster-administration/version-upgrade  301!
 
 # Security
 /docs/features/acls   /docs/security/acls  301!

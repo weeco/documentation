@@ -20,6 +20,7 @@
     {
       type: 'category',
       label: 'Introduction',
+      link: { type: 'doc', id: 'introduction/index'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -76,6 +77,7 @@
       type: 'category',
       label: 'Deployment',
       collapsible: false,
+      link: { type: 'doc', id: 'deployment/index'},
       collapsed: false,
       items: [
         'deployment/production-deployment-automation',
@@ -114,21 +116,23 @@
     {
       type: 'category',
       label: 'Cluster administration',
+      link: { type: 'doc', id: 'cluster-administration/index'},
       collapsible: false,
       collapsed: false,
       items: [
         {
           type: 'doc',
           label: 'Custom configuration',
-          id: 'cluster-management/configuration',
+          id: 'cluster-administration/configuration',
         },        
-        'cluster-management/monitoring',
-        'cluster-management/version-upgrade',        
+        'cluster-administration/monitoring',
+        'cluster-administration/version-upgrade',        
       ]
     },
     {
       type: 'category',
       label: 'Data management',
+      link: { type: 'doc', id: 'data-management/index'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -141,6 +145,7 @@
     {
       type: 'category',
       label: 'Development',
+      link: { type: 'doc', id: 'development/index'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -150,6 +155,7 @@
     {
       type: 'category',
       label: 'Security',
+      link: { type: 'doc', id: 'security/index'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -166,6 +172,7 @@
     {
       type: 'category',
       label: 'Reference',
+      link: { type: 'doc', id: 'reference/index'},
       collapsible: true,
       collapsed: true,
       items: [
