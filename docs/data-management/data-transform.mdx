@@ -19,7 +19,7 @@ You can jump-start your data transformation development with `rpk`. Redpanda pro
 Under the hood, Redpanda reads from an immutable Apache Kafka® topic, applies a data transformation process, and then produces another immutable Kafka topic. That way, the data is transformed into a new topic and we preserve the original topic without any data loss.
 
 :::note
-- The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
+The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
 :::
 
 ## Prerequisites
@@ -277,8 +277,9 @@ To add multiple source topics, add the topic and policy as pairs:
 transform.subscribe[[<topic1>,<policyA>],[<topic2>,<policyB>]]
 ```
 
-> **_Note_** - Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic does not exist when the transformation is deployed, you might encounter a deployment error. 
-
+:::note
+Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic does not exist when the transformation is deployed, you might encounter a deployment error. 
+:::
 
 The `PolicyInjection` parameter can have the following values:  
 
