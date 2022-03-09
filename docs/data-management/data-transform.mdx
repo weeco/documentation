@@ -277,8 +277,9 @@ To add multiple source topics, add the topic and policy as pairs:
 transform.subscribe[[<topic1>,<policyA>],[<topic2>,<policyB>]]
 ```
 
-> **_Note_** - Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic does not exist when the transformation is deployed, you might encounter a deployment error. 
-
+:::note
+Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic does not exist when the transformation is deployed, you might encounter a deployment error. 
+:::
 
 The `PolicyInjection` parameter can have the following values:  
 
