@@ -1,14 +1,13 @@
 ---
-title: Data Transformation with WebAssembly
+title: Data transformation with WebAssembly
 order: 0
 ---
-# Data Transformation with WebAssembly
 
 :::caution
 
 This feature is in technical preview and is not supported for production.
 
-For installation instructions, check our guide on [how to install beta versions](/docs/getting-started/install-preview).
+For installation instructions, check our guide on [how to install beta versions](/docs/deployment/install-preview).
 :::
 
 Redpanda Data Transforms enable users to perform simple data transformations on topics without leaving the platform, such as capitalizing strings, and filtering messages to adhere to GDPR. This eliminates data going back and forth by removing the need to consume data streams from a separate system for simple transformations.
@@ -20,9 +19,7 @@ You can jump-start your data transformation development with `rpk`. Redpanda pro
 Under the hood, Redpanda reads from an immutable Apache Kafka® topic, applies a data transformation process, and then produces another immutable Kafka topic. That way, the data is transformed into a new topic and we preserve the original topic without any data loss.
 
 :::note
-
 The data transformation service will run with the same privileges that Redpanda has and it will have permission to read your data. Only run code from trusted authors.
-
 :::
 
 ## Prerequisites
@@ -376,7 +373,9 @@ To enable the transform to start consuming and producing events, you must deploy
 
 As with other `rpk` commands, you must specify the brokers in the cluster and all of the authentication parameters (including user, password, TLS) for the brokers.
 
-> **_Note_** -  If the source topic does not exist, the deployment will fail. If the target topic already exists, it will use the existing topic.
+:::note
+-  If the source topic does not exist, the deployment will fail. If the target topic already exists, it will use the existing topic.
+:::
 
 To deploy the sample transform, run the following command:
 

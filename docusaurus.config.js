@@ -13,7 +13,7 @@ module.exports = {
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
     colorMode: {
-      disableSwitch: true
+      disableSwitch: false
     },
     navbar: {
       title: '',
@@ -23,30 +23,23 @@ module.exports = {
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
         width: '144',
-        height: '24'
+        height: '24',
+        href: 'https://redpanda.com'
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
-        { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right' },
-        { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right' },
-        { href: '/', label: 'Docs', position: 'right' },
-        { href: 'https://redpanda.com/team', label: 'Team', position: 'right' },
-        { href: 'https://redpanda.com/careers', label: 'Careers', position: 'right' },        
-        { href: 'https://redpanda.com/blog', label: 'Blog', position: 'right' },
+        { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/team', label: 'Team', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/careers', label: 'Careers', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/blog', label: 'Blog', position: 'right', target: '_self' },
         { 
           href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', 
           position: 'right',
           label: 'Slack',
           className: 'header-icon header-icon-slack',
           'aria-label': 'Slack',
-        },
-        {
-          href: 'https://github.com/redpanda-data/redpanda',
-          position: 'right',
-          label: 'Github',
-          className: 'header-icon header-icon-github',
-          'aria-label': 'GitHub repository',
         },
       ],
     },
@@ -57,27 +50,28 @@ module.exports = {
         src: 'img/RedpandaLogo.svg',
         srcDark: 'img/RedpandaLogoInverted.svg',
         width: '144',
-        height: '24'
+        height: '24',
+        href: 'https://redpanda.com'
       },
       links: [
         {
           title: 'Product',
           items: [
-            { label: 'Platform', to: 'https://redpanda.com/redpanda/' },
-            { label: 'Cloud', to: 'https://redpanda.com/cloud' },
+            { label: 'Platform', to: 'https://redpanda.com/redpanda/', target: '_self' },
+            { label: 'Cloud', to: 'https://redpanda.com/cloud', target: '_self' },
             { label: 'Documentation', to: '/' },
-            { label: 'Blog', to: 'https://redpanda.com/blog' },
-            { label: 'Events', to: 'https://redpanda.com/events' },
-            { label: 'Support', to: 'https://support.redpanda.com' },
+            { label: 'Blog', to: 'https://redpanda.com/blog', target: '_self' },
+            { label: 'Events', to: 'https://redpanda.com/events', target: '_self' },
+            { label: 'Support', to: 'https://support.redpanda.com', target: '_self' },
           ],
         },
         {
           title: 'Company',
           items: [
-            { label: 'Team', to: 'https://redpanda.com/team' },
-            { label: 'Careers', to: 'https://redpanda.com/careers' },
-            { label: 'Press & Media', to: 'https://redpanda.com/press' },
-            { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy' },
+            { label: 'Team', to: 'https://redpanda.com/team', target: '_self' },
+            { label: 'Careers', to: 'https://redpanda.com/careers', target: '_self' },
+            { label: 'Press & Media', to: 'https://redpanda.com/press', target: '_self' },
+            { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy', target: '_self' },
           ],
         },
       ],
@@ -86,6 +80,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
+      additionalLanguages: ['yaml','docker','powershell','git', 'ini']
     },
   },
   presets: [

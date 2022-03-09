@@ -139,9 +139,8 @@
                  <div className="col footer__col logo__col">
                  {logo && (logo.src || logo.srcDark) && (
                  <div className="margin-bottom--sm">
-                   <a href='https://redpanda.com/'>
                    {logo.href ? (
-                     <Link href={logo.href} className={styles.footerLogoLink}>
+                     <Link href={logo.href} target="_self">
                        <FooterLogo
                          alt={logo.alt}
                          sources={sources}
@@ -151,7 +150,6 @@
                      ) : (
                        <FooterLogo alt={logo.alt} sources={sources} />
                      )}
-                     </a>
                  </div>
                  )}
                  {copyright ? (
@@ -169,7 +167,7 @@
                  <ul className="footer__items">
                    <li class="footer__item">
                      <a href="https://redpanda.com/contact" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          Contact
@@ -177,7 +175,7 @@
                    </li>
                    <li class="footer__item">
                      <a href="https://redpanda.com/feedback" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          Feedback
@@ -185,7 +183,7 @@
                    </li>
                    <li class="footer__item">
                      <a href="https://redpanda.com/scholarship" 
-                       target="_blank" 
+                       target="_self" 
                        rel="noopener noreferrer" 
                        class="footer__link-item">
                          h4ck::73h::pl4n37 scholarship
