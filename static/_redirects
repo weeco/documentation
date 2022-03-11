@@ -26,6 +26,7 @@
 /docs/features/kubernetes-external-connect   /docs/deployment/kubernetes-external-connect  301!
 /docs/deploy-self-hosted/production-deployment-automation   /docs/deployment/production-deployment-automation  301!
 /docs/deploy-self-hosted/production-deployment   /docs/deployment/production-deployment  301!
+/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
 /docs/reference/well-known-io   /docs/deployment/well-known-io  301!
 /docs/getting-started/install-preview   /docs/deployment/install-preview  301!
 

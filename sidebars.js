@@ -104,7 +104,7 @@
             },            
           ]
         },
-        'deployment/well-known-io',
+        'deployment/performance-storage-tuning',
         {
           type: 'doc',
           label: 'Deploying for production',
