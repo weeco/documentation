@@ -179,7 +179,7 @@ Follow these steps to start working with the `panda-ns` cluster you created in t
 1. Create a `panda-chat` topic with five partitions:
 
 ```
-kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic create panda-chat --brokers='localhost:9092'
+kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic create panda-chat -p 5 --brokers='localhost:9092'
 ```
 
 2. Produce messages to the topic:
