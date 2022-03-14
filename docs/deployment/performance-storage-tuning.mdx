@@ -34,7 +34,7 @@ delete_retention_ms: 604800000
 retention.ms
 ```
 
-A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` value. The parameters are explained in detail below: 
+A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` value. Note that properties in `redpanda.yaml` use camel case while topic-level configurations use dots. The parameters are explained in detail below: 
 
 * **delete_retention_ms** - Host-wide setting in `redpanda.yaml` that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` parameter,  which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value. 
 
@@ -61,7 +61,7 @@ retention_bytes: null
 retention.bytes 
 ```
 
-A message is deleted if the size of the partition in which it is contained reaches the `retention_bytes` or `retention.bytes` value. The parameters are explained in detail below: 
+A message is deleted if the size of the partition in which it is contained reaches the `retention_bytes` or `retention.bytes` value. Note that properties in `redpanda.yaml` use camel case while topic-level configurations use dots. The parameters are explained in detail below: 
 
 * **retention_bytes** - Host-wide setting that specifies the maximum size of a partition. When a partition reaches the `retention_bytes` size, the oldest messages in the partition are deleted. To set retention size for a single topic, use the `retention.bytes` parameter, which overrides the `retention_bytes` setting. If `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value. 
 
