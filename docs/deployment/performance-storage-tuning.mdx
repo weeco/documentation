@@ -25,6 +25,14 @@ This document provides information on how to avoid out-of-disk failures by makin
 
 Retention refers to the conditions under which messages in a topic are retained on disk. These conditions can be configured based on message age or aggregate message size in a topic. The most common reason Redpanda runs out of disk space is high retention settings.
 
+The following table shows the parameters that are described in this section along with their scope and defaults. If no value is specified in the topic-level configuration, the topic uses the value of the host-wide configuration. Note that properties in `redpanda.yaml` use snake case while topic-level configurations use dots: 
+
+| Type of retention | Host-wide configuration <br /> (`redpanda.yaml`) | Topic-level configuration <br /> (overrides host-wide configuration) |
+| ---               | ---                                                |  ---                                 |
+| Time-based        | `delete_retention_ms` <br /> Default - `604800000` | `retention.ms` <br /> No default     |
+| Size-based        | `retention_bytes`  <br /> Default - `null`         | `retention.bytes`  <br /> No default |
+| Segment size      | `log_segment_size`  <br /> Default - `1073741824`  | N/A                                  |
+
 #### Time-based retention
 
 Configure time-based retention with the following properties: 
@@ -34,7 +42,7 @@ delete_retention_ms: 604800000
 retention.ms
 ```
 
-A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` value. Note that properties in `redpanda.yaml` use camel case while topic-level configurations use dots. The parameters are explained in detail below: 
+A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` value. The parameters are explained in detail below: 
 
 * **delete_retention_ms** - Host-wide setting in `redpanda.yaml` that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` parameter,  which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value. 
 
@@ -61,7 +69,7 @@ retention_bytes: null
 retention.bytes 
 ```
 
-A message is deleted if the size of the partition in which it is contained reaches the `retention_bytes` or `retention.bytes` value. Note that properties in `redpanda.yaml` use camel case while topic-level configurations use dots. The parameters are explained in detail below: 
+A message is deleted if the size of the partition in which it is contained reaches the `retention_bytes` or `retention.bytes` value. The parameters are explained in detail below: 
 
 * **retention_bytes** - Host-wide setting that specifies the maximum size of a partition. When a partition reaches the `retention_bytes` size, the oldest messages in the partition are deleted. To set retention size for a single topic, use the `retention.bytes` parameter, which overrides the `retention_bytes` setting. If `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value. 
 
