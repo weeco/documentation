@@ -119,11 +119,6 @@ The parameters are explained in detail below:
 
 * **ballast_file_size** - The size of the ballast file. You can increase the ballast file size if it is a very high throughput cluster or decrease the ballast file size if you have very little storage space. You want to balance the size of the ballast file so that it is large enough to give you enough time to delete data and configure retention settings if Redpanda crashes, but small enough that you do not waste unnecessary disk space. In general, you can set ballast_file_size to approximately 10 times the size of the largest segment to have enough space to compact that topic. Default is `1GiB`. 
 
-:::note
-Although a ballast file is not created by default, `rpk mode production` enables the ballast file tuner, which creates the ballast file when a tune occurs. If you follow the Redpanda production recommendations, a ballast file will already exist in the Redpanda data directory. 
-:::
-
-
 ## Cloud I/O optimization
 
 Redpanda relies on its own disk I/O scheduler, and by default tells the kernel to 
