@@ -21,7 +21,7 @@
       type: 'category',
       label: 'Introduction',
       link: { type: 'doc', id: 'introduction/index'},
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       items: [
         {
@@ -35,7 +35,7 @@
     {
       type: 'category',
       label: 'Quickstarts',
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       link: { type: 'doc', id: 'quickstart/index'},
       items: [
@@ -76,7 +76,7 @@
     {
       type: 'category',
       label: 'Deployment',
-      collapsible: false,
+      collapsible: true,
       link: { type: 'doc', id: 'deployment/index'},
       collapsed: false,
       items: [
@@ -117,7 +117,7 @@
       type: 'category',
       label: 'Cluster administration',
       link: { type: 'doc', id: 'cluster-administration/index'},
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       items: [
         {
@@ -133,7 +133,7 @@
       type: 'category',
       label: 'Data management',
       link: { type: 'doc', id: 'data-management/index'},
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       items: [
         'data-management/shadow-indexing',
@@ -146,7 +146,7 @@
       type: 'category',
       label: 'Development',
       link: { type: 'doc', id: 'development/index'},
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       items: [
         'development/guide-nodejs',
@@ -156,7 +156,7 @@
       type: 'category',
       label: 'Security',
       link: { type: 'doc', id: 'security/index'},
-      collapsible: false,
+      collapsible: true,
       collapsed: false,
       items: [
         'security/acls',
@@ -174,7 +174,7 @@
       label: 'Reference',
       link: { type: 'doc', id: 'reference/index'},
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           type: 'doc',
