@@ -55,10 +55,9 @@ configurations use dots:
 
 Configure time-based retention with the following properties: 
 
-```yaml
-delete_retention_ms: 604800000
-retention.ms
-```
+* `delete_retention_ms`
+* `retention.ms` 
+
 
 A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` 
 value. The parameters are explained in detail below: 
@@ -96,10 +95,8 @@ which can result in an out-of-disk outage and may result in data loss.
 
 Configure size-based retention with the following properties: 
 
-```yaml
-retention_bytes: null
-retention.bytes 
-```
+* `retention_bytes`
+* `retention.bytes`
 
 A message is deleted if the size of the partition in which it is contained 
 reaches the `retention_bytes` or `retention.bytes` value. The parameters 
@@ -135,10 +132,6 @@ uses the `retention_bytes` value.
 ### Segment size
 
 The `log_segment_size` parameter specifies the size of each log segment.
-
-```yaml
-log_segment_size: 1073741824
-```
 
 You can set the log segment size globally in the `redpanda.yaml` file, but 
 if you know which topics will receive more data, it is better to set the size 
