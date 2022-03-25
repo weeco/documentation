@@ -266,7 +266,7 @@ You must configure the following parameters before you use Shadow Indexing:
 * `cloud_storage_region` - Cloud storage region. Required. 
 * `cloud_storage_bucket` - Cloud storage bucket name. Required. 
 * `cloud_storage_api_endpoint` - API endpoint. This can be left blank for AWS, where it’s generated automatically using the region and bucket. For Google Cloud Service, use storage.googleapis.com. 
-* `cloud_storage_cache_directory` - The directory for the Shadow Indexing cache. You must specify the full path. Default is: `&lt;redpanda-data-directory>/cloud_storage_cache. `
+* `cloud_storage_cache_directory` - The directory for the Shadow Indexing cache. You must specify the full path. Default is: `<redpanda-data-directory>/cloud_storage_cache. `
 * `cloud_storage_cache_size` - Maximum size of the disk cache that is used by Shadow Indexing. Default is 20GiB.
 
 You may want to configure these parameters: 
@@ -288,5 +288,5 @@ Under normal circumstances, you should not need to configure these parameters:
 * `cloud_storage_upload_ctrl_max_shares` - The maximum number of I/O and CPU shares that the remote write process can use. Default is 1000. 
 * `cloud_storage_reconciliation_interval_ms` - Sets the interval, in milliseconds, that is used to reconcile partitions that need to be uploaded. A long reconciliation interval can result in a delayed reaction to topic creation, topic deletion, or leadership rebalancing events. A short reconciliation interval guarantees that new partitions are picked up quickly, but the process uses more resources. Default is 10000ms.
 * `cloud_storage_disable_tls` - Disables TLS encryption. You can set this to true if TLS termination is done by the proxy, such as HAProxy. Default is false. 
-* `cloud_storage_api_endpoint_port` - Overrides the default port for the TLS connection. Default is 443. 
+* `cloud_storage_api_endpoint_port` - Overrides the default API endpoint port. Default is 443. 
 * `cloud_storage_trust_file` - The public certificate that is used to validate the TLS connection to cloud storage. If this is empty, Redpanda will use your operating system's CA cert pool.
