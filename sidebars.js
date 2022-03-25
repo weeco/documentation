@@ -164,7 +164,26 @@
           type: 'category',
           label: 'Kubernetes',
           items: [
-            'security/tls-kubernetes',
+            {
+              type: 'doc',
+              label: 'Redpanda security',
+              id: 'security/kubernetes-security',
+            },
+            {
+              type: 'doc',
+              label: 'Configuring TLS',
+              id: 'security/tls-kubernetes',
+            },
+            {
+              type: 'doc',
+              label: 'Configuring SASL authentication',
+              id: 'security/kubernetes-sasl',
+            },
+            {
+              type: 'doc',
+              label: 'Configuring mTLS authentication',
+              id: 'security/kubernetes-mtls',
+            },
           ],
         },
       ]
