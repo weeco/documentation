@@ -33,7 +33,7 @@ Before you install Redpanda, verify that you have the following software install
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.19 or later
 * [Helm](https://github.com/helm/helm/releases) version 3.0.0 or later 
 * [minikube](https://minikube.sigs.k8s.io/docs/start/) version 1.25.1 or later
-* [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. The steps below assume that you have jq installed, but if you don’t, you can run the same commands by replacing the `$VERSION` environment variable with the version of Reppanda that you’re using. Run the one of the commands below to install jq: 
+* [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. The steps below assume that you have jq installed, but if you don’t, you can run the same commands by replacing the `$VERSION` environment variable with the version of Redpanda that you’re using. Run the one of the commands below to install jq: 
     <Tabs>
       <TabItem value="brew" label="brew" default>
 
@@ -96,7 +96,7 @@ helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 ```
 
-2. Use the following command to retrieve the latest operator and Redpanda version: 
+2. Use the following command to set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
 ```
 export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
