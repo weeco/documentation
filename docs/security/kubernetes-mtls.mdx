@@ -193,6 +193,8 @@ Kafka API and Schema Registry allow you to provide a certificate issuer or certi
 
 When you enable mTLS, the Redpanda operator generates a root certificate for each API. The root certificate is local to the cluster and the operator uses the root certificate to generate leaf certificates for the nodes and the client. However, for Kafka API and Schema registry you can instead specify a certificate issuer or a certificate. 
 
+For information about how certificates are created and used in Redpanda, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security/#certificates" target="_self">Certificates</a> section of the Redpanda security on Kubernetes document.
+
 ### Provide an issuer
 
 To provide a certificate issuer, add the `issuerRef` property to the cluster specification file that you created in the previous step. For information about issuers, see the cert-manager [Issuer](https://cert-manager.io/docs/concepts/issuer/) documentation.
@@ -348,7 +350,7 @@ The Pod is the process that consumes the ConfigMap that you created in the previ
 For everything you ever wanted to know about Pods, see the Kubernetes [Pods](https://kubernetes.io/docs/concepts/workloads/pods/) documentation.
 :::
 
-4. Copy the text below and save it locally as a `yaml` file, such as `mtls_pod.yaml`. 
+1. Copy the text below and save it locally as a `yaml` file, such as `mtls_pod.yaml`. 
 
 ```yaml
 apiVersion: v1
@@ -384,10 +386,10 @@ spec:
         name: <configMap_name>
 ```
 
-5. In the file that you just saved, configure these variables: 
+2. In the file that you just saved, configure these variables: 
     * `pod_name` - Name of the Pod. This is the Pod that will run `rpk`. This can be any string. 
     * `args` - Specifies what you want the Pod to do. You can execute `rpk` commands here. This example uses the `sleep infinity` argument, which tells the Pod to keep running so that you can execute as many `rpk` commands as you want from the command line. 
-6. Configure the `volumeMounts` properties. There are three of these; one for `tls`, one for `ca`, and one for `rpk`. 
+3. Configure the `volumeMounts` properties. There are three of these; one for `tls`, one for `ca`, and one for `rpk`. 
     * `tls` - The path and the name of the `tls.crt` and `tls.key` volume mount. 
         * `key_file_path` - The same path that you specified in the `key_file_path` and `cert_file_path` properties in the ConfigMap. Generally this is `/etc/tls/certs`. 
         * `tls_volume_name` - Must match the `tls_volume_name` in the `volumeMounts` property.
@@ -396,7 +398,7 @@ spec:
         * `ca_volume_name` - Can be any string, but it must match the `ca_volume_name` in the `volumes` property of this file.
     * `rpk` - The path and the name of the `rpk` volume mount.
         * `name` - Can be any string, but it must match the `rpk_volume_name` in the `volumes` property of this file.
-7. Configure the `volumes` properties. There are three of these; one for `tls`, one for `ca`, and one for `rpk`. 
+4. Configure the `volumes` properties. There are three of these; one for `tls`, one for `ca`, and one for `rpk`. 
     * `tls` -  The name and Secret of the `tls.crt` and `tls.key` volume mount. 
         * `tls_volume_name` - Must be the same as the `tls_volume_name` in the `volumeMounts` property of this file.  
         * `cluster_name` - The cluster name that you defined in the cluster specification file in **Step 1**. The `secretName` property specifies the name of the client Secret. For the Kafka API, this is `<cluster_name>-user-client`. 
@@ -406,8 +408,8 @@ spec:
     * `rpk` - The volume name and ConfigMap name of the `rpk` volume mount.
         * `rpk_volume_name` - Must match the `<rpk_volume_name>` in the `volumeMounts` property of this file.
         * `configMap_name` - The ConfigMap name that you specified in the `name` property of the ConfigMap in the previous step. 
-8. Configure the `<redpanda-version>` variable. Add a Redpanda version, such as `v21.11.11`. You can find all the Redpanda version tags in the [Redpanda Docker Hub repository](https://hub.docker.com/r/vectorized/redpanda/tags?page=1&ordering=last_updated). 
-9. Save the file. 
+5. Configure the `<redpanda-version>` variable. Add a Redpanda version, such as `v21.11.11`. You can find all the Redpanda version tags in the [Redpanda Docker Hub repository](https://hub.docker.com/r/vectorized/redpanda/tags?page=1&ordering=last_updated). 
+6. Save the file. 
 
 ### Tutorial: Triceratops
 
