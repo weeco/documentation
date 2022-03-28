@@ -6,6 +6,7 @@ module.exports = {
   tagline: 'A modern streaming platform for mission critical workloads',
   url: 'https://docs.redpanda.com',
   baseUrl: '/',
+  trailingSlash: 'true',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
