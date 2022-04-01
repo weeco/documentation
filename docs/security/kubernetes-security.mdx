@@ -91,7 +91,7 @@ Users, including superusers, are created through the Admin API. However, you mus
 
 ```yaml
 superUsers:
-  - admin
+  - username: admin
 ```
 
 You can specify an existing user or a user that does not exist yet. Adding the username in the configuration file does not create the user, but when you do create a user with the username that you specified in the configuration file, that user will have full access to the cluster. You can then use that superuser to grant permissions to other users. 
