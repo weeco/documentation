@@ -171,7 +171,7 @@ redpanda:
     port: 33145
   seed_servers: []
   superUsers:
-  - admin
+    - username: admin
 rpk:
   coredump_dir: /var/lib/redpanda/coredump
   enable_memory_locking: false
@@ -209,7 +209,7 @@ spec:
   replicas: 3
   enableSasl: true
   superUsers:
-  - admin
+    - username: admin
   resources:
     requests:
       cpu: 1
