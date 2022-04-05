@@ -1,23 +1,18 @@
 ---
-title: RPK commands
+title: rpk commands
 ---
 
-# RPK commands
+# rpk commands
 
-## What is RPK?
+`rpk` (Redpanda Keeper) is Redpanda's command line interface (CLI) utility. `rpk` commands allow you to configure and manage Redpanda clusters, tune them for better performance, manage topics and groups, manage access control lists (ACLs), and more.
 
-`rpk` is a CLI utility tool that helps you manage Redpanda.
+All `rpk` commands offer auto-completion. You can also run `rpk <command> -h` to see all flags for that command, as well as examples.
 
-With it you can interact with Redpanda in all sorts of ways. You can manage your ACLs, tune for performance, manage topics, and more. 
-
-It also has a version as a Docker container named `rpk container`.
-
-Here are all of the rpk commands.
-
+This section lists each RPK command in alphabetical order, along with a table of flags for that command. All descriptions are from the output of the `rpk –help` command.
 
 ## rpk
 
- rpk is the Redpanda CLI & toolbox.
+ rpk is the Redpanda CLI.
 
 ```bash 
 Usage:
@@ -58,10 +53,9 @@ An ACL is made up of five components:
 
 ACL commands work on a multiplicative basis. If creating, specifying two
 principals and two permissions creates four ACLs: both permissions for the
-first principal, as well as both permissions for the second principal. Adding
-two resources further doubles the ACLs created.
+first principal, as well as both permissions for the second principal. Adding two resources further doubles the ACLs created.
 
-It is recommended to be as specific as possible when granting ACLs. Granting
+Be as specific as possible when granting ACLs. Granting
 more ACLs than necessary per principal may inadvertently allow clients to do
 things they should not, such as deleting topics or joining the wrong consumer
 group.
