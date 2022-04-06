@@ -18,6 +18,9 @@ To create a simple config file that you can customize, run:
 ```bash
 rpk config init
 ```
+:::note
+Node settings in the Redpanda configuration file apply to topics if there is no topic-level setting specified through `rpk` or another Kafka client. This means that if you update the node configuraiton in `redpanda.yaml`, topic configuration will reflect those changes. However, if you configure a setting at the topic-level, that setting overrides the node-level setting and will not be affected by changes in `redpanda.yaml`. 
+:::
 
 ## Sample configuration
 
@@ -343,7 +346,7 @@ redpanda:
 
   # Free cache when segments roll
   # Default: false
-  release_cache_on_segment_roll: 10000
+  release_cache_on_segment_roll: false
 
   # Maximum delay in milliseconds until buffered data is written
   # Default: 1s

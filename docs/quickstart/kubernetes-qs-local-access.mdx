@@ -125,7 +125,7 @@ helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 ```
 
-2. Use the following command to retrieve the latest operator and Redpanda version: 
+2. Use the following command to set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
 ```
 export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)

@@ -101,7 +101,7 @@ Your config should look something like this:
 redpanda:
   enable_sasl: true
   superUsers:
-  - admin
+    - username: admin
   # The rest of the config...
 ```
 
@@ -171,7 +171,7 @@ redpanda:
     port: 33145
   seed_servers: []
   superUsers:
-  - admin
+    - username: admin
 rpk:
   coredump_dir: /var/lib/redpanda/coredump
   enable_memory_locking: false
@@ -209,7 +209,7 @@ spec:
   replicas: 3
   enableSasl: true
   superUsers:
-  - admin
+    - username: admin
   resources:
     requests:
       cpu: 1
@@ -254,7 +254,7 @@ Creating users happens through the Redpanda admin API, which defaults to `localh
 
 The reason you need a super user is because creating ACLs for users uses the Kafka protocol (default of `localhost:9092`, mentioned above). 
 
-Since no ACLs exist at the start, you need a super user to bypass the requirement of needing ACLs to create ACLs. Once you provision an initial user and initial set of ACLs (described below), it is recommended to delete the super user.
+Since no ACLs exist at the start, you need a super user to bypass the requirement of needing ACLs to create ACLs.
 
 You can create users and set passwords by running the following command:
 
