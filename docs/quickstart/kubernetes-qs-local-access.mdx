@@ -61,7 +61,7 @@ Use kind to create a Kubernetes cluster on your local machine.
 
 [kind](https://kind.sigs.k8s.io/) is a tool that lets you create local Kubernetes clusters using Docker. After you install kind, verify that port `30001` is free on your machine before you set up a cluster or cluster creation will fail. 
 
-The command to set up a cluster requires you to have a `docs/kind-external.yaml` file that contains the following text: 
+To enable access from your operating system to the cluster, create a `kind-external.yaml` file that contains the following text: 
 
 ```
 kind: Cluster
@@ -76,7 +76,7 @@ nodes:
 Set up a cluster with this command:
 
 ```
-kind create cluster --config docs/kind-external.yaml
+kind create cluster --config kind-external.yaml
 ```
 
 ## Step 2: Install cert-manager
@@ -139,7 +139,7 @@ curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | gr
 ```
 :::
 
-You can find information about the versions of the operator in the [list of operator releases](https://github.com/vectorizedio/redpanda/releases).
+You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).
 
 3. Install the Redpanda operator CRD with the bash or zsh command below:
     <Tabs>
