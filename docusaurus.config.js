@@ -13,6 +13,7 @@ module.exports = {
   organizationName: 'redpanda-data', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
+    hideableSidebar: true,
     colorMode: {
       disableSwitch: false
     },
