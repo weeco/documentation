@@ -203,6 +203,25 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+button[class*='collapseSidebarButton'] {
+  position: absolute;
+  top: 150px;
+  left: 250px;
+  width: 50px;
+  padding: 0;
+}
+
+div[class*='collapsedDocSidebar'] {
+  top: 170px;
+  height: 50px;
+  border:2px solid var(--v-white);
+  cursor: pointer;
+}
+
+aside[class*='docSidebarContainerHidden_node_modules'] {
+  width: 60px;
+  cursor: auto;
+}
 
 @font-face {
   font-family: 'KumbhSans';
