@@ -20,9 +20,15 @@
     {
       type: 'category',
       label: 'Introduction',
-      link: { type: 'doc', id: 'introduction/index'},
       collapsible: true,
       collapsed: false,
+      link: {
+        type: 'generated-index',
+        title: 'Introduction',
+        description: 'New in event streaming? Here are some Introduction guides.',
+        slug: '/introduction',
+        keywords: ['introduction, intro, events'],
+      },
       items: [
         {
           type: 'doc',
@@ -37,16 +43,38 @@
       label: 'Quickstarts',
       collapsible: true,
       collapsed: false,
-      link: { type: 'doc', id: 'quickstart/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Quick Start',
+        description: 'We can get you running with Redpanda in just a few minutes. Which platform do you want to use?',
+        slug: '/quickstart',
+        keywords: ['quickstart, start, kubernetes, docker, linux, macos, windows'],
+      },
       items: [
         {
           type: 'category',
           label: 'Local',
           items: [
-            'quickstart/quick-start-docker', 
-            'quickstart/quick-start-linux',
-            'quickstart/quick-start-macos',
-            'quickstart/quick-start-windows',
+            {
+              type: 'doc',
+              label: 'Docker',
+              id: 'quickstart/quick-start-docker',
+            },
+            {
+              type: 'doc',
+              label: 'Linux',
+              id: 'quickstart/quick-start-linux',
+            }, 
+            {
+              type: 'doc',
+              label: 'macOS',
+              id: 'quickstart/quick-start-macos',
+            },
+            {
+              type: 'doc',
+              label: 'Windows',
+              id: 'quickstart/quick-start-windows',
+            },            
           ],
         },
         {
@@ -77,7 +105,13 @@
       type: 'category',
       label: 'Deployment',
       collapsible: true,
-      link: { type: 'doc', id: 'deployment/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Deployment',
+        description: 'You can deploy Redpanda to a number of platforms and systems.',
+        slug: '/deployment',
+        keywords: ['deployment, terraform, cluster, kubernetes, performance, storage, production, beta, version'],
+      },
       collapsed: false,
       items: [
         'deployment/production-deployment-automation',
@@ -116,7 +150,13 @@
     {
       type: 'category',
       label: 'Cluster administration',
-      link: { type: 'doc', id: 'cluster-administration/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Cluster Management',
+        description: 'You can perform day-to-day operations very easily with Redpanda.',
+        slug: '/cluster-administration',
+        keywords: ['cluster, administration, configuration, monitoring, version, upgrade'],
+      },
       collapsible: true,
       collapsed: false,
       items: [
@@ -132,7 +172,13 @@
     {
       type: 'category',
       label: 'Data management',
-      link: { type: 'doc', id: 'data-management/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Data management',
+        description: 'Managing your data is one of the key components of a stream-based application and Redpanda can help you with that.',
+        slug: '/data-management',
+        keywords: ['data, management, shadow, indexing, webassembly, archiving, migrating'],
+      },
       collapsible: true,
       collapsed: false,
       items: [
@@ -145,17 +191,29 @@
     {
       type: 'category',
       label: 'Development',
-      link: { type: 'doc', id: 'development/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Development',
+        slug: '/development',
+        keywords: ['development, library, client, nodejs'],
+      },
       collapsible: true,
       collapsed: false,
       items: [
+        'development/libraries',
         'development/guide-nodejs',
       ]
     },
     {
       type: 'category',
       label: 'Security',
-      link: { type: 'doc', id: 'security/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Security',
+        description: 'Security is at the heart of Redpanda and we highly recommend these articles:',
+        slug: '/security',
+        keywords: ['security, encryption, authorization, authentication, kubernetes, configuration, TLS, SASL, mTLS'],
+      },
       collapsible: true,
       collapsed: false,
       items: [
@@ -191,7 +249,13 @@
     {
       type: 'category',
       label: 'Reference',
-      link: { type: 'doc', id: 'reference/index'},
+      link: {
+        type: 'generated-index',
+        title: 'Reference',
+        description: 'Here are some reference pages about what else Redpanda has to offer:',
+        slug: '/reference',
+        keywords: ['reference, rpk, commands, CRD, operator, questions, release, notes'],
+      },
       collapsible: true,
       collapsed: false,
       items: [

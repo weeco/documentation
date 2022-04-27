@@ -195,6 +195,10 @@ div.navbar__items a {
   transform: none !important;
 }
 
+.card {
+  border-radius: 10px !important;
+}
+
 div[class^="navbarHideable"] {
   transform: none !important;
 }
