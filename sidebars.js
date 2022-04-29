@@ -30,6 +30,7 @@
           id: 'introduction/intro-to-events',
         },        
         'introduction/autotune',
+        'introduction/consumer-offsets',
       ],
     },
     {

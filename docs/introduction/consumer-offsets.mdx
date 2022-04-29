@@ -1,0 +1,95 @@
+---
+title: Consumer Offset
+---
+
+## Introduction
+
+Redpanda has different ways of tracking events: topics, partitions, and offsets.
+
+Topics are responsible for receive, store, and stream events at a very high level. Each topic can have multiple partitions, which are the smallest storage unit in which a subset of events are stored when the topic receives them.
+
+OffsetWhen stored in a partition, a sequential number is assigned to each event for order. This number is the offset.
+
+The offset allows consumer event processing to start or continue from where it left off. For example, suppose a consumer application has an outage, preventing it from receiving events. In that case, it is possible to use the consumer offset to select the events to send only events streamed when the application was out. By default, the offset starts at 0, but it is possible to manually specify that it start with a specific value.
+
+<!-- If a consumer application has an outage preventing it from receiving events, then you can use the consumer offset to select events to send only events streamed by the time the application was out.
+
+![Redpanda consumer offset overview](../images/<placeholder>)
+
+Redpanda consumer offset process overview. -->
+
+## Consumer offset use cases
+
+With all concepts previously explained regarding event tracking, we can try some examples to see how it works in practice. To have Redpanda running in your environment, check our quick start guides.
+
+One of the required structures to track events are topics, so for example, let’s create a new topic with 10 partitions:
+
+```bash
+rpk topic create orders -p 10
+```
+
+Produce some events in the topic “orders”:
+
+```bash
+rpk topic produce orders
+```
+
+For each event produced, you will see an output similar to the following:
+
+```bash
+Produced to partition 6 at offset 0 with timestamp 1649269960577.
+```
+
+Redpanda automatically assigns the partition, offset, and timestamp. If you want to produce an event for a specific partition, use the `-p` flag followed by the partition number.
+
+```bash
+rpk topic produce orders -p <partition_number>
+```
+
+With events sent to topics, you can now consume them and check to confirm that both partition and offset are assigned. All events sent to a topic will show in the output if no partition is specified.
+
+```bash
+rpk topic consume orders -p <partition_number>
+```
+
+You can expect output similar to the following:
+
+```bash
+{
+  "topic": "orders",
+  "value": "order_1",
+  "timestamp": 1649269951126,
+  "partition": 3,
+  "offset": 0
+}
+{
+  "topic": "orders",
+  "value": "order_2",
+  "timestamp": 1649269960577,
+  "partition": 6,
+  "offset": 0
+}
+{
+  "topic": "orders",
+  "value": "order_4",
+  "timestamp": 1649269973940,
+  "partition": 8,
+  "offset": 0
+}
+{
+  "topic": "orders",
+  "value": "order_3",
+  "timestamp": 1649269967731,
+  "partition": 9,
+  "offset": 0
+}
+{
+  "topic": "orders",
+  "value": "order_9",
+  "timestamp": 1649270168759,
+  "partition": 9,
+  "offset": 1
+}
+```
+
+All of the tracking structures mentioned here can be viewed in the output. All sent events to the orders topic are displayed if no partition is specified. For more information about rpk commands used here, refer to [rpk documentation](/docs/reference/rpk-commands).
