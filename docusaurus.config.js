@@ -117,5 +117,8 @@ module.exports = {
         // When applying `zh` in language, please install `nodejieba` in your project.
       },
     ],
-  ]
+  ],
+  stylesheets: [
+    "https://fonts.googleapis.com/icon?family=Material+Icons",
+  ],
 };
