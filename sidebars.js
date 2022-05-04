@@ -97,11 +97,6 @@
               label: 'Using configuration parameters with a custom resource',
               id: 'deployment/kubernetes-additional-config',
             },
-            {
-              type: 'doc',
-              label: 'Arbitrary configuration',
-              id: 'deployment/arbitrary-configuration',
-            },            
           ]
         },
         'deployment/performance-storage-tuning',
@@ -202,7 +197,7 @@
         },        
         {
           type: 'link',
-          label: 'CRD operator',
+          label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },        
         'reference/faq',
