@@ -21,6 +21,8 @@ For example:
     - port: 9092
     pandaproxyApi:
     - port: 8082
+    schemaRegistry:
+      port: 8081
     adminApi:
     - port: 9644
 ```
@@ -87,6 +89,8 @@ Status:
       three-node-cluster-0.three-node-cluster.default.svc.cluster.local.
       three-node-cluster-1.three-node-cluster.default.svc.cluster.local.
       three-node-cluster-2.three-node-cluster.default.svc.cluster.local.
+    Schema Registry:
+      Internal:  three-node-cluster-cluster.default.svc.cluster.local:8081
 ```
 
 ### Trying it out
@@ -137,6 +141,10 @@ Let’s enable external connectivity for all supported APIs:
      - port: 8082
      - external:
          enabled: true
+    schemaRegistry:
+      port: 8081
+      external:
+        enabled: true
     adminApi:
     - port: 9644
      - external:
@@ -158,6 +166,7 @@ and will also create two services to support external connectivity:
 | Admin API  | y  | n  | y |
 | Kafka API  | y  | n  | y |
 | Pandaproxy API  | y  | y  | y|
+| Schema Registry  | y  | y  | y|
 
 Each external listener is provided with a nodeport that is automatically selected by Kubernetes.
 A benefit of not specifying one explicitly is the prevention of port collisions.
