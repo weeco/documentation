@@ -62,7 +62,7 @@ A message is deleted if its age exceeds the  `delete_retention_ms`  or `retentio
   ```
 
 :::caution 
-Do not set `delete_retention_ms` to `-1` unless you are using <a href="https://docs.redpanda.com/docs/data-management/shadow-indexing#remote-write" target="_self">remote write with Shadow Indexing</a> to upload segments to remote storage. Setting `delete_retention_ms` to `-1` configures indefinite retention, which can result in an out-of-disk outage and may result in data loss. 
+Do not set `delete_retention_ms` to `-1` unless you are using <a href="https://docs.redpanda.com/docs/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting `delete_retention_ms` to `-1` configures indefinite retention, which can result in an out-of-disk outage and may result in data loss. 
 :::
 
 #### Size-based retention

@@ -1,13 +1,16 @@
 ---
-title: Data transformation with WebAssembly
+title: Data Transforms
 order: 0
 ---
 
 :::caution
 
-This feature is in technical preview and is not supported for production.
+This feature is in technical preview and is not supported for production. For instructions on how to install features that are in technical preview, see the [Installing beta versions](/docs/deployment/install-preview) documentation.
 
-For installation instructions, check our guide on [how to install beta versions](/docs/deployment/install-preview).
+We recommend that you do not use Data Transforms with Tiered Storage. There is a high likelihood that you will encounter problems if you use Data Transforms and Tiered Storage on a topic.
+
+Data Transforms are not supported in Redpanda Cloud.
+
 :::
 
 Redpanda Data Transforms enable users to perform simple data transformations on topics without leaving the platform, such as capitalizing strings, and filtering messages to adhere to GDPR. This eliminates data going back and forth by removing the need to consume data streams from a separate system for simple transformations.
@@ -452,3 +455,5 @@ The coprocessor does not have system limits. For example, there is no limit for 
 The coprocessor doesn't save your state. For example, if you have a counter and there is a crash, you will lose that counter.  The best practice is to always avoid stateful implementations. The only state that is kept and checkpointed is your offset, just like Kafka. The semantics of your materialized topics is `At-Least-Once`. Redpanda saves the offset from wherever you were reading. In the case of a crash, your deployed code will be reprocessed based on the `PolicyInjection` policy. If you use `PolicyInjection.Stored`, for example, it will be reprocessed from whatever offset was saved before the crash.
 
 It's not possible to pipeline multiple scripts so that you can pass transforms through one another (such as A->B->C->D). The API only maps topic(s)-to-topic(s).
+
+Data Transforms are not supported in Redpanda Cloud.

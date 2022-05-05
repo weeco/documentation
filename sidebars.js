@@ -131,7 +131,7 @@
       collapsible: true,
       collapsed: false,
       items: [
-        'data-management/shadow-indexing',
+        'data-management/tiered-storage',
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
