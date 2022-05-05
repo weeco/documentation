@@ -121,6 +121,7 @@
           id: 'cluster-administration/configuration',
         },        
         'cluster-administration/monitoring',
+        'cluster-administration/node-management',
         'cluster-administration/version-upgrade',        
       ]
     },
