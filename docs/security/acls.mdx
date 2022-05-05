@@ -100,8 +100,8 @@ Your config should look something like this:
 ```yaml
 redpanda:
   enable_sasl: true
-  superUsers:
-    - username: admin
+  superusers:
+    - admin
   # The rest of the config...
 ```
 
@@ -119,7 +119,7 @@ You can modify the configuration file at `etc/redpanda/redpanda.yaml`. After you
     - redpanda
     - start
     - --set redpanda.enable_sasl=true
-    - --set redpanda.superUsers=["admin"]
+    - --set redpanda.superusers=["admin"]
 
 #rest of config
 ```
@@ -170,8 +170,8 @@ redpanda:
     address: 0.0.0.0
     port: 33145
   seed_servers: []
-  superUsers:
-    - username: admin
+  superusers:
+    - admin
 rpk:
   coredump_dir: /var/lib/redpanda/coredump
   enable_memory_locking: false
@@ -246,7 +246,7 @@ kubectl get clusters external-connectivity -o=jsonpath='{.spec}'
 
 #### Users
 
-The `superUsers` section in your `redpanda.yaml` is the user that you will use to bootstrap other users and ACLs. 
+The `superusers` section in your `redpanda.yaml` is the user that you will use to bootstrap other users and ACLs. 
 
 For example, if you used super user `admin`, Redpanda _allows_ the `admin` user to do anything, but Redpanda does _not_ create the `admin` user. You must now create this super user. 
 
