@@ -30,6 +30,11 @@
           id: 'introduction/intro-to-events',
         },        
         'introduction/autotune',
+        {
+          type: 'doc',
+          label: 'Technical Preview',
+          id: 'introduction/tech-preview',
+        }
       ],
     },
     {
@@ -206,7 +211,8 @@
           type: 'link',
           label: 'Release notes',
           href: 'https://github.com/redpanda-data/redpanda/releases'
-        }
+        },
+        
       ]
     },
     {
