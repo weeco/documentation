@@ -18,6 +18,6 @@ yarn build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-## Style Guide
+## Style Guides
 
 Before you add or edit content, consult the Redpanda Style Guide (available on the [wiki](https://vectorizedio.atlassian.net/wiki/spaces/DOC/pages/92635182/Redpanda+Style+Guide) or in [Google Docs](https://drive.google.com/drive/folders/1dZqaWhAqe5-jHcOd0y6WRflMUxEPNK4Q?ths=true)) for product documentation guidelines.  
