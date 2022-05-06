@@ -76,8 +76,5 @@ redpanda:
   ..
 ...
 schema_registry:
-  schema_registry_api:
-    - address: 0.0.0.0
-      name: external
-      port: 8081
+  schema_registry_replication_factor: 3
 ```
