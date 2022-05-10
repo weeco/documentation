@@ -34,7 +34,8 @@
           type: 'doc',
           label: 'Technical Preview',
           id: 'introduction/tech-preview',
-        }
+        },
+        'introduction/consumer-offsets',
       ],
     },
     {
