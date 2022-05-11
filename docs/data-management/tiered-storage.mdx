@@ -79,7 +79,7 @@ To enable Tiered Storage on a cluster, set the following parameters in the `redp
 Tiered Storage also uses the following topic configuration flags, which are described in detail in the sections below: 
 
 * `redpanda.remote.write` - Uploads data from Redpanda to cloud storage. Overrides the cluster-level `cloud_storage_enable_remote_write` configuration for the topic. 
-* `redpanda.remote.read` - Fetches data from cloud storage to Redpanda. Overrides the cluster-level `cloud_storage_enable_reamote_read` configuration for the topic.
+* `redpanda.remote.read` - Fetches data from cloud storage to Redpanda. Overrides the cluster-level `cloud_storage_enable_remote_read` configuration for the topic.
 * `redpanda.remote.recovery` - Recovers or reproduces a topic from cloud storage. Use this flag during topic creation. It does not apply to existing topics. 
 
 Note: For cloud customers, Tiered Storage is turned off by default. You can turn it on for a topic using the topic configuration flags with the `rpk` CLI tool. 
@@ -90,7 +90,7 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 
 **Table 1: Remote write configuration**
 
-| Cluster-level configuration <br />(<code>cloud_storage_remote_write</code>) | Topic-level configuration <br />(<code>redpanda.remote.write</code>) | Outcome <br />(whether remote write is enabled <br />or disabled on the topic) |
+| Cluster-level configuration <br />(<code>cloud_storage_enable_remote_write</code>) | Topic-level configuration <br />(<code>redpanda.remote.write</code>) | Outcome <br />(whether remote write is enabled <br />or disabled on the topic) |
 | --------           | ------             | ----     |
 | <code>true</code>  | Not set            | Enabled  |
 | <code>true</code>  | <code>false</code> | Disabled |
@@ -101,7 +101,7 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 
 **Table 2: Remote read configuration**
 
-| Cluster-level configuration <br />(<code>cloud_storage_remote_read</code>) | Topic-level configuration <br />(<code>redpanda.remote.read</code>) | Outcome <br />(whether remote read is enabled <br />or disabled on the topic) |
+| Cluster-level configuration <br />(<code>cloud_storage_enable_remote_read</code>) | Topic-level configuration <br />(<code>redpanda.remote.read</code>) | Outcome <br />(whether remote read is enabled <br />or disabled on the topic) |
 | --------           | ------             | ----     |
 | <code>true</code>  | Not set            | Enabled  |
 | <code>true</code>  | <code>false</code> | Disabled |
