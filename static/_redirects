@@ -39,6 +39,9 @@
 /docs/cluster-management/monitoring   /docs/cluster-administration/monitoring  301!
 /docs/cluster-management/version-upgrade   /docs/cluster-administration/version-upgrade  301!
 
+# Data Management
+/docs/data-management/shadow-indexing /docs/data-management/tiered-storage 301!
+
 # Security
 /docs/features/acls   /docs/security/acls  301!
 /docs/features/tls-kubernetes   /docs/security/tls-kubernetes  301!
