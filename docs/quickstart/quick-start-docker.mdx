@@ -35,6 +35,8 @@ With a 1-node cluster you can test out a simple implementation of Redpanda.
 
 ```bash
 docker run -d --pull=always --name=redpanda-1 --rm \
+-p 8081:8081 \
+-p 8082:8082 \
 -p 9092:9092 \
 -p 9644:9644 \
 docker.redpanda.com/vectorized/redpanda:latest \
@@ -77,6 +79,7 @@ docker run -d \
 --name=redpanda-1 \
 --hostname=redpanda-1 \
 --net=redpandanet \
+-p 8081:8081 \
 -p 8082:8082 \
 -p 9092:9092 \
 -p 9644:9644 \
@@ -88,10 +91,10 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --overprovisioned \
 --node-id 0 \
 --check=false \
---pandaproxy-addr 0.0.0.0:8082 \
---advertise-pandaproxy-addr 127.0.0.1:8082 \
---kafka-addr 0.0.0.0:9092 \
---advertise-kafka-addr 127.0.0.1:9092 \
+--pandaproxy-addr INSIDE://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082 \
+--advertise-pandaproxy-addr INSIDE://redpanda-1:28082,OUTSIDE://localhost:8082 \
+--kafka-addr INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092 \
+--advertise-kafka-addr INSIDE://redpanda-1:29092,OUTSIDE://localhost:9092 \
 --rpc-addr 0.0.0.0:33145 \
 --advertise-rpc-addr redpanda-1:33145 &&
 
@@ -100,6 +103,7 @@ docker run -d \
 --name=redpanda-2 \
 --hostname=redpanda-2 \
 --net=redpandanet \
+-p 8083:8083 \
 -p 9093:9093 \
 -v "redpanda2:/var/lib/redpanda/data" \
 docker.redpanda.com/vectorized/redpanda redpanda start \
@@ -110,10 +114,10 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --node-id 1 \
 --seeds "redpanda-1:33145" \
 --check=false \
---pandaproxy-addr 0.0.0.0:8083 \
---advertise-pandaproxy-addr 127.0.0.1:8083 \
---kafka-addr 0.0.0.0:9093 \
---advertise-kafka-addr 127.0.0.1:9093 \
+--pandaproxy-addr INSIDE://0.0.0.0:28083,OUTSIDE://0.0.0.0:8083 \
+--advertise-pandaproxy-addr INSIDE://redpanda-2:28083,OUTSIDE://localhost:8083 \
+--kafka-addr INSIDE://0.0.0.0:29093,OUTSIDE://0.0.0.0:9093 \
+--advertise-kafka-addr INSIDE://redpanda-2:29093,OUTSIDE://localhost:9093 \
 --rpc-addr 0.0.0.0:33146 \
 --advertise-rpc-addr redpanda-2:33146 &&
 
@@ -122,6 +126,7 @@ docker run -d \
 --name=redpanda-3 \
 --hostname=redpanda-3 \
 --net=redpandanet \
+-p 8084:8084 \
 -p 9094:9094 \
 -v "redpanda3:/var/lib/redpanda/data" \
 docker.redpanda.com/vectorized/redpanda redpanda start \
@@ -132,10 +137,10 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --node-id 2 \
 --seeds "redpanda-1:33145" \
 --check=false \
---pandaproxy-addr 0.0.0.0:8084 \
---advertise-pandaproxy-addr 127.0.0.1:8084 \
---kafka-addr 0.0.0.0:9094 \
---advertise-kafka-addr 127.0.0.1:9094 \
+--pandaproxy-addr INSIDE://0.0.0.0:28084,OUTSIDE://0.0.0.0:8084 \
+--advertise-pandaproxy-addr INSIDE://redpanda-3:28084,OUTSIDE://localhost:8084 \
+--kafka-addr INSIDE://0.0.0.0:29094,OUTSIDE://0.0.0.0:9094 \
+--advertise-kafka-addr INSIDE://redpanda-3:29094,OUTSIDE://localhost:9094 \
 --rpc-addr 0.0.0.0:33147 \
 --advertise-rpc-addr redpanda-3:33147
 ```
@@ -146,14 +151,21 @@ Now you can run `rpk` on one of the containers to interact with the cluster:
 docker exec -it redpanda-1 rpk cluster info
 ```
 
+Or as a separate container in the same network:
+
+```bash
+docker run --net redpandanet docker.vectorized.io/vectorized/redpanda cluster info --brokers=redpanda-1:29092
+```
+
 The output of the status command looks like:
 
 ```bash
-  Redpanda Cluster Status
-
-  0 (127.0.0.1:9092)       (No partitions)
-  1 (127.0.0.1:9093)       (No partitions)
-  2 (127.0.0.1:9094)       (No partitions)
+BROKERS
+=======
+ID    HOST        PORT
+0*    redpanda-1  29092
+1     redpanda-2  29093
+2     redpanda-3  29094
 ```
 
 ### Bring up a docker-compose file
@@ -162,31 +174,38 @@ You can easily try out different docker configuration parameters with a docker-c
 
 1. Save this content as `docker-compose.yml`:
 
-    ```yaml
-    version: '3.7'
-    services:
-      redpanda:
-        command:
-        - redpanda
-        - start
-        - --smp
-        - '1'
-        - --reserve-memory
-        - 0M
-        - --overprovisioned
-        - --node-id
-        - '0'
-        - --kafka-addr
-        - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
-        - --advertise-kafka-addr
-        - PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
-        # NOTE: Please use the latest version here!
-        image: docker.redpanda.com/vectorized/redpanda:v21.9.5
-        container_name: redpanda-1
-        ports:
-        - 9092:9092
-        - 29092:29092
-    ```
+```yaml
+version: '3.7'
+services:
+  redpanda:
+    # NOTE: Please use the latest version here!
+    image: docker.redpanda.com/vectorized/redpanda:v21.11.15
+    container_name: redpanda-1
+    command:
+    - redpanda
+    - start
+    - --smp
+    - '1'
+    - --reserve-memory
+    - 0M
+    - --overprovisioned
+    - --node-id
+    - '0'
+    - --kafka-addr
+    - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+    - --advertise-kafka-addr
+    - PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
+    - --pandaproxy-addr
+    - PLAINTEXT://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082
+    - --advertise-pandaproxy-addr
+    - PLAINTEXT://redpanda:28082,OUTSIDE://localhost:8082
+    ports:
+    - 8081:8081
+    - 8082:8082
+    - 9092:9092
+    - 28082:28082
+    - 29092:29092
+```
 
 2. In the directory where the file is saved, run:
 
