@@ -29,7 +29,9 @@ Retention refers to the conditions under which messages in a topic are retained 
 * Aggregate message size in the topic is exceeded
 * Either message age is exceeded or aggregate message size in the topic is exceeded
 
-The following table shows the properties that are described in this section along with their scope and defaults. If no value is specified in the topic-level configuration, the topic uses the value of the cluster configuration. Note that properties in the cluster configuration use snake case while topic-level configurations use dots: 
+The following table shows the properties that are described in this section along with their scope and default values. 
+If the value is not specified at the topic-level configuration, the topic uses the value of the cluster configuration. 
+Note that cluster configuration properties use snake-case while topic-level configurations use dots.
 
 | Type of retention | Cluster-level configuration | Topic-level configuration <br /> (overrides cluster configuration) |
 | ---               | ---                                                |  ---                                 |
@@ -44,16 +46,13 @@ Configure time-based retention with the following properties:
 * `delete_retention_ms`
 * `retention.ms` 
 
+A message is deleted if its age exceeds the `delete_retention_ms` or `retention.ms` value. These properties are explained in detail below: 
 
-A message is deleted if its age exceeds the  `delete_retention_ms`  or `retention.ms` value. The properties are explained in detail below: 
+* **delete_retention_ms** - Cluster configuration setting in (cluster configuration)[/docs/cluster-administration/cluster-property-configuration] that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` property, which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
 
-* **delete_retention_ms** - Cluster configuration property that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` property,  which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value. 
+To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to `86400000`, which equates to one day. The default value is `604800000`, which equates to one week.
 
-  To minimize the chance of out-of-disk outages, you can set `delete_retention_ms`   to `86400000`, which is one day. Default is `604800000`, which is one week. 
-
-  For information about how to modify cluster configuration properties, see [Cluster configuration](/docs/cluster-administration/cluster-configuration). 
-
-* **retention.ms** - Topic-level setting that specifies how long a message stays on disk before it is deleted. This setting overrides the cluster configuration `delete_retention_ms` property for the topic. To minimize the chance of out-of-disk outages, you can set `retention.ms` to `86400000`, which is one day. There is no default, but if `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value. 
+* **retention.ms** - Topic-level setting that specifies how long a message stays on disk before it is deleted. This setting overrides the cluster `delete_retention_ms` property for the topic. To minimize the likelihood of out-of-disk outages, set `retention.ms` to `86400000`, which equates to one day. There is no default value, but if `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
 
   You can set `retention.ms` with this command: 
 
@@ -74,13 +73,17 @@ Configure size-based retention with the following properties:
 
 A message is deleted if the size of the partition in which it is contained reaches the `retention_bytes` or `retention.bytes` value. The properties are explained in detail below: 
 
-* **retention_bytes** - Cluster configuration property that specifies the maximum size of a partition. When a partition reaches the `retention_bytes` size, the oldest messages in the partition are deleted. To set retention size for a single topic, use the `retention.bytes` property, which overrides the `retention_bytes` setting. If `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value.
+* **retention_bytes** - Cluster configuration property that specifies the maximum size of a partition. When a partition reaches the `retention_bytes` size, the oldest messages in the partition are deleted. To set retention size for a single topic, use the `retention.bytes` property, which overrides the `retention_bytes` cluster setting. If `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value.
 
-  We recommend that you configure `retention_bytes` to a value that is lower than the disk capacity, or a fraction of the disk capacity based on the number of partitions per topic. For example, if you have one partition, `retention_bytes` can be 80% of the disk size, or if you have 10 partitions, `retention_byes` can be 80% of the disk size divided by 10. Default is `null`, which means that retention based on topic size is disabled. 
+  It is recommended that you configure `retention_bytes` to a value that is lower than the disk capacity, or a fraction of the disk capacity based on the number of partitions per topic. For example, if you have one partition, `retention_bytes` can be 80% of the disk size, or if you have 10 partitions, `retention_bytes` can be 80% of the disk size divided by 10. The default value is `null`, which means that retention based on topic size is disabled.
+  
+  To specify the `retention_bytes` value:
+  
+  ```bash
+  rpk cluster config set retention_bytes <retention_size>
+  ```
 
-  For details about how to modify cluster configuration properties, refer to [Cluster configuration](/docs/cluster-administration/cluster-configuration). 
-
-* **retention.bytes** - Topic-level setting that specifies the maximum size of a partition. This setting overrides the cluster configuration `retention_bytes` property for the topic. We recommend the same considerations for the `retention.bytes` property as the `retention_bytes` property described above. There is no default, but if `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value. 
+* **retention.bytes** - Topic-level setting that specifies the maximum size of a partition. This setting overrides the host-wide `retention_bytes` property for the topic. It is recommended to take the same considerations for the `retention.bytes` and `retention_bytes` properties as described above. There is not a default value and when `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value. 
 
   You can set `retention.bytes` with this command: 
 
@@ -92,7 +95,13 @@ A message is deleted if the size of the partition in which it is contained reach
 
 The `log_segment_size` property specifies the size of each log segment.
 
-You can set the log segment size for the cluster in the cluster configuration, but if you know which topics will receive more data, it is better to set the size for each topic. Configure log segment size on a topic with the following `rpk` command:
+To specify a value for `log_segment_size`:
+
+```bash
+rpk cluster config set log_segment_size <segment_size>
+```
+
+If you know which topics will receive more data, it is best to specify the size for each topic. To configure log segment size on a topic: 
 
 ```
 rpk topic alter-config <topic> --set segment.bytes=<segment_size>
@@ -100,13 +109,13 @@ rpk topic alter-config <topic> --set segment.bytes=<segment_size>
 
 When determining ideal segment size, keep in mind that very large segments prevent compaction and very small segments increase the risk of encountering resource limits. As a rule of thumb to calculate an upper limit on segment size, you can divide the disk size by the number of partitions. For example, if you have a 128GB disk and 1000 partitions, the upper limit of the segment size would be `134217728`. Default is `1073741824`. 
 
-For details about how to modify cluster configuration properties, refer to [Cluster configuration](/docs/cluster-administration/cluster-configuration). 
+For details about how to modify cluster configuration properties, refer to [Cluster configuration](/docs/cluster-administration/cluster-property-configuration). 
 
 ### Ballast file
 
 You can enable ballast file creation to act as a buffer against an out-of-disk outage. The ballast file is an empty file that takes up disk space. In the event that Redpanda becomes unavailable because it runs out of disk space, you can delete the ballast file, which will clear up some disk space and give you time to delete topics or records and change your retention settings. Deletion of the ballast file is an emergency last resort and should not be considered a replacement for adjusting settings for segment size and retention.
 
-To enable ballast file creation, configure the following properties in the `redpanda.yaml` file for the node:
+To enable ballast file creation, configure the following properties in the `redpanda.yaml` file: 
 
 ```yaml
 tune_ballast_file: false
@@ -114,7 +123,7 @@ ballast_file_path: "/var/lib/redpanda/data/ballast"
 ballast_file_size: "1GiB"
 ```
 
-The properties are explained in detail below: 
+These properties are explained in detail below: 
 
 * **tune_ballast_file** - Tells Redpanda to create a ballast file. Set to `true` to enable ballast file creation. Default is `false`. 
 
@@ -135,10 +144,10 @@ starting every new instance (via `rpk iotune`) and instead need resources right
 now. To meet this demand, Redpanda will attempt to predict the best known
 settings for VM cloud types.
 
-We still encourage users to run `rpk iotune` for production workloads, but we’ll
-do our best to start with near optimal settings for popular machines types we
-have measured. It’s important to mention that this doesn’t need to be done each
-time Redpanda is started. The output properties of `rpk iotune` are written to a file
+It is encouraged for users to run `rpk iotune` for production workloads, but we will
+provide near-optimal settings for the types of most popular machines. 
+It’s important to mention this is not required to be done each 
+time Redpanda is started. An `rpk iotune`’s output properties are written to a file
 which can be saved and reused in nodes running on the same type of hardware.
 
 Currently, we only have well-known-types for AWS and GCP (Azure VM types support

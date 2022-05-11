@@ -10,7 +10,7 @@ This section lists each `rpk` command in alphabetical order, along with a table 
 
 ## rpk
 
- rpk is the Redpanda CLI.
+ rpk is the Redpanda CLI & toolbox.
 
 ```bash 
 Usage:
@@ -51,9 +51,10 @@ An ACL is made up of five components:
 
 ACL commands work on a multiplicative basis. If creating, specifying two
 principals and two permissions creates four ACLs: both permissions for the
-first principal, as well as both permissions for the second principal. Adding two resources further doubles the ACLs created.
+first principal, as well as both permissions for the second principal. Adding
+two resources further doubles the ACLs created.
 
-Be as specific as possible when granting ACLs. Granting
+It is recommended to be as specific as possible when granting ACLs. Granting
 more ACLs than necessary per principal may inadvertently allow clients to do
 things they should not, such as deleting topics or joining the wrong consumer
 group.
@@ -190,137 +191,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--allow-host</td>
-<td>strings</td>
-<td>hosts from which access will be granted (repeatable)</td>
-</tr>
-<tr>
-<td>--allow-principal</td>
-<td>strings</td>
-<td>principals for which these permissions will be granted (repeatable)</td>
-</tr>
-<tr>
-<td>--cluster</td>
-<td>-</td>
-<td>whether to grant ACLs to the cluster</td>
-</tr>
-<tr>
-<td>--deny-host</td>
-<td>strings</td>
-<td>hosts from from access will be denied (repeatable)</td>
-</tr>
-<tr>
-<td>--deny-principal</td>
-<td>strings</td>
-<td>principal for which these permissions will be denied (repeatable)</td>
-</tr>
-<tr>
-<td>--group</td>
-<td>strings</td>
-<td>group to grant ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for create</td>
-</tr>
-<tr>
-<td>--operation</td>
-<td>strings</td>
-<td>operation to grant (repeatable)</td>
-</tr>
-<tr>
-<td>--resource-pattern-type</td>
-<td>string</td>
-<td>pattern to use when matching resource names (literal or prefixed) (default "literal")</td>
-</tr>
-<tr>
-<td>--topic</td>
-<td>strings</td>
-<td>topic to grant ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--transactional-id</td>
-<td>strings</td>
-<td>transactional IDs to grant ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--admin-api-tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--admin-api-tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--allow-host</td><td>strings</td><td>              hosts from which access will be granted (repeatable)</td></tr><tr><td>--allow-principal</td><td>strings</td><td>         principals for which these permissions will be granted (repeatable)</td></tr><tr><td>--cluster</td><td>-</td><td>                        whether to grant ACLs to the cluster</td></tr><tr><td>--deny-host</td><td>strings</td><td>               hosts from from access will be denied (repeatable)</td></tr><tr><td>--deny-principal</td><td>strings</td><td>          principal for which these permissions will be denied (repeatable)</td></tr><tr><td>--group</td><td>strings</td><td>                   group to grant ACLs for (repeatable)</td></tr><tr><td>-h, --help</td><td>-</td><td>                           help for create</td></tr><tr><td>--operation</td><td>strings</td><td>               operation to grant (repeatable)</td></tr><tr><td>--topic</td><td>strings</td><td>                   topic to grant ACLs for (repeatable)</td></tr><tr><td>--transactional-id</td><td>strings</td><td>        transactional IDs to grant ACLs for (repeatable)</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk acl delete
 
@@ -356,152 +233,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--allow-host</td>
-<td>strings</td>
-<td>allowed host ACLs to remove (repeatable)</td>
-</tr>
-<tr>
-<td>--allow-principal</td>
-<td>strings</td>
-<td>allowed principal ACLs to remove (repeatable)</td>
-</tr>
-<tr>
-<td>--cluster</td>
-<td>-</td>
-<td>whether to remove ACLs to the cluster</td>
-</tr>
-<tr>
-<td>--deny-host</td>
-<td>strings</td>
-<td>denied host ACLs to remove (repeatable)</td>
-</tr>
-<tr>
-<td>--deny-principal</td>
-<td>strings</td>
-<td>denied principal ACLs to remove (repeatable)</td>
-</tr>
-<tr>
-<td>-d, --dry</td>
-<td>-</td>
-<td>dry run: validate what would be deleted</td>
-</tr>
-<tr>
-<td>--group</td>
-<td>strings</td>
-<td>group to remove ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for delete</td>
-</tr>
-<tr>
-<td>--no-confirm</td>
-<td>-</td>
-<td>disable confirmation prompt</td>
-</tr>
-<tr>
-<td>--operation</td>
-<td>strings</td>
-<td>operation to remove (repeatable)</td>
-</tr>
-<tr>
-<td>-f, --print-filters</td>
-<td>-</td>
-<td>print the filters that were requested (failed filters are always printed)</td>
-</tr>
-<tr>
-<td>--resource-pattern-type</td>
-<td>string</td>
-<td>pattern to use when matching resource names (any, match, literal, or prefixed) (default "any")</td>
-</tr>
-<tr>
-<td>--topic</td>
-<td>strings</td>
-<td>topic to remove ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--transactional-id</td>
-<td>strings</td>
-<td>transactional IDs to remove ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--admin-api-tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--admin-api-tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--allow-host</td><td>strings</td><td>              allowed host ACLs to remove (repeatable)</td></tr><tr><td>--allow-principal</td><td>strings</td><td>         allowed principal ACLs to remove (repeatable)</td></tr><tr><td>--cluster</td><td>-</td><td>                        whether to remove ACLs to the cluster</td></tr><tr><td>--deny-host</td><td>strings</td><td>               denied host ACLs to remove (repeatable)</td></tr><tr><td>--deny-principal</td><td>strings</td><td>          denied principal ACLs to remove (repeatable)</td></tr><tr><td>-d, --dry</td><td>-</td><td>                            dry run: validate what would be deleted</td></tr><tr><td>--group</td><td>strings</td><td>                   group to remove ACLs for (repeatable)</td></tr><tr><td>-h, --help</td><td>-</td><td>                           help for delete</td></tr><tr><td>--no-confirm</td><td>-</td><td>                     disable confirmation prompt</td></tr><tr><td>--operation</td><td>strings</td><td>               operation to remove (repeatable)</td></tr><tr><td>-f, --print-filters</td><td>-</td><td>                  print the filters that were requested (failed filters are always printed)</td></tr><tr><td>--topic</td><td>strings</td><td>                   topic to remove ACLs for (repeatable)</td></tr><tr><td>--transactional-id</td><td>strings</td><td>        transactional IDs to remove ACLs for (repeatable)</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk acl list
 
@@ -537,142 +275,13 @@ Aliases:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--allow-host</td>
-<td>strings</td>
-<td>allowed host ACLs to match (repeatable)</td>
-</tr>
-<tr>
-<td>--allow-principal</td>
-<td>strings</td>
-<td>allowed principal ACLs to match (repeatable)</td>
-</tr>
-<tr>
-<td>--cluster</td>
-<td>-</td>
-<td>whether to match ACLs to the cluster</td>
-</tr>
-<tr>
-<td>--deny-host</td>
-<td>strings</td>
-<td>denied host ACLs to match (repeatable)</td>
-</tr>
-<tr>
-<td>--deny-principal</td>
-<td>strings</td>
-<td>denied principal ACLs to match (repeatable)</td>
-</tr>
-<tr>
-<td>--group</td>
-<td>strings</td>
-<td>group to match ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for list</td>
-</tr>
-<tr>
-<td>--operation</td>
-<td>strings</td>
-<td>operation to match (repeatable)</td>
-</tr>
-<tr>
-<td>-f, --print-filters</td>
-<td>-</td>
-<td>print the filters that were requested (failed filters are always printed)</td>
-</tr>
-<tr>
-<td>--resource-pattern-type</td>
-<td>string</td>
-<td>pattern to use when matching resource names (any, match, literal, or prefixed) (default "any")</td>
-</tr>
-<tr>
-<td>--topic</td>
-<td>strings</td>
-<td>topic to match ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--transactional-id</td>
-<td>strings</td>
-<td>transactional IDs to match ACLs for (repeatable)</td>
-</tr>
-<tr>
-<td>--admin-api-tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--admin-api-tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--allow-host</td><td>strings</td><td>              allowed host ACLs to match (repeatable)</td></tr><tr><td>--allow-principal</td><td>strings</td><td>         allowed principal ACLs to match (repeatable)</td></tr><tr><td>--cluster</td><td>-</td><td>                        whether to match ACLs to the cluster</td></tr><tr><td>--deny-host</td><td>strings</td><td>               denied host ACLs to match (repeatable)</td></tr><tr><td>--deny-principal</td><td>strings</td><td>          denied principal ACLs to match (repeatable)</td></tr><tr><td>--group</td><td>strings</td><td>                   group to match ACLs for (repeatable)</td></tr><tr><td>-h, --help</td><td>-</td><td>                           help for list</td></tr><tr><td>--operation</td><td>strings</td><td>               operation to match (repeatable)</td></tr><tr><td>-f, --print-filters</td><td>-</td><td>                  print the filters that were requested (failed filters are always printed)</td></tr><tr><td>--topic</td><td>strings</td><td>                   topic to match ACLs for (repeatable)</td></tr><tr><td>--transactional-id</td><td>strings</td><td>        transactional IDs to match ACLs for (repeatable)</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk acl user
 
@@ -729,97 +338,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for create</td>
-</tr>
-<tr>
-<td>--mechanism</td>
-<td>string</td>
-<td>SASL mechanism to use (scram-sha-256, scram-sha-512, case insensitive) (default "scram-sha-256")</td>
-</tr>
-<tr>
-<td>--admin-api-tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--admin-api-tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr>
-<td>--api-urls</td>
-<td>strings</td>
-<td>The comma-separated list of Admin API addresses (|IP|:|port|). You must specify one for each node.</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>               help for create</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--api-urls</td><td>strings</td><td>                   The comma-separated list of Admin API addresses (|IP|:|port|). You must specify one for each node.</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk acl user delete
 
@@ -892,6 +417,280 @@ Usage:
 <td><strong> Description</strong>
 </td>
 </tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>-h, --help</td><td>-</td><td>                    help for cluster</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config
+
+ Interact with cluster configuration properties.
+
+Cluster properties are redpanda settings which apply to all nodes in
+the cluster.  These are separate to node properties, which are set with
+'rpk redpanda config'.
+
+Use the 'edit' subcommand to interactively modify the cluster configuration, or
+'export' and 'import' to write configuration to a file that can be edited and
+read back later.
+
+These commands take an optional '--all' flag to include all properties including
+low level tunables such as internal buffer sizes, that do not usually need
+to be changed during normal operations.  These properties generally require
+some expertize to set safely, so if in doubt, avoid using '--all'.
+
+Modified properties are propagated immediately to all nodes.  The 'status'
+subcommand can be used to verify that all nodes are up to date, and identify
+any settings which were rejected by a node, for example if a node is running a
+different redpanda version that does not recognize certain properties.
+
+```bash 
+Usage:
+  rpk cluster config [command]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>-h, --help</td><td>-</td><td>                              help for config</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config edit
+
+ Edit cluster-wide configuration properties.
+
+This command opens a text editor to modify the cluster's configuration.
+
+Cluster properties are redpanda settings which apply to all nodes in
+the cluster.  These are separate to node properties, which are set with
+'rpk redpanda config'.
+
+Modified values are written back when the file is saved and the editor
+is closed.  Properties which are deleted are reset to their default
+values.
+
+By default, low level tunables are excluded: use the '--all' flag
+to edit all properties including these tunables.
+
+```bash 
+Usage:
+  rpk cluster config edit [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>   help for edit</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config export
+
+ Export cluster configuration.
+
+Writes out a YAML representation of the cluster configuration to a file,
+suitable for editing and later applying with the corresponding 'import'
+command.
+
+By default, low level tunables are excluded: use the '--all' flag
+to include all properties including these low level tunables.
+
+```bash 
+Usage:
+  rpk cluster config export [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-f, --filename</td><td>string</td><td>    full path to file to export to, e.g. '/tmp/config.yml'</td></tr><tr><td>-h, --help</td><td>-</td><td>              help for export</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config force-reset
+
+ Forcibly clear a cluster configuration property on this node.
+
+This command is not for general changes to cluster configuration: use this only
+when redpanda will not start due to a configuration issue.
+
+If your cluster is working properly and you would like to reset a property
+to its default, you may use the 'set' command with an empty string, or
+use the 'edit' command and delete the property's line.
+
+This command erases a named property from an internal cache of the cluster
+configuration on the local node, so that on next startup redpanda will treat
+the setting as if it was set to the default.
+
+```bash 
+Usage:
+  rpk cluster config force-reset [PROPERTY...] [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--cache-file</td><td>string</td><td>    location of configuration cache file (defaults to redpanda data directory)</td></tr><tr><td>-h, --help</td><td>-</td><td>                help for force-reset</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config get
+
+ Get a cluster configuration property.
+
+This command is provided for use in scripts.  For interactive editing, or bulk
+output, use the 'edit' and 'export' commands respectively.
+
+```bash 
+Usage:
+  rpk cluster config get <key> [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>   help for get</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config import
+
+ Import cluster configuration from a file.
+
+Import configuration from a YAML file, usually generated with
+corresponding 'export' command.  This downloads the current cluster
+configuration, calculates the difference with the YAML file, and
+updates any properties that were changed.  If a property is removed
+from the YAML file, it is reset to its default value.
+
+```bash 
+Usage:
+  rpk cluster config import [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--filename</td><td>string</td><td>    full path to file to import, e.g. '/tmp/config.yml'</td></tr><tr><td>-h, --help</td><td>-</td><td>              help for import</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config lint
+
+ Remove any deprecated content from redpanda.yaml.
+
+Deprecated content includes properties which were set via redpanda.yaml
+in earlier versions of redpanda, but are now managed via Redpanda's
+central configuration store (and via 'rpk cluster config edit').
+
+```bash 
+Usage:
+  rpk cluster config lint [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>   help for lint</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config set
+
+ Set a single cluster configuration property.
+
+This command is provided for use in scripts.  For interactive editing, or bulk
+changes, use the 'edit' and 'import' commands respectively.
+
+If an empty string is given as the value, the property is reset to its default.
+
+```bash 
+Usage:
+  rpk cluster config set <key> <value> [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>   help for set</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
+
+## rpk cluster config status
+
+ Get configuration status of redpanda nodes.
+
+For each node, indicate whether a restart is required for settings to
+take effect, and any settings that the node has identified as invalid
+or unknown properties.
+
+Additionally show the version of cluster configuration that each node
+has applied: under normal circumstances these should all be equal,
+a lower number shows that a node is out of sync, perhaps because it
+is offline.
+
+```bash 
+Usage:
+  rpk cluster config status [flags]
+``` 
+
+#### Flags
+
+<table>
+<tbody>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>   help for status</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--all</td><td>-</td><td>                               Include all properties, including tunables.</td></tr><tr><td>--api-urls</td><td>string</td><td>                    Comma-separated list of admin API addresses (|IP|:|port|</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk cluster metadata
 
@@ -996,7 +795,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>-h, --help</td><td>-</td><td>           help for start</td></tr><tr><td>-n, --nodes</td><td>uint</td><td>      The number of nodes to start (default 1)</td></tr><tr><td>--retries</td><td>uint</td><td>    The amount of times to check for the cluster before considering it unstable and exiting. (default 10)</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>-h, --help</td><td>-</td><td>           help for start</td></tr><tr><td>-n, --nodes</td><td>-</td><td> uint     The number of nodes to start (default 1)</td></tr><tr><td>--retries</td><td>-</td><td> uint   The amount of times to check for the cluster before considering it unstable and exiting. (default 10)</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk container stop
 
@@ -1104,113 +903,14 @@ Usage:
 
 <table>
 <tbody>
-<tr >
-<td ><strong> Value</strong></td>
-<td ><strong> Type</strong></td>
-<td ><strong> Description</strong></td>
-</tr>
-<tr >
-<td >--logs-since</td>
-<td >string</td>
-<td >Include log entries on or newer than the specified date. (journalctl date format, e.g. YYYY-MM-DD)</td>
-</tr>
-<tr >
-<td >--logs-size-limit</td>
-<td >string</td>
-<td >read the logs until the given size is reached. Multipliers are also supported, e.g. 3MB, 1GiB. (default "100MiB")</td>
-</tr>
-<tr >
-<td >--logs-until</td>
-<td >string</td>
-<td >Include log entries on or older than the specified date. (journalctl date format, e.g. YYYY-MM-DD)</td>
-</tr>
-<tr >
-<td >--admin-api-tls-cert</td>
-<td >string</td>
-<td >The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr >
-<td >--admin-api-tls-enabled</td>
-<td >-</td>
-<td >Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr >
-<td >--admin-api-tls-key</td>
-<td >string</td>
-<td >The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr >
-<td >--admin-api-tls-truststore</td>
-<td >string</td>
-<td >The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr >
-<td >--admin-url</td>
-<td >string</td>
-<td >The address to the broker's admin API. Defaults to the one in the config file.</td>
-</tr>
-<tr >
-<td >--brokers</td>
-<td >strings</td>
-<td >Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr >
-<td >--config</td>
-<td >string</td>
-<td >Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr >
-<td >-h, --help</td>
-<td >-</td>
-<td >help for bundle</td>
-</tr>
-<tr >
-<td >--password</td>
-<td >string</td>
-<td >SASL password to be used for authentication.</td>
-</tr>
-<tr >
-<td >--sasl-mechanism</td>
-<td >string</td>
-<td >The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr >
-<td >--timeout</td>
-<td >duration</td>
-<td >How long to wait for child commands to execute (e.g. '30s', '1.5m') (default 10s)</td>
-</tr>
-<tr >
-<td >--tls-cert</td>
-<td >string</td>
-<td >The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr >
-<td >--tls-enabled</td>
-<td >-</td>
-<td >Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr >
-<td >--tls-key</td>
-<td >string</td>
-<td >The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr >
-<td >--tls-truststore</td>
-<td >string</td>
-<td >The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr >
-<td >--user</td>
-<td >string</td>
-<td >SASL user to be used for authentication.</td>
-</tr>
-<tr >
-<td >-v, --verbose</td>
-<td >-</td>
-<td >Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<tr>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--admin-url</td><td>string</td><td>                   The address to the broker's admin API. Defaults to the one in the config file.</td></tr><tr><td>--brokers</td><td>strings</td><td>                    Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>                      Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>-h, --help</td><td>-</td><td>                              help for bundle</td></tr><tr><td>--logs-since</td><td>string</td><td>                  Include log entries on or newer than the specified date. (journalctl date format, e.g. YYYY-MM-DD)</td></tr><tr><td>--logs-until</td><td>string</td><td>                  Include log entries on or older than the specified date. (journalctl date format, e.g. YYYY-MM-DD)</td></tr><tr><td>--password</td><td>string</td><td>                    SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>              The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--timeout</td><td>duration</td><td>                   How long to wait for child commands to execute (e.g. '30s', '1.5m') (default 10s)</td></tr><tr><td>--tls-cert</td><td>string</td><td>                    The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>                       Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>                     The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>              The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>                        SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk generate
 
@@ -1248,37 +948,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--datasource</td>
-<td>string</td>
-<td>The name of the Prometheus datasource as configured in your grafana instance.</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for grafana-dashboard</td>
-</tr>
-<tr>
-<td>--job-name</td>
-<td>string</td>
-<td>The prometheus job name by which to identify the redpanda nodes (default "redpanda")</td>
-</tr>
-<tr>
-<td>--metrics-endpoint</td>
-<td>string</td>
-<td>The redpanda metrics endpoint where to get the metrics metadata. i.e. redpanda_host:9644/metrics (default "http://localhost:9644/metrics")</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--datasource</td><td>string</td><td>          The name of the Prometheus datasource as configured in your grafana instance.</td></tr><tr><td>-h, --help</td><td>-</td><td>                      help for grafana-dashboard</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk generate prometheus-config
 
@@ -1291,7 +967,7 @@ If --seed-addr is passed, it will be used to discover the rest of the cluster
 hosts via redpanda's Kafka API. If --node-addrs is passed, they will be used
 directly. Otherwise, 'rpk generate prometheus-conf' will read the redpanda
 config file and use the node IP configured there. --config may be passed to
-especify an arbitrary config file.
+specify an arbitrary config file.
 
 ```bash 
 Usage:
@@ -1303,42 +979,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>The path to the redpanda config file</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for prometheus-config</td>
-</tr>
-<tr>
-<td>--job-name</td>
-<td>string</td>
-<td>The prometheus job name by which to identify the redpanda nodes (default "redpanda")</td>
-</tr>
-<tr>
-<td>--node-addrs</td>
-<td>strings</td>
-<td>A comma-delimited list of the addresses (|host|:|port|) of all the redpanda nodes in a cluster. The port must be the one configured for the nodes' admin API (9644 by default)</td>
-</tr>
-<tr>
-<td>--seed-addr</td>
-<td>string</td>
-<td>The URL of a redpanda node with which to discover the rest</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--config</td><td>string</td><td>         The path to the redpanda config file</td></tr><tr><td>-h, --help</td><td>-</td><td>                 help for prometheus-config</td></tr><tr><td>--node-addrs</td><td>strings</td><td>    A comma-delimited list of the addresses (|host|:|port|) of all the redpanda nodes in a cluster. The port must be the one configured for the nodes' admin API (9644 by default)</td></tr><tr><td>--seed-addr</td><td>string</td><td>      The URL of a redpanda node with which to discover the rest</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk generate shell-completion
 
@@ -1626,7 +1273,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>--allow-new-topics</td><td>-</td><td>     allow seeking to new topics not currently consumed (implied with --to-group or --to-file)</td></tr><tr><td>-h, --help</td><td>-</td><td>                 help for seek</td></tr><tr><td>--to</td><td>string</td><td>             where to seek (start, end, unix second|millisecond|nanosecond)</td></tr><tr><td>--to-file</td><td>string</td><td>        seek to offsets as specified in the file</td></tr><tr><td>--to-group</td><td>string</td><td>       seek to the commits of another group</td></tr><tr><td>--topics</td><td>stringArray</td><td>    only seek these topics, if any are specified</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>--allow-new-topics</td><td>-</td><td>     Allow seeking to new topics not currently consumed (implied with --to-group or --to-file)</td></tr><tr><td>-h, --help</td><td>-</td><td>                 help for seek</td></tr><tr><td>--to</td><td>string</td><td>             Where to seek (start, end, unix second | millisecond | nanosecond)</td></tr><tr><td>--to-file</td><td>string</td><td>        Seek to offsets as specified in the file</td></tr><tr><td>--to-group</td><td>string</td><td>       Seek to the commits of another group</td></tr><tr><td>--topics</td><td>stringArray</td><td>    Only seek these topics, if any are specified</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk help
 
@@ -1665,47 +1312,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations.</td>
-</tr>
-<tr>
-<td>--directories</td>
-<td>strings</td>
-<td>List of directories to evaluate</td>
-</tr>
-<tr>
-<td>--duration</td>
-<td>duration</td>
-<td>Duration of tests.The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or '&micro;s'), 'ms', 's', 'm', 'h' (default 10m0s)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for iotune</td>
-</tr>
-<tr>
-<td>--out</td>
-<td>string</td>
-<td>The file path where the IO config will be written (default "/etc/redpanda/io-config.yaml")</td>
-</tr>
-<tr>
-<td>--timeout</td>
-<td>duration</td>
-<td>The maximum time after -- to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or '&micro;s'), 'ms', 's', 'm', 'h' (default 1h0m0s)</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--config</td><td>string</td><td>          Redpanda config file, if not set the file will be searched for in the default locations.</td></tr><tr><td>--directories</td><td>strings</td><td>    List of directories to evaluate</td></tr><tr><td>--duration</td><td>duration</td><td>      Duration of tests.The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10m0s)</td></tr><tr><td>-h, --help</td><td>-</td><td>                  help for iotune</td></tr><tr><td>--timeout</td><td>duration</td><td>       The maximum time after -- to wait for iotune to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 1h0m0s)</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk plugin
 
@@ -1794,32 +1407,13 @@ Aliases:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--dir</td>
-<td>string&nbsp;</td>
-<td>estination directory to save the installed plugin (defaults to the first dir in $PATH) (default "/opt/redpanda/bin")</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for install</td>
-</tr>
-<tr>
-<td>-u, --update</td>
-<td>-</td>
-<td>update a locally installed plugin if it differs from the current remote version</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>         help for install</td></tr><tr><td>-u, --update</td><td>-</td><td>       update a locally installed plugin if it differs from the current remote version</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk plugin list
 
@@ -2104,67 +1698,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>-e, --expiry-seconds</td>
-<td>int</td>
-<td>seconds to persist this log level override before redpanda reverts to its previous settings (if 0, persist until shutdown) (default 300)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for set</td>
-</tr>
-<tr>
-<td>-l, --level</td>
-<td>string</td>
-<td>log level to set (error, warn, info, debug, trace) (default "debug")</td>
-</tr>
-<tr>
-<td>--host</td>
-<td>string</td>
-<td>either an index into admin_api hosts to issue the request to, or a hostname</td>
-</tr>
-<tr>
-<td>--admin-api-tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Admin API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--admin-api-tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the Admin API.</td>
-</tr>
-<tr>
-<td>--admin-api-tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the Admin API.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>rpk config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--hosts</td>
-<td>strings</td>
-<td>A comma-separated list of Admin API addresses (|IP|:|port|). You must specify one for each node.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-e, --expiry-seconds</td><td>int</td><td>    seconds to persist this log level override before redpanda reverts to its previous settings (if 0, persist until shutdown) (default 300)</td></tr><tr><td>-h, --help</td><td>-</td><td>                 help for set</td></tr><tr><td>--host</td><td>string</td><td>           either an index into admin_api hosts to issue the request to, or a hostname</td></tr><tr><td>--admin-api-tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-enabled</td><td>-</td><td>             Enable TLS for the Admin API (not necessary if specifying custom certs).</td></tr><tr><td>--admin-api-tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the Admin API.</td></tr><tr><td>--admin-api-tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the Admin API.</td></tr><tr><td>--config</td><td>string</td><td>                      rpk config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--hosts</td><td>strings</td><td>                      A comma-separated list of Admin API addresses (|IP|:|port|). You must specify one for each node.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                           Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk redpanda admin config print
 
@@ -2293,32 +1833,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default location.</td>
-</tr>
-<tr>
-<td>--format</td>
-<td>string</td>
-<td>The value format. Can be 'single', for single values such as '/etc/redpanda' or 100; and 'json' and 'yaml' when partially or completely setting config objects (default "single")</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for set</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--config</td><td>string</td><td>    Redpanda config file, if not set the file will be searched for in the default location.</td></tr><tr><td>-h, --help</td><td>-</td><td>            help for set</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk redpanda mode
 
@@ -2391,7 +1912,7 @@ Usage:
 
 ## rpk redpanda tune
 
- Sets the OS parameters to tune system performance. Available tuners: all, aio_events, ballast_file, disk_scheduler, fstrim, cpu, net, clocksource, swappiness, transparent_hugepages, coredump, disk_irq, disk_nomerges, disk_write_cache.
+ Sets the OS parameters to tune system performance. Available tuners: all, disk_irq, fstrim, cpu, aio_events, clocksource, swappiness, transparent_hugepages, coredump, disk_scheduler, disk_nomerges, disk_write_cache, net, ballast_file.
  In order to get more information about the tuners, run `rpk redpanda tune help <tuner name>`
 
 ```bash 
@@ -2405,76 +1926,17 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations.</td>
-</tr>
-<tr>
-<td>--cpu-set</td>
-<td>string</td>
-<td>Set of CPUs for tuner to use in cpuset(7) format if not specified tuner will use all available CPUs (default "all")</td>
-</tr>
-<tr>
-<td>-r, --dirs</td>
-<td>strings</td>
-<td>List of *data* directories or places to store data, i.e.: '/var/vectorized/redpanda/', usually your XFS filesystem on an NVMe SSD device.</td>
-</tr>
-<tr>
-<td>-d, --disks</td>
-<td>strings</td>
-<td>Lists of devices to tune f.e. 'sda1'</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for tune</td>
-</tr>
-<tr>
-<td>--interactive</td>
-<td>-</td>
-<td>Ask for confirmation on every step (e.g. tuner execution, configuration generation)</td>
-</tr>
-<tr>
-<td>-m, --mode</td>
-<td>string</td>
-<td>Operation Mode: one of: [sq, sq_split, mq]</td>
-</tr>
-<tr>
-<td>-n, --nic</td>
-<td>strings</td>
-<td>Network Interface Controllers to tune</td>
-</tr>
-<tr>
-<td>--output-script</td>
-<td>string</td>
-<td>If set tuners will generate tuning file that can later be used to tune the system</td>
-</tr>
-<tr>
-<td>--reboot-allowed</td>
-<td>-</td>
-<td>If set will allow tuners to tune boot parameters and request system reboot.</td>
-</tr>
-<tr>
-<td>--timeout</td>
-<td>duration</td>
-<td>The maximum time to wait for the tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or '&micro;s'), 'ms', 's', 'm', 'h' (default 10s)</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--config</td><td>string</td><td>           Redpanda config file, if not set the file will be searched for in the default locations.</td></tr><tr><td>-r, --dirs</td><td>strings</td><td>            List of *data* directories or places to store data, i.e.: '/var/vectorized/redpanda/', usually your XFS filesystem on an NVMe SSD device.</td></tr><tr><td>-d, --disks</td><td>strings</td><td>           Lists of devices to tune f.e. 'sda1'</td></tr><tr><td>-h, --help</td><td>-</td><td>                   help for tune</td></tr><tr><td>--interactive</td><td>-</td><td>            Ask for confirmation on every step (e.g. tuner execution, configuration generation)</td></tr><tr><td>-m, --mode</td><td>string</td><td>             Operation Mode: one of: [sq, sq_split, mq]</td></tr><tr><td>-n, --nic</td><td>strings</td><td>             Network Interface Controllers to tune</td></tr><tr><td>--output-script</td><td>string</td><td>    If set tuners will generate tuning file that can later be used to tune the system</td></tr><tr><td>--reboot-allowed</td><td>-</td><td>         If set will allow tuners to tune boot parameters and request system reboot.</td></tr><tr><td>--timeout</td><td>duration</td><td>        The maximum time to wait for the tune processes to complete. The value passed is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as '300ms', '1.5s' or '2h45m'. Valid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h' (default 10s)</td></tr><tr><td>-v, --verbose</td><td>-</td><td>   Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk redpanda tune help
 
- Display detailed information about the tuner. To check which tuners you have available for your machine run `rpk redpanda tune -h`.
+ Display detailed information about the tuner.
 
 ```bash 
 Usage:
@@ -2571,7 +2033,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>--append</td><td>stringArray</td><td>      key=value; value to append to a list-of-values key (repeatable)</td></tr><tr><td>-d, --delete</td><td>stringArray</td><td>      key to delete (repeatable)</td></tr><tr><td>--dry</td><td>-</td><td>                    dry run: validate the alter request, but do not apply</td></tr><tr><td>-h, --help</td><td>-</td><td>                   help for alter-config</td></tr><tr><td>-s, --set</td><td>stringArray</td><td>         key=value pair to set (repeatable)</td></tr><tr><td>--subtract</td><td>stringArray</td><td>    key=value; value to remove from list-of-values key (repeatable)</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>--append</td><td>stringArray</td><td>      key=value; Value to append to a list-of-values key (repeatable)</td></tr><tr><td>-d, --delete</td><td>stringArray</td><td>      Key to delete (repeatable)</td></tr><tr><td>--dry</td><td>-</td><td>                    dry run: validate the alter request, but do not apply</td></tr><tr><td>-h, --help</td><td>-</td><td>                   help for alter-config</td></tr><tr><td>-s, --set</td><td>stringArray</td><td>         key=value; Pair to set (repeatable)</td></tr><tr><td>--subtract</td><td>stringArray</td><td>    key=value; Value to remove from list-of-values key (repeatable)</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk topic consume
 
@@ -2736,19 +2198,51 @@ A key length as four big endian bytes, and the key as hex:
 A little endian uint32 and a string unpacked from a value:
     -f '%v{unpack[is$]}'
 
-MISC
+OFFSETS
 
 The --offset flag allows for specifying where to begin consuming, and
-optionally, where to stop consuming:
+optionally, where to stop consuming. The literal words "start" and "end"
+specify consuming from the start and the end.
 
-    start    consume from the beginning
-    end      consume from the end
-    +NNN     consume NNN after the start offset
-    -NNN     consume NNN before the end offset
-    N1-N2    consume from N1 to N2
+    start     consume from the beginning
+    end       consume from the end
+    :end      consume until the current end
+    +oo       consume oo after the current start offset
+    -oo       consume oo before the current end offset
+    oo        consume after an exact offset
+    oo:       alias for oo
+    :oo       consume until an exact offset
+    o1:o2     consume from exact offset o1 until exact offset o2
+    @t        consume starting from a given timestamp
+    @t:       alias for @t
+    @:t       consume until a given timestamp
+    @t1:t2    consume from timestamp t1 until timestamp t2
 
-If consuming a range of offsets, rpk does not currently quit after it has
-consumed all partitions through the end range.
+There are a few options for timestamps, with each option being evaluated
+until one succeeds:
+
+    13 digits             parsed as a unix millisecond
+    9 digits              parsed as a unix second
+    YYYY-MM-DD            parsed as a day, UTC
+    YYYY-MM-DDTHH:MM:SSZ  parsed as RFC3339, UTC; fractional seconds optional (.MMM)
+    -dur                  duration ago; from now (as t1) or from t1 (as t2)
+    dur                   for t2 in @t1:t2, relative duration from t1
+    end                   for t2 in @t1:t2, the current end of the partition
+
+Durations are parsed simply:
+
+    3ms    three milliseconds
+    10s    ten seconds
+    9m     nine minutes
+    1h     one hour
+    1m3ms  one minute and three milliseconds
+
+For example,
+
+    -o @2022-02-14:1h   consume 1h of time on Valentine's Day 2022
+    -o @-48h:-24h       consume from 2 days ago to 1 day ago
+    -o @-1m:end         consume from 1m ago until now
+    -o @:-1hr           consume from the start until an hour ago
 
 ```bash 
 Usage:
@@ -2766,7 +2260,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>--fetch-max-bytes</td><td>int32</td><td>      maximum amount of bytes per fetch request per broker (default 1048576)</td></tr><tr><td>--fetch-max-wait</td><td>duration</td><td>    maximum amount of time to wait when fetching from a broker before the broker replies (default 5s)</td></tr><tr><td>-g, --group</td><td>string</td><td>               group to use for consuming (incompatible with -p)</td></tr><tr><td>-h, --help</td><td>-</td><td>                      help for consume</td></tr><tr><td>--meta-only</td><td>-</td><td>                 print all record info except the record value (for -f json)</td></tr><tr><td>-n, --num</td><td>int</td><td>                    quit after consuming this number of records (0 is unbounded)</td></tr><tr><td>-p, --partitions</td><td>int32</td><td> int32Slice     comma delimited list of specific partitions to consume (default [])</td></tr><tr><td>--pretty-print</td><td>-</td><td>              pretty print each record over multiple lines (for -f json) (default true)</td></tr><tr><td>--read-committed</td><td>-</td><td>            opt in to reading only committed offsets</td></tr><tr><td>-r, --regex</td><td>-</td><td>                     parse topics as regex; consume any topic that matches any expression</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>--fetch-max-bytes</td><td>int32</td><td>      Maximum amount of bytes per fetch request per broker (default 1048576)</td></tr><tr><td>--fetch-max-wait</td><td>duration</td><td>    Maximum amount of time to wait when fetching from a broker before the broker replies (default 5s)</td></tr><tr><td>-g, --group</td><td>string</td><td>               group to use for consuming (incompatible with -p)</td></tr><tr><td>-h, --help</td><td>-</td><td>                      help for consume</td></tr><tr><td>--meta-only</td><td>-</td><td>                 Print all record info except the record value (for -f json)</td></tr><tr><td>-n, --num</td><td>int</td><td>                    Quit after consuming this number of records (0 is unbounded)</td></tr><tr><td>-p, --partitions</td><td>int32</td><td> int32Slice     Comma delimited list of specific partitions to consume (default [])</td></tr><tr><td>--pretty-print</td><td>-</td><td>              Pretty print each record over multiple lines (for -f json) (default true)</td></tr><tr><td>--read-committed</td><td>-</td><td>            Opt in to reading only committed offsets</td></tr><tr><td>-r, --regex</td><td>-</td><td>                     Parse topics as regex; consume any topic that matches any expression</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk topic create
 
@@ -2798,7 +2292,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>-d, --dry</td><td>-</td><td>                        dry run: validate the topic creation request; do not create topics</td></tr><tr><td>-h, --help</td><td>-</td><td>                       help for create</td></tr><tr><td>-p, --partitions</td><td>int32</td><td>            number of partitions to create per topic (default 1)</td></tr><tr><td>-r, --replicas</td><td>int16</td><td>              replication factor; if -1, this will be the broker's default.replication.factor (default -1)</td></tr><tr><td>-c, --topic-config</td><td>stringArray</td><td>    key=value config parameters (repeatable; e.g. -c cleanup.policy=compact)</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>-d, --dry</td><td>-</td><td>                        dry run: validate the topic creation request; do not create topics</td></tr><tr><td>-h, --help</td><td>-</td><td>                       help for create</td></tr><tr><td>-p, --partitions</td><td>int32</td><td>            Number of partitions to create per topic (default 1)</td></tr><tr><td>-r, --replicas</td><td>int16</td><td>              Replication factor; if -1, this will be the broker's default.replication.factor (default -1)</td></tr><tr><td>-c, --topic-config</td><td>stringArray</td><td>    key=value; Config parameters (repeatable; e.g. -c cleanup.policy=compact)</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk topic delete
 
@@ -3046,107 +2540,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--acks</td>
-<td>int</td>
-<td>number of acks required for producing (-1=all, 0=none, 1=leader) (default -1)</td>
-</tr>
-<tr>
-<td>-z, --compression</td>
-<td>string</td>
-<td>Compression to use for producing batches (none, gzip, snapy, lz4, zstd) (default "snappy")</td>
-</tr>
-<tr>
-<td>--delivery-timeout</td>
-<td>duration</td>
-<td>per-record delivery timeout, if non-zero, min 1s</td>
-</tr>
-<tr>
-<td>-f, --format</td>
-<td>string</td>
-<td>input record format (default "%v\n")</td>
-</tr>
-<tr>
-<td>-H, --header</td>
-<td>stringArray</td>
-<td>headers in format key:value to add to each record (repeatable)</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for produce</td>
-</tr>
-<tr>
-<td>-k, --key</td>
-<td>string</td>
-<td>a fixed key to use for each record (parsed input keys take precedence)</td>
-</tr>
-<tr>
-<td>-o, --output-format</td>
-<td>string</td>
-<td>what to write to stdout when a record is successfully produced (default "Produced to partition %p at offset %o with timestamp %d.\n")</td>
-</tr>
-<tr>
-<td>-p, --partition</td>
-<td>int32</td>
-<td>partition to directly produce to, if non-negative (also allows %p parsing to set partitions) (default -1)</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--acks</td><td>int</td><td>                     Number of acks required for producing (-1=all, 0=none, 1=leader) (default -1)</td></tr><tr><td>--delivery-timeout</td><td>duration</td><td>    per-record delivery timeout, if non-zero, min 1s</td></tr><tr><td>-H, --header</td><td>stringArray</td><td>           Headers in format key:value to add to each record (repeatable)</td></tr><tr><td>-h, --help</td><td>-</td><td>                        help for produce</td></tr><tr><td>-k, --key</td><td>string</td><td>                   A fixed key to use for each record (parsed input keys take precedence)</td></tr><tr><td>-p, --partition</td><td>int32</td><td>              partition to directly produce to, if non-negative (also allows %p parsing to set partitions) (default -1)</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk version
 
@@ -3206,82 +2606,13 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>--description</td>
-<td>string</td>
-<td>optional description about what the wasm function does</td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for deploy</td>
-</tr>
-<tr>
-<td>--name</td>
-<td>string</td>
-<td>unique deploy identifier attached to the instance of this script</td>
-</tr>
-<tr>
-<td>--type</td>
-<td>string</td>
-<td>WASM engine type (async, data-policy) (default "async")</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>--description</td><td>string</td><td>    optional description about what the wasm function does</td></tr><tr><td>-h, --help</td><td>-</td><td>                 help for deploy</td></tr><tr><td>--name</td><td>string</td><td>           unique deploy identifier attached to the instance of this script</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk wasm generate
 
@@ -3303,7 +2634,7 @@ Usage:
 </td>
 <td><strong> Description</strong>
 </td>
-</tr><tr><td>-h, --help</td><td>-</td><td>   help for generate</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
+</tr><tr><td>-h, --help</td><td>-</td><td>           help for generate</td></tr><tr><td>--skip-version</td><td>-</td><td>   Omit version check from npm, use default instead</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>
 
 ## rpk wasm remove
 
@@ -3319,69 +2650,10 @@ Usage:
 <table>
 <tbody>
 <tr>
-<td><strong> Value</strong></td>
-<td><strong> Type</strong></td>
-<td><strong> Description</strong></td>
-</tr>
-<tr>
-<td>-h, --help</td>
-<td>-</td>
-<td>help for remove</td>
-</tr>
-<tr>
-<td>--type</td>
-<td>string</td>
-<td>WASM engine type (async, data-policy) (default "async")</td>
-</tr>
-<tr>
-<td>--brokers</td>
-<td>strings</td>
-<td>Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td>
-</tr>
-<tr>
-<td>--config</td>
-<td>string</td>
-<td>Redpanda config file, if not set the file will be searched for in the default locations</td>
-</tr>
-<tr>
-<td>--password</td>
-<td>string</td>
-<td>SASL password to be used for authentication.</td>
-</tr>
-<tr>
-<td>--sasl-mechanism</td>
-<td>string</td>
-<td>The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td>
-</tr>
-<tr>
-<td>--tls-cert</td>
-<td>string</td>
-<td>The certificate to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-enabled</td>
-<td>-</td>
-<td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
-</tr>
-<tr>
-<td>--tls-key</td>
-<td>string</td>
-<td>The certificate key to be used for TLS authentication with the broker.</td>
-</tr>
-<tr>
-<td>--tls-truststore</td>
-<td>string</td>
-<td>The truststore to be used for TLS communication with the broker.</td>
-</tr>
-<tr>
-<td>--user</td>
-<td>string</td>
-<td>SASL user to be used for authentication.</td>
-</tr>
-<tr>
-<td>-v, --verbose</td>
-<td>-</td>
-<td>Enable verbose logging (default: false).</td>
-</tr>
-</tbody>
-</table>
+<td><strong> Value</strong>
+</td>
+<td><strong> Type</strong>
+</td>
+<td><strong> Description</strong>
+</td>
+</tr><tr><td>-h, --help</td><td>-</td><td>          help for remove</td></tr><tr><td>--brokers</td><td>strings</td><td>          Comma-separated list of broker ip:port pairs (e.g. --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you may set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.</td></tr><tr><td>--config</td><td>string</td><td>            Redpanda config file, if not set the file will be searched for in the default locations</td></tr><tr><td>--password</td><td>string</td><td>          SASL password to be used for authentication.</td></tr><tr><td>--sasl-mechanism</td><td>string</td><td>    The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.</td></tr><tr><td>--tls-cert</td><td>string</td><td>          The certificate to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-enabled</td><td>-</td><td>             Enable TLS for the Kafka API (not necessary if specifying custom certs).</td></tr><tr><td>--tls-key</td><td>string</td><td>           The certificate key to be used for TLS authentication with the broker.</td></tr><tr><td>--tls-truststore</td><td>string</td><td>    The truststore to be used for TLS communication with the broker.</td></tr><tr><td>--user</td><td>string</td><td>              SASL user to be used for authentication.</td></tr><tr><td>-v, --verbose</td><td>-</td><td>                 Enable verbose logging (default: false).</td></tr></tbody></table>

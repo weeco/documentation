@@ -39,13 +39,24 @@ In this section, we'll cover how to setup your transformations in Redpanda.
 
 ### Enable data transforms
 
-**Sample redpanda.yaml file**
+To enable the coprocessor that runs the data transformation, you must set the configuration properties at the cluster level with (centralized configuration)[/docs/cluster-administration/cluster-property-configuration] and enable the engine in the `redpanda.yaml` configuration file.
 
-To enable the coprocessor that runs the data transformation, you must enable the engine in the Redpanda configuration file, `redpanda.yaml`.
+On the cluster level, you need to set the `enable_coproc` property to `true` using (cluster configuration `rpk` commands)[/docs/cluster-administration/cluster-property-configuration]:
+```bash
+rpk cluster config set enable_coproc true
+```
 
+Also set `enable_idempotence` property to `false`:
+
+```bash
+rpk cluster config set enable_idempotence false 
+```
+
+Finally, on the node level, add the following flags under `redpanda` in the `redpanda.yaml` file: 
+
+:::note
 The default location of `redpanda.yaml` is `/etc/redpanda/redpanda.yaml`.
-
-Add the following flags under `redpanda`: 
+:::
 
 ```yaml
 enable_coproc: true
@@ -61,7 +72,7 @@ coproc_supervisor_server:
     port: <new_port>
 ```
 
-The default location of the Data Transforms log file is: `/var/lib/redpanda/coprocessor/wasm_engine.log`. You can configure the location of the log file in `redpanda.yaml` with this parameter:
+The default location of the Data Transforms log file is: `/var/lib/redpanda/coprocessor/wasm_engine.log`. You can configure the location of the log file in `redpanda.yaml` with this property:
 
 ```yaml
 coproc_engine:

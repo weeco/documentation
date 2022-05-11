@@ -122,12 +122,23 @@
       collapsed: false,
       items: [
         {
-          type: 'doc',
-          label: 'Custom configuration',
-          id: 'cluster-administration/configuration',
+          type: 'category',
+          label: 'Configuration',
+          link: { type: 'doc', id: 'cluster-administration/configuration'},
+          items: [
+            {
+              type: 'doc',
+              label: 'Configuring cluster properties',
+              id: 'cluster-administration/cluster-property-configuration',
+            },
+            {
+              type: 'doc',
+              label: 'Configuring node properties',
+              id: 'cluster-administration/node-property-configuration',
+            },             
+          ],
         },        
-        'cluster-administration/monitoring',
-        'cluster-administration/node-management',
+        'cluster-administration/monitoring', 
         'cluster-administration/version-upgrade',        
       ]
     },
@@ -197,6 +208,9 @@
       collapsible: true,
       collapsed: false,
       items: [
+        'reference/cluster-properties',
+        'reference/node-properties',
+        'reference/node-configuration-sample',
         {
           type: 'doc',
           label: 'rpk commands',
