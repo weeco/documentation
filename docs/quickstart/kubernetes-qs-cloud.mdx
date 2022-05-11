@@ -265,7 +265,7 @@ Follow these steps to start working with the `panda-chat` cluster you created in
 ```
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.vectorized.io/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/vectorized/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 cluster info
 ```
@@ -275,7 +275,7 @@ cluster info
 ```
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.vectorized.io/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/vectorized/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic create chat-rooms -p 5
 ```
@@ -285,7 +285,7 @@ topic create chat-rooms -p 5
 ```
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.vectorized.io/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/vectorized/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic list
 ```
@@ -295,7 +295,7 @@ topic list
 ```
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.vectorized.io/vectorized/redpanda \
+--image docker.redpanda.com/vectorized/redpanda \
 -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 
@@ -308,7 +308,7 @@ kubectl -n panda-chat run -ti --rm \
 ```
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.vectorized.io/vectorized/redpanda \
+--image docker.redpanda.com/vectorized/redpanda \
 -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 

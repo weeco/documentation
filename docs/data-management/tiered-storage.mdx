@@ -89,7 +89,7 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 
 **Table 1: Remote write configuration**
 
-| Cluster-level configuration <br />(<code>cloud_storage_remote_write</code>) | Topic-level configuration <br />(<code>redpanda.remote.write</code>) | Outcome <br />(whether remote write is enabled <br />or disabled on the topic) |
+| Cluster-level configuration <br />(<code>cloud_storage_enable_remote_write</code>) | Topic-level configuration <br />(<code>redpanda.remote.write</code>) | Outcome <br />(whether remote write is enabled <br />or disabled on the topic) |
 | --------           | ------             | ----     |
 | <code>true</code>  | Not set            | Enabled  |
 | <code>true</code>  | <code>false</code> | Disabled |
@@ -100,7 +100,7 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 
 **Table 2: Remote read configuration**
 
-| Cluster-level configuration <br />(<code>cloud_storage_remote_read</code>) | Topic-level configuration <br />(<code>redpanda.remote.read</code>) | Outcome <br />(whether remote read is enabled <br />or disabled on the topic) |
+| Cluster-level configuration <br />(<code>cloud_storage_enable_remote_read</code>) | Topic-level configuration <br />(<code>redpanda.remote.read</code>) | Outcome <br />(whether remote read is enabled <br />or disabled on the topic) |
 | --------           | ------             | ----     |
 | <code>true</code>  | Not set            | Enabled  |
 | <code>true</code>  | <code>false</code> | Disabled |
