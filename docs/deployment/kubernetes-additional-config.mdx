@@ -31,11 +31,11 @@ additionalConfiguration:
 
 This example references the following subsystems: `redpanda`, `pandaproxy_client` (this refers to the HTTP Proxy client), and `schema_registry`. Each subsystem is followed by a property name and a value for the property. For a more detailed example of the CRD with the `additionalConfiguration` section included, see the *CRD example* section below.
 
-Note that the Redpanda operator does not check for version compatibility of the properties in the `additionalConfiguration` section of the CRD. You might try to apply a property that is not supported by the Redpanda version that the cluster is running. Therefore, we recommend that you verify the CRD after you make a change. This is explained in the *Verifying the CRD* section below.
+Note that the Redpanda operator does not check for version compatibility of the properties in the `additionalConfiguration` section of the CRD. You might try to apply a property that is not supported by the Redpanda version that the cluster is running. Therefore, it is recommended that you verify the CRD after you make a change. This is explained in the *Verifying the CRD* section below.
 
 ### Modifying the CRD
 
-To modify properties, all you have to do is edit the CRD file, save it, and execute it with the following command:
+To modify properties, edit the CRD file, save it, and execute it as follows:
 
 ```
 kubectl apply -f <custom_resource.yaml>
@@ -43,10 +43,10 @@ kubectl apply -f <custom_resource.yaml>
 
 If a change to the property requires a restart of the cluster, the operator will perform the restart automatically.
 
-If you want to view whether a change to a property requires a restart, see the [Cluster-level properties](/docs/reference/cluster-properties) documentation.
+If you want to view whether a change to a property requires a restart, see [Cluster-level properties](/docs/reference/cluster-properties).
 
 :::caution
-It is possible to change cluster-level configuration properties through the Admin API. However, if the property in the CRD contains a different value than the value that you set through the Admin API, the value set through the Admin API will eventually be overwritten. If the property does not exist in the CRD, you can change it through the Admin API and there will be no conflict. However, because there is the possibility of a property value being overwritten, we recommend that you set properties in the CRD.
+It is possible to change cluster-level configuration properties through the Admin API. However, if the property in the CRD contains a different value than the value that you set through the Admin API, the value set through the Admin API will eventually be overwritten. If the property does not exist in the CRD, you can change it through the Admin API and there will be no conflict. However, because there is the possibility of a property value being overwritten, it is recommended that you set properties in the CRD.
 :::
 
 ### Verifying the CRD
@@ -60,15 +60,15 @@ additionalConfiguration:
   redpanda.cluster_idd: allosaurus
 ```
 
-In the example, there is a typo in the `cluster_id` property name, with an additional `d`. After saving the file with the typo, you run the `kubectl apply` command to apply the modified CRD.
+In the example, there is a typo in the `cluster_id` property name, with an additional `d`. After saving the file with the typo, run the `kubectl apply` command to apply the modified CRD.
 
-To verify whether the cluster was configured successfully, you can run this command:
+To verify that the cluster was configured successfully:
 
 ```
 kubectl get cluster -o yaml
 ```
 
-If there was an error, the `status` section of the output will notify you. In this example, the status will look something like this:
+If there is an error, the `status` section of the output will notify you and look like the following:
 
 ```
 status:
@@ -82,7 +82,7 @@ status:
 
 Note that there is a message that there is an unknown property, the reason is that there was an error, and the `ClusterConfigured` status is `False`. In this case, the cluster will continue to run without making a change to the configuration, whether or not a change to the property would require a cluster restart.
 
-After you fix the typo, the `status` section of the `kubectl get cluster-o yaml` output will look something like this:
+After you fix the typo, the `status` section of the `kubectl get cluster-o yaml` output will look like the following:
 
 ```
 status: 
@@ -132,24 +132,24 @@ spec:
 
 The `additionalConfiguration` section of the CRD example contains a cluster-level property, `cluster_id`. 
 
-For this example, I'll change the cluster ID to `mapusaurus`. To do that, I edit the `cluster_id` property in the CRD so that the `additionalConfiguration` section looks like this:
+In this example, the cluster ID is revised to `mapusaurus`. To do that, edit the `cluster_id` property in the CRD so that the `additionalConfiguration` section looks like this:
 
 ```
 additionalConfiguration:
   redpanda.cluster_id: mapusaurus
 ```
 
-I then save the file, and run the following command to apply the change:
+Save the file, and run the following command to apply the change:
 
 `kubectl apply -f one-node-cluster.yaml`
 
-Now I can run the following `rpk` command to retrieve the cluster ID:
+Now you can run the following `rpk` command to retrieve the cluster ID:
 
 ```
 kubectl exec one-node-cluster-0 -- rpk cluster config get cluster_id
 ```
 
-And the command will will return something like this, with the updated cluster ID:
+The command will return something like the following, with the updated cluster ID:
 
 ```
 Defaulted container "redpanda" out of: redpanda, redpanda-configurator (init)

@@ -12,7 +12,7 @@ Note that maintenance mode doesn’t move any partitions out of the node, and Re
 
 Before placing a node in maintenance mode, ensure that you have replicas of partitions on other nodes in the cluster (or manually reassign partitions to other nodes). You may want to consider temporarily disabling or ignoring alerts related to under-replicated partitions.
 
-To place a node into maintenance mode, run the following command:
+To place a node into maintenance mode:
 
 ```bash
 rpk cluster maintenance enable &lt;node-id> --wait
@@ -20,13 +20,13 @@ rpk cluster maintenance enable &lt;node-id> --wait
 
 The `--wait` option ensures that `rpk` waits until leadership draining is completed before responding.
 
-To remove a node from maintenance mode (and thus enable the node to start taking leadership of partitions), run the following command:
+To remove a node from maintenance mode (and thus enable the node to start taking leadership of partitions):
 
 ```bash
 rpk cluster maintenance disable &lt;node-id> 
 ```
 
-To see the maintenance status of nodes in the cluster, run the following command:
+To see the maintenance status of nodes in the cluster:
 
 ```bash
 rpk cluster maintenance status

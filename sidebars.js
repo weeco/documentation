@@ -103,6 +103,12 @@
               label: 'Using configuration parameters with a custom resource',
               id: 'deployment/kubernetes-additional-config',
             },
+            {
+              type: 'doc',
+              label: 'Arbitrary configuration',
+              id: 'deployment/arbitrary-configuration',
+            },
+            
           ]
         },
         'deployment/performance-storage-tuning',

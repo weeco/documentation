@@ -26,7 +26,7 @@ journalctl -u redpanda # see logs
 ## Disk
 
 Redpanda uses DMA (Direct Memory Access) for all its disk IO. To get the
-best IO performance, we recommend the you place the data directory
+best IO performance, it is recommended the you place the data directory
 (/var/lib/redpanda/data) on an XFS partition in a local NVMe SSD. Redpanda can
 drive your SSD at maximum throughput at all times. Redpanda relies on XFS due
 to its use of sparse file system support to flush concurrent, non-overlapping pages.
@@ -37,7 +37,7 @@ you from getting the most value out of your hardware.
 We recommend not using network-blocked devices because of their inherent performance limitations.
 :::
 
-For multi-disk setups we recommend using Raid-0 with XFS on
+For multi-disk setups it is recommended using Raid-0 with XFS on
 top. Future releases will manage multi-disk virtualization without user
 involvement.
 
