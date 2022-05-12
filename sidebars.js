@@ -35,7 +35,7 @@
           label: 'Technical Preview',
           id: 'introduction/tech-preview',
         },
-        'introduction/consumer-offsets',
+        'introduction/consumer-offsets',        
       ],
     },
     {
@@ -164,6 +164,7 @@
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
+        'data-management/rack-awareness',
       ]
     },
     {
