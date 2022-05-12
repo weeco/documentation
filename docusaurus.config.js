@@ -28,7 +28,7 @@ module.exports = {
         href: 'https://redpanda.com'
       },
       items: [
-        // { type: 'docsVersionDropdown',position: 'right'},
+        { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
         { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right', target: '_self' },
@@ -90,7 +90,12 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          lastVersion: 'current'
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '22.1',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
