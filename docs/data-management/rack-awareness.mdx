@@ -2,6 +2,8 @@
 title: Rack awareness
 ---
 
+import styles from './rack-awareness.module.css';
+
 When you create a topic, you specify the number of partitions for the topic and the number of partition replicas. Redpanda software determines where to place the replicas on the cluster such that each replica is on a different node, if possible.
 
 By defining different racks for a cluster, you can specify a preference for the way partition replicas are assigned to nodes. A rack is basically a failure zone, with one or more nodes assigned to it. When the Redpanda software places partition replicas, it takes into account whether a replica has already been placed on a node in a particular rack. 
@@ -18,7 +20,7 @@ The instructions in this section are based on a cluster with five nodes and thre
 The nodes are assigned to the three racks as shown:
 
 | Node | Rack |
-| ---- | ---- |
+| :--- | :--- |
 | 1 | A |
 | 2 | A |
 | 3 | B |
