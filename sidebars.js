@@ -143,9 +143,10 @@
               id: 'cluster-administration/node-property-configuration',
             },             
           ],
-        },        
-        'cluster-administration/monitoring', 
-        'cluster-administration/version-upgrade',        
+        },
+        'cluster-administration/maintenance-mode',
+        'cluster-administration/monitoring',
+        'cluster-administration/version-upgrade',
       ]
     },
     {

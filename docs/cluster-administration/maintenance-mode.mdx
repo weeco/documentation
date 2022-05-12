@@ -1,0 +1,89 @@
+---
+title: Maintenance mode
+---
+
+Redpanda provides a maintenance mode that allows you to take a node offline without impacting cluster operations. Maintenance mode is especially useful during upgrades or hardware changes, and reduces client disruption and the potential for data loss during upgrade or maintenance operations. 
+
+When placed in maintenance mode, Redpanda moves all the leaders on that node to other nodes. When this occurs, clients stop interacting with the node, which allows you to remove the node without the client trying to connect to that node. Note that when a node is in maintenance mode, other nodes are still communicating with it–it’s only the client that's not interacting with the node. The only time you effectively have a fewer number of nodes is when you turn the node off.
+
+Only one node in a cluster can be in maintenance mode at a time. 
+
+## Putting a node in maintenance mode
+
+Before you place a node in maintenance mode, verify that the cluster is in good health. If it is not, make sure that the cluster is in good health before you put the node in maintenance mode. 
+To view the health of your cluster, run the following command: 
+
+```bash
+rpk admin cluster health
+```
+
+The output will...
+
+from noah about the output of this command: 
+the PR is still in review, the the simplest form of it right now is yes/no. we’ll also report
+- partitions without leaders
+- nodes that are down
+- if there is no controller node
+
+After you have verified that your cluster is in good health, you can put the node into maintenance mode with the following command:
+
+```bash
+rpk cluster maintenance enable <node_id>
+```
+
+It might take a few minutes for the node to enter maintenance mode. 
+If the process stalls or takes longer than a few minutes, revert the process with the following command: 
+
+```bash
+rpk cluster maintenance disable <node_id>
+```
+
+Once the node is in maintenance mode, it is safe to take the node offline and perform whatever software or hardware updates you need to on the node. 
+
+## Taking a node out of maintenance mode
+
+When you are ready to put the node back online, run the following command: 
+
+```bash
+rpk cluster maintenance disable <node_id> 
+```
+
+To verify that the node is running and the cluster is healthy, run this command: 
+
+```bash
+rpk cluster health
+```
+
+Questions: 
+1. Do I want to talk about these items from the upgrades design doc? 
+- leadership relinquishment
+- forward progress
+- partition scheduling
+- finalization
+- safety policy
+
+# Rolling upgrades
+
+A rolling upgrade is an upgrade in which you upgrade a cluster from one version of Redpanda to a higher version of Redpanda one node at a time. In Kubernetes, this includes the Redpanda operator. A rolling upgrade allows you to maintain cluster availability during the upgrade process, monitor the process, and roll back to the previous version of Redpanda if necessary. 
+
+This document details the steps for a rolling upgrade in Linux and Kubernetes production environments. If you want to upgrade your cluster on Mac, Windows, or Docker, see the [Version upgrade](\docs\cluster-administration\version-upgrade) documentation.
+
+This document walks you through the following steps to perform the upgrade: 
+
+## Prerequisites 
+
+Before starting a rolling upgrade, you must satisfy the following prerequisites:
+
+1 .You must be running  Redpanda version 22.1 or later. 
+
+    To view the Redpanda version that you have installed: 
+
+	In Kubernetes, run the following command: 
+	kubectl describe cluster <cluster_name>
+	The version field in the Status section contains the version of Redpanda that you are running. 
+
+
+2. Any others?
+
+no idea how juan's kubernetes upgrade doc fits into this - 
+https://docs.google.com/document/d/102cFkkNHEx575fjzDH49SKDnJOLvJeiqKVhoHrmb47Y/edit#heading=h.4r0nhvsniiuo
