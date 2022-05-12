@@ -141,6 +141,11 @@
               type: 'doc',
               label: 'Configuring node properties',
               id: 'cluster-administration/node-property-configuration',
+            },
+            {
+              type: 'doc',
+              label: 'Node Management',
+              id: 'cluster-administration/node-management',
             },             
           ],
         },        
