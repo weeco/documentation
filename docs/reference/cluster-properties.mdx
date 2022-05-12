@@ -2,12 +2,6 @@
 title: Cluster configuration properties
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-<TabItem value="cluster-properties" label="Cluster Properties" default>
-
 ## Cluster configuration properties
 
 Cluster configuration properties are properties that are the same for all nodes in a cluster, and can be set at the cluster level. 
@@ -142,9 +136,6 @@ All cluster properties are presented in tables that are grouped into the followi
 | :------  | :---------  | :--------------- |
 | enable_coproc | Enable coprocessing mode. <br/><br/>Default: false <br/><br/><b>This feature is in tech preview and is not supported in production environments.</b>| Yes |
 
-</TabItem>
-<TabItem value="tunable-properties" label="Tunable Properties">
-
 ## Tunable cluster configuration properties
 
 Tunable properties are cluster properties that are specifically designed for tuning a cluster.
@@ -262,6 +253,3 @@ The following table lists the available tunable properties:
 | transaction_coordinator_log_segment_size | How large in bytes should each log segment be (default 1 GB). <br/><br/>Default: 1048576000 (1 GB) |
 | wait_for_leader_timeout_ms | Timeout (ms) to wait for leadership in metadata cache. <br/><br/>Default: 5000 |
 | zstd_decompress_workspace_bytes | Size of the zstd decompression workspace. <br/><br/>Default: 8388608 (8 MB) |
-
-</TabItem>
-</Tabs>
