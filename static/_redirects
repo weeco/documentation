@@ -19,7 +19,8 @@
 /docs/features/guide-nodejs   /docs/development/guide-nodejs  301!
 
 # Deployment
-/docs/deploy-self-hosted/arbitrary-configuration   /docs/deployment/arbitrary-configuration  301!
+/docs/deploy-self-hosted/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
+/docs/deployment/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
 /docs/features/guide-rpk-container   /docs/deployment/guide-rpk-container  301!
 /docs/features/kubernetes-additional-config   /docs/deployment/kubernetes-additional-config  301!
 /docs/features/kubernetes-connectivity   /docs/deployment/kubernetes-connectivity  301!
@@ -28,6 +29,7 @@
 /docs/deploy-self-hosted/production-deployment   /docs/deployment/production-deployment  301!
 /docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
 /docs/reference/well-known-io   /docs/deployment/well-known-io  301!
+/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
 /docs/getting-started/install-preview   /docs/deployment/install-preview  301!
 
 # Cluster Administration

@@ -143,6 +143,15 @@ div .admonition-content > ul > li > a {
   margin-top: 0;
 }
 
+table {
+  display: table;
+  width: 100%;
+}
+
+table tr td {
+  text-align: left !important;
+}
+
 .table-of-contents__link, .menu__link {
   font-weight: 100 !important;
   font-size: 14px;

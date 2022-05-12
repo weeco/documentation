@@ -30,6 +30,12 @@
           id: 'introduction/intro-to-events',
         },        
         'introduction/autotune',
+        {
+          type: 'doc',
+          label: 'Technical Preview',
+          id: 'introduction/tech-preview',
+        },
+        'introduction/consumer-offsets',
       ],
     },
     {
@@ -101,7 +107,8 @@
               type: 'doc',
               label: 'Arbitrary configuration',
               id: 'deployment/arbitrary-configuration',
-            },            
+            },
+            
           ]
         },
         'deployment/performance-storage-tuning',
@@ -121,11 +128,23 @@
       collapsed: false,
       items: [
         {
-          type: 'doc',
-          label: 'Custom configuration',
-          id: 'cluster-administration/configuration',
+          type: 'category',
+          label: 'Configuration',
+          link: { type: 'doc', id: 'cluster-administration/configuration'},
+          items: [
+            {
+              type: 'doc',
+              label: 'Configuring cluster properties',
+              id: 'cluster-administration/cluster-property-configuration',
+            },
+            {
+              type: 'doc',
+              label: 'Configuring node properties',
+              id: 'cluster-administration/node-property-configuration',
+            },             
+          ],
         },        
-        'cluster-administration/monitoring',
+        'cluster-administration/monitoring', 
         'cluster-administration/version-upgrade',        
       ]
     },
@@ -195,6 +214,9 @@
       collapsible: true,
       collapsed: false,
       items: [
+        'reference/cluster-properties',
+        'reference/node-properties',
+        'reference/node-configuration-sample',
         {
           type: 'doc',
           label: 'rpk commands',
@@ -202,7 +224,7 @@
         },        
         {
           type: 'link',
-          label: 'CRD operator',
+          label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },        
         'reference/faq',
@@ -210,7 +232,8 @@
           type: 'link',
           label: 'Release notes',
           href: 'https://github.com/redpanda-data/redpanda/releases'
-        }
+        },
+        
       ]
     },
     {
