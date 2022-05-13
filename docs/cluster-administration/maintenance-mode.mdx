@@ -69,16 +69,14 @@ This document details the steps for a rolling upgrade in Linux and Kubernetes pr
 
 Before starting a rolling upgrade, you must satisfy the following prerequisites:
 
-1 .You must be running  Redpanda version 22.1 or later. 
+- You must be running  Redpanda version 22.1 or later. 
 
     To view the Redpanda version that you have installed: 
 
 	In Kubernetes, run the following command: 
 	kubectl describe cluster <cluster_name>
-	The version field in the Status section contains the version of Redpanda that you are running. 
+	The `version` field in the `Status` section contains the version of Redpanda that you are running. 
 
-
-2. Any others?
 
 no idea how juan's kubernetes upgrade doc fits into this - 
 https://docs.google.com/document/d/102cFkkNHEx575fjzDH49SKDnJOLvJeiqKVhoHrmb47Y/edit#heading=h.4r0nhvsniiuo
