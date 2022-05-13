@@ -221,6 +221,7 @@
       items: [
         'reference/cluster-properties',
         'reference/node-properties',
+        'reference/tunable-properties',
         'reference/node-configuration-sample',
         {
           type: 'doc',
