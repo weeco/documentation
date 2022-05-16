@@ -413,3 +413,12 @@ html[data-theme='dark'] .button--secondary {
   padding-left: 1rem;
   margin-left: -1rem;
 }
+
+
+.menu__link {
+  color: black;
+}
+
+.menu__link--active {
+  color: var(--ifm-menu-color-active);
+}
