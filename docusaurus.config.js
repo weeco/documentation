@@ -28,7 +28,7 @@ module.exports = {
         href: 'https://redpanda.com'
       },
       items: [
-        { type: 'docsVersionDropdown',position: 'right'},
+        // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
         { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right', target: '_self' },
