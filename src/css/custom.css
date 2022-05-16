@@ -414,6 +414,13 @@ html[data-theme='dark'] .button--secondary {
   margin-left: -1rem;
 }
 
+[data-theme='dark'] .menu__link {
+  color: white;
+}
+
+[data-theme='dark'] .menu__link--active {
+  color: var(--ifm-menu-color-active);
+}
 
 .menu__link {
   color: black;
