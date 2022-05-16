@@ -90,7 +90,12 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          lastVersion: 'current'
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '22.1',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
