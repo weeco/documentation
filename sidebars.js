@@ -13,9 +13,9 @@
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
     {
-      type: 'link',
+      type: 'doc',
       label: 'Docs home',
-      href: '/',
+      id: 'home/index',
     },
     {
       type: 'category',
