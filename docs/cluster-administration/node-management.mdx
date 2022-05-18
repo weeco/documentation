@@ -1,29 +1,29 @@
 ---
-title: Node Maintenance Mode
+title: Node maintenance mode
 ---
 
 Node maintenance mode enables you to bring a Redpanda node into a state where you can safely perform operations like an upgrade with reduced risk of data loss or downtime.
 
-When a node is placed in maintenance mode, it relinquishes leadership of any partitions, drains that leadership to other nodes in the cluster, and ensures that the node can not gain partition leadership until maintenance mode is disabled.
+When a node is placed in maintenance mode, it relinquishes leadership of any partitions, drains that leadership to other nodes in the cluster, and ensures that the node cannot gain partition leadership until maintenance mode is disabled.
 
 Note that maintenance mode doesn’t move any partitions out of the node, and Redpanda will continue to replicate follower partition data to nodes in maintenance mode. If the node becomes unreachable, then the cluster could accumulate under-replicated partitions until the node becomes available or it is decommissioned.
 
-## Using Maintenance Mode
+## Using maintenance mode
 
-Before placing a node in maintenance mode, ensure that you have replicas of partitions on other nodes in the cluster (or manually reassign partitions to other nodes). You may want to consider temporarily disabling or ignoring alerts related to under-replicated partitions.
+Before placing a node in maintenance mode, ensure that you have replicas of partitions on other nodes in the cluster. Alternatively, you can manually reassign partitions to other nodes. You may also want to temporarily disable or ignore alerts related to under-replicated partitions.
 
 To place a node into maintenance mode:
 
 ```bash
-rpk cluster maintenance enable &lt;node-id> --wait
+rpk cluster maintenance enable <node-id> --wait
 ```
 
-The `--wait` option ensures that `rpk` waits until leadership draining is completed before responding.
+The `--wait` option ensures that `rpk` waits until leadership draining is complete before responding.
 
 To remove a node from maintenance mode (and thus enable the node to start taking leadership of partitions):
 
 ```bash
-rpk cluster maintenance disable &lt;node-id> 
+rpk cluster maintenance disable <node-id> 
 ```
 
 To see the maintenance status of nodes in the cluster:
@@ -32,22 +32,21 @@ To see the maintenance status of nodes in the cluster:
 rpk cluster maintenance status
 ```
 
-The cluster maintenance status output identifies which nodes in the cluster are in the process of draining leadership, finished with that process, or have had any resulting errors.
+The output of this command identifies which nodes in the cluster are in the process of draining leadership, which are finished with that process, and whether any nodes had resulting errors.
 
-## Using Maintenance Mode to perform a Rolling Upgrade
+## Using maintenance mode to perform a rolling upgrade
 
-One of the primary uses for Maintenance Mode is to perform a rolling upgrade of the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, removing the node from maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster with reduced risk of interruption or degradation in service.
+One of the primary uses for maintenance mode is to perform a rolling upgrade of the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, removing the node from maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster with reduced risk of interruption or degradation in service.
 
 To perform a rolling upgrade: 
 
-
 1. Check to ensure all nodes are healthy by running `rpk cluster health`.
-2. Select a non-upgraded node and place it into maintenance mode using `rpk cluster maintenance enable &lt;node-id> --wait`. This may take some time to complete.
+2. Select a non-upgraded node and place it into maintenance mode using `rpk cluster maintenance enable &<node-id> --wait`. This may take some time to complete.
 3. Confirm the node is in maintenance mode by running `rpk cluster maintenance status` and confirming  that `FINISHED` is `true`.
-4. You can use `rpk cluster health` and external metrics (e.g. consumer lag) to validate the health of the cluster. If you encounter any issues, then revert node maintenance mode using `rpk maintenance mode disable &lt;node-id>`.
-5. If there are no issues, perform a node upgrade by following the Version Upgrade process specific to your deployment model. The basic steps include node shutdown, upgrade, and restart.
-6. Take the node out of maintenance mode using `rpk cluster maintenance disable &lt;node-id>`.
-7. Use `rpk cluster maintenance status` to ensure that the node is ready.
+4. Validate the health of the cluster by running `rpk cluster health` and using external metrics, such as consumer lag. If you encounter any issues, take the node out of maintenance mode by running `rpk maintenance mode disable <node-id>`.
+5. If there are no issues, perform a node upgrade by following the version upgrade process specific to your deployment model. The basic steps include node shutdown, upgrade, and restart.
+6. Take the node out of maintenance mode by running `rpk cluster maintenance disable <node-id>`.
+7. Run `rpk cluster maintenance status` to ensure that the node is ready.
 8. Repeat this process on another node in the cluster.
 
 :::note
@@ -66,4 +65,4 @@ Maintenance mode only transfers leadership; it does not move any partitions to o
 
 _How long does it take to drain a node?_
 
-The amount of time it takes to drain a node  depends on the number of partitions and how healthy the cluster is. For healthy clusters (`acks = all`) and small partitions sizes, draining leadership should take less than a minute. If partition sizes are large, it may take a few minutes. If the cluster is unhealthy (e.g. a follower is lagging behind), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
+The amount of time it takes to drain a node  depends on the number of partitions and how healthy the cluster is. For healthy clusters (`acks = all`) and small partition sizes, draining leadership should take less than a minute. If partition sizes are large, it may take a few minutes. If the cluster is unhealthy (for example, a follower is lagging behind), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
