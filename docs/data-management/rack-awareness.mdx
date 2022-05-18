@@ -12,7 +12,7 @@ If so, the software chooses a node in a different rack. This way, partition repl
 When rack awareness is enabled, the Redpanda software places replicas according to these criteria:
 - Number of racks vs. replicas - If the cluster has more racks than the number of replicas, each replica is placed on a node in a unique rack. If the cluster has fewer racks than the number of replicas, some replicas are placed on nodes in the same rack.
 - Number of available CPU cores - Nodes with more available CPU cores are chosen over nodes with fewer available CPU cores.
-- Node utilization - Less utilized nodes are chosen over nodes that are more utilized.
+- Node utilization - Nodes with fewer partitions are chosen over nodes with more partitions.
 
 ## Setting up rack awareness
 
