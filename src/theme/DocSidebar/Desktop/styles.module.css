@@ -54,7 +54,7 @@
   padding: 10px;
   margin: 0px;
   width: 100%;
-  height: 60px;
+  height: 75px;
   border-bottom: 1px solid var(--ifm-toc-border-color);
   font-size: 13px;
 }
@@ -63,7 +63,19 @@ div .topPanel > div > label {
   color: dimgray;
 }
 
-div .topPanel > div > div {
+div .topPanelLanguageContainer {
+  float: left;
+  width: 50%;
+  padding-left: 5px;
+}
+
+div .topPanelVersionContainer {
+  float: right;
+  width: 50%;
+  padding-left: 5px;
+}
+
+div .topPanelVersionContainer div {
   padding: 1px;
   padding-left: 5px;
 }

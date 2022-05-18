@@ -7,7 +7,6 @@
 import React from 'react';
 import NavbarItem from '@theme/NavbarItem';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
-import SearchBar from '@theme/SearchBar';
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
@@ -48,7 +47,6 @@ export default function NavbarContent() {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
-  const autoAddSearchBar = !items.some((item) => item.type === 'search');
   const { stars } = useGithubStars('redpanda-data', 'redpanda');
   useScript('//js.hs-scripts.com/7733588.js');
   
@@ -69,7 +67,6 @@ export default function NavbarContent() {
           <NavbarItems items={rightItems} />
           <NavbarItem href ="https://github.com/redpanda-data/redpanda" label= {stars} className = "header-icon header-icon-github" aria-label = "GitHub repository" />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
-          {autoAddSearchBar && <SearchBar />}
         </>
       }
     />

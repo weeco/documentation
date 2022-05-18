@@ -8,6 +8,7 @@ import React from 'react';
 import clsx from 'clsx';
 import {useThemeConfig} from '@docusaurus/theme-common';
 import Logo from '@theme/Logo';
+import SearchBar from '@theme/SearchBar';
 import CollapseButton from '@theme/DocSidebar/Desktop/CollapseButton';
 import Content from '@theme/DocSidebar/Desktop/Content';
 import DocsVersionDropdownNavbarItem from '@theme/NavbarItem/DocsVersionDropdownNavbarItem';
@@ -27,8 +28,9 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
       )}>
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <div className={styles.topPanel}>
-          <div><label>Language:</label> English</div>
-          <div><label>Version:</label>
+          <div><SearchBar /></div>
+          <div className={styles.topPanelLanguageContainer} ><label>Language:</label> English</div>
+          <div className={styles.topPanelVersionContainer}><label>Version:</label>
             <DocsVersionDropdownNavbarItem 
               docsPluginId={'default'}
               dropdownItemsBefore={[]}
