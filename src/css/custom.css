@@ -429,7 +429,7 @@ html[data-theme='dark'] .navbar__search-input {
   width: 15rem;
 }
 
-span[class*="dropdownMenu_src"] {
+span[class*="dropdownMenu_"] {
   position:  relative !important;
   width: 100% !important;
 }
