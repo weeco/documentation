@@ -33,6 +33,10 @@ To set up rack awareness for this cluster:
 3. In the text editor window that opens, set `enable_rack_awareness` to `true`.
 4. Save your change and quit the editor.
 5. Go to the `/etc/redpanda` directory.
-6. Edit the `redpanda.yaml` file and set `rack` to `A`.
-7. Log in to the remaining nodes and edit their `redpanda.yaml` files. For node 2, set `rack` to `A`. For node 3, set `rack` to `B`. For nodes 4 and 5, set `rack` to `C`.
-8. Restart each node in the cluster for the rack assignments to take effect.
+6. Open the `redpanda.yaml` file for editing.
+7. In the `redpanda` section, add the `rack` property and set the value to A as shown:
+    ```yaml
+    rack: "A"
+    ```
+8. Log in to the remaining nodes and edit their `redpanda.yaml` files. For node 2, set `rack` to `A`. For node 3, set `rack` to `B`. For nodes 4 and 5, set `rack` to `C`.
+9. Restart each node in the cluster for the rack assignments to take effect.
