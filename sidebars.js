@@ -13,9 +13,9 @@
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
     {
-      type: 'link',
+      type: 'doc',
       label: 'Docs home',
-      href: '/',
+      id: 'home/index',
     },
     {
       type: 'category',
@@ -35,7 +35,7 @@
           label: 'Technical Preview',
           id: 'introduction/tech-preview',
         },
-        'introduction/consumer-offsets',
+        'introduction/consumer-offsets',        
       ],
     },
     {
@@ -142,13 +142,13 @@
               label: 'Configuring node properties',
               id: 'cluster-administration/node-property-configuration',
             },
-            {
-              type: 'doc',
-              label: 'Node Management',
-              id: 'cluster-administration/node-management',
-            },             
           ],
         },        
+        {
+          type: 'doc',
+          label: 'Node management',
+          id: 'cluster-administration/node-management',
+        },             
         'cluster-administration/monitoring', 
         'cluster-administration/version-upgrade',        
       ]
@@ -164,6 +164,7 @@
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
+        'data-management/rack-awareness',
       ]
     },
     {

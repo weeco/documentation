@@ -433,3 +433,19 @@ span[class*="dropdownMenu_"] {
   position:  relative !important;
   width: 100% !important;
 }
+
+[data-theme='dark'] .menu__link {
+  color: white;
+}
+
+[data-theme='dark'] .menu__link--active {
+  color: var(--ifm-menu-color-active);
+}
+
+.menu__link {
+  color: black;
+}
+
+.menu__link--active {
+  color: var(--ifm-menu-color-active);
+}
