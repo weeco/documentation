@@ -63,6 +63,10 @@ div .topPanel > div > label {
   color: dimgray;
 }
 
+div .searchPlaceholder {
+  height: 40px;
+}
+
 div .topPanelLanguageContainer {
   float: left;
   width: 50%;

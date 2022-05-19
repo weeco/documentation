@@ -430,8 +430,8 @@ html[data-theme='dark'] .navbar__search-input {
 }
 
 span[class*="dropdownMenu_"] {
+  display: block;
   position:  relative !important;
-  width: 100% !important;
 }
 
 [data-theme='dark'] .menu__link {
