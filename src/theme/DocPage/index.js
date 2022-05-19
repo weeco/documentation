@@ -52,9 +52,6 @@ function DocPageContent({
       <Layout>
         <div className={styles.docPage}>
           <BackToTopButton />
-          <div className={styles.searchDiv}>
-            <SearchBar />
-          </div>
           {sidebar && (
             <aside
               className={clsx(
@@ -75,6 +72,9 @@ function DocPageContent({
                   setHiddenSidebar(true);
                 }
               }}>
+              <div className={styles.searchDiv}>
+                <SearchBar />
+              </div>                
               <DocSidebar
                 key={
                   // Reset sidebar state on sidebar changes
