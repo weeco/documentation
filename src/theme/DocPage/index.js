@@ -25,6 +25,7 @@ import {
 } from '@docusaurus/theme-common';
 import SearchMetadata from '@theme/SearchMetadata';
 import SearchBar from '@theme/SearchBar';
+import {useWindowSize} from '@docusaurus/theme-common';
 
 function DocPageContent({
   currentDocRoute,
@@ -43,6 +44,12 @@ function DocPageContent({
 
     setHiddenSidebarContainer((value) => !value);
   }, [hiddenSidebar]);
+  const windowSize = useWindowSize(); // Desktop sidebar visible on hydration: need SSR rendering
+
+  const shouldRenderSidebarDesktop =
+    windowSize === 'desktop' || windowSize === 'ssr'; // Mobile sidebar not visible on hydration: can avoid SSR rendering
+
+  const shouldRenderSidebarMobile = windowSize === 'mobile';
   return (
     <>
       <SearchMetadata
@@ -52,6 +59,11 @@ function DocPageContent({
       <Layout>
         <div className={styles.docPage}>
           <BackToTopButton />
+          
+          <div className={clsx(shouldRenderSidebarDesktop && styles.searchDiv,
+                                shouldRenderSidebarMobile && styles.hiddenSearchDiv)}> 
+            <SearchBar />
+          </div>   
           {sidebar && (
             <aside
               className={clsx(
@@ -71,10 +83,7 @@ function DocPageContent({
                 if (hiddenSidebarContainer) {
                   setHiddenSidebar(true);
                 }
-              }}>
-              <div className={styles.searchDiv}>
-                <SearchBar />
-              </div>                
+              }}>             
               <DocSidebar
                 key={
                   // Reset sidebar state on sidebar changes
