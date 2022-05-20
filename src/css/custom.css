@@ -414,6 +414,26 @@ html[data-theme='dark'] .button--secondary {
   margin-left: -1rem;
 }
 
+div[class*="searchBarContainer"] {
+  margin: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+html[data-theme='dark'] .navbar__search-input {
+  color: black;
+}
+
+.navbar__search-input {
+  border: 1px solid gray !important;
+  font-size: 14px;
+  width: 15rem;
+}
+
+span[class*="dropdownMenu_"] {
+  display: block;
+  position:  relative !important;
+}
+
 [data-theme='dark'] .menu__link {
   color: white;
 }

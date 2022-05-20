@@ -27,8 +27,9 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
       )}>
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <div className={styles.topPanel}>
-          <div><label>Language:</label> English</div>
-          <div><label>Version:</label>
+          <div className={styles.searchPlaceholder}></div>
+          <div className={styles.topPanelLanguageContainer} ><label>Language:</label> English</div>
+          <div className={styles.topPanelVersionContainer}><label>Version:</label>
             <DocsVersionDropdownNavbarItem 
               docsPluginId={'default'}
               dropdownItemsBefore={[]}
