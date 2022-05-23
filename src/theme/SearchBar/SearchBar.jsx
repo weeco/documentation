@@ -3,11 +3,12 @@ import clsx from "clsx";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import { useHistory, useLocation } from "@docusaurus/router";
+import { translate } from "@docusaurus/Translate";
 import { fetchIndexes } from "./fetchIndexes";
 import { SearchSourceFactory } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/SearchSourceFactory";
 import { SuggestionTemplate } from "./SuggestionTemplate";
 import { EmptyTemplate } from "./EmptyTemplate";
-import { searchResultLimits, Mark, translations, } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/proxiedGenerated";
+import { searchResultLimits, Mark } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/proxiedGenerated";
 import LoadingRing from "@easyops-cn/docusaurus-search-local/dist/client/client/theme/LoadingRing/LoadingRing";
 import styles from "./SearchBar.module.css";
 async function fetchAutoCompleteJS() {
@@ -48,6 +49,7 @@ export default function SearchBar({ handleSearchBarToggle, }) {
         const search = autoComplete(searchBarRef.current, {
             hint: false,
             autoselect: true,
+            openOnFocus: true,
             cssClasses: {
                 root: styles.searchBar,
                 noPrefix: true,
@@ -73,7 +75,10 @@ export default function SearchBar({ handleSearchBarToggle, }) {
                         const a = document.createElement("a");
                         const url = `${baseUrl}search?q=${encodeURIComponent(query)}`;
                         a.href = url;
-                        a.textContent = translations.see_all_results;
+                        a.textContent = translate({
+                            id: "theme.SearchBar.seeAll",
+                            message: "See all results",
+                        });
                         a.addEventListener("click", (e) => {
                             if (!e.ctrlKey && !e.metaKey) {
                                 e.preventDefault();
@@ -88,7 +93,9 @@ export default function SearchBar({ handleSearchBarToggle, }) {
                     },
                 },
             },
-        ]).on("autocomplete:selected", function (event, { document: { u, h }, tokens }) {
+        ])
+            .on("autocomplete:selected", function (event, { document: { u, h }, tokens }) {
+            searchBarRef.current?.blur();
             let url = u;
             if (Mark && tokens.length > 0) {
                 const params = new URLSearchParams();
@@ -101,6 +108,9 @@ export default function SearchBar({ handleSearchBarToggle, }) {
                 url += h;
             }
             history.push(url);
+        })
+            .on("autocomplete:closed", () => {
+            searchBarRef.current?.blur();
         });
         indexState.current = "done";
         setLoading(false);
@@ -135,7 +145,7 @@ export default function SearchBar({ handleSearchBarToggle, }) {
             mark.unmark();
             mark.mark(keywords);
         });
-    }, [location.search]);
+    }, [location.search, location.pathname]);
     const onInputFocus = useCallback(() => {
         focusAfterIndexLoaded.current = true;
         loadIndex();
@@ -162,17 +172,22 @@ export default function SearchBar({ handleSearchBarToggle, }) {
             if ((isMac ? event.metaKey : event.ctrlKey) && event.code === "KeyK") {
                 event.preventDefault();
                 searchBarRef.current?.focus();
+                onInputFocus();
             }
         }
         document.addEventListener("keydown", handleShortcut);
         return () => {
             document.removeEventListener("keydown", handleShortcut);
         };
-    }, [isMac]);
+    }, [isMac, onInputFocus]);
     return (<div className={clsx("navbar__search", styles.searchBarContainer, {
-        [styles.searchIndexLoading]: loading && inputChanged,
-    })}>
-      <input placeholder={translations.search_placeholder} aria-label="Search" className="navbar__search-input" onMouseEnter={onInputMouseEnter} onFocus={onInputFocus} onBlur={onInputBlur} onChange={onInputChange} ref={searchBarRef}/>
+            [styles.searchIndexLoading]: loading && inputChanged,
+        })}>
+      <input placeholder={translate({
+            id: "theme.SearchBar.label",
+            message: "Search",
+            description: "The ARIA label and placeholder for search button",
+        })} aria-label="Search" className="navbar__search-input" onMouseEnter={onInputMouseEnter} onFocus={onInputFocus} onBlur={onInputBlur} onChange={onInputChange} ref={searchBarRef}/>
       <LoadingRing className={styles.searchBarLoadingRing}/>
     </div>);
 }

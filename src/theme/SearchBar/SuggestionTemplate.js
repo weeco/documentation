@@ -1,7 +1,9 @@
-import { highlight } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/highlight.js";
-import { highlightStemmed } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/highlightStemmed.js";
+import { concatDocumentPath } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/concatDocumentPath";
 import { getStemmedPositions } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/getStemmedPositions";
-import { iconTitle, iconHeading, iconContent, iconAction, iconTreeInter, iconTreeLast, } from "./icons";
+import { highlight } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/highlight";
+import { highlightStemmed } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/highlightStemmed";
+import { explicitSearchResultPath } from "@easyops-cn/docusaurus-search-local/dist/client/client/utils/proxiedGenerated";
+import { iconAction, iconContent, iconHeading, iconTitle, iconTreeInter, iconTreeLast, } from "./icons";
 import styles from "./SearchBar.module.css";
 export function SuggestionTemplate({ document, type, page, metadata, tokens, isInterOfTree, isLastOfTree, }) {
     const isTitle = type === 0;
@@ -18,7 +20,14 @@ export function SuggestionTemplate({ document, type, page, metadata, tokens, isI
     const wrapped = [
         `<span class="${styles.hitTitle}">${highlightStemmed(document.t, getStemmedPositions(metadata, "t"), tokens)}</span>`,
     ];
-    if (!isTitle) {
+    const needsExplicitHitPath = !isInterOfTree && !isLastOfTree && explicitSearchResultPath;
+    if (needsExplicitHitPath) {
+        const pathItems = page
+            ? (page.b ?? []).concat(page.t).concat(!document.s || document.s === page.t ? [] : document.s)
+            : document.b;
+        wrapped.push(`<span class="${styles.hitPath}">${concatDocumentPath(pathItems ?? [])}</span>`);
+    }
+    else if (!isTitle) {
         wrapped.push(`<span class="${styles.hitPath}">${highlight(page.t ||
             // Todo(weareoutman): This is for EasyOps only.
             // istanbul ignore next
