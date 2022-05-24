@@ -77,7 +77,7 @@ redpanda:
       port: 9644
   data_directory: /var/lib/redpanda/data
   developer_mode: true          ## since this is a tech preview you must set developer mode as true
-  coproc_engine: 
+coproc_engine: 
     logFilePath: <file_path>    ## remember to change the file_path
     enable_coproc: true         ## data transform flag here. make sure it's under redpanda
     enable_idempotence: false   ## this flag is also mandatory because we're running a tech preview
