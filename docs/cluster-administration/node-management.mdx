@@ -11,9 +11,9 @@ Node maintenance mode enables you to bring a Redpanda node into a state where yo
 
 When a node is placed in maintenance mode, it relinquishes leadership of any partitions, drains that leadership to other nodes in the cluster, and ensures that the node cannot gain partition leadership until maintenance mode is disabled.
 
-Note that maintenance mode doesn’t move any partitions out of the node, and Redpanda will continue to replicate follower partition data to nodes in maintenance mode. If the node becomes unreachable, then the cluster could accumulate under-replicated partitions until the node becomes available or it is decommissioned.
+Note that maintenance mode does not move any partitions out of the node, and Redpanda will continue to replicate follower partition data to nodes in maintenance mode. If the node becomes unreachable, then the cluster could accumulate under-replicated partitions until the node becomes available or it is decommissioned.
 
-## Using maintenance mode
+## Placing a node in maintenance mode
 
 Before placing a node in maintenance mode, ensure that you have replicas of partitions on other nodes in the cluster. Alternatively, you can manually reassign partitions to other nodes. You may also want to temporarily disable or ignore alerts related to under-replicated partitions.
 
