@@ -34,8 +34,7 @@
           type: 'doc',
           label: 'Technical Preview',
           id: 'introduction/tech-preview',
-        },
-        'introduction/consumer-offsets',        
+        },  
       ],
     },
     {
@@ -175,6 +174,7 @@
       collapsed: false,
       items: [
         'development/guide-nodejs',
+        'development/consumer-offsets',
       ]
     },
     {
