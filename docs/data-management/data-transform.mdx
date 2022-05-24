@@ -77,10 +77,8 @@ redpanda:
       port: 9644
   data_directory: /var/lib/redpanda/data
   developer_mode: true        ## since this is a tech preview you must set developer mode as true
-coproc_engine: 
-  logFilePath: <file_path>    ## remember to change the file_path
-  enable_coproc: true         ## data transform flag here. make sure it's under redpanda
-  enable_idempotence: false   ## this flag is also mandatory because we're running a tech preview
+  enable_coproc: true         ## data transform flag
+  enable_idempotence: false   ## this flag is also mandatory for the tech preview
   coproc_supervisor_server:
     address: 0.0.0.0          ## if you want, you can change the ip address here
     port: <new port>          ## remember to change the port here
@@ -92,6 +90,8 @@ coproc_engine:
     address: 0.0.0.0
     port: 33145
   seed_servers: []
+coproc_engine: 
+  logFilePath: <file_path>    ## optional: change the directory where logs are written
 rpk:
   coredump_dir: /var/lib/redpanda/coredump
   enable_memory_locking: false
