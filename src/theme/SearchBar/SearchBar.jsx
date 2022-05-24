@@ -185,9 +185,9 @@ export default function SearchBar({ handleSearchBarToggle, }) {
         })}>
       <input placeholder={translate({
             id: "theme.SearchBar.label",
-            message: "Search",
+            message: "Search documentation",
             description: "The ARIA label and placeholder for search button",
-        })} aria-label="Search" className="navbar__search-input" onMouseEnter={onInputMouseEnter} onFocus={onInputFocus} onBlur={onInputBlur} onChange={onInputChange} ref={searchBarRef}/>
+        })} aria-label="Search documentation" className="navbar__search-input" onMouseEnter={onInputMouseEnter} onFocus={onInputFocus} onBlur={onInputBlur} onChange={onInputChange} ref={searchBarRef}/>
       <LoadingRing className={styles.searchBarLoadingRing}/>
     </div>);
 }
