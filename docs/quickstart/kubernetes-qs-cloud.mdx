@@ -67,7 +67,7 @@ Select the cloud provider that you want to use to create your Kubernetes cluster
 
 Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart). Then create a cluster with this command:
 
-```
+```bash
 gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=1
 ```
 :::note
@@ -80,7 +80,7 @@ You may need to add a `--region` or `--zone` to this command if defaults are not
 
 Use the [Amazon EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. When you finish, you'll have `eksctl` installed so that you can create and delete clusters in Amazon EKS. Then, create an Amazon EKS cluster with:
 
-```
+```bash
 eksctl create cluster \
 --name redpanda \
 --nodegroup-name standard-workers \
@@ -92,7 +92,7 @@ eksctl create cluster \
 
 Alternatively, if you want to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
 
-  ```
+  ```yaml
   apiVersion: eksctl.io/v1alpha5
   kind: ClusterConfig
   metadata:
@@ -118,7 +118,7 @@ The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, i
 
 Finally, create the Amazon EKS cluster with the following command: 
 
-```
+```bash
 eksctl create cluster -f eks-bootstrap.yaml
 ```
 
@@ -131,7 +131,7 @@ First, set up your [DigitalOcean account](https://docs.digitalocean.com/products
 You can find additional information in the [DigitalOcean set up](https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/01-setup-DOKS/README.md) documentation.
 
 Then use the following command to create a cluster for your Redpanda deployment:
-```
+```bash
 doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
 ```
   </TabItem>
@@ -143,13 +143,13 @@ Most cloud utility tools will automatically change your kubectl configuration fi
 
 To verify that you’re in the correct context, run the following command:
 
-```
+```bash
 kubectl config current-context
 ```
 
 On GKE for example, the output will look similar to this:
 
-```
+```bash
 gke_myproject_us-west1_redpanda
 ```
 
@@ -161,7 +161,7 @@ The Redpanda operator requires cert-manager to create certificates for TLS commu
 
 Use this command to install cert-manager with Helm:
 
-```
+```bash
 helm repo add jetstack https://charts.jetstack.io && \
 helm repo update && \
 helm install \
@@ -180,21 +180,21 @@ You may have to wait a few minutes for cert-manager to be ready before you conti
 
 1. Run the following command to use Helm to add the Redpanda chart repository and update it:
 
-```
+```bash
 helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 ```
 
 2. Use the following command to set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
-```
+```bash
 export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
 ```
 
 :::note
 If you prefer to manually enter the Redpanda version, or if you want to verify the version, run this command to return the installed version: 
 
-```
+```bash
 curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | grep tag_name
 ```
 :::
@@ -221,7 +221,7 @@ You can find information about the versions of the operator in the [list of oper
 
 4. Install the Redpanda operator on your Kubernetes cluster with this command:
 
-```
+```bash
 helm install \
   redpanda-operator \
   redpanda/redpanda-operator \
@@ -240,13 +240,13 @@ Complete the following steps to manage a stream of events from `panda-chat`:
 
 1. Create a namespace for the cluster with this command:
 
-```
+```bash
 kubectl create ns panda-chat
 ```
 
 2. Install a single-node cluster like this:
 
-```
+```bash
 kubectl apply \
 -n panda-chat \
 -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
@@ -262,7 +262,7 @@ Follow these steps to start working with the `panda-chat` cluster you created in
 
 1. First, check the status of the cluster with this command:
 
-```
+```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
 --image docker.redpanda.com/vectorized/redpanda:$VERSION \
@@ -272,7 +272,7 @@ cluster info
 
 2. Next, create a topic in the cluster. This command creates five chat rooms in the `panda-chat` cluster:
 
-```
+```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
 --image docker.redpanda.com/vectorized/redpanda:$VERSION \
@@ -282,7 +282,7 @@ topic create chat-rooms -p 5
 
 3. Run this command to view the list of topics:
 
-```
+```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
 --image docker.redpanda.com/vectorized/redpanda:$VERSION \
@@ -292,7 +292,7 @@ topic list
 
 4. Now you can produce to the topic with this command: 
 
-```
+```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
 --image docker.redpanda.com/vectorized/redpanda \
@@ -305,7 +305,7 @@ kubectl -n panda-chat run -ti --rm \
 
 6. Finally, consume, or read, from the topic with this command: 
 
-```
+```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
 --image docker.redpanda.com/vectorized/redpanda \
@@ -321,7 +321,7 @@ Now that you’ve completed the quickstart, you can use the following commands t
 <Tabs>
   <TabItem value="GKE" label="GKE" default>
 
-```
+```bash
 gcloud container clusters delete redpanda
 ```
 See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster) documentation for more information.
@@ -329,7 +329,7 @@ See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs
   </TabItem>
   <TabItem value="EKS" label="EKS">
 
-```
+```bash
 eksctl delete cluster --name redpanda
 ```
 
@@ -338,7 +338,7 @@ See the [Deleting an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/
   </TabItem>
   <TabItem value="DigitalOcean" label="DigitalOcean">
 
-```
+```bash
 doctl kubernetes cluster delete
 ```
 

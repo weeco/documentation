@@ -60,7 +60,7 @@ receive and send messages, so we need to create a consumer and a producer.
 
 ## Producer Setup
 
-```typescript
+```javascript
 // src/producer.ts
 import {Kafka} from 'kafkajs';
 
@@ -93,7 +93,7 @@ that you can send buffers, meaning you can send pretty much anything you want.
 
 ## Consumer Setup
 
-```typescript
+```javascript
 // src/consumer.ts
 import { v4 as uuidv4 } from 'uuid';
 import {Kafka} from 'kafkajs';
@@ -128,7 +128,7 @@ get a message only once. That's why we have the uuid generated.
 
 ## Putting everything together
 
-```typescript
+```javascript
 //src/index.ts
 import readline from 'readline';
 

@@ -1,17 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
-import Translate, {translate} from '@docusaurus/Translate';
 
 const FeatureList = [
   {
-    title: <Translate>Get started with Redpanda</Translate>,
+    title: 'Get started with Redpanda',
     Svg: require('../../static/img/Redpanda Rocket.svg').default,
     description: (
-      <Translate>
+      <>
         Redpanda was designed from the ground up to be easily installed
         to get streaming up and running quickly.
-      </Translate>
+      </>
     ),
     url: '/docs/quickstart/',
   },

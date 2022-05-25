@@ -103,7 +103,7 @@ rpk cluster config set log_segment_size <segment_size>
 
 If you know which topics will receive more data, it is best to specify the size for each topic. To configure log segment size on a topic: 
 
-```
+```bash
 rpk topic alter-config <topic> --set segment.bytes=<segment_size>
 ```
 
