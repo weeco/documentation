@@ -32,7 +32,7 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 4. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the properties listed here are the minimum required properties that you must configure at the cluster level to use Tiered Storage for Amazon S3. Use the `rpk cluster config edit` command to edit these properties:
 
-```
+```properties
 cloud_storage_enabled: true
 cloud_storage_access_key: ***
 cloud_storage_secret_key: ***
@@ -50,7 +50,7 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the properties listed here are the minimum required properties to use Tiered Storage for Google Cloud Storage. Use the `rpk cluster config edit` command to edit these properties:
 
-```
+```properties
 cloud_storage_access_key: ***
 cloud_storage_api_endpoint: storage.googleapis.com
 cloud_storage_bucket: pandabucket
@@ -113,13 +113,13 @@ Note that the cluster-level `cloud_storage_enabled` property must be set to `tru
 
 To enable Tiered Storage on a topic, you can set the `redpanda.remote.write` and `redpanda.remote.read` flags on a new topic or an existing topic. Use the following command to create a new topic with Tiered Storage enabled: 
 
-```
+```bash
 rpk topic create <topic_name> -c redpanda.remote.read=true -c redpanda.remote.write=true
 ```
 
 And use this command to enable Tiered Storage on an existing topic: 
 
-```
+```bash
 rpk topic alter-config <topic_name> --set redpanda.remote.read=true --set redpanda.remote.write=true
 ```
 
@@ -133,13 +133,13 @@ To enable Tiered Storage, use remote write in conjunction with remote read. If y
 
 To create a topic with remote write enabled, use this command: 
 
-```
+```bash
 rpk topic create <topic_name> -c -c redpanda.remote.write=true
 ```
 
 And to enable remote write on an existing topic, use this command: 
 
-```
+```bash
 rpk topic alter-config <topic_name> --set redpanda.remote.write=true
 ```
 
@@ -181,13 +181,13 @@ When data is available remotely and Tiered Storage is enabled, the client can st
 
 To create a topic with remote read enabled, use this command: 
 
-```
+```bash
 rpk topic create <topic_name> -c -c redpanda.remote.read=true
 ```
 
 And to enable remote read on an existing topic, use this command: 
 
-```
+```bash
 rpk topic alter-config <topic_name> --set redpanda.remote.read=true
 ```
 
@@ -216,13 +216,13 @@ You can use remote recovery to restore a topic that was deleted from a cluster.
 
 Use the following command to create a new topic using remote recovery: 
 
-```
+```bash
 rpk topic create <topic_name> -c redpanda.remote.recovery=true
 ```
 
 You can also create a new topic using remote recovery and enable Tiered Storage on the new topic by adding the `redpanda.remote.write` and `redpanda.remote.read` flags: 
 
-```
+```bash
 rpk topic create <topic_name> -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
 ```
 

@@ -54,13 +54,13 @@ Before you install Redpanda, verify that you have the following software install
 
 Run the `minikube start` command to start up minikube and Kubernetes: 
 
-```
+```bash
 minikube start
 ```
 
 Verify that Kubernetes is running with this command: 
 
-```
+```bash
 minikube status
 ```
 
@@ -72,7 +72,7 @@ Before you install cert-manager, verify that the version you’re installing is 
 
 Use this command to install cert-manager with Helm:
 
-```
+```bash
 helm repo add jetstack https://charts.jetstack.io && \
 helm repo update && \
 helm install \
@@ -91,14 +91,14 @@ Use the [verification procedure](https://cert-manager.io/docs/installation/verif
 
 1. Run the following command to use Helm to add the Redpanda chart repository and update it:
 
-```
+```bash
 helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 ```
 
 2. Use the following command to set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
-```
+```bash
 export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
 ```
 
@@ -131,7 +131,7 @@ You can find information about the versions of the operator in the [list of oper
 
 4. Install the Redpanda operator on your Kubernetes cluster with this command:
 
-```
+```bash
 helm install \
   redpanda-operator \
   redpanda/redpanda-operator \
@@ -150,13 +150,13 @@ Complete the following steps to manage a stream of events from `panda-chat`:
 
 1. Create a namespace for the cluster with this command:
 
-```
+```bash
 kubectl create ns panda-ns
 ```
 
 2. Install a single-node cluster like this (note that only single-node clusters are supported for local access clusters):
 
-```
+```bash
 kubectl apply \
 -n panda-ns \
 -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
@@ -166,7 +166,7 @@ You can view the resource configuration options, such as storage capacity, netwo
 
 3. Verify that the cluster was created successfully with this command: 
 
-```
+```bash
 kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk cluster metadata --brokers='localhost:9092'
 ```
 
@@ -178,13 +178,13 @@ Follow these steps to start working with the `panda-ns` cluster you created in t
 
 1. Create a `panda-chat` topic with five partitions:
 
-```
+```bash
 kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic create panda-chat -p 5 --brokers='localhost:9092'
 ```
 
 2. Produce messages to the topic:
 
-```
+```bash
 kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic produce panda-chat --brokers='localhost:9092'
 ```
 
@@ -194,13 +194,13 @@ kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic produce panda-chat 
 
 4. Consume (i.e. read) the messages in the topic with this command:
 
-```
+```bash
 kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic consume panda-chat --brokers='localhost:9092'
 ```
 
 Each message is shown with its metadata, like this:
 
-```
+```json
 {
 "message": "Pandas are fabulous!\n",
 "partition": 0,
@@ -211,7 +211,7 @@ Each message is shown with its metadata, like this:
 
 5. List the topics: 
 
-```
+```bash
 kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic list --brokers='localhost:9092'
 ```
 
@@ -219,7 +219,7 @@ kubectl exec -it -n panda-ns one-node-cluster-0 -- rpk topic list --brokers='loc
 
 Now that you’ve completed the quickstart, you can delete your cluster with the following command: 
 
-```
+```bash
 minikube delete
 ```
 

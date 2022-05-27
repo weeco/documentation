@@ -66,7 +66,7 @@ Create a 3-node cluster on the platform of your choice:
 
   Then you can create a cluster for your Redpanda deployment:
 
-  ```
+  ```bash
   doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
   ```
 
@@ -111,7 +111,7 @@ We'll use Helm to install cert-manager:
 
 1. Just to simplify the commands, create a variable to hold the latest version number:
 
-    ```
+    ```bash
     export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
     ```
 
@@ -139,7 +139,7 @@ We'll use Helm to install cert-manager:
 
     <TabItem value="bash" label="bash" default>
 
-    ```
+    ```bash
     kubectl apply -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
     helm repo add redpanda https://charts.vectorized.io/ && \
     helm repo update && \
@@ -154,7 +154,7 @@ We'll use Helm to install cert-manager:
 
     <TabItem value="zsh" label="zsh">
 
-    ```
+    ```bash
     noglob kubectl apply -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=$VERSION && \
     helm repo add redpanda https://charts.vectorized.io/ && \
     helm repo update && \
@@ -171,13 +171,13 @@ We'll use Helm to install cert-manager:
 
 3. Install a cluster with external connectivity:
 
-  ```
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda/$VERSION/src/go/k8s/config/samples/external_connectivity.yaml
   ```
 
 4. Get the addresses of the brokers:
 
-  ```
+  ```bash
   kubectl get clusters external-connectivity -o=jsonpath='{.status.nodes.external}'
   ```
 
@@ -189,7 +189,7 @@ We'll use Helm to install cert-manager:
 
   Commands like these will help you better understand what's happening:
 
-  ```
+  ```bash
   kubectl describe statefulset external-connectivity
   kubectl describe pods external-connectivity-0
   ```
@@ -220,7 +220,7 @@ We'll use Helm to install cert-manager:
   For GKE, open the firewall for access to the cluster:
   a. Get the port number that Redpanda is listening on:
 
-  ```
+  ```bash
   kubectl get service external-connectivity-external -o=jsonpath='{.spec.ports[0].nodePort}'
   ```
 
@@ -228,7 +228,7 @@ We'll use Helm to install cert-manager:
 
   b. Create a firewall rule that allows traffic to Redpanda on that port:
 
-  ```
+  ```bash
   gcloud compute firewall-rules create redpanda-nodeport --allow tcp:<port_number>
   ```
 
@@ -248,7 +248,7 @@ We'll use Helm to install cert-manager:
 
 1. From a remote machine that has `rpk` installed, get information about the cluster:
 
-  ```
+  ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   cluster info
   ```
@@ -261,14 +261,14 @@ We'll use Helm to install cert-manager:
 
 2. Create a topic in your Redpanda cluster:
 
-  ```
+  ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   topic create chat-rooms -p 5
   ```
 
 3. Show the list of topics: 
 
-  ```
+  ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   topic list
   ```

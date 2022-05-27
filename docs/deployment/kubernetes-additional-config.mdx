@@ -15,13 +15,13 @@ In addition to the cluster properties that are included in the CRD by default, y
 
 The format of each property in the `additionalConfiguration` section of the CRD is:
 
-```
+```yaml
 <subsystem>.<property_name>: <value>
 ```
 
 For example, the CRD might have the following `additionalConfiguration` section: 
 
-```
+```yaml
 additionalConfiguration:
   redpanda.enable_idempotence: "true"
   redpanda.default_topic_partitions: "3"
@@ -37,7 +37,7 @@ Note that the Redpanda operator does not check for version compatibility of the 
 
 To modify properties, edit the CRD file, save it, and execute it as follows:
 
-```
+```bash
 kubectl apply -f <custom_resource.yaml>
 ```
 
@@ -55,7 +55,7 @@ It is a best practice to verify that your CRD is applied to the cluster successf
 
 For example, you might add the following `additionalConfiguration` section to the CRD:
 
-```
+```yaml
 additionalConfiguration: 
   redpanda.cluster_idd: allosaurus
 ```
@@ -64,13 +64,13 @@ In the example, there is a typo in the `cluster_id` property name, with an addit
 
 To verify that the cluster was configured successfully:
 
-```
+```bash
 kubectl get cluster -o yaml
 ```
 
 If there is an error, the `status` section of the output will notify you and look like the following:
 
-```
+```yaml
 status:
   conditions:
   - lastTransitionTime: "2022-04-01T13:11Z"
@@ -84,7 +84,7 @@ Note that there is a message that there is an unknown property, the reason is th
 
 After you fix the typo, the `status` section of the `kubectl get cluster-o yaml` output will look like the following:
 
-```
+```yaml
 status: 
   conditions: 
   - lastTransitionTime: "2022-04-01T13:11Z"
@@ -134,7 +134,7 @@ The `additionalConfiguration` section of the CRD example contains a cluster-leve
 
 In this example, the cluster ID is revised to `mapusaurus`. To do that, edit the `cluster_id` property in the CRD so that the `additionalConfiguration` section looks like this:
 
-```
+```yaml
 additionalConfiguration:
   redpanda.cluster_id: mapusaurus
 ```
@@ -145,13 +145,13 @@ Save the file, and run the following command to apply the change:
 
 Now you can run the following `rpk` command to retrieve the cluster ID:
 
-```
+```bash
 kubectl exec one-node-cluster-0 -- rpk cluster config get cluster_id
 ```
 
 The command will return something like the following, with the updated cluster ID:
 
-```
+```bash
 Defaulted container "redpanda" out of: redpanda, redpanda-configurator (init)
 mapusaurus
 ```

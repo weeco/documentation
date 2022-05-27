@@ -96,7 +96,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --kafka-addr INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092 \
 --advertise-kafka-addr INSIDE://redpanda-1:29092,OUTSIDE://localhost:9092 \
 --rpc-addr 0.0.0.0:33145 \
---advertise-rpc-addr redpanda-1:33145 &&
+--advertise-rpc-addr redpanda-1:33145 && \
 
 docker run -d \
 --pull=always \
@@ -119,7 +119,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --kafka-addr INSIDE://0.0.0.0:29093,OUTSIDE://0.0.0.0:9093 \
 --advertise-kafka-addr INSIDE://redpanda-2:29093,OUTSIDE://localhost:9093 \
 --rpc-addr 0.0.0.0:33146 \
---advertise-rpc-addr redpanda-2:33146 &&
+--advertise-rpc-addr redpanda-2:33146 && \
 
 docker run -d \
 --pull=always \

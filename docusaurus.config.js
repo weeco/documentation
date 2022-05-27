@@ -81,7 +81,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['yaml','docker','powershell','git', 'ini']
+      additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript']
     },
   },
   presets: [

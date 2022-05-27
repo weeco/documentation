@@ -167,6 +167,8 @@ table tr td {
   transition: all 75ms ease;
   box-shadow: none;
   background-color: hsla(21, 17%, 97%, 1.0) !important;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .navbar__inner {
@@ -448,4 +450,13 @@ span[class*="dropdownMenu_"] {
 
 .menu__link--active {
   color: var(--ifm-menu-color-active);
+}
+
+.admonition {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+h5 {
+  font-size: 0.83em !important;
 }
