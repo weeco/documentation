@@ -1,0 +1,17 @@
+---
+title: Idempotent producers
+---
+
+Idempotent producers guarantee that producers write a message to a topic only once. Under stable conditions, this is expected. But in the event of a connection failure or other disruption, retry logic tries to write the message again. If the write was already successful, this can result in duplicate messages.
+
+Idempotent producers prevent duplicate messages from being written to a topic by assigning a unique ID for every request. When a client receives an error that indicates a disruption, such as a timeout, the client retries the request. If new write requests continue while a previous request is being retried, the new requests are stored in memory in order to preserve the correct sequence.
+
+Redpanda software identifies duplicate messages based on their request ID and removes them. Since the request ID includes a sequence number, the order in which the requests were sent is also preserved.
+
+:::note
+
+Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any retry requests that were stored in memory are erased.
+
+:::
+
+Starting with the 22.1 release, the `enable_idempotence` property is set at the cluster level, so the setting applies to all nodes in the cluster. This property is set to `true` by default in the default cluster configuration.
