@@ -84,3 +84,9 @@ Swapping is prevented so that Redpanda is never swapped out of memory. By
 design, `redpanda` allocates nearly all of the available memory upfront,
 partitioning the allocated memory between all cores and pinning such memory
 to the specified NUMA domain (specific CPU socket). This makes sure that we have predictable memory allocations and provides predictable latency.
+
+---
+## Suggested readings
+
+- Benchmark of Redpanda and Apache Kafka [article](https://redpanda.com/blog/fast-and-safe/)
+- Fast distributed transactions with Redpanda [article](https://redpanda.com/blog/fast-transactions/)
