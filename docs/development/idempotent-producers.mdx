@@ -10,7 +10,7 @@ Redpanda software identifies duplicate messages based on their request ID and re
 
 :::note
 
-Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any retry requests that were stored in memory are erased.
+Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any write requests that were stored in memory are erased.
 
 :::
 
