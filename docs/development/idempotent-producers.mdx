@@ -8,10 +8,10 @@ Idempotent producers assign a unique ID to every write request. This request ID 
 
 If a retry results in a duplicate message, Redpanda software identifies the duplicate based on its request ID and removes it.
 
-The `enable_idempotence` property is enabled by default. This property is set at the cluster level, which means the setting applies to all nodes in the cluster. To disable idempotence, refer to [Configuring cluster properties](/docs/cluster-administration/cluster-property-configuration).
-
 :::note
 
 Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any write requests that were stored in memory are erased. Also, if you manually retry a write request, the client will assign a new ID to that request and the original sequencing will be lost.
 
 :::
+
+The `enable_idempotence` property is enabled by default. This property is set at the cluster level, which means the setting applies to all nodes in the cluster. To disable idempotence, refer to [Configuring cluster properties](/docs/cluster-administration/cluster-property-configuration).
