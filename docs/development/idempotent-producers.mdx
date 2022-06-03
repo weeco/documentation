@@ -2,20 +2,16 @@
 title: Idempotent producers
 ---
 
-Idempotent producers guarantee that the client writes a message to a topic only once. Under stable conditions, this is expected. But in the event of a disruption, the client retries the write request until an acknowledgment is received from the broker or the retry limit is reached. Even when the write request is sent multiple times, idempotence ensures that the message is only written once.
+Idempotent producers guarantee that the client writes a message to a topic only once. Under stable conditions, this is expected. But in the event of a disruption, the client retries the write request until an acknowledgment is received from the broker or the retry limit is reached. When a write request is sent multiple times, idempotence ensures that the message is only written once.
 
+Idempotent producers assign a unique ID to every write request. This request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If new write requests continue while a previous request is being retried, the new requests are stored in order in memory to preserve the correct sequence. The client must also retry these requests.
 
+If a retry results in a duplicate message, Redpanda software identifies the duplicate based on its request ID and removes it.
 
-Idempotent producers assign a unique ID to every write request. This request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent.
-
-When a client receives an error that indicates a disruption, such as a timeout, the client automatically retries the request. If new write requests continue while a previous request is being retried, the new requests are stored in memory in order to preserve the correct sequence. The client must also retry these requests.
-
-If a retry results in a duplicate message, Redpanda software identifies the duplicate based on its request ID and removes it. This way, each message is guaranteed to be written only once. Since each request ID includes a sequence number, the order in which the requests were sent is also preserved. 
+The `enable_idempotence` property is enabled by default. This property is set at the cluster level, which means the setting applies to all nodes in the cluster. To disable idempotence, refer to [Configuring cluster properties](/docs/cluster-administration/cluster-property-configuration).
 
 :::note
 
 Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any write requests that were stored in memory are erased. Also, if you manually retry a write request, the client will assign a new ID to that request and the original sequencing will be lost.
 
 :::
-
-Starting with the 22.1 release, the `enable_idempotence` property is set at the cluster level, which means the setting applies to all nodes in the cluster. This property is set to `true` by default in the default cluster configuration. To disable idempotence, edit the cluster configuration and set `enable_idempotence` to `false`. Refer to [Configuring cluster properties](/docs/cluster-administration/cluster-property-configuration) for details.
