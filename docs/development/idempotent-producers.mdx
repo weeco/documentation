@@ -2,15 +2,19 @@
 title: Idempotent producers
 ---
 
-Idempotent producers guarantee that producers write a message to a topic only once. Under stable conditions, this is expected. But in the event of a connection failure or other disruption, retry logic tries to write the message again. If the write was already successful, this can result in duplicate messages.
+Idempotent producers guarantee that the client writes a message to a topic only once. Under stable conditions, this is expected. But in the event of a disruption, the client retries the write request until an acknowledgment is received from the broker or the retry limit is reached. Even when the write request is sent multiple times, idempotence ensures that the message is only written once.
 
-Idempotent producers prevent duplicate messages from being written to a topic by assigning a unique ID for every request. Each request ID consists of the producer ID and a sequence number. When a client receives an error that indicates a disruption, such as a timeout, the client retries the request. If new write requests continue while a previous request is being retried, the new requests are stored in memory in order to preserve the correct sequence.
 
-Redpanda software identifies duplicate messages based on their request ID and removes them. Since each request ID includes a sequence number, the order in which the requests were sent is also preserved.
+
+Idempotent producers assign a unique ID to every write request. This request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent.
+
+When a client receives an error that indicates a disruption, such as a timeout, the client automatically retries the request. If new write requests continue while a previous request is being retried, the new requests are stored in memory in order to preserve the correct sequence. The client must also retry these requests.
+
+If a retry results in a duplicate message, Redpanda software identifies the duplicate based on its request ID and removes it. This way, each message is guaranteed to be written only once. Since each request ID includes a sequence number, the order in which the requests were sent is also preserved. 
 
 :::note
 
-Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any write requests that were stored in memory are erased.
+Idempotence is guaranteed within a session. If the system is restarted, a new session starts, and any write requests that were stored in memory are erased. Also, if you manually retry a write request, the client will assign a new ID to that request and the original sequencing will be lost.
 
 :::
 
