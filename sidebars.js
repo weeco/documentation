@@ -175,7 +175,7 @@
       items: [
         'development/guide-nodejs',
         'development/consumer-offsets',
-        'development/idempotent-producers'
+        'development/idempotent-producers',
       ]
     },
     {
