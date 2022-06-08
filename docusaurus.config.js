@@ -106,10 +106,10 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
         },
-        gtag: {
+        /* gtag: {
           trackingID: 'GTM-WB2CSV5',
           anonymizeIP: true,
-        },
+        }, */
       },
     ],
   ],
@@ -126,7 +126,23 @@ module.exports = {
         // ```
         // When applying `zh` in language, please install `nodejieba` in your project.
       },
-    ],
+    ],    
+    function (context, options) {
+      return {
+        name: 'docusaurus-plugin',
+        injectHtmlTags({content}) {
+          return {
+            preBodyTags: [`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB2CSV5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`],
+          };
+        },
+      }
+    },
+  ],
+  scripts: [
+    {
+      src: '/js/googletag.js',
+      async: false,
+    }
   ],
   stylesheets: [
     "https://fonts.googleapis.com/icon?family=Material+Icons",
