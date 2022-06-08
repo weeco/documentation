@@ -6,7 +6,13 @@ title: Rolling upgrades
 
 One of the primary uses for maintenance mode is to perform a rolling upgrade of the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, removing the node from maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster with reduced risk of interruption or degradation in service.
 
-To perform a rolling upgrade: 
+:::note
+If you are using the Redpanda Kubernetes Operator to trigger an upgrade, then node maintenance mode is automatically incorporated into the upgrade process.
+:::
+
+## Performing a rolling upgrade
+
+To perform a rolling upgrade:
 
 1. Check to ensure all nodes are healthy by running `rpk cluster health`.
 2. Select a non-upgraded node and place it into maintenance mode using `rpk cluster maintenance enable <node-id> --wait`. This may take some time to complete.
@@ -16,11 +22,3 @@ To perform a rolling upgrade:
 6. Take the node out of maintenance mode by running `rpk cluster maintenance disable <node-id>`.
 7. Run `rpk cluster maintenance status` to ensure that the node is ready.
 8. Repeat this process on another node in the cluster.
-
-:::note
-These steps are for a deployment that is not controlled by the Kubernetes Operator. With the Kubernetes Operator, maintenance mode is automatically employed during a Redpanda upgrade as described here.
-:::
-
-## Performing a rolling upgrade on a Kubernetes cluster
-
-If you are using the Redpanda Kubernetes Operator to trigger an upgrade, then node maintenance mode is automatically incorporated into the upgrade process.
