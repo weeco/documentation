@@ -10,7 +10,7 @@ When a producer writes messages to a topic, each message should be recorded only
 
 Since there is no way to tell if the initial write request succeeded before the disruption, a retry can result in a duplicate message. A retry can also cause subsequent messages to be written out of order.
 
-Idempotent producers solve this problem by assigning a unique ID to every write request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If a retry results in a duplicate message, Redpanda software detects and rejects the duplicate message and maintains the original order of the messages.
+Idempotent producers prevent this problem by assigning a unique ID to every write request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If a retry results in a duplicate message, Redpanda software detects and rejects the duplicate message and maintains the original order of the messages.
 
 If new write requests continue while a previous request is being retried, the new requests are stored in the client’s memory in the order in which they were received. The client must also retry these requests once the previous request is successful.
 
