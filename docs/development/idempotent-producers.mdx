@@ -27,6 +27,7 @@ With idempotence enabled, these settings are configured automatically, so you ca
 ## Enabling idempotence for producers
 
 The `enable_idempotence` property is enabled by default. This property is set at the cluster level, which means the setting applies to all nodes in the cluster.
+
 Idempotence is guaranteed within a session. A session starts once a producer is created and a connection is established between the client and the Kafka broker.
 
 :::note
