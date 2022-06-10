@@ -9,7 +9,7 @@ title: Node maintenance mode
 
 Node maintenance mode enables you to bring a Redpanda node into a state where you can safely perform operations like an upgrade or disk replacement, while reducing the risk of data loss or downtime.
 
-When a node is placed in maintenance mode, it relinquishes leadership of any partitions, reassigns that leadership to other nodes in the cluster, and ensures that the node cannot gain partition leadership until the node is returned to the cluster.
+When a node is placed in maintenance mode, it relinquishes leadership of any partitions, reassigns that leadership to other nodes in the cluster, and ensures that the node cannot gain partition leadership until the node rejoins the cluster.
 
 If a node hosts a partition with a replica count of 1, you have two options:
 
