@@ -106,10 +106,6 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
         },
-        /* gtag: {
-          trackingID: 'GTM-WB2CSV5',
-          anonymizeIP: true,
-        }, */
       },
     ],
   ],
