@@ -34,7 +34,7 @@ In the steps below, the `.yaml` file that you use to install Redpanda sets `deve
 
 Before you install Redpanda, verify that you have the following software installed on the machine where you want to run Redpanda: 
 
-* [kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.19 or later
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.21 or later
 * [Helm](https://github.com/helm/helm/releases) version 3.0.0 or later
 * [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) version 0.11.1 or later
 * [Go](https://go.dev/doc/install) v1.17 or later (only required for Windows setup)
@@ -94,7 +94,7 @@ helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --create-namespace \
-  --version v1.2.0 \
+  --version v1.4.4 \
   --set installCRDs=true
 ```
 
