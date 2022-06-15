@@ -339,6 +339,6 @@ md_result = md_result + suggestedReadings
 
 print(md_result)
 
-file = "docs/www/rpk-commands.md"
+file = "docs/core/www/rpk-commands.md"
 with open(file, "w") as filetowrite:
     filetowrite.write(md_result)

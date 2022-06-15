@@ -10,7 +10,7 @@
       "label": "Introduction",
       "link": {
         "type": "doc",
-        "id": "introduction/index"
+        "id": "core/introduction/index"
       },
       "collapsible": true,
       "collapsed": false,
@@ -18,9 +18,9 @@
         {
           "type": "doc",
           "label": "An introduction to events and streaming",
-          "id": "introduction/intro-to-events"
+          "id": "core/introduction/intro-to-events"
         },
-        "introduction/autotune"
+        "core/introduction/autotune"
       ]
     },
     {
@@ -30,17 +30,17 @@
       "collapsed": false,
       "link": {
         "type": "doc",
-        "id": "quickstart/index"
+        "id": "core/quickstart/index"
       },
       "items": [
         {
           "type": "category",
           "label": "Local",
           "items": [
-            "quickstart/quick-start-docker",
-            "quickstart/quick-start-linux",
-            "quickstart/quick-start-macos",
-            "quickstart/quick-start-windows"
+            "core/quickstart/quick-start-docker",
+            "core/quickstart/quick-start-linux",
+            "core/quickstart/quick-start-macos",
+            "core/quickstart/quick-start-windows"
           ]
         },
         {
@@ -50,21 +50,21 @@
             {
               "type": "doc",
               "label": "Cloud",
-              "id": "quickstart/kubernetes-qs-cloud"
+              "id": "core/quickstart/kubernetes-qs-cloud"
             },
             {
               "type": "doc",
               "label": "kind",
-              "id": "quickstart/kubernetes-qs-local-access"
+              "id": "core/quickstart/kubernetes-qs-local-access"
             },
             {
               "type": "doc",
               "label": "minikube",
-              "id": "quickstart/kubernetes-qs-minikube"
+              "id": "core/quickstart/kubernetes-qs-minikube"
             }
           ]
         },
-        "quickstart/what-is-next"
+        "core/quickstart/what-is-next"
       ]
     },
     {
@@ -73,12 +73,12 @@
       "collapsible": true,
       "link": {
         "type": "doc",
-        "id": "deployment/index"
+        "id": "core/deployment/index"
       },
       "collapsed": false,
       "items": [
-        "deployment/production-deployment-automation",
-        "deployment/guide-rpk-container",
+        "core/deployment/production-deployment-automation",
+        "core/deployment/guide-rpk-container",
         {
           "type": "category",
           "label": "Kubernetes",
@@ -86,28 +86,28 @@
             {
               "type": "doc",
               "label": "Configuring Redpanda operator for connectivity",
-              "id": "deployment/kubernetes-connectivity"
+              "id": "core/deployment/kubernetes-connectivity"
             },
-            "deployment/kubernetes-external-connect",
+            "core/deployment/kubernetes-external-connect",
             {
               "type": "doc",
               "label": "Using configuration parameters with a custom resource",
-              "id": "deployment/kubernetes-additional-config"
+              "id": "core/deployment/kubernetes-additional-config"
             },
             {
               "type": "doc",
               "label": "Arbitrary configuration",
-              "id": "deployment/arbitrary-configuration"
+              "id": "core/deployment/arbitrary-configuration"
             }
           ]
         },
-        "deployment/performance-storage-tuning",
+        "core/deployment/performance-storage-tuning",
         {
           "type": "doc",
           "label": "Deploying for production",
-          "id": "deployment/production-deployment"
+          "id": "core/deployment/production-deployment"
         },
-        "deployment/install-preview"
+        "core/deployment/install-preview"
       ]
     },
     {
@@ -115,7 +115,7 @@
       "label": "Cluster administration",
       "link": {
         "type": "doc",
-        "id": "cluster-administration/index"
+        "id": "core/cluster-administration/index"
       },
       "collapsible": true,
       "collapsed": false,
@@ -123,10 +123,10 @@
         {
           "type": "doc",
           "label": "Custom configuration",
-          "id": "cluster-administration/configuration"
+          "id": "core/cluster-administration/configuration"
         },
-        "cluster-administration/monitoring",
-        "cluster-administration/version-upgrade"
+        "core/cluster-administration/monitoring",
+        "core/cluster-administration/version-upgrade"
       ]
     },
     {
@@ -134,15 +134,15 @@
       "label": "Data management",
       "link": {
         "type": "doc",
-        "id": "data-management/index"
+        "id": "core/data-management/index"
       },
       "collapsible": true,
       "collapsed": false,
       "items": [
-        "data-management/tiered-storage",
-        "data-management/data-transform",
-        "data-management/data-migration",
-        "data-management/data-archiving"
+        "core/data-management/tiered-storage",
+        "core/data-management/data-transform",
+        "core/data-management/data-migration",
+        "core/data-management/data-archiving"
       ]
     },
     {
@@ -150,12 +150,12 @@
       "label": "Development",
       "link": {
         "type": "doc",
-        "id": "development/index"
+        "id": "core/development/index"
       },
       "collapsible": true,
       "collapsed": false,
       "items": [
-        "development/guide-nodejs"
+        "core/development/guide-nodejs"
       ]
     },
     {
@@ -163,12 +163,12 @@
       "label": "Security",
       "link": {
         "type": "doc",
-        "id": "security/index"
+        "id": "core/security/index"
       },
       "collapsible": true,
       "collapsed": false,
       "items": [
-        "security/acls",
+        "core/security/acls",
         {
           "type": "category",
           "label": "Kubernetes",
@@ -176,22 +176,22 @@
             {
               "type": "doc",
               "label": "Redpanda security",
-              "id": "security/kubernetes-security"
+              "id": "core/security/kubernetes-security"
             },
             {
               "type": "doc",
               "label": "Configuring TLS",
-              "id": "security/tls-kubernetes"
+              "id": "core/security/tls-kubernetes"
             },
             {
               "type": "doc",
               "label": "Configuring SASL authentication",
-              "id": "security/kubernetes-sasl"
+              "id": "core/security/kubernetes-sasl"
             },
             {
               "type": "doc",
               "label": "Configuring mTLS authentication",
-              "id": "security/kubernetes-mtls"
+              "id": "core/security/kubernetes-mtls"
             }
           ]
         }
@@ -202,7 +202,7 @@
       "label": "Reference",
       "link": {
         "type": "doc",
-        "id": "reference/index"
+        "id": "core/reference/index"
       },
       "collapsible": true,
       "collapsed": false,
@@ -210,14 +210,14 @@
         {
           "type": "doc",
           "label": "rpk commands",
-          "id": "reference/rpk-commands"
+          "id": "core/reference/rpk-commands"
         },
         {
           "type": "link",
           "label": "CRD operator",
           "href": "https://doc.crds.dev/github.com/vectorizedio/redpanda"
         },
-        "reference/faq",
+        "core/reference/faq",
         {
           "type": "link",
           "label": "Release notes",
@@ -227,7 +227,7 @@
     },
     {
       "type": "doc",
-      "id": "support"
+      "id": "core/support"
     }
   ]
 }
