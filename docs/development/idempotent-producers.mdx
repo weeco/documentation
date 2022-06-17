@@ -2,7 +2,7 @@
 title: Idempotent producers
 ---
 
-When a producer writes messages to a topic, each message should be recorded only once in the order in which it was received. However, a disruption such as a timeout or a transient connection failure can prevent a write request from succeeding. In such cases, the client retries the write request until one of these events occurs:
+When a producer writes messages to a topic, each message should be recorded only once in the order in which it was sent. However, a disruption such as a timeout or a transient connection failure can prevent a write request from succeeding. In such cases, the client retries the write request until one of these events occurs:
 
 * The client receives an acknowledgment from the broker that the write was successful.
 * The retry limit is reached.
@@ -10,29 +10,21 @@ When a producer writes messages to a topic, each message should be recorded only
 
 Since there is no way to tell if the initial write request succeeded before the disruption, a retry can result in a duplicate message. A retry can also cause subsequent messages to be written out of order.
 
-Idempotent producers prevent this problem by assigning a unique ID to every write request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If a retry results in a duplicate message, Redpanda software detects and rejects the duplicate message and maintains the original order of the messages.
+Idempotent producers prevent this problem by assigning a unique ID to every write request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If a retry results in a duplicate message, Redpanda detects and rejects the duplicate message and maintains the original order of the messages.
 
 If new write requests continue while a previous request is being retried, the new requests are stored in the client’s memory in the order in which they were received. The client must also retry these requests once the previous request is successful.
-
-## Required settings
-
-In order for idempotence to work properly, the following client-side settings are required:
-
-* `acks=all`
-* `max.in.flight.requests.per.connection=5` or less
-* `message.send.max.retries=10000000`
-
-With idempotence enabled, these settings are configured automatically, so you can leave them unset.
 
 ## Enabling idempotence for producers
 
 The `enable_idempotence` property is enabled by default. This property is set at the cluster level, which means the setting applies to all nodes in the cluster.
 
+Certain client-side settings are required in order for idempotence to work properly. These settings are configured automatically when idempotence is enabled.
+
 Idempotence is guaranteed within a session. A session starts once a producer is created and a connection is established between the client and the Kafka broker.
 
 :::note
 
-Idempotent producers retry unsuccessful write requests automatically. If you manually retry a write request, the client will assign a new ID to that request and the original sequencing will be lost.
+Idempotent producers retry unsuccessful write requests automatically. If you manually retry a write request, the client will assign a new ID to that request, which may lead to duplication.
 
 :::
 
