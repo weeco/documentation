@@ -9,7 +9,7 @@ module.exports = {
   trailingSlash: 'true',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/Redpanda_Favicon_32px.svg',
   organizationName: 'redpanda-data', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
   themeConfig: {
