@@ -9,7 +9,7 @@
 :root {
   /* Vectorized variables */
   --v-black: #2F2C2C;
-  --v-white: #F8F8F8;
+  --v-white: #FFFFFF;
   --v-red:   #F15D61;
   --v-red2:  #D85556;
   --v-gray1: #828282;
@@ -19,7 +19,7 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: KumbhSans, sans-serif;
+  --v-font: Patron, sans-serif;
   --v-font-mono: 'Courier Prime', Courier, monospace;
 
   /* Color Variables */
@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: KumbhSans, sans-serif;
+  --ifm-heading-font-family: Patron, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -59,7 +59,7 @@
 }
 
 * {
-  font-family: KumbhSans,sans-serif;
+  font-family: Patron,sans-serif;
   box-sizing: border-box;
 }
 
@@ -124,7 +124,6 @@ div .admonition-content > ul > li > a {
 }
 
 .social-links {
-  margin-top: 1em;
   display: flex;
 }
 
@@ -165,14 +164,13 @@ table tr td {
   left: 0;
   right: 0;
   transition: all 75ms ease;
-  box-shadow: none;
-  background-color: hsla(21, 17%, 97%, 1.0) !important;
+  box-shadow: 1px 3px 5px #f2f2f2;
+  background-color: white !important;
   padding-left: 15px;
   padding-right: 15px;
 }
 
 .navbar__inner {
-  max-width: 1140px;
   margin-left: auto;
   margin-right: auto;
   padding-left: auto;
@@ -187,7 +185,7 @@ table tr td {
   background-attachment: initial;
   background-origin: initial;
   background-clip: initial;
-  background-color: hsla(21, 17%, 97%, 1.0) !important;
+  background-color: white !important;
 }
 
 .navbar__items, .navbar__items--right {
@@ -216,27 +214,27 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 
 @font-face {
-  font-family: 'KumbhSans';
+  font-family: 'Patron';
   font-weight: normal;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Regular.otf') format('truetype');
+    url('../fonts/Patron-Regular.otf') format('truetype');
 }
 
 @font-face {
-  font-family: 'KumbhSans';
-  font-weight: 300;
+  font-family: 'Patron';
+  font-weight: 150;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Light.otf') format('truetype');
+    url('../fonts/Patron-Light.otf') format('truetype');
 }
 
 @font-face {
-  font-family: 'KumbhSans';
+  font-family: 'Patron';
   font-weight: bold;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Bold.otf') format('truetype');
+    url('../fonts/Patron-Bold.otf') format('truetype');
 }
 
 @font-face {
@@ -302,10 +300,10 @@ html[data-theme='dark'] .container code span.comment {
   margin-left: 0.5rem;
 }
 .navbar__item {
-  font-weight: bold !important;
+  
 }
 .navbar__item span {
-  font-weight: bold !important;
+  
 }
 .header-icon {
   position: relative;
@@ -337,7 +335,7 @@ html[data-theme='dark'] .container code span.comment {
   padding: 60px 0 51px;
   padding-top: 3rem;
   text-transform: capitalize;
-  
+  box-shadow: 1px 3px 5px #666666;
 }
 
 .footer--dark {
