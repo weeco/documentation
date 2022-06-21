@@ -9,7 +9,7 @@
 :root {
   /* Vectorized variables */
   --v-black: #2F2C2C;
-  --v-white: #F8F8F8;
+  --v-white: #FFFFFF;
   --v-red:   #F15D61;
   --v-red2:  #D85556;
   --v-gray1: #828282;
@@ -124,7 +124,6 @@ div .admonition-content > ul > li > a {
 }
 
 .social-links {
-  margin-top: 1em;
   display: flex;
 }
 
@@ -165,8 +164,8 @@ table tr td {
   left: 0;
   right: 0;
   transition: all 75ms ease;
-  box-shadow: none;
-  background-color: hsla(21, 17%, 97%, 1.0) !important;
+  box-shadow: 1px 3px 5px #f2f2f2;
+  background-color: white !important;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -187,7 +186,7 @@ table tr td {
   background-attachment: initial;
   background-origin: initial;
   background-clip: initial;
-  background-color: hsla(21, 17%, 97%, 1.0) !important;
+  background-color: white !important;
 }
 
 .navbar__items, .navbar__items--right {
@@ -337,7 +336,7 @@ html[data-theme='dark'] .container code span.comment {
   padding: 60px 0 51px;
   padding-top: 3rem;
   text-transform: capitalize;
-  
+  box-shadow: 1px 3px 5px #666666;
 }
 
 .footer--dark {

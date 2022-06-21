@@ -47,7 +47,6 @@ export default function NavbarContent() {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
-  const { stars } = useGithubStars('redpanda-data', 'redpanda');
   useScript('//js.hs-scripts.com/7733588.js');
   
   return (
@@ -65,7 +64,6 @@ export default function NavbarContent() {
         // Ask the user to add the respective navbar items => more flexible
         <>
           <NavbarItems items={rightItems} />
-          <NavbarItem href ="https://github.com/redpanda-data/redpanda" label= {stars} className = "header-icon header-icon-github" aria-label = "GitHub repository" />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
         </>
       }

@@ -21,62 +21,35 @@ module.exports = {
       hideOnScroll: true,
       logo: {
         alt: 'Vectorized Logo',
-        src: 'img/RedpandaLogo.svg',
-        srcDark: 'img/RedpandaLogoInverted.svg',
-        width: '144',
-        height: '24',
-        href: 'https://redpanda.com'
+        src: 'img/redpanda-docs-logo.svg',
+        srcDark: 'img/redpanda-docs-logo.svg',
+        href: '/'
       },
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
-        { href: 'https://redpanda.com/redpanda', label: 'Platform', position: 'right', target: '_self' },
-        { href: 'https://redpanda.com/cloud', label: 'Cloud', position: 'right', target: '_self' },
-        { href: 'https://redpanda.com/team', label: 'Team', position: 'right', target: '_self' },
-        { href: 'https://redpanda.com/careers', label: 'Careers', position: 'right', target: '_self' },
-        { href: 'https://redpanda.com/blog', label: 'Blog', position: 'right', target: '_self' },
-        { 
-          href: 'https://join.slack.com/t/vectorizedcommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA', 
-          position: 'right',
-          label: 'Slack',
-          className: 'header-icon header-icon-slack',
-          'aria-label': 'Slack',
-        },
+        { href: 'https://redpanda.com/', label: 'Redpanda', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/resources/', label: 'Resources', position: 'right', target: '_self' },
+        { href: 'https://university.redpanda.com/', label: 'Training', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/blog/', label: 'Blog', position: 'right', target: '_self' },
+        { href: 'https://support.redpanda.com/hc/en-us/', label: 'Helpdesk', position: 'right', target: '_self' },
+        { href: 'https://rpnda.co/slack/', label: 'Community', position: 'right', target: '_self' },
+        { href: 'https://github.com/redpanda-data/redpanda/', label: 'GitHub', position: 'right', target: '_self' },
       ],
     },
     footer: {
       style: 'dark',
       logo: {
         alt: 'Redpanda Logo',
-        src: 'img/RedpandaLogo.svg',
-        srcDark: 'img/RedpandaLogoInverted.svg',
-        width: '144',
-        height: '24',
-        href: 'https://redpanda.com'
+        src: 'img/redpanda-logo.svg',
+        srcDark: 'img/redpanda-logo.svg',
+        href: 'https://redpanda.com/'
       },
       links: [
         {
-          title: 'Product',
-          items: [
-            { label: 'Platform', to: 'https://redpanda.com/redpanda/', target: '_self' },
-            { label: 'Cloud', to: 'https://redpanda.com/cloud', target: '_self' },
-            { label: 'Documentation', to: '/' },
-            { label: 'Blog', to: 'https://redpanda.com/blog', target: '_self' },
-            { label: 'Events', to: 'https://redpanda.com/events', target: '_self' },
-            { label: 'Support', to: 'https://support.redpanda.com', target: '_self' },
-          ],
-        },
-        {
-          title: 'Company',
-          items: [
-            { label: 'Team', to: 'https://redpanda.com/team', target: '_self' },
-            { label: 'Careers', to: 'https://redpanda.com/careers', target: '_self' },
-            { label: 'Press & Media', to: 'https://redpanda.com/press', target: '_self' },
-            { label: 'Privacy Policy', to: 'https://redpanda.com/privacy-policy', target: '_self' },
-          ],
-        },
+        }
       ],
-      copyright: `<p style="font-size:10px;margin-bottom:0px;">© 2022 Redpanda Data Inc. All Rights Reserved.</p>`,
+      copyright: '<p style=" color: #808080">© 2022 Redpanda Data Inc. All Rights Reserved.</p>'
     },
     prism: {
       theme: lightCodeTheme,
