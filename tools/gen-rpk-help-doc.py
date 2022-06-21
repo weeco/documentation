@@ -1,6 +1,16 @@
 import subprocess
 import re
 
+suggestedReadings = """
+
+---
+
+## Suggested readings
+- Introduction to rpk container [article](https://redpanda.com/blog/rpk-container/)
+- Getting started with rpk commands [article](https://redpanda.com/blog/getting-started-rpk/)
+- Working with schema registry [article](https://redpanda.com/blog/schema_registry/)
+
+"""
 
 class Flag:
     def __init__(self, value, type, explanation):
@@ -264,21 +274,12 @@ it_flags = extract_new_commands(available_flags, True)
 flag_list = extract_all_flag(it_flags)
 
 md_result = """---
-title: RPK commands
-order: 7
+title: rpk commands
 ---
 
-# RPK commands
+`rpk`  (Redpanda Keeper) is Redpanda's command line interface (CLI) utility. rpk commands allow you to configure and manage Redpanda clusters, tune them for better performance, manage topics and groups, manage access control lists (ACLs), and more.
 
-## What is RPK?
-
-`rpk` is a CLI utility tool that helps you manage Redpanda.
-
-With it you can interact with Redpanda in all sorts of ways. You can manage your ACLs, tune for performance, manage topics, and more. 
-
-It also has a version as a Docker container named `rpk container`.
-
-Here are all of the rpk commands.
+This section lists each rpk command in alphabetical order, along with a table of flags for that command. All descriptions are from the output of the rpk <command> –help command.
 
 """
 
@@ -334,6 +335,8 @@ md_result = md_result.replace("<storage type>", "|storage type|")
 md_result = md_result.replace("<vm type>", "|vm type|")
 md_result = md_result.replace("<vendor>", "|vendor|")
 md_result = md_result.replace("<host:port>", "|host:port|")
+md_result = md_result + suggestedReadings
+
 print(md_result)
 
 file = "docs/www/rpk-commands.md"
