@@ -301,10 +301,10 @@ html[data-theme='dark'] .container code span.comment {
   margin-left: 0.5rem;
 }
 .navbar__item {
-  font-weight: bold !important;
+  
 }
 .navbar__item span {
-  font-weight: bold !important;
+  
 }
 .header-icon {
   position: relative;
