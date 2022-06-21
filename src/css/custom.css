@@ -223,7 +223,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 @font-face {
   font-family: 'Patron';
-  font-weight: 300;
+  font-weight: 150;
   font-style: normal;
   src: local('example'),
     url('../fonts/Patron-Light.otf') format('truetype');
