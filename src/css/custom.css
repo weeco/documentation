@@ -19,7 +19,7 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: KumbhSans, sans-serif;
+  --v-font: Patron, sans-serif;
   --v-font-mono: 'Courier Prime', Courier, monospace;
 
   /* Color Variables */
@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: KumbhSans, sans-serif;
+  --ifm-heading-font-family: Patron, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -59,7 +59,7 @@
 }
 
 * {
-  font-family: KumbhSans,sans-serif;
+  font-family: Patron,sans-serif;
   box-sizing: border-box;
 }
 
@@ -215,27 +215,27 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 
 @font-face {
-  font-family: 'KumbhSans';
+  font-family: 'Patron';
   font-weight: normal;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Regular.otf') format('truetype');
+    url('../fonts/Patron-Regular.otf') format('truetype');
 }
 
 @font-face {
-  font-family: 'KumbhSans';
+  font-family: 'Patron';
   font-weight: 300;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Light.otf') format('truetype');
+    url('../fonts/Patron-Light.otf') format('truetype');
 }
 
 @font-face {
-  font-family: 'KumbhSans';
+  font-family: 'Patron';
   font-weight: bold;
   font-style: normal;
   src: local('example'),
-    url('../fonts/KumbhSans-Bold.otf') format('truetype');
+    url('../fonts/Patron-Bold.otf') format('truetype');
 }
 
 @font-face {
