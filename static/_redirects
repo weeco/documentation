@@ -49,3 +49,6 @@
 
 # Root
 /docs/features/index /docs/features-guide
+
+# Fix for google result on 'redpanda encryption'
+/docs/21.1/security/acls   /docs/21.11/security/acls  301!
