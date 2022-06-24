@@ -52,3 +52,6 @@
 
 # Fix for google result on 'redpanda encryption'
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
+
+#Fix for old blog post
+/docs/introduction/consumer-offsets /docs/development/consumer-offsets 301!
