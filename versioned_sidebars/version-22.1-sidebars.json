@@ -181,8 +181,10 @@
       "collapsible": true,
       "collapsed": false,
       "items": [
+        "development/kafka-clients",
         "development/guide-nodejs",
-        "development/consumer-offsets"
+        "development/consumer-offsets",
+        "development/idempotent-producers"
       ]
     },
     {

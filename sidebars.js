@@ -48,10 +48,26 @@
           type: 'category',
           label: 'Local',
           items: [
-            'core/quickstart/quick-start-docker', 
-            'core/quickstart/quick-start-linux',
-            'core/quickstart/quick-start-macos',
-            'core/quickstart/quick-start-windows',
+            {
+              type: 'doc',
+              label: 'Docker',
+              id: 'core/quickstart/quick-start-docker',
+            },
+            {
+              type: 'doc',
+              label: 'Linux',
+              id: 'core/quickstart/quick-start-linux',
+            },
+            {
+              type: 'doc',
+              label: 'macOS',
+              id: 'core/quickstart/quick-start-macos',
+            },
+            {
+              type: 'doc',
+              label: 'Windows',
+              id: 'core/quickstart/quick-start-windows',
+            },
           ],
         },
         {
@@ -67,6 +83,11 @@
               type: 'doc',
               label: 'minikube',
               id: 'core/quickstart/kubernetes-qs-minikube',
+            },
+            {
+              type: 'doc',
+              label: 'Cloud',
+              id: 'core/quickstart/kubernetes-qs-cloud',
             },            
           ],
         },
@@ -168,9 +189,10 @@
       collapsible: true,
       collapsed: false,
       items: [
-        'development/guide-nodejs',
-        'development/consumer-offsets',
-        'development/idempotent-producers',
+        'core/development/kafka-clients',
+        'core/development/guide-nodejs',
+        'core/development/consumer-offsets',
+        'core/development/idempotent-producers',
       ]
     },
     {
