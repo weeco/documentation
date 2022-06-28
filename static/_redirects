@@ -3,8 +3,8 @@
 /docs/core/features/intro-to-events   /docs/core/introduction/intro-to-events  301!
 
 # Quickstart
-/docs/core/getting-started/quick-start-kubernetes   /docs/core/cloud/kubernetes/kubernetes-qs-cloud  301!
-/docs/core/getting-started/kubernetes-qs-cloud   /docs/core/cloud/kubernetes/kubernetes-qs-cloud  301!
+/docs/core/getting-started/quick-start-kubernetes   /docs/core/quickstart/kubernetes-qs-cloud/  301!
+/docs/core/getting-started/kubernetes-qs-cloud   /docs/core/quickstart/kubernetes-qs-cloud/  301!
 /docs/core/getting-started/kubernetes-qs-local-access   /docs/core/quickstart/kubernetes-qs-local-access  301!
 /docs/core/getting-started/kubernetes-qs-minikube   /docs/core/quickstart/kubernetes-qs-minikube  301!
 /docs/core/getting-started/kubernetes-qs-minikube   /docs/core/quickstart/kubernetes-qs-minikube  301!
@@ -54,4 +54,4 @@
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
 
 #Fix for old blog post
-/docs/introduction/consumer-offsets /docs/development/consumer-offsets 301!
+/docs/core/introduction/consumer-offsets /docs/core/development/consumer-offsets 301!

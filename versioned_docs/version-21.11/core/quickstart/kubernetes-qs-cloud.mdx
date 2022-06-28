@@ -31,7 +31,7 @@ Because the goal of this quickstart guide is to get you up and running as quickl
 
 Before you install Redpanda, verify that you have the following software installed on the machine where you want to run Redpanda: 
 
-* [kubectl](https://kubernetes.io/docs/core/tasks/tools/) version 1.19 or later
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.19 or later
 * [Helm](https://github.com/helm/helm/releases) version 3.0.0 or later
 * [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. The steps below assume that you have jq installed, but if you don’t, you can run the same commands by replacing the `$VERSION` environment variable with the version of Redpanda that you’re using. Run the one of the commands below to install jq: 
     <Tabs>
@@ -65,7 +65,7 @@ Select the cloud provider that you want to use to create your Kubernetes cluster
 <Tabs>
   <TabItem  value="GKE" label="GKE" default>
 
-Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/core/quickstart). Then create a cluster with this command:
+Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docsquickstart). Then create a cluster with this command:
 
 ```
 gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=1
@@ -153,7 +153,7 @@ On GKE for example, the output will look similar to this:
 gke_myproject_us-west1_redpanda
 ```
 
-If you're running multiple clusters or if the configuration file wasn't set up automatically, look for more information in the Kubernetes [Configure Access to Multiple Clusters ](https://kubernetes.io/docs/core/tasks/access-application-cluster/configure-access-multiple-clusters/)documentation.
+If you're running multiple clusters or if the configuration file wasn't set up automatically, look for more information in the Kubernetes [Configure Access to Multiple Clusters ](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)documentation.
 
 ## Step 3: Install cert-manager
 
@@ -324,7 +324,7 @@ Now that you’ve completed the quickstart, you can use the following commands t
 ```
 gcloud container clusters delete redpanda
 ```
-See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/core/how-to/deleting-a-cluster) documentation for more information.
+See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docshow-to/deleting-a-cluster) documentation for more information.
 
   </TabItem>
   <TabItem value="EKS" label="EKS">

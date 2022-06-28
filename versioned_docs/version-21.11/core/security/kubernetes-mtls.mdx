@@ -41,7 +41,7 @@ This guide assumes that you have already completed the following tasks:
 
 If you haven’t completed these tasks, you can use one of the following quickstarts to get set up before you configure mTLS. Just follow the steps in any of these guides and stop before you install and connect to the Redpanda cluster: 
 
-* [Kubernetes quickstart for cloud](/docs/core/cloud/kubernetes/kubernetes-qs-cloud)
+* [Kubernetes quickstart for cloud](/docs/core/quickstart/kubernetes-qs-cloud/)
 * [Kubernetes quickstart with local access on kind](/docs/core/quickstart/kubernetes-qs-local-access)
 * [Kubernetes quickstart with local access on minikube](/docs/core/quickstart/kubernetes-qs-minikube) 
 
@@ -221,7 +221,7 @@ The `issuerRef` property contains the following variables:
 
 ### Provide a certificate
 
-You can provide a certificate as a Secret by adding the `nodeSecretRef` property to the cluster specification file that you created above. For information about Secrets, see the Kubernetes [Secrets](https://kubernetes.io/docs/core/concepts/configuration/secret/) documentation. The cert-manager [Certificate](https://cert-manager.io/docs/core/concepts/certificate/) documentation contains detailed information about certificates, including a diagram of the certificate lifecycle. 
+You can provide a certificate as a Secret by adding the `nodeSecretRef` property to the cluster specification file that you created above. For information about Secrets, see the Kubernetes [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/) documentation. The cert-manager [Certificate](https://cert-manager.io/docs/core/concepts/certificate/) documentation contains detailed information about certificates, including a diagram of the certificate lifecycle. 
 
 You can provide a certificate for `kafkaAPI` or `schemaRegistry` in the same way. The example here is the `kafkaAPI` configuration with the `nodeSecretRef` property highlighted: 
 
@@ -276,7 +276,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 Create a `yaml` file that will hold the configuration for mTLS, including the location of the public certificate. In the next step, you will create the Pod, which will consume this ConfigMap. This will allow you to run `rpk` commands with mTLS authentication. 
 
 :::info
-The Kubernetes [ConfigMaps](https://kubernetes.io/docs/core/concepts/configuration/configmap/) documentation has everything you ever wanted to know about ConfigMaps.
+The Kubernetes [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/) documentation has everything you ever wanted to know about ConfigMaps.
 :::
 
 1. Copy the text below and save it locally as a `yaml` file, such as `mtls_config_map.yaml`. 
@@ -347,7 +347,7 @@ data:
 The Pod is the process that consumes the ConfigMap that you created in the previous step. This Pod runs the Redpanda image in order to run `rpk`, which is part of the Redpanda image. 
 
 :::info
-For everything you ever wanted to know about Pods, see the Kubernetes [Pods](https://kubernetes.io/docs/core/concepts/workloads/pods/) documentation.
+For everything you ever wanted to know about Pods, see the Kubernetes [Pods](https://kubernetes.io/docs/concepts/workloads/pods/) documentation.
 :::
 
 1. Copy the text below and save it locally as a `yaml` file, such as `mtls_pod.yaml`. 
