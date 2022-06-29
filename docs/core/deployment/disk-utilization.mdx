@@ -1,0 +1,143 @@
+---
+title: Disk utilization
+---
+
+Redpanda provides Full Disk Handling metrics to warn about low disk space. Redpanda also blocks writes to the local node from Kafka producers when disk space is almost full, which gives you time to take action.
+
+:::caution
+If a Redpanda node runs out of disk space, it terminates. This results in node failure and performance degradation. If there are enough out-of-disk node failures in the cluster, topics can become unavailable. 
+:::
+
+In addition to Full Disk Handling, you can configure retention and storage settings to ensure the production stability of the cluster. 
+
+## Full disk handling
+
+Note: Continuous Data Balancing improves the performance of your system by automatically balancing disk usage. ADD LINK.
+
+Redpanda blocks clients from producing when free disk space reaches a critically low level. The threshold for this "write rejection" is determined by the `storage_min_free_bytes` configuration field.
+This works with these related configuration properties, which can be set on any data disk (one per broker):
+
+* `storage_space_alert_free_threshold_bytes`: Minimum amount of free disk space allowed in bytes.
+* `storage_space_alert_free_threshold_percent`: Minimum amount of free disk space allowed in percentage of total available space for that drive.
+
+If either of these thresholds are exceeded, `vectorized_storage_disk_free_space_alert` issues a storage space alert error message. To disable one threshold in favor of the other, set it to 0. 
+
+You can check your total disk size and free space with these metrics: 
+* `vectorized_storage_disk_total_bytes`
+* `vectorized_storage_disk_free_bytes`
+
+
+Disk space monitoring is available in cluster health reports. The `local_monitor` class monitors disk space and updates the value of that node’s counters for available and free disk space. It also updates the value of its storage_space_alert field, based on which thresholds, if any, were passed. This field is exposed via the `vectorized_storage_disk_free_space_alert` metric.
+
+This refreshing of storage space metrics happens as part of the health monitor’s backend tick processing, which collects node health reports for all members of the cluster. This allows any node to observe the storage_space_alert value for all nodes in the cluster, updated at a periodic frequency determined by the health monitor backend. This is the mechanism proposed for propagating any disk’s low space condition across the cluster.
+
+write rejection:
+
+effective free space: amount of unreserved free space on a disk.
+
+minimum space threshold: threshold of free space, in bytes, below which we block external writers.
+Consider the set of all local disk volumes, V, in a cluster (today one volume per node).
+Choose a volume, vi, with the lowest effective free space.
+If vi < minimum space threshold transition the entire cluster into a “degraded: low space” condition.
+If we’re in the degraded state, and minimum space rises above the threshold, exit the degraded state.
+
+While in the degraded (low space) state, return errors to external writers. Still allow internal write traffic, such as replication, state machine writes, rebalancing, etc. 
+
+## Retention
+
+Retention refers to the conditions under which messages in a topic are retained on disk. When retention conditions are exceeded, cleanup occurs. You can configure retention settings so that cleanup occurs under the following conditions: 
+
+* Message age is exceeded
+* Aggregate message size in the topic is exceeded
+* Either message age is exceeded or aggregate message size in the topic is exceeded
+
+The following table shows retention properties. 
+If a value isn't specified at the topic-level configuration, then the topic uses the value of the cluster configuration. 
+Note that cluster configuration properties use snake-case, while topic-level configurations use dots.
+
+| Type of retention | Cluster-level configuration | Topic-level configuration <br /> (overrides cluster configuration) |
+| ---               | ---                                                |  ---                                 |
+| Time-based        | `delete_retention_ms` <br /> Default - `604800000` | `retention.ms` <br /> No default     |
+| Size-based        | `retention_bytes`  <br /> Default - `null`         | `retention.bytes`  <br /> No default |
+| Segment size      | `log_segment_size`  <br /> Default - `1073741824`  | N/A                                  |
+
+### Time-based retention
+
+A message is deleted if its age exceeds the value specified in `delete_retention_ms` or `retention.ms`.
+
+* `delete_retention_ms` - Cluster-level setting that specifies how long a message stays on disk before it's deleted. To set retention time for a single topic, use `retention.ms`, which overrides `delete_retention_ms`. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
+
+  To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to `86400000`, which equates to one day. The default value is `604800000`, which equates to one week.
+
+* `retention.ms` - Topic-level setting that specifies how long a message stays on disk before it's deleted. This setting overrides the cluster `delete_retention_ms` property for the topic. To minimize the likelihood of out-of-disk outages, set `retention.ms` to `86400000`, which equates to one day. There is no default value, but if `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
+
+  You can set `retention.ms` with this command: 
+
+  ```bash
+  rpk topic alter-config <topic> --set retention.ms=<retention_time>
+  ```
+
+:::caution 
+Do not set `delete_retention_ms` to `-1` unless you are using <a href="https://docs.redpanda.com/docs/core/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting `delete_retention_ms` to `-1` configures indefinite retention, which can result in an out-of-disk outage and may result in data loss. 
+:::
+
+### Size-based retention
+
+A message is deleted if the size of the partition in which it is contained reaches the value specified in `retention_bytes` or `retention.bytes`.
+
+* `retention_bytes` - Cluster-level property that specifies the maximum size of a partition. When a partition reaches the `retention_bytes` size, the oldest messages in the partition are deleted. To set retention size for a single topic, use `retention.bytes`, which overrides `retention_bytes`. If `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value.
+
+  It is recommended that you configure `retention_bytes` to a value that is lower than the disk capacity, or a fraction of the disk capacity based on the number of partitions per topic. For example, if you have one partition, `retention_bytes` can be 80% of the disk size. If you have 10 partitions, `retention_bytes` can be 80% of the disk size divided by 10. The default value is `null`, which means that retention based on topic size is disabled.
+  
+  To specify the `retention_bytes` value:
+  
+  ```bash
+  rpk cluster config set retention_bytes <retention_size>
+  ```
+
+* `retention.bytes` - Topic-level setting that specifies the maximum size of a partition. This setting overrides the host-wide `retention_bytes` property for the topic. Take the same considerations for the `retention.bytes` and `retention_bytes` properties as described above. There is not a default value and when `retention.bytes` is not set at the topic-level, the topic uses the `retention_bytes` value. 
+
+  You can set `retention.bytes` with this command: 
+
+  ```bash
+  rpk topic alter-config <topic> --set retention.bytes=<retention_size>
+  ```
+
+## Segment size
+
+The `log_segment_size` property specifies the size of each log segment.
+
+To specify a value for `log_segment_size`:
+
+```bash
+rpk cluster config set log_segment_size <segment_size>
+```
+
+If you know which topics will receive more data, it's best to specify the size for each topic. To configure log segment size on a topic: 
+
+```bash
+rpk topic alter-config <topic> --set segment.bytes=<segment_size>
+```
+
+When determining ideal segment size, keep in mind that very large segments prevent compaction, and very small segments increase the risk of encountering resource limits. To calculate an upper limit on segment size, you can divide the disk size by the number of partitions. For example, if you have a 128GB disk and 1000 partitions, the upper limit of the segment size would be `134217728`. Default is `1073741824`. 
+
+For details about how to modify cluster configuration properties, see [Cluster configuration](/docs/core/cluster-administration/cluster-property-configuration). 
+
+## Ballast file
+
+You can enable ballast file creation to act as a buffer against an out-of-disk outage. The ballast file is an empty file that takes up disk space. If Redpanda becomes unavailable because it runs out of disk space, you can delete the ballast file, which clears up some disk space and give you time to delete topics or records and change your retention settings. Deletion of the ballast file is an emergency last resort and should not be considered a replacement for adjusting settings for segment size and retention.
+
+To enable ballast file creation, configure the following properties in the `redpanda.yaml` file: 
+
+```yaml
+tune_ballast_file: false
+ballast_file_path: "/var/lib/redpanda/data/ballast"
+ballast_file_size: "1GiB"
+```
+
+where: 
+* `tune_ballast_file` - Tells Redpanda to create a ballast file. Set to `true` to enable ballast file creation. Default is `false`. 
+
+* `ballast_file_path` - Location of the ballast file. You can change the location of the ballast file, but it must be on the same mount point as the Redpanda data directory. Default is `/var/lib/redpanda/data/ballast`.
+
+* `ballast_file_size` - Size of the ballast file. You can increase the ballast file size if it is a very high throughput cluster, or you can decrease the ballast file size if you have very little storage space. You want to balance the size of the ballast file so that it's large enough to give you enough time to delete data and configure retention settings if Redpanda crashes, but small enough that you do not waste unnecessary disk space. In general, set ballast_file_size to approximately 10 times the size of the largest segment to have enough space to compact that topic. Default is `1GiB`. 
