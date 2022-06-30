@@ -2,6 +2,11 @@
 title: Configuring Redpanda SASL authentication on Kubernetes
 ---
 
+<head>
+    <meta name="title" content="Configuring Redpanda SASL authentication on Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Configuring Redpanda SASL authentication on Kubernetes."/>
+</head>
+
 This document provides details on how to enable SASL authentication on Kubernetes. Alone, SASL authenticates the server and the client. To encrypt communication between the server and the client, combine SASL authentication with <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">TLS encryption</a>.
 
 Redpanda supports the SASL/SCRAM authentication method for the Kafka API. For information about Redpanda authentication on Kubernetes in general, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security" target="_self">Redpanda security on Kubernetes</a> document. You will find information there about supported authentication methods for each API. 
