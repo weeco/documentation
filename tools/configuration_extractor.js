@@ -8,10 +8,10 @@ async function run() {
         headers: {"Content-Type": "blob"}
     }
 
-    const cluster_properties_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/ab6292062d11602184800d586afe4e0458bb8aa5/src/v/config/configuration.h';
+    const cluster_properties_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/configuration.h';
     const constants_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/b83df539864626a9a5af62ced2b7078ef70b92e0/src/v/cluster/node/constants.h';
     
-    const cluster_config_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/b83df539864626a9a5af62ced2b7078ef70b92e0/src/v/config/configuration.cc';
+    const cluster_config_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/configuration.cc';
     const node_config_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/node_config.cc';
 
     var cluster_properties_file = await axios.get(cluster_properties_file_url, options);
