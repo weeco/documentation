@@ -2,28 +2,27 @@
 title: I/O optimization
 ---
 
-Redpanda relies on its own disk I/O scheduler, and by default tells the kernel to 
-use the `noop` scheduler. To provide near-optimal performance by default,
+Redpanda relies on its own disk I/O scheduler, and by default it tells the kernel to 
+use the `noop` scheduler. To provide near-optimal performance,
 `rpk` comes with an embedded database of I/O settings for well-known cloud
-computers, which are specific combinations of CPUs, SSD types, and VM sizes. Running software on four VCPUs isn't the same as running on an EC2 i3.metal
+computers, which are specific combinations of CPUs, SSD types, and VM sizes. 
+
+Running software on four VCPUs isn't the same as running on an EC2 i3.metal
 with 96 physical cores. Often, when trying to scale rapidly to meet demands,
 product teams don't have time to measure I/O throughput and latency before
-starting every new instance (via `rpk iotune`), and instead need resources right
-now. To meet this demand, Redpanda tries to predict the best known
+starting every new instance (via `rpk iotune`), and instead need resources immediately. To meet this demand, Redpanda tries to predict the best known
 settings for VM cloud types.
 
-You can run `rpk iotune` for production workloads, but we
-provide near-optimal settings for the types of most popular machines. 
-This isn't required each 
+Running `rpk iotune` isn't necessary each 
 time Redpanda is started. The output properties for `rpk iotune` are written to a file
 that can be saved and reused in nodes running on the same type of hardware.
 
 Currently, we only have well-known-types for AWS and GCP (Azure VM types support
-is coming soon). Upon startup, `rpk` tries to detect the current cloud and
-instance type via the cloud’s metadata API, setting the correct `iotune`
-properties if the detected setup is known apriori.
+is coming soon). Upon startup, `rpk` tries to detect the cloud and
+instance type from the cloud’s metadata API, setting the correct `iotune`
+properties.
 
-If access to the metadata API isn’t allowed from the instance, you can also hint
+If access to the metadata API isn’t allowed from the instance, you can hint
 the desired setup by passing the `--well-known-io` flag to `rpk` with the
 cloud vendor, VM type, and storage type:
 
@@ -39,8 +38,7 @@ rpk:
   well_known_io: 'gcp:c2-standard-16:nvme'
 ```
 
-If `well-known-io` is specified in the config file and also as a flag, then the value
-passed with the flag takes precedence.
+If `well-known-io` is specified in the config file and also as a flag, then the flag takes precedence.
 
 If a certain cloud vendor, machine type, or storage type isn’t
 found, or if the metadata isn’t available and no hint is given, then `rpk` prints a
