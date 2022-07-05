@@ -2,10 +2,15 @@
 title: Disk utilization
 ---
 
-Redpanda provides Full Disk Handling metrics to warn about low disk space, and it blocks writes to the local node from Kafka producers when it passes a low disk space threshold. This gives you time to take action. You could also configure retention and storage settings to ensure the production stability of the cluster. 
+<head>
+    <meta name="title" content="Disk utilization | Redpanda Docs"/>
+    <meta name="description" content="If you exceed the low disk space threshold, Redpanda blocks writes to the local node from Kafka producers."/>
+</head>
+
+Redpanda's Full Disk Handling metrics send warnings about low disk space. If you exceed the low disk space threshold, Redpanda blocks writes to the local node from Kafka producers, giving you time to take action. You can also configure retention and storage settings to ensure the production stability of the cluster. 
 
 :::caution
-When a Redpanda node runs out of disk space, it terminates. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, potentially impacting performance. You can use Continuous Data Balancing to automatically balance disk usage.
+When a Redpanda node runs out of disk space, it terminates. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, potentially impacting performance. You can use [Continuous Data Balancing](/docs/core/cluster-administration/data-balancing) to automatically balance disk usage. 
 :::
 
 ## Full Disk Handling
