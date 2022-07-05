@@ -33,7 +33,7 @@ Disk space monitoring is available in cluster health reports. The `local_monitor
 * 1 = low free space alert
 * 2 = out of space (degraded, external writes are rejected)
 
-The refreshing of storage space metrics happens as part of the health monitor’s backend tick processing, which collects node health reports for all members of the cluster. This lets any node see the storage_space_alert value for all nodes in the cluster, updated at a frequency determined by the health monitor. 
+Storage space metrics are refreshed as part of the health monitor’s backend tick processing, which collects node health reports for all members of the cluster. This lets any node see the storage_space_alert value for all nodes in the cluster, updated at a frequency determined by the health monitor. 
 
 ## Retention
 
