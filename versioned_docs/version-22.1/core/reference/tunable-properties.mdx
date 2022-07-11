@@ -53,7 +53,7 @@ The following table lists the available tunable properties:
 | full_raft_configuration_recovery_pattern | Recover raft configuration on start for NTPs matching pattern. <br/><br/>Default: Null |
 | group_initial_rebalance_delay | Extra delay (ms) added to rebalance phase to wait for new members. <br/><br/>Default: 300 |
 | group_new_member_join_timeout | Timeout for new member joins. <br/><br/>Default: 30000 |
-| group_topic_partitions | Number of partitions in the internal group membership topic. <br/><br/>Default: 1 |
+| group_topic_partitions | Number of partitions in the internal group membership topic. <br/><br/>Default: 16 |
 | health_manager_tick_interval | How often the health manager runs. <br/><br/>Default: 180000 |
 | health_monitor_max_metadata_age | Max age of metadata cached in the health monitor of non controller node. <br/><br/>Default: 10000 |
 | health_monitor_tick_interval | How often health monitor refresh cluster state. <br/><br/>Default: 10000 |
