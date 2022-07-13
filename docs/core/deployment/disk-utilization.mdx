@@ -17,7 +17,9 @@ When a Redpanda node runs out of disk space, it terminates. This impacts perform
 
 Redpanda blocks clients from producing when free disk space is at a critically low level. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 
 
-The `storage_min_free_bytes` configuration field determines the threshold of free space for this write rejection. It works with the following configuration properties, which you can set on any data disk (one drive per node):
+The `storage_min_free_bytes` configuration field determines the threshold, or "hard limit", of free space for this write rejection. 
+
+You can also set soft limits for a minimum free disk space _alert_. This soft limit causes error messages to be logged, and affects the value of the `vectorized_storage_disk_free_space_alert` metric, which you can monitor for early warning. The soft limit alert feature works with the following configuration properties, which you can set on any data disk (one drive per node):
 
 * `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
 * `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
