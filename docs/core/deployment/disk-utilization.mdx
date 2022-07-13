@@ -24,7 +24,7 @@ You can also set soft limits for a minimum free disk space _alert_. This soft li
 * `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
 * `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
 
-When either the byte or percent threshold is exceeded, `vectorized_storage_disk_free_space_alert` issues a storage space alert error message. To disable one threshold in favor of the other, set it to zero. 
+When either the byte or percent threshold is exceeded, the metric `vectorized_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
 
 ## Disk space monitoring
 
