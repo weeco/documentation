@@ -39,6 +39,26 @@
     },
     {
       type: 'category',
+      label: 'Install and upgrade',
+      link: { type: 'doc', id: 'core/install-upgrade/index'},
+      collapsible: true,
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          label: 'Installing beta versions',
+          id: 'core/install-upgrade/install-preview',
+        },
+        {
+          type: 'doc',
+          label: 'Version upgrade',
+          id: 'core/install-upgrade/version-upgrade',
+        }, 
+        
+      ],
+    },
+    {
+      type: 'category',
       label: 'Quickstarts',
       collapsible: true,
       collapsed: false,
@@ -132,7 +152,6 @@
           label: 'Deploying for production',
           id: 'core/deployment/production-deployment',
         },
-        'core/deployment/install-preview',
       ]
     },    
     {
@@ -165,7 +184,6 @@
           id: 'core/cluster-administration/node-management',
         },             
         'core/cluster-administration/monitoring', 
-        'core/cluster-administration/version-upgrade',        
       ]
     },
     {
@@ -189,7 +207,11 @@
       collapsible: true,
       collapsed: false,
       items: [
-        'core/development/kafka-clients',
+        {
+          type: 'doc',
+          label: 'Kafka clients',
+          id: 'core/development/kafka-clients',
+        },
         'core/development/guide-nodejs',
         'core/development/consumer-offsets',
         'core/development/idempotent-producers',
