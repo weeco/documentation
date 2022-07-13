@@ -32,7 +32,7 @@ You can check your total disk size and free space by viewing the metrics:
 * `vectorized_storage_disk_total_bytes`
 * `vectorized_storage_disk_free_bytes`
 
-Disk space monitoring is available in cluster health reports. The `local_monitor` class checks disk space and updates the value of that node’s counters for available and free disk space. It also updates the value of its `storage_space_alert` field based on your full disk handling threshold. This field is exposed with the `vectorized_storage_disk_free_space_alert` metric:
+As part of its continuous disk space monitoring, redpanda updates these disk usage statistics, and updates the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `vectorized_storage_disk_free_space_alert` metric:
 * 0 = no alert
 * 1 = low free space alert
 * 2 = out of space (degraded, external writes are rejected)
