@@ -1,53 +1,48 @@
 ---
-title: Kafka clients
+title: Kafka compatibility
 ---
 
-## Is Redpanda Fully compatible with the Kafka API?
+Redpanda is compatible with Apache Kafka version 0.11 through 3.1.  
 
-Redpanda is generally compatible with Apache Kafka versions 0.11-3.1, with specific exceptions noted below.  
+## Kafka client compatibility
 
-## What are the recommended clients to use with Redpanda?
+Clients developed for any version of Kafka typically work with Redpanda. Modern clients auto-negotiate protocol versions or use an earlier protocol version accepted by Redpanda brokers.
 
-The following clients have been tested with Redpanda.
+The following clients have been validated with Redpanda.
 
-| Language | Client | Link |
-| -------- | ------ | ---- |
-| Java | Apache Kafka Java Client | https://github.com/apache/kafka |
-| C/C++ | librdkafka | https://github.com/edenhill/librdkafka |
-| Go | franz-go | https://github.com/twmb/franz-go |
-| Python | kafka-python | https://pypi.org/project/kafka-python |
-| JS | KafkaJS | https://kafka.js.org |
-| PHP | php-simple-kafka-client | https://github.com/php-kafka/php-simple-kafka-client |
+| Language | Client | 
+| -------- | ------ | 
+| Java | [Apache Kafka Java Client](https://github.com/apache/kafka) | 
+| C/C++ | [librdkafka](https://github.com/edenhill/librdkafka) | 
+| Go | [franz-go](https://github.com/twmb/franz-go) | 
+| Python | [kafka-python](https://pypi.org/project/kafka-python) |
+| JS | [KafkaJS](https://kafka.js.org) | 
+| Rust | [build.rs](https://github.com/kafka-rust/kafka-rust) | 
 
+:::tip
+* Use the latest supported version.
+* Other clients, particularly ones based on librdkafka, probably work with Redpanda, but they haven't yet been validated.
+:::
 
-## Important notes about using Kafka clients
+## Kafka feature compatibility 
 
-* We generally recommend using the latest available (supported) version of your chosen client (e.g. the Apache Kafka 3.1 Java Client)
-* Clients developed for newer versions of Apache Kafka (3.2 and later) typically work with Redpanda when using the Kafka 3.1 feature set (exceptions below), as most clients auto-negotiate the protocol version with Redpanda brokers and/or user an earlier protocol version, which is seamlessly accepted by Redpanda brokers.
-* Other Kafka clients not listed below, particularly those based upon librdkafka, may also work with Redpanda but have not been explicitly validated by Redpanda.
-
-
-## What Features of Kafka are unsupported in Redpanda?
-
-The following capabilities present in Apache Kafka 3.1 are not yet present in Redpanda, but may be planned for a future release
+Redpanda supports the following Apache Kafka capabilities:
 
 * Transactions
-    * Available in tech preview, planned to be GA in release 22.2.2, includes KIP-345 / 360 / 447 and others)
+    * The Transactions API is available in technical preview, but it can be enabled by setting both `enable_idempotence` and `enable_transactions` to `true` in the Redpanda config. Supports KIP-345, KIP- 360, KIP-447, and others.
 * Static consumer group membership
-    * Planned for the release 22.2.1
-* Client quotas for bandwidth and request rate
+  *  Supports KIP-345.
+* Explicit partition assignment / altering partition assignments (with Kafka API)
+    * Supported with the Redpanda Admin API
+  
+<!--- * Client quotas for bandwidth and request rate
     * Planned for a future release
 * Follower fetching
     * Planned for a future release
-* Explicit partition assignment / altering partition assignments (via Kafka API)
-    * Possible today via RedpandaAdmin API
 * Deleting records
-    * Planned for a future release
+    * Planned for a future release --->
 
-	
-
-The following Kafka APIs, mostly related to administrative functions, have not yet been directly exposed by Redpanda, but may be available via the Redpanda Admin API.  Some may be exposed through the Kafka API in a future release.
-
+The following administrative Kafka APIs have not yet been directly exposed by Redpanda, but they may be available with the Redpanda Admin API. 
 
 * AlterClientQuotas
 * AlterPartitionAssignments
@@ -69,9 +64,7 @@ The following Kafka APIs, mostly related to administrative functions, have not y
 * RenewDelegationToken
 * UpdateFeatures
 
-
-The following ApacheKafka APIs deal with Kafka internals generally not relevant to the use of Redpanda and thus will not be implemented.
-
+The following Kafka APIs deal with Kafka internals, so they have not been implemented.
 
 * AllocateProducerIDs
 * AlterISR
