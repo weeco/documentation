@@ -7,7 +7,7 @@ title: Disk utilization
     <meta name="description" content="If you exceed the low disk space threshold, Redpanda blocks writes to the local node from Kafka producers."/>
 </head>
 
-If you exceed your low disk space threshold, Redpanda blocks clients from producing. This gives you time to take action. In addition to this, you can monitor your disk space, and you can configure retention and storage settings to ensure the production stability of the cluster. 
+Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure retention and storage settings to ensure the production stability of the cluster. 
 
 :::caution
 When a Redpanda node runs out of disk space, it terminates. This impacts performance, with leader reassignment and then replication and rebalancing. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use Continuous Data Balancing (/docs/core/cluster-administration/data-balancing) to automatically balance disk usage. 
@@ -15,16 +15,16 @@ When a Redpanda node runs out of disk space, it terminates. This impacts perform
 
 ## Full disk handling
 
-Redpanda blocks clients from producing when free disk space is at a critically low level. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 
+If you exceed your low disk space threshold, Redpanda blocks clients from producing. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 
 
-The `storage_min_free_bytes` configuration field determines the threshold, or "hard limit", of free space for this write rejection. 
+The `storage_min_free_bytes` configuration field determines the threshold of free space, or hard limit, for this write rejection. 
 
-You can also set soft limits for a minimum free disk space _alert_. This soft limit generates error messages and affects the value of the `vectorized_storage_disk_free_space_alert` metric, which you can monitor for early warning. The soft limit alert feature works with the following configuration properties, which you can set on any data disk (one drive per node):
+You can also set a soft limit for a minimum free disk space _alert_. This soft limit generates an error message and affects the value of the `vectorized_storage_disk_free_space_alert` metric, which you can monitor for early warning. The alert works with the following configuration properties, which you can set on any data disk (one drive per node):
 
 * `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
 * `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
 
-When either the byte or percent threshold is exceeded, the metric `vectorized_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
+When either the byte or percent threshold is exceeded, `vectorized_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
 
 ## Disk space monitoring
 
@@ -146,4 +146,4 @@ where:
 
 * `ballast_file_path` - You can change the location of the ballast file, but it must be on the same mount point as the Redpanda data directory. Default is `/var/lib/redpanda/data/ballast`.
 
-* `ballast_file_size` - You can increase the ballast file size if it is a very high-throughput cluster, or you can decrease the ballast file size if you have very little storage space. The ballast file should be large enough to give you enough time to delete data and configure retention settings if Redpanda crashes, but small enough that you don't waste disk space. In general, set this to approximately 10 times the size of the largest segment, to have enough space to compact that topic. Default is `1GiB`. 
+* `ballast_file_size` - Increase the ballast file size if it is a very high-throughput cluster, or decrease the ballast file size if you have very little storage space. The ballast file should be large enough to give you enough time to delete data and configure retention settings if Redpanda crashes, but small enough that you don't waste disk space. In general, set this to approximately 10 times the size of the largest segment, to have enough space to compact that topic. Default is `1GiB`. 
