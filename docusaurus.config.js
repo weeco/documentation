@@ -7,7 +7,7 @@ module.exports = {
   url: 'https://docs.redpanda.com',
   baseUrl: '/',
   trailingSlash: 'true',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/Redpanda_Favicon_32px.svg',
   organizationName: 'redpanda-data', // Usually your GitHub org/user name.
