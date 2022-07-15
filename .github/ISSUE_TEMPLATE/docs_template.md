@@ -4,34 +4,50 @@ about: Suggest a documentation change to Redpanda
 labels: "documentation"
 ---
 
-### Who is this for and what problem do they have today?
+
+### Describe the Issue
 
 <!--
-Describe the user and relevant workflows
-Describe the current pain points the user has
+What problem does this issue solve for customers?
+Who is the audience for this update? For example, Infosec admins, cluster admins, or developers.
+Do you know the context in which users will likely search for this content? If so, share it.
+If this is a new feature, add a label for the version in which the update is expected.
 -->
 
-### What would you like fixed in or added to the documentation?
+### Updates to existing documentation
 
 <!--
-Describe what's wrong or missing
-Describe the current pain points the user has
+Provide the URL of the page(s) to which the updates apply.
+Which topic(s) should be updated?
+What is the requested fix? Describe what is wrong in the existing doc and include screenshots if possible. Then provide the correct information.
+Is this request to document an existing Redpanda feature that is not currently documented?
 -->
 
-### Is this a new feature or a gap in the documentation?
+### New feature or content gap requests
 
-#### If new feature, what's the expected release number and date? 
+<!--
+If this is a new feature, provide material that will help the writer draft the new or updated content. If an issue only includes the name of a feature and release, it will be marked “More Info Needed” or “Blocked”. Ideally, the issue will provide:
+- Links to internal wikis, PRDs, design docs, KIPs, training material, or slide decks.
+- Links to engineering PRs that implement the update.
+- Links to blog posts, if applicable.
+- Links to Slack conversations (RP and RP Community) about the issue.
+- Names of SMEs who can answer questions and act as reviewers (at least one engineer and one PM).
+- Any additional information that will be of use to the writer.
+-->
+
+#### If new feature, in which release is it included or expected? 
 
 
-### Link to existing product documentation page and/or community slack conversation, if applicable
+### If the requested update is from customer feedback or a Community slack conversation, provide a link:
 
 
 ### Additional notes
 
-
 <!--
-Why is this impactful for you? 
-Relevant GitHub issues and pull requests
-Dependencies on other features or components
-Specific Redpanda contributors you’d like to notify
+Documentation Issues must be distinct and not overlap. If filing an Issue for a feature that spans platform and cloud, you must file two separate Issues. Each Issue will drive the new content in GitHub for the respective platform or cloud doc. 
+
+Include:
+ - Relevant GitHub issues and pull requests
+ - Dependencies on other features or components
+ - Specific Redpanda contributors to notify
 -->
