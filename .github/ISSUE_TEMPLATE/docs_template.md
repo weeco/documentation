@@ -35,7 +35,7 @@ If this is a new feature, provide material that will help the writer draft the n
 - Any additional information that will be of use to the writer.
 -->
 
-#### If new feature, in which release is it included or expected? 
+### If new feature, in which release is it included or expected? 
 
 
 ### If the requested update is from customer feedback or a Community slack conversation, provide a link:
