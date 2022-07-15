@@ -10,7 +10,7 @@ title: Disk utilization
 Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure retention and storage settings to ensure the production stability of the cluster. 
 
 :::caution
-When a Redpanda node runs out of disk space, it terminates. This impacts performance, with leader reassignment and then replication and rebalancing. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use Continuous Data Balancing (/docs/core/cluster-administration/data-balancing) to automatically balance disk usage. 
+When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use Continuous Data Balancing (/docs/core/cluster-administration/data-balancing) to automatically balance disk usage. 
 :::
 
 ## Full disk handling
