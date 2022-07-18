@@ -30,7 +30,7 @@ To place a node into maintenance mode:
 rpk cluster maintenance enable <node-id> --wait
 ```
 
-The `--wait` option ensures that `rpk` waits until leadership draining is complete before responding.
+The `--wait` option ensures that `rpk` waits until leadership is drained from the node before responding.
 
 To remove a node from maintenance mode (and thus enable the node to start taking leadership of partitions):
 
