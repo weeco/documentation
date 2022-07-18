@@ -27,7 +27,7 @@ After cloud storage is enabled and configured, you can either enable Tiered Stor
 Complete the following tasks to create a cloud storage bucket and configure Redpanda before you enable Tiered Storage for Amazon S3: 
 
 1. Specify the expiration rules for the files that are based on the `rp-type` file tags. 
-2. Use the IAM service to create a user to access S3. 
+2. Use the IAM service to create a user who can access S3. 
 3. Grant the user permission to read and create objects in cloud storage.
 4. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the properties listed here are the minimum required properties that you must configure at the cluster level to use Tiered Storage for Amazon S3. Use the `rpk cluster config edit` command to edit these properties:
