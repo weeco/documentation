@@ -4,7 +4,7 @@ title: Rolling upgrades
 
 ## Using maintenance mode to perform a rolling upgrade
 
-One of the primary uses for maintenance mode is to perform a rolling upgrade of the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, taking the node out of maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster with reduced risk of interruption or degradation in service.
+One of the primary uses for maintenance mode is to perform a rolling upgrade on each node in the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, taking the node out of maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster with reduced risk of interruption or degradation in service.
 
 :::note
 If you are using the Redpanda Kubernetes Operator to trigger an upgrade, then node maintenance mode is automatically incorporated into the upgrade process.
@@ -19,7 +19,7 @@ To perform a rolling upgrade:
 3. Verify that the node is in maintenance mode by running `rpk cluster maintenance status` and confirming  that `FINISHED` is `true`.
 ```
 
-4. Validate the health of the cluster by running `rpk cluster health` and using external metrics, such as consumer lag. If you encounter any issues, take the node out of maintenance mode by running `rpk maintenance mode disable <node-id>`.
+4. Validate the health of the cluster by running `rpk cluster health` and evaluating external metrics, such as consumer lag. If you encounter any issues, take the node out of maintenance mode by running `rpk maintenance mode disable <node-id>`.
 5. If there are no issues, perform a node upgrade by following the version upgrade process specific to your deployment model. The basic steps include node shutdown, upgrade, and restart.
 6. Take the node out of maintenance mode by running `rpk cluster maintenance disable <node-id>`.
 7. Run `rpk cluster maintenance status` to ensure that the node is ready.
