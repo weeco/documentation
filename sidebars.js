@@ -54,7 +54,7 @@
           label: 'Version upgrade',
           id: 'core/install-upgrade/version-upgrade',
         }, 
-        
+        'core/install-upgrade/supported-platforms',
       ],
     },
     {
