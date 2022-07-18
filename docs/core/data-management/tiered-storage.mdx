@@ -61,7 +61,7 @@ cloud_storage_secret_key: ***
 
 ### Enabling Tiered Storage for a cluster
 
-You can enable Tiered Storage for a cluster or for a topic. Topic-level tags override cluster-level settings. For example, if you have Tiered Storage enabled on the cluster and you create a topic with Tiered Storage turned off, it is turned off for that topic. 
+You can enable Tiered Storage for a cluster or for a topic. Topic-level tags override cluster-level settings. For example, if you have Tiered Storage enabled on the cluster and you create a topic with Tiered Storage turned off, it is also turned off for that topic. 
 
 When you enable Tiered Storage on a cluster, it becomes enabled for already-existing topics. 
 
@@ -109,7 +109,7 @@ The table below gives the outcomes for the possible combinations of cluster-leve
 | <code>false</code> | <code>false</code> | Disabled |
 | <code>false</code> | <code>true</code>  | Enabled  |
 
-Note that the cluster-level `cloud_storage_enabled` property must be set to `true` to enable Tiered Storage at the cluster level or the topic level. If you want to have Tiered Storage turned off at the cluster level and enable it on specific topics, you must enable the `cloud_storage_enabled` property. If this property is set to `false`, nothing is added to cloud storage, whether or not the other Tiered Storage properties are enabled. If this property is set to `true` and the other Tiered Storage properties are disabled, the Tiered Storage subsystem is initialized, but it is not used until you enable Tiered Storage for a topic or at the cluster level. 
+Note that the cluster-level `cloud_storage_enabled` property must be set to `true` to enable Tiered Storage at the cluster level or the topic level. If you want to have Tiered Storage turned off at the cluster level and enable it on specific topics, you must enable the `cloud_storage_enabled` property. If this property is set to `false`, nothing is added to cloud storage, regardless of whether or not the other Tiered Storage properties are enabled. If this property is set to `true` and the other Tiered Storage properties are disabled, then the Tiered Storage subsystem is initialized, but it is not used until you enable Tiered Storage for a topic or at the cluster level. 
 
 To enable Tiered Storage on a topic, you can set the `redpanda.remote.write` and `redpanda.remote.read` flags on a new topic or an existing topic. Use the following command to create a new topic with Tiered Storage enabled: 
 
@@ -151,9 +151,9 @@ If you delete a topic that has been uploaded to cloud storage, the data in cloud
 
 You can configure Redpanda to start a remote write periodically. This is useful if the ingestion rate is low and the segments are kept open for long periods of time. You specify a number of seconds for the timeout, and if that time has passed since the previous write and the partition has new data, Redpanda starts a new write. This limits data loss in the event of catastrophic failure and adds a guarantee that you only lose the specified number of seconds of data. 
 
-Setting idle timeout to a very short interval can result in the creation of a lot of small files, which can affect throughput. If you decide to set a value for idle timeout, it is recommended starting with 600 seconds, which prevents the creation of so many small files that throughput is affected when you recover the files. 
+Setting idle timeout to a very short interval can result in the creation of a lot of small files, which can affect throughput. If you decide to set a value for idle timeout, it is recommended you start out with 600 seconds, which prevents the creation of so many small files that throughput is affected when you recover the files. 
 
-Use the `cloud_storage_segment_max_upload_interval_sec` property to set the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. Edit the property value with the `rpk cluster config edit` command. By default, the property is empty.
+Use the `cloud_storage_segment_max_upload_interval_sec` property to set the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. Edit the property value using the `rpk cluster config edit` command. By default, the property is empty.
 
 ### Reconciliation 
 
@@ -252,7 +252,7 @@ Redpanda uses the following properties to configure transport. Edit the properti
 * `cloud_storage_max_connections` - The maximum number of connections to cloud storage on a node per CPU. Remote read and remote write share the same pool of connections. This means that if a connection is being used to upload a segment, it cannot be used to download another segment. If this value is too small, some workloads might starve for connections, which results in delayed uploads and downloads. If this value is too large, Redpanda tries to upload a lot of files at the same time and might overwhelm the system. Default is 20. 
 * `cloud_storage_segment_upload_timeout_ms` - Timeout for segment upload. Redpanda retries the upload after the timeout. Default is 30000ms. 
 * `cloud_storage_manifest_upload_timeout_ms` - Timeout for manifest upload. Redpanda retries the upload after the timeout. Default is 10000ms. 
-* `cloud_storage_max_connection_idle_time_ms` - The maximum idle time for persistent HTTP connections. Differs depending on the cloud provider. Default is 5000ms, which is sufficient for most providers. 
+* `cloud_storage_max_connection_idle_time_ms` - The maximum idle time for persistent HTTP connections. Differs depending on the cloud provider. Default is 5000 ms, which is sufficient for most providers. 
 * `cloud_storage_segment_max_upload_interval_sec` - Sets the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. 
 * `cloud_storage_trust_file` - The public certificate that is used to validate the TLS connection to cloud storage. If this is empty, Redpanda uses your operating system's CA cert pool.
 
@@ -282,7 +282,7 @@ You may want to configure these properties:
 * `cloud_storage_manifest_upload_timeout_ms` - Timeout for manifest upload. Redpanda retries the upload after the timeout. Default is 10000ms. 
 * `cloud_storage_max_connection_idle_time_ms` - The maximum idle time for persistent HTTP connections. Differs depending on the cloud provider. Default is 5000ms, which is sufficient for most providers. 
 * `cloud_storage_segment_max_upload_interval_sec` - Sets the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. 
-* `cloud_storage_cache_check_interval` - The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they consume a lot of resources. Default is 30000ms. 
+* `cloud_storage_cache_check_interval` - The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they consume a lot of resources. Default is 30000 ms. 
 
 Under normal circumstances, you should not need to configure these properties:
 
