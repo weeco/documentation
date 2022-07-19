@@ -111,6 +111,12 @@ module.exports = {
     {
       src: '/js/googletag.js',
       async: false,
+    },
+    {
+      src:'https://plausible.io/js/plausible.js',
+      defer: true,
+      'data-domain': "redpanda.com",
+
     }
   ],
   stylesheets: [
