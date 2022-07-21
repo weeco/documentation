@@ -21,20 +21,20 @@ If you exceed your low disk space threshold, Redpanda blocks clients from produc
 
 The `storage_min_free_bytes` configuration field determines the threshold of free space–the hard limit–for this write rejection. 
 
-You can also set a soft limit for a minimum free disk space _alert_. This soft limit generates an error message and affects the value of the `vectorized_storage_disk_free_space_alert` metric. The alert works with the following configuration properties, which you can set on any data disk (one drive per node):
+You can also set a soft limit for a minimum free disk space _alert_. This soft limit generates an error message and affects the value of the `redpanda_storage_disk_free_space_alert` metric. The alert works with the following configuration properties, which you can set on any data disk (one drive per node):
 
 * `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
 * `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
 
-When either the byte or percent threshold is exceeded, `vectorized_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
+When either the byte or percent threshold is exceeded, `redpanda_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
 
 ## Disk space monitoring
 
 You can check your total disk size and free space by viewing the metrics: 
-* `vectorized_storage_disk_total_bytes`
-* `vectorized_storage_disk_free_bytes`
+* `redpanda_storage_disk_total_bytes`
+* `redpanda_storage_disk_free_bytes`
 
-As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `vectorized_storage_disk_free_space_alert` metric:
+As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:
 
 * 0 = no alert
 * 1 = low free space alert
