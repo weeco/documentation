@@ -20,7 +20,7 @@ module.exports = {
       title: '',
       hideOnScroll: true,
       logo: {
-        alt: 'Vectorized Logo',
+        alt: 'Redpanda Logo',
         src: 'img/redpanda-docs-logo.svg',
         srcDark: 'img/redpanda-docs-logo.svg',
         href: '/'
