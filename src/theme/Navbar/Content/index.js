@@ -3,6 +3,7 @@ import {useThemeConfig} from '@docusaurus/theme-common';
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
+  useWindowSize,
 } from '@docusaurus/theme-common/internal';
 import NavbarItem from '@theme/NavbarItem';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
@@ -34,6 +35,7 @@ function NavbarContentLayout({left, right}) {
 }
 export default function NavbarContent() {
   const mobileSidebar = useNavbarMobileSidebar();
+  const windowSize = useWindowSize();
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
   useScript('//js.hs-scripts.com/7733588.js');
@@ -45,6 +47,8 @@ export default function NavbarContent() {
           {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
           <NavbarLogo />
           <NavbarItems items={leftItems} />
+          {windowSize !=='desktop' && <NavbarColorModeToggle />}
+          
         </>
       }
       right={
