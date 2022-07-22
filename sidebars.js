@@ -149,6 +149,7 @@
           id: 'cluster-administration/node-management',
         },             
         'cluster-administration/monitoring', 
+        'cluster-administration/rolling-upgrade', 
         'cluster-administration/version-upgrade',        
       ]
     },
