@@ -10,15 +10,15 @@ computers, which are specific combinations of CPUs, SSD types, and VM sizes.
 Running software on four VCPUs isn't the same as running on an EC2 i3.metal
 with 96 physical cores. Often, when trying to scale rapidly to meet demands,
 product teams don't have time to measure I/O throughput and latency before
-starting every new instance (via `rpk iotune`), and instead need resources immediately. To meet this demand, Redpanda tries to predict the best known
+starting every new instance (via `rpk iotune`). They need resources immediately. To meet this demand, Redpanda tries to predict the best known
 settings for VM cloud types.
 
 Running `rpk iotune` isn't necessary each 
 time Redpanda is started. The output properties for `rpk iotune` are written to a file
 that can be saved and reused in nodes running on the same type of hardware.
 
-Currently, we only have well-known-types for AWS and GCP (Azure VM types support
-is coming soon). Upon startup, `rpk` tries to detect the cloud and
+Currently, we only have well-known-types for AWS and GCP. (Azure VM types support
+is coming soon.) Upon startup, `rpk` tries to detect the cloud and
 instance type from the cloud’s metadata API, setting the correct `iotune`
 properties.
 

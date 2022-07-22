@@ -9,10 +9,10 @@ title: Disk utilization
 
 Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure retention and storage settings to ensure the production stability of the cluster. 
 
-If you do run out of disk space, you can look at your topics with metrics and then change your retention settings to reduce the amount of disk space used. Or, add another disk to force a rebalance.
+If you do run out of disk space, look at metrics for your topics, and adjust your retention settings to reduce the amount of disk space used. Or, add another disk to force a rebalance.
 
 :::caution
-When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use [Continuous Data Balancing](/docs/core/cluster-administration/data-balancing) to automatically distribute partitions to nodes with enough disk space.
+When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use [Continuous Cluster Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to distribute partitions across nodes with enough disk space.
 :::
 
 ## Full disk handling
@@ -26,7 +26,7 @@ You can also set a soft limit for a minimum free disk space _alert_. This soft l
 * `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
 * `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
 
-When either the byte or percent threshold is exceeded, `redpanda_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
+When a disk exceeds either the byte or percent threshold, `redpanda_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
 
 ## Disk space monitoring
 
