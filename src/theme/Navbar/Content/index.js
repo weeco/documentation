@@ -1,29 +1,20 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 import React from 'react';
-import NavbarItem from '@theme/NavbarItem';
-import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
+import {useThemeConfig} from '@docusaurus/theme-common';
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
-  useThemeConfig,
-} from '@docusaurus/theme-common';
+} from '@docusaurus/theme-common/internal';
+import NavbarItem from '@theme/NavbarItem';
+import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import styles from './styles.module.css';
-import useGithubStars from './useGithubStars'
 import useScript from './useScript';
-
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
   return useThemeConfig().navbar.items;
 }
-
 function NavbarItems({items}) {
   return (
     <>
@@ -33,7 +24,6 @@ function NavbarItems({items}) {
     </>
   );
 }
-
 function NavbarContentLayout({left, right}) {
   return (
     <div className="navbar__inner">
@@ -42,13 +32,11 @@ function NavbarContentLayout({left, right}) {
     </div>
   );
 }
-
 export default function NavbarContent() {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
   useScript('//js.hs-scripts.com/7733588.js');
-  
   return (
     <NavbarContentLayout
       left={
