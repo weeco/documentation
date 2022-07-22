@@ -7,9 +7,9 @@ title: Node maintenance mode
     <meta name="description" content="Enabling node maintenance mode."/>
 </head>
 
-Node maintenance mode enables you to take a Redpanda node offline temporarily while minimizing disruption to client operations. When a node is in maintenance mode, you can safely perform operations like a rolling upgrade or disk replacement.
+Node maintenance mode enables you to take a Redpanda node offline temporarily while minimizing disruption to client operations. When a node is in maintenance mode, you can safely perform operations such as a rolling upgrade or disk replacement.
 
-When a node is placed in maintenance mode, it relinquishes leadership of any partitions, reassigns that leadership to other nodes in the cluster, and ensures that the node cannot gain partition leadership until the node rejoins the cluster.
+When a node is placed in maintenance mode, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode.
 
 If a node hosts a partition with a replica count of 1, you have two options:
 
