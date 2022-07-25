@@ -7,22 +7,23 @@ title: Node maintenance mode
     <meta name="description" content="Enabling node maintenance mode."/>
 </head>
 
-Node maintenance mode enables you to take a Redpanda node offline temporarily while minimizing disruption to client operations. When a node is in maintenance mode, you can safely perform operations such as a rolling upgrade or disk replacement.
+Node maintenance mode enables you to take a Redpanda node offline temporarily while minimizing disruption to client operations. When a node is in maintenance mode, you can safely perform operations that require the Redpanda process to be temporarily stopped; for example, replacing a disk, power cycling a node, or performing a [rolling upgrade](/docs/cluster-administration/rolling-upgrade).
 
 When a node is placed in maintenance mode, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode.
 
-If a node hosts a partition with a replica count of 1, you have two options:
+If a node hosts a partition with a replica count of 1, you have three options:
 
-* Manually reassign the partition to another node.
-* Increase the number of replicas to ensure that the partition is available for Apache Kafka clients.
+* Manually reassign the partition to another node by changing its replica set.
+* Increase the number of replicas.
+* Do nothing, but be aware that the partition will not be available while the redpanda process is shut down temporarily.
 
-Maintenance mode only transfers leadership; it does not move any partitions to other nodes in the cluster. The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters (`acks = all`) and small partition sizes, draining leadership should take less than a minute. If partition sizes are large, it may take a few minutes. If the cluster is unhealthy (for example, a follower is lagging behind), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
+Maintenance mode only transfers leadership; it does not move any partitions to other nodes in the cluster. The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters, draining leadership should take less than a minute. If the cluster is unhealthy (for example, a follower is lagging behind), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
 
-When a node is in maintenance mode, Redpanda continues to replicate follower partition data to that node. If the node becomes unreachable, then the cluster could accumulate under-replicated partitions until the node becomes available or it is decommissioned.
+When a node is in maintenance mode, Redpanda continues to replicate follower partition data to that node. If the node becomes unreachable, then the cluster could accumulate under-replicated partitions until the node becomes available. As soon as the node is upgraded, it becomes reachable, and any data that was not able to be replicated will then be replicated.
 
 ## Placing a node in maintenance mode
 
-Before placing a node in maintenance mode, ensure that partition replicas are on other nodes in the cluster. Alternatively, you can manually reassign partitions to other nodes. You may also want to temporarily disable or ignore alerts related to under-replicated partitions.
+Before placing a node in maintenance mode, you may want to temporarily disable or ignore alerts related to under-replicated partitions.
 
 To place a node into maintenance mode:
 
