@@ -17,4 +17,3 @@ jobs:
           static-args: |
             org=redpanda-data
             repo=documentation
-            milestone=auto
