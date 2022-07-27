@@ -44,13 +44,15 @@ Storage space metrics are refreshed as part of the health monitor’s backend ti
 
 ## Log cleanup and message retention
 
-Retention policy controls how long messages are kept in on-disk logs before they're deleted or compacted. This is the main tool you can use to keep messages as long as you need, without running out of disk space. You can configure retention properties to delete messages based on the following:
+Retention policies control how long messages (also known as events) are kept on disk before they're deleted or compacted. Use message retention policies to keep messages as long as you need without running out of disk space. 
+
+You can configure retention properties to delete messages based on the following:
 
 * Message age is exceeded.
 * Aggregate message size in the topic is exceeded.
 * Either message age is exceeded or aggregate message size in the topic is exceeded.
 
-Based on these properties, Redpanda automatically runs a log cleanup process in the background. 
+Based on these properties, Redpanda automatically runs a log cleanup process in the background. If you start to run out of disk space, adjust your retention properties to reduce the amount of disk space used.
 
 Set retention properties at the topic level or the cluster level. If a value isn't specified for the topic, then the topic uses the value for the cluster. Note that cluster-level property names use snake-case, while topic-level properties use dots.
 
