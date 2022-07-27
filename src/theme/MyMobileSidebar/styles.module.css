@@ -1,0 +1,46 @@
+.mobileSidebar {
+    position: fixed;
+    height: 161px;
+    width: 20px;
+    background: #e55a41;
+    left: 0;
+    z-index: 20;
+    top: 0;
+    transform: translateY(calc(50vh - 50%));
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color:white;
+    border: none;
+  }
+
+.mobileSidebarInverted {
+    position: fixed;
+    height: 161px;
+    width: 20px;
+    background: black;
+    left: 0;
+    z-index: 20;
+    top: 0;
+    transform: translateY(calc(50vh - 50%));
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color:white;
+    border: none;
+  }
+
+  
+  .mobileSidebarArrow{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #fff;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
+  

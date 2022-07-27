@@ -11,6 +11,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import styles from './styles.module.css';
 import useScript from './useScript';
+import MyMobileSidebar from '../../MyMobileSidebar';
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -48,6 +49,7 @@ export default function NavbarContent() {
           <NavbarLogo />
           <NavbarItems items={leftItems} />
           {windowSize !=='desktop' && <NavbarColorModeToggle />}
+          <MyMobileSidebar/>
           
         </>
       }
@@ -57,6 +59,7 @@ export default function NavbarContent() {
         <>
           <NavbarItems items={rightItems} />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
+
         </>
       }
     />
