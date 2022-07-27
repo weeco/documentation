@@ -16,5 +16,5 @@ jobs:
             backport
           static-args: |
             org=redpanda-data
-            repo=vtools
+            repo=documentation
             milestone=auto
