@@ -19,7 +19,7 @@ If a node hosts a partition with a replica count of 1, you have three options:
 
 The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters, draining leadership should take less than a minute. If the cluster is unhealthy (for example, a follower is not in sync with the leader), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
 
-When a node is in maintenance mode, Redpanda continues to replicate follower partition data to that node. When the node is taken offline, the follower partitions could become out of sync until the node becomes available. Once the node is available again, data is copied to under-replicated partitions until they become in sync with the leader partitions.
+When a node is in maintenance mode, Redpanda continues to replicate updates to that node. When the node is taken offline, partitions with replicas on the node could become out of sync until the node is brought back online. Once the node is available again, data is copied to under-replicated replicas on the node until all affected partitions are in sync with the leader.
 
 ## Placing a node in maintenance mode
 
