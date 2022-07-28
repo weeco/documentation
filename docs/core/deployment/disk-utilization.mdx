@@ -7,12 +7,12 @@ title: Disk utilization
     <meta name="description" content="If you exceed the low disk space threshold, Redpanda blocks writes to the local node from Kafka producers."/>
 </head>
 
-Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure retention and storage properties to ensure the production stability of the cluster. 
+Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure message retention and storage properties to ensure the production stability of the cluster. 
 
 If you do run out of disk space, look at metrics for your topics, and adjust your retention properties to reduce the amount of disk space used. Or, add another disk to force a rebalance.
 
 :::caution
-When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use [Continuous Cluster Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to distribute partitions across nodes with enough disk space.
+When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to distribute partitions across nodes with enough disk space.
 :::
 
 ## Full disk handling
@@ -34,17 +34,14 @@ You can check your total disk size and free space by viewing the metrics:
 * `redpanda_storage_disk_total_bytes`
 * `redpanda_storage_disk_free_bytes`
 
-As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:
-
+As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:  
 * 0 = no alert
 * 1 = low free space alert
 * 2 = out of space (degraded, external writes are rejected)
 
-Storage space metrics are refreshed as part of the health monitor’s backend tick processing, which collects node health reports for all members of the cluster. This lets any node see the `storage_space_alert` value for all nodes in the cluster, updated at a frequency determined by the health monitor. 
-
 ## Log cleanup and message retention
 
-Retention policies control how long messages (also known as events) are kept on disk before they're deleted or compacted. Use message retention policies to keep messages as long as you need without running out of disk space. 
+Retention policies control how long messages are kept on disk before they're deleted or compacted. Use message retention policies to keep messages as long as you need without running out of disk space. 
 
 You can configure retention properties to delete messages based on the following:
 
@@ -52,7 +49,7 @@ You can configure retention properties to delete messages based on the following
 * Aggregate message size in the topic is exceeded.
 * Either message age is exceeded or aggregate message size in the topic is exceeded.
 
-Based on these properties, Redpanda automatically runs a log cleanup process in the background. If you start to run out of disk space, adjust your retention properties to reduce the amount of disk space used.
+Based on these properties, Redpanda runs a log cleanup process in the background. If you start to run out of disk space, adjust your retention properties to reduce the amount of disk space used.
 
 Set retention properties at the topic level or the cluster level. If a value isn't specified for the topic, then the topic uses the value for the cluster. Note that cluster-level property names use snake-case, while topic-level properties use dots.
 
@@ -83,7 +80,7 @@ To set retention time for a single topic, use `retention.ms`, which overrides `d
   To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to `86400000`, which is one day. The default is `604800000`, which is one week.
 
 :::caution 
-Do not set `delete_retention_ms` to `-1` unless you're using <a href="https://docs.redpanda.com/docs/core/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting it to `-1` configures indefinite retention, which can result in an out-of-disk outage. 
+Do not set `delete_retention_ms` to `-1` unless you're using <a href="https://docs.redpanda.com/docs/core/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting it to `-1` configures indefinite retention, which can fill disk space. 
 :::
 
 ### Size-based retention
@@ -128,13 +125,13 @@ To configure log segment size on a topic, run:
 rpk topic alter-config <topic> --set segment.bytes=<segment_size>
 ```
 
-Keep in mind that very large segments prevent compaction, and very small segments increase the risk of encountering resource limits. To calculate an upper limit on segment size, you can divide the disk size by the number of partitions. For example, if you have a 128 GB disk and 1000 partitions, the upper limit of the segment size is `134217728`. Default is `1073741824`. 
+Keep in mind that very large segments prevent compaction, and very small segments increase the risk of encountering resource limits. To calculate an upper limit on segment size, divide the disk size by the number of partitions. For example, if you have a 128 GB disk and 1000 partitions, the upper limit of the segment size is `134217728`. Default is `1073741824`. 
 
 For details about how to modify cluster configuration properties, see [Cluster configuration](/docs/core/cluster-administration/cluster-property-configuration). 
 
 ## Ballast file
 
-You can create a ballast file to act as a buffer against an out-of-disk outage. A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file, which clears up some disk space and gives you time to delete topics or records and change your retention properties. You can delete the ballast file as a last resort.
+You can create a ballast file to act as a buffer against an out-of-disk outage. A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file, which clears up some space and gives you time to delete topics or records and change your retention properties. You can delete the ballast file as a last resort.
 
 To create a ballast file, set the following properties in the `redpanda.yaml` file: 
 

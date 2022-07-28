@@ -4,26 +4,23 @@ title: I/O optimization
 
 Redpanda relies on its own disk I/O scheduler, and by default it tells the kernel to 
 use the `noop` scheduler. To provide near-optimal performance,
-`rpk` comes with an embedded database of I/O settings for well-known cloud
-computers, which are specific combinations of CPUs, SSD types, and VM sizes. 
+`rpk` comes with an embedded database of I/O settings, which are specific combinations of CPUs, SSD types, and VM sizes. 
 
 Running software on four VCPUs isn't the same as running on an EC2 i3.metal
-with 96 physical cores. Often, when trying to scale rapidly to meet demands,
-product teams don't have time to measure I/O throughput and latency before
-starting every new instance (via `rpk iotune`). They need resources immediately. To meet this demand, Redpanda tries to predict the best known
+with 96 physical cores. When trying to scale rapidly, product teams may not have time to measure I/O throughput and latency before
+starting every new instance with `rpk iotune`. They need resources immediately. To meet this demand, Redpanda tries to predict the best known
 settings for VM cloud types.
 
+:::note
 Running `rpk iotune` isn't necessary each 
 time Redpanda is started. The output properties for `rpk iotune` are written to a file
 that can be saved and reused in nodes running on the same type of hardware.
+:::
 
-Currently, we only have well-known-types for AWS and GCP. (Azure VM types support
-is coming soon.) Upon startup, `rpk` tries to detect the cloud and
+Currently, Redpanda has well-known-types for AWS and GCP. On startup, `rpk` tries to detect the cloud and
 instance type from the cloud’s metadata API, setting the correct `iotune`
-properties.
-
-If access to the metadata API isn’t allowed from the instance, you can hint
-the desired setup by passing the `--well-known-io` flag to `rpk` with the
+properties. If access to the metadata API isn’t allowed from the instance, you can hint
+the desired setup by passing the `--well-known-io` flag with the
 cloud vendor, VM type, and storage type:
 
 ```bash
@@ -42,4 +39,4 @@ If `well-known-io` is specified in the config file and also as a flag, then the 
 
 If a certain cloud vendor, machine type, or storage type isn’t
 found, or if the metadata isn’t available and no hint is given, then `rpk` prints a
-warning and continues using the default values.
+warning and continues to use the default values.
