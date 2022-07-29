@@ -25,7 +25,10 @@ The IAM policy must have read and write permissions assigned to the S3 storage b
 ## Configuring IAM roles
 
 Edit the Redpanda cluster configuration and set `Cloud_storage_credentials_source` to one of these values:
-* `config_file`
-* `aws_instance_metadata`
-* `sts`
-* `gcp_instance_metadata`
+
+| Value       | Description |
+| ----------- | ----------- |
+| `config_file` (default) | If IAM roles are not available, specify credentials in the configuration file.|
+| `aws_instance_metadata` | For an AWS EC2 instance, use the instance metadata API from AWS.|
+| `sts` |For AWS on Kubernetes, use the Secure Token Service (STS) to obtain a token from the pod.|
+| `gcp_instance_metadata` |For a VM running on GCP, or for Google Kubernetes Engine (GKE), use the instance metadata API from GCP)|
