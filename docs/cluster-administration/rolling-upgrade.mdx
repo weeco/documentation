@@ -17,7 +17,6 @@ To perform a rolling upgrade:
 1. Check to ensure all nodes are healthy by running `rpk cluster health`.
 2. Select a node that has not been upgraded yet and place it into maintenance mode using `rpk cluster maintenance enable <node-id> --wait`. This may take some time to complete.
 3. Verify that the node is in maintenance mode by running `rpk cluster maintenance status` and confirming  that `FINISHED` is `true`.
-```
 
 4. Validate the health of the cluster by running `rpk cluster health` and evaluating external metrics, such as consumer lag. If you encounter any issues, take the node out of maintenance mode by running `rpk maintenance mode disable <node-id>`.
 5. If there are no issues, perform a node upgrade by following the version upgrade process specific to your deployment model. The basic steps include node shutdown, upgrade, and restart.
