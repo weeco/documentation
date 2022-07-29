@@ -4,6 +4,12 @@ title: IAM roles
 
 IAM roles replace the less secure credential system by supplying temporary credentials to a role for the duration of a session. These credentials allow you to access the data stored in an S3 bucket.
 
+:::note
+
+When using Tiered Storage for an on-premises cluster, you must still use credentials. IAM roles cannot be used in this case.
+
+:::
+
 ## Prerequisites
 
 Before you can configure IAM roles in Redpanda, you must create the IAM role that will be used to access the S3 storage bucket. The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well:
