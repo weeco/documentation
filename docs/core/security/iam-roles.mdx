@@ -2,3 +2,24 @@
 title: IAM roles
 ---
 
+IAM roles replace the less secure credential system by supplying temporary credentials to a role for the duration of a session. These credentials allow you to access the data stored in an S3 bucket.
+
+## Prerequisites
+
+Perform the following steps in your cloud provider console to create the IAM role that will be used to access the S3 storage bucket. Before you can configure IAM roles in Redpanda, you must create the IAM role that will be used to access the S3 storage bucket. The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well:
+1. Create an S3 storage bucket.
+2. Create an IAM policy.
+3. Create an IAM role and assign the policy to that role.
+4. Bind the VM or pod (in the case of Kubernetes) to the IAM role by following your cloud provider's instructions.
+
+## Sample IAM policy
+
+The IAM policy must have read and write permissions assigned to the S3 storage bucket.
+
+## Configuring IAM roles
+
+Edit the Redpanda cluster configuration and set `Cloud_storage_credentials_source` to one of these values:
+* `config_file`
+* `aws_instance_metadata`
+* `sts`
+* `gcp_instance_metadata`
