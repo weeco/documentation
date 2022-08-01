@@ -30,6 +30,7 @@ If this is a new feature, provide material that will help the writer draft the n
 - Links to internal wikis, PRDs, design docs, KIPs, training material, or slide decks.
 - Links to engineering PRs that implement the update.
 - Links to blog posts, if applicable.
+- Identify specific Slack channels that the writer can join to get more details about the feature.
 - Links to Slack conversations (RP and RP Community) about the issue.
 - Names of SMEs who can answer questions and act as reviewers (at least one engineer and one PM).
 - Any additional information that will be of use to the writer.
