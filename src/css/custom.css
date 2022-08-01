@@ -458,3 +458,7 @@ span[class*="dropdownMenu_"] {
 h5 {
   font-size: 0.83em !important;
 }
+
+[class*=iconExternalLink] {
+  display: none;
+}
