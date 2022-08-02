@@ -7,37 +7,19 @@ title: Disk utilization
     <meta name="description" content="If you exceed the low disk space threshold, Redpanda blocks writes to the local node from Kafka producers."/>
 </head>
 
-Redpanda blocks clients from producing when free disk space reaches a critically low level. This gives you time to take action. In addition, you can monitor your disk space, and you can configure message retention and storage properties to ensure the production stability of the cluster. 
+Redpanda provides several ways to manage disk space to ensure the production stability of the cluster. 
+* You can configure message retention and storage properties.
+* You can create a ballast file to act as a buffer against an out-of-disk outage.
+* You can monitor disk space metrics.  
+* When free disk space reaches a critically low level, Redpanda blocks clients from producing. 
 
-If you do run out of disk space, look at metrics for your topics, and adjust your retention properties to reduce the amount of disk space used. Or, add another disk to force a rebalance.
+If you do run out of disk space, you can delete your ballast file, which gives you time to take action. Look at metrics for your topics, and adjust your retention properties to reduce the amount of disk space used. Or, add another disk to force a rebalance.
 
-:::caution
-When a Redpanda node runs out of disk space, it terminates. This causes necessary leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. You can use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to distribute partitions across nodes with enough disk space.
+When a Redpanda node runs out of disk space, it terminates. This causes leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. 
+
+:::tip
+Use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to automatically distribute partitions across nodes with enough disk space and avoid disks becoming full.
 :::
-
-## Full disk handling
-
-If you exceed your low disk space threshold, Redpanda blocks clients from producing. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 
-
-The `storage_min_free_bytes` configuration field determines the threshold of free space–the hard limit–for this write rejection. 
-
-You can also set a soft limit for a minimum free disk space _alert_. This soft limit generates an error message and affects the value of the `redpanda_storage_disk_free_space_alert` metric. The alert works with the following configuration properties, which you can set on any data disk (one drive per node):
-
-* `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
-* `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
-
-When a disk exceeds either the byte or percent threshold, `redpanda_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
-
-## Disk space monitoring
-
-You can check your total disk size and free space by viewing the metrics: 
-* `redpanda_storage_disk_total_bytes`
-* `redpanda_storage_disk_free_bytes`
-
-As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:  
-* 0 = no alert
-* 1 = low free space alert
-* 2 = out of space (degraded, external writes are rejected)
 
 ## Log cleanup and message retention
 
@@ -131,7 +113,7 @@ For details about how to modify cluster configuration properties, see [Cluster c
 
 ## Ballast file
 
-You can create a ballast file to act as a buffer against an out-of-disk outage. A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file, which clears up some space and gives you time to delete topics or records and change your retention properties. You can delete the ballast file as a last resort.
+A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file, which clears up some space and gives you time to delete topics or records and change your retention properties. You can delete the ballast file as a last resort.
 
 To create a ballast file, set the following properties in the `redpanda.yaml` file: 
 
@@ -147,3 +129,27 @@ where:
 * `ballast_file_path` - You can change the location of the ballast file, but it must be on the same mount point as the Redpanda data directory. Default is `/var/lib/redpanda/data/ballast`.
 
 * `ballast_file_size` - Increase the ballast file size if it is a very high-throughput cluster. Decrease the ballast file size if you have very little storage space. The ballast file should be large enough to give you time to delete data and reconfigure retention properties if Redpanda crashes, but small enough that you don't waste disk space. In general, set this to approximately 10 times the size of the largest segment, to have enough space to compact that topic. Default is `1GiB`.
+
+## Disk space monitoring
+
+You can check your total disk size and free space by viewing the metrics: 
+* `redpanda_storage_disk_total_bytes`
+* `redpanda_storage_disk_free_bytes`
+
+As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:  
+* 0 = no alert
+* 1 = low free space alert
+* 2 = out of space (degraded, external writes are rejected)
+
+## Full disk handling
+
+If you exceed your low disk space threshold, Redpanda blocks clients from producing. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 
+
+The `storage_min_free_bytes` configuration field determines the threshold of free space–the hard limit–for this write rejection. 
+
+You can also set a soft limit for a minimum free disk space _alert_. This soft limit generates an error message and affects the value of the `redpanda_storage_disk_free_space_alert` metric. The alert works with the following configuration properties, which you can set on any data disk (one drive per node):
+
+* `storage_space_alert_free_threshold_bytes` - Minimum free disk space allowed, in bytes.
+* `storage_space_alert_free_threshold_percent` - Minimum free disk space allowed, in percentage of total available space for that drive.
+
+When a disk exceeds either the byte or percent threshold, `redpanda_storage_disk_free_space_alert` changes value, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
