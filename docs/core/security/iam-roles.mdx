@@ -16,11 +16,11 @@ Before you can configure IAM roles in Redpanda, you must create the IAM role tha
 1. Create an S3 storage bucket.
 2. Create an IAM policy.
 3. Create an IAM role and assign the policy to that role.
-4. Bind the VM or pod (in the case of Kubernetes) to the IAM role by following your cloud provider's instructions.
+4. Bind the VM, or pod in the case of Kubernetes, to the IAM role by following your cloud provider's instructions.
 
-## Sample IAM policy
+## Sample IAM policies
 
-The IAM policy must have read and write permissions assigned to the S3 storage bucket.
+When you create an IAM policy, you can decide what operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. The following example policy grants all permissions associated with any S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket.
 
 ```
 # AmazonS3FullAccess
@@ -38,6 +38,29 @@ The IAM policy must have read and write permissions assigned to the S3 storage b
     ]
 }
 ```
+
+A more restrictive IAM policy is shown below. This policy only allows a user to get and list objects in the `test` S3 bucket.
+
+```
+# AmazonS3ReadOnlyAccess
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*",
+                "s3-object-lambda:Get*",
+                "s3-object-lambda:List*"
+            ],
+            "Resource": "arn:aws:s3:::test"
+        }
+    ]
+}
+```
+
+For tips on writing an IAM policy, see this [AWS blog post](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/).
 
 ## Configuring IAM roles
 
