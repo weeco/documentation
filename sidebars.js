@@ -145,7 +145,7 @@
         },        
         {
           type: 'doc',
-          label: 'Node management',
+          label: 'Node maintenance mode',
           id: 'cluster-administration/node-management',
         },             
         'cluster-administration/monitoring', 
