@@ -22,6 +22,23 @@ Before you can configure IAM roles in Redpanda, you must create the IAM role tha
 
 The IAM policy must have read and write permissions assigned to the S3 storage bucket.
 
+```
+# AmazonS3FullAccess
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ## Configuring IAM roles
 
 Edit the Redpanda cluster configuration and set `Cloud_storage_credentials_source` to one of these values:
