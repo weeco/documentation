@@ -12,15 +12,18 @@ When using Tiered Storage for an on-premises cluster, you must still use credent
 
 ## Prerequisites
 
-Before you can configure IAM roles in Redpanda, you must create the IAM role that will be used to access the S3 storage bucket. The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well:
+Before you can configure IAM roles in Redpanda, you must create an S3 bucket and the IAM policy that will be used to access that bucket. An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. 
+
+The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well. Each step is performed in your cloud provider's environment. For detailed instructions, consult your cloud provider's documentation.
+
 1. Create an S3 storage bucket.
 2. Create an IAM policy.
 3. Create an IAM role and assign the policy to that role.
-4. Bind the VM, or pod in the case of Kubernetes, to the IAM role by following your cloud provider's instructions.
+4. Bind the VM, or pod in the case of Kubernetes, to the IAM role.
 
-## Sample IAM policies
+### Sample "Full Access" IAM policy
 
-An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. The following example policy grants all permissions associated with any S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket.
+The following example policy grants all permissions associated with any S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket.
 
 ```
 # AmazonS3FullAccess
@@ -39,7 +42,9 @@ An IAM policy specifies which operations can be performed, such as writing to an
 }
 ```
 
-A more restrictive IAM policy is shown below. This policy only allows a user to get and list objects in the `test` S3 bucket.
+### Sample "Read-only" IAM policy
+
+A more restrictive "read-only" IAM policy is shown below. This policy only allows a user to get and list objects in the `test` S3 bucket.
 
 ```
 # AmazonS3ReadOnlyAccess
