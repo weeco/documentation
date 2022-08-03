@@ -12,7 +12,7 @@ When using Tiered Storage for an on-premises cluster, you must still use credent
 
 ## Prerequisites
 
-Before you can configure IAM roles in Redpanda, you must [create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html) and the IAM policy that will be used to access that bucket. An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. 
+Before you can configure IAM roles in Redpanda, you must [create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html) and [create an IAM policy](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/) that will be used to access that bucket. An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. 
 
 The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well. Each step is performed in your cloud provider's environment. For detailed instructions, consult your cloud provider's documentation.
 
@@ -64,8 +64,6 @@ A more restrictive "read-only" IAM policy is shown below. This policy only allow
     ]
 }
 ```
-
-For tips on writing an IAM policy, see this [AWS blog post](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/).
 
 ## Configuring IAM roles
 
