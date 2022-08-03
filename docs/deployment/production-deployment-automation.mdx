@@ -17,7 +17,7 @@ First, install Terraform using the [Terraform Installation Tutorial](https://lea
 Then clone the `deployment-automation` repo:
 
 ```bash
-git clone git@github.com:redpanda-data/deployment-automation.git
+git clone https://github.com/redpanda-data/deployment-automation.git
 ```
 
 Then change into the directory:
@@ -101,7 +101,7 @@ terraform init
 We now can run `terraform apply` to create the cluster. There are a number of
 configuration options which can be specified when creating the cluster:
 
-- `region` (default: `us-west-1`): The region to deploy the infrastructure on.
+- `region` (default: `us-west1`): The region to deploy the infrastructure on.
 - `zone` (default: `a`): The region's zone to deploy the infrastructure on.
 - `subnet`: The name of an existing subnet to deploy the infrastructure on.
 - `nodes` (default: `1`): The number of nodes to base the cluster on. Keep in mind that one node is used as a monitoring node.
