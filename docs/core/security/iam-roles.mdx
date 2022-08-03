@@ -20,7 +20,7 @@ Before you can configure IAM roles in Redpanda, you must create the IAM role tha
 
 ## Sample IAM policies
 
-When you create an IAM policy, you can decide what operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. The following example policy grants all permissions associated with any S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket.
+An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. The following example policy grants all permissions associated with any S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket.
 
 ```
 # AmazonS3FullAccess
@@ -64,7 +64,7 @@ For tips on writing an IAM policy, see this [AWS blog post](https://aws.amazon.c
 
 ## Configuring IAM roles
 
-Once you complete the prerequisites, edit the Redpanda cluster configuration and set the `Cloud_storage_credentials_source` property to the appropriate value for your use case. The following table shows all possible values and their descriptions.
+Once you complete the prerequisites, edit the Redpanda cluster configuration and set the [`Cloud_storage_credentials_source`](https://docs.redpanda.com/docs/reference/cluster-properties/#cloud-storage) property to the appropriate value for your use case. The following table shows all possible values and their descriptions.
 
 | Value       | Description |
 | ----------- | ----------- |
