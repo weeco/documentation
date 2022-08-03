@@ -9,13 +9,11 @@ async function run() {
     }
 
     const cluster_properties_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/configuration.h';
-    const constants_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/b83df539864626a9a5af62ced2b7078ef70b92e0/src/v/cluster/node/constants.h';
     
     const cluster_config_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/configuration.cc';
     const node_config_file_url = 'https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/v/config/node_config.cc';
 
     var cluster_properties_file = await axios.get(cluster_properties_file_url, options);
-    var constants_file = await axios.get(constants_file_url, options);
     var cluster_config_file = await axios.get(cluster_config_file_url, options);
     var node_config_file = await axios.get(node_config_file_url, options);
     
@@ -34,7 +32,6 @@ async function run() {
     var config_default_value_pos = -1;
 
     const propertisTypes = loadClusterPropertiesTypes(cluster_properties_file);
-    const constants = loadConstants(constants_file);
 
     let config = {};
 
@@ -159,18 +156,6 @@ async function run() {
 
             }
 
-            if (constants.has(config.defaultValue)) {
-                config.defaultValue = constants.get(config.defaultValue);
-            }
-
-            if (constants.has(config.minValue)) {
-                config.minValue = constants.get(config.minValue);
-            }
-            
-            if (constants.has(config.maxValue)) {
-                config.maxValue = constants.get(config.maxValue);
-            }
-
             config.defaultValue = convertToBytes(config.defaultValue);
             config.defaultValue = extractValuesFromTypes(config.defaultValue, config.key, propertisTypes);
             config.minValue = convertToBytes(config.minValue);
@@ -290,17 +275,6 @@ async function run() {
 
             }
 
-            if (constants.has(config.defaultValue)) {
-                config.defaultValue = constants.get(config.defaultValue);
-            }
-
-            if (constants.has(config.minValue)) {
-                config.minValue = constants.get(config.minValue);
-            }
-
-            if (constants.has(config.maxValue)) {
-                config.maxValue = constants.get(config.maxValue);
-            }
 
             config.defaultValue = convertToBytes(config.defaultValue);
             config.defaultValue = extractValuesFromTypes(config.defaultValue, config.key, propertisTypes);
@@ -332,28 +306,6 @@ async function run() {
     writeFile('node_configs_table.txt', node_configs);
     writeFile('tunable_configs_table.txt', tunable_configs);
     writeFile('missing_info_table.txt', missing_info);
-}
-
-function loadConstants(constants_payload) {
-    let arr = constants_payload.data.split('\n');
-    let ln;
-    let key, val;
-    let constants_map = new Map();
-    for (var i = 0; i < arr.length; i++) {
-        ln = arr[i];
-        if (ln.includes('static')) {
-            if (ln.includes('int')) {
-                key = ln.substring(ln.indexOf('int') + 4, ln.indexOf(' ='));
-            } else if (ln.includes('size_t')) {
-                key = ln.substring(ln.indexOf('size_t') + 7, ln.indexOf(' ='));
-            } else {
-                throw 'Var type not found';
-            }
-            val = ln.substring(ln.indexOf('=') + 1, ln.indexOf(';'));
-            constants_map.set(key, val);
-        }
-    }
-    return constants_map;
 }
 
 function loadClusterPropertiesTypes(file) {
