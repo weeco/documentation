@@ -195,3 +195,26 @@ any of the remaining nodes will automatically assume the cluster leadership.
 
 Make sure that the installed certificates haven't expired. If they have,
 generate new ones and restart the node.
+
+### Replication factor issues
+
+If you are [Setting up a 3-node cluster](./docs/quickstart/quick-start-docker#Set-up-a-3-node-cluster) and create a topic with two replicas like the following, then the following command would fail.
+
+```bash
+rpk topic create test -r 2 -p 1
+```
+
+:::note
+The following error message is available since 22.1.6
+:::
+
+```bash
+TOPIC  STATUS
+test   INVALID_REPLICATION_FACTOR: Replication factor must be odd.
+```
+
+This happens because `rpk` is using [Raft Consensus Algorithm](https://raft.github.io/#:~:text=What%20is%20Raft%3F,pieces%20needed%20for%20practical%20systems) and an even number is meaningless to it. To fix this error, create a cluster with an odd replication factor. For example: 
+
+```bash
+rpk topic create test -r 3 -p 1
+```
