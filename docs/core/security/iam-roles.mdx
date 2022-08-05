@@ -14,16 +14,18 @@ When using Tiered Storage for an on-premises cluster, you must still use static 
 
 ## Prerequisites
 
-Before you can configure IAM roles in Redpanda, you must create an S3 bucket and create an IAM policy that will be used to access that bucket. An IAM policy specifies which operations can be performed, such as writing to and reading from an S3 bucket, and which resources can be accessed. 
+Before you can configure IAM roles in Redpanda, you must create a cloud storage bucket and create an IAM policy that will be used to access that bucket. An IAM policy specifies which operations can be performed, such as writing to and reading from a cloud storage bucket, and which resources can be accessed. 
 
-The following steps use Amazon Web Services (AWS) terminology, but they apply to Google Cloud Platform (GCP) as well. Each step is performed in your cloud provider's environment. For detailed instructions, consult your cloud provider's documentation.
+### Amazon Web Services prerequisites
+
+If you are using Amazon Web Services (AWS) as your cloud provider, satisfy the following prerequisites:
 
 1. [Create an S3 storage bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html).
 2. [Create an IAM policy](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/).
 3. [Create an IAM role and assign the policy to that role](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions_create-policies.html).
 4. [Bind the VM](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role), or [Pod in the case of Kubernetes](https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html), to the IAM role.
 
-### Sample "Full Access" IAM policy
+#### Sample "Full Access" IAM policy
 
 The following example policy grants all permissions associated with an S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket. A full access policy with all S3 permissions is required for Tiered Storage.
 
@@ -44,7 +46,7 @@ The following example policy grants all permissions associated with an S3 bucket
 }
 ```
 
-### Sample "Read-only" IAM policy
+#### Sample "Read-only" IAM policy
 
 A more restrictive "read-only" IAM policy is shown below. This policy only allows a user to get and list objects in the `test` S3 bucket. Such a policy could be used for a read relica topic on a remote cluster that hosts read replica topics, but not Tiered Storage topics.
 
@@ -67,9 +69,22 @@ A more restrictive "read-only" IAM policy is shown below. This policy only allow
 }
 ```
 
+### Google Cloud Platform prerequisites
+
+If you are using Google Cloud Platform as your cloud provider, satisfy the following prerequisites:
+
+1. [Create a storage bucket](https://cloud.google.com/storage/docs/creating-buckets).
+2. [Create an allow policy](https://cloud.google.com/iam/docs/overview), also called an IAM policy, that specifies the principal, the role, and the role binding.
+
+:::note
+
+A full access policy with all storage bucket permissions is required for Tiered Storage.
+
+:::
+
 ## Configuring IAM roles
 
-Once you complete the prerequisites, edit the Redpanda cluster configuration by running `rpk cluster config edit`. Set the [`cloud_storage_credentials_source`](https://docs.redpanda.com/docs/reference/cluster-properties/#cloud-storage) property to the appropriate value for your use case. The following table shows all possible values and their descriptions.
+After you satisfy the prerequisites, edit the Redpanda cluster configuration by running `rpk cluster config edit`. Set the [`cloud_storage_credentials_source`](https://docs.redpanda.com/docs/reference/cluster-properties/#cloud-storage) property to the appropriate value for your use case. The following table shows all possible values and their descriptions.
 
 | Value       | Description |
 | ----------- | ----------- |
