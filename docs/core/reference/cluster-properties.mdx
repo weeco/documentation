@@ -34,7 +34,7 @@ All cluster properties are presented in tables that are grouped into the followi
 | cloud_storage_api_endpoint_port | TLS port override. <br/><br/>Default: 443 | Yes |
 | cloud_storage_bucket | AWS or GCS bucket that should be used to store data. <br/><br/>Default: Null | Yes |
 | cloud_storage_cache_size | Max size of archival cache. <br/><br/>Default: 20971520000 (20 GB) | Yes |
-|cloud_storage_credentials_source | The source of credentials to connect to cloud services. <br/><br/>Default: config_file | Yes |
+|cloud_storage_credentials_source | The source of credentials used to connect to cloud services. <br/><br/>Default: config_file | Yes |
 | cloud_storage_disable_tls | Disable TLS for all S3 or GCS connections. <br/><br/>Default: false | Yes |
 | cloud_storage_enabled | Enable archival storage. _This property must be enabled in order to use Tiered Storage or Remote Read Replicas._ <br/><br/>Default: false | Yes |
 | cloud_storage_max_connections | Max number of simultaneous uploads to S3 or GCS. <br/><br/>Default: 20 | Yes |
