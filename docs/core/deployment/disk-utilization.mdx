@@ -10,7 +10,7 @@ title: Disk Space Management
 Redpanda provides several ways to manage disk space to ensure the production stability of the cluster. You can:
 * Configure message retention and a log cleanup policy.
 * Configure storage threshold properties, and set up alerts to notify you when free disk space reaches a certain threshold.
-* Use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-cluster-balancing) to automatically distribute partitions across nodes for more balanced disk usage.
+* Use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-data-balancing) to automatically distribute partitions across nodes for more balanced disk usage.
 * Create a ballast file to act as a buffer against an out-of-disk outage.
 
 When free disk space reaches a critically low level, Redpanda blocks clients from producing. 
