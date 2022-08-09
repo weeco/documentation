@@ -13,7 +13,7 @@ Redpanda provides several ways to manage disk space to ensure the production sta
 * Use [Continuous Data Balancing](/docs/core/cluster-administration/continuous-data-balancing) to automatically distribute partitions across nodes for more balanced disk usage.
 * Create a ballast file to act as a buffer against an out-of-disk outage.
 
-When free disk space reaches a critically low level, Redpanda blocks clients from producing. 
+If free disk space reaches a critically low level, Redpanda blocks clients from producing. 
 
 When a Redpanda node runs out of disk space, it terminates. This causes leader reassignment and then replication and rebalancing, impacting performance. If more nodes in the cluster fill up and terminate, traffic concentrates in fewer nodes, also impacting performance. 
 
@@ -25,7 +25,7 @@ You can configure retention properties to delete messages based on the following
 
 * Message age is exceeded.
 * Aggregate message size in the topic is exceeded.
-* Either message age is exceeded or aggregate message size in the topic is exceeded.
+* Either message age or aggregate message size in the topic is exceeded.
 
 Set retention properties at the topic level or the cluster level. If a value isn't specified for the topic, then the topic uses the value for the cluster. Note that cluster-level property names use snake-case, while topic-level properties use dots.
 
@@ -39,7 +39,7 @@ Based on these properties, Redpanda runs a log cleanup process in the background
 
 ### Set time-based retention
 
-A message is deleted if its age exceeds the value specified in **`delete_retention_ms`** (the cluster-level property)or **`retention.ms`** (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
+A message is deleted if its age exceeds the value specified in **`delete_retention_ms`** (the cluster-level property) or **`retention.ms`** (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
 
 To set retention time for a single topic, use `retention.ms`, which overrides `delete_retention_ms`. 
 
@@ -121,7 +121,11 @@ You can also set a soft limit for a minimum free disk space _alert_. This soft l
 | `storage_space_alert_free_threshold_bytes` | Minimum free disk space allowed, in bytes. | 
 | `storage_space_alert_free_threshold_percent`  | Minimum free disk space allowed, in percentage of total available space for that drive.    | 
 
-When a disk exceeds either the byte or percent threshold, `redpanda_storage_disk_free_space_alert` updates, and a storage space alert error message is written to the Redpanda service log. Note that the alert threshold can be set in bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
+:::note
+The alert threshold can be set in either bytes or percentage of total space. To disable one threshold in favor of the other, set it to zero. 
+:::
+
+When a disk exceeds either the threshold, `redpanda_storage_disk_free_space_alert` updates, and an error message is written to the Redpanda service log. 
 
 ## Monitor disk space
 
@@ -129,14 +133,14 @@ You can check your total disk size and free space by viewing the metrics:
 * `redpanda_storage_disk_total_bytes`
 * `redpanda_storage_disk_free_bytes`
 
-As part of its continuous disk space monitoring, Redpanda updates these disk usage statistics, including the value of its `storage_space_alert` field based on your full disk alert threshold. This field is exposed with the `redpanda_storage_disk_free_space_alert` metric:  
-* 0 = no alert
-* 1 = low free space alert
-* 2 = out of space (degraded, external writes are rejected)
+Redpanda monitors disk space and updates these metrics and the `storage_space_alert` status based on your full disk alert threshold. You can check the alert status with the `redpanda_storage_disk_free_space_alert` metric. The alert values are:  
+* 0 = No alert
+* 1 = Low free space alert
+* 2 = Out of space (degraded, external writes are rejected)
 
 ## Create a ballast file
 
-A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file, which clears up some space and gives you time to delete topics or records and change your retention properties. You can delete the ballast file as a last resort.
+A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file as a last resort. This clears up some space and gives you time to delete topics or records and change your retention properties. 
 
 To create a ballast file, set the following properties in the `redpanda.yaml` file: 
 
