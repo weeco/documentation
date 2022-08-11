@@ -8,13 +8,13 @@ title: Tiered Storage
 </head>
 
 :::important
-This feature requires an [Enterprise license](/docs/core/introduction/licensing). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
+This feature requires an [Enterprise license](/docs/core/introduction/licensing). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
 Tiered Storage lets you save storage costs by offloading log segments to cloud storage. You can specify the amount of local storage you want to provision and configure Tiered Storage to move the rest to Amazon S3 or Google Cloud Storage. You do not have to specify which log segments you want to move. Redpanda moves them automatically based on cluster-level configuration properties. Redpanda Tiered Storage works behind the scenes to index where data is offloaded, so that it can retrieve the data when you need it.
 
 :::caution
-Do not use Tiered Storage with <a href="https://docs.redpanda.com/docs/core/data-management/data-transform/" target="_self">Data Transforms</a>, which is in technical preview. Technical preview features are not supported for production usage.
+Do not use Tiered Storage with [data transforms](https://docs.redpanda.com/docs/core/data-management/data-transform), which is in technical preview. Technical preview features are not supported for production usage.
 :::
 
 This image illustrates the Tiered Storage architecture. Remote write uploads data from Redpanda to cloud storage. Remote read fetches data from cloud storage to Redpanda. 
