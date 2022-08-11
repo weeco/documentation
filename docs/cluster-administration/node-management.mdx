@@ -15,7 +15,7 @@ If a node hosts a partition with a replica count of 1, you have three options:
 
 * Manually reassign the partition to another node by changing its replica set.
 * Increase the number of replicas.
-* Do nothing, but be aware that the partition will not be available while the redpanda process is shut down temporarily.
+* Do nothing, but be aware that the partition will not be available while the `redpanda` process is shut down temporarily.
 
 The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters, draining leadership should take less than a minute. If the cluster is unhealthy (for example, a follower is not in sync with the leader), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
 
