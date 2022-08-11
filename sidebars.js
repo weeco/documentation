@@ -26,7 +26,7 @@
       items: [
         {
           type: 'doc',
-          label: 'An introduction to events and streaming',
+          label: 'Introduction to Events and Streaming',
           id: 'introduction/intro-to-events',
         },        
         'introduction/autotune',
@@ -93,18 +93,18 @@
           items: [
             {
               type: 'doc',
-              label: 'Configuring Redpanda operator for connectivity',
+              label: 'Configuring Redpanda Operator for Connectivity',
               id: 'deployment/kubernetes-connectivity',
             },            
             'deployment/kubernetes-external-connect',
             {
               type: 'doc',
-              label: 'Using configuration parameters with a custom resource',
+              label: 'Using Configuration Parameters with a Custom Resource',
               id: 'deployment/kubernetes-additional-config',
             },
             {
               type: 'doc',
-              label: 'Arbitrary configuration',
+              label: 'Arbitrary Configuration',
               id: 'deployment/arbitrary-configuration',
             },
             
@@ -113,7 +113,7 @@
         'deployment/performance-storage-tuning',
         {
           type: 'doc',
-          label: 'Deploying for production',
+          label: 'Deploying for Production',
           id: 'deployment/production-deployment',
         },
         'deployment/install-preview',
@@ -121,7 +121,7 @@
     },    
     {
       type: 'category',
-      label: 'Cluster administration',
+      label: 'Cluster Administration',
       link: { type: 'doc', id: 'cluster-administration/index'},
       collapsible: true,
       collapsed: false,
@@ -133,28 +133,29 @@
           items: [
             {
               type: 'doc',
-              label: 'Configuring cluster properties',
+              label: 'Configuring Cluster Properties',
               id: 'cluster-administration/cluster-property-configuration',
             },
             {
               type: 'doc',
-              label: 'Configuring node properties',
+              label: 'Configuring Node Properties',
               id: 'cluster-administration/node-property-configuration',
             },
           ],
         },        
         {
           type: 'doc',
-          label: 'Node management',
+          label: 'Node Maintenance Mode',
           id: 'cluster-administration/node-management',
         },             
         'cluster-administration/monitoring', 
+        'cluster-administration/rolling-upgrade', 
         'cluster-administration/version-upgrade',        
       ]
     },
     {
       type: 'category',
-      label: 'Data management',
+      label: 'Data Management',
       link: { type: 'doc', id: 'data-management/index'},
       collapsible: true,
       collapsed: false,
@@ -192,7 +193,7 @@
           items: [
             {
               type: 'doc',
-              label: 'Redpanda security',
+              label: 'Redpanda Security',
               id: 'security/kubernetes-security',
             },
             {
@@ -202,12 +203,12 @@
             },
             {
               type: 'doc',
-              label: 'Configuring SASL authentication',
+              label: 'Configuring SASL Authentication',
               id: 'security/kubernetes-sasl',
             },
             {
               type: 'doc',
-              label: 'Configuring mTLS authentication',
+              label: 'Configuring mTLS Authentication',
               id: 'security/kubernetes-mtls',
             },
           ],
