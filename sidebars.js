@@ -225,6 +225,7 @@
       collapsed: false,
       items: [
         'core/security/acls',
+        'core/security/iam-roles',
         {
           type: 'category',
           label: 'Kubernetes',
