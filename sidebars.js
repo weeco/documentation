@@ -46,7 +46,7 @@
       items: [
         {
           type: 'doc',
-          label: 'Installing beta versions',
+          label: 'Installing Preview Versions',
           id: 'core/install-upgrade/install-preview',
         },
         {

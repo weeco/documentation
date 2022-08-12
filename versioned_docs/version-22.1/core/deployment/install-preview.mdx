@@ -1,16 +1,16 @@
 ---
-title: Installing beta versions
+title: Installing Preview Versions
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-We are constantly updating and improving Redpanda with new features, and capabilities. You can try out these features early on with our beta versions and give us feedback about them. With your help, we can identify and fix potential issues, and make the platform even better for everyone. 
+We are constantly updating and improving Redpanda with new features, and capabilities. You can try out these features early on with our preview versions and give us feedback about them. With your help, we can identify and fix potential issues, and make the platform even better for everyone. 
 
 If you face any errors during your installation or upgrading process, feel free to reach us in our [Slack Community](https://join.slack.com/t/redpandacommunity/shared_invite/zt-ng2ze1uv-l5VMWSGQHB9gp47~kNnYGA/) or on [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions). 
 
 :::caution
-Beta versions are not supported for production usage. 
+Preview versions are not supported for production usage. 
 :::
 
 ## Installation
@@ -20,8 +20,8 @@ Choose your desired system and run the commands down below.
   <TabItem value="install-debian" label="Debian/Ubuntu" default>
 
 ```bash
-## Run the setup script to download and install the beta repo
-curl -1sLf 'https://packages.vectorized.io/HxYRCzL4xbbaEtPi/redpanda-beta/setup.deb.sh' | 
+## Run the setup script to download and install the unstable repo
+curl -1sLf 'https://packages.vectorized.io/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.deb.sh' | 
 sudo -E bash && \
 ## Use apt to install redpanda
 sudo apt install redpanda
@@ -30,8 +30,8 @@ sudo apt install redpanda
   <TabItem value="install-fedora" label="Fedora/RedHat/Amazon Linux" default>
 
 ```bash
-## Run the setup script to download and install the beta repo
-curl -1sLf 'https://packages.vectorized.io/HxYRCzL4xbbaEtPi/redpanda-beta/setup.rpm.sh' | 
+## Run the setup script to download and install the unstable repo
+curl -1sLf 'https://packages.vectorized.io/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.rpm.sh' | 
 sudo -E bash && \
 ## Use yum to install redpanda
 sudo yum install redpanda
@@ -44,7 +44,7 @@ There are several ways to choose a version of Redpanda for Docker. You can check
 So, for example, you can pull a docker image through this command:
 
 ```bash
-docker pull docker.redpanda.com/vectorized/redpanda:v21.12.1-wasm-beta1
+docker pull docker.redpanda.com/vectorized/redpanda-unstable:v22.1.7-rc1
 ```
   
   </TabItem>
@@ -61,11 +61,11 @@ kubectl apply \
   Replace the version variable below with your desired version.
 
 
-  So, for example, if you want to download v21.12.1-wasm-beta1 the command will look like this:
+  So, for example, if you want to download v22.1.7-rc1 the command will look like this:
 
 ```bash
 kubectl apply \
--k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=v21.12.1-wasm-beta1
+-k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=v22.1.7-rc1
 ```
 
 3. Update your helm charts:
@@ -133,6 +133,6 @@ rpk version
 The result is similar to this:
 
 ```bash
-v21.12.1-wasm-beta1 (rev ed9a450)
+v22.1.7-rc1 (rev 9ddbb4d)
 ```
 
