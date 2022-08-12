@@ -217,6 +217,86 @@
     },
     {
       type: 'category',
+      label: 'Redpanda Console',
+      link: { type: 'doc', id: 'console/index'},
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'console/installation',
+        {
+          type: 'category',
+          label: 'Features',
+          items: [
+            'console/features/kafka-connect',
+            'console/features/record-deserialization',
+            'console/features/schema-registry',
+            'console/features/protobuf',
+            'console/features/topic-documentation',
+            'console/features/programmable-push-filters',
+            'console/features/http-path-rewrites'
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Single Sign On',
+          items: [
+            {
+              type: 'doc',
+              label: 'Authentication',
+              id: 'console/single-sign-on/authentication',
+            },
+            {
+              type: 'doc',
+              label: 'Authorization',
+              id: 'console/single-sign-on/authorization',
+            },
+            {
+              type: 'doc',
+              label: 'GitHub',
+              id: 'console/single-sign-on/identity-providers/github',
+            },
+            {
+              type: 'doc',
+              label: 'Google',
+              id: 'console/single-sign-on/identity-providers/google',
+            },
+            {
+              type: 'doc',
+              label: 'Okta',
+              id: 'console/single-sign-on/identity-providers/okta',
+            },
+            {
+              type: 'doc',
+              label: 'Generic OIDC',
+              id: 'console/single-sign-on/identity-providers/generic-oidc',
+            }
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Reference',
+          items: [
+            {
+              type: 'doc',
+              label: 'Redpanda Console Configuration',
+              id: 'console/reference/config',
+            },
+            {
+              type: 'doc',
+              label: 'Redpanda Console Role-Binding Configuration',
+              id: 'console/reference/role-bindings',
+            },
+            {
+              type: 'doc',
+              label: 'Docker Compose Configuration',
+              id: 'console/reference/docker-compose',
+            }
+          ]
+        },
+      ]
+    },
+    {
+      type: 'category',
       label: 'Reference',
       link: { type: 'doc', id: 'reference/index'},
       collapsible: true,
