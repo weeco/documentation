@@ -190,7 +190,21 @@
               id: 'core/cluster-administration/node-property-configuration',
             },
           ],
-        },        
+        },
+        {
+          type: 'category',
+          label: 'Cluster balancing',
+          collapsible: true,
+          collapsed: false,
+          link: { type: 'doc', id: 'core/cluster-administration/cluster-balancing'},
+          items: [
+            {
+              type: 'doc',
+              label: 'Configuring Continuous Data Balancing',
+              id: 'core/cluster-administration/continuous-data-balancing',
+            },
+          ],
+        },    
         {
           type: 'doc',
           label: 'Node management',
