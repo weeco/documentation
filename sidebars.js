@@ -151,7 +151,15 @@
             
           ]
         },
-        'core/deployment/performance-storage-tuning',
+        {
+          type: 'category',
+          label: 'Performance and storage tuning',
+          items: [
+            'core/deployment/disk-utilization',     
+            'core/deployment/io-optimization',
+            
+          ]
+        },
         {
           type: 'doc',
           label: 'Deploying for production',
