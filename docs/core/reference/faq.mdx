@@ -3,42 +3,23 @@ title: Frequently asked questions
 ---
 
 ## Getting started with Redpanda
-The FAQs in this section are related to the Redpanda platform. 
 
-### What are the recommended clients to use with Redpanda?
+### Can I use Redpanda for free?
+Yes, Redpanda is free and source-available at the [Redpanda GitHub repo](https://github.com/redpanda-data/redpanda).
 
-Redpanda is Kafka API compatible so any client that works with Kafka
-should work out of the box with Redpanda. However here is a list of clients
-which we have tested with:
+Additional features are included with the Redpanda Enterprise Edition license. For more information, including a list of the latest enterprise features, see [Redpanda licensing](/docs/core/introduction/licenses). To request a trial license, to extend your trial period, or to purchase an Enterprise Edition license, contact [Redpanda Sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 
-| Language | Client | Link |
-| -------- | ------ | ---- |
-| Java | Apache Kafka Java Client | https://github.com/apache/kafka |
-| C/C++ | librdkafka | https://github.com/edenhill/librdkafka |
-| Go | franz-go | https://github.com/twmb/franz-go |
-| Python | kafka-python | https://pypi.org/project/kafka-python |
-| JS | KafkaJS | https://kafka.js.org |
-| PHP | php-simple-kafka-client | https://github.com/php-kafka/php-simple-kafka-client |
+### Is Redpanda fully Kafka API-compatible?
 
-### Is Redpanda Fully Kafka API compatible?
-
-Redpanda works to ensure all Kafka-based application are compatible with the Redpanda platform. ** The transactions API is in technical preview. **
-but can be enabled by setting both `enable_idempotence` and `enable_transactions` to `true`
-in the Redpanda config.
-
-If you run into any issues while working with a Kafka tool, please let us know! [File an issue](https://github.com/redpanda-data/redpanda/issues/new)
+Redpanda works to ensure all Kafka-based applications are compatible with the Redpanda platform. For more information, see [Kafka compatibility](/docs/core/development/kafka-clients).
 
 ### Does Redpanda use Zookeeper?
 
-No, Redpanda is a modern streaming platform that has been built using C++ and
-Raft for consensus. Since we use Raft we have no need for an external consensus
-system like Zookeeper.
+No. Redpanda is a modern streaming platform written in C++, leveraging the Raft protocol for consensus. Because Redpanda uses Raft, there is no need for an external consensus system like Zookeeper.
 
 ### Can I run Redpanda directly on Windows or MacOS?
 
-Unfortunately, you can only run Redpanda directly on Linux. However, you can
-use Docker to run Redpanda on any system supported by Docker. Please see our
-[Quick Start Docker Guide](/docs/core/quickstart/quick-start-docker) for more information.
+You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. See [Quick Start Docker Guide](/docs/core/quickstart/quick-start-docker).
 
 ## Consumers and topics
 
@@ -52,12 +33,11 @@ use Docker to run Redpanda on any system supported by Docker. Please see our
 
 Topics are split into partitions. 
 
-* Every partition is handled by exactly one leader node in the cluster, so if you want to fully use your cluster you need at least the same amount of partitions as you have nodes. 
-
+* Every partition is handled by exactly one leader node in the cluster, so to fully use your cluster, you need at least the same number of partitions as you have nodes. 
 * The records within a partition are ordered. 
 * There is no ordering between records in different partitions in the same topic.
 
 The partition is the unit of scale. 
 
-* Only one consumer in a group can receive records from a given partition at a specific time. This might change as the group is rebalanced.
+* Only one consumer in a group can receive records from a given partition at a specific time. This can change as the group is rebalanced.
 * If a consumer cannot keep up, reduce the work per consumer by adding additional consumers. You may also need to increase the number of partitions: because partitions are assigned exclusively to a single consumer, you should have at least three times the number of partitions as consumers to allow for a balanced assignment.

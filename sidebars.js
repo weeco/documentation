@@ -26,10 +26,15 @@
       items: [
         {
           type: 'doc',
-          label: 'An introduction to events and streaming',
+          label: 'Introduction to Events and Streaming',
           id: 'core/introduction/intro-to-events',
         },        
-        'core/introduction/autotune',
+        {
+          type: 'doc',
+          label: 'Designed for Performance',
+          id: 'core/introduction/autotune',
+        },     
+        'core/introduction/licenses',
         {
           type: 'doc',
           label: 'Technical Preview',
@@ -39,7 +44,7 @@
     },
     {
       type: 'category',
-      label: 'Install and upgrade',
+      label: 'Install and Upgrade',
       link: { type: 'doc', id: 'core/install-upgrade/index'},
       collapsible: true,
       collapsed: false,
@@ -51,7 +56,7 @@
         },
         {
           type: 'doc',
-          label: 'Version upgrade',
+          label: 'Version Upgrade',
           id: 'core/install-upgrade/version-upgrade',
         }, 
         
