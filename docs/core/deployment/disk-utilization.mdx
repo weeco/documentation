@@ -39,7 +39,7 @@ Based on these properties, Redpanda runs a log cleanup process in the background
 
 ### Set time-based retention
 
-A message is deleted if its age exceeds the value specified in **`delete_retention_ms`** (the cluster-level property) or **`retention.ms`** (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
+A message is deleted if its age exceeds the value specified in `delete_retention_ms` (the cluster-level property) or `retention.ms` (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
 
 To set retention time for a single topic, use `retention.ms`, which overrides `delete_retention_ms`. 
 
@@ -64,7 +64,7 @@ Do not set `delete_retention_ms` to `-1` unless you're using <a href="https://do
 ### Set size-based retention
 
 A message is deleted if the size of the partition in which it is contained reaches the value specified in 
-**`retention_bytes`** or **`retention.bytes`**. When a partition reaches that value, the oldest messages in the partition are deleted.
+`retention_bytes` or `retention.bytes`. When a partition reaches that value, the oldest messages in the partition are deleted.
 
 To set retention size for a single topic, use `retention.bytes`, which overrides the cluster property `retention_bytes`. If `retention.bytes` is not set at the topic-level, the topic inherits the cluster-level setting.
 
