@@ -223,6 +223,7 @@
       collapsed: true,
       items: [
         'data-management/tiered-storage',
+        'data-management/read-replicas',
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
