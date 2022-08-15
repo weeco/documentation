@@ -304,7 +304,8 @@
           type: 'link',
           label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
-        },        
+        },       
+        'core/reference/monitoring-vectorized', 
         'core/reference/faq',
         {
           type: 'link',
