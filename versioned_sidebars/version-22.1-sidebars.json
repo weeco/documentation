@@ -10,7 +10,7 @@
       "label": "Introduction",
       "link": {
         "type": "doc",
-        "id": "core/introduction/index"
+        "id": "introduction/index"
       },
       "collapsible": true,
       "collapsed": true,
@@ -18,13 +18,13 @@
         {
           "type": "doc",
           "label": "An introduction to events and streaming",
-          "id": "core/introduction/intro-to-events"
+          "id": "introduction/intro-to-events"
         },
-        "core/introduction/autotune",
+        "introduction/autotune",
         {
           "type": "doc",
           "label": "Technical Preview",
-          "id": "core/introduction/tech-preview"
+          "id": "introduction/tech-preview"
         }
       ]
     },
@@ -35,17 +35,17 @@
       "collapsed": true,
       "link": {
         "type": "doc",
-        "id": "core/quickstart/index"
+        "id": "quickstart/index"
       },
       "items": [
         {
           "type": "category",
           "label": "Local",
           "items": [
-            "core/quickstart/quick-start-docker",
-            "core/quickstart/quick-start-linux",
-            "core/quickstart/quick-start-macos",
-            "core/quickstart/quick-start-windows"
+            "quickstart/quick-start-docker",
+            "quickstart/quick-start-linux",
+            "quickstart/quick-start-macos",
+            "quickstart/quick-start-windows"
           ]
         },
         {
@@ -55,21 +55,21 @@
             {
               "type": "doc",
               "label": "Cloud",
-              "id": "core/quickstart/kubernetes-qs-cloud"
+              "id": "quickstart/kubernetes-qs-cloud"
             },
             {
               "type": "doc",
               "label": "kind",
-              "id": "core/quickstart/kubernetes-qs-local-access"
+              "id": "quickstart/kubernetes-qs-local-access"
             },
             {
               "type": "doc",
               "label": "minikube",
-              "id": "core/quickstart/kubernetes-qs-minikube"
+              "id": "quickstart/kubernetes-qs-minikube"
             }
           ]
         },
-        "core/quickstart/what-is-next"
+        "quickstart/what-is-next"
       ]
     },
     {
@@ -78,12 +78,12 @@
       "collapsible": true,
       "link": {
         "type": "doc",
-        "id": "core/deployment/index"
+        "id": "deployment/index"
       },
       "collapsed": true,
       "items": [
-        "core/deployment/production-deployment-automation",
-        "core/deployment/guide-rpk-container",
+        "deployment/production-deployment-automation",
+        "deployment/guide-rpk-container",
         {
           "type": "category",
           "label": "Kubernetes",
@@ -91,28 +91,28 @@
             {
               "type": "doc",
               "label": "Configuring Redpanda operator for connectivity",
-              "id": "core/deployment/kubernetes-connectivity"
+              "id": "deployment/kubernetes-connectivity"
             },
-            "core/deployment/kubernetes-external-connect",
+            "deployment/kubernetes-external-connect",
             {
               "type": "doc",
               "label": "Using configuration parameters with a custom resource",
-              "id": "core/deployment/kubernetes-additional-config"
+              "id": "deployment/kubernetes-additional-config"
             },
             {
               "type": "doc",
               "label": "Arbitrary configuration",
-              "id": "core/deployment/arbitrary-configuration"
+              "id": "deployment/arbitrary-configuration"
             }
           ]
         },
-        "core/deployment/performance-storage-tuning",
+        "deployment/performance-storage-tuning",
         {
           "type": "doc",
           "label": "Deploying for production",
-          "id": "core/deployment/production-deployment"
+          "id": "deployment/production-deployment"
         },
-        "core/deployment/install-preview"
+        "deployment/install-preview"
       ]
     },
     {
@@ -120,7 +120,7 @@
       "label": "Cluster administration",
       "link": {
         "type": "doc",
-        "id": "core/cluster-administration/index"
+        "id": "cluster-administration/index"
       },
       "collapsible": true,
       "collapsed": true,
@@ -130,28 +130,28 @@
           "label": "Configuration",
           "link": {
             "type": "doc",
-            "id": "core/cluster-administration/configuration"
+            "id": "cluster-administration/configuration"
           },
           "items": [
             {
               "type": "doc",
               "label": "Configuring cluster properties",
-              "id": "core/cluster-administration/cluster-property-configuration"
+              "id": "cluster-administration/cluster-property-configuration"
             },
             {
               "type": "doc",
               "label": "Configuring node properties",
-              "id": "core/cluster-administration/node-property-configuration"
+              "id": "cluster-administration/node-property-configuration"
             }
           ]
         },
         {
           "type": "doc",
           "label": "Node management",
-          "id": "core/cluster-administration/node-management"
+          "id": "cluster-administration/node-management"
         },
-        "core/cluster-administration/monitoring",
-        "core/cluster-administration/version-upgrade"
+        "cluster-administration/monitoring",
+        "cluster-administration/version-upgrade"
       ]
     },
     {
@@ -159,16 +159,16 @@
       "label": "Data management",
       "link": {
         "type": "doc",
-        "id": "core/data-management/index"
+        "id": "data-management/index"
       },
       "collapsible": true,
       "collapsed": true,
       "items": [
-        "core/data-management/tiered-storage",
-        "core/data-management/data-transform",
-        "core/data-management/data-migration",
-        "core/data-management/data-archiving",
-        "core/data-management/rack-awareness"
+        "data-management/tiered-storage",
+        "data-management/data-transform",
+        "data-management/data-migration",
+        "data-management/data-archiving",
+        "data-management/rack-awareness"
       ]
     },
     {
@@ -176,15 +176,15 @@
       "label": "Development",
       "link": {
         "type": "doc",
-        "id": "core/development/index"
+        "id": "development/index"
       },
       "collapsible": true,
       "collapsed": true,
       "items": [
-        "core/development/kafka-clients",
-        "core/development/guide-nodejs",
-        "core/development/consumer-offsets",
-        "core/development/idempotent-producers"
+        "development/kafka-clients",
+        "development/guide-nodejs",
+        "development/consumer-offsets",
+        "development/idempotent-producers"
       ]
     },
     {
@@ -192,12 +192,12 @@
       "label": "Security",
       "link": {
         "type": "doc",
-        "id": "core/security/index"
+        "id": "security/index"
       },
       "collapsible": true,
       "collapsed": true,
       "items": [
-        "core/security/acls",
+        "security/acls",
         {
           "type": "category",
           "label": "Kubernetes",
@@ -205,22 +205,22 @@
             {
               "type": "doc",
               "label": "Redpanda security",
-              "id": "core/security/kubernetes-security"
+              "id": "security/kubernetes-security"
             },
             {
               "type": "doc",
               "label": "Configuring TLS",
-              "id": "core/security/tls-kubernetes"
+              "id": "security/tls-kubernetes"
             },
             {
               "type": "doc",
               "label": "Configuring SASL authentication",
-              "id": "core/security/kubernetes-sasl"
+              "id": "security/kubernetes-sasl"
             },
             {
               "type": "doc",
               "label": "Configuring mTLS authentication",
-              "id": "core/security/kubernetes-mtls"
+              "id": "security/kubernetes-mtls"
             }
           ]
         }
@@ -231,26 +231,26 @@
       "label": "Reference",
       "link": {
         "type": "doc",
-        "id": "core/reference/index"
+        "id": "reference/index"
       },
       "collapsible": true,
       "collapsed": true,
       "items": [
-        "core/reference/cluster-properties",
-        "core/reference/tunable-properties",
-        "core/reference/node-properties",
-        "core/reference/node-configuration-sample",
+        "reference/cluster-properties",
+        "reference/tunable-properties",
+        "reference/node-properties",
+        "reference/node-configuration-sample",
         {
           "type": "doc",
           "label": "rpk commands",
-          "id": "core/reference/rpk-commands"
+          "id": "reference/rpk-commands"
         },
         {
           "type": "link",
           "label": "Operator Custom Resource Definition (CRD)",
           "href": "https://doc.crds.dev/github.com/vectorizedio/redpanda"
         },
-        "core/reference/faq",
+        "reference/faq",
         {
           "type": "link",
           "label": "Release notes",
@@ -260,7 +260,7 @@
     },
     {
       "type": "doc",
-      "id": "core/support"
+      "id": "support"
     }
   ]
 }

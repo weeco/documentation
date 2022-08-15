@@ -1,57 +1,57 @@
 # Introduction
-/docs/core/reference/autotune   /docs/core/introduction/autotune  301!
-/docs/core/features/intro-to-events   /docs/core/introduction/intro-to-events  301!
+/docs/reference/autotune   /docs/introduction/autotune  301!
+/docs/features/intro-to-events   /docs/introduction/intro-to-events  301!
 
 # Quickstart
-/docs/core/getting-started/quick-start-kubernetes   /docs/core/quickstart/kubernetes-qs-cloud/  301!
-/docs/core/getting-started/kubernetes-qs-cloud   /docs/core/quickstart/kubernetes-qs-cloud/  301!
-/docs/core/getting-started/kubernetes-qs-local-access   /docs/core/quickstart/kubernetes-qs-local-access  301!
-/docs/core/getting-started/kubernetes-qs-minikube   /docs/core/quickstart/kubernetes-qs-minikube  301!
-/docs/core/getting-started/kubernetes-qs-minikube   /docs/core/quickstart/kubernetes-qs-minikube  301!
-/docs/core/getting-started/index   /docs/core/quickstart/index  301!
-/docs/core/getting-started/quick-start-docker   /docs/core/quickstart/quick-start-docker  301!
-/docs/core/getting-started/quick-start-linux   /docs/core/quickstart/quick-start-linux  301!
-/docs/core/getting-started/quick-start-macos   /docs/core/quickstart/quick-start-macos  301!
-/docs/core/getting-started/quick-start-windows   /docs/core/quickstart/quick-start-windows  301!
-/docs/core/getting-started/what-is-next   /docs/core/quickstart/what-is-next  301!
+/docs/getting-started/quick-start-kubernetes   /docs/quickstart/kubernetes-qs-cloud/  301!
+/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud/  301!
+/docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-local-access  301!
+/docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
+/docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
+/docs/getting-started/index   /docs/quickstart/index  301!
+/docs/getting-started/quick-start-docker   /docs/quickstart/quick-start-docker  301!
+/docs/getting-started/quick-start-linux   /docs/quickstart/quick-start-linux  301!
+/docs/getting-started/quick-start-macos   /docs/quickstart/quick-start-macos  301!
+/docs/getting-started/quick-start-windows   /docs/quickstart/quick-start-windows  301!
+/docs/getting-started/what-is-next   /docs/quickstart/what-is-next  301!
 
 # Development
-/docs/core/features/guide-nodejs   /docs/core/development/guide-nodejs  301!
+/docs/features/guide-nodejs   /docs/development/guide-nodejs  301!
 
 # Deployment
-/docs/core/deploy-self-hosted/arbitrary-configuration   /docs/core/deployment/kubernetes-additional-config  301!
-/docs/core/deployment/arbitrary-configuration   /docs/core/deployment/kubernetes-additional-config  301!
-/docs/core/features/guide-rpk-container   /docs/core/deployment/guide-rpk-container  301!
-/docs/core/features/kubernetes-additional-config   /docs/core/deployment/kubernetes-additional-config  301!
-/docs/core/features/kubernetes-connectivity   /docs/core/deployment/kubernetes-connectivity  301!
-/docs/core/features/kubernetes-external-connect   /docs/core/deployment/kubernetes-external-connect  301!
-/docs/core/deploy-self-hosted/production-deployment-automation   /docs/core/deployment/production-deployment-automation  301!
-/docs/core/deploy-self-hosted/production-deployment   /docs/core/deployment/production-deployment  301!
-/docs/core/deployment/well-known-io   /docs/core/deployment/performance-storage-tuning  301!
-/docs/core/reference/well-known-io   /docs/core/deployment/well-known-io  301!
-/docs/core/deployment/well-known-io   /docs/core/deployment/performance-storage-tuning  301!
-/docs/core/getting-started/install-preview   /docs/core/deployment/install-preview  301!
+/docs/deploy-self-hosted/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
+/docs/deployment/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
+/docs/features/guide-rpk-container   /docs/deployment/guide-rpk-container  301!
+/docs/features/kubernetes-additional-config   /docs/deployment/kubernetes-additional-config  301!
+/docs/features/kubernetes-connectivity   /docs/deployment/kubernetes-connectivity  301!
+/docs/features/kubernetes-external-connect   /docs/deployment/kubernetes-external-connect  301!
+/docs/deploy-self-hosted/production-deployment-automation   /docs/deployment/production-deployment-automation  301!
+/docs/deploy-self-hosted/production-deployment   /docs/deployment/production-deployment  301!
+/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
+/docs/reference/well-known-io   /docs/deployment/well-known-io  301!
+/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
+/docs/getting-started/install-preview   /docs/deployment/install-preview  301!
 
 # Cluster Administration
-/docs/core/deploy-self-hosted/configuration   /docs/core/cluster-administration/configuration  301!
-/docs/core/deploy-self-hosted/monitoring   /docs/core/cluster-administration/monitoring  301!
-/docs/core/reference/version-upgrade   /docs/core/cluster-administration/version-upgrade  301!
-/docs/core/cluster-management/configuration   /docs/core/cluster-administration/configuration  301!
-/docs/core/cluster-management/monitoring   /docs/core/cluster-administration/monitoring  301!
-/docs/core/cluster-management/version-upgrade   /docs/core/cluster-administration/version-upgrade  301!
+/docs/deploy-self-hosted/configuration   /docs/cluster-administration/configuration  301!
+/docs/deploy-self-hosted/monitoring   /docs/cluster-administration/monitoring  301!
+/docs/reference/version-upgrade   /docs/cluster-administration/version-upgrade  301!
+/docs/cluster-management/configuration   /docs/cluster-administration/configuration  301!
+/docs/cluster-management/monitoring   /docs/cluster-administration/monitoring  301!
+/docs/cluster-management/version-upgrade   /docs/cluster-administration/version-upgrade  301!
 
 # Data Management
-/docs/core/data-management/shadow-indexing /docs/core/data-management/tiered-storage 301!
+/docs/data-management/shadow-indexing /docs/data-management/tiered-storage 301!
 
 # Security
-/docs/core/features/acls   /docs/core/security/acls  301!
-/docs/core/features/tls-kubernetes   /docs/core/security/tls-kubernetes  301!
+/docs/features/acls   /docs/security/acls  301!
+/docs/features/tls-kubernetes   /docs/security/tls-kubernetes  301!
 
 # Root
-/docs/features/index /docs/core/features-guide 301!
+/docs/features/index /docs/features-guide 301!
 
 # Fix for google result on 'redpanda encryption'
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
 
 #Fix for old blog post
-/docs/core/introduction/consumer-offsets /docs/core/development/consumer-offsets 301!
+/docs/introduction/consumer-offsets /docs/development/consumer-offsets 301!

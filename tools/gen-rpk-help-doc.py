@@ -342,9 +342,9 @@ md_result = md_result + suggestedReadings
 
 
 try:
-    file = "docs/core/reference/rpk-commands.mdx"
+    file = "docs/reference/rpk-commands.mdx"
     with open(file, "w") as filetowrite:
         filetowrite.write(md_result)
-    print("The rpk commands have been succesfully generated at docs/core/reference/rpk-commands.mdx")
+    print("The rpk commands have been successfully generated at docs/reference/rpk-commands.mdx")
 except Exception as e:
     print("Error generating the rpk commands file " + e)

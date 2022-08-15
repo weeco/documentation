@@ -20,44 +20,44 @@
     {
       type: 'category',
       label: 'Introduction',
-      link: { type: 'doc', id: 'core/introduction/index'},
+      link: { type: 'doc', id: 'introduction/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Introduction to Events and Streaming',
-          id: 'core/introduction/intro-to-events',
+          id: 'introduction/intro-to-events',
         },        
         {
           type: 'doc',
           label: 'Designed for Performance',
-          id: 'core/introduction/autotune',
+          id: 'introduction/autotune',
         },     
-        'core/introduction/licenses',
+        'introduction/licenses',
         {
           type: 'doc',
           label: 'Technical Preview',
-          id: 'core/introduction/tech-preview',
+          id: 'introduction/tech-preview',
         },  
       ],
     },
     {
       type: 'category',
       label: 'Install and Upgrade',
-      link: { type: 'doc', id: 'core/install-upgrade/index'},
+      link: { type: 'doc', id: 'install-upgrade/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Installing Preview Versions',
-          id: 'core/install-upgrade/install-preview',
+          id: 'install-upgrade/install-preview',
         },
         {
           type: 'doc',
           label: 'Version Upgrade',
-          id: 'core/install-upgrade/version-upgrade',
+          id: 'install-upgrade/version-upgrade',
         }, 
         
       ],
@@ -67,7 +67,7 @@
       label: 'Quickstarts',
       collapsible: true,
       collapsed: true,
-      link: { type: 'doc', id: 'core/quickstart/index'},
+      link: { type: 'doc', id: 'quickstart/index'},
       items: [
         {
           type: 'category',
@@ -76,22 +76,22 @@
             {
               type: 'doc',
               label: 'Docker',
-              id: 'core/quickstart/quick-start-docker',
+              id: 'quickstart/quick-start-docker',
             },
             {
               type: 'doc',
               label: 'Linux',
-              id: 'core/quickstart/quick-start-linux',
+              id: 'quickstart/quick-start-linux',
             },
             {
               type: 'doc',
               label: 'macOS',
-              id: 'core/quickstart/quick-start-macos',
+              id: 'quickstart/quick-start-macos',
             },
             {
               type: 'doc',
               label: 'Windows',
-              id: 'core/quickstart/quick-start-windows',
+              id: 'quickstart/quick-start-windows',
             },
           ],
         },
@@ -102,32 +102,32 @@
             {
               type: 'doc',
               label: 'kind',
-              id: 'core/quickstart/kubernetes-qs-local-access',
+              id: 'quickstart/kubernetes-qs-local-access',
             },
             {
               type: 'doc',
               label: 'minikube',
-              id: 'core/quickstart/kubernetes-qs-minikube',
+              id: 'quickstart/kubernetes-qs-minikube',
             },
             {
               type: 'doc',
               label: 'Cloud',
-              id: 'core/quickstart/kubernetes-qs-cloud',
+              id: 'quickstart/kubernetes-qs-cloud',
             },            
           ],
         },
-        'core/quickstart/what-is-next',
+        'quickstart/what-is-next',
       ]
     },    
     {
       type: 'category',
       label: 'Deployment',
       collapsible: true,
-      link: { type: 'doc', id: 'core/deployment/index'},
+      link: { type: 'doc', id: 'deployment/index'},
       collapsed: true,
       items: [
-        'core/deployment/production-deployment-automation',
-        'core/deployment/guide-rpk-container',
+        'deployment/production-deployment-automation',
+        'deployment/guide-rpk-container',
         {
           type: 'category',
           label: 'Kubernetes',
@@ -135,18 +135,18 @@
             {
               type: 'doc',
               label: 'Configuring Redpanda operator for connectivity',
-              id: 'core/deployment/kubernetes-connectivity',
+              id: 'deployment/kubernetes-connectivity',
             },            
-            'core/deployment/kubernetes-external-connect',
+            'deployment/kubernetes-external-connect',
             {
               type: 'doc',
               label: 'Using configuration parameters with a custom resource',
-              id: 'core/deployment/kubernetes-additional-config',
+              id: 'deployment/kubernetes-additional-config',
             },
             {
               type: 'doc',
               label: 'Arbitrary configuration',
-              id: 'core/deployment/arbitrary-configuration',
+              id: 'deployment/arbitrary-configuration',
             },
             
           ]
@@ -155,41 +155,41 @@
           type: 'category',
           label: 'Performance and storage tuning',
           items: [
-            'core/deployment/disk-utilization',     
-            'core/deployment/io-optimization',
+            'deployment/disk-utilization',     
+            'deployment/io-optimization',
             
           ]
         },
         {
           type: 'doc',
           label: 'Deploying for production',
-          id: 'core/deployment/production-deployment',
+          id: 'deployment/production-deployment',
         },
       ]
     },    
     {
       type: 'category',
       label: 'Cluster Administration',
-      link: { type: 'doc', id: 'core/cluster-administration/index'},
+      link: { type: 'doc', id: 'cluster-administration/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'category',
           label: 'Configuration',
-          link: { type: 'doc', id: 'core/cluster-administration/configuration'},
+          link: { type: 'doc', id: 'cluster-administration/configuration'},
           items: [
             {
               type: 'doc',
               label: 'Configuring cluster properties',
-              id: 'core/cluster-administration/cluster-property-configuration',
+              id: 'cluster-administration/cluster-property-configuration',
             },
             {
               type: 'doc',
               label: 'Configuring node properties',
-              id: 'core/cluster-administration/node-property-configuration',
+              id: 'cluster-administration/node-property-configuration',
             },
-            'core/cluster-administration/listener-configuration', 
+            'cluster-administration/listener-configuration', 
           ],
         },
         {
@@ -197,65 +197,65 @@
           label: 'Cluster balancing',
           collapsible: true,
           collapsed: true,
-          link: { type: 'doc', id: 'core/cluster-administration/cluster-balancing'},
+          link: { type: 'doc', id: 'cluster-administration/cluster-balancing'},
           items: [
             {
               type: 'doc',
               label: 'Configuring Continuous Data Balancing',
-              id: 'core/cluster-administration/continuous-data-balancing',
+              id: 'cluster-administration/continuous-data-balancing',
             },
           ],
         },    
         {
           type: 'doc',
           label: 'Node management',
-          id: 'core/cluster-administration/node-management',
+          id: 'cluster-administration/node-management',
         },             
-        'core/cluster-administration/monitoring', 
+        'cluster-administration/monitoring', 
       ]
     },
     {
       type: 'category',
       label: 'Data management',
-      link: { type: 'doc', id: 'core/data-management/index'},
+      link: { type: 'doc', id: 'data-management/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'core/data-management/tiered-storage',
-        'core/data-management/data-transform',
-        'core/data-management/data-migration',
-        'core/data-management/data-archiving',
-        'core/data-management/rack-awareness',
+        'data-management/tiered-storage',
+        'data-management/data-transform',
+        'data-management/data-migration',
+        'data-management/data-archiving',
+        'data-management/rack-awareness',
       ]
     },
     {
       type: 'category',
       label: 'Development',
-      link: { type: 'doc', id: 'core/development/index'},
+      link: { type: 'doc', id: 'development/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Kafka clients',
-          id: 'core/development/kafka-clients',
+          id: 'development/kafka-clients',
         },
-        'core/development/guide-nodejs',
-        'core/development/consumer-offsets',
-        'core/development/idempotent-producers',
+        'development/guide-nodejs',
+        'development/consumer-offsets',
+        'development/idempotent-producers',
       ]
     },
     {
       type: 'category',
       label: 'Security',
-      link: { type: 'doc', id: 'core/security/index'},
+      link: { type: 'doc', id: 'security/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'core/security/encryption',
-        'core/security/authentication',
-        'core/security/authorization',
-        'core/security/iam-roles',
+        'security/encryption',
+        'security/authentication',
+        'security/authorization',
+        'security/iam-roles',
         {
           type: 'category',
           label: 'Security on Kubernetes',
@@ -263,22 +263,22 @@
             {
               type: 'doc',
               label: 'Redpanda Security on Kubernetes',
-              id: 'core/security/security-kubernetes',
+              id: 'security/security-kubernetes',
             },
             {
               type: 'doc',
               label: 'Configuring TLS on Kubernetes',
-              id: 'core/security/tls-kubernetes',
+              id: 'security/tls-kubernetes',
             },
             {
               type: 'doc',
               label: 'Configuring SASL on Kubernetes',
-              id: 'core/security/kubernetes-sasl',
+              id: 'security/kubernetes-sasl',
             },
             {
               type: 'doc',
               label: 'Configuring mTLS on Kubernetes',
-              id: 'core/security/kubernetes-mtls',
+              id: 'security/kubernetes-mtls',
             },
           ],
         },
@@ -287,26 +287,26 @@
     {
       type: 'category',
       label: 'Reference',
-      link: { type: 'doc', id: 'core/reference/index'},
+      link: { type: 'doc', id: 'reference/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'core/reference/cluster-properties',
-        'core/reference/tunable-properties',
-        'core/reference/node-properties',        
-        'core/reference/node-configuration-sample',
+        'reference/cluster-properties',
+        'reference/tunable-properties',
+        'reference/node-properties',        
+        'reference/node-configuration-sample',
         {
           type: 'doc',
           label: 'rpk commands',
-          id: 'core/reference/rpk-commands',
+          id: 'reference/rpk-commands',
         },        
         {
           type: 'link',
           label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },       
-        'core/reference/monitoring-vectorized', 
-        'core/reference/faq',
+        'reference/monitoring-vectorized', 
+        'reference/faq',
         {
           type: 'link',
           label: 'Release notes',
@@ -317,46 +317,7 @@
     },
     {
       type: 'doc',
-      id: 'core/support',
-    },
-  ],
-  cloudSidebar:
-  [
-    {
-      type: 'doc',
-      label: 'Docs home',
-      id: 'home/index',
-    },
-    {
-      type: 'doc',
-      label: 'Cloud Intro',
-      id: 'cloud/index',
-    },
-    {
-      type: 'category',
-      label: 'Kubernetes',
-      items: [
-        'cloud/kubernetes/development',
-        'cloud/kubernetes/production',       
-      ],
-    },
-  ],
-  homeSidebar : 
-  [
-    {
-    type: 'doc',
-    label: 'Docs home',
-    id: 'home/index',
-  },
-    {
-      type: 'doc',
-      label: 'Core',
-      id: 'core/introduction/index',
-    },
-    {
-      type: 'doc',
-      label: 'Cloud',
-      id: 'cloud/index',
+      id: 'support',
     },
   ]
 };

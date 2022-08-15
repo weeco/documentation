@@ -31,7 +31,7 @@ export function SuggestionTemplate({ document, type, page, metadata, tokens, isI
         wrapped.push(`<span class="${styles.hitPath}">${highlight(page.t ||
             // Todo(weareoutman): This is for EasyOps only.
             // istanbul ignore next
-            (document.u.startsWith("/docs/core/api-reference/")
+            (document.u.startsWith("/docs/api-reference/")
                 ? "API Reference"
                 : ""), tokens)}</span>`);
     }
