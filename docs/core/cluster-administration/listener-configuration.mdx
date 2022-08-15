@@ -1,0 +1,105 @@
+---
+title: Configuring Listeners
+---
+
+<head>
+    <meta name="title" content="Configuring listeners | Redpanda Docs"/>
+    <meta name="description" content="Steps to configure listeners."/>
+</head>
+
+Apache Kafka® client libraries must be able to connect to every Redpanda broker
+instance. If the client and broker exist on different subnets, then Redpanda
+must be configured to advertise the location where it, so other brokers in
+the cluster can be found. If not, clients connecting to brokers outside
+their local network experience connectivity issues.
+
+To initally try out Redpanda, see the Getting Started Guides for
+[Linux](/docs/core/quickstart/quick-start-linux), [MacOS](/docs/core/quickstart/quick-start-macos),
+[Docker](/docs/core/quickstart/quick-start-docker), or [Kubernetes](/docs/core/quickstart/kubernetes-qs-cloud).
+
+## Anatomy of a listener
+
+Clients must connect to Redpanda with a TCP socket. A TCP socket is described by an IP address of an interface and a port on the machine that Redpanda runs on. For example:
+
+```yaml
+redpanda:
+  kafka_api:
+    - address: 0.0.0.0
+      port: 9092
+```
+
+An address of `0.0.0.0` means that Redpanda listens on all interfaces.
+
+## Advertise a listener
+
+If the client exists on another subnet, then it needs to be informed of how to reach Redpanda. This is done by configuring the advertised address of the Kafka API.
+
+If Redpanda is running on the subnet `192.168.4.0/24` with IP address `192.168.4.1`, and the clients are running on the subnet `192.168.5.0/24`:
+
+```yaml
+redpanda:
+  advertised_kafka_api:
+    - address: 192.168.4.1
+      port: 9092
+```
+
+The client machine requires a gateway configured to route requests to `192.168.4.1`.
+
+It's also possible to advertise a host name, provided the client can resolve the DNS and has a route to the host.
+
+## Multiple listeners
+
+Sometimes its useful to have multiple configurations for accessing Redpanda with multiple routes.
+
+This is possible by creating multiple listeners, and providing a name for the listener. The name is used to connect the listener and its advertised address. For example:
+
+```yaml
+redpanda:
+  kafka_api:
+    - name: local
+      address: 127.0.0.1
+      port: 9092
+    - name: subnet
+      address: 192.168.4.1
+      port: 9093
+  advertised_kafka_api:
+    - name: local
+      address: 127.0.0.1
+      port: 9092
+    - name: subnet
+      address: 192.168.4.1
+      port: 9093
+```
+
+It's also possible to create additional listeners for different configurations of TLS or authentication.
+
+## Mixed-mode authentication with multiple listeners
+
+Redpanda supports using both SASL and mTLS principal extraction authentication methods using multiple listeners. This supports a variety of Kafka clients using various authentication schemes all connecting to your cluster. For example:
+
+```yaml
+redpanda:
+  kafka_api:
+    - address: 0.0.0.0
+      port: 9092
+      name: sasl_listener
+      authentication_method: sasl
+  kafka_api:
+    - address: 0.0.0.0
+      port: 9092
+      name: mtls_listener
+      authentication_method: mtls_identity
+  kafka_api_tls:
+    - name: mtls_listener
+      key_file: mtls_server.key
+      cert_file: mtls_server.crt
+      truststore_file: mtls_ca.crt
+      enabled: true
+      require_client_auth: true
+```
+
+## Listeners that can be advertised
+
+* `kafka_api` -> `advertised_kafka_api`
+* `rpc_server` -> `advertised_rpc_server` (Only a single listener is supported and is used for Redpanda instances to talk to each other.)
+* `pandaproxy_api` -> `advertised_pandaproxy_api`

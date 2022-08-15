@@ -169,7 +169,7 @@
     },    
     {
       type: 'category',
-      label: 'Cluster administration',
+      label: 'Cluster Administration',
       link: { type: 'doc', id: 'core/cluster-administration/index'},
       collapsible: true,
       collapsed: false,
@@ -189,6 +189,7 @@
               label: 'Configuring node properties',
               id: 'core/cluster-administration/node-property-configuration',
             },
+            'core/cluster-administration/listener-configuration', 
           ],
         },
         {
@@ -251,30 +252,32 @@
       collapsible: true,
       collapsed: false,
       items: [
-        'core/security/acls',
+        'core/security/encryption',
+        'core/security/authentication',
+        'core/security/authorization',
         'core/security/iam-roles',
         {
           type: 'category',
-          label: 'Kubernetes',
+          label: 'Security on Kubernetes',
           items: [
             {
               type: 'doc',
-              label: 'Redpanda security',
-              id: 'core/security/kubernetes-security',
+              label: 'Redpanda Security on Kubernetes',
+              id: 'core/security/security-kubernetes',
             },
             {
               type: 'doc',
-              label: 'Configuring TLS',
+              label: 'Configuring TLS on Kubernetes',
               id: 'core/security/tls-kubernetes',
             },
             {
               type: 'doc',
-              label: 'Configuring SASL authentication',
+              label: 'Configuring SASL on Kubernetes',
               id: 'core/security/kubernetes-sasl',
             },
             {
               type: 'doc',
-              label: 'Configuring mTLS authentication',
+              label: 'Configuring mTLS on Kubernetes',
               id: 'core/security/kubernetes-mtls',
             },
           ],
