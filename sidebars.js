@@ -22,7 +22,7 @@
       label: 'Introduction',
       link: { type: 'doc', id: 'core/introduction/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           type: 'doc',
@@ -47,7 +47,7 @@
       label: 'Install and Upgrade',
       link: { type: 'doc', id: 'core/install-upgrade/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           type: 'doc',
@@ -66,7 +66,7 @@
       type: 'category',
       label: 'Quickstarts',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       link: { type: 'doc', id: 'core/quickstart/index'},
       items: [
         {
@@ -124,7 +124,7 @@
       label: 'Deployment',
       collapsible: true,
       link: { type: 'doc', id: 'core/deployment/index'},
-      collapsed: false,
+      collapsed: true,
       items: [
         'core/deployment/production-deployment-automation',
         'core/deployment/guide-rpk-container',
@@ -172,7 +172,7 @@
       label: 'Cluster Administration',
       link: { type: 'doc', id: 'core/cluster-administration/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           type: 'category',
@@ -196,7 +196,7 @@
           type: 'category',
           label: 'Cluster balancing',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           link: { type: 'doc', id: 'core/cluster-administration/cluster-balancing'},
           items: [
             {
@@ -219,7 +219,7 @@
       label: 'Data management',
       link: { type: 'doc', id: 'core/data-management/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         'core/data-management/tiered-storage',
         'core/data-management/data-transform',
@@ -233,7 +233,7 @@
       label: 'Development',
       link: { type: 'doc', id: 'core/development/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         {
           type: 'doc',
@@ -250,7 +250,7 @@
       label: 'Security',
       link: { type: 'doc', id: 'core/security/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         'core/security/encryption',
         'core/security/authentication',
@@ -289,7 +289,7 @@
       label: 'Reference',
       link: { type: 'doc', id: 'core/reference/index'},
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         'core/reference/cluster-properties',
         'core/reference/tunable-properties',

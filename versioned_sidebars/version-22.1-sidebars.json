@@ -13,7 +13,7 @@
         "id": "core/introduction/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "type": "doc",
@@ -32,7 +32,7 @@
       "type": "category",
       "label": "Quickstarts",
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "link": {
         "type": "doc",
         "id": "core/quickstart/index"
@@ -80,7 +80,7 @@
         "type": "doc",
         "id": "core/deployment/index"
       },
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "core/deployment/production-deployment-automation",
         "core/deployment/guide-rpk-container",
@@ -123,7 +123,7 @@
         "id": "core/cluster-administration/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "type": "category",
@@ -162,7 +162,7 @@
         "id": "core/data-management/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "core/data-management/tiered-storage",
         "core/data-management/data-transform",
@@ -179,7 +179,7 @@
         "id": "core/development/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "core/development/kafka-clients",
         "core/development/guide-nodejs",
@@ -195,7 +195,7 @@
         "id": "core/security/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "core/security/acls",
         {
@@ -234,7 +234,7 @@
         "id": "core/reference/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "core/reference/cluster-properties",
         "core/reference/tunable-properties",
