@@ -7,7 +7,7 @@ title: Configuring Redpanda TLS on Kubernetes
     <meta name="description" content="Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication."/>
 </head>
 
-This section explains how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication. 
+This section explains how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication.
 
 For general security information, see [Redpanda security on Kubernetes](/docs/security/security-kubernetes).
 
@@ -28,7 +28,7 @@ If you haven’t completed these tasks, you can use one of the following quickst
 The Redpanda GitHub repository contains a `tls.yaml` sample configuration file you can use to enable TLS: [redpanda-examples/docs/example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/tls.yaml).
 
 :::note
-To modify the sample file, save it locally and make the required changes. 
+To modify the sample file, save it locally and make the required changes.
 :::
 
 The following text is the Redpanda `tls.yaml` file with the relevant sections highlighted:
@@ -320,7 +320,7 @@ spec:
         | `truststore_file_path` | The same path that you specified in the `truststore_file_path` property in the ConfigMap. Generally this is `/etc/tls/certs/ca`. |
         | `ca_volume_name` | This can be any string, but it must be the same as `ca_volume_name` in the `volume` property of this file. |
     * `rpk` - The path and the name of the `rpk` volume mount.
-     
+
         | Variable | Description |
         | --- | --- |
         | `rpk_volume_name` | This can be any string, but it must be the same as `rpk_volume_name` in the `volume` property of this file. |
@@ -332,7 +332,7 @@ spec:
         | `ca_volume_name` | This must be the same as the `ca_volume_name` in the `volumeMounts` property of this file. |
         | `cluster_name` | Cluster name that you defined in the cluster specification file in **Step 1**. The `secretName` property specifies the name of the node secret. For the Kafka API, this is `<cluster_name>-redpanda`. |
     * `rpk` - Volume name and ConfigMap name of the `rpk` volume mount.
-  
+
         | Variable | Description |
         | --- | --- |
         | `rpk_volume_name` | This must match the `<rpk_volume_name>` in the `volumeMounts` property of this file. |

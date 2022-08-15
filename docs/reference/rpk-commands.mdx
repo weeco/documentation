@@ -2,6 +2,11 @@
 title: rpk commands
 ---
 
+<head>
+    <meta name="title" content="rpk commands | Redpanda Docs"/>
+    <meta name="description" content="rpk commands list."/>
+</head>
+
 `rpk` (Redpanda Keeper) is Redpanda's command line interface (CLI) utility. rpk commands allow you to configure and manage Redpanda clusters, tune them for better performance, manage topics and groups, manage access control lists (ACLs).
 
 This section lists each rpk command in alphabetical order, along with a table of flags for that command. All descriptions are from the output of the `rpk <command> -–help` command.
@@ -725,10 +730,10 @@ Usage:
 
  Manage cluster license.
 
-```bash 
+```bash
 Usage:
   rpk cluster license [command]
-``` 
+```
 
 #### Flags
 
@@ -752,10 +757,10 @@ Usage:
     Expires:         Expiration date of the license
     Version:         License schema version.
 
-```bash 
+```bash
 Usage:
   rpk cluster license info [flags]
-``` 
+```
 
 #### Flags
 
@@ -785,10 +790,10 @@ Or inline the license string:
 If neither are present, rpk will look for the license in the
 default location '/etc/redpanda/redpanda.license'.
 
-```bash 
+```bash
 Usage:
   rpk cluster license set [flags]
-``` 
+```
 
 #### Flags
 
@@ -807,10 +812,10 @@ Usage:
 
  Describe log directories on Redpanda brokers
 
-```bash 
+```bash
 Usage:
   rpk cluster logdirs [command]
-``` 
+```
 
 #### Flags
 
@@ -843,10 +848,10 @@ the partition data lives underneath the the returned root directory in
 
 where revision is a Redpanda internal concept.
 
-```bash 
+```bash
 Usage:
   rpk cluster logdirs describe [flags]
-``` 
+```
 
 #### Flags
 
@@ -1039,10 +1044,10 @@ Aliases:
 
  Manage cluster partitions
 
-```bash 
+```bash
 Usage:
   rpk cluster partitions [command]
-``` 
+```
 
 #### Flags
 
@@ -1111,10 +1116,10 @@ investigation. A few areas to investigate:
 * Are any nodes in maintenance mode? Partitions are not moved if any node is in
   maintenance mode.
 
-```bash 
+```bash
 Usage:
   rpk cluster partitions balancer-status [flags]
-``` 
+```
 
 #### Flags
 
@@ -1133,22 +1138,22 @@ Usage:
 
  Cancel ongoing partition movements.
 
-By default, this command cancels all the partition movements in the cluster. 
-To ensure that you do not accidentally cancel all partition movements, this 
-command prompts users for confirmation before issuing the cancellation request. 
+By default, this command cancels all the partition movements in the cluster.
+To ensure that you do not accidentally cancel all partition movements, this
+command prompts users for confirmation before issuing the cancellation request.
 You can use "--no-confirm" to disable the confirmation prompt:
 
     rpk cluster partitions movement-cancel --no-confirm
 
-If "--node" is set, this command will only stop the partition movements 
+If "--node" is set, this command will only stop the partition movements
 occurring in the specified node:
 
     rpk cluster partitions movement-cancel --node 1
 
-```bash 
+```bash
 Usage:
   rpk cluster partitions movement-cancel [flags]
-``` 
+```
 
 #### Flags
 
@@ -1404,7 +1409,7 @@ specify an arbitrary config file.
 You can include tls_config to the job by using the flags --ca-file, --cert-file
 and --key-file.
 
-```bash 
+```bash
 Usage:
   rpk generate prometheus-config [flags]
 ``` 
@@ -2170,10 +2175,10 @@ Aliases:
 
  View and configure Redpanda partitions through the admin listener
 
-```bash 
+```bash
 Usage:
   rpk redpanda admin partitions [command]
-``` 
+```
 
 #### Flags
 
@@ -2192,13 +2197,13 @@ Usage:
 
  List the partitions in a broker in the cluster
 
-```bash 
+```bash
 Usage:
   rpk redpanda admin partitions list [BROKER ID] [flags]
 
 Aliases:
   list, ls
-``` 
+```
 
 #### Flags
 
@@ -2498,7 +2503,7 @@ Usage:
 
 ## rpk redpanda tune list
 
- List available redpanda tuners and check if they are enabled and 
+ List available redpanda tuners and check if they are enabled and
 supported by your system
 
 To enable a tuner it must be set in the `redpanda.yaml` configuration file
@@ -2510,10 +2515,10 @@ under rpk section, e.g:
 
 You may use 'rpk redpanda config set' to enable or disable a tuner.
 
-```bash 
+```bash
 Usage:
   rpk redpanda tune list [flags]
-``` 
+```
 
 #### Flags
 
