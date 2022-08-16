@@ -4,7 +4,7 @@ title: Redpanda Security on Kubernetes
 
 <head>
     <meta name="title" content="Redpanda Security on Kubernetes | Redpanda Docs"/>
-    <meta name="description" content=""/>
+    <meta name="description" content="The custom resource definition (CRD) of a Redpanda cluster includes five APIs: Kafka API, HTTP Proxy (formerly Pandaproxy), Schema Registry, Admin API, and RPC secured with `rpc_server_tls` (for communication between redpanda nodes)."/>
 </head>
 
 The custom resource definition (CRD) of a Redpanda cluster includes five APIs: Kafka API, HTTP Proxy (formerly Pandaproxy), Schema Registry, Admin API, and RPC secured with `rpc_server_tls` (for communication between redpanda nodes). You can configure authentication individually for each API. 
@@ -103,7 +103,7 @@ The `nodeSecretRef` property contains the following variables:
 | `secret_name` | Name of the certificate secret. |
 | `secret_namespace` | Kubernetes namespace where the certificate secret is. If the secret is in a different namespace than the Redpanda cluster, the operator copies it to the namespace of the Redpanda cluster. |
 
-For details about providing a trusted issuer or certificate issuer, see [Configuring Redpanda TLS on Kubernetes](/docs/security/tls-kubernetes) and [Configuring Redpanda mTLS authentication on Kubernetes](/docs/security/kubernetes-mtls). 
+For details about providing a trusted issuer or certificate issuer, see [Configuring Redpanda TLS on Kubernetes](/docs/security/tls-kubernetes) and [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls). 
 
 ### Certificate secrets
 

@@ -63,8 +63,7 @@
               "id": "quickstart/kubernetes-qs-minikube"
             }
           ]
-        },
-        "quickstart/what-is-next"
+        }
       ]
     },
     {

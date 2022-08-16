@@ -116,7 +116,6 @@
             },
           ],
         },
-        'quickstart/what-is-next',
       ]
     },    
     {
@@ -223,7 +222,7 @@
       collapsed: true,
       items: [
         'data-management/tiered-storage',
-        'data-management/read-replicas',
+        'data-management/remote-read-replicas',
         'data-management/data-transform',
         'data-management/data-migration',
         'data-management/data-archiving',
@@ -387,7 +386,7 @@
           label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },
-        'reference/monitoring-vectorized',
+        'reference/internal-metrics',
         'reference/faq',
         {
           type: 'link',

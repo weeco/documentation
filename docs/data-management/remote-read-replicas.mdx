@@ -2,8 +2,13 @@
 title: Remote Read Replicas
 ---
 
-:::important
-This feature requires an [Enterprise license](/docs/core/introduction/licensing). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
+<head>
+    <meta name="title" content="Remote Read Replicas | Redpanda Docs"/>
+    <meta name="description" content="A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster."/>
+</head>
+
+:::info
+This feature requires an [Enterprise license](/docs/introduction/licensing). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
 :::
 
 A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster.
@@ -24,7 +29,7 @@ Before you can create a Remote Read Replica, you must create a topic on the orig
     | :------  | :---------  |
     | `cloud_storage_enabled: true` | Must be set to `true` to enable the cloud storage feature. |
     | `cloud_storage_bucket: “<bucket_name>”` | The S3 bucket where the original data is stored. |
-    | `cloud_storage_access_key: “<access_key>”` | The access key used for authentication. When using [IAM roles](https://docs/core/security/iam-roles), you do not have to specify this property. |
+    | `cloud_storage_access_key: “<access_key>”` | The access key used for authentication. When using [IAM roles](/docs/security/iam-roles), you do not have to specify this property. |
     | `cloud_storage_secret_key: “<secret_key>”` | The secret key used for authentication.  When using IAM roles, you do not have to specify this property. |
     | `cloud_storage_region: “<region>”` | The region where the S3 bucket is located. This must be a supported region. |
     | `cloud_storage_enable_remote_write` | When using archival storage or tiered storage on the origin cluster, set to `true` to enable data to be uploaded from Redpanda and written to cloud storage for all topics. To only enable data upload for a specific topic, set `cloud_storage_enable_remote_write: false` and run `rpk topic create <topic_name> -c redpanda.remote.write=true` when you create the topic. |

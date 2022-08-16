@@ -4,12 +4,12 @@ title: Configuring Redpanda TLS on Kubernetes
 
 <head>
     <meta name="title" content="Configuring TLS on Kubernetes | Redpanda Docs"/>
-    <meta name="description" content="Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication."/>
+    <meta name="description" content="This section explains how to enable Transport Layer Security (TLS) on Kubernetes."/>
 </head>
 
 This section explains how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication.
 
-For general security information, see [Redpanda security on Kubernetes](/docs/security/security-kubernetes).
+For general security information, see [Redpanda Security on Kubernetes](/docs/security/security-kubernetes).
 
 ## Prerequisites
 
@@ -143,7 +143,7 @@ schemaRegistry:
      enabled: true
 ```
 
-For information about external connectivity, including subdomains, see [External Connectivity](/docs/security/security-kubernetes#external-connectivity).
+For information about external connectivity, including subdomains, see [External connectivity](/docs/security/security-kubernetes#external-connectivity).
 
 ## Step 3: Provide an issuer or certificate (optional)
 
