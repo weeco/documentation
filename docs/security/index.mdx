@@ -7,11 +7,18 @@ title: Security
     <meta name="description" content="Security index page."/>
 </head>
 
-Security is at the heart of Redpanda and we highly recommend these articles: 
+Redpanda recommends that production environments always configure encryption, authorization, and authentication. (While _authentication_ tells who you are, _authorization_ tells what you can do.)
 
-- [Encryption, authorization, and authentication](./acls)
+- [Configuring Encryption](./encryption)
+- [Configuring Authentication](./authentication)
+- [Configuring Authorization](./authorization)
+- [IAM Roles](./iam-roles)
 - Kubernetes
-    - [Redpanda security on Kubernetes](./kubernetes-security)
-    - [Configuring Redpanda TLS on Kubernetes](./tls-kubernetes)
-    - [Configuring Redpanda SASL authentication on Kubernetes](./kubernetes-sasl)
-    - [Configuring Redpanda mTLS authentication on Kubernetes](./kubernetes-mtls)
+    - [Redpanda Security on Kubernetes](./security-kubernetes)
+    - [Configuring TLS on Kubernetes](./tls-kubernetes)
+    - [Configuring SASL on Kubernetes](./kubernetes-sasl)
+    - [Configuring mTLS on Kubernetes](./kubernetes-mtls)
+
+:::note
+All concepts described in this section are compatible with Kafka and its client libraries and CLIs. This section does not cover ways you can protect your Redpanda cluster externally; for example, through network ACLs or private networks.
+:::

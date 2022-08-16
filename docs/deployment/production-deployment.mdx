@@ -7,20 +7,19 @@ title: Deploying Redpanda for production
     <meta name="description" content="Steps to deploy Redpanda in production."/>
 </head>
 
-This guide will take you through what is needed to setup a production cluster
-of Redpanda.
+This section describes how to set up a production cluster of Redpanda.
 
-If you just want to try out Redpanda, check out our Getting Started Guides for
+To initially try out Redpanda, see the Getting Started Guides for
 [Linux](/docs/quickstart/quick-start-linux), [MacOS](/docs/quickstart/quick-start-macos),
 [Docker](/docs/quickstart/quick-start-docker), or [Kubernetes](/docs/quickstart/kubernetes-qs-cloud).
 
 :::note
-Before you set up your Redpanda cluster, refer to the [Performance and storage tuning](https://docs.redpanda.com/docs/deployment/performance-storage-tuning) documentation for guidelines on cluster creation, such as avoiding out-of-disk outages.
+Before you set up your Redpanda cluster, see [Performance and storage tuning](https://docs.redpanda.com/docs/deployment/performance-storage-tuning) for guidelines on cluster creation, such as avoiding out-of-disk outages.
 :::
 
 ## Prepare infrastructure
 
-For the best performance, we need to provision the hardware according to these hardware requirements:
+For the best performance, provision the hardware according to these hardware requirements:
 
 - XFS for the data directory of Redpanda (/var/lib/redpanda/data)
 - A kernel that is at least 3.10.0-514, but a 4.18 or newer kernel is preferred
@@ -60,14 +59,14 @@ sudo -E bash && sudo apt install redpanda -y
 ### Step 2: Set Redpanda production mode
 
 By default Redpanda is installed in **development** mode, which turns off hardware optimization.
+
 To enable hardware optimization, set Redpanda to run in **production** mode:
 
 ```bash
 sudo rpk redpanda mode production
 ```
 
-We then need to tune the hardware, which can be done by running the following
-on each node:
+To tune the hardware, on each node, run:
 
 ```bash
 sudo rpk redpanda tune all
@@ -75,14 +74,13 @@ sudo rpk redpanda tune all
 
 :::note Optional: Benchmark your SSD
 
-On taller machines it is recommended benchmarking your SSD. This can be done
+On taller machines, Redpanda recommends benchmarking your SSD. This can be done
 with `rpk iotune`. You only need to run this once. For reference, a decent
 local NVMe SSD should yield around 1GB/s sustained writes.
-`rpk iotune` will capture SSD wear and tear and give accurate measurements
-of what your hardware is actually capable of delivering. It is recommended
-you run this before benchmarking.
+`rpk iotune` captures SSD wear and tear and gives accurate measurements
+of what your hardware is actually capable of delivering. Run this before benchmarking.
 
-If you are on AWS, GCP or Azure, creating a new instance and upgrading to
+If you're on AWS, GCP, or Azure, creating a new instance and upgrading to
 an image with a recent Linux Kernel version is often the easiest way to
 work around bad devices.
 
@@ -94,20 +92,23 @@ sudo rpk iotune # takes 10mins
 
 ### Step 3: Configure and start the root node
 
-Now that the software is installed we need to configure it. The first step is
-to setup the root node. The root node will start as a standalone node, and
-every other one will join it, forming a cluster along the way.
+Now that the software is installed, you must configure it. The first step is
+to set up the root node. The root node starts as a standalone node, and
+every other one joins it, forming a cluster along the way.
 
-For the root node we’ll choose 0 as its ID. `--self` tells the node which interface address to bind to. Usually you want that to be its private IP.
+For the root node, choose 0 as its ID. The `--self` option tells the node which interface address to bind to. Usually you want that to be its private IP.
 
 ```bash
 sudo rpk config bootstrap --id 0 --self <ip> && \
 sudo systemctl start redpanda-tuner redpanda
 ```
 
+If clients will connect from a different subnet, see [Configuring Listeners](/docs/cluster-administration/listener-configuration).
+
+
 ### Step 4: Configure and start the other nodes
 
-For every other node, we just have to choose a unique integer id for it and let
+For every other node, you have to choose a unique integer ID for it, and let
 it know where to reach the root node.
 
 ```bash
@@ -119,13 +120,13 @@ sudo systemctl start redpanda-tuner redpanda
 
 ### Step 5: Verify the installation
 
-You can verify that the cluster is up and running by checking the logs:
+To verify that the cluster is up and running, check the logs:
 
 ```bash
 journalctl -u redpanda
 ```
 
-You should also be able to create a topic with the following command:
+To create a topic, run:
 
 ```bash
 rpk topic create panda

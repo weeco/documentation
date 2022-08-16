@@ -11,6 +11,7 @@ import Logo from '@theme/Logo';
 import CollapseButton from '@theme/DocSidebar/Desktop/CollapseButton';
 import Content from '@theme/DocSidebar/Desktop/Content';
 import DocsVersionDropdownNavbarItem from '@theme/NavbarItem/DocsVersionDropdownNavbarItem';
+import SearchBar from '@theme/SearchBar';
 import styles from './styles.module.css';
 
 function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
@@ -27,6 +28,7 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
       )}>
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <div className={styles.topPanel}>
+      <SearchBar />
           <div className={styles.searchPlaceholder}></div>
           <div className={styles.topPanelLanguageContainer} ><label>Language:</label> English</div>
           <div className={styles.topPanelVersionContainer}><label>Version:</label>

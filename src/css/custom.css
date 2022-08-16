@@ -56,6 +56,8 @@
   /* Search */
   /* --search-local-highlight-color: var(--v-gray1); */
   --ifm-navbar-search-input-background-color: var(--v-background);
+
+  --docusaurus-highlighted-code-line-bg : rgba(0,0,0,.1);
 }
 
 * {
@@ -457,4 +459,8 @@ span[class*="dropdownMenu_"] {
 
 h5 {
   font-size: 0.83em !important;
+}
+
+[class*=iconExternalLink] {
+  display: none;
 }

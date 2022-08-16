@@ -13,19 +13,6 @@ In production mode, Redpanda identifies your hardware configuration and tunes it
 
 The performance settings listed here are just for general reference.
 
-<!-- It’s worth mentioning - as you might have noticed by now - you’ll always
-interact with redpanda through `rpk`. `rpk` is the Redpanda Keeper, a command-line interface to automate all tasks related to managing, running, and upgrading
-redpanda. We also leverage `systemd` to make it even simpler to run and
-operate redpanda as a service. This means you’ll also find yourself using
-`systemctl` to start and stop `redpanda`, as well as checking its status. You
-can also manage, filter, and rotate the logs created by redpanda through
-journalctl.
-
-```
-rpk --help             # interact with the server and service
-journalctl -u redpanda # see logs
-``` -->
-
 ## Disk
 
 Redpanda uses DMA (Direct Memory Access) for all its disk IO. To get the

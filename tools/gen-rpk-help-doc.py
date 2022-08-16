@@ -277,9 +277,9 @@ md_result = """---
 title: rpk commands
 ---
 
-`rpk`  (Redpanda Keeper) is Redpanda's command line interface (CLI) utility. rpk commands allow you to configure and manage Redpanda clusters, tune them for better performance, manage topics and groups, manage access control lists (ACLs), and more.
+`rpk` (Redpanda Keeper) is Redpanda's command line interface (CLI) utility. rpk commands allow you to configure and manage Redpanda clusters, tune them for better performance, manage topics and groups, manage access control lists (ACLs).
 
-This section lists each rpk command in alphabetical order, along with a table of flags for that command. All descriptions are from the output of the rpk <command> –help command.
+This section lists each rpk command in alphabetical order, along with a table of flags for that command. All descriptions are from the output of the `rpk <command> -–help` command.
 
 """
 
@@ -327,6 +327,7 @@ rpk.ac-<name>
 """,
 )
 
+md_result = md_result.replace("redpanda.yaml", "`redpanda.yaml`")
 md_result = md_result.replace("<IP>", "|IP|")
 md_result = md_result.replace("<port>", "|port|")
 md_result = md_result.replace("<name>", "|name|")
@@ -335,10 +336,15 @@ md_result = md_result.replace("<storage type>", "|storage type|")
 md_result = md_result.replace("<vm type>", "|vm type|")
 md_result = md_result.replace("<vendor>", "|vendor|")
 md_result = md_result.replace("<host:port>", "|host:port|")
+md_result = md_result.replace("<tuner name>", "|tuner name|")
+
 md_result = md_result + suggestedReadings
 
-print(md_result)
 
-file = "docs/www/rpk-commands.md"
-with open(file, "w") as filetowrite:
-    filetowrite.write(md_result)
+try:
+    file = "docs/reference/rpk-commands.mdx"
+    with open(file, "w") as filetowrite:
+        filetowrite.write(md_result)
+    print("The rpk commands have been successfully generated at docs/reference/rpk-commands.mdx")
+except Exception as e:
+    print("Error generating the rpk commands file " + e)

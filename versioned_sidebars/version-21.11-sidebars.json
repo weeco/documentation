@@ -13,7 +13,7 @@
         "id": "introduction/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "type": "doc",
@@ -27,7 +27,7 @@
       "type": "category",
       "label": "Quickstarts",
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "link": {
         "type": "doc",
         "id": "quickstart/index"
@@ -63,8 +63,7 @@
               "id": "quickstart/kubernetes-qs-minikube"
             }
           ]
-        },
-        "quickstart/what-is-next"
+        }
       ]
     },
     {
@@ -75,7 +74,7 @@
         "type": "doc",
         "id": "deployment/index"
       },
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "deployment/production-deployment-automation",
         "deployment/guide-rpk-container",
@@ -118,7 +117,7 @@
         "id": "cluster-administration/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "type": "doc",
@@ -137,7 +136,7 @@
         "id": "data-management/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "data-management/tiered-storage",
         "data-management/data-transform",
@@ -153,7 +152,7 @@
         "id": "development/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "development/guide-nodejs"
       ]
@@ -166,7 +165,7 @@
         "id": "security/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         "security/acls",
         {
@@ -205,7 +204,7 @@
         "id": "reference/index"
       },
       "collapsible": true,
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "type": "doc",

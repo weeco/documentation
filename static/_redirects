@@ -3,8 +3,8 @@
 /docs/features/intro-to-events   /docs/introduction/intro-to-events  301!
 
 # Quickstart
-/docs/getting-started/quick-start-kubernetes   /docs/quickstart/kubernetes-qs-cloud  301!
-/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud  301!
+/docs/getting-started/quick-start-kubernetes   /docs/quickstart/kubernetes-qs-cloud/  301!
+/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud/  301!
 /docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-local-access  301!
 /docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
 /docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
@@ -13,7 +13,6 @@
 /docs/getting-started/quick-start-linux   /docs/quickstart/quick-start-linux  301!
 /docs/getting-started/quick-start-macos   /docs/quickstart/quick-start-macos  301!
 /docs/getting-started/quick-start-windows   /docs/quickstart/quick-start-windows  301!
-/docs/getting-started/what-is-next   /docs/quickstart/what-is-next  301!
 
 # Development
 /docs/features/guide-nodejs   /docs/development/guide-nodejs  301!
@@ -46,9 +45,6 @@
 # Security
 /docs/features/acls   /docs/security/acls  301!
 /docs/features/tls-kubernetes   /docs/security/tls-kubernetes  301!
-
-# Root
-/docs/features/index /docs/features-guide
 
 # Fix for google result on 'redpanda encryption'
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
