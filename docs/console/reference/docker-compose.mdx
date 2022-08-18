@@ -20,7 +20,7 @@ To run `docker compose` you have to install Docker on your machine. Please refer
 version: '3.7'
 services:
   redpanda:
-    image: vectorized/redpanda:v22.1.7
+    image: vectorized/redpanda:v22.2.1
     command:
       - redpanda start
       - --smp 1
@@ -38,7 +38,7 @@ services:
       - 29092:29092
 
   console:
-    image: vectorized/console:v2.0.0
+    image: vectorized/console:latest
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
