@@ -4,13 +4,13 @@ title: Configuring Authentication
 
 <head>
     <meta name="title" content="Configuring Authentication | Redpanda Docs"/>
-    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS using principal mapping, and mixed-mode authentication with multiple listeners."/>
+    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS using principal mapping, and mixed-mode authentication with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each, you can configure the authentication method and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. See [Configuring Listeners](/docs/cluster-administration/listener-configuration).
+Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. See [Configuring Listeners](/docs/cluster-administration/listener-configuration).
 
 ## Enable Authentication
 
@@ -94,7 +94,7 @@ rpk topic create littlefoot \
 
 ### Configure SASL authentication
 
-To configure SASL authentication for the Kafka API, set `authention_method` of the listener to `sasl`. 
+To configure SASL authentication for the Kafka API, set `authentication_method` of the listener to `sasl`. 
 
 In `redpanda.yaml`, enter: 
 

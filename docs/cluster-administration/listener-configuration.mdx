@@ -9,11 +9,11 @@ title: Configuring Listeners
 
 Apache Kafka® client libraries must be able to connect to every Redpanda broker
 instance. If the client and broker exist on different subnets, then Redpanda
-must be configured to advertise the location where it, so other brokers in
+must be configured to advertise its location, so other brokers in
 the cluster can be found. If not, clients connecting to brokers outside
 their local network experience connectivity issues.
 
-To initally try out Redpanda, see the Getting Started Guides for
+To try out Redpanda, see the Getting Started Guides for
 [Linux](/docs/quickstart/quick-start-linux), [MacOS](/docs/quickstart/quick-start-macos),
 [Docker](/docs/quickstart/quick-start-docker), or [Kubernetes](/docs/quickstart/kubernetes-qs-cloud).
 
@@ -34,7 +34,7 @@ An address of `0.0.0.0` means that Redpanda listens on all interfaces.
 
 If the client exists on another subnet, then it needs to be informed of how to reach Redpanda. This is done by configuring the advertised address of the Kafka API.
 
-If Redpanda is running on the subnet `192.168.4.0/24` with IP address `192.168.4.1`, and the clients are running on the subnet `192.168.5.0/24`:
+For example, if Redpanda is running on the subnet `192.168.4.0/24` with IP address `192.168.4.1`, and the clients are running on the subnet `192.168.5.0/24`:
 
 ```yaml
 redpanda:
@@ -49,7 +49,7 @@ It's also possible to advertise a host name, provided the client can resolve the
 
 ## Multiple listeners
 
-Sometimes its useful to have multiple configurations for accessing Redpanda with multiple routes.
+Sometimes it's useful to have multiple configurations for accessing Redpanda with multiple routes.
 
 This is possible by creating multiple listeners, and providing a name for the listener. The name is used to connect the listener and its advertised address. For example:
 
