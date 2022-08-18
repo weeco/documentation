@@ -55,8 +55,7 @@ Save the configuration file, and restart Prometheus to apply changes.
 After you have the metrics, you can use a tool like [Grafana](https://grafana.com/oss/grafana/) to query, visualize, and generate alerts. For example, to display the total number of partitions in your cluster, run this query on Grafana:
 
 ```
-count(count by (topic,partition)
- (redpanda_cluster_partitions{namespace="kafka"}))
+ redpanda_cluster_partitions
 ```
 
 To show the number of partitions for a specific topic, run:
