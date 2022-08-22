@@ -1,5 +1,5 @@
 ---
-title: Tunable configuration properties
+title: Tunable Configuration Properties
 ---
 
 <head>
@@ -8,7 +8,7 @@ title: Tunable configuration properties
 </head>
 
 Tunable properties are cluster properties that are specifically designed for tuning a cluster.
-For information on how to edit tunable properties, refer to [Configuring cluster properties](/docs/cluster-administration/cluster-property-configuration).
+For information on how to edit tunable properties, refer to [Configuring Cluster Properties](/docs/cluster-administration/cluster-property-configuration).
 
 The following table lists the available tunable properties:
 
@@ -21,19 +21,19 @@ The following table lists the available tunable properties:
 | cloud_storage_cache_check_interval | Timeout to check if cache eviction should be triggered. <br/><br/>Default: 30000 |
 | cloud_storage_enable_remote_read | Enable remote read for all topics. <br/><br/>Default: false |
 | cloud_storage_enable_remote_write | Enable remote write for all topics. <br/><br/>Default: false |
-| cloud_storage_initial_backoff_ms | Initial backoff time for exponetial backoff algorithm (ms). <br/><br/>Default: 100 |
+| cloud_storage_initial_backoff_ms | Initial backoff time for exponential backoff algorithm (ms). <br/><br/>Default: 100 |
 | cloud_storage_manifest_upload_timeout_ms | Manifest upload timeout (ms). <br/><br/>Default: 10000 |
 | cloud_storage_max_connection_idle_time_ms | Max https connection idle time (ms). <br/><br/>Default: 5000 |
 | cloud_storage_reconciliation_interval_ms | Interval at which the archival service runs reconciliation (ms). <br/><br/>Default: 10000 |
 | cloud_storage_segment_max_upload_interval_sec | Time that segment can be kept locally without uploading it to the remote storage (sec). <br/><br/>Default: Null |
 | cloud_storage_segment_upload_timeout_ms | Log segment upload timeout (ms). <br/><br/>Default: 30000 |
 | cloud_storage_upload_ctrl_d_coeff | Derivative coefficient for upload PID controller. <br/><br/>Default: 0.0 |
-| cloud_storage_upload_ctrl_max_shares | Maximum number of IO and CPU shares that archival upload can use. <br/><br/>Default: 1000 |
-| cloud_storage_upload_ctrl_min_shares | Minimum number of IO and CPU shares that archival upload can use. <br/><br/>Default: 100 |
+| cloud_storage_upload_ctrl_max_shares | Maximum number of I/O and CPU shares that archival upload can use. <br/><br/>Default: 1000 |
+| cloud_storage_upload_ctrl_min_shares | Minimum number of I/O and CPU shares that archival upload can use. <br/><br/>Default: 100 |
 | cloud_storage_upload_ctrl_p_coeff | Proportional coefficient for upload PID controller. <br/><br/>Default: -2.0 |
 | cloud_storage_upload_ctrl_update_interval_ms | No description. <br/><br/>Default: 60000 |
-| compacted_log_segment_size | How large in bytes should each compacted log segment be (default 256 MB). <br/><br/>Default: 268435456 (256 MB) <br/>Minimum = 1048576 (1 MB) |
-| compaction_ctrl_backlog_size | Target backlog size for compaction controller. if not set compaction target compaction backlog would be equal to. <br/><br/>Default: Null |
+| compacted_log_segment_size | How large in bytes each compacted log segment should be (default 256 MB). <br/><br/>Default: 268435456 (256 MB) <br/>Minimum = 1048576 (1 MB) |
+| compaction_ctrl_backlog_size | Target backlog size for compaction controller. If not set, compaction target that the compaction backlog would be equal to. <br/><br/>Default: Null |
 | compaction_ctrl_d_coeff | Derivative coefficient for compaction PID controller. <br/><br/>Default: 0.2 |
 | compaction_ctrl_i_coeff | Integral coefficient for compaction PID controller. <br/><br/>Default: 0.0 |
 | compaction_ctrl_max_shares | Maximum number of IO and CPU shares that compaction process can use. <br/><br/>Default: 1000 |
@@ -61,7 +61,7 @@ The following table lists the available tunable properties:
 | group_topic_partitions | Number of partitions in the internal group membership topic. <br/><br/>Default: 1 |
 | health_manager_tick_interval | How often the health manager runs. <br/><br/>Default: 180000 |
 | health_monitor_max_metadata_age | Max age of metadata cached in the health monitor of non controller node. <br/><br/>Default: 10000 |
-| health_monitor_tick_interval | How often health monitor refresh cluster state. <br/><br/>Default: 10000 |
+| health_monitor_tick_interval | How often health monitor refreshes cluster state. <br/><br/>Default: 10000 |
 | id_allocator_batch_size | Id allocator allocates messages in batches (each batch is a one log record) and then serves requests from memory without touching the log until the batch is exhausted. <br/><br/>Default: 1000 |
 | id_allocator_log_capacity | Capacity of the id_allocator log in number of messages. Once it reached id_allocator_stm should compact the log. <br/><br/>Default: 100 |
 | join_retry_timeout_ms | Time between cluster join retries in milliseconds. <br/><br/>Default: 5000 |
@@ -83,9 +83,9 @@ The following table lists the available tunable properties:
 | max_compacted_log_segment_size | Max compacted segment size after consolidation. <br/><br/>Default: 5242880000 (5 GB) |
 | max_kafka_throttle_delay_ms | Fail-safe maximum throttle delay on kafka requests. <br/><br/>Default: 60000 |
 | members_backend_retry_ms | Time between members backend reconciliation loop retries. <br/><br/>Default: 5000 |
-| metadata_dissemination_interval_ms | Interaval for metadata dissemination batching. <br/><br/>Default: 3000 |
-| metadata_dissemination_retries | Number of attempts of looking up a topic's meta data like shard before failing a request. <br/><br/>Default: 30 |
-| metadata_dissemination_retry_delay_ms | Delay before retry a topic lookup in a shard or other meta tables. <br/><br/>Default: 0500 |
+| metadata_dissemination_interval_ms | Interval for metadata dissemination batching. <br/><br/>Default: 3000 |
+| metadata_dissemination_retries | Number of attempts to look up a topic's metadata like shard before failing a request. <br/><br/>Default: 30 |
+| metadata_dissemination_retry_delay_ms | Delay before retrying a topic lookup in a shard or other meta tables. <br/><br/>Default: 0500 |
 | metadata_status_wait_timeout_ms | Maximum time to wait in metadata request for cluster health to be refreshed. <br/><br/>Default: 2000 |
 | metrics_reporter_report_interval | Cluster metrics reporter report interval. <br/><br/>Default: 864000000 |
 | metrics_reporter_tick_interval | Cluster metrics reporter tick interval. <br/><br/>Default: 60000 |
@@ -96,7 +96,7 @@ The following table lists the available tunable properties:
 | raft_heartbeat_timeout_ms | Raft heartbeat RPC timeout. <br/><br/> Default: 3000 <br/>Minimum = milliseconds(1) |
 | raft_io_timeout_ms | Raft I/O timeout. <br/><br/>Default: 10000 |
 | raft_max_concurrent_append_requests_per_follower | Maximum number of concurrent append entries requests sent by leader to one follower. <br/><br/>Default: 16 |
-| raft_max_recovery_memory | Maximum memory that can be used for reads in the  raft recovery proces . <br/><br/>Default: 15% of total memory <br/>Minimum = 33554432 (32 MB) |
+| raft_max_recovery_memory | Maximum memory that can be used for reads in the raft recovery process. <br/><br/>Default: 15% of total memory <br/>Minimum = 33554432 (32 MB) |
 | raft_recovery_default_read_size | Default size of read issued during raft follower recovery. <br/><br/>Default: 524288 (512 KB) <br/>Minimum = 128 <br/>Maximum = 5242880 (5 MB) |
 | raft_replicate_batch_window_size | Maximum size of requests cached for replication. <br/><br/>Default: 1048576 (1 MB) |
 | raft_smp_max_non_local_requests | Maximum number of x-core requests pending in Raft seastar::smp group. (for more details look at seastar::smp_service_group documentation). <br/><br/>Default: The maximum number of x-core pending in Raft relies on the total number of cores that your environment is executing. |
