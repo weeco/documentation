@@ -46,7 +46,7 @@ Configure time-based retention with the following properties:
 
 A message is deleted if its age exceeds the `delete_retention_ms` or `retention.ms` value. These properties are explained in detail below: 
 
-* **delete_retention_ms** - Cluster configuration setting in (cluster configuration)[/docs/cluster-administration/cluster-property-configuration] that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` property, which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
+* **delete_retention_ms** - Cluster configuration setting in (cluster configuration)[/docs/core/cluster-administration/cluster-property-configuration] that specifies how long a message stays on disk before it is deleted. To set retention time for a single topic, use the `retention.ms` property, which overrides the `delete_retention_ms` setting. If `retention.ms` is not set at the topic-level, the topic uses the `delete_retention_ms` value.
 
 To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to `86400000`, which equates to one day. The default value is `604800000`, which equates to one week.
 
@@ -59,7 +59,7 @@ To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to 
   ```
 
 :::caution 
-Do not set `delete_retention_ms` to `-1` unless you are using <a href="https://docs.redpanda.com/docs/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting `delete_retention_ms` to `-1` configures indefinite retention, which can result in an out-of-disk outage and may result in data loss. 
+Do not set `delete_retention_ms` to `-1` unless you are using <a href="https://docs.redpanda.com/docs/core/data-management/tiered-storage#remote-write" target="_self">remote write with Tiered Storage</a> to upload segments to remote storage. Setting `delete_retention_ms` to `-1` configures indefinite retention, which can result in an out-of-disk outage and may result in data loss. 
 :::
 
 #### Size-based retention
@@ -107,7 +107,7 @@ rpk topic alter-config <topic> --set segment.bytes=<segment_size>
 
 When determining ideal segment size, keep in mind that very large segments prevent compaction and very small segments increase the risk of encountering resource limits. As a rule of thumb to calculate an upper limit on segment size, you can divide the disk size by the number of partitions. For example, if you have a 128GB disk and 1000 partitions, the upper limit of the segment size would be `134217728`. Default is `1073741824`. 
 
-For details about how to modify cluster configuration properties, refer to [Cluster configuration](/docs/cluster-administration/cluster-property-configuration). 
+For details about how to modify cluster configuration properties, refer to [Cluster configuration](/docs/core/cluster-administration/cluster-property-configuration). 
 
 ### Ballast file
 

@@ -13,18 +13,18 @@ const FeatureList = [
         to get streaming up and running quickly.
       </>
     ),
-    url: '/docs/quickstart/',
+    url: '/docs/core/quickstart/',
   },
   {
     title: 'Deploy Redpanda in production',
     Svg: require('../../../static/img/Redpanda Sitting.svg').default,
-    href: `/docs/deploy-self-hosted/production-deployment`,
+    href: `/docs/core/deploy-self-hosted/production-deployment`,
     description: (
       <>
         After you see its power, put Redpanda to the test in production.
       </>
     ),
-    url: '/docs/deployment/production-deployment/',
+    url: '/docs/core/deployment/production-deployment/',
   },
   {
     title: 'Dive deeper into Redpanda',
@@ -34,7 +34,7 @@ const FeatureList = [
         Use the more advanced Redpanda features...
       </>
     ),
-    url: '/docs/reference/rpk-commands/',
+    url: '/docs/core/reference/rpk-commands/',
   },
 ];
 

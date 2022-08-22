@@ -20,44 +20,44 @@
     {
       type: 'category',
       label: 'Introduction',
-      link: { type: 'doc', id: 'introduction/index'},
+      link: { type: 'doc', id: 'core/introduction/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Introduction to Events and Streaming',
-          id: 'introduction/intro-to-events',
+          id: 'core/introduction/intro-to-events',
         },        
         {
           type: 'doc',
           label: 'Designed for Performance',
-          id: 'introduction/autotune',
+          id: 'core/introduction/autotune',
         },
-        'introduction/licenses',
+        'core/introduction/licenses',
         {
           type: 'doc',
           label: 'Technical Preview',
-          id: 'introduction/tech-preview',
+          id: 'core/introduction/tech-preview',
         },  
       ],
     },
     {
       type: 'category',
       label: 'Install and Upgrade',
-      link: { type: 'doc', id: 'install-upgrade/index'},
+      link: { type: 'doc', id: 'core/install-upgrade/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Installing Preview Versions',
-          id: 'install-upgrade/install-preview',
+          id: 'core/install-upgrade/install-preview',
         },
         {
           type: 'doc',
           label: 'Version Upgrade',
-          id: 'install-upgrade/version-upgrade',
+          id: 'core/install-upgrade/version-upgrade',
         },
 
       ],
@@ -67,7 +67,7 @@
       label: 'Quickstarts',
       collapsible: true,
       collapsed: true,
-      link: { type: 'doc', id: 'quickstart/index'},
+      link: { type: 'doc', id: 'core/quickstart/index'},
       items: [
         {
           type: 'category',
@@ -76,22 +76,22 @@
             {
               type: 'doc',
               label: 'Docker',
-              id: 'quickstart/quick-start-docker',
+              id: 'core/quickstart/quick-start-docker',
             },
             {
               type: 'doc',
               label: 'Linux',
-              id: 'quickstart/quick-start-linux',
+              id: 'core/quickstart/quick-start-linux',
             },
             {
               type: 'doc',
               label: 'macOS',
-              id: 'quickstart/quick-start-macos',
+              id: 'core/quickstart/quick-start-macos',
             },
             {
               type: 'doc',
               label: 'Windows',
-              id: 'quickstart/quick-start-windows',
+              id: 'core/quickstart/quick-start-windows',
             },
           ],
         },
@@ -102,17 +102,17 @@
             {
               type: 'doc',
               label: 'kind',
-              id: 'quickstart/kubernetes-qs-local-access',
+              id: 'core/quickstart/kubernetes-qs-local-access',
             },
             {
               type: 'doc',
               label: 'minikube',
-              id: 'quickstart/kubernetes-qs-minikube',
+              id: 'core/quickstart/kubernetes-qs-minikube',
             },
             {
               type: 'doc',
               label: 'Cloud',
-              id: 'quickstart/kubernetes-qs-cloud',
+              id: 'core/quickstart/kubernetes-qs-cloud',
             },
           ],
         },
@@ -122,11 +122,11 @@
       type: 'category',
       label: 'Deployment',
       collapsible: true,
-      link: { type: 'doc', id: 'deployment/index'},
+      link: { type: 'doc', id: 'core/deployment/index'},
       collapsed: true,
       items: [
-        'deployment/production-deployment-automation',
-        'deployment/guide-rpk-container',
+        'core/deployment/production-deployment-automation',
+        'core/deployment/guide-rpk-container',
         {
           type: 'category',
           label: 'Kubernetes',
@@ -134,18 +134,18 @@
             {
               type: 'doc',
               label: 'Configuring Redpanda Operator for Connectivity',
-              id: 'deployment/kubernetes-connectivity',
+              id: 'core/deployment/kubernetes-connectivity',
             },            
-            'deployment/kubernetes-external-connect',
+            'core/deployment/kubernetes-external-connect',
             {
               type: 'doc',
               label: 'Using Configuration Parameters with a Custom Resource',
-              id: 'deployment/kubernetes-additional-config',
+              id: 'core/deployment/kubernetes-additional-config',
             },
             {
               type: 'doc',
               label: 'Arbitrary Configuration',
-              id: 'deployment/arbitrary-configuration',
+              id: 'core/deployment/arbitrary-configuration',
             },
             
           ]
@@ -154,41 +154,41 @@
           type: 'category',
           label: 'Performance and storage tuning',
           items: [
-            'deployment/disk-utilization',
-            'deployment/io-optimization',
+            'core/deployment/disk-utilization',
+            'core/deployment/io-optimization',
 
           ]
         },
         {
           type: 'doc',
           label: 'Deploying for Production',
-          id: 'deployment/production-deployment',
+          id: 'core/deployment/production-deployment',
         },
       ]
     },    
     {
       type: 'category',
       label: 'Cluster Administration',
-      link: { type: 'doc', id: 'cluster-administration/index'},
+      link: { type: 'doc', id: 'core/cluster-administration/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'category',
           label: 'Configuration',
-          link: { type: 'doc', id: 'cluster-administration/configuration'},
+          link: { type: 'doc', id: 'core/cluster-administration/configuration'},
           items: [
             {
               type: 'doc',
               label: 'Configuring Cluster Properties',
-              id: 'cluster-administration/cluster-property-configuration',
+              id: 'core/cluster-administration/cluster-property-configuration',
             },
             {
               type: 'doc',
               label: 'Configuring Node Properties',
-              id: 'cluster-administration/node-property-configuration',
+              id: 'core/cluster-administration/node-property-configuration',
             },
-            'cluster-administration/listener-configuration',
+            'core/cluster-administration/listener-configuration',
           ],
         },
         {
@@ -196,67 +196,67 @@
           label: 'Cluster balancing',
           collapsible: true,
           collapsed: true,
-          link: { type: 'doc', id: 'cluster-administration/cluster-balancing'},
+          link: { type: 'doc', id: 'core/cluster-administration/cluster-balancing'},
           items: [
             {
               type: 'doc',
               label: 'Configuring Continuous Data Balancing',
-              id: 'cluster-administration/continuous-data-balancing',
+              id: 'core/cluster-administration/continuous-data-balancing',
             },
           ],
         },
         {
           type: 'doc',
           label: 'Node Maintenance Mode',
-          id: 'cluster-administration/node-management',
+          id: 'core/cluster-administration/node-management',
         },             
-        'cluster-administration/monitoring', 
-        'cluster-administration/rolling-upgrade',
+        'core/cluster-administration/monitoring', 
+        'core/cluster-administration/rolling-upgrade',
       ]
     },
     {
       type: 'category',
       label: 'Data Management',
-      link: { type: 'doc', id: 'data-management/index'},
+      link: { type: 'doc', id: 'core/data-management/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'data-management/tiered-storage',
-        'data-management/remote-read-replicas',
-        'data-management/data-transform',
-        'data-management/data-migration',
-        'data-management/data-archiving',
-        'data-management/rack-awareness',
+        'core/data-management/tiered-storage',
+        'core/data-management/remote-read-replicas',
+        'core/data-management/data-transform',
+        'core/data-management/data-migration',
+        'core/data-management/data-archiving',
+        'core/data-management/rack-awareness',
       ]
     },
     {
       type: 'category',
       label: 'Development',
-      link: { type: 'doc', id: 'development/index'},
+      link: { type: 'doc', id: 'core/development/index'},
       collapsible: true,
       collapsed: true,
       items: [
         {
           type: 'doc',
           label: 'Kafka clients',
-          id: 'development/kafka-clients',
+          id: 'core/development/kafka-clients',
         },
-        'development/guide-nodejs',
-        'development/consumer-offsets',
-        'development/idempotent-producers',
+        'core/development/guide-nodejs',
+        'core/development/consumer-offsets',
+        'core/development/idempotent-producers',
       ]
     },
     {
       type: 'category',
       label: 'Security',
-      link: { type: 'doc', id: 'security/index'},
+      link: { type: 'doc', id: 'core/security/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'security/encryption',
-        'security/authentication',
-        'security/authorization',
-        'security/iam-roles',
+        'core/security/encryption',
+        'core/security/authentication',
+        'core/security/authorization',
+        'core/security/iam-roles',
         {
           type: 'category',
           label: 'Security on Kubernetes',
@@ -264,22 +264,22 @@
             {
               type: 'doc',
               label: 'Redpanda Security on Kubernetes',
-              id: 'security/security-kubernetes',
+              id: 'core/security/security-kubernetes',
             },
             {
               type: 'doc',
               label: 'Configuring TLS on Kubernetes',
-              id: 'security/tls-kubernetes',
+              id: 'core/security/tls-kubernetes',
             },
             {
               type: 'doc',
               label: 'Configuring SASL on Kubernetes',
-              id: 'security/kubernetes-sasl',
+              id: 'core/security/kubernetes-sasl',
             },
             {
               type: 'doc',
               label: 'Configuring mTLS on Kubernetes',
-              id: 'security/kubernetes-mtls',
+              id: 'core/security/kubernetes-mtls',
             },
           ],
         },
@@ -288,22 +288,22 @@
     {
       type: 'category',
       label: 'Redpanda Console',
-      link: { type: 'doc', id: 'console/index'},
+      link: { type: 'doc', id: 'core/console/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'console/installation',
+        'core/console/installation',
         {
           type: 'category',
           label: 'Features',
           items: [
-            'console/features/kafka-connect',
-            'console/features/record-deserialization',
-            'console/features/schema-registry',
-            'console/features/protobuf',
-            'console/features/topic-documentation',
-            'console/features/programmable-push-filters',
-            'console/features/http-path-rewrites'
+            'core/console/features/kafka-connect',
+            'core/console/features/record-deserialization',
+            'core/console/features/schema-registry',
+            'core/console/features/protobuf',
+            'core/console/features/topic-documentation',
+            'core/console/features/programmable-push-filters',
+            'core/console/features/http-path-rewrites'
           ],
         },
         {
@@ -313,32 +313,32 @@
             {
               type: 'doc',
               label: 'Authentication',
-              id: 'console/single-sign-on/authentication',
+              id: 'core/console/single-sign-on/authentication',
             },
             {
               type: 'doc',
               label: 'Authorization',
-              id: 'console/single-sign-on/authorization',
+              id: 'core/console/single-sign-on/authorization',
             },
             {
               type: 'doc',
               label: 'GitHub',
-              id: 'console/single-sign-on/identity-providers/github',
+              id: 'core/console/single-sign-on/identity-providers/github',
             },
             {
               type: 'doc',
               label: 'Google',
-              id: 'console/single-sign-on/identity-providers/google',
+              id: 'core/console/single-sign-on/identity-providers/google',
             },
             {
               type: 'doc',
               label: 'Okta',
-              id: 'console/single-sign-on/identity-providers/okta',
+              id: 'core/console/single-sign-on/identity-providers/okta',
             },
             {
               type: 'doc',
               label: 'Generic OIDC',
-              id: 'console/single-sign-on/identity-providers/generic-oidc',
+              id: 'core/console/single-sign-on/identity-providers/generic-oidc',
             }
           ]
         },
@@ -349,17 +349,17 @@
             {
               type: 'doc',
               label: 'Redpanda Console Configuration',
-              id: 'console/reference/config',
+              id: 'core/console/reference/config',
             },
             {
               type: 'doc',
               label: 'Redpanda Console Role-Binding Configuration',
-              id: 'console/reference/role-bindings',
+              id: 'core/console/reference/role-bindings',
             },
             {
               type: 'doc',
               label: 'Docker Compose Configuration',
-              id: 'console/reference/docker-compose',
+              id: 'core/console/reference/docker-compose',
             }
           ]
         },
@@ -368,26 +368,26 @@
     {
       type: 'category',
       label: 'Reference',
-      link: { type: 'doc', id: 'reference/index'},
+      link: { type: 'doc', id: 'core/reference/index'},
       collapsible: true,
       collapsed: true,
       items: [
-        'reference/cluster-properties',
-        'reference/tunable-properties',
-        'reference/node-properties',        
-        'reference/node-configuration-sample',
+        'core/reference/cluster-properties',
+        'core/reference/tunable-properties',
+        'core/reference/node-properties',        
+        'core/reference/node-configuration-sample',
         {
           type: 'doc',
           label: 'rpk commands',
-          id: 'reference/rpk-commands',
+          id: 'core/reference/rpk-commands',
         },        
         {
           type: 'link',
           label: 'Operator Custom Resource Definition (CRD)',
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },
-        'reference/internal-metrics',
-        'reference/faq',
+        'core/reference/internal-metrics',
+        'core/reference/faq',
         {
           type: 'link',
           label: 'Release notes',
@@ -398,7 +398,46 @@
     },
     {
       type: 'doc',
-      id: 'support',
+      id: 'core/support',
+    },
+  ],
+  cloudSidebar:
+  [
+    {
+      type: 'doc',
+      label: 'Docs home',
+      id: 'home/index',
+    },
+    {
+      type: 'doc',
+      label: 'Cloud Intro',
+      id: 'cloud/index',
+    },
+    {
+      type: 'category',
+      label: 'Kubernetes',
+      items: [
+        'cloud/kubernetes/development',
+        'cloud/kubernetes/production',       
+      ],
+    },
+  ],
+  homeSidebar : 
+  [
+    {
+    type: 'doc',
+    label: 'Docs home',
+    id: 'home/index',
+  },
+    {
+      type: 'doc',
+      label: 'Core',
+      id: 'core/introduction/index',
+    },
+    {
+      type: 'doc',
+      label: 'Cloud',
+      id: 'cloud/index',
     },
   ]
 };

@@ -13,15 +13,15 @@ and be fully compatible with the [Kafka ecosystem](https://cwiki.apache.org/conf
 This quick start guide can help you get started with Redpanda for development and testing purposes.
 To get up and running you need to create a cluster and deploy the Redpanda operator on the cluster.
 
-- For production or benchmarking, set up a [production deployment](/docs/deployment/production-deployment).
-- You can also set up a [Kubernetes cluster with external access](/docs/deployment/kubernetes-external-connect).
+- For production or benchmarking, set up a [production deployment](/docs/core/deployment/production-deployment).
+- You can also set up a [Kubernetes cluster with external access](/docs/core/deployment/kubernetes-external-connect).
 
 **_Note_** - Run a container inside the Kubernetes cluster to communicate with the Redpanda cluster.
 Currently, a load balancer is not automatically created during deployment by default.
 
 **_Note_** - In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. 
 If you want to set `developerMode: false`, for optimal configuration it is recommended that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster.
-You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/deployment/production-deployment#step-2-set-redpanda-production-mode) documentation. 
+You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/core/deployment/production-deployment#step-2-set-redpanda-production-mode) documentation. 
 If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. 
 You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`. 
 
@@ -45,7 +45,7 @@ Make sure you also have these common tools installed:
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) 
 
 To run locally
-- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/) v0.12 or above
+- [Kind](https://kind.sigs.k8s.io/docs/core/user/quick-start/) v0.12 or above
 
 :::note
 
@@ -316,5 +316,5 @@ Here are some sample commands to produce and consume streams:
 
 ## Next steps
 
-- Check out our in-depth explanation of how to [connect external clients](/docs/deployment/kubernetes-connectivity) to a Redpanda Kubernetes deployment.
+- Check out our in-depth explanation of how to [connect external clients](/docs/core/deployment/kubernetes-connectivity) to a Redpanda Kubernetes deployment.
 - Contact us in our [Slack](https://vectorized.io/slack) community so we can work together to implement your Kubernetes use cases.

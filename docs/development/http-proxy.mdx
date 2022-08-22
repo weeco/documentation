@@ -1,0 +1,756 @@
+---
+title: Redpanda HTTP Proxy
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Redpanda HTTP Proxy exposes a REST API for listing topics, producing events, and subscribing to events from topics using consumer groups. The API is suitable for simple integrations with CI/CD pipelines or where a Kafka API client doesn't yet exist.
+
+:::caution
+To use HTTP Proxy, you must be using Redpanda version 21.4.1 or later.
+:::
+
+## Step 1: Enable the Redpanda HTTP Proxy
+
+HTTP Proxy is enabled by default on port 8082. To change the proxy port, edit the redpanda.yaml file and set the ‘port’ under ‘pandaproxy_api’ on ‘pandaproxy’ section.
+
+```yaml
+...
+spec:
+    image: "vectorized/redpanda"
+    ...
+    // highlight-start
+    resources:
+        pandaproxyApi:
+            - port: 8082
+    // highlight-end
+...
+```
+
+For Kubernetes, enabling the HTTP Proxy for connection requires port exposing using port forwarding. [Port forwarding guide](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) can help you to open port 8082.
+
+After Redpanda starts running using the preceding commands, HTTP Proxy is available. To view the available REST endpoints, access `<host_address>:8082/v1` in a browser.  
+
+In the browser page, you can test the link to the Swagger specifications, which contain: HTTP methods, descriptions, parameters, and possible responses.
+
+## Step 2: Environment Setup
+
+Before moving forward with the examples to call the endpoints from the HTTP Proxy, you must set up the libraries shown below:
+
+<Tabs>
+  <TabItem value="env-nodejs" label="NodeJS" default>
+Run the following command in a terminal window:
+
+```bash
+npm install axios
+```
+
+After the library installation, import it to your code using the following command:
+
+```javascript
+const axios = requires=(‘axios’);
+
+const base_uri = ‘http://localhost:8082’;
+```
+
+  </TabItem>
+  <TabItem value="env-python" label="Python">
+
+Run the following command in a terminal window:
+
+```bash
+pip install requests
+```
+
+After the library installation, import the library into your code using the following command:
+
+```python
+import requests
+import json
+
+def pretty(text):
+print(json.dumps(text, indent=2))
+
+base_uri = “http://localhost:8082”
+```
+
+  </TabItem>
+</Tabs>
+
+### Creating Topics
+
+To create a topic to use with the Redpanda HTTP Proxy:
+
+```bash
+docker exec -it redpanda rpk topic create test_topic --brokers=<host_address>:9092 -p 3
+```
+
+:::note
+Be sure to replace `<host_address>` and `<version>` before executing these commands.
+:::
+
+```bash
+kubectl -n chat-with-me run -ti --rm \
+--restart=Never \
+--image docker.vectorized.io/vectorized/redpanda:<version> \
+-- rpk topic create test_topic \
+--brokers <host_address>:9092 \
+--partitions=3 \
+--replicas=1 \
+
+```
+
+## Step 3: Interacting with HTTP Proxy
+
+### HTTP Proxy with Swagger UI
+
+You can use Swagger UI to test and interact with Redpanda HTTP Proxy endpoints.
+
+To use Docker to run Swagger UI, run the following command:
+
+```bash
+docker run -p 80:8080 -d swaggerapi/swagger-ui
+```
+
+To verify that the Swagger container is available, run the following command:
+
+```bash
+docker ps
+```
+
+Verify that the Docker container has been added and is running: `swaggerapi/swagger-ui` with `Up…` status.
+
+In a browser, type `localhost` in the address bar to open the Swagger console.
+
+
+Change the URL to `http://<host_address>:8082/v1` and click on `Explore` to update the page with Redpanda HTTP Proxy endpoints for the endpoints.
+
+### List available topics
+
+At this point, you can use the Redpanda HTTP proxy. You can call the endpoints in any application and language that supports web interactions. The following examples show how to call the endpoints using curl, NodeJS, and Python.
+
+<Tabs>
+  <TabItem value="topics-curl" label="Curl" default>
+
+```bash
+curl -s "localhost:8082/topics"
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+axios
+  .get("http://localhost:8082/topics")
+  .then((response) => {
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.get(f"{base_uri}/topics").json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+["test_topic"]
+```
+
+### Send events to a topic
+
+
+You must use POST to send events in the REST endpoint query. The header must include the following:
+
+```
+Content-Type:application/vnd.kafka.json.v2+json
+```
+
+The following commands show how to send events to `test_topic`:
+
+<Tabs>
+  <TabItem value="events-curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X POST \
+  "http://localhost:8082/topics/test_topic" \
+  -H "Content-Type: application/vnd.kafka.json.v2+json" \
+  -d '{
+  "records":[
+      {
+          "value":"Redpanda",
+          "partition":0
+      },
+      {
+          "value":"HTTP proxy",
+          "partition":1
+      },
+      {
+          "value":"Test event",
+          "partition":2
+      }
+  ]
+}'
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let payload = { records: [
+    {
+        "value":"Redpanda",
+        "partition":0
+    },
+    {
+        "value":"HTTP proxy",
+        "partition":1
+    },
+    {
+        "value":"Test event",
+        "partition":2
+    }
+]};
+let options = {
+    headers: {
+        "Content-Type" : "application/vnd.kafka.json.v2+json"
+    }
+};
+let response = await axios.post(base_uri + '/topics/test_topic', payload, options);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.post(
+    url=f"{base_uri}/topics/my_topic",
+    data=json.dumps(
+        dict(records=[
+            dict(value="Redpanda", partition=0),
+            dict(value="HTTP Proxy", partition=1),
+            dict(value="Test Event", partition=2)
+        ])),
+    headers={"Content-Type": "application/vnd.kafka.json.v2+json"}).json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+{"offsets":[{"partition":0,"offset":0},{"partition":2,"offset":0},{"partition":1,"offset":0}]}
+```
+
+### Retrieving Records from a Topic
+
+After events have been sent to the topic, you can retrieve these same events using the following commands.
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8082/topics/test_topic/partitions/0/records?offset=0&timeout=1000&max_bytes=100000"\
+  -H "Accept: application/vnd.kafka.json.v2+json"
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let options = {
+  headers: {
+    accept: "application/vnd.kafka.json.v2+json",
+  },
+  params: {
+    offset: 0,
+    timeout: "1000",
+    max_bytes: "100000",
+  },
+};
+
+let response = await axios.get(
+  base_uri + "/topics/test_topic/partitions/0/records",
+  options
+);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.get(
+        url=f"{base_uri}/topics/test_topic/partitions/0/records",
+        params={"offset": 0, "timeout":1000,"max_bytes":100000},
+        headers={"Accept": "application/vnd.kafka.json.v2+json"}).json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+[{"topic":"test_topic","key":null,"value":"Redpanda","partition":0,"offset":0}]
+```
+
+### Consume topic events with consumers
+
+To retrieve messages from a topic using consumers, you must: create a consumer group, a consumer instance, and then subscribe the consumer instance to a topic. Each action is related to a different endpoint and method.
+
+The first endpoint is: `/consumers/<test_group_name>.` For this REST call the payload is the group information.
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X POST \
+  "http://localhost:8082/consumers/test_group"\
+  -H "Content-Type: application/vnd.kafka.v2+json" \
+  -d '{
+  "format":"json",
+  "name":"test_consumer",
+  "auto.offset.reset":"earliest",
+  "auto.commit.enable":"false",
+  "fetch.min.bytes": "1",
+  "consumer.request.timeout.ms": "10000"
+}'
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+    let payload = {
+        "name": "test_consumer",
+        "format": "json",
+        "auto.offset.reset": "earliest",
+        "auto.commit.enable": "false",
+        "fetch.min.bytes": "1",
+        "consumer.request.timeout.ms": "10000"
+    };
+    let options = {
+        headers: {
+            "Content-Type" : "application/vnd.kafka.v2+json"
+        }
+    };
+    let response = await axios.post('http://localhost:8082/consumers/test_group', payload, options);
+    console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.post(
+    url=f"{base_uri}/consumers/test_group",
+    data=json.dumps({
+        "name": "test_consumer",
+        "format": "json",
+        "auto.offset.reset": "earliest",
+        "auto.commit.enable": "false",
+        "fetch.min.bytes": "1",
+        "consumer.request.timeout.ms": "10000"
+    }),
+    headers={"Content-Type": "application/vnd.kafka.v2+json"}).json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+{"instance_id":"test_consumer","base_uri":"http://127.0.0.1:8082/consumers/test_group/instances/test_consumer"}
+```
+
+:::note 
+Consumers expire within 5 minutes. After 5 minutes, you must create a new consumer. Fetch events from consumers often (e.g. within a loop) to prevent this from happening. If the consumer has expired, you can create a new one with the same name.
+:::
+
+After creating the consumer, you must subscribe to the topic that you created earlier.
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+  -X POST \
+  "http://localhost:8082/consumers/test_group/instances/test_consumer/subscription"\
+  -H "Content-Type: application/vnd.kafka.v2+json" \
+  -d '{
+  "topics": [
+     "test_topic"
+  ]
+}'
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let payload = {
+  topics: ["test_topic"],
+};
+let options = {
+  headers: {
+    "Content-Type": "application/vnd.kafka.v2+json",
+  },
+};
+let response = await axios.post(
+  base_uri + "/consumers/test_group/instances/test_consumer/subscription",
+  payload,
+  options
+);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.post(
+    url=f"{base_uri}/consumers/test_group/subscription",
+    data=json.dumps({"topics": ["test_topic"]}),
+    headers={"Content-Type": "application/vnd.kafka.v2+json"})
+```
+
+  </TabItem>
+</Tabs>
+
+You can expect a HTTP 204 response, without a body.
+
+Now you can get the events from `test_topic`.
+
+To retrieve the events from the topic, run the following command:
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8082/consumers/test_group/instances/test_consumer/records?timeout=1000&max_bytes=100000"\
+  -H "Accept: application/vnd.kafka.json.v2+json"
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let options = {
+  headers: {
+    Accept: "application/vnd.kafka.json.v2+json",
+  },
+  params: {
+    timeout: "1000",
+    max_bytes: "100000",
+  },
+};
+let response = await axios.get(
+  base_uri + "/consumers/test_group/instances/test_consumer/records",
+  options
+);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.get(
+    url=f"{base_uri}/consumers/test_group/instances/test_consumer/records",
+    params={"timeout":1000,"max_bytes":100000},
+    headers={"Accept": "application/vnd.kafka.json.v2+json"}).json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+[{"topic":"test_topic","key":null,"value":"Redpanda","partition":0,"offset":0},{"topic":"test_topic","key":null,"value":"HTTP proxy","partition":1,"offset":0},{"topic":"test_topic","key":null,"value":"Test event","partition":2,"offset":0}]
+```
+
+### Get offsets from consumer
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s \
+   -X 'GET' \
+  'http://localhost:8082/consumers/test_group/instances/test_consumer/offsets' \
+  -H 'accept: application/vnd.kafka.v2+json' \
+  -H 'Content-Type: application/vnd.kafka.v2+json' \
+  -d '{
+  "partitions": [
+    {
+      "topic": "test_topic",
+      "partition": 0
+    },
+    {
+      "topic": "test_topic",
+      "partition": 1
+    },
+    {
+      "topic": "test_topic",
+      "partition": 2
+    }
+  ]
+}
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let options = {
+  headers: {
+    "Content-Type": "application/vnd.kafka.v2+json",
+  },
+};
+
+let payload = {
+  partitions: [
+    {
+      topic: "test_topic",
+      partition: 0,
+    },
+    {
+      topic: "test_topic",
+      partition: 1,
+    },
+    {
+      topic: "test_topic",
+      partition: 2,
+    },
+  ],
+};
+
+let response = await axios.get(base_uri + consumer_offsets, payload, options);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.get(
+        url=f"{base_uri}/consumers/test_group/instances/test_consumer/offsets",
+        data=json.dumps(
+            dict(partitions=[
+                dict(topic="test_topic", partition=p) for p in [0, 1, 2]
+            ])),
+        headers={"Content-Type": "application/vnd.kafka.v2+json"}).json()
+    pretty(res)
+
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+{ "offsets": [{ "topic": "test_topic", "partition": 0, "offset": 0, "metadata": "" },{ "topic": "test_topic", "partition": 1, "offset": 0, "metadata": "" }, { "topic": "test_topic", "partition": 2, "offset": 0, "metadata": "" }] }
+```
+
+### Commit Consumer Offset
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+-X 'POST' \
+'http://localhost:8082/consumers/test_group/instances/test_consumer/offsets' \
+-H 'accept: application/vnd.kafka.v2+json' \
+-H 'Content-Type: application/vnd.kafka.v2+json' \
+-d '{
+  "partitions": [
+    {
+      "topic": "test_topic",
+      "partition": 0,
+      "offset": 0
+    },
+    {
+      "topic": "test_topic",
+      "partition": 1,
+      "offset": 0
+    },
+    {
+      "topic": "test_topic",
+      "partition": 2,
+      "offset": 0
+    }
+  ]
+}'
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let options = {
+  headers: {
+    accept: "application/vnd.kafka.v2+json",
+    "Content-Type": "application/vnd.kafka.v2+json",
+  },
+};
+
+let payload = {
+  partitions: [
+    {
+      topic: "test_topic",
+      partition: 0,
+      offset: 0,
+    },
+    {
+      topic: "test_topic",
+      partition: 1,
+      offset: 0,
+    },
+    {
+      topic: "test_topic",
+      partition: 2,
+      offset: 0,
+    },
+  ],
+};
+
+let response = await axios.post(base_uri + consumer_offsets, payload, options);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.post(
+    url=f"{consumer_base_uri}/offsets",
+    data=json.dumps(
+        dict(partitions=[
+            dict(topic="my_topic", partition=p, offset=0) for p in [0, 1, 2]
+        ])),
+    headers={"Content-Type": "application/vnd.kafka.v2+json"})
+```
+
+  </TabItem>
+</Tabs>
+
+No output is expected.
+
+### List Brokers
+
+To list all brokers:
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl "http://localhost:8082/brokers"
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let response = await axios.get(base_uri + "/brokers");
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.get(f"{base_uri}/brokers").json()
+pretty(res)
+```
+
+  </TabItem>
+</Tabs>
+
+The expected output is:
+
+```bash
+{brokers: [0]}
+```
+
+### Deleting a consumer
+
+To delete an existing consumer:
+
+<Tabs>
+  <TabItem value="records-curl" label="Curl" default>
+
+```bash
+curl -s -o /dev/null -w "%{http_code}" \
+   -X 'DELETE' \
+  'http://localhost:8082/consumers/test_group/instances/test_consumer' \
+  -H 'Content-Type: application/vnd.kafka.v2+json'
+```
+
+  </TabItem>
+
+  <TabItem value="topics-nodejs" label="NodeJS" default>
+
+```javascript
+let options = {
+  headers: {
+    "Content-Type": "application/vnd.kafka.v2+json",
+  },
+};
+
+let response = await axios.delete(
+  base_uri + "/consumers/test_group/instances/test_consumer",
+  options
+);
+console.log(response.data);
+```
+
+  </TabItem>
+  <TabItem value="topics-python" label="Python">
+
+```python
+res = requests.delete(
+    url=f"{base_uri}/consumers/test_group/instances/test_consumer",
+    headers={"Content-Type": "application/vnd.kafka.v2+json"})
+```
+
+  </TabItem>
+</Tabs>
+
+For more options and actions refer to the [rpk guide](https://docs.redpanda.com/docs/core/core/reference/rpk-commands).
+
+If you require examples that show how to connect to Redpanda with a native library, refer to the [NodeJS tutorial](https://docs.redpanda.com/docs/core/core/features/guide-nodejs).
