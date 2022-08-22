@@ -32,8 +32,6 @@ To specify superusers using the `set` command, run:
 rpk cluster config set superusers ['admin']
 ```
 
-Upon cluster creation, the environment variable `RP_BOOTSTRAP_USER` creates an initial user account. This lets you start up a cluster with authentication on the Kafka and Admin APIs.
-
 ### Create superusers
 
 When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](/docs/security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
@@ -44,7 +42,7 @@ You can specify the name of the superuser. For example, if you used superuser `a
 rpk acl user create <super_user_username> -p <super_user_password> 
 ```
 
-You have the initial user account created with the `RP_BOOTSTRAP_USER` environment variable. You can specify another existing user or a user that does not exist yet. Adding the user name in the configuration file does not create the user, but when you do create a user with the user name specified in the configuration file, that user has full access to the cluster. You can then use that superuser to grant permissions to other users. 
+You can specify another existing user or a user that does not exist yet. Adding the user name in the configuration file does not create the user, but when you create a user with the user name specified in the configuration file, that user has full access to the cluster. You can then use that superuser to grant permissions to other users. 
 
 The Admin API defaults to `localhost:9644`. If you've configured the Admin API to use a different address/port, use the `--api-urls <address:port>` flag.
 
@@ -161,7 +159,7 @@ message.timestamp.type  CreateTime  DEFAULT_CONFIG
 ...
 ```
 
-See also: [Configuring Redpanda SASL authentication on Kubernetes](/docs/security/kubernetes-sasl)
+See also: [Configuring Redpanda SASL on Kubernetes](/docs/security/kubernetes-sasl)
 
 ## Configure mTLS with authentication  
 
@@ -218,7 +216,13 @@ To update the `kafka_mtls_principal_mapping_rules` property, run:
 rpk cluster config set kafka_mtls_principal_mapping_rules '["DEFAULT"]'
 ```
 
-See also: [Configuring Redpanda mTLS authentication on Kubernetes](/docs/security/kubernetes-mtls)
+See also: [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls)
+
+## Securely bootstrap a cluster
+
+The `RP_BOOTSTRAP_USER` environment variable creates an initial user account. This lets you bootstrap a cluster that is fully secure from the start.
+
+When you set up Redpanda with `admin_api_require_auth` set to `true`, you can use `RP_BOOTSTRAP_USER` to create a user with a superuser password. This environment variable is only read when Redpanda starts up for the first time. Later modifications of its value have no affect. The value should have the format `<user>:<password>`.
 
 ## Disable authentication
 
