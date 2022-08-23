@@ -376,11 +376,7 @@
         'reference/tunable-properties',
         'reference/node-properties',        
         'reference/node-configuration-sample',
-        {
-          type: 'doc',
-          label: 'rpk commands',
-          id: 'reference/rpk-commands',
-        },        
+        'reference/rpk-commands',      
         {
           type: 'link',
           label: 'Operator Custom Resource Definition (CRD)',
