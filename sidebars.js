@@ -59,7 +59,11 @@
           label: 'Version Upgrade',
           id: 'install-upgrade/version-upgrade',
         },
-
+        {
+          type: 'doc',
+          label: 'Rolling Upgrades',
+          id: 'install-upgrade/rolling-upgrade',
+        },
       ],
     },
     {
@@ -210,8 +214,7 @@
           label: 'Node Maintenance Mode',
           id: 'cluster-administration/node-management',
         },             
-        'cluster-administration/monitoring', 
-        'cluster-administration/rolling-upgrade',
+        'cluster-administration/monitoring',
       ]
     },
     {
