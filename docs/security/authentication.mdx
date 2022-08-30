@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
 
 Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. See [Configuring Listeners](/docs/cluster-administration/listener-configuration).
 
-## Enable Authentication
+## Enable authentication
 
 To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](/docs/cluster-administration/cluster-property-configuration).
 

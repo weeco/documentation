@@ -1,5 +1,5 @@
 ---
-title: Connecting remotely to Kubernetes
+title: Connecting Remotely to Kubernetes
 ---
 
 <head>
@@ -10,26 +10,25 @@ title: Connecting remotely to Kubernetes
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The [Kubernetes Quick Start guide](/docs/quickstart/kubernetes-qs-cloud/) describes how to quickly get up and running with a Kubernetes cluster.
-Those instructions only provide access to the cluster from within the Kubernetes network.
+[60-Second Kubernetes for Cloud](/docs/quickstart/kubernetes-qs-cloud/) describes how to quickly get up and running with a Kubernetes cluster.
+Those instructions provide access to the cluster from within the Kubernetes network.
 
-Here we'll show you an example of how to set up Kubernetes in
-[Google GKE](https://cloud.google.com/kubernetes-engine), [Amazon EKS](https://aws.amazon.com/eks), or [Digital Ocean](https://cloud.digitalocean.com/)
-so you can work with Redpanda from outside of the Kubernetes network.
-
-Let's get started...
+This section shows how to set up Kubernetes in
+[Google GKE](https://cloud.google.com/kubernetes-engine), [Amazon EKS](https://aws.amazon.com/eks), or [Digital Ocean](https://cloud.digitalocean.com/),
+so you can work with Redpanda from outside of the Kubernetes network.  
 
 ## Create a Kubernetes cluster
 
-Create a 3-node cluster on the platform of your choice:
+Create a three-node cluster for your Redpanda deployment on any of the following platforms:
 
 <Tabs>
 
   <TabItem value="awsEksPlatform" label="AWS EKS" default>
 
   Use the [EKS Getting Started](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) guide to set up EKS.
-  When you finish, you'll have `eksctl` installed so that you can create and delete clusters in EKS.
-  Then, create an EKS cluster with:
+  When you finish, you have `eksctl` installed, so that you can create and delete clusters in EKS.
+  
+  To create a cluster:
 
   ```bash
   eksctl create cluster \
@@ -41,14 +40,15 @@ Create a 3-node cluster on the platform of your choice:
   --nodes-max 4
   ```
 
-  It will take about 10-15 minutes for the process to finish.
+  The process takes about 10-15 minutes to finish.
 
   </TabItem>
 
   <TabItem value="googleGkePlatform" label="Google GKE">
 
-  First complete the "Before You Begin" steps described in [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
-  Then, create a cluster with:
+  Complete the "Before You Begin" steps described in [Google Kubernetes Engine Quickstart](https://cloud.google.com/kubernetes-engine/docs/quickstart).
+  
+  To create a cluster:
 
   ```bash
   gcloud container clusters create redpanda --machine-type e2-standard-4 --cluster-version 1.21 && \
@@ -56,20 +56,17 @@ Create a 3-node cluster on the platform of your choice:
   ```
 
 :::note
-- You may need to add a `--region`, `--zone`, or `--project` to this command.
+You may need to specify a `--region`, `--zone`, or `--project` in this command.
 :::
 
   </TabItem>
   <TabItem value="digitalOceanPlatform" label="Digital Ocean">
 
-  First, set up your [Digital Ocean account](https://docs.digitalocean.com/products/getting-started/) and install [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/).
+  Set up your [Digital Ocean account](https://docs.digitalocean.com/products/getting-started/), and install [`doctl`](https://docs.digitalocean.com/reference/doctl/how-to/install/).
 
-  Remember to setup your [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/).
+  Remember to set up your [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/). For information, see the [Digital Ocean setup docs](https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/01-setup-DOKS/README.md).
 
-
-  For additional information, check out the [Digital Ocean setup docs](https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/01-setup-DOKS/README.md).
-
-  Then you can create a cluster for your Redpanda deployment:
+  To create a cluster:
 
   ```bash
   doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
@@ -79,27 +76,27 @@ Create a 3-node cluster on the platform of your choice:
 </Tabs>
 
 ## Kubectl context
-Most cloud utility tools will automatically change your `kubectl` config file.   
-To check if you're in the correct context, run the command:
+Most cloud utility tools automatically change your `kubectl` config file.   
+
+To check if you're in the correct context:
 
 ```bash
 kubectl config current-context
 ```
 
-For Digital Ocean for example, the output will look similar to this:
+For Digital Ocean, for example, the output looks similar to this:
 
 ```bash
 do-nyc1-redpanda
 ```
    
-If you're running multiple clusters or if the config file wasn't set up automatically, look for more information in the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/).
-
+If you're running multiple clusters, or if the config file wasn't set up automatically, see the [Kubernetes documentation](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/).
 
 ## Prepare TLS certificate infrastructure
 
 The Redpanda cluster uses cert-manager to create TLS certificates for communication between the cluster nodes.
 
-We'll use Helm to install cert-manager:
+To use Helm to install cert-manager:
 
   ```bash
   helm repo add jetstack https://charts.jetstack.io && \
@@ -114,14 +111,13 @@ We'll use Helm to install cert-manager:
 
 ## Install the Redpanda operator and cluster
 
-1. Just to simplify the commands, create a variable to hold the latest version number:
+1. To simplify the commands, create a variable to hold the latest version number:
 
     ```bash
     export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
     ```
 
-    **_Note_** - You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
-    We're using `jq` to help us. If you don't have it installed run this command:   
+    This section uses `jq` to help. If you don't have `jq` installed:   
     <Tabs>
       <TabItem value="apt" label="apt" default>
 
@@ -138,7 +134,11 @@ We'll use Helm to install cert-manager:
       </TabItem>
     </Tabs>
 
-2. Install the latest redpanda operator:
+    :::note
+    You can also get operator versions from the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).   
+    :::
+
+2. To install the latest Redpanda operator:
 
   <Tabs>
 
@@ -169,118 +169,113 @@ We'll use Helm to install cert-manager:
       --version $VERSION \
       redpanda/redpanda-operator
     ```
-
     </TabItem>
 
   </Tabs>
 
-3. Install a cluster with external connectivity:
+3. To install a cluster with external connectivity:
 
   ```bash
   kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda/$VERSION/src/go/k8s/config/samples/external_connectivity.yaml
   ```
 
-4. Get the addresses of the brokers:
+4. To get the addresses of the brokers:
 
   ```bash
   kubectl get clusters external-connectivity -o=jsonpath='{.status.nodes.external}'
   ```
 
-  The broker addresses are shown in the command output, for example:
+  The broker addresses are shown in the command output. For example:
 
   `["34.121.167.159:30249","34.71.125.54:30249","35.184.221.5:30249"]`
 
-  If you don't get any response for this command, please check if the pods are healthy and are running with no errors. 
+  If you don't get any response for this command, check if the pods are healthy and are running with no errors. 
 
-  Commands like these will help you better understand what's happening:
+  The following commands help you better understand what's happening:
 
   ```bash
   kubectl describe statefulset external-connectivity
   kubectl describe pods external-connectivity-0
   ```
 
+5. To configure security access:
 
-5. Configure security access
+  <Tabs>
+    <TabItem value="awsEksAccess" label="AWS EKS" default>
 
-<Tabs>
-  <TabItem value="awsEksAccess" label="AWS EKS" default>
+    When you run `eksctl`, it automatically creates a lot of resources for you (dedicated VPC, new Security Group, and others). Because of that, you have to enter your security configurations and open the ports that external-connectivity uses in order to follow the next steps. The easiest way to do that is to:
 
-  When you run `eksctl` it automatically creates a lot of resources for you (dedicated VPC, new Security Group and etc). Because of that, you have to enter your security configurations and open the ports that external-connectivity uses in order to follow the next steps.   
-
-  The easiest way to do that is to:
-
-  a. Get the ports that you need to open with the command that you ran in step 4.
+    a. Get the ports that you need to open with the command you ran in the previous step.
      
-  b. Go to your Security Group configurations and check the newly created rule for your cluster.
+    b. Go to your Security Group configurations and check the newly created rule for your cluster.
 
-  c. Open TCP traffic to the ports. 
+    c. Open TCP traffic to the ports. 
 
-  If you don't know how to do it, refer to the [AWS guide for configuring VPCs and Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html).
+    For more information, see the [AWS guide for configuring VPCs and Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html).
 
-
-</TabItem>
-
-<TabItem value="googleGkeAccess" label="Google GKE">
-
-  For GKE, open the firewall for access to the cluster:
-  a. Get the port number that Redpanda is listening on:
-
-  ```bash
-  kubectl get service external-connectivity-external -o=jsonpath='{.spec.ports[0].nodePort}'
-  ```
-
-  The port is shown in the command output.
-
-  b. Create a firewall rule that allows traffic to Redpanda on that port:
-
-  ```bash
-  gcloud compute firewall-rules create redpanda-nodeport --allow tcp:<port_number>
-  ```
-
-  The port that Redpanda is listening on is shown in the command output, for example:
-
-  `30249`
   </TabItem>
 
-  <TabItem value="digitalOceanAccess" label="Digital Ocean">
+  <TabItem value="googleGkeAccess" label="Google GKE">
+
+    For GKE, open the firewall for access to the cluster:
+    
+    a. To get the port number on which Redpanda is listening:
+
+    ```bash
+    kubectl get service external-connectivity-external -o=jsonpath='{.spec.ports[0].nodePort}'
+    ```
+
+    The port is shown in the command output.
+
+    b.  To create a firewall rule that allows traffic to Redpanda on that port:
+
+    ```bash
+    gcloud compute firewall-rules create redpanda-nodeport --allow tcp:<port_number>
+    ```
+
+    The port that Redpanda is listening on is shown in the command output; for example: `30249`.
+
+    </TabItem>
+
+    <TabItem value="digitalOceanAccess" label="Digital Ocean">
   
-  For Digital Ocean, there's no need for additional configurations. 
+    For Digital Ocean, there's no need for additional configurations. 
 
-  </TabItem>
-</Tabs>
+    </TabItem>
+  </Tabs>
 
 ## Verify the connection
 
-1. From a remote machine that has `rpk` installed, get information about the cluster:
+1. From a remote machine that has `rpk` installed, to get information about the cluster:
 
   ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   cluster info
   ```
 
-  **_Note_** - Check if you're using the correct address and ports. Otherwise you may run into errors like:
+  :::note
+  Check if you're using the correct address and ports. Otherwise you may run into errors like the following:
   
   ```bash
   unable to create topics [chat-rooms]: invalid large response size 1213486160 > limit 104857600
   ```
+  :::
 
-2. Create a topic in your Redpanda cluster:
+2. To create a topic in your Redpanda cluster:
 
   ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   topic create chat-rooms -p 5
   ```
 
-3. Show the list of topics: 
+3. To show the list of topics: 
 
   ```bash
   rpk --brokers 34.121.167.159:30249,34.71.125.54:30249,35.184.221.5:30249 \
   topic list
   ```
 
-Now you know how to set up a Kubernetes cluster in a cloud and access it from a remote machine.
-
 ## Next steps
 
-- Check out our in-depth explanation of [Kubernetes connectivity](/docs/deployment/kubernetes-connectivity).
+- For a detailed explanation, see [Configuring the Kubernetes Operator for Connectivity](/docs/deployment/kubernetes-connectivity).
 - Contact us in our <a href="https://redpanda.com/slack">Slack</a> community so we can work together to implement your Kubernetes use cases.

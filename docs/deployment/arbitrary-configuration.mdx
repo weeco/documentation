@@ -1,23 +1,20 @@
 ---
-title: Arbitrary configuration parameters for the Redpanda operator
+title: Using Additional Configuration Parameters for the Redpanda Operator
 ---
 
 <head>
-    <meta name="title" content="Arbitrary configuration | Redpanda Docs"/>
-    <meta name="description" content="Arbitrary configuration parameters for the Redpanda operator."/>
+    <meta name="title" content="Additional configuration parameters for the Redpanda Operator| Redpanda Docs"/>
+    <meta name="description" content="Additional configuration parameters for the Redpanda operator."/>
 </head>
 
-# Arbitrary configuration
+Follow [60-Second Kubernetes for Cloud](/docs/quickstart/kubernetes-qs-cloud/) to set up the Redpanda operator and optionally a Redpanda cluster.
 
-Before continuing please go over the [Kubernetes Quick Start Guide](/docs/quickstart/kubernetes-qs-cloud/) and follow the steps for setting up the Redpanda Operator and optionally a Redpanda cluster.
+After the Redpanda operator is installed, you can create a Redpanda cluster by applying a Cluster Custom Resource (CR) that contains the specification of the desired Redpanda cluster. The CR includes the Redpanda cluster name, namespace, and configuration for the Admin API, Kafka API, HTTP Proxy API, and others.
 
-Once the Redpanda Operator is installed a Redpanda cluster can be created by *applying* a Cluster Custom Resource (CR) containing the specification of the desired Redpanda cluster. The CR includes the desired Redpanda Cluster name, namespace, and configuration for the Admin, Kafka, Pandaproxy API, and others.
+The cluster definition includes commonly used cluster and node properties. To add other node properties, you can specify any node property in the [node configuration template](/docs/reference/node-configuration-sample/) by using the `additionalConfiguration` property.
 
-The cluster definition includes properties that are commonly used to configure at both cluster and node levels. 
-However, Redpanda offers a broad range of custom properties for [node configuration](/docs/cluster-administration/node-property-configuration) besides cluster configuration.
-
-For this reason, Redpanda introduced the `additionalConfiguration` property, which allows you to include arbitrary configuration properties not included in the CR. 
-For example, consider the `single-node sample` found in [our sample files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples) with `additionalConfiguration` added:
+The `additionalConfiguration` property lets you add properties not included in the CR. 
+For example, consider the `single-node sample` found in the [sample files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples) with `additionalConfiguration` added:
 
 ## Sample configuration
 
@@ -59,15 +56,16 @@ rpk cluster config set enable_idempotence true
 ```
 
 To define the `default_topic_partitions` property with a new value:
+
 ```bash
 rpk cluster config set default_topic_partitions 3
 ```
 
- The `additionalConfiguration` map includes parameters that are not part of the Custom Resource, but are passed to the Redpanda configuration (`redpanda.yaml`).
+ The `additionalConfiguration` map includes parameters that are not part of the Custom Resource, but are passed to the `redpanda.yaml` configuration file.
 
- The format of each entry is `<subsystem>.<property_name>: <value>`. Examples of subsystems, as seen above, are `redpanda`, `pandaproxy_client`, and `schema_registry`. The value can be a single value or a YAML/JSON-encoded string, as is the case with the `schema_registry` parameter in the example.
+ The format of each entry is `<subsystem>.<property_name>: <value>`. Examples of subsystems are `redpanda`, `pandaproxy_client`, and `schema_registry`. The value can be a single value or a YAML/JSON-encoded string, as is the case with the `schema_registry` parameter in the example.
 
- Once the above specification is applied, the Redpanda logs should include
+ After the specification is applied, the Redpanda logs should include the following:
 
  ```yaml
  pandaproxy_client:
@@ -99,10 +97,8 @@ rpk cluster config get default_topic_partitions
 3
 ```
 
-
 ## Limitations
 
- When using this capability keep in mind some limitations:
- - versioning is not supported for the `additionalConfiguration` parameters
- - key names not supported by Redpanda will lead to failure on start
- - updating this map requires a manual restart of the Redpanda pods 
+ - Versioning is not supported for the `additionalConfiguration` parameters.
+ - Key names not supported by Redpanda lead to failure on startup.
+ - Updating this map requires a manual restart of the Redpanda pods. 

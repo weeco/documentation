@@ -148,7 +148,7 @@
             },
             {
               type: 'doc',
-              label: 'Arbitrary Configuration',
+              label: 'Additional Configuration Parameters',
               id: 'deployment/arbitrary-configuration',
             },
             

@@ -47,7 +47,7 @@ To set retention time for a single topic, use `retention.ms`, which overrides `d
   
   To minimize the likelihood of out-of-disk outages, set `retention.ms` to `86400000`. There is no default.
   
-  To set `retention.ms`, run: 
+  To set `retention.ms`: 
 
   ```bash
   rpk topic alter-config <topic> --set retention.ms=<retention_time>
@@ -70,7 +70,7 @@ To set retention size for a single topic, use `retention.bytes`, which overrides
 
 * `retention.bytes` - Topic-level property that specifies the maximum size of a partition. There is no default. 
 
-  To set `retention.bytes`, run:
+  To set `retention.bytes`:
 
   ```bash
   rpk topic alter-config <topic> --set retention.bytes=<retention_size>
@@ -80,7 +80,7 @@ To set retention size for a single topic, use `retention.bytes`, which overrides
 
   Set this to a value that is lower than the disk capacity, or a fraction of the disk capacity based on the number of partitions per topic. For example, if you have one partition, `retention_bytes` can be 80% of the disk size. If you have 10 partitions, it can be 80% of the disk size divided by 10. The default is `null`, which means that retention based on topic size is disabled.
   
-  To set `retention_bytes`, run:
+  To set `retention_bytes`:
   
   ```bash
   rpk cluster config set retention_bytes <retention_size>
@@ -90,7 +90,7 @@ To set retention size for a single topic, use `retention.bytes`, which overrides
 
 The `log_segment_size` property specifies the size of each log segment.
 
-To set `log_segment_size`, run:
+To set `log_segment_size`:
 
 ```bash
 rpk cluster config set log_segment_size <segment_size>
@@ -98,7 +98,7 @@ rpk cluster config set log_segment_size <segment_size>
 
 If you know which topics will receive more data, it's best to specify the size for each topic. 
 
-To configure log segment size on a topic, run: 
+To configure log segment size on a topic: 
 
 ```bash
 rpk topic alter-config <topic> --set segment.bytes=<segment_size>
