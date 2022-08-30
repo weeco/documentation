@@ -52,3 +52,9 @@ To set up a Remote Read Replica topic on a separate remote cluster:
     | `cloud_storage_region: “<region>”` | The region where the remote cluster is created. |
 4. If you're using Google Cloud Storage, set the `cloud_storage_api_endpoint` property to `storage.googleapis.com`.
 3. Create the Remote Read Replica topic by running `rpk topic create <topic_name> -c redpanda.remote.readreplica=<bucket_name>`. For `<topic_name>`, use the same name as the original topic. For `<bucket_name>`, use the S3 bucket specified in the `cloud_storage_bucket` property for the origin cluster.
+
+---
+
+## Suggested reading
+
+- [Remote Read Replicas: Read-only topics in tiered storage](https://redpanda.com/blog/remote-read-replicas-for-distributing-work)
