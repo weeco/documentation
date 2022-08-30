@@ -81,7 +81,8 @@ All cluster properties are presented in tables that are grouped into the followi
 
 | Property | Description | Restart Required |
 | :------  | :---------  | :--------------- |
-| disable_metrics | Disable registering metrics. <br/><br/>Default: false | Yes |
+| disable_metrics | Disable registering metrics exposed on the internal metrics endpoint (/metrics). <br/><br/>Default: false | Yes |
+| disable_public_metrics | Disable registering metrics exposed on the public metrics endpoint (/public_metrics). <br/><br/>Default: false | Yes |
 | enable_metrics_reporter | Enable cluster metrics reporter. <br/><br/>Default: true | No |
 
 ### Raft
