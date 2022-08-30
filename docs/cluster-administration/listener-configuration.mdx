@@ -12,7 +12,7 @@ instance. If the client and broker are on different subnets, advertise the locat
 the cluster can be found. If not, clients connecting to brokers outside
 their local network experience connectivity issues.
 
-To try out Redpanda, see the Getting Started Guides for
+To try out Redpanda, see the 60-Second Guides for
 [Linux](/docs/quickstart/quick-start-linux), [MacOS](/docs/quickstart/quick-start-macos),
 [Docker](/docs/quickstart/quick-start-docker), or [Kubernetes](/docs/quickstart/kubernetes-qs-cloud).
 
@@ -50,7 +50,7 @@ It's also possible to advertise a host name, provided the client can resolve the
 
 Sometimes it's useful to have multiple configurations for accessing Redpanda with multiple routes.
 
-This is possible by creating multiple listeners, and providing a name for the listener. The name is used to connect the listener and its advertised address. For example:
+Do this by creating multiple listeners, and providing a name for the listener. The name is used to connect the listener and its advertised address. For example:
 
 ```yaml
 redpanda:
@@ -70,7 +70,7 @@ redpanda:
       port: 9093
 ```
 
-It's also possible to create additional listeners for different configurations of TLS or authentication.
+You can also create additional listeners for different configurations of TLS or authentication.
 
 ## Mixed-mode authentication with multiple listeners
 
@@ -100,5 +100,5 @@ redpanda:
 ## Listeners that can be advertised
 
 * `kafka_api` -> `advertised_kafka_api`
-* `rpc_server` -> `advertised_rpc_server` (Only a single listener is supported and is used for Redpanda instances to talk to each other.)
+* `rpc_server` -> `advertised_rpc_api` (Only a single listener is supported and is used for Redpanda instances to talk to each other.)
 * `pandaproxy_api` -> `advertised_pandaproxy_api`
