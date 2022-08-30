@@ -4,53 +4,93 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Get started with Redpanda',
-    Svg: require('../../static/img/Redpanda Rocket.svg').default,
+    title: '60-second Guides',
+    Svg: require('../../static/img/quickstart.svg').default,
     description: (
       <>
-        Redpanda was designed from the ground up to be easily installed
-        to get streaming up and running quickly.
+        Try out Redpanda.                                                                                
       </>
     ),
     url: '/docs/quickstart/',
   },
   {
-    title: 'Deploy Redpanda in production',
-    Svg: require('../../static/img/Redpanda Sitting.svg').default,
-    href: `/docs/deploy-self-hosted/production-deployment`,
+    title: 'Deploying for Production',
+    Svg: require('../../static/img/deployment.svg').default,
     description: (
       <>
-        After you see its power, put Redpanda to the test in production.
+        Install and configure Redpanda.                       
       </>
     ),
     url: '/docs/deployment/production-deployment',
   },
   {
-    title: 'Dive deeper into Redpanda',
-    Svg: require('../../static/img/Redpanda Transporter.svg').default,
+    title: 'Redpanda Console',
+    Svg: require('../../static/img/console-docs.svg').default,
     description: (
       <>
-        Use the more advanced Redpanda features...
+        Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
+      </>
+    ),
+    url: '/docs/console',
+  },
+  {
+    title: 'rpk Command Reference',
+    Svg: require('../../static/img/RPK-commands.svg').default,
+    description: (
+      <>
+        Browse all commands for running Redpanda.
       </>
     ),
     url: '/docs/reference/rpk-commands',
+  },
+  {
+    title: 'Tiered Storage',
+    Svg: require('../../static/img/try-now.svg').default,
+    description: (
+      <>
+        Save storage costs by offloading log segments to the cloud.
+      </>
+    ),
+    url: '/docs/data-management/tiered-storage',
+  },
+  {
+    title: 'Sizing Guidelines',
+    Svg: require('../../static/img/get-started.svg').default,
+    description: (
+      <>
+        Size your production clusters to maximize performance.
+      </>
+    ),
+    url: 'https://redpanda.com/blog/sizing-redpanda-cluster-best-practices',
   },
 ];
 
 function Feature({Svg, title, description, url}) {
   return (
     <div className={clsx('col col--4')}>
-      <a href={url}>
-        <div className="text--center">
-          <Svg className={styles.featureSvg} alt={title} />
+      <div className={styles.padding}>
+      <div className={styles.border}>
+          <div className="text--center">
+            <a href={url}>
+            <Svg className={styles.featureSvg} alt={title} />
+            </a>
+          </div>
+        <div className="text--left padding-horiz--md">
+          <a href={url}>
+          <span className={styles.body_title}>{title}</span> 
+          </a> 
+          <div className={styles.body_text}>
+          
+          
+          <p>{description}</p>
+          <div>
+            <a href={url}><p>Learn more -> </p></a>
+          </div>
+          </div>
+          
         </div>
-      </a>
-      <div className="text--center padding-horiz--md">
-        <a href={url}>
-          <h3>{title}</h3>
-        </a>
-        <p>{description}</p>
       </div>
+    </div>
     </div>
   );
 }
@@ -58,13 +98,15 @@ function Feature({Svg, title, description, url}) {
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
+      <div class={clsx('border border-primary')}>
       <div className="container">
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
+            {FeatureList.map((props, idx) => (
+              <Feature key={idx} {...props} />
+            ))}
+          </div>
         </div>
-      </div>
+        </div>
     </section>
   );
 }

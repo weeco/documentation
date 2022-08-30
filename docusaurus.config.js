@@ -2,7 +2,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 module.exports = {
-  title: 'Redpanda Documentation',
+  title: 'Redpanda Docs',
   tagline: 'A modern streaming platform for mission critical workloads',
   url: 'https://docs.redpanda.com',
   baseUrl: '/',
@@ -20,7 +20,7 @@ module.exports = {
       title: '',
       hideOnScroll: true,
       logo: {
-        alt: 'Vectorized Logo',
+        alt: 'Redpanda Logo',
         src: 'img/redpanda-docs-logo.svg',
         srcDark: 'img/redpanda-docs-logo.svg',
         href: '/'
