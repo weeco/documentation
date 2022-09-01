@@ -168,6 +168,11 @@
           label: 'Deploying for Production',
           id: 'deployment/production-deployment',
         },
+        {
+          type: 'doc',
+          label: 'Writing Custom Deployment',
+          id: 'deployment/custom-deployment',
+        },
       ]
     },    
     {

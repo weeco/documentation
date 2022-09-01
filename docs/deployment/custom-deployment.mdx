@@ -1,45 +1,43 @@
 ---
-title: Writing Custom Redpanda Deployment Automation
+title: Writing Custom Deployment Automation
 ---
 
 <head>
     <meta name="title" content="Writing Custom Redpanda Deployment Automation | Redpanda Docs"/>
-    <meta name="description" content="Technical guidance for engineers writing deployment systems for redpanda."/>
+    <meta name="description" content="Technical guidance for engineers writing deployment systems for Redpanda."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda provides several deployment tools for setting up a cluster:
+Redpanda supports several deployment tools for setting up a cluster:
 - Kubernetes Operator
 - Ansible Playbook
 - Helm Chart
 
-**It is strongly recommended to use one of these supported deployment tools.**
+:::tip
+Redpanda strongly recommends using one of these supported deployment tools.
+:::
 
-This page provides extra information for anyone who is not using one
-of the supported deployment tools, and is creating their own 
-automation for deploying Redpanda clusters.
+This page provides information for anyone creating their own 
+automation for deploying Redpanda clusters; that is, anyone not using one
+of these supported tools.
 
-The instructions on this page assume familiarity with general Redpanda
-adminstrative concepts.
+## Configure bootstrapping
 
-## Bootstrapping configuration
-
-In general, cluster configuration is written via the Admin API and
+Redpanda cluster configuration is written in the Admin API and
 the `rpk cluster config` CLIs.
 
-In the special case where one wishes to provide configuration to redpanda
-before it starts for the first time, one may write a `.bootstrap.yaml` file
+In the special case where you want to provide configuration to Redpanda
+before it starts for the first time, you can write a `.bootstrap.yaml` file
 in the same directory as `redpanda.yaml`.
 
-This file is only read on the first startup of the cluster.  Any subsequent
-changes to `.bootstrap.yaml` will be ignored: all subsequent changes to
-cluster configuration must be done via the admin API.  The content
-format is a YAML dictionary of cluster configuration properties.
+This file is only read on the first startup of the cluster. Any subsequent
+changes to `.bootstrap.yaml` are ignored, so changes to
+cluster configuration must be done with the Admin API. 
 
-For example, to initialize a cluster with admin API authentication enabled
-and a single superuser, the .bootstrap.yaml file would contain this:
+The content format is a YAML dictionary of cluster configuration properties. For example, to initialize a cluster with Admin API authentication enabled
+and a single superuser, the `.bootstrap.yaml` file would contain the following:
 
 ```
 admin_api_require_auth: true
@@ -47,89 +45,78 @@ superusers:
 - alice
 ```
 
-With that configuration, the admin API would not be accessible without a user
-account.  See the following section for how to deal with that.
+With this configuration, the Admin API is not accessible until you bootstrap a user account.
 
-## Bootstrapping a user account
+## Bootstrap a user account
 
-When using username/password auth, it is helpful to be able to create one
-user before the cluster starts for the first time.
+When using username/password authentication, it's helpful to be able to create one user before the cluster starts for the first time.
 
-This can be done by setting `RP_BOOTSTRAP_USER` environment variable
-when starting Redpanda for the first time.  The value has the format
-`<username>:<password>`.  So to continue the example from the previous
-section, one might set `RP_BOOTSTRAP_USER` to `alice:letmein`.
+This can be done by setting the `RP_BOOTSTRAP_USER` environment variable
+when starting Redpanda for the first time. The value has the format
+`<username>:<password>`. For example, you could set `RP_BOOTSTRAP_USER` to `alice:letmein`.
 
-Note that `RP_BOOTSTRAP_USER` _only_ creates a user account.  It is still
-necessary to set up authentication to your requirements using cluster
-configuration.
+:::note
+`RP_BOOTSTRAP_USER` only creates a user account. You must still
+set up authentication using cluster configuration.
+:::
 
-## Admin API security
+## Secure the Admin API
 
-The admin API is used to create SASL user accounts and ACLs, so it is
-important to think about how you will secure it when creating a cluster.
+The Admin API is used to create SASL user accounts and ACLs, so it's
+important to think about how you secure it when creating a cluster.
 
-There are three ways you might choose to configure this:
-- No authentication, but listening only on 127.0.0.1: this may be appropriate
-  if your redpanda processes are running in an environment where only
+There are three ways to authenticate the Admin API:
+- No authentication, but listening only on 127.0.0.1: This may be appropriate
+  if your Redpanda processes are running in an environment where only
   administrators can access the host.
-- mTLS authentication: you may generate client and server x509 certificates
+- mTLS authentication: You can generate client and server x509 certificates
   before starting Redpanda for the first time, refer to them in 
-  `redpanda.yaml`, and use the client certificate when accessing the admin API.
-- username/password authentication: using the combination of `admin_api_require_auth`,
-  `superusers`, and `RP_BOOTSTRAP_USER` to access the admin API user username/password
-  authentication.  You will probably still want to enable TLS on the admin API
-  endpoint to protect credentials in flight, even if not using mTLS.
+  `redpanda.yaml`, and use the client certificate when accessing the Admin API.
+- Username/password authentication: Use the combination of `admin_api_require_auth`,
+  `superusers`, and `RP_BOOTSTRAP_USER` to access the Admin API username/password
+  authentication. You probably still want to enable TLS on the Admin API
+  endpoint to protect credentials in flight.
 
-## Cluster formation and seed_servers
+## Configure seed_servers list
 
 The `seed_servers` node configuration property controls how Redpanda
-finds its peers when initially forming a cluster.
-
-Redpanda clusters form via the following process:
+finds its peers when initially forming a cluster. Redpanda clusters form according to the following:
 - When a node starts with an empty `seed_servers` list, it creates a single
   node cluster with itself as the only member.
 - When a node starts with a non-empty `seed_servers` list, it sends requests
   to the nodes in that list to join the cluster.
 
-It is therefore essential that only one node has an empty `seed_servers`
+Therefore, it's essential that only one node has an empty `seed_servers`
 list.
 
-## Disk replacement/wiping
+### Replaced disks
 
-In general, Redpanda expects its storage to be persistent, and it is an error
-to erase a node's drive and restart it.
+Redpanda expects its storage to be persistent, and it is an error
+to erase a node's drive and restart it. However, in some runtime environments, truly persistent storage is unavailable,
+and nodes may find their data volumes erased; for example, when migrating to a different node pool on Kubernetes.
 
-However, in some runtime environments, truly persistent storage is unavailable,
-and nodes may find their data volumes erased when e.g. migrating to a different
-node pool in a kubernetes platform.
-
-It is essential that nodes undergoing this process **do not have an empty seed_servers
-list**.  If a node has an empty seed servers list, then when it starts with an
-empty data volume it will try to initialize a new Redpanda cluster and write
-new content to its controller log unrelated to the previous state of the cluster.  This
+:::caution
+A node undergoing this process should not have an empty `seed_servers`
+list. If it does, then when it starts with an
+empty data volume, it tries to initialize a new Redpanda cluster and write
+new content to its controller log unrelated to the previous state of the cluster. This
 can result in undefined behavior when the node later rejoins its peers and tries to
 reconcile its local controller log with the controller log from peers.
+:::
 
-## node_id re-use after decommissioning
+## Use new node_id 
 
-In general, it is not safe to re-use a node_id when adding a new node after
-decommissioning a node that used that node_id before.
-
-While it is convenient to have low, consecutive node IDs, it is not necessary,
-and node IDs can take any value in the 32 bit space.
-
-It is therefore recommended to use a fresh node_id each time you add a node
+Redpanda recommends using a fresh `node_id` each time you add a node
 to the cluster.
 
-## Upgrades
+In general, it is not safe to reuse a node ID (for example, when adding a new node after
+decommissioning the node with that node ID). While it's convenient to have low, consecutive node IDs, it's not necessary. Node IDs can take any value in the 32-bit space.
 
-See the Node Maintenance Mode page for information about how to drive a rolling
-upgrade of a Redpanda cluster.  Deployment automation should place each node into maintenance
-mode and wait for it to drain leaderships before restarting it with a newer version of
-Redpanda.
+## Upgrade
 
-As well as preserving high availability, rolling restarts are also important to reduce
-risk during upgrades: check the cluster's health after upgrading each node.  Rolling
+Deployment automation should place each node into maintenance mode and wait for it to drain leaderships before restarting it with a newer version of Redpanda. For information about how to drive a rolling upgrade of a Redpanda cluster, see [Node Maintenance Mode](/docs/cluster-administration/node-management.mdx).
+
+Rolling restarts preserve high availability and reduce
+risk during upgrades. Check the cluster's health after upgrading each node. Rolling
 back an upgrade to an earlier feature release is only supported until the last node
-has been updated, so it is essential to identify any issues before that point.
+has been updated, so it's important to identify any issues before that point.
