@@ -11,9 +11,10 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 Redpanda supports several deployment tools for setting up a cluster:
-- Kubernetes Operator
+
 - Ansible Playbook
 - Helm Chart
+- Kubernetes Operator
 
 :::tip
 Redpanda strongly recommends using one of these supported deployment tools.
@@ -25,7 +26,7 @@ of these supported tools.
 
 ## Configure bootstrapping
 
-Redpanda cluster configuration is written in the Admin API and
+Redpanda cluster configuration is written with the Admin API and
 the `rpk cluster config` CLIs.
 
 In the special case where you want to provide configuration to Redpanda
@@ -51,7 +52,7 @@ With this configuration, the Admin API is not accessible until you bootstrap a u
 
 When using username/password authentication, it's helpful to be able to create one user before the cluster starts for the first time.
 
-This can be done by setting the `RP_BOOTSTRAP_USER` environment variable
+Do this by setting the `RP_BOOTSTRAP_USER` environment variable
 when starting Redpanda for the first time. The value has the format
 `<username>:<password>`. For example, you could set `RP_BOOTSTRAP_USER` to `alice:letmein`.
 
@@ -80,7 +81,7 @@ There are three ways to authenticate the Admin API:
 ## Configure seed_servers list
 
 The `seed_servers` node configuration property controls how Redpanda
-finds its peers when initially forming a cluster. Redpanda clusters form according to the following:
+finds its peers when initially forming a cluster. Redpanda clusters form with these guidelines:
 - When a node starts with an empty `seed_servers` list, it creates a single
   node cluster with itself as the only member.
 - When a node starts with a non-empty `seed_servers` list, it sends requests
@@ -89,22 +90,20 @@ finds its peers when initially forming a cluster. Redpanda clusters form accordi
 Therefore, it's essential that only one node has an empty `seed_servers`
 list.
 
-### Replaced disks
+### Wiped disks need non-empty seed_servers
 
 Redpanda expects its storage to be persistent, and it is an error
-to erase a node's drive and restart it. However, in some runtime environments, truly persistent storage is unavailable,
-and nodes may find their data volumes erased; for example, when migrating to a different node pool on Kubernetes.
+to erase a node's drive and restart it. However, in some environments (like when migrating to a different node pool on Kubernetes), truly persistent storage is unavailable,
+and nodes may find their data volumes erased.
 
-:::caution
-A node undergoing this process should not have an empty `seed_servers`
+In this situation, the node should not have an empty `seed_servers`
 list. If it does, then when it starts with an
 empty data volume, it tries to initialize a new Redpanda cluster and write
 new content to its controller log unrelated to the previous state of the cluster. This
 can result in undefined behavior when the node later rejoins its peers and tries to
 reconcile its local controller log with the controller log from peers.
-:::
 
-## Use new node_id 
+## Use new node ID 
 
 Redpanda recommends using a fresh `node_id` each time you add a node
 to the cluster.
@@ -112,7 +111,7 @@ to the cluster.
 In general, it is not safe to reuse a node ID (for example, when adding a new node after
 decommissioning the node with that node ID). While it's convenient to have low, consecutive node IDs, it's not necessary. Node IDs can take any value in the 32-bit space.
 
-## Upgrade
+## Upgrade considerations
 
 Deployment automation should place each node into maintenance mode and wait for it to drain leaderships before restarting it with a newer version of Redpanda. For information about how to drive a rolling upgrade of a Redpanda cluster, see [Node Maintenance Mode](/docs/cluster-administration/node-management.mdx).
 
