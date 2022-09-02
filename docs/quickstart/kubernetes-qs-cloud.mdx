@@ -1,5 +1,5 @@
 ---
-title: Kubernetes quickstart for cloud
+title: 60-Second Guide for Kubernetes on Cloud
 ---
 
 <head>
@@ -10,35 +10,23 @@ title: Kubernetes quickstart for cloud
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This guide will help you set up Redpanda for development and testing purposes on any operating system. Start here if you want to set up Redpanda quickly to try it out or for CI/CD purposes. 
+This guide helps you set up Redpanda for development and testing purposes on any operating system. Start here to set up Redpanda quickly to try it out or for CI/CD purposes. 
 
-The steps here install Redpanda on Amazon EKS, Google Kubernetes Engine (GKE), and DigitalOcean. If you want to run Redpanda using kind with local access, see the <a href="https://docs.redpanda.com/docs/quickstart/kubernetes-qs-local-access" target="_self">Kubernetes quickstart with local access on kind</a>. If you want to use minikube, see the <a href="https://docs.redpanda.com/docs/quickstart/kubernetes-qs-minikube" target="_self">Kubernetes quickstart with local access on minikube</a>. 
+These steps install Redpanda on Amazon EKS, GKE, or DigitalOcean. To run Redpanda with local access, see [60-Second Guide for Kubernetes with kind](https://docs.redpanda.com/docs/quickstart/kubernetes-qs-local-access) or [60-Second Guide for Kubernetes with minikube](/docs/quickstart/kubernetes-qs-minikube). 
 
-To get up and running, you’ll create a cluster and deploy the Redpanda operator on the cluster. This guide will walk you through the steps to do that. 
-
-This quickstart guide walks you through the following steps: 
-
-1. Create a Kubernetes cluster
-2. Configure the kubectl context
-3. Install cert-manager
-4. Install the Redpanda operator
-5. Install and connect to a Redpanda cluster
-6. Start streaming
-7. Clean up
-
-Because the goal of this quickstart guide is to get you up and running as quickly as possible, you will run the client in the same cluster where you run Redpanda. This simplifies network connectivity. For details on how to access Redpanda outside the Kubernetes network, see the [Connecting remotely to Kubernetes](/docs/deployment/kubernetes-external-connect) guide. 
+To get up and running, you create a cluster, deploy the Redpanda operator on the cluster, and run the client in the same cluster. Because the client is running in the same cluster where you run Redpands, this simplifies network connectivity. For details on how to access Redpanda outside the Kubernetes network, see [Connecting Remotely to Kubernetes](/docs/deployment/kubernetes-external-connect). 
 
 :::note
-**_Note_** - In the steps below, the `.yaml` file that you use to install Redpanda sets `developerMode: true`. If you want to set `developerMode: false`, for optimal configuration it is recommended that you run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. You can find more information about the command as well as tuning recommendations in the [Set Redpanda production mode](/docs/deployment/production-deployment#Step-2-Set-Redpanda-production-mode) documentation. If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
+In these steps, the YAML file you use to install Redpanda sets `developerMode: true`. If you choose to set `developerMode: false`, run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. This command sets tuning parameters for optimal configuration. For more information, see [Set Redpanda production mode](/docs/deployment/production-deployment#Step-2-Set-Redpanda-production-mode). If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
 :::
 
 ## Prerequisites
 
 Before you install Redpanda, verify that you have the following software installed on the machine where you want to run Redpanda: 
 
-* [kubectl](https://kubernetes.io/docs/tasks/tools/) version 1.21 or later
-* [Helm](https://github.com/helm/helm/releases) version 3.0.0 or later
-* [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. The steps below assume that you have jq installed, but if you don’t, you can run the same commands by replacing the `$VERSION` environment variable with the version of Redpanda that you’re using. Run the one of the commands below to install jq: 
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) - version 1.21 or later
+* [Helm](https://github.com/helm/helm/releases) - version 3.0.0 or later
+* [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. (If you don't have jq installed, you can run the same commands by replacing the `$VERSION` environment variable with the version of Redpanda that you’re using.) Run the one of the following commands to install jq: 
     <Tabs>
       <TabItem value="brew" label="brew" default>
 
@@ -57,33 +45,37 @@ Before you install Redpanda, verify that you have the following software install
 
 ### Amazon EKS prerequisites
 
-In addition, if you’re using Amazon EKS, you will need the following prerequisites: 
+If you’re using Amazon EKS, you must satisfy the following prerequisites: 
 
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 
-* Configure the credentials to your AWS account with the Amazon [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) documentation.
+* Install AWK CLI. See the [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html). 
+* Configure the credentials to your AWS account. See the [AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 
 
-## Step 1: Create a Kubernetes cluster
+## Create a Kubernetes cluster
 
 Select the cloud provider that you want to use to create your Kubernetes cluster: 
 
 <Tabs>
   <TabItem  value="GKE" label="GKE" default>
 
-Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://kubernetes.io/docs/contribute/generate-ref-docs/quickstart/). Then create a cluster with this command:
+Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://kubernetes.io/docs/contribute/generate-ref-docs/quickstart/). 
+
+Create a cluster:
 
 ```bash
 gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=1
 ```
 :::note
-You may need to add a `--region` or `--zone` to this command if defaults are not set. The [Google Cloud](https://cloud.google.com/compute/docs/regions-zones/changing-default-zone-region) documentation has information on how to set the defaults.
+You may need to add a `--region` or `--zone` to this command if defaults are not set. The [Google Cloud](https://cloud.google.com/compute/docs/regions-zones/changing-default-zone-region) documentation explains how to set defaults.
 :::
 
   </TabItem>
 
   <TabItem  value="Amazon EKS" label="Amazon EKS">
 
-Use the [Amazon EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. When you finish, you'll have `eksctl` installed so that you can create and delete clusters in Amazon EKS. Then, create an Amazon EKS cluster with:
+Use the [Amazon EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. After `eksctl` is installed, you can create and delete clusters in Amazon EKS.
+
+Create an Amazon EKS cluster:
 
 ```bash
 eksctl create cluster \
@@ -95,7 +87,7 @@ eksctl create cluster \
 --nodes-max 1
 ```
 
-Alternatively, if you want to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
+Alternatively, to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
 
   ```yaml
   apiVersion: eksctl.io/v1alpha5
@@ -116,12 +108,12 @@ Alternatively, if you want to create an Amazon EKS cluster that is auto-tuned fo
         - "sudo yum -y remove redpanda"
   ```
 
-The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, installs Redpanda, and runs the tuning. This sample file contains the following parameters that you might want to change: 
+The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, installs Redpanda, and runs the tuning. This sample file contains the following parameters, which you might want to change: 
 
 - `instanceType: m5.xlarge`
 - `desiredCapacity: 1` - This sets the number of nodes that you want to create
 
-Finally, create the Amazon EKS cluster with the following command: 
+Create the Amazon EKS cluster: 
 
 ```bash
 eksctl create cluster -f eks-bootstrap.yaml
@@ -131,40 +123,41 @@ eksctl create cluster -f eks-bootstrap.yaml
 
   <TabItem  value="DigitalOcean" label="DigitalOcean">
 
-First, set up your [DigitalOcean account](https://docs.digitalocean.com/products/getting-started/) and install [doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/). Remember to set up your [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/).
+Set up your [DigitalOcean account](https://docs.digitalocean.com/products/getting-started/) and install [doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/). Remember to set up your [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/).
 
-You can find additional information in the [DigitalOcean set up](https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/01-setup-DOKS/README.md) documentation.
+Find additional information in the [DigitalOcean set up](https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/01-setup-DOKS/README.md) documentation.
 
-Then use the following command to create a cluster for your Redpanda deployment:
+Create a cluster for your Redpanda deployment:
+
 ```bash
 doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
 ```
   </TabItem>
 </Tabs>
 
-## Step 2: Configure the kubectl context
+## Configure the kubectl context
 
-Most cloud utility tools will automatically change your kubectl configuration file.
+Most cloud utility tools automatically change your kubectl configuration file.
 
-To verify that you’re in the correct context, run the following command:
+Verify that you’re in the correct context:
 
 ```bash
 kubectl config current-context
 ```
 
-On GKE for example, the output will look similar to this:
+On GKE for example, the output looks similar to this:
 
 ```bash
 gke_myproject_us-west1_redpanda
 ```
 
-If you're running multiple clusters or if the configuration file wasn't set up automatically, look for more information in the Kubernetes [Configure Access to Multiple Clusters ](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)documentation.
+If you're running multiple clusters, or if the configuration file wasn't set up automatically, see the Kubernetes [Configure Access to Multiple Clusters ](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)documentation.
 
-## Step 3: Install cert-manager
+## Install cert-manager
 
 The Redpanda operator requires cert-manager to create certificates for TLS communication. You can install cert-manager with [Helm](https://cert-manager.io/docs/installation/helm/) or [kubectl](https://cert-manager.io/docs/installation/kubectl/). 
 
-Use this command to install cert-manager with Helm:
+To install cert-manager with Helm:
 
 ```bash
 helm repo add jetstack https://charts.jetstack.io && \
@@ -177,36 +170,36 @@ helm install \
   --set installCRDs=true
 ```
 
-### Verify the cert-manager installation
+### Verify cert-manager installation
 
 You may have to wait a few minutes for cert-manager to be ready before you continue to the next step. Use the [verification procedure](https://cert-manager.io/docs/installation/verify/#manual-verification) in the cert-manager documentation to verify that cert-manager is deployed correctly.
 
-## Step 4: Use Helm to install the Redpanda operator
+## Install the Redpanda operator with Helm
 
-1. Run the following command to use Helm to add the Redpanda chart repository and update it:
+1. Add the Redpanda chart repository and update it:
 
 ```bash
 helm repo add redpanda https://charts.vectorized.io/ && \
 helm repo update
 ```
 
-2. Use the following command to set the `$VERSION` environment variable to the latest operator and Redpanda version: 
+2. Set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
 ```bash
 export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
 ```
 
 :::note
-If you prefer to manually enter the Redpanda version, or if you want to verify the version, run this command to return the installed version: 
+If you prefer to manually enter the Redpanda version, or if you want to verify the version, the following command returns the installed version: 
 
 ```bash
 curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | grep tag_name
 ```
-:::
 
 You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).
+:::
 
-3. Install the Redpanda operator CRD with the bash or zsh command below:
+3. Install the Redpanda operator CRD with bash or zsh:
     <Tabs>
       <TabItem value="bash" label="bash" default>
 
@@ -224,7 +217,7 @@ You can find information about the versions of the operator in the [list of oper
       </TabItem>
     </Tabs>
 
-4. Install the Redpanda operator on your Kubernetes cluster with this command:
+4. Install the Redpanda operator on your Kubernetes cluster:
 
 ```bash
 helm install \
@@ -235,21 +228,21 @@ helm install \
   --version $VERSION
 ```
 
-## Step 5: Install and connect to a Redpanda cluster
+## Install and connect to a Redpanda cluster
 
 After you set up Redpanda in your Kubernetes cluster, you can use the sample configuration files in GitHub to install a cluster and see Redpanda in action.
 
-The example here is an imaginary chat application, `panda-chat`, but you can replace `panda-chat` with any string. In this example, `panda-chat` has five chat rooms.
+The example is an imaginary chat application, `panda-chat`, but you can replace `panda-chat` with any string. In this example, `panda-chat` has five chat rooms.
 
 Complete the following steps to manage a stream of events from `panda-chat`:
 
-1. Create a namespace for the cluster with this command:
+1. Create a namespace for the cluster:
 
 ```bash
 kubectl create ns panda-chat
 ```
 
-2. Install a single-node cluster like this:
+2. Install a single-node cluster:
 
 ```bash
 kubectl apply \
@@ -259,13 +252,11 @@ kubectl apply \
 
 You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/vectorizedio/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples). 
 
-## Step 6: Do some streaming
+## Start streaming
 
-The Redpanda image contains the `rpk` and `redpanda` binaries. Redpanda Keeper, or `rpk`, is a CLI utility that you can use to work with your Redpanda nodes. See the [rpk commands](/docs/reference/rpk-commands) documentation for a full list of commands. 
+Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](/docs/reference/rpk-commands). Here are some sample commands to produce and consume streams:
 
-Follow these steps to start working with the `panda-chat` cluster you created in the previous section.
-
-1. First, check the status of the cluster with this command:
+Check the status of the cluster:
 
 ```bash
 kubectl -n panda-chat run -ti --rm \
@@ -275,7 +266,7 @@ kubectl -n panda-chat run -ti --rm \
 cluster info
 ```
 
-2. Next, create a topic in the cluster. This command creates five chat rooms in the `panda-chat` cluster:
+Next, create a topic in the cluster. This command creates five chat rooms in the `panda-chat` cluster:
 
 ```bash
 kubectl -n panda-chat run -ti --rm \
@@ -285,7 +276,7 @@ kubectl -n panda-chat run -ti --rm \
 topic create chat-rooms -p 5
 ```
 
-3. Run this command to view the list of topics:
+View the list of topics:
 
 ```bash
 kubectl -n panda-chat run -ti --rm \
@@ -295,7 +286,7 @@ kubectl -n panda-chat run -ti --rm \
 topic list
 ```
 
-4. Now you can produce to the topic with this command: 
+Produce to the topic: 
 
 ```bash
 kubectl -n panda-chat run -ti --rm \
@@ -304,11 +295,11 @@ kubectl -n panda-chat run -ti --rm \
 -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 
-5. Type text into the topic, such as `Pandas are fabulous!`. 
-    * Press Enter to separate between messages. 
-    * Press Ctrl + D to exit the produce command.
+Type text into the topic, such as `Pandas are fabulous!`. 
+  * Click Enter to separate between messages. 
+  * Click Ctrl + D to exit the produce command.
 
-6. Finally, consume, or read, from the topic with this command: 
+Consume (read) from the topic: 
 
 ```bash
 kubectl -n panda-chat run -ti --rm \
@@ -317,11 +308,11 @@ kubectl -n panda-chat run -ti --rm \
 -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 
-In the `rpk topic consume command above`, `-n 1` specifies the number of messages to print. If you produced more than one message in the previous step, you can change the number of messages to consume based on the number that you produced. 
+In the `rpk topic consume command`, `-n 1` specifies the number of messages to print. If you produced more than one message in the previous step, you can change the number of messages to consume based on the number that you produced. 
 
-## Step 7: Clean up
+## Delete the cluster
 
-Now that you’ve completed the quickstart, you can use the following commands to delete your cluster: 
+Delete the cluster: 
 
 <Tabs>
   <TabItem value="GKE" label="GKE" default>
@@ -329,7 +320,7 @@ Now that you’ve completed the quickstart, you can use the following commands t
 ```bash
 gcloud container clusters delete redpanda
 ```
-See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster) documentation for more information.
+For more information, see the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster) documentation.
 
   </TabItem>
   <TabItem value="EKS" label="EKS">
@@ -338,7 +329,7 @@ See the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs
 eksctl delete cluster --name redpanda
 ```
 
-See the [Deleting an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html) documentation for more information. 
+For more information, see [Deleting an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html). 
 
   </TabItem>
   <TabItem value="DigitalOcean" label="DigitalOcean">
@@ -347,7 +338,7 @@ See the [Deleting an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/
 doctl kubernetes cluster delete
 ```
 
-See the DigitalOcean [`cluster delete`](https://docs.digitalocean.com/reference/doctl/reference/kubernetes/cluster/delete/) documentation for more information. 
+For more information, see DigitalOcean [`cluster delete`](https://docs.digitalocean.com/reference/doctl/reference/kubernetes/cluster/delete/). 
 
   </TabItem>
 </Tabs>

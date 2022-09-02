@@ -68,57 +68,45 @@
     },
     {
       type: 'category',
-      label: 'Quickstarts',
+      label: '60-Second Guides',
       collapsible: true,
       collapsed: true,
       link: { type: 'doc', id: 'quickstart/index'},
       items: [
         {
-          type: 'category',
-          label: 'Local',
-          items: [
-            {
-              type: 'doc',
-              label: 'Docker',
-              id: 'quickstart/quick-start-docker',
-            },
-            {
-              type: 'doc',
-              label: 'Linux',
-              id: 'quickstart/quick-start-linux',
-            },
-            {
-              type: 'doc',
-              label: 'macOS',
-              id: 'quickstart/quick-start-macos',
-            },
-            {
-              type: 'doc',
-              label: 'Windows',
-              id: 'quickstart/quick-start-windows',
-            },
-          ],
+          type: 'doc',
+          label: 'Docker',
+          id: 'quickstart/quick-start-docker',
         },
         {
-          type: 'category',
-          label: 'Kubernetes',
-          items: [
-            {
-              type: 'doc',
-              label: 'kind',
-              id: 'quickstart/kubernetes-qs-local-access',
-            },
-            {
-              type: 'doc',
-              label: 'minikube',
-              id: 'quickstart/kubernetes-qs-minikube',
-            },
-            {
-              type: 'doc',
-              label: 'Cloud',
-              id: 'quickstart/kubernetes-qs-cloud',
-            },
-          ],
+          type: 'doc',
+          label: 'Linux',
+          id: 'quickstart/quick-start-linux',
+        },
+        {
+          type: 'doc',
+          label: 'macOS',
+          id: 'quickstart/quick-start-macos',
+        },
+        {
+          type: 'doc',
+          label: 'Windows',
+          id: 'quickstart/quick-start-windows',
+        },
+        {
+          type: 'doc',
+          label: 'Kubernetes with kind',
+          id: 'quickstart/kubernetes-qs-local-access',
+        },
+        {
+          type: 'doc',
+          label: 'Kubernetes with minikube',
+          id: 'quickstart/kubernetes-qs-minikube',
+        },
+        {
+          type: 'doc',
+          label: 'Kubernetes on Cloud',
+          id: 'quickstart/kubernetes-qs-cloud',
         },
       ]
     },    
