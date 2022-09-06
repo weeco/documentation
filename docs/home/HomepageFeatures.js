@@ -5,27 +5,27 @@ import styles from './HomepageFeatures.module.css';
 const FeatureList = [
   {
     title: '60-second Guides',
-    Svg: require('../../static/img/quickstart.svg').default,
+    image: require('../../static/img/quickstart.png').default,
     description: (
       <>
-        Try out Redpanda.                                                                                
+        Try out Redpanda.
       </>
     ),
     url: '/docs/quickstart/',
   },
   {
     title: 'Deploying for Production',
-    Svg: require('../../static/img/deployment.svg').default,
+    image: require('../../static/img/deployment.png').default,
     description: (
       <>
-        Install and configure Redpanda.                       
+        Install and configure Redpanda.
       </>
     ),
     url: '/docs/deployment/production-deployment',
   },
   {
     title: 'Redpanda Console',
-    Svg: require('../../static/img/console-docs.svg').default,
+    image: require('../../static/img/console-docs.png').default,
     description: (
       <>
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
@@ -35,7 +35,7 @@ const FeatureList = [
   },
   {
     title: 'rpk Command Reference',
-    Svg: require('../../static/img/RPK-commands.svg').default,
+    image: require('../../static/img/RPK-commands.png').default,
     description: (
       <>
         Browse all commands for running Redpanda.
@@ -45,7 +45,7 @@ const FeatureList = [
   },
   {
     title: 'Tiered Storage',
-    Svg: require('../../static/img/try-now.svg').default,
+    image: require('../../static/img/try-now.png').default,
     description: (
       <>
         Save storage costs by offloading log segments to the cloud.
@@ -55,7 +55,7 @@ const FeatureList = [
   },
   {
     title: 'Sizing Guidelines',
-    Svg: require('../../static/img/get-started.svg').default,
+    image: require('../../static/img/get-started.png').default,
     description: (
       <>
         Size your production clusters to maximize performance.
@@ -65,14 +65,14 @@ const FeatureList = [
   },
 ];
 
-function Feature({Svg, title, description, url}) {
+function Feature({image, title, description, url}) {
   return (
     <div className={clsx('col col--4')}>
       <div className={styles.padding}>
       <div className={styles.border}>
           <div className="text--center">
             <a href={url}>
-            <Svg className={styles.featureSvg} alt={title} />
+            <img src={image} className={styles.featureSvg} alt={title} />
             </a>
           </div>
         <div className="text--left padding-horiz--md">
@@ -80,13 +80,12 @@ function Feature({Svg, title, description, url}) {
           <span className={styles.body_title}>{title}</span> 
           </a> 
           <div className={styles.body_text}>
-          
-          
-          <p>{description}</p>
-          <div>
-            <a href={url}><p>Learn more -> </p></a>
+            <p>{description}</p>
+            
           </div>
-          </div>
+          <div className={styles.learn}>
+              <a href={url}><p>Learn more -> </p></a>
+            </div>
           
         </div>
       </div>
