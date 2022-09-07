@@ -30,6 +30,7 @@
 /docs/reference/well-known-io   /docs/deployment/well-known-io  301!
 /docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
 /docs/getting-started/install-preview   /docs/deployment/install-preview  301!
+/docs/deployment/performance-storage-tuning   /docs/deployment/disk-utilization  301!  
 
 # Cluster Administration
 /docs/deploy-self-hosted/configuration   /docs/cluster-administration/configuration  301!
