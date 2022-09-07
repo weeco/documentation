@@ -228,7 +228,7 @@ rpk topic create <topic_name> -c redpanda.remote.recovery=true
 You can also create a new topic using remote recovery and enable Tiered Storage on the new topic by adding the `redpanda.remote.write` and `redpanda.remote.read` flags: 
 
 ```bash
-rpk topic create <topic_name> -c redpanda.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
+rpk topic create <topic_name> -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true
 ```
 
 ## Retries and backoff 
