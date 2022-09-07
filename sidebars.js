@@ -378,7 +378,6 @@
           href: 'https://doc.crds.dev/github.com/vectorizedio/redpanda',
         },
         'reference/internal-metrics',
-        'reference/faq',
         {
           type: 'link',
           label: 'Release notes',

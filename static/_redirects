@@ -49,6 +49,9 @@
 /docs/security/acls  /docs/security/index  301!
 /docs/security/kubernetes-security  /docs/security/security-kubernetes/  301!
 
+# Reference
+/docs/reference/faq   /docs/home  301!
+
 
 # Fix for google result on 'redpanda encryption'
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
