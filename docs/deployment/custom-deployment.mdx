@@ -90,18 +90,16 @@ finds its peers when initially forming a cluster. Redpanda clusters form with th
 Therefore, it's essential that only one node has an empty `seed_servers`
 list.
 
-### Wiped disks need non-empty seed_servers
-
-Redpanda expects its storage to be persistent, and it is an error
+:::important
+Redpanda expects its storage to be persistent, and it's an error
 to erase a node's drive and restart it. However, in some environments (like when migrating to a different node pool on Kubernetes), truly persistent storage is unavailable,
-and nodes may find their data volumes erased.
-
-In this situation, the node should not have an empty `seed_servers`
+and nodes may find their data volumes erased. In this situation, the node should not have an empty `seed_servers`
 list. If it does, then when it starts with an
 empty data volume, it tries to initialize a new Redpanda cluster and write
 new content to its controller log unrelated to the previous state of the cluster. This
 can result in undefined behavior when the node later rejoins its peers and tries to
 reconcile its local controller log with the controller log from peers.
+:::
 
 ## Use new node ID 
 
