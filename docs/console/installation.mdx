@@ -125,11 +125,9 @@ your Enterprise license. You have two options for providing the license:
 1. Mount the `redpanda.license` file, then specify the filepath to this license file by setting the `redpanda.licenseFilepath` property in the YAML file, or by setting the environment variable `REDPANDA_LICENSE_FILEPATH`.
 2. Specify the license file contents directly by setting the `redpanda.license` property in the YAML file, or by setting the environment variable `REDPANDA_LICENSE`.
 
-Console will always check the license on startup and print log messages about it.
-If the license expires at runtime, Console will shut down. If the license is already
-expired at startup, Console will print an error message and exit. The UI will warn
-30 days in advance about an expiring license. Additionally it prints the expiry date
-in the startup logs.
+Redpanda Console checks the license status on startup and warns you 30 days before a license expires. You can also view the expiration date in the startup logs.
+If the license expires at runtime, Redpanda Console shuts down. If the license has already
+expired at startup, Redpanda Console prints an error message and exits.
 
 ## Configuration
 
