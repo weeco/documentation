@@ -39,10 +39,30 @@ docker run -p 8080:8080 \
   docker.redpanda.com/vectorized/console:latest
 ```
 
-:::note
-The configuration used in the command above is based on the assumption that you connect to a cluster
-that uses commonly trusted certificates as well as SASL plain authentication.
-::: 
+The configuration above can be used to connect to a cluster that uses commonly trusted certificates in 
+combination with SASL plain authentication. To launch Redpanda Console with additional files, such 
+as certificates or a Redpanda license, you can mount a directory that contains those files.
+When you run the docker run command, specify the mount volume and the filepaths to the additional files.
+
+The following example mounts the directory
+`console-mounts` in your current path so that all files inside that directory become available at
+`/etc/console-mounts` inside the Docker container. The directory contains the files
+`redpanda.license` and `ca.crt`, which are specified in the configuration parameters 
+`REDPANDA_LICENSE_FILEPATH` and `KAFKA_TLS_CAFILEPATH` respectively.
+
+```shell
+docker run -p 8080:8080 \
+  -v $(pwd)/console-mounts:/etc/console-mounts \
+  -e REDPANDA_LICENSE_FILEPATH=/etc/console-mounts/redpanda.license \
+  -e KAFKA_BROKERS=bootstrap.cluster-hash.redpanda.cloud:9092 \
+  -e KAFKA_TLS_ENABLED=true \
+  -e KAFKA_TLS_CAFILEPATH=/etc/console-mounts/ca.crt \
+  -e KAFKA_SASL_ENABLED=true \
+  -e KAFKA_SASL_MECHANISM=SCRAM-SHA-256 \
+  -e KAFKA_SASL_USERNAME=xxx \
+  -e KAFKA_SASL_PASSWORD=xxx \
+  docker.redpanda.com/vectorized/console:latest
+```
 
 ## Docker
 
@@ -96,6 +116,20 @@ curl -1sLf \
 
 sudo yum install redpanda-console
 ```
+
+## Redpanda Enterprise license
+
+To use an Enterprise feature, Redpanda Console must have its own physical copy of 
+your Enterprise license. You have two options for providing the license:
+
+1. Mount the `redpanda.license` file, then specify the filepath to this license file by setting the `redpanda.licenseFilepath` property in the YAML file, or by setting the environment variable `REDPANDA_LICENSE_FILEPATH`.
+2. Specify the license file contents directly by setting the `redpanda.license` property in the YAML file, or by setting the environment variable `REDPANDA_LICENSE`.
+
+Console will always check the license on startup and print log messages about it.
+If the license expires at runtime, Console will shut down. If the license is already
+expired at startup, Console will print an error message and exit. The UI will warn
+30 days in advance about an expiring license. Additionally it prints the expiry date
+in the startup logs.
 
 ## Configuration
 
