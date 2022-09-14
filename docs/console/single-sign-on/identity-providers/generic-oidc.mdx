@@ -17,9 +17,17 @@ and then provide this application's credentials in the configuration:
 
 ```yaml
 login:
+  enabled: true
+
+  # jwtSecret is a random string of at least 10 characters that must be the same for all Console instances. 
+  # This string is used to sign and validate the user session JSON Web Tokens (JWT). 
+  # If this string changes, logged-in Console users will be logged out and will have to initiate a 
+  # new session by logging in again.
+  jwtSecret: ""
+
   oidc:
     # Whether or not the OIDC provider should be initialized
-    enabled: false
+    enabled: true
 
     # OAuth application client id
     clientId: ""
@@ -27,9 +35,10 @@ login:
     # OAuth application client secret
     clientSecret: ""
 
-    // Domain is the URL without scheme that shall be used as an OIDC endpoint. It will be
-    // inserted in this template string: `url.Parse("https://" + cfg.Domain + "/")`.
-    domain: ""
+    # IssuerUrl is the identity provider's URL; for example, https://accounts.google.com.
+    # Console will send a GET request to `${issuerUrl}/.well-known/openid-configuration` 
+    # and the `issuer` returned in the response has to match this issuer url.
+    issuerUrl: ""
 
     # DisplayName is the name that shall be shown on the login page for this identity provider
     displayName: ""
@@ -40,7 +49,7 @@ login:
     # By default, we will use the 'sub' claim key, which usually resolves to the unique ID 
     # within the identity provider. The value of this claim is compared against what you
     # use in the roleBindings for the `name` property.
-    userIdentifyingClaimKey: ""
+    userIdentifyingClaimKey: "sub"
 ```
 
 ## Define role-bindings

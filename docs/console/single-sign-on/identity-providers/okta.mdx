@@ -37,8 +37,10 @@ Put the following credentials into your Redpanda Console configuration:
 login:
   enabled: true
 
-  # Random string which is used to sign JSON web tokens
-  # It has to be static across all Console instances and restarts
+  # jwtSecret is a random string of at least 10 characters that must be the same for all Console instances. 
+  # This string is used to sign and validate the user session JSON Web Tokens (JWT). 
+  # If this string changes, logged-in Console users will be logged out and will have to initiate a 
+  # new session by logging in again.
   jwtSecret: ""
 
   okta:
