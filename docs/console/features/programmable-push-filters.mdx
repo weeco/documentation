@@ -7,11 +7,16 @@ title: Programmable Push Filters
     <meta name="description" content="Filtering Kafka records in Console's message viewer based on your provided JavaScript code."/>
 </head>
 
-You can use Redpanda Console's programmable push filters to search for a specific message within a Kafka topic.
-Programmable push filters enable you to write a TypeScript/JavaScript function body that **runs in the backend** and is called for 
-every individual Kafka record. The code has to return a boolean. If your code returns `true`, the backend sends the record to the frontend. 
-Otherwise the record will be skipped and Redpanda Console will continue to consume records until the selected number
-of max search results has been reached or "the end" of the topic hit.
+You can write a simple Javascript filter in Redpanda Console to search for and display messages that match the filter criteria. Since the filter is evaluated on the backend, Redpanda Console only displays matching messages in the browser.
+
+### Write a filter
+
+Filters are written in Javascript. A filter evaluates each record and must return a boolean value (`true` or `false`). If your code returns `true`, the backend sends the record to the frontend. 
+Otherwise, the record is skipped and Redpanda Console continues consuming records until the selected number of maximum search results has been reached, or there are no more messages.
+
+:::note
+If your filter is a simple expression, you can omit the `return` keyword.
+:::
 
 Redpanda Console injects the following variables into your function, which you can use in your filter code:
 
