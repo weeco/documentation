@@ -136,6 +136,62 @@ redpanda:
 // highlight-end
 ```
 
+### Configure SASL for HTTP Proxy and Schema Registry
+
+The HTTP Proxy and Schema Registry connect to Redpanda over the Kafka API, and must be configured with a username and password.
+
+For schema registry, the configuration node is `schema_registry_client`:
+
+```yaml
+// highlight-start
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+// highlight-end
+```
+
+If TLS is in use, additional configuration is required:
+
+```yaml
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: server.key
+    cert_file: server.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+```
+
+HTTP Proxy has similar configuration, but the configuration node is `pandaproxy_client`:
+
+```yaml
+// highlight-start
+pandaproxy_client:
+// highlight-end
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+  broker_tls:
+    key_file: server.key
+    cert_file: server.crt
+    truststore_file: ca.crt
+    enabled: true
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+```
+
 ### Connect to Redpanda
 
 You can use the newly-created user to interact with Redpanda with `rpk`:
