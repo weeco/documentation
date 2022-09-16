@@ -277,6 +277,37 @@ To update the `kafka_mtls_principal_mapping_rules` property, run:
 rpk cluster config set kafka_mtls_principal_mapping_rules '["DEFAULT"]'
 ```
 
+### Configure mTLS for HTTP Proxy and Schema Registry
+
+The HTTP Proxy and Schema Registry will require valid client certificates.
+
+In `redpanda.yaml`, enter:
+
+```yaml
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: schema_registry.key
+    cert_file: schema_registry.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+pandaproxy_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: pandaproxy.key
+    cert_file: pandaproxy.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+```
+
 See also: [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls)
 
 ## Disable authentication
