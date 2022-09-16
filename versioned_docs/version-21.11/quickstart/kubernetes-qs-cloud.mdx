@@ -105,8 +105,7 @@ Alternatively, if you want to create an Amazon EKS cluster that is auto-tuned fo
       maxSize: 2
       instanceType: m5.xlarge
       preBootstrapCommands:
-        - "curl -1sLf 
-  'https://packages.vectorized.io/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && sudo yum -y install redpanda"
+        - "curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && sudo yum -y install redpanda"
         - "sudo rpk mode prod && sudo rpk redpanda tune all"
         - "sudo yum -y remove redpanda"
   ```
