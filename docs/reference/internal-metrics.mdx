@@ -17,7 +17,9 @@ For information about the latest metrics available on `:9644/public_metrics`, se
 
 Redpanda exports Prometheus metrics on `:9644/public_metrics`. To generate the Redpanda configuration on an existing Prometheus instance for both the `/public_metrics` endpoint as well as the `/metrics` endpoint, run: 
 
-`rpk generate prometheus-config --job-name redpanda-metrics-test --node-addrs 'localhost:9644' --internal-metrics`
+```
+rpk generate prometheus-config --job-name redpanda-metrics-test --node-addrs 'localhost:9644' --internal-metrics
+```
 
 The output is a YAML object that you can add to the `scrape_configs` list.
 
@@ -50,7 +52,7 @@ Save the configuration file, and restart Prometheus to apply changes.
 
 :::note
 * You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
-* See rpk details in the [rpk command reference](/docs/reference/rpk-commands/#rpk-generate-prometheus-config). 
+* See rpk details in the [rpk command reference](/docs/reference/rpk/rpk-generate/rpk-generate-prometheus-config/) for Prometheus. 
 :::
 
 ## Configure Grafana: internal metrics
@@ -67,7 +69,7 @@ where:
 Grafana instance.
 * `<url>` is the address to a Redpanda node's metrics endpoint. The default is `<node ip>:9644/metrics`.
 
-See details in the [rpk command reference](/docs/reference/rpk-commands/#rpk-generate-grafana-dashboard). 
+See details in the [rpk command reference](/docs/reference/rpk/rpk-generate/rpk-generate-grafana-dashboard/) for Grafana. 
 
 Out of the box, Grafana generates panels tracking latency for 50%, 95%, and
 99% (based on the maximum latency set), throughput, and error segmentation by type.

@@ -187,7 +187,7 @@ kubectl exec -c redpanda external-connectivity-0 -- rpk acl user create <usernam
 
 ## Step 5: Grant permissions
 
-The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl](/docs/reference/rpk-commands/#rpk-acl) documentation. 
+The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl](/docs/reference/rpk/rpk-acl/) documentation. 
 
 1. Use the superuser to grant `create` and `describe` permissions to another user for the cluster. You can edit the `rpk acl create` command to grant permissions to specific users or groups:
 
@@ -231,7 +231,7 @@ kubectl exec -c redpanda <cluster_name>-0 -- rpk topic describe <topic_name> \
 
 ## Step 7: Clean up
 
-Now that you have your superuser and additional users that can interact with the cluster, use the [rpk reference](/docs/reference/rpk-commands) documentation to experiment with the `rpk` commands and create additional users and ACLs.
+Now that you have your superuser and additional users that can interact with the cluster, use the [rpk reference](/docs/reference/rpk/rpk-acl) documentation to experiment with the `rpk` commands and create additional users and ACLs.
 
 When you're ready, to delete the cluster, run:
 
