@@ -95,18 +95,8 @@ module.exports = {
         },
         {
           type: "doc",
-          label: "Kubernetes with kind",
-          id: "quickstart/kubernetes-qs-local-access",
-        },
-        {
-          type: "doc",
-          label: "Kubernetes with minikube",
-          id: "quickstart/kubernetes-qs-minikube",
-        },
-        {
-          type: "doc",
-          label: "Kubernetes on Cloud",
-          id: "quickstart/kubernetes-qs-cloud",
+          label: "Kubernetes",
+          id: "quickstart/kubernetes-qs-dev",
         },
       ],
     },
