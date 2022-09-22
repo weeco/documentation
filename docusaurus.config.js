@@ -56,6 +56,19 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript']
     },
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '6YUV7845VT',
+
+      // Public API key: it is safe to commit it
+      apiKey: '2639b1b6c05670f52200b301c84866d9',
+
+      indexName: 'redpanda',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+    },
   },
   presets: [
     [
@@ -83,19 +96,6 @@ module.exports = {
     ],
   ],
   plugins: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        // ... Your options.
-        // `hashed` is recommended as long-term-cache of index file is possible.
-        hashed: true,
-        // For Docs using Chinese, The `language` is recommended to set to:
-        // ```
-        // language: ["en", "zh"],
-        // ```
-        // When applying `zh` in language, please install `nodejieba` in your project.
-      },
-    ],    
     function (context, options) {
       return {
         name: 'docusaurus-plugin',
