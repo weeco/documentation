@@ -7,9 +7,7 @@ title: Using Additional Configuration Parameters for the Redpanda Operator
     <meta name="description" content="Additional configuration parameters for the Redpanda operator."/>
 </head>
 
-Follow [60-Second Kubernetes for Cloud](/docs/quickstart/kubernetes-qs-cloud/) to set up the Redpanda operator and optionally a Redpanda cluster.
-
-After the Redpanda operator is installed, you can create a Redpanda cluster by applying a Cluster Custom Resource (CR) that contains the specification of the desired Redpanda cluster. The CR includes the Redpanda cluster name, namespace, and configuration for the Admin API, Kafka API, HTTP Proxy API, and others.
+After the Redpanda operator is installed, you can create a Redpanda cluster by applying a cluster Custom Resource (CR) that contains the specification of the desired Redpanda cluster. The CR includes the Redpanda cluster name, namespace, and configuration for the Admin API, Kafka API, HTTP Proxy API, and others.
 
 The cluster definition includes commonly used cluster and node properties. To add other node properties, you can specify any node property in the [node configuration template](/docs/reference/node-configuration-sample/) by using the `additionalConfiguration` property.
 

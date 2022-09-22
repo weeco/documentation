@@ -9,10 +9,6 @@ title: Custom Configuration in Kubernetes
 
 The Redpanda operator for Kubernetes creates clusters based on the Custom Resource Definition (CRD). After you install the Redpanda operator, you apply the CRD. The CRD has two main components: the basic configuration for the Redpanda cluster, which includes the cluster name and namespace, and the configuration for the APIs.
 
-:::tip
-Follow one of the Redpanda Kubernetes 60-second guides to install the Redpanda operator and create a cluster. See [cloud](/docs/quickstart/kubernetes-qs-cloud/), [kind](/docs/quickstart/kubernetes-qs-local-access), and [minikube](/docs/quickstart/kubernetes-qs-minikube).
-:::
-
 ### Configure the CRD
 
 In addition to the cluster properties included in the CRD by default, you can specify other cluster-level and node-level properties in the `additionalConfiguration` section of the CRD. Node-level configuration properties are passed to the `redpanda.yaml` configuration file. The Redpanda operator uses the Admin API to update cluster-level properties.
