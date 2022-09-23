@@ -222,9 +222,10 @@ module.exports = {
           label: "Kafka clients",
           id: "development/kafka-clients",
         },
-        "development/guide-nodejs",
-        "development/consumer-offsets",
-        "development/idempotent-producers",
+        'development/guide-nodejs',
+        'development/consumer-offsets',
+        'development/idempotent-producers',
+        'development/http-proxy',
       ],
     },
     {
