@@ -41,7 +41,7 @@ const FeatureList = [
         Browse all commands for running Redpanda.
       </>
     ),
-    url: '/docs/reference/rpk-commands',
+    url: '/docs/21.11/reference/rpk-commands',
   },
   {
     title: 'Tiered Storage',

@@ -28,9 +28,9 @@ This guide assumes that you have already completed the following tasks:
 
 If you haven’t completed these tasks, you can use one of the following quickstarts to get set up before you configure TLS. Just follow the steps in any of these guides and stop before you install and connect to the Redpanda cluster: 
 
-* [Kubernetes quickstart for cloud](/docs/quickstart/kubernetes-qs-cloud/)
-* [Kubernetes quickstart with local access on kind](/docs/quickstart/kubernetes-qs-local-access)
-* [Kubernetes quickstart with local access on minikube](/docs/quickstart/kubernetes-qs-minikube) 
+* [Kubernetes quickstart for cloud](/docs/quickstart/kubernetes-qs-dev/)
+* [Kubernetes quickstart with local access on kind](/docs/quickstart/kubernetes-qs-dev)
+* [Kubernetes quickstart with local access on minikube](/docs/quickstart/kubernetes-qs-dev) 
 
 ## Step 1: Configure the cluster specification file
 
@@ -229,7 +229,7 @@ kubectl exec -c redpanda cluster-sample-sasl-0 -- rpk acl user create brontosaur
 
 ## Step 5: Grant permissions
 
-The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl reference](/docs/reference/rpk-commands/#rpk-acl) documentation. 
+The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl reference](/docs/21.11/reference/rpk-commands/#rpk-acl) documentation. 
 
 1. Use the superuser to grant `create` and `describe` permissions to another user for the cluster. You can edit the `rpk acl create` command as needed to grant specific permissions to specific users or groups: 
 
@@ -313,7 +313,7 @@ kubectl exec -c redpanda cluster-sample-sasl-0 -- rpk topic describe littlefoot 
 
 ## Step 7: Clean up
 
-Now that you have your superuser and additional users that can interact with the cluster, you can use the [rpk reference](/docs/reference/rpk-commands) documentation to experiment with the `rpk` commands and create additional users and ACLs. 
+Now that you have your superuser and additional users that can interact with the cluster, you can use the [rpk reference](/docs/21.11/reference/rpk-commands) documentation to experiment with the `rpk` commands and create additional users and ACLs. 
 
 When you're ready, delete the cluster with this command: 
 
@@ -323,7 +323,7 @@ kubectl delete -f <cluster_specification.yaml>
 
 ### Tutorial: Brontosaurus
 
-Use the [rpk reference](/docs/reference/rpk-commands) documentation to experiment with the `rpk` commands and when you're ready to clean up the cluster from the brontosaurus tutorial, run this command: 
+Use the [rpk reference](/docs/21.11/reference/rpk-commands) documentation to experiment with the `rpk` commands and when you're ready to clean up the cluster from the brontosaurus tutorial, run this command: 
 
 ```bash
 kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/sasl.yaml
