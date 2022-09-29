@@ -15,7 +15,7 @@ For information about the latest metrics available on `:9644/public_metrics`, se
 
 [Prometheus](https://prometheus.io/) is a systems monitoring and alerting tool. It collects and stores metrics as time-series data identified by metric name and key/value pairs. 
 
-Redpanda exports Prometheus metrics on `:9644/public_metrics`. To generate the Redpanda configuration on an existing Prometheus instance for both the `/public_metrics` endpoint as well as the `/metrics` endpoint, run: 
+Redpanda exports Prometheus metrics on `:9644/public_metrics`, which has been available since v22.2. To generate the Redpanda configuration on an existing Prometheus instance for both the `/public_metrics` endpoint as well as the `/metrics` endpoint, run: 
 
 ```
 rpk generate prometheus-config --job-name redpanda-metrics-test --node-addrs 'localhost:9644' --internal-metrics
