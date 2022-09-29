@@ -80,6 +80,10 @@ Use the `export` option to save the current cluster configuration to a file. You
 2. Copy `<filename>.yaml` to the other cluster.
 3. Log in to the other cluster and import the file with the saved configuration by running `rpk cluster config import –filename <filename>.yaml`. This command applies the property settings in `<filename>.yaml` to all nodes in the cluster.
 
+:::caution
+Redpanda does not support importing cluster-specific identification (such as `cluster_id`) with this command.
+:::
+
 ## Removing cluster properties from a redpanda.yaml file
 
 If you have a `redpanda.yaml` file that contains both cluster and node properties, the cluster properties are ignored.

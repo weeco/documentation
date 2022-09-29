@@ -584,7 +584,11 @@ Usage:
 
 ## rpk cluster config import
 
- Import cluster configuration from a file.
+:::caution
+Redpanda does not support importing cluster-specific identification (such as `cluster_id`) with this command.
+:::
+
+Import cluster configuration from a file.
 
 Import configuration from a YAML file, usually generated with
 corresponding 'export' command.  This downloads the current cluster
