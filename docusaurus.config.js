@@ -101,6 +101,7 @@ module.exports = {
         name: 'docusaurus-plugin',
         injectHtmlTags({content}) {
           return {
+            headTags:['<meta name="google-site-verification" content="QcL-pD81oJatgKXQ3Wquvk_Ku3RRtUljxKoMaicySQA" />'],
             preBodyTags: [`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB2CSV5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`],
           };
         },
