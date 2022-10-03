@@ -108,7 +108,6 @@ module.exports = {
       collapsed: true,
       items: [
         "deployment/production-deployment-automation",
-        "deployment/guide-rpk-container",
         {
           type: "category",
           label: "Performance and storage tuning",
