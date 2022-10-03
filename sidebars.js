@@ -612,6 +612,26 @@ module.exports = {
           label: "Redpanda Operator",
           link: { type: "doc", id: "reference/redpanda-operator/index" },
           items: [
+            {
+              type: "category",
+              label: "60-Second Guides",
+              items: ["redpanda-operator/kubernetes-qs-local-access", "redpanda-operator/kubernetes-qs-minikube", "redpanda-operator/kubernetes-qs-cloud"],
+            },
+            {
+              type: "category",
+              label: "Deployment",
+              items: ["redpanda-operator/kubernetes-connectivity", "redpanda-operator/kubernetes-external-connect", "redpanda-operator/kubernetes-additional-config", "redpanda-operator/arbitrary-configuration"],
+            },
+            {
+              type: "category",
+              label: "Security",
+              items: ["redpanda-operator/security-kubernetes", "redpanda-operator/tls-kubernetes", "redpanda-operator/kubernetes-sasl", "redpanda-operator/kubernetes-mtls"],
+            },
+            {
+              type: "link",
+              label: "Operator Custom Resource Definition (CRD)",
+              href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
+            },
             "reference/redpanda-operator/kubernetes-qs-local-access",
             "reference/redpanda-operator/kubernetes-qs-minikube",
             "reference/redpanda-operator/kubernetes-qs-cloud",
@@ -623,11 +643,6 @@ module.exports = {
             "reference/redpanda-operator/tls-kubernetes",
             "reference/redpanda-operator/kubernetes-sasl",
             "reference/redpanda-operator/kubernetes-mtls",
-            {
-              type: "link",
-              label: "Operator Custom Resource Definition (CRD)",
-              href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
-            },
           ]
         },
         "reference/internal-metrics",
