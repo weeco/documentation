@@ -134,7 +134,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 
 ## Step 3: Create the superuser
 
-You must create the superuser through the Admin API. This user has [ALL permissions](../../security/authorization#operations) on the cluster and is the user that grants permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster.
+You must create the superuser through the Admin API. This user has [ALL permissions](../../../security/authorization#operations) on the cluster and is the user that grants permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster.
 
 To create the superuser and specify a password for the user, run:
 
@@ -183,7 +183,7 @@ kubectl exec -c redpanda external-connectivity-0 -- rpk acl user create <usernam
 
 ## Step 5: Grant permissions
 
-The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl](../../reference/rpk/rpk-acl/) documentation. 
+The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl](../../rpk/rpk-acl/) documentation. 
 
 1. Use the superuser to grant `create` and `describe` permissions to another user for the cluster. You can edit the `rpk acl create` command to grant permissions to specific users or groups:
 
@@ -227,7 +227,7 @@ kubectl exec -c redpanda <cluster_name>-0 -- rpk topic describe <topic_name> \
 
 ## Step 7: Clean up
 
-Now that you have your superuser and additional users that can interact with the cluster, use the [rpk reference](../../reference/rpk/rpk-acl) documentation to experiment with the `rpk` commands and create additional users and ACLs.
+Now that you have your superuser and additional users that can interact with the cluster, use the [rpk reference](../../rpk/rpk-acl) documentation to experiment with the `rpk` commands and create additional users and ACLs.
 
 When you're ready, to delete the cluster, run:
 
