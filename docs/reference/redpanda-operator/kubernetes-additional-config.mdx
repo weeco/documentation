@@ -45,7 +45,7 @@ kubectl apply -f <custom_resource.yaml>
 
 If a change to the property requires a restart of the cluster, the operator performs the restart automatically.
 
-To see whether a change to a property requires a restart, see [Cluster-level properties](../../reference/cluster-properties).
+To see whether a change to a property requires a restart, see [Cluster-level properties](../../cluster-properties).
 
 :::caution
 You can change cluster-level configuration properties through the Admin API. However, if the CRD has a different value for that property, that value overwrites the value set through the Admin API. If the CRD does not contain that property, there is no conflict. To avoid the possibility of overwriting a property value set through the Admin API, Redpanda recommends that you set properties in the CRD.
