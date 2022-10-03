@@ -3,18 +3,15 @@
 /docs/features/intro-to-events   /docs/introduction/intro-to-events  301!
 
 # Quickstart
-/docs/getting-started/quick-start-kubernetes   /docs/quickstart/kubernetes-qs-dev/  301!
-/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-dev/  301!
-/docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-dev  301!
-/docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-dev  301!
+/docs/getting-started/quick-start-kubernetes   /docs/quickstart/ 301!
+/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud/  301!
+/docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-local-access  301!
+/docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
 /docs/getting-started/index   /docs/quickstart/index  301!
 /docs/getting-started/quick-start-docker   /docs/quickstart/quick-start-docker  301!
 /docs/getting-started/quick-start-linux   /docs/quickstart/quick-start-linux  301!
 /docs/getting-started/quick-start-macos   /docs/quickstart/quick-start-macos  301!
 /docs/getting-started/quick-start-windows   /docs/quickstart/quick-start-windows  301!
-/docs/quickstart/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-dev  301!
-/docs/quickstart/kubernetes-qs-local-access  /docs/quickstart/kubernetes-qs-dev  301!
-/docs/quickstart/kubernetes-qs-minikube  /docs/quickstart/kubernetes-qs-dev  301!
 
 
 
