@@ -657,10 +657,17 @@ module.exports = {
           ],
         },
         {
+          type: "category",
+          label: "Redpanda Operator",
+          link: { type: "doc", id: "reference/redpanda-operator/index" },
+          items: [
+            "reference/redpanda-operator/",
+            {
           type: "link",
           label: "Operator Custom Resource Definition (CRD)",
           href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
-        },
+            },
+        }
         "reference/internal-metrics",
         {
           type: "link",
