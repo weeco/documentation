@@ -111,9 +111,10 @@ decommissioning the node with that node ID). While it's convenient to have low, 
 
 ## Upgrade considerations
 
-Deployment automation should place each node into maintenance mode and wait for it to drain leaderships before restarting it with a newer version of Redpanda. For information about how to drive a rolling upgrade of a Redpanda cluster, see [Node Maintenance Mode](/docs/cluster-administration/node-management.mdx).
+Deployment automation should place each node into maintenance mode and wait for it to drain leaderships before restarting it with a newer version of Redpanda. For information about how to drive a rolling upgrade of a Redpanda cluster, see [Node Maintenance Mode](../../cluster-administration/node-management).
 
 Rolling restarts preserve high availability and reduce
 risk during upgrades. Check the cluster's health after upgrading each node. Rolling
 back an upgrade to an earlier feature release is only supported until the last node
 has been updated, so it's important to identify any issues before that point.
+pro

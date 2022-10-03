@@ -12,19 +12,19 @@ import TabItem from '@theme/TabItem';
 
 This guide helps you set up Redpanda for development and testing purposes on any operating system. Start here to set up Redpanda quickly to try it out or for CI/CD purposes. 
 
-These steps install Redpanda on Amazon EKS, GKE, or DigitalOcean. To run Redpanda with local access, see [60-Second Guide for Kubernetes with kind](https://docs.redpanda.com/docs/quickstart/kubernetes-qs-local-access) or [60-Second Guide for Kubernetes with minikube](/docs/quickstart/kubernetes-qs-minikube). 
+These steps install Redpanda on Amazon EKS, GKE, or DigitalOcean. To run Redpanda with local access, see [60-Second Guide for Kubernetes with kind](../../quickstart/kubernetes-qs-local-access) or [60-Second Guide for Kubernetes with minikube](../../quickstart/kubernetes-qs-minikube). 
 
-To get up and running, you create a cluster, deploy the Redpanda operator on the cluster, and run the client in the same cluster. Because the client is running in the same cluster where you run Redpands, this simplifies network connectivity. For details on how to access Redpanda outside the Kubernetes network, see [Connecting Remotely to Kubernetes](/docs/deployment/kubernetes-external-connect). 
+To get up and running, you create a cluster, deploy the Redpanda operator on the cluster, and run the client in the same cluster. Because the client is running in the same cluster where you run Redpands, this simplifies network connectivity. For details on how to access Redpanda outside the Kubernetes network, see [Connecting Remotely to Kubernetes](../../deployment/kubernetes-external-connect). 
 
 :::note
-In these steps, the YAML file you use to install Redpanda sets `developerMode: true`. If you choose to set `developerMode: false`, run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. This command sets tuning parameters for optimal configuration. For more information, see [Set Redpanda production mode](/docs/deployment/production-deployment#Step-2-Set-Redpanda-production-mode). If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
+In these steps, the YAML file you use to install Redpanda sets `developerMode: true`. If you choose to set `developerMode: false`, run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. This command sets tuning parameters for optimal configuration. For more information, see [Set Redpanda production mode](../../deployment/production-deployment#Step-2-Set-Redpanda-production-mode). If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
 :::
 
 ## Prerequisites
 
 Before you install Redpanda, verify that you have the following software installed on the machine where you want to run Redpanda: 
 
-* [kubectl](https://kubernetes.io/docs/tasks/tools/) - version 1.21 or later
+* [kubectl](https://kubernetes.io/tasks/tools/) - version 1.21 or later
 * [Helm](https://github.com/helm/helm/releases) - version 3.0.0 or later
 * [jq](https://stedolan.github.io/jq/) - This setup uses jq to set the Redpanda `$VERSION` environment variable. (If you don't have jq installed, you can run the same commands by replacing the `$VERSION` environment variable with the version of Redpanda that you’re using.) Run the one of the following commands to install jq: 
     <Tabs>
@@ -66,7 +66,7 @@ Create a cluster:
 gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=1
 ```
 :::note
-You may need to add a `--region` or `--zone` to this command if defaults are not set. The [Google Cloud](https://cloud.google.com/compute/docs/regions-zones/changing-default-zone-region) documentation explains how to set defaults.
+You may need to add a `--region` or `--zone` to this command if defaults are not set. The [Google Cloud](https://cloud.google.com/compute../../regions-zones/changing-default-zone-region) documentation explains how to set defaults.
 :::
 
   </TabItem>
@@ -253,7 +253,7 @@ You can view the resource configuration options, such as storage capacity, netwo
 
 ## Start streaming
 
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](/docs/reference/rpk/rpk-topic) Here are some sample commands to produce and consume streams:
+Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic) Here are some sample commands to produce and consume streams:
 
 Check the status of the cluster:
 
@@ -319,7 +319,7 @@ Delete the cluster:
 ```bash
 gcloud container clusters delete redpanda
 ```
-For more information, see the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster) documentation.
+For more information, see the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine../../how-to/deleting-a-cluster) documentation.
 
   </TabItem>
   <TabItem value="EKS" label="EKS">

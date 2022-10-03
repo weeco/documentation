@@ -9,7 +9,7 @@ title: Protobuf Deserialization
 
 If you have one or more topics that contain Protobuf serialized messages, you can configure Redpanda Console to deserialize 
 the binary content into JSON, which makes the message human-readable. The resulting message can also be used in the 
-[programmable push filters](/docs/console/features/programmable-push-filters) like a JavaScript object.
+[programmable push filters](../programmable-push-filters) like a JavaScript object.
 
 Protobuf serialization is commonly used with Kafka clusters in two ways:
 - With schema registry (schema meta information gets embedded as part of the record's value)
@@ -35,7 +35,7 @@ Unlike other providers, the schema registry does not require you to set up mappi
 this information is inferred from the messages, and the schema registry finds the right prototype for deserialization.
 
 The protobuf deserializer uses the same schema registry client that is configured under `kafka.schemaRegistry`. See
-[Schema registry](/docs/console/features/schema-registry) for information about how to set up the schema registry in Redpanda Console.
+[Schema registry](../schema-registry) for information about how to set up the schema registry in Redpanda Console.
 A valid configuration for the Protobuf support with schema registry support looks like this:
 
 ```yaml

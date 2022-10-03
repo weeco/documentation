@@ -87,7 +87,7 @@ docker ps
 ```
 
 :::caution
-In order to prevent any potential data loss when Docker is locally executed, you will need to utilize persistent volumes. You will find the steps to do that here: [persistent volumes](/docs/quickstart/quick-start-docker#create-network-and-persistent-volumes).
+In order to prevent any potential data loss when Docker is locally executed, you will need to utilize persistent volumes. You will find the steps to do that here: [persistent volumes](../../quickstart/quick-start-docker#create-network-and-persistent-volumes).
 :::
 
 Stop and remove Redpanda's container(s):
@@ -110,7 +110,7 @@ The next step is to pull the desired Redpanda's version, or you can adjust the s
 docker pull docker.redpanda.com/vectorized/redpanda:<version>
 ```
 
-Finally, you'll need to follow the steps in the [docker getting started](/docs/quickstart/quick-start-docker) to start Redpanda.
+Finally, you'll need to follow the steps in the [docker getting started](../../quickstart/quick-start-docker) to start Redpanda.
 If you are using a previous `redpanda.yaml` configuration file, make sure to apply it to the configuration folder `/etc/redpanda` inside the container.
 
 ```bash
@@ -167,7 +167,7 @@ Installations from binary files require you to download the preferred version fr
 
 ## Windows
 
-Currently, it's only possible to run Redpanda on Docker. Therefore, the [Docker guide](/docs/quickstart/quick-start-docker) would be applicable here.
+Currently, it's only possible to run Redpanda on Docker. Therefore, the [Docker guide](../../quickstart/quick-start-docker) would be applicable here.
 
 ## Post-upgrade applications
 
@@ -178,4 +178,4 @@ To verify that the cluster is running properly, implement the following command:
 rpk cluster status
 ```
 
-You'll also want to set up a real-time dashboard to monitor your cluster health. That can be  done by following the steps in our [monitoring guide](/docs/cluster-administration/monitoring).
+You'll also want to set up a real-time dashboard to monitor your cluster health. That can be  done by following the steps in our [monitoring guide](../../cluster-administration/monitoring).

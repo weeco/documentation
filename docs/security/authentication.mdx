@@ -14,12 +14,12 @@ Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS wi
 
 See also: 
 
-- [Configuring Listeners](/docs/cluster-administration/listener-configuration)
-- [Writing Custom Deployment Automation](/docs/deployment/custom-deployment)
+- [Configuring Listeners](../../cluster-administration/listener-configuration)
+- [Writing Custom Deployment Automation](../../deployment/custom-deployment)
 
 ## Enable authentication
 
-To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](/docs/cluster-administration/cluster-property-configuration).
+To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](../../cluster-administration/cluster-property-configuration).
 
 To update the `kafka_enable_authorization` property, run:
 
@@ -39,7 +39,7 @@ rpk cluster config set superusers ['admin']
 
 ### Create superusers
 
-When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](/docs/security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
+When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](../../security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
 
 You can specify the name of the superuser. For example, if you used superuser `admin`, Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run: 
 
@@ -61,7 +61,7 @@ rpk acl user create admin \
 --api-urls localhost:9644
 ```
 
-For information about using `rpk` to manage ACL users, see [rpk acl](/docs/reference/rpk/rpk-acl/). 
+For information about using `rpk` to manage ACL users, see [rpk acl](../../reference/rpk/rpk-acl/). 
 
 As a security best practice, you don't want to use the superuser to interact with the cluster, but you also don't want to delete the superuser (in case you need to grant permissions to new users later on). In addition, when you create the superuser, you specify a password for the user, which adds a level of security to the superuser. If you delete the user, someone else might re-create the user with a different password. 
 
@@ -220,7 +220,7 @@ message.timestamp.type  CreateTime  DEFAULT_CONFIG
 ...
 ```
 
-See also: [Configuring Redpanda SASL on Kubernetes](/docs/security/kubernetes-sasl)
+See also: [Configuring Redpanda SASL on Kubernetes](../../security/kubernetes-sasl)
 
 ## Configure mTLS with authentication  
 
@@ -308,7 +308,7 @@ pandaproxy_client:
 // highlight-end
 ```
 
-See also: [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls)
+See also: [Configuring Redpanda mTLS on Kubernetes](../../security/kubernetes-mtls)
 
 ## Disable authentication
 

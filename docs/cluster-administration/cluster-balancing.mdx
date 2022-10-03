@@ -9,7 +9,7 @@ title: Cluster Balancing
 
 When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the node with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when nodes are added or decommissioned. 
 
-With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor node availability and disk usage. This enables self-healing clusters that dynamically balance partitions. See [Continuous Data Balancing](/docs/cluster-administration/continuous-data-balancing).
+With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor node availability and disk usage. This enables self-healing clusters that dynamically balance partitions. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).
 
 Cluster balancing protects you from unbalanced systems that saturate resources on one or more nodes. This can affect throughput and latency. Furthermore, a cluster with replicas on a down node risks availability loss if more nodes fail, and a cluster that keeps losing nodes without healing eventually risks data loss.
 
@@ -26,7 +26,7 @@ Partition balancing moves data from hot-loaded nodes to least-loaded nodes to en
 By default, Redpanda rebalances partition distribution when nodes are added or decommissioned. Continuous Data Balancing additionally rebalances partitions when nodes become unavailable or when disk space usage exceeds a threshold. 
 
 * Monitoring unavailable nodes lets Redpanda self-heal clusters by moving partitions from a failed node to a healthy node.
-* Monitoring low disk space lets Redpanda distribute partitions across nodes with enough disk space. If free disk space reaches a critically low level, Redpanda blocks clients from producing. For information about the disk space threshold and alert, see [Handle full disks](/docs/deployment/disk-utilization/#handle-full-disks).
+* Monitoring low disk space lets Redpanda distribute partitions across nodes with enough disk space. If free disk space reaches a critically low level, Redpanda blocks clients from producing. For information about the disk space threshold and alert, see [Handle full disks](../../deployment/disk-utilization/#handle-full-disks).
 
 ### Partition balancing settings
 
@@ -35,5 +35,5 @@ Select your partition balancing setting with the `partition_autobalancing_mode` 
 | Setting      | Description |
 | ----------- | ----------- |
 | `node_add`      | Partition balancing happens when nodes are added.  <br /><br />This is the default setting.|
-| `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. See [Continuous Data Balancing](/docs/cluster-administration/continuous-data-balancing).<br /><br />This option requires an Enterprise license.         |
+| `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).<br /><br />This option requires an Enterprise license.         |
 | `off`     | All partition balancing from Redpanda is turned off. <br /><br />This option is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |

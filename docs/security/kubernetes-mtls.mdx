@@ -9,7 +9,7 @@ title: Configuring Redpanda mTLS on Kubernetes
 
 This section provides details on how to enable mutual Transport Layer Security (mTLS) authentication on Kubernetes. mTLS authenticates the server and encrypts communication between the server and client, as one-way TLS does, and also authenticates the client. Redpanda supports mTLS authentication on all four APIs.
 
-For general security information, see [Redpanda Security on Kubernetes](/docs/security/security-kubernetes).
+For general security information, see [Redpanda Security on Kubernetes](../../security/security-kubernetes).
 
 
 ## Prerequisites
@@ -111,7 +111,7 @@ adminApi:
 
 ## Step 2: Configure external connectivity (optional)
 
-The table below lists the supported listener configurations for each API with mTLS enabled. See [Listeners](/docs/security/security-kubernetes#listeners).
+The table below lists the supported listener configurations for each API with mTLS enabled. See [Listeners](../../security/security-kubernetes#listeners).
 
 | API              | Listener configurations with mTLS   |
 | --------         | ------                             |
@@ -156,7 +156,7 @@ schemaRegistry:
     requireClientAuth: true
 ```
 
-For information about external connectivity, including subdomains, see [External connectivity](/docs/security/security-kubernetes#external-connectivity).
+For information about external connectivity, including subdomains, see [External connectivity](../../security/security-kubernetes#external-connectivity).
 
 ## Step 3: Provide an issuer or certificate (optional)
 
@@ -164,7 +164,7 @@ Kafka API and Schema Registry let you provide a certificate issuer or certificat
 
 When you enable mTLS, the Redpanda operator generates a root certificate for each API. The root certificate is local to the cluster and the operator uses the root certificate to generate leaf certificates for the nodes and the client. However, for Kafka API and Schema registry you can instead specify a certificate issuer or a certificate. 
 
-For information about how certificates are created and used in Redpanda, see [Certificates](/docs/security/security-kubernetes#certificates).
+For information about how certificates are created and used in Redpanda, see [Certificates](../../security/security-kubernetes#certificates).
 
 ### Provide an issuer
 
@@ -413,7 +413,7 @@ You don't need to specify the brokers in these commands, because they were defin
 
 ## Step 9: Clean up
 
-You can use [rpk commands](/docs/reference/rpk/rpk-topic) to start producing and consuming to your cluster.
+You can use [rpk commands](../../reference/rpk/rpk-topic) to start producing and consuming to your cluster.
 
 When you're ready to delete your cluster and configuration files, run:
 

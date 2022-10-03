@@ -8,7 +8,7 @@ title: Remote Read Replicas
 </head>
 
 :::info
-This feature requires an [Enterprise license](/docs/introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
+This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
 :::
 
 A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster.
@@ -19,7 +19,7 @@ You can create Remote Read Replica topics in a Redpanda cluster that directly ac
 
 ## Creating a topic with archival storage or Tiered Storage
 
-Before you can create a Remote Read Replica, you must create a topic on the origin cluster, and set up an S3 bucket for the topic's cloud storage. Remote Read Replicas work with both archival storage and [Tiered Storage](/docs/data-management/tiered-storage/).
+Before you can create a Remote Read Replica, you must create a topic on the origin cluster, and set up an S3 bucket for the topic's cloud storage. Remote Read Replicas work with both archival storage and [Tiered Storage](../../data-management/tiered-storage/).
 
 1. Create an S3 bucket to store the original data.
 2. Create the original topic by running `rpk topic create <topic_name>`, and specifying the number of partitions and the number of replicas.
@@ -29,7 +29,7 @@ Before you can create a Remote Read Replica, you must create a topic on the orig
     | :------  | :---------  |
     | `cloud_storage_enabled: true` | Must be set to `true` to enable the cloud storage feature. |
     | `cloud_storage_bucket: “<bucket_name>”` | The S3 bucket where the original data is stored. |
-    | `cloud_storage_access_key: “<access_key>”` | The access key used for authentication. When using [IAM roles](/docs/security/iam-roles), you do not have to specify this property. |
+    | `cloud_storage_access_key: “<access_key>”` | The access key used for authentication. When using [IAM roles](../../security/iam-roles), you do not have to specify this property. |
     | `cloud_storage_secret_key: “<secret_key>”` | The secret key used for authentication.  When using IAM roles, you do not have to specify this property. |
     | `cloud_storage_region: “<region>”` | The region where the S3 bucket is located. This must be a supported region. |
     | `cloud_storage_enable_remote_write` | When using archival storage or Tiered Storage on the origin cluster, set to `true` to enable data to be uploaded from Redpanda and written to cloud storage for all topics. To only enable data upload for a specific topic, set `cloud_storage_enable_remote_write: false` and run `rpk topic create <topic_name> -c redpanda.remote.write=true` when you create the topic. |
@@ -47,7 +47,7 @@ To set up a Remote Read Replica topic on a separate remote cluster:
     | :------  | :---------  |
     | `cloud_storage_enabled: true` | Must be set to `true` to enable the cloud storage feature. |
     | `cloud_storage_bucket: “none”` | No S3 bucket is needed for the remote cluster. |
-    | `cloud_storage_access_key: “<access_key>”` | The access key that allows read access to the S3 bucket. When using [IAM roles](/docs/security/iam-roles), you do not have to specify this property. |
+    | `cloud_storage_access_key: “<access_key>”` | The access key that allows read access to the S3 bucket. When using [IAM roles](../../security/iam-roles), you do not have to specify this property. |
     | `cloud_storage_secret_key: “<secret_key>”` | The secret key that allows read access to the S3 bucket.  When using IAM roles, you do not have to specify this property. |
     | `cloud_storage_region: “<region>”` | The region where the remote cluster is created. |
 4. If you're using Google Cloud Storage, set the `cloud_storage_api_endpoint` property to `storage.googleapis.com`.

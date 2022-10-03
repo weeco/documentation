@@ -8,13 +8,13 @@ title: Tiered Storage
 </head>
 
 :::info
-This feature requires an [Enterprise license](/docs/introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
 Tiered Storage allows you to save storage costs by offloading log segments to cloud storage. You can specify the amount of local storage that you want to provision and configure Tiered Storage to move the rest to Amazon S3 or Google Cloud Storage. You do not have to specify which log segments you want to move; Redpanda moves them automatically based on cluster-level configuration properties. Redpanda Tiered Storage works behind the scenes to index where data is offloaded so that it can retrieve the data when you need it.
 
 :::caution
-Do not use Tiered Storage with [data transforms](https://docs.redpanda.com/docs/data-management/data-transform), which is in technical preview. Technical preview features are not supported for production usage.
+Do not use Tiered Storage with [data transforms](../../data-management/data-transform), which is in technical preview. Technical preview features are not supported for production usage.
 :::
 
 This image illustrates the Tiered Storage architecture. Remote write uploads data from Redpanda to cloud storage. Remote read fetches data from cloud storage to Redpanda.
@@ -51,8 +51,8 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 
 1. Choose a uniform access control when you create the bucket. 
 2. Use a Google managed encryption key. 
-3. Set a [default project](https://cloud.google.com/storage/docs/migrating#defaultproj). 
-4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
+3. Set a [default project](https://cloud.google.com/storage../../migrating#defaultproj). 
+4. Create a service user with [HMAC keys](https://cloud.google.com/storage../../authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. The sections below give detailed information on cloud storage configuration options, but the properties listed here are the minimum required properties to use Tiered Storage for Google Cloud Storage. Use the `rpk cluster config edit` command to edit these properties:
 
 ```properties

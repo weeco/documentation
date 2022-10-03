@@ -22,7 +22,7 @@ docker run --network=host \
 :::note
 The host networking driver only works on Linux hosts, and is not supported on Docker Desktop for Mac, 
 Docker Desktop for Windows, or Docker EE for Windows Server. The recommended approach to test Redpanda Console
-on a local machine is to run it with [Docker compose](/docs/console/reference/docker-compose) 
+on a local machine is to run it with [Docker compose](../../console/reference/docker-compose) 
 so that it can share the network scope with the container that runs the Kafka cluster.
 ::: 
 
@@ -139,5 +139,5 @@ passwords using the environment variables.
 
 To view the reference configurations that document all environment and YAML variables:
 
-- [Redpanda Console Configuration](/docs/console/reference/config) - Main configuration file for Redpanda Console
-- [Redpanda Console Role Binding Configuration](/docs/console/reference/role-bindings) - Role binding configuration for RBAC
+- [Redpanda Console Configuration](../../console/reference/config) - Main configuration file for Redpanda Console
+- [Redpanda Console Role Binding Configuration](../../console/reference/role-bindings) - Role binding configuration for RBAC

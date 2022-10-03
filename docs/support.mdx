@@ -92,7 +92,7 @@ sudo systemctl start redpanda
 ### Adding a new node
 
 Adding a new node is very easy. You can follow
-[the manual installation section](/docs/deployment/production-deployment#manual-installation)
+[the manual installation section](../deployment/production-deployment#manual-installation)
 on setting up a production cluster.
 
 ### Changing the config on an existing node
@@ -117,7 +117,7 @@ Some configuration fields can't be changed, however.
 Redpanda exports Prometheus metrics on `<host>:9644/metrics`. To learn how to
 quickly generate the necessary configuration, to start scraping it and
 visualizing it, see our
-[monitoring docs](/docs/cluster-administration/monitoring)
+[monitoring docs](../cluster-administration/monitoring)
 
 ## Troubleshooting
 
@@ -168,7 +168,7 @@ misconfigurations.
 ### The 'redpanda' package wasn't found
 
 Make sure that you added our repo to your package manager as explained in our
-[Quick Start Linux Guide](/docs/quickstart/quick-start-linux)
+[Quick Start Linux Guide](../quickstart/quick-start-linux)
 
 ### The 'redpanda' package can't be downloaded
 
@@ -198,7 +198,7 @@ generate new ones and restart the node.
 
 ### Replication factor issues
 
-If you are [Setting up a 3-node cluster](/docs/quickstart/quick-start-docker#set-up-a-3-node-cluster) and create a topic with two replicas like the following, then the following command would fail.
+If you are [Setting up a 3-node cluster](../quickstart/quick-start-docker#set-up-a-3-node-cluster) and create a topic with two replicas like the following, then the following command would fail.
 
 ```bash
 rpk topic create test -r 2 -p 1

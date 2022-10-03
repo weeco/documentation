@@ -178,7 +178,7 @@ docker ps
 ```
 
 :::caution
-To prevent any potential data loss when Docker is locally executed, you must use persistent volumes. For more information, refer to [persistent volumes](/docs/quickstart/quick-start-docker#create-network-and-persistent-volumes).
+To prevent any potential data loss when Docker is locally executed, you must use persistent volumes. For more information, refer to [persistent volumes](../../quickstart/quick-start-docker#create-network-and-persistent-volumes).
 :::
 
 Stop and remove Redpanda's container(s):
@@ -201,7 +201,7 @@ Pull the desired Redpanda's version, or adjust the setting to `latest` in the `v
 docker pull docker.redpanda.com/vectorized/redpanda:<version>
 ```
 
-If you have any questions about how to start Redpanda on Docker, refer to [docker getting started](/docs/quickstart/quick-start-docker).
+If you have any questions about how to start Redpanda on Docker, refer to [docker getting started](../../quickstart/quick-start-docker).
 
 Once completed, restart the cluster:
 
@@ -230,6 +230,6 @@ If you want to view additional information about your brokers, run:
 rpk redpanda admin brokers list
 ```
 
-You'll also want to set up a real-time dashboard to monitor your cluster health. That can be  done by following the steps in our [monitoring guide](/docs/cluster-administration/monitoring).
+You'll also want to set up a real-time dashboard to monitor your cluster health. That can be  done by following the steps in our [monitoring guide](../../cluster-administration/monitoring).
 
-If you would like to perform a rolling upgrade on your cluster using maintenance mode, refer to [Node Maintenance Mode](/docs/cluster-administration/node-management). Keep in mind that rolling upgrades are only available in versions **22.1 and later**.
+If you would like to perform a rolling upgrade on your cluster using maintenance mode, refer to [Node Maintenance Mode](../../cluster-administration/node-management). Keep in mind that rolling upgrades are only available in versions **22.1 and later**.

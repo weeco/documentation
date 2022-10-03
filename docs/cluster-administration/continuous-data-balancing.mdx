@@ -8,7 +8,7 @@ title: Configuring Continuous Data Balancing
 </head>
 
 :::info
-This feature requires an [Enterprise license](/docs/introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
 Continuous Data Balancing continuously monitors your node availability and disk usage. This enables self-healing clusters that dynamically balance partitions, ensuring smooth operations and optimal cluster performance.
@@ -21,7 +21,7 @@ To enable Continuous Data Balancing, set the `partition_autobalancing_mode` prop
 | `partition_autobalancing_node_availability_timeout_sec`   |  When a node is unreachable for the specified amount of time, Redpanda acts as if the node had been decommissioned: rebalancing begins, re-creating all of its replicas on other nodes in the cluster.<br /><br /> **Note:** The node remains part of the cluster, and it can re-join when it comes back online. A node that was actually decommissioned is removed from the cluster. <br /><br /> Default is 900 seconds (15 minutes).      |
 | `partition_autobalancing_max_disk_usage_percent`      |  When a node fills up to this disk usage percentage, Redpanda starts moving replicas off the node to other nodes with disk utilization below the percentage. <br /><br />Default is 80%.    |
 
-For information about other modes with `partition_autobalancing_mode`, see [Cluster Balancing](/docs/cluster-administration/cluster-balancing).
+For information about other modes with `partition_autobalancing_mode`, see [Cluster Balancing](../../cluster-administration/cluster-balancing).
 
 ## Use Data Balancing commands
 

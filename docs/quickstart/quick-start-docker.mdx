@@ -9,14 +9,14 @@ title: 60-Second Guide for Docker
 
 You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This 60-Second Guide helps you get started with Redpanda for development and testing. 
 
-For production or benchmarking, see [Deploying for Production](/docs/deployment/production-deployment).
+For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
 ## Get your cluster ready
 
 To get a cluster ready for streaming, either run a single Docker container with Redpanda running, or run a cluster of three containers.
 
 :::note
-You can also use [`rpk container`](/docs/deployment/guide-rpk-container) to run Redpanda in containers without having to interact with Docker at all.
+You can also use [`rpk container`](../../deployment/guide-rpk-container) to run Redpanda in containers without having to interact with Docker at all.
 :::
 
 ### Set up a one-node cluster
@@ -45,7 +45,7 @@ redpanda start \
 :::
 
 You can do some [simple topic actions](#do-some-streaming) to start streaming.
-Otherwise, point your [Kafka-compatible client](/docs/development/kafka-clients) to 127.0.0.1:9092.
+Otherwise, point your [Kafka-compatible client](../../development/kafka-clients) to 127.0.0.1:9092.
 
 ### Set up a three-node cluster
 
@@ -212,7 +212,7 @@ To change the parameters, edit the `docker-compose` file, and run the command ag
 
 ## Start streaming
 
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](/docs/reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
+Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
 
 Create a topic called `twitch_chat`:
 
