@@ -45,7 +45,7 @@ If you haven’t completed these tasks, you can use one of the following quickst
 
 The Redpanda GitHub repository contains a `tls.yaml` example configuration file that you can use to enable TLS. You can find the file here:
 
-[redpanda-examples../../example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main../../example-config/kubernetes/tls.yaml)
+[redpanda-examples../../example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/tls.yaml)
 
 :::note
 If you want to modify the example file, save it locally and make the required changes listed below. If you’re following along with the stegosaurus tutorial or if you don’t need to make changes to the example file, you don’t need to save the file locally.
@@ -246,7 +246,7 @@ kubectl apply -f <cluster_specification.yaml>
 If you did not modify the example file, you can use the URL to the example file in GitHub to create the cluster:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml
 ```
 
 ### Tutorial: Stegosaurus
@@ -254,7 +254,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 To create the cluster for the stegosaurus tutorial, run this command:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml
 ```
 
 ## Step 5: Create the ConfigMap
@@ -485,5 +485,5 @@ kubectl delete -f <cluster_specification.yaml> -f <tls_config_map.yaml> -f <tls_
 Use the <a href="https://docs.redpanda.com/docs/21.11/reference/rpk-commands" target="_self">rpk commands</a> documentation to experiment with producing and consuming to your cluster. When you're ready, delete the cluster and configuration files with this command:
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml stegosaurus_config.yaml stegosaurus_pod.yaml
+kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml stegosaurus_config.yaml stegosaurus_pod.yaml
 ```

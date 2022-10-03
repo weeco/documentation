@@ -33,8 +33,8 @@ To configure data archiving:
         - Choose a uniform access control when you create the bucket.
             - Use bucket-level permissions for all objects.
             - Use a Google-managed encryption key.
-            - Set a [default project](https://cloud.google.com/storage../../migrating#defaultproj).
-        - [Create a service user with Hash-based Message Authentication Code (HMAC) keys](https://cloud.google.com/storage../../authentication/managing-hmackeys)
+            - Set a [default project](https://cloud.google.com/storage/docs/migrating#defaultproj).
+        - [Create a service user with Hash-based Message Authentication Code (HMAC) keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys)
             and copy the keys to the Redpanda configuration properties `cloud_storage_access_key` and `cloud_storage_secret_key`, respectively. 
         - Set `cloud_storage_api_endpoint` to `storage.googleapis.com`
     - MinIO (for local testing)

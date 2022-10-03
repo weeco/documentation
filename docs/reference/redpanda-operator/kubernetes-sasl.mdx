@@ -21,7 +21,7 @@ If you haven’t completed these tasks, follow one of the 60-Second Guides for K
 
 ## Step 1: Configure the cluster specification file
 
-The Redpanda GitHub repository contains a `sasl.yaml` sample configuration file you can use to enable SASL authentication: [redpanda-examples../../example-config/kubernetes/sasl.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main../../example-config/kubernetes/sasl.yaml).
+The Redpanda GitHub repository contains a `sasl.yaml` [sample configuration file](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/sasl.yaml) you can use to enable SASL authentication.
 
 :::note
 To modify the sample file, save it locally and make the required changes.
@@ -129,7 +129,7 @@ kubectl apply -f <cluster_specification.yaml>
 If you did not modify the example file, you can use the URL to the example file in GitHub to create the cluster: 
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/sasl.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/sasl.yaml
 ```
 
 ## Step 3: Create the superuser

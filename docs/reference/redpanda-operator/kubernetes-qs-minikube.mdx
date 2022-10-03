@@ -21,7 +21,7 @@ This guide uses minikube to create a local Kubernetes cluster in which Redpanda 
 To get up and running, you create a cluster and deploy the Redpanda operator on the cluster. The steps limit the number of nodes to one, because multi-node local clusters are not currently supported. For details on how to access Redpanda outside the Kubernetes network, see [Connecting Remotely to Kubernetes](../kubernetes-external-connect). 
 
 :::note
-In these steps, the YAML file you use to install Redpanda sets `developerMode: true`. If you choose to set `developerMode: false`, run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. This command sets tuning parameters for optimal configuration. For more information, see [Set Redpanda production mode](../../deployment/production-deployment#Step-2-Set-Redpanda-production-mode). If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
+In these steps, the YAML file you use to install Redpanda sets `developerMode: true`. If you choose to set `developerMode: false`, run `rpk redpanda tune all` directly on the host before you create a Redpanda cluster. This command sets tuning parameters for optimal configuration. For more information, see [Set Redpanda production mode](../../../deployment/production-deployment#Step-2-Set-Redpanda-production-mode). If `rpk` is not available, verify that `fs.aio-max-nr` is set to `1048576` or greater. You can set `fs.aio-max-nr` by running `sysctl -w fs.aio-max-nr=1048576`.
 :::
 
 ## Prerequisites
