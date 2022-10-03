@@ -63,3 +63,6 @@
 
 #Fix for new rpk page
 /docs/reference/rpk-commands  /docs/reference/rpk 301!
+
+#Fix for duplicate rpk container page
+/docs/deployment/guide-rpk-container /docs/quickstart/quick-start-macos 301!
