@@ -199,10 +199,10 @@ module.exports = {
           label: "Kafka clients",
           id: "development/kafka-clients",
         },
-        'development/guide-nodejs',
-        'development/consumer-offsets',
-        'development/idempotent-producers',
-        'development/http-proxy',
+        "development/guide-nodejs",
+        "development/consumer-offsets",
+        "development/idempotent-producers",
+        "development/http-proxy",
       ],
     },
     {
@@ -216,7 +216,7 @@ module.exports = {
         "security/authentication",
         "security/authorization",
         "security/iam-roles",
-          ],
+      ],
     },
     {
       type: "category",
@@ -614,36 +614,40 @@ module.exports = {
           items: [
             {
               type: "category",
-              label: "60-Second Guides",
-              items: ["redpanda-operator/kubernetes-qs-local-access", "redpanda-operator/kubernetes-qs-minikube", "redpanda-operator/kubernetes-qs-cloud"],
+              label: "Install",
+              items: [
+                "reference/redpanda-operator/kubernetes-qs-local-access",
+                "reference/redpanda-operator/kubernetes-qs-minikube",
+                "reference/redpanda-operator/kubernetes-qs-cloud",
+              ],
             },
             {
               type: "category",
-              label: "Deployment",
-              items: ["redpanda-operator/kubernetes-connectivity", "redpanda-operator/kubernetes-external-connect", "redpanda-operator/kubernetes-additional-config", "redpanda-operator/arbitrary-configuration"],
+              label: "Deploy",
+              items: [
+                "reference/redpanda-operator/kubernetes-connectivity",
+                "reference/redpanda-operator/kubernetes-external-connect",
+                "reference/redpanda-operator/kubernetes-additional-config",
+                "reference/redpanda-operator/arbitrary-configuration",
+              ],
             },
             {
               type: "category",
               label: "Security",
-              items: ["redpanda-operator/security-kubernetes", "redpanda-operator/tls-kubernetes", "redpanda-operator/kubernetes-sasl", "redpanda-operator/kubernetes-mtls"],
+              items: [
+                "reference/redpanda-operator/security-kubernetes",
+                "reference/redpanda-operator/tls-kubernetes",
+                "reference/redpanda-operator/kubernetes-sasl",
+                "reference/redpanda-operator/kubernetes-mtls",
+              ],
             },
+
             {
               type: "link",
               label: "Operator Custom Resource Definition (CRD)",
               href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
             },
-            "reference/redpanda-operator/kubernetes-qs-local-access",
-            "reference/redpanda-operator/kubernetes-qs-minikube",
-            "reference/redpanda-operator/kubernetes-qs-cloud",
-            "reference/redpanda-operator/kubernetes-connectivity",
-            "reference/redpanda-operator/kubernetes-external-connect",
-            "reference/redpanda-operator/kubernetes-additional-config",
-            "reference/redpanda-operator/arbitrary-configuration",
-            "reference/redpanda-operator/security-kubernetes",
-            "reference/redpanda-operator/tls-kubernetes",
-            "reference/redpanda-operator/kubernetes-sasl",
-            "reference/redpanda-operator/kubernetes-mtls",
-          ]
+          ],
         },
         "reference/internal-metrics",
         {
