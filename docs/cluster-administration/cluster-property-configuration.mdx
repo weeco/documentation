@@ -10,9 +10,9 @@ title: Configuring Cluster Properties
 When you install Redpanda software, it automatically generates a cluster configuration with default settings assigned to each cluster property. 
 You might want to change some of the default settings, particularly if you plan to use features such as rack awareness or tiered storage, which are disabled by default.
 
-[Tunable properties](/docs/reference/tunable-properties), such as internal buffer sizes, have default settings that you typically do not need to modify during normal operations. You should only change these properties after collecting sufficient data to warrant a change. 
+[Tunable properties](../../reference/tunable-properties), such as internal buffer sizes, have default settings that you typically do not need to modify during normal operations. You should only change these properties after collecting sufficient data to warrant a change. 
 
-To view all cluster properties, along with their descriptions and default settings, refer to [Cluster configuration properties](/docs/reference/cluster-properties) and [Tunable properties](/docs/reference/tunable-properties).
+To view all cluster properties, along with their descriptions and default settings, refer to [Cluster configuration properties](../../reference/cluster-properties) and [Tunable properties](../../reference/tunable-properties).
 
 ## Editing cluster properties
 
@@ -38,7 +38,7 @@ To assign new values to cluster properties:
 
 1. Open a terminal window and log in to a node on your cluster.
 2. At the prompt, type `rpk cluster config edit`. To edit tuning properties, type `rpk cluster config edit --all` instead.
-3. Edit the configuration file and set values for the [properties](/docs/reference/cluster-properties) you want to change.
+3. Edit the configuration file and set values for the [properties](../../reference/cluster-properties) you want to change.
 4. Save the file and quit the editor.
 5. At the prompt, type `rpk cluster config status` to see whether the cluster requires a restart. If a restart is necessary, you will see a message like this:
 

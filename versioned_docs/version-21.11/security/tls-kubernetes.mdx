@@ -2,9 +2,9 @@
 title: Configuring Redpanda TLS on Kubernetes
 ---
 
-This document provides details on how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with <a href="https://docs.redpanda.com/docs/security/kubernetes-sasl/" target="_self">SASL authentication</a> or you can configure <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">mTLS authentication</a>.
+This document provides details on how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with [SASL authentication](../../security/kubernetes-sasl/)or you can configure [SASL authentication](../../security/kubernetes-sasl/).
 
-For information about Redpanda authentication on Kubernetes in general, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security" target="_self">Redpanda security on Kubernetes</a> document. You’ll find information there about supported authentication methods for each API.
+For information about Redpanda authentication on Kubernetes in general, see the [Redpanda security on Kubernetes](../../security/kubernetes-security) document. You’ll find information there about supported authentication methods for each API.
 
 Redpanda supports TLS on all four APIs:
 
@@ -37,15 +37,15 @@ This guide assumes that you have already completed the following tasks:
 
 If you haven’t completed these tasks, you can use one of the following quickstarts to get set up before you configure TLS. Just follow the steps in any of these guides and stop before you install and connect to the Redpanda cluster:
 
-* [Kubernetes quickstart for cloud](/docs/quickstart/kubernetes-qs-dev/)
-* [Kubernetes quickstart with local access on kind](/docs/quickstart/kubernetes-qs-dev)
-* [Kubernetes quickstart with local access on minikube](/docs/quickstart/kubernetes-qs-dev)
+* [Kubernetes quickstart for cloud](../../quickstart/kubernetes-qs-cloud/)
+* [Kubernetes quickstart with local access on kind](../../quickstart/kubernetes-qs-cloud)
+* [Kubernetes quickstart with local access on minikube](../../quickstart/kubernetes-qs-cloud)
 
 ## **Step 1: Create the cluster specification file**
 
 The Redpanda GitHub repository contains a `tls.yaml` example configuration file that you can use to enable TLS. You can find the file here:
 
-[redpanda-examples/docs/example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/tls.yaml)
+[redpanda-examples../../example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main../../example-config/kubernetes/tls.yaml)
 
 :::note
 If you want to modify the example file, save it locally and make the required changes listed below. If you’re following along with the stegosaurus tutorial or if you don’t need to make changes to the example file, you don’t need to save the file locally.
@@ -167,7 +167,7 @@ schemaRegistry:
      enabled: true
 ```
 
-For more information about external connectivity, including subdomains, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#external-connectivity" target="_self">External connectivity</a> section of the Redpanda security on Kubernetes documentation.
+For more information about external connectivity, including subdomains, see the [External connectivity](../../security/kubernetes-security#external-connectivity) section of the Redpanda security on Kubernetes documentation.
 
 ### Tutorial: Stegosaurus
 
@@ -179,7 +179,7 @@ Kafka API and Schema Registry allow you to provide a certificate issuer or certi
 
 When you enable TLS, the Redpanda operator generates a root certificate for each API. However, for Kafka API and Schema registry you can instead specify a certificate issuer or a certificate.
 
-For information about how certificates are created and used in Redpanda, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security/#certificates" target="_self">Certificates</a> section of the Redpanda security on Kubernetes document.
+For information about how certificates are created and used in Redpanda, see the [Certificates](../../security/kubernetes-security/#certificates) section of the Redpanda security on Kubernetes document.
 
 
 ### Provide an issuer
@@ -246,7 +246,7 @@ kubectl apply -f <cluster_specification.yaml>
 If you did not modify the example file, you can use the URL to the example file in GitHub to create the cluster:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml
 ```
 
 ### Tutorial: Stegosaurus
@@ -254,7 +254,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 To create the cluster for the stegosaurus tutorial, run this command:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml
 ```
 
 ## Step 5: Create the ConfigMap
@@ -485,5 +485,5 @@ kubectl delete -f <cluster_specification.yaml> -f <tls_config_map.yaml> -f <tls_
 Use the <a href="https://docs.redpanda.com/docs/21.11/reference/rpk-commands" target="_self">rpk commands</a> documentation to experiment with producing and consuming to your cluster. When you're ready, delete the cluster and configuration files with this command:
 
 ```bash
-kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml stegosaurus_config.yaml stegosaurus_pod.yaml
+kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml stegosaurus_config.yaml stegosaurus_pod.yaml
 ```

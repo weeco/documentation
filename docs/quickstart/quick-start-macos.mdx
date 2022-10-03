@@ -9,14 +9,14 @@ title: 60-Second Guide for macOS
 
 You can only run Redpanda directly on Linux. However, you can run Redpanda on macOS in a Docker container. This 60-Second Guide helps you get started with Redpanda for development and testing.
 
-For production or benchmarking, see [Deploying for Production](/docs/deployment/production-deployment).
+For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
 ## Get Redpanda running
 
 To run Redpanda on MacOS, use `rpk` to bring up Redpanda nodes in Docker containers.
 Make sure that you install [Docker](https://docs.docker.com/docker-for-mac/install/) first.
 
-To customize the containers, you can also set up your own [Redpanda containers in Docker](/docs/quickstart/quick-start-docker).
+To customize the containers, you can also set up your own [Redpanda containers in Docker](../../quickstart/quick-start-docker).
 
 ### Install `rpk`
 
@@ -58,7 +58,7 @@ rpk cluster info --brokers 127.0.0.1:49462,127.0.0.1:49468,127.0.0.1:49467
 
 ## Start streaming
 
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](/docs/reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
+Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
 
 Create a topic called `twitch_chat`:
 

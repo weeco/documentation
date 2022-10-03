@@ -8,11 +8,11 @@ This guide will take you through what is needed to setup a production cluster
 of Redpanda.
 
 If you just want to try out Redpanda, check out our Getting Started Guides for
-[Linux](/docs/quickstart/quick-start-linux), [MacOS](/docs/quickstart/quick-start-macos),
-[Docker](/docs/quickstart/quick-start-docker), or [Kubernetes](/docs/quickstart/kubernetes-qs-dev/).
+[Linux](../../quickstart/quick-start-linux), [MacOS](../../quickstart/quick-start-macos),
+[Docker](../../quickstart/quick-start-docker), or [Kubernetes](../../quickstart/kubernetes-qs-cloud/).
 
 :::note
-Before you set up your Redpanda cluster, refer to the [Performance and storage tuning](https://docs.redpanda.com/docs/deployment/performance-storage-tuning) documentation for guidelines on cluster creation, such as avoiding out-of-disk outages.
+Before you set up your Redpanda cluster, refer to the [Performance and storage tuning](../../deployment/performance-storage-tuning) documentation for guidelines on cluster creation, such as avoiding out-of-disk outages.
 :::
 
 ## Prepare infrastructure
@@ -30,13 +30,13 @@ For the best performance, we need to provision the hardware according to these h
   - `8081` - Schema Registry Port
   - `9644` - Prometheus and HTTP admin port
 
-If you want, you can [use Terraform to deploy Redpanda](/docs/deployment/production-deployment-automation).
+If you want, you can [use Terraform to deploy Redpanda](../../deployment/production-deployment-automation).
 
 ## Install Redpanda
 
 After the hardware is provisioned, install Redpanda and configure it for production use.
 
-You can also install Redpanda using an [Ansible playbook](/docs/deployment/production-deployment-automation).
+You can also install Redpanda using an [Ansible playbook](../../deployment/production-deployment-automation).
 
 ### Step 1: Install the binary
 

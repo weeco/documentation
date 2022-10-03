@@ -11,15 +11,15 @@ You can configure TLS inside a Kubernetes cluster to establish a secure connecti
 
 For details about Kubernetes configuration, see: 
 
-* [Configuring TLS on Kubernetes](/docs/security/tls-kubernetes)
-* [Configuring SASL on Kubernetes](/docs/security/kubernetes-sasl)
-* [Configuring mTLS on Kubernetes](/docs/security/kubernetes-mtls)
+* [Configuring TLS on Kubernetes](../../security/tls-kubernetes)
+* [Configuring SASL on Kubernetes](../../security/kubernetes-sasl)
+* [Configuring mTLS on Kubernetes](../../security/kubernetes-mtls)
 
 For general information about Redpanda security, see:
 
-* [Configuring Encryption](/docs/security/encryption)
-* [Configuring Authentication](/docs/security/authentication)
-* [Configuring Authorization](/docs/security/authorization)
+* [Configuring Encryption](../../security/encryption)
+* [Configuring Authentication](../../security/authentication)
+* [Configuring Authorization](../../security/authorization)
 
 ## Certificates
 
@@ -101,7 +101,7 @@ The `nodeSecretRef` property contains the following variables:
 | `secret_name` | Name of the certificate secret. |
 | `secret_namespace` | Kubernetes namespace where the certificate secret is. If the secret is in a different namespace than the Redpanda cluster, the operator copies it to the namespace of the Redpanda cluster. |
 
-For details about providing a trusted issuer or certificate issuer, see [Configuring Redpanda TLS on Kubernetes](/docs/security/tls-kubernetes) and [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls). 
+For details about providing a trusted issuer or certificate issuer, see [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes) and [Configuring Redpanda mTLS on Kubernetes](../../security/kubernetes-mtls). 
 
 ### Certificate secrets
 
@@ -119,7 +119,7 @@ The `kubernetes.io/tls` resource contains the following components:
 * `tls.crt` 
 * `ca.crt` - This is provided if you're using a self-signed Certificate Authority (that is, you didn't provide an issuer in the cluster configuration file). 
 
-These components are described in [TLS certificates with external connectivity](/docs/security/security-kubernetes#tls-certificates-with-external-connectivity) and [mTLS certificates with external connectivity](/docs/security/security-kubernetes#mtls-certificates-with-external-connectivity).
+These components are described in [TLS certificates with external connectivity](../../security/security-kubernetes#tls-certificates-with-external-connectivity) and [mTLS certificates with external connectivity](../../security/security-kubernetes#mtls-certificates-with-external-connectivity).
 
 To see the contents of `kubernetes.io/tls`, run: 
 
@@ -239,7 +239,7 @@ kubectl get secret <secret_name> -o go-template='{{index .data "ca.crt"}}' | bas
 ```
 
 :::note
-The secret names for each API are listed in [Node certificate](/docs/security/security-kubernetes#node-certificate).
+The secret names for each API are listed in [Node certificate](../../security/security-kubernetes#node-certificate).
 :::
 
 After you have `ca.crt` extracted, you can create an `rpk` configuration file that lets you to run `rpk` from anywhere, including outside the Kubernetes cluster. To do this, create a configuration file with the following content: 
@@ -278,7 +278,7 @@ If you have external connectivity configured for your cluster and you're using m
 The following table gives the command to extract each of these files. 
 
 :::note
-The secret names for each API are listed in [Node certificate](/docs/security/security-kubernetes#node-certificate).
+The secret names for each API are listed in [Node certificate](../../security/security-kubernetes#node-certificate).
 :::
 
 | File                   | Description                                                    | Command to extract the file        |

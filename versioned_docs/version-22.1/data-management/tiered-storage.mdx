@@ -8,7 +8,7 @@ Tiered Storage allows you to save storage costs by offloading log segments to cl
 
 Tiered Storage is available for Redpanda 22.1.1 and later.
 
-It is recommended that you do not use Tiered Storage with <a href="https://docs.redpanda.com/docs/data-management/data-transform/" target="_self">Data Transforms</a>, which is in technical preview. If you do, there is a likelihood that you will encounter problems with topics.
+It is recommended that you do not use Tiered Storage with [Data Transforms](../../data-management/data-transform/), which is in technical preview. If you do, there is a likelihood that you will encounter problems with topics.
 
 :::
 
@@ -46,8 +46,8 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 
 1. Choose a uniform access control when you create the bucket. 
 2. Use a Google managed encryption key. 
-3. Set a [default project](https://cloud.google.com/storage/docs/migrating#defaultproj). 
-4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
+3. Set a [default project](https://cloud.google.com/storage../../migrating#defaultproj). 
+4. Create a service user with [HMAC keys](https://cloud.google.com/storage../../authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the properties listed here are the minimum required properties to use Tiered Storage for Google Cloud Storage. Use the `rpk cluster config edit` command to edit these properties:
 
 ```properties
