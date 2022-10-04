@@ -9,7 +9,7 @@ title: Configuring Redpanda TLS on Kubernetes
 
 This section explains how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication.
 
-For general security information, see [Redpanda Security on Kubernetes](../../security/security-kubernetes).
+For general security information, see [Redpanda Security on Kubernetes](../security-kubernetes).
 
 ## Prerequisites
 
@@ -17,11 +17,11 @@ For general security information, see [Redpanda Security on Kubernetes](../../se
 2. Install cert-manager.
 3. Install the Redpanda operator.
 
-If you haven’t completed these tasks, see [60-Second Guide for Kubernetes](../../quickstart/kubernetes-qs-dev) to get set up before you configure TLS. Just stop before you install and connect to the Redpanda cluster.
+If you haven’t completed these tasks, follow one of the 60-Second Guides for Kubernetes to get set up before you configure TLS. Just stop before you install and connect to the Redpanda cluster.
 
 ## Step 1: Create the cluster specification file
 
-The Redpanda GitHub repository contains a `tls.yaml` sample configuration file you can use to enable TLS: [redpanda-examples../../example-config/kubernetes/tls.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main../../example-config/kubernetes/tls.yaml).
+The Redpanda GitHub repository contains a [sample configuration file](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/tls.yaml) you can use to enable TLS.
 
 :::note
 To modify the sample file, save it locally and make the required changes.
@@ -139,7 +139,7 @@ schemaRegistry:
      enabled: true
 ```
 
-For information about external connectivity, including subdomains, see [External connectivity](../../security/security-kubernetes#external-connectivity).
+For information about external connectivity, including subdomains, see [External connectivity](../security-kubernetes#external-connectivity).
 
 ## Step 3: Provide an issuer or certificate (optional)
 
@@ -147,7 +147,7 @@ Kafka API and Schema Registry let you provide a certificate issuer or certificat
 
 When you enable TLS, the Redpanda operator generates a root certificate for each API. However, for Kafka API and Schema registry you can instead specify a certificate issuer or a certificate.
 
-For information about how certificates are created and used in Redpanda, see [Certificates](../../security/security-kubernetes#certificates).
+For information about how certificates are created and used in Redpanda, see [Certificates](../security-kubernetes#certificates).
 
 ### Provide an issuer
 
@@ -212,7 +212,7 @@ kubectl apply -f <cluster_specification.yaml>
 If you did not modify the example file, you can use the URL to the example file in GitHub to create the cluster:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main../../example-config/kubernetes/tls.yaml
+kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/tls.yaml
 ```
 
 ## Step 5: Create the ConfigMap
@@ -373,7 +373,7 @@ You don't need to specify the brokers in these commands, because they were defin
 
 ## Step 9: Clean up
 
-You can use [rpk commands](../../reference/rpk/rpk-topic) to start producing and consuming to your cluster.
+You can use [rpk commands](../../rpk/rpk-topic) to start producing and consuming to your cluster.
 
 When you're ready to delete your cluster and configuration files, run:
 

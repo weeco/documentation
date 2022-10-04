@@ -110,28 +110,6 @@ module.exports = {
         "deployment/production-deployment-automation",
         {
           type: "category",
-          label: "Kubernetes",
-          items: [
-            {
-              type: "doc",
-              label: "Configuring Redpanda Operator for Connectivity",
-              id: "deployment/kubernetes-connectivity",
-            },
-            "deployment/kubernetes-external-connect",
-            {
-              type: "doc",
-              label: "Using Configuration Parameters with a Custom Resource",
-              id: "deployment/kubernetes-additional-config",
-            },
-            {
-              type: "doc",
-              label: "Additional Configuration Parameters",
-              id: "deployment/arbitrary-configuration",
-            },
-          ],
-        },
-        {
-          type: "category",
           label: "Performance and storage tuning",
           items: ["deployment/disk-utilization", "deployment/io-optimization"],
         },
@@ -221,10 +199,10 @@ module.exports = {
           label: "Kafka clients",
           id: "development/kafka-clients",
         },
-        'development/guide-nodejs',
-        'development/consumer-offsets',
-        'development/idempotent-producers',
-        'development/http-proxy',
+        "development/guide-nodejs",
+        "development/consumer-offsets",
+        "development/idempotent-producers",
+        "development/http-proxy",
       ],
     },
     {
@@ -238,32 +216,6 @@ module.exports = {
         "security/authentication",
         "security/authorization",
         "security/iam-roles",
-        {
-          type: "category",
-          label: "Security on Kubernetes",
-          items: [
-            {
-              type: "doc",
-              label: "Redpanda Security on Kubernetes",
-              id: "security/security-kubernetes",
-            },
-            {
-              type: "doc",
-              label: "Configuring TLS on Kubernetes",
-              id: "security/tls-kubernetes",
-            },
-            {
-              type: "doc",
-              label: "Configuring SASL on Kubernetes",
-              id: "security/kubernetes-sasl",
-            },
-            {
-              type: "doc",
-              label: "Configuring mTLS on Kubernetes",
-              id: "security/kubernetes-mtls",
-            },
-          ],
-        },
       ],
     },
     {
@@ -656,9 +608,46 @@ module.exports = {
           ],
         },
         {
-          type: "link",
-          label: "Operator Custom Resource Definition (CRD)",
-          href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
+          type: "category",
+          label: "Redpanda Operator",
+          link: { type: "doc", id: "reference/redpanda-operator/index" },
+          items: [
+            {
+              type: "category",
+              label: "Install",
+              items: [
+                "reference/redpanda-operator/kubernetes-qs-local-access",
+                "reference/redpanda-operator/kubernetes-qs-minikube",
+                "reference/redpanda-operator/kubernetes-qs-cloud",
+              ],
+            },
+            {
+              type: "category",
+              label: "Deploy",
+              items: [
+                "reference/redpanda-operator/kubernetes-connectivity",
+                "reference/redpanda-operator/kubernetes-external-connect",
+                "reference/redpanda-operator/kubernetes-additional-config",
+                "reference/redpanda-operator/arbitrary-configuration",
+              ],
+            },
+            {
+              type: "category",
+              label: "Security",
+              items: [
+                "reference/redpanda-operator/security-kubernetes",
+                "reference/redpanda-operator/tls-kubernetes",
+                "reference/redpanda-operator/kubernetes-sasl",
+                "reference/redpanda-operator/kubernetes-mtls",
+              ],
+            },
+
+            {
+              type: "link",
+              label: "Operator Custom Resource Definition (CRD)",
+              href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
+            },
+          ],
         },
         "reference/internal-metrics",
         {
