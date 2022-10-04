@@ -5,15 +5,16 @@
 # Quickstart
 /docs/getting-started/quick-start-kubernetes   /docs/quickstart/ 301!
 /docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud/  301!
+/docs/quickstart/kubernetes-qs-cloud   /docs/reference/redpanda-operator/kubernetes-qs-cloud  301!
 /docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-local-access  301!
+/docs/quickstart/kubernetes-qs-local-access  /docs/reference/redpanda-operator/kubernetes-qs-local-access  301!
 /docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
+/docs/quickstart/kubernetes-qs-minikube  /docs/reference/redpanda-operator/kubernetes-qs-minikube  301!
 /docs/getting-started/index   /docs/quickstart/index  301!
 /docs/getting-started/quick-start-docker   /docs/quickstart/quick-start-docker  301!
 /docs/getting-started/quick-start-linux   /docs/quickstart/quick-start-linux  301!
 /docs/getting-started/quick-start-macos   /docs/quickstart/quick-start-macos  301!
 /docs/getting-started/quick-start-windows   /docs/quickstart/quick-start-windows  301!
-
-
 
 # Development
 /docs/features/guide-nodejs   /docs/development/guide-nodejs  301!
@@ -32,6 +33,10 @@
 /docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
 /docs/getting-started/install-preview   /docs/deployment/install-preview  301!
 /docs/deployment/performance-storage-tuning   /docs/deployment/disk-utilization  301!  
+/docs/deployment/kubernetes-additional-config  /docs/reference/redpanda-operator/kubernetes-additional-config  301!
+/docs/deployment/arbitrary-configuration  /docs/reference/redpanda-operator/arbitrary-configuration  301!
+/docs/deployment/kubernetes-external-connect  /docs/reference/redpanda-operator/kubernetes-external-connect  301!
+/docs/deployment/kubernetes-connectivity  /docs/reference/redpanda-operator/kubernetes-connectivity  301!  
 
 # Cluster Administration
 /docs/deploy-self-hosted/configuration   /docs/cluster-administration/configuration  301!
@@ -48,8 +53,12 @@
 # Security
 /docs/features/acls   /docs/security/acls  301!
 /docs/features/tls-kubernetes   /docs/security/tls-kubernetes  301!
+/docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
 /docs/security/acls  /docs/security/index  301!
 /docs/security/kubernetes-security  /docs/security/security-kubernetes/  301!
+/docs/security/security-kubernetes  /docs/reference/redpanda-operator/security-kubernetes  301!
+/docs/security/kubernetes-mtls  /docs/reference/redpanda-operator/kubernetes-mtls  301!
+/docs/security/kubernetes-sasl  /docs/reference/redpanda-operator/kubernetes-sasl  301!
 
 # Reference
 /docs/reference/faq   /docs/home  301!
