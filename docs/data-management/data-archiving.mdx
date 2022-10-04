@@ -1,16 +1,20 @@
 ---
-title: Data archiving
+title: Data Archiving
 ---
 
 <head>
     <meta name="title" content="Data archiving | Redpanda Docs"/>
-    <meta name="description" content="Setup data archiving on Redpanda."/>
+    <meta name="description" content="Set up data archiving on Redpanda."/>
 </head>
+
+:::info
+This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+:::
 
 When producers send events to Redpanda, Redpanda stores those events on a local storage volume.
 Redpanda then replicates the data to other nodes,
 according to the requirements defined by the producer.
-Redpanda'a persistence and replication processes protect your data in the event of a node or cluster failure. 
+Redpanda's persistence and replication processes protect your data in the event of a node or cluster failure. 
 After configuring data archiving, your data is uploaded to cloud storage. 
 In the event of a data center failure, data corruption, or cluster migration, you can recover your archived data from the cloud back to your cluster.
 
@@ -18,7 +22,7 @@ In the event of a data center failure, data corruption, or cluster migration, yo
 Redpanda supports data archiving to Amazon S3 and Google Cloud Storage. 
 :::
 
-## Configuring data archiving
+## Configure data archiving
 
 To configure data archiving:
 1. Create the cloud storage bucket and prepare it to be archived:
@@ -48,34 +52,30 @@ To configure data archiving:
     The secret and access keys are stored in plain text in configuration files.
     :::
 
-2. Configure the following properties using (cluster configuration rpk commands)[../../cluster-administration/cluster-property-configuration]:
+2. Configure the following properties using [cluster configuration rpk commands](../../reference/rpk/rpk-cluster/rpk-cluster-config):
 
-    | Parameter name                                | Type         | Descripion                                              |
+    | Parameter name                                | Type         | Description                                              |
     |-----------------------------------------------|--------------|---------------------------------------------------------|
-    | `cloud_storage_enabled`                       | boolean      | Enables archival storage feature                        |
+    | `cloud_storage_enabled`                       | Boolean      | Enables archival storage feature                        |
     | `cloud_storage_access_key`                    | string       | Access key                                           |
     | `cloud_storage_secret_key`                    | string       | Secret key                                           |
     | `cloud_storage_region`                        | string       | Cloud region                                              |
     | `cloud_storage_bucket`                        | string       | Bucket name                                              |
     | `cloud_storage_api_endpoint`                  | string       | Cloud storage API endpoint (Default: S3)     |
     | `cloud_storage_api_endpoint_port`             | string       | Cloud storage API endpoint port number (Default: 443)    |
-    | `cloud_storage_trust_file`                    | string       | Alternative location of the CA certificate (Default: /etc/pki/tls/cert.pem) |
-    | `cloud_storage_disable_tls`                   | boolean      | Disable TLS for cloud storage connections               |
+    | `cloud_storage_trust_file`                    | string       | Alternative location of the CA certificate (Default: `/etc/pki/tls/cert.pem`) |
+    | `cloud_storage_disable_tls`                   | Boolean      | Disable TLS for cloud storage connections               |
 
 3. (Optional) You can tune the data transfer with these properties:
 
-    | Parameter name                                | Type         | Descripion                                              |
+    | Parameter name                                | Type         | Description                                              |
     |-----------------------------------------------|--------------|---------------------------------------------------------|
     | `cloud_storage_reconciliation_interval_ms`    | milliseconds | Reconciliation period (Default: 10s)                   |
     | `cloud_storage_max_connections`               | integer      | Number of simultaneous uploads per shard (Default: 20) |
 
-## Troubleshooting data archiving
+## Cancel and delete archiving jobs
 
-This section includes guidance to help you troubleshoot data archiving. 
-
-### Canceling and deleting data archiving jobs
-
-The data archiving process runs on each node. By default, every 10 seconds the archiving process identifies log segments that are ready for archiving. Those log segments are uploaded when they are closed for new batches because they contain only batches with offsets that are less than the committed offset of the partition. 
+The data archiving process runs on each node. By default, every 10 seconds the archiving process identifies log segments that are ready for archiving. Those log segments are uploaded when they are closed for new batches, because they contain only batches with offsets that are less than the committed offset of the partition. 
 
 Every upload job handles a single partition for which the node is a leader.
 When the leadership for the partition changes, the reconciliation process cancels all upload jobs that are no longer running on a leader and starts new upload jobs for new partitions. 
@@ -89,7 +89,7 @@ Redpanda uploads the following objects to an S3 bucket:
 - Topic manifests
 - Log segments
 
-Partition and topic manifests use the *.json extension, and log segments use the *.log extension.
+Partition and topic manifests use the .json extension, and log segments use the .log extension.
 - Log paths match the paths in the Redpanda data folder in the format `<random-prefix>/<namespace>/<topic>/<partition-id>_<revision-id>/<logfile-name>.log`. For example, a log segment path looks like `/06160a28/kafka/redpanda-test/0_2/39459-1-v1.log`. The random characters improve performance with S3 data transfers. 
 - Partition and topic manifests use prefixes with all symbols set to `0` except the first one. For example, a manifest path looks like `/00000000/meta/kafka/redpanda-test/topic_manifest.json` or `/00000000/meta/kafka/redpanda-test/6_2/manifest.json`.
 
