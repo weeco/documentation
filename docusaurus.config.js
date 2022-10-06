@@ -76,6 +76,18 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: ({versionDocsDirPath, docPath}) =>
+            `https://github.com/redpanda-data/documentation/edit/dev/${versionDocsDirPath}/${docPath}`,
+          editLocalizedFiles: false,
+          editCurrentVersion: false,
+          routeBasePath: 'docs',
+          include: ['**/*.md', '**/*.mdx'],
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+          ],
           lastVersion: 'current',
           versions: {
             current: {

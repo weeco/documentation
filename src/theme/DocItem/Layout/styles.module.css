@@ -9,18 +9,25 @@
   }
 }
 
-.issueLink{
+.issueLinkSeparator {
   border-top: 1px solid;
   margin-top: 30px;
   padding-top: 10px;
   border-color: #d0d7de;
 }
 
-.mailIcon{
+.mailIcon {
   position: relative;
   top: 7px;
 }
 
-.reportIssueText{
-  text-align: center;
+.contributionIcon {
+  position: relative;
+  top: 7px;
+}
+
+@media (min-width: 997px) {
+  .reportIssueText {
+    text-align: right;
+  }
 }
