@@ -13,6 +13,8 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import styles from './styles.module.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Icon from "@material-ui/core/Icon";
+import ContributionIcon from "../../../../static/img/contribution.svg";
+
 /**
  * Decide if the toc should be rendered, on mobile or desktop viewports
  */
@@ -34,9 +36,11 @@ function useDocTOC() {
 }
 export default function DocItemLayout({children}) {
   const docTOC = useDocTOC();
+  const { metadata } = useDoc();
+  const { editUrl } = metadata;
   return (
     <div className="row">
-      <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
+      <div className={clsx("col", !docTOC.hidden && styles.docItemCol)}>
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
@@ -47,11 +51,36 @@ export default function DocItemLayout({children}) {
             <DocItemFooter />
           </article>
           {/* BEGIN COMPONENT SWIZZLING. Add link to repository.
-          */}
-          <section className={styles.issueLink}>
-          <BrowserOnly>
-          {() =><div className={styles.reportIssueText}><a href={"mailto:rp-docs-feedback@redpanda.com?subject=Documentation Feedback&body=Doc url: "+window.location.href}><Icon className={styles.mailIcon}>email</Icon><span> Report a doc issue or suggest an edit.</span></a></div>}
-          </BrowserOnly>
+           */}
+          <section className={styles.issueLinkSeparator}>
+            <BrowserOnly>
+              {() => (
+                <div className="row">
+                  <div className="col">
+                    <a
+                      href={
+                        "mailto:rp-docs-feedback@redpanda.com?subject=Documentation Feedback&body=Doc url: " +
+                        window.location.href
+                      }
+                    >
+                      <Icon className={styles.mailIcon}>email</Icon>
+                      <span> Share your feedback</span>
+                    </a>
+                  </div>
+                  <div className={clsx("col", styles.reportIssueText)}>
+                    <a
+                      href={editUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={styles.contributionIcon}
+                    >
+                      <ContributionIcon />
+                      <span> Make a contribution</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </BrowserOnly>
           </section>
           <DocItemPaginator />
         </div>

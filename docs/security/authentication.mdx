@@ -10,11 +10,16 @@ title: Configuring Authentication
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. See [Configuring Listeners](/docs/cluster-administration/listener-configuration).
+Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. 
+
+See also: 
+
+- [Configuring Listeners](../../cluster-administration/listener-configuration)
+- [Writing Custom Deployment Automation](../../deployment/custom-deployment)
 
 ## Enable authentication
 
-To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](/docs/cluster-administration/cluster-property-configuration).
+To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](../../cluster-administration/cluster-property-configuration).
 
 To update the `kafka_enable_authorization` property, run:
 
@@ -34,7 +39,7 @@ rpk cluster config set superusers ['admin']
 
 ### Create superusers
 
-When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](/docs/security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
+When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](../../security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
 
 You can specify the name of the superuser. For example, if you used superuser `admin`, Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run: 
 
@@ -56,7 +61,7 @@ rpk acl user create admin \
 --api-urls localhost:9644
 ```
 
-For information about using `rpk` to manage ACL users, see [rpk acl](/docs/reference/rpk-commands#rpk-acl). 
+For information about using `rpk` to manage ACL users, see [rpk acl](../../reference/rpk/rpk-acl/). 
 
 As a security best practice, you don't want to use the superuser to interact with the cluster, but you also don't want to delete the superuser (in case you need to grant permissions to new users later on). In addition, when you create the superuser, you specify a password for the user, which adds a level of security to the superuser. If you delete the user, someone else might re-create the user with a different password. 
 
@@ -131,6 +136,62 @@ redpanda:
 // highlight-end
 ```
 
+### Configure SASL for HTTP Proxy and Schema Registry
+
+The HTTP Proxy and Schema Registry connect to Redpanda over the Kafka API, and must be configured with a username and password.
+
+For schema registry, the configuration node is `schema_registry_client`:
+
+```yaml
+// highlight-start
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+// highlight-end
+```
+
+If TLS is in use, additional configuration is required:
+
+```yaml
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: server.key
+    cert_file: server.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+```
+
+HTTP Proxy has a similar configuration, but the configuration node is `pandaproxy_client`:
+
+```yaml
+// highlight-start
+pandaproxy_client:
+// highlight-end
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+  broker_tls:
+    key_file: server.key
+    cert_file: server.crt
+    truststore_file: ca.crt
+    enabled: true
+  scram_username: panda
+  scram_password: pandaPassword
+  sasl_mechanism: SCRAM-SHA-256
+```
+
 ### Connect to Redpanda
 
 You can use the newly-created user to interact with Redpanda with `rpk`:
@@ -158,8 +219,7 @@ compression.type        producer    DEFAULT_CONFIG
 message.timestamp.type  CreateTime  DEFAULT_CONFIG
 ...
 ```
-
-See also: [Configuring Redpanda SASL on Kubernetes](/docs/security/kubernetes-sasl)
+See also: [Configuring Redpanda SASL on Kubernetes](../../reference/redpanda-operator/kubernetes-sasl)
 
 ## Configure mTLS with authentication  
 
@@ -216,13 +276,38 @@ To update the `kafka_mtls_principal_mapping_rules` property, run:
 rpk cluster config set kafka_mtls_principal_mapping_rules '["DEFAULT"]'
 ```
 
-See also: [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls)
+### Configure mTLS for HTTP Proxy and Schema Registry
 
-## Securely bootstrap a cluster
+The HTTP Proxy and Schema Registry require valid client certificates.
 
-The `RP_BOOTSTRAP_USER` environment variable creates an initial user account. This lets you bootstrap a cluster that is fully secure from the start.
+In `redpanda.yaml`, enter:
 
-When you set up Redpanda with `admin_api_require_auth` set to `true`, you can use `RP_BOOTSTRAP_USER` to create a user with a superuser password. This environment variable is only read when Redpanda starts up for the first time. Later modifications of its value have no affect. The value should have the format `<user>:<password>`.
+```yaml
+schema_registry_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: schema_registry.key
+    cert_file: schema_registry.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+pandaproxy_client:
+  brokers:
+    - address: 127.0.0.1
+      port: 9092
+// highlight-start
+  broker_tls:
+    key_file: pandaproxy.key
+    cert_file: pandaproxy.crt
+    truststore_file: ca.crt
+    enabled: true
+// highlight-end
+```
+
+See also: [Configuring Redpanda mTLS on Kubernetes](../../reference/redpanda-operator/kubernetes-mtls).
 
 ## Disable authentication
 

@@ -275,7 +275,7 @@ code {
   padding: 0.15rem 0.35rem 0;
 }
 .container code {
-  background: var(--v-white);
+  background: var(--v-gray3);
 }
 .container code span:not(.comment) {
   

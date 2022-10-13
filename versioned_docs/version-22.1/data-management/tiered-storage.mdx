@@ -8,7 +8,7 @@ Tiered Storage allows you to save storage costs by offloading log segments to cl
 
 Tiered Storage is available for Redpanda 22.1.1 and later.
 
-It is recommended that you do not use Tiered Storage with <a href="https://docs.redpanda.com/docs/data-management/data-transform/" target="_self">Data Transforms</a>, which is in technical preview. If you do, there is a likelihood that you will encounter problems with topics.
+It is recommended that you do not use Tiered Storage with [Data Transforms](../../data-management/data-transform/), which is in technical preview. If you do, there is a likelihood that you will encounter problems with topics.
 
 :::
 
@@ -134,7 +134,7 @@ To enable Tiered Storage, use remote write in conjunction with remote read. If y
 To create a topic with remote write enabled, use this command: 
 
 ```bash
-rpk topic create <topic_name> -c -c redpanda.remote.write=true
+rpk topic create <topic_name> -c redpanda.remote.write=true
 ```
 
 And to enable remote write on an existing topic, use this command: 
@@ -182,7 +182,7 @@ When data is available remotely and Tiered Storage is enabled, the client can st
 To create a topic with remote read enabled, use this command: 
 
 ```bash
-rpk topic create <topic_name> -c -c redpanda.remote.read=true
+rpk topic create <topic_name> -c redpanda.remote.read=true
 ```
 
 And to enable remote read on an existing topic, use this command: 

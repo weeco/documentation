@@ -56,6 +56,19 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript']
     },
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '6YUV7845VT',
+
+      // Public API key: it is safe to commit it
+      apiKey: '2639b1b6c05670f52200b301c84866d9',
+
+      indexName: 'redpanda',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+    },
   },
   presets: [
     [
@@ -63,6 +76,18 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: ({versionDocsDirPath, docPath}) =>
+            `https://github.com/redpanda-data/documentation/edit/dev/${versionDocsDirPath}/${docPath}`,
+          editLocalizedFiles: false,
+          editCurrentVersion: false,
+          routeBasePath: 'docs',
+          include: ['**/*.md', '**/*.mdx'],
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+          ],
           lastVersion: 'current',
           versions: {
             current: {
@@ -83,24 +108,12 @@ module.exports = {
     ],
   ],
   plugins: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        // ... Your options.
-        // `hashed` is recommended as long-term-cache of index file is possible.
-        hashed: true,
-        // For Docs using Chinese, The `language` is recommended to set to:
-        // ```
-        // language: ["en", "zh"],
-        // ```
-        // When applying `zh` in language, please install `nodejieba` in your project.
-      },
-    ],    
     function (context, options) {
       return {
         name: 'docusaurus-plugin',
         injectHtmlTags({content}) {
           return {
+            headTags:['<meta name="google-site-verification" content="QcL-pD81oJatgKXQ3Wquvk_Ku3RRtUljxKoMaicySQA" />'],
             preBodyTags: [`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB2CSV5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`],
           };
         },

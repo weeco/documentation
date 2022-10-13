@@ -21,7 +21,7 @@ Choose your desired system and run the commands down below.
 
 ```bash
 ## Run the setup script to download and install the beta repo
-curl -1sLf 'https://packages.vectorized.io/HxYRCzL4xbbaEtPi/redpanda-beta/setup.deb.sh' | 
+curl -1sLf 'https://dl.redpanda.com/HxYRCzL4xbbaEtPi/redpanda-beta/setup.deb.sh' | 
 sudo -E bash && \
 ## Use apt to install redpanda
 sudo apt install redpanda
@@ -31,7 +31,7 @@ sudo apt install redpanda
 
 ```bash
 ## Run the setup script to download and install the beta repo
-curl -1sLf 'https://packages.vectorized.io/HxYRCzL4xbbaEtPi/redpanda-beta/setup.rpm.sh' | 
+curl -1sLf 'https://dl.redpanda.com/HxYRCzL4xbbaEtPi/redpanda-beta/setup.rpm.sh' | 
 sudo -E bash && \
 ## Use yum to install redpanda
 sudo yum install redpanda
@@ -39,7 +39,7 @@ sudo yum install redpanda
   </TabItem>
   <TabItem value="install-docker" label="Docker" default>
 
-There are several ways to choose a version of Redpanda for Docker. You can check our [getting started guide on Docker](/docs/quickstart/quick-start-docker) for more information about it.
+There are several ways to choose a version of Redpanda for Docker. You can check our [getting started guide on Docker](../../quickstart/quick-start-docker) for more information about it.
 
 So, for example, you can pull a docker image through this command:
 
@@ -84,7 +84,7 @@ redpanda/redpanda-operator \
 --create-namespace \
 --version <VERSION>
 ```
-For more information about installing Redpanda in Kubernetes, refer to our [getting started guide on Kubernetes](/docs/quickstart/kubernetes-qs-cloud/).
+For more information about installing Redpanda in Kubernetes, refer to our [getting started guide on Kubernetes](../../quickstart/kubernetes-qs-cloud/).
 
   </TabItem>
 </Tabs>

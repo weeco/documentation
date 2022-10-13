@@ -4,7 +4,7 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: '60-second Guides',
+    title: '60-Second Guides',
     image: require('../../../static/img/quickstart.png').default,
     description: (
       <>
@@ -31,7 +31,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/console',
+    url: '/docs/console/installation',
   },
   {
     title: 'rpk Command Reference',
@@ -41,7 +41,7 @@ const FeatureList = [
         Browse all commands for running Redpanda.
       </>
     ),
-    url: '/docs/reference/rpk-commands',
+    url: '/docs/22.1/reference/rpk-commands',
   },
   {
     title: 'Tiered Storage',

@@ -8,7 +8,7 @@ title: GitHub SSO Setup
 </head>
 
 :::info
-This feature requires an [Enterprise license](/docs/introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+This feature requires an [Enterprise license](../../../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
 Integrating Redpanda Console with GitHub allows your users to use their GitHub identities to sign-in to Console.
@@ -35,8 +35,10 @@ Below configurations assume that you want to host Redpanda Console so that it wo
 login:
   enabled: true
 
-  # Random string which is used to sign JSON web tokens
-  # It has to be static across all Console instances and restarts
+  # jwtSecret is a random string of at least 10 characters that must be the same for all Console instances. 
+  # This string is used to sign and validate the user session JSON Web Tokens (JWT). 
+  # If this string changes, logged-in Console users will be logged out and will have to initiate a 
+  # new session by logging in again.
   jwtSecret: ""
 
   github:

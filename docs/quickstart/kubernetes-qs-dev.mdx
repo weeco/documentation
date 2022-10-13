@@ -1,0 +1,273 @@
+---
+title: 60-Second Guide for Kubernetes
+---
+
+<head>
+    <meta name="title" content="60-Second Guide for Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Kubernetes quickstart for developers."/>
+</head>
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+This 60-Second Guide helps you get started with Redpanda for development and testing. 
+
+:::note
+This page uses the latest recommended Helm chart for installing Redpanda. For information about installing Redpanda on Kubernetes using the older Redpanda Operator, see [Redpanda Operator](../../reference/redpanda-operator).
+:::
+
+## Prerequisites
+
+Verify that you have the following software installed:
+
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) - version 1.21 or later
+* [Helm](https://github.com/helm/helm/releases) - version 3.0.0 or later
+* [Go](https://go.dev/doc/install) - v1.17 or later (only required for Windows setup)
+
+## Create a Kubernetes cluster
+
+<Tabs>
+  <TabItem value="kind" label="kind" default>
+
+Create the kind config file to create a multi-node cluster:
+
+```bash
+cat <<EOF >kind.yaml
+---
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker
+EOF
+```
+
+Create a Kubernetes cluster:
+
+```bash
+kind create cluster --config kind.yaml
+```
+
+  </TabItem>
+  <TabItem value="minikube" label="minikube">
+
+Create a Kubernetes cluster:
+
+```bash
+minikube start --nodes 4
+```
+
+Prevent applications from being scheduled with the Kubernetes control plane:
+
+```bash
+kubectl taint node \
+    -l node-role.kubernetes.io/control-plane="" \
+    node-role.kubernetes.io/control-plane=:NoSchedule
+```
+
+  </TabItem>
+  <TabItem value="eks" label="Amazon EKS">
+
+Create an Elastic Kubernetes Service (EKS) cluster:
+
+```bash
+eksctl create cluster --name redpanda \
+    --nodegroup-name standard-workers \
+    --node-type m5.xlarge \
+    --nodes 3 \
+    --nodes-min 3 \
+    --nodes-max 4
+```
+  </TabItem>
+  <TabItem value="gke" label="Google GKE">
+
+Create a Google Kubernetes Engine (GKE) cluster:
+
+```bash
+gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nodes=3
+```
+
+  </TabItem>
+</Tabs>
+
+## Use Helm to install Redpanda
+
+Install Redpanda using Helm:
+
+```bash
+helm repo add redpanda https://charts.redpanda.com/
+helm repo update
+helm install redpanda redpanda/redpanda \
+    --namespace redpanda \
+    --create-namespace
+```
+
+The installation produces some notes with getting started tips:
+
+```text
+NAME: redpanda
+LAST DEPLOYED: Wed Sep 14 17:08:43 2022
+NAMESPACE: redpanda
+STATUS: deployed
+REVISION: 1
+NOTES:
+Congratulations on installing redpanda!
+
+The pods roll out in a few seconds. To check the status, run:
+
+  kubectl -n redpanda rollout status statefulset redpanda --watch
+
+Try some sample commands, like creating a topic called test-topic:
+
+Get the API status:
+
+  kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093 cluster info
+
+Create a topic:
+
+  kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093 topic create test-topic
+
+Describe the topic:
+
+  kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093 topic describe test-topic
+
+Delete the topic:
+
+  kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093 topic delete test-topic
+```
+
+Wait for the Redpanda cluster to be ready:
+
+```bash
+kubectl -n redpanda rollout status statefulset redpanda --watch
+```
+
+When it's ready, the output should look similar to the following:
+
+```text
+statefulset rolling update complete 3 pods at revision redpanda-8654f645b4...
+```
+
+## Connect to your new Redpanda cluster
+
+Set up an alias to simplify these commands:
+
+```bash
+alias rpk="kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093"
+```
+
+Get the API status:
+
+```bash
+rpk cluster info
+```
+
+Output:
+
+```text
+CLUSTER
+=======
+redpanda.825b69f2-84a6-4eaf-b2dd-4a19b69dd47c
+
+BROKERS
+=======
+ID    HOST                                             PORT
+0*    redpanda-0.redpanda.redpanda.svc.cluster.local.  9093
+1     redpanda-1.redpanda.redpanda.svc.cluster.local.  9093
+2     redpanda-2.redpanda.redpanda.svc.cluster.local.  9093
+```
+
+Create a topic:
+
+```bash
+rpk topic create test-topic
+```
+
+Output:
+
+```text
+TOPIC       STATUS
+test-topic  OK
+```
+
+Describe the topic:
+
+```bash
+rpk topic describe test-topic
+```
+
+Output:
+
+```text
+SUMMARY
+=======
+NAME        test-topic
+PARTITIONS  1
+REPLICAS    1
+
+CONFIGS
+=======
+KEY                     VALUE                          SOURCE
+cleanup.policy          delete                         DYNAMIC_TOPIC_CONFIG
+compression.type        producer                       DEFAULT_CONFIG
+message.timestamp.type  CreateTime                     DEFAULT_CONFIG
+partition_count         1                              DYNAMIC_TOPIC_CONFIG
+redpanda.datapolicy     function_name:  script_name:   DEFAULT_CONFIG
+redpanda.remote.read    false                          DEFAULT_CONFIG
+redpanda.remote.write   false                          DEFAULT_CONFIG
+replication_factor      1                              DYNAMIC_TOPIC_CONFIG
+retention.bytes         -1                             DEFAULT_CONFIG
+retention.ms            604800000                      DEFAULT_CONFIG
+segment.bytes           1073741824                     DEFAULT_CONFIG
+```
+
+Produce a message into the topic:
+
+```bash
+rpk topic produce test-topic
+```
+
+Enter a message:
+```text
+Pandas are fabulous!
+```
+Output:
+
+```text
+Produced to partition 0 at offset 0 with timestamp 1663282629789.
+```
+
+Click `ctrl-d` (or `ctrl-z` on Windows) to finish sending messages to the topic.
+
+Consume one message from the topic:
+
+```bash
+rpk topic consume test-topic --num 1
+```
+
+Each message is shown with its metadata, like this:
+
+```json
+{
+  "topic": "test-topic",
+  "value": "Pandas are fabulous!",
+  "timestamp": 1663282936833,
+  "partition": 0,
+  "offset": 0
+}
+```
+
+Delete the topic:
+
+```bash
+rpk topic delete test-topic
+```
+
+Output:
+
+```text
+TOPIC       STATUS
+test-topic  OK
+```

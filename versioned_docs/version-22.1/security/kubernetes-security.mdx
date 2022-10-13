@@ -24,19 +24,19 @@ In general, the guidelines put in place by your organization will determine the 
 
 The sections below contain general information for TLS encryption and SASL and mTLS authentication. If you want to quickly set up authentication on your cluster, you can follow the steps in one of the three configuration guides: 
 
-* <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">Configuring Redpanda TLS on Kubernetes</a>
-* <a href="https://docs.redpanda.com/docs/security/kubernetes-sasl/" target="_self">Configuring Redpanda SASL authentication on Kubernetes</a>
-* <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">Configuring Redpanda mTLS authentication on Kubernetes</a>
+* [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes/)
+* [Configuring Redpanda SASL authentication on Kubernetes](../../security/kubernetes-sasl/)
+* [Configuring Redpanda mTLS authentication on Kubernetes](../../security/kubernetes-mtls/)
 
 ## TLS
 
 Transport Layer Security (TLS), previously SSL, provides authentication of the server as well as encryption for client-server communication, which prevents third parties from accessing the data that is transferred between the client and the server. You can configure TLS inside a Kubernetes cluster to establish a secure connection with encrypted communication between a client and a broker. 
 
-TLS requires the server to give a certificate to the client. For information about certificates, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#certificates" target="_self">Certificates</a> section below.
+TLS requires the server to give a certificate to the client. For information about certificates, see the [Certificates](../../security/kubernetes-security#certificates) section below.
 
 If you need flexibility for authorization combined with encrypted communication, you can configure TLS encryption along with SASL authentication. 
 
-TLS is available on all four APIs. The table below lists the supported listener configurations for each API with TLS enabled. For more information about listeners, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#listeners" target="_self">Listeners</a> section below. 
+TLS is available on all four APIs. The table below lists the supported listener configurations for each API with TLS enabled. For more information about listeners, see the [Listeners](../../security/kubernetes-security#listeners) section below. 
 
 | API              | Listener configurations with TLS   |
 | --------         | ------                             |
@@ -52,7 +52,7 @@ tls:
   enabled: true
 ```
 
-For detailed steps on how to enable TLS, see the <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">Configuring Redpanda TLS on Kubernetes</a> documentation. 
+For detailed steps on how to enable TLS, see the [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes/) documentation. 
 
 ## SASL/SCRAM
 
@@ -62,7 +62,7 @@ SASL authentication is available for the Kafka API.
 
 SASL provides authentication, but not encryption. You can, however, configure TLS to only handle encryption, and use SASL for authentication. This is useful if you require flexibility in the authorization mechanisms that you use.
 
-See the [rpk acl](/docs/reference/rpk-commands/#rpk-acl) documentation for information about using `rpk` to manage SASL users. 
+See the [rpk acl](/docs/22.1/reference/rpk-commands/#rpk-acl) documentation for information about using `rpk` to manage SASL users. 
 
 ### SCRAM
 
@@ -90,7 +90,7 @@ kubectl exec -c redpanda cluster-sample-sasl-0 -- rpk topic create littlefoot \
 
 ### Superusers
 
-When you configure SASL authentication, you include one or more superusers in the Redpanda configuration file. This user has <a href="https://docs.redpanda.com/docs/security/acls/#operations" target="_self">ALL permissions</a> on the cluster and is the user that will grant permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster.
+When you configure SASL authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](../../security/acls/#operations) on the cluster and is the user that will grant permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster.
 
 Users, including superusers, are created through the Admin API. However, you must specify the username of the superuser with the following property in the `redpanda.yaml` file: 
 
@@ -113,7 +113,7 @@ enableSasl: true
     - username: admin
 ```
 
-This enables SASL authentication and specifies the superusers. For detailed steps on how to enable SASL authentication, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-sasl/" target="_self">Configuring Redpanda SASL authentication on Kubernetes</a> documentation.
+This enables SASL authentication and specifies the superusers. For detailed steps on how to enable SASL authentication, see the [Configuring Redpanda SASL authentication on Kubernetes](../../security/kubernetes-sasl/) documentation.
 
 ### SASL with TLS encryption 
 
@@ -132,7 +132,7 @@ Mutual TLS (mTLS) is a method of authentication in which the client authenticate
 
 mTLS requires the client to give a certificate in addition to the server certificate that is required in TLS. This involves more overhead to implement, but can be useful for environments that require additional security and only have a small number of verified clients.
 
-mTLS authentication is available on all four APIs. The table below lists the supported listener configurations for each API with mTLS enabled. For more information about listeners, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#listeners" target="_self">Listeners</a> section below.
+mTLS authentication is available on all four APIs. The table below lists the supported listener configurations for each API with mTLS enabled. For more information about listeners, see the [Listeners](../../security/kubernetes-security#listeners) section below.
 
 | API              | Listener configurations with mTLS   |
 | --------         | ------                             |
@@ -153,7 +153,7 @@ tls:
   requireClientAuth: true
 ```
 
-For detailed steps on how to enable mTLS, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">Configuring Redpanda mTLS authentication on Kubernetes</a> documentation.
+For detailed steps on how to enable mTLS, see the [Configuring Redpanda mTLS authentication on Kubernetes](../../security/kubernetes-mtls/) documentation.
 
 ## Certificates
 
@@ -235,7 +235,7 @@ The `nodeSecretRef` property contains the following variables:
 * `secret_name` - Name of the certificate Secret. 
 * `secret_namespace` - The Kubernetes namespace where the certificate Secret is. If the Secret is in a different namespace than the Redpanda cluster, the operator copies it to the namespace of the Redpanda cluster.  
 
-Details for providing a trusted issuer or certificate issuer are included in the <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">Configuring Redpanda TLS on Kubernetes</a> and <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">Configuring Redpanda mTLS authentication on Kubernetes</a> documentation. 
+Details for providing a trusted issuer or certificate issuer are included in the [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes/) and [Configuring Redpanda mTLS authentication on Kubernetes](../../security/kubernetes-mtls/) documentation. 
 
 ### Certificate Secrets
 
@@ -255,7 +255,7 @@ The `kubernetes.io/tls` resource contains the following components:
 * `tls.crt` 
 * `ca.crt` - This is provided if you are using a self-signed Certificate Authority (i.e. you did not provide an issuer in the cluster configuration file). 
 
-These components are described further in the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#tls-certificates-with-external-connectivity" target="_self">TLS certificates with external connectivity</a> and <a href="https://docs.redpanda.com/docs/security/kubernetes-security#mtls-certificates-with-external-connectivity" target="_self">mTLS certificates with external connectivity</a> sections of this article. 
+These components are described further in the [TLS certificates with external connectivity](../../security/kubernetes-security#tls-certificates-with-external-connectivity) and [mTLS certificates with external connectivity](../../security/kubernetes-security#mtls-certificates-with-external-connectivity) sections of this article. 
 
 To see the contents of `kubernetes.io/tls`, run this command: 
 
@@ -307,7 +307,7 @@ DNS: *.<subdomain_name>
 
 ## External connectivity
 
-If the client is within the same Kubernetes cluster as Redpanda, you do not need to configure external connectivity. However, if you have communication from outside the cluster or from outside the virtual private cloud, you will need to set up external connectivity. This section contains an overview of how external connectivity works, and the <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">Configuring Redpanda TLS on Kubernetes</a> and <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">Configuring Redpanda mTLS authentication on Kubernetes</a> pages contain detailed steps to enable TLS and mTLS with external connectivity. 
+If the client is within the same Kubernetes cluster as Redpanda, you do not need to configure external connectivity. However, if you have communication from outside the cluster or from outside the virtual private cloud, you will need to set up external connectivity. This section contains an overview of how external connectivity works, and the [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes/) and [Configuring Redpanda mTLS authentication on Kubernetes](../../security/kubernetes-mtls/) pages contain detailed steps to enable TLS and mTLS with external connectivity. 
 
 ### Listeners
 
@@ -349,7 +349,7 @@ schemaRegistry:
     enabled: true
 ```
 
-See the <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">Configuring Redpanda TLS on Kubernetes</a> and <a href="https://docs.redpanda.com/docs/security/kubernetes-mtls/" target="_self">Configuring Redpanda mTLS authentication on Kubernetes</a> pages for detailed steps on how to enable TLS and mTLS with external connectivity.
+See the [Configuring Redpanda TLS on Kubernetes](../../security/tls-kubernetes/) and [Configuring Redpanda mTLS authentication on Kubernetes](../../security/kubernetes-mtls/) pages for detailed steps on how to enable TLS and mTLS with external connectivity.
 
 ### Subdomain
 
@@ -373,7 +373,7 @@ To extract `ca.crt` from the certificate Secret, run this command:
 kubectl get secret <secret_name> -o go-template='{{index .data "ca.crt"}}' | base64 -d - > ca.crt
 ```
 
-Note that the Secret names for each API are listed in the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#node-certificate" target="_self">Node certificate</a> section of this article. 
+Note that the Secret names for each API are listed in the [Node certificate](../../security/kubernetes-security#node-certificate) section of this article. 
 
 Once you have `ca.crt` extracted, you can create an `rpk` configuration file that will allow you to run `rpk` from anywhere, including outside the Kubernetes cluster. To do this, create a configuration file with the following content: 
 
@@ -406,7 +406,7 @@ rpk topic create stegosaurus --config stegosaurus_config.yaml
 
 If you have external connectivity configured for your cluster and you're using mTLS, you must extract the `tls.crt` and `tls.key` files from the client certificate Secret and export them to the client. In addition, if you did not provide an issuer in the cluster configuration file, you must export `ca.crt`. 
 
-The table below gives the command to extract each of these files. Note that the Secret names for each API are listed in the <a href="https://docs.redpanda.com/docs/security/kubernetes-security#node-certificate" target="_self">Node certificate</a> section of this article.
+The table below gives the command to extract each of these files. Note that the Secret names for each API are listed in the [Node certificate](../../security/kubernetes-security#node-certificate) section of this article.
 
 | File                   | Description                                                    | Command to extract the file        |
 | --------               | ------                                                         | -----               |

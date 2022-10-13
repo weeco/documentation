@@ -5,7 +5,7 @@ title: Custom configuration in Kubernetes
 The Redpanda operator for Kubernetes creates clusters based on the Custom Resource Definition (CRD). After you install the Redpanda operator, you apply the CRD. The CRD contains the basic configuration for the Redpanda cluster, including the cluster name and namespace, and the configuration for the APIs.
 
 :::tip
-Use one of the Redpanda Kubernetes quickstart guides to install the Redpanda operator and create a cluster in a few easy steps. We have quickstart guides for [cloud](/docs/quickstart/kubernetes-qs-cloud), [kind](/docs/quickstart/kubernetes-qs-local-access), and [minikube](/docs/quickstart/kubernetes-qs-minikube).
+Use one of the Redpanda Kubernetes quickstart guides to install the Redpanda operator and create a cluster in a few easy steps. We have quickstart guides for [cloud](../../quickstart/kubernetes-qs-cloud), [kind](../../quickstart/kubernetes-qs-cloud), and [minikube](../../quickstart/kubernetes-qs-cloud).
 :::
 
 ### Configuring the CRD
@@ -42,7 +42,7 @@ kubectl apply -f <custom_resource.yaml>
 
 If a change to the property requires a restart of the cluster, the operator will perform the restart automatically.
 
-If you want to view whether a change to a property requires a restart, see [Cluster-level properties](/docs/reference/cluster-properties).
+If you want to view whether a change to a property requires a restart, see [Cluster-level properties](../../reference/cluster-properties).
 
 :::caution
 It is possible to change cluster-level configuration properties through the Admin API. However, if the property in the CRD contains a different value than the value that you set through the Admin API, the value set through the Admin API will eventually be overwritten. If the property does not exist in the CRD, you can change it through the Admin API and there will be no conflict. However, because there is the possibility of a property value being overwritten, it is recommended that you set properties in the CRD.

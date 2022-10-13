@@ -2,9 +2,9 @@
 title: Configuring Redpanda SASL authentication on Kubernetes
 ---
 
-This document provides details on how to enable SASL authentication on Kubernetes. Alone, SASL authenticates the server and the client. To encrypt communication between the server and the client, combine SASL authentication with <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">TLS encryption</a>.
+This document provides details on how to enable SASL authentication on Kubernetes. Alone, SASL authenticates the server and the client. To encrypt communication between the server and the client, combine SASL authentication with [TLS encryption](../../security/tls-kubernetes/).
 
-Redpanda supports the SASL/SCRAM authentication method for the Kafka API. For information about Redpanda authentication on Kubernetes in general, see the <a href="https://docs.redpanda.com/docs/security/kubernetes-security" target="_self">Redpanda security on Kubernetes</a> document. You will find information there about supported authentication methods for each API. 
+Redpanda supports the SASL/SCRAM authentication method for the Kafka API. For information about Redpanda authentication on Kubernetes in general, see the [Redpanda security on Kubernetes](../../security/kubernetes-security) document. You will find information there about supported authentication methods for each API. 
 
 The steps below will show you how to: 
 
@@ -28,15 +28,15 @@ This guide assumes that you have already completed the following tasks:
 
 If you haven’t completed these tasks, you can use one of the following quickstarts to get set up before you configure TLS. Just follow the steps in any of these guides and stop before you install and connect to the Redpanda cluster: 
 
-* [Kubernetes quickstart for cloud](/docs/quickstart/kubernetes-qs-cloud)
-* [Kubernetes quickstart with local access on kind](/docs/quickstart/kubernetes-qs-local-access)
-* [Kubernetes quickstart with local access on minikube](/docs/quickstart/kubernetes-qs-minikube) 
+* [Kubernetes quickstart for cloud](../../quickstart/kubernetes-qs-cloud)
+* [Kubernetes quickstart with local access on kind](../../quickstart/kubernetes-qs-cloud)
+* [Kubernetes quickstart with local access on minikube](../../quickstart/kubernetes-qs-cloud) 
 
 ## Step 1: Configure the cluster specification file
 
 The Redpanda GitHub repository contains a `sasl.yaml` example configuration file that you can use to enable SASL authentication. You can find the file here: 
 
-[redpanda-examples/docs/example-config/kubernetes/sasl.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/sasl.yaml)
+[redpanda-examples../../example-config/kubernetes/sasl.yaml](https://github.com/redpanda-data/redpanda-examples/blob/main/docs/example-config/kubernetes/sasl.yaml)
 
 :::note
 If you want to modify the example file, save it locally and make the required changes listed below. If you’re following along with the brontosaurus tutorial or if you don’t need to make changes to the example file, you don’t need to save the file locally.
@@ -116,12 +116,12 @@ adminApi:
 :::info
 You can find additional sample configuration files in the following location: 
 
-[redpanda-examples/docs/example-config/kubernetes](https://github.com/redpanda-data/redpanda-examples/tree/main/docs/example-config/kubernetes)
+[redpanda-examples../../example-config/kubernetes](https://github.com/redpanda-data/redpanda-examples/tree/main/docs/example-config/kubernetes)
 :::
 
 ### SASL with TLS encryption
 
-Optionally, you can use SASL authentication with <a href="https://docs.redpanda.com/docs/security/tls-kubernetes/" target="_self">TLS encryption</a> for the Kafka API. To do that, enable TLS for the Kafka API by adding the highlighted lines below to the `kafkaApi` property in the configuration file: 
+Optionally, you can use SASL authentication with [TLS encryption](../../security/tls-kubernetes/) for the Kafka API. To do that, enable TLS for the Kafka API by adding the highlighted lines below to the `kafkaApi` property in the configuration file: 
 
 ```yaml
 kafkaApi:
@@ -162,7 +162,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 
 ## Step 3: Create the superuser
 
-You must create the superuser through the Admin API. This user has <a href="https://docs.redpanda.com/docs/security/acls#operations" target="_self">ALL permissions</a> on the cluster and is the user that will grant permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster. 
+You must create the superuser through the Admin API. This user has [ALL permissions](../../security/acls#operations) on the cluster and is the user that will grant permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster. 
 
 Run the following command to create the superuser and specify a password for the user: 
 
@@ -229,7 +229,7 @@ kubectl exec -c redpanda cluster-sample-sasl-0 -- rpk acl user create brontosaur
 
 ## Step 5: Grant permissions
 
-The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl reference](/docs/reference/rpk-commands//#rpk-acl) documentation. 
+The superuser can grant permissions to additional users through access control lists (ACLs). For details on how ACLs function in Redpanda, see the [rpk acl reference](/docs/22.1/reference/rpk-commands//#rpk-acl) documentation. 
 
 1. Use the superuser to grant `create` and `describe` permissions to another user for the cluster. You can edit the `rpk acl create` command as needed to grant specific permissions to specific users or groups: 
 
@@ -313,7 +313,7 @@ kubectl exec -c redpanda cluster-sample-sasl-0 -- rpk topic describe littlefoot 
 
 ## Step 7: Clean up
 
-Now that you have your superuser and additional users that can interact with the cluster, you can use the [rpk reference](/docs/reference/rpk-commands/) documentation to experiment with the `rpk` commands and create additional users and ACLs. 
+Now that you have your superuser and additional users that can interact with the cluster, you can use the [rpk reference](/docs/22.1/reference/rpk-commands/) documentation to experiment with the `rpk` commands and create additional users and ACLs. 
 
 When you're ready, delete the cluster with this command: 
 
@@ -323,7 +323,7 @@ kubectl delete -f <cluster_specification.yaml>
 
 ### Tutorial: Brontosaurus
 
-Use the [rpk reference](/docs/reference/rpk-commands/) documentation to experiment with the `rpk` commands and when you're ready to clean up the cluster from the brontosaurus tutorial, run this command: 
+Use the [rpk reference](/docs/22.1/reference/rpk-commands/) documentation to experiment with the `rpk` commands and when you're ready to clean up the cluster from the brontosaurus tutorial, run this command: 
 
 ```bash
 kubectl delete -f https://raw.githubusercontent.com/redpanda-data/redpanda-examples/main/docs/example-config/kubernetes/sasl.yaml

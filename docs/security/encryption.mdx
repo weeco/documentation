@@ -9,7 +9,7 @@ title: Configuring Encryption
 
 By default, Redpanda data is sent unencrypted. A security best practice is to enable encryption with TLS or mTLS. 
 
-For Kubernetes-specific information, see [Redpanda Security on Kubernetes](/docs/security/security-kubernetes). 
+For Kubernetes-specific information, see [Redpanda Security on Kubernetes](../../reference/redpanda-operator/security-kubernetes). 
 
 ## Prerequisite
 
@@ -61,8 +61,8 @@ schema_registry:
 All APIs, except `rpc_server_tls`, support multiple listeners. 
 
 See also: 
-- [Configuring Listeners](/docs/cluster-administration/listener-configuration)
-- [Configuring Redpanda TLS on Kubernetes](/docs/security/tls-kubernetes)
+- [Configuring Listeners](../../cluster-administration/listener-configuration)
+- [Configuring Redpanda TLS on Kubernetes](../../reference/redpanda-operator/tls-kubernetes)
 
 ## mTLS
 
@@ -92,9 +92,9 @@ redpanda:
 ```
 
 See also: 
-- [Configuring Listeners](/docs/cluster-administration/listener-configuration)
-- [Configuring mTLS with authentication](/docs/security/authentication)
-- [Configuring Redpanda mTLS on Kubernetes](/docs/security/kubernetes-mtls)
+- [Configuring Listeners](../../cluster-administration/listener-configuration)
+- [Configuring mTLS with authentication](../../security/authentication)
+- [Configuring Redpanda mTLS on Kubernetes](../../reference/redpanda-operator/kubernetes-mtls)
 
 ### Configure mTLS for a Kafka API listener
 
@@ -130,7 +130,7 @@ redpanda:
 // highlight-end
 ```
 
-See Also: [Configuring Listeners](/docs/cluster-administration/listener-configuration)
+See Also: [Configuring Listeners](../../cluster-administration/listener-configuration)
 
 ## Using rpk with TLS
 
