@@ -216,6 +216,19 @@ module.exports = {
         "security/authentication",
         "security/authorization",
         "security/iam-roles",
+        {
+          type: "category",
+          label: "Security on Kubernetes",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "Configuring TLS on Kubernetes",
+              id: "security/kubernetes-tls",
+            },
+          ],
+        },
       ],
     },
     {
