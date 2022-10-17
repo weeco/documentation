@@ -144,9 +144,12 @@ div .admonition-content > ul > li > a {
   margin-top: 0;
 }
 
-table {
-  display: table;
-  width: 100%;
+@media screen and (max-width: 966px)  {
+  table{
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  }
 }
 
 table tr td {
