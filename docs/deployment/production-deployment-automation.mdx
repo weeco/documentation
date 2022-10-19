@@ -59,7 +59,7 @@ If you use automation tools in your environment, like Terraform and Ansible, you
     | Property      | Description |
     | ----------- | ----------- |
     | `aws_region` | The AWS region to use for deploying the infrastructure. Default: `us-west-2` |
-    | `nodes` | The number of nodes to base the cluster on. Default: `1` |
+    | `nodes` | The number of nodes to base the cluster on. Default: `3` |
     | `enable_monitoring` | Creates a Prometheus/Grafana instance for monitoring the cluster. Default: `true` |
     | `instance_type` | The instance type on which Redpanda is deployed. Default: `i3.8xlarge` |
     | `prometheus_instance_type` | The instance type on which Prometheus and Grafana are deployed. Default: `c5.2xlarge` |
@@ -71,7 +71,7 @@ If you use automation tools in your environment, like Terraform and Ansible, you
     The following example creates a three-node cluster using i3.large instances.
 
     ```bash
-    terraform apply -var="instance_type=i3.large" -var="nodes=3"
+    terraform apply -var="instance_type=i3.large"
     ```
 
 
