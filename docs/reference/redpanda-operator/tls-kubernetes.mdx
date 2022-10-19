@@ -1,5 +1,5 @@
 ---
-title: Configuring Redpanda TLS on Kubernetes
+title: "Configuring Redpanda TLS on Kubernetes"
 ---
 
 <head>
@@ -7,7 +7,11 @@ title: Configuring Redpanda TLS on Kubernetes
     <meta name="description" content="This section explains how to enable Transport Layer Security (TLS) on Kubernetes."/>
 </head>
 
-This section explains how to enable Transport Layer Security (TLS) on Kubernetes. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication.
+:::important
+See [Configuring Redpanda TLS on Kubernetes](../../../security/kubernetes-tls) for the most up-to-date instructions using the Redpanda Helm chart. This page is preserved for backward compatibility.
+:::
+
+This section explains how to enable Transport Layer Security (TLS) on Kubernetes using the Redpanda Operator. Alone, TLS authenticates the server and encrypts communication between the client and the server. To add client authentication, you can combine TLS encryption with SASL authentication, or you can configure mTLS authentication.
 
 For general security information, see [Redpanda Security on Kubernetes](../security-kubernetes).
 
@@ -17,7 +21,7 @@ For general security information, see [Redpanda Security on Kubernetes](../secur
 2. Install cert-manager.
 3. Install the Redpanda operator.
 
-If you haven’t completed these tasks, follow one of the 60-Second Guides for Kubernetes to get set up before you configure TLS. Just stop before you install and connect to the Redpanda cluster.
+If you haven’t completed these tasks, follow one of the [60-Second Guides for Kubernetes](../) to get set up before you configure TLS. Just stop before you install and connect to the Redpanda cluster.
 
 ## Step 1: Create the cluster specification file
 
