@@ -63,7 +63,6 @@
 # Reference
 /docs/reference/faq   /docs/home  301!
 
-
 # Fix for google result on 'redpanda encryption'
 /docs/21.1/security/acls   /docs/21.11/security/acls  301!
 
@@ -75,3 +74,9 @@
 
 #Fix for duplicate rpk container page
 /docs/deployment/guide-rpk-container /docs/quickstart/quick-start-macos 301!
+
+#Redpanda console
+/docs/console/installation /docs/quickstart/console-installation 301!
+
+#Tech Preview
+/docs/introduction/tech-preview /docs/install-upgrade/install-preview 301!

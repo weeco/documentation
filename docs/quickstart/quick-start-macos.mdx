@@ -1,13 +1,13 @@
 ---
-title: 60-Second Guide for macOS
+title: Installing Redpanda on macOS
 ---
 
 <head>
-    <meta name="title" content="MacOS Quick Start Guide | Redpanda Docs"/>
+    <meta name="title" content="Installing Redpanda on macOS | Redpanda Docs"/>
     <meta name="description" content="MacOS quick start guide."/>
 </head>
 
-You can only run Redpanda directly on Linux. However, you can run Redpanda on macOS in a Docker container. This 60-Second Guide helps you get started with Redpanda for development and testing.
+You can only run Redpanda directly on Linux. However, you can run Redpanda on macOS in a Docker container. This guide helps you get started with Redpanda for development and testing on macOS.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
@@ -54,43 +54,6 @@ You can run `rpk` commands to interact with the cluster; for example:
 
 ```bash
 rpk cluster info --brokers 127.0.0.1:49462,127.0.0.1:49468,127.0.0.1:49467
-```
-
-## Start streaming
-
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
-
-Create a topic called `twitch_chat`:
-
-```bash
-rpk topic create twitch_chat --brokers <broker1_address>,<broker2_address>...
-```
-
-Produce messages to the topic:
-
-```bash
-rpk topic produce twitch_chat --brokers <broker1_address>,<broker2_address>...
-```
-
-Type text into the topic and click Ctrl + D to seperate between messages.
-
-Click Ctrl + C to exit the produce command.
-
-Consume (read) the messages in the topic:
-
-```bash
-rpk topic consume twitch_chat --brokers <broker1_address>,<broker2_address>...
-```
-    
-Each message is shown with its metadata, like this:
-    
-```json
-{
-    "message": "How do you stream with Redpanda?\n",
-    "partition": 0,
-    "offset": 1,
-    "timestamp": "2021-02-10T15:52:35.251+02:00"
-}
 ```
 
 ## Delete the nodes

@@ -35,11 +35,6 @@ module.exports = {
           id: "introduction/autotune",
         },
         "introduction/licenses",
-        {
-          type: "doc",
-          label: "Technical Preview",
-          id: "introduction/tech-preview",
-        },
       ],
     },
     {
@@ -50,9 +45,44 @@ module.exports = {
       collapsed: true,
       items: [
         {
+          type: "category",
+          label: "Install Redpanda",
+          collapsible: true,
+          collapsed: true,
+          link: { type: "doc", id: "quickstart/index" },
+          items: [
+            {
+              type: "doc",
+              label: "Docker",
+              id: "quickstart/quick-start-docker",
+            },
+            {
+              type: "doc",
+              label: "Kubernetes",
+              id: "quickstart/kubernetes-qs-dev",
+            },
+            {
+              type: "doc",
+              label: "Linux",
+              id: "quickstart/quick-start-linux",
+            },
+            {
+              type: "doc",
+              label: "macOS",
+              id: "quickstart/quick-start-macos",
+            },
+            {
+              type: "doc",
+              label: "Windows",
+              id: "quickstart/quick-start-windows",
+            },
+          ],
+        },
+        "quickstart/console-installation",
+        {
           type: "doc",
-          label: "Installing Preview Versions",
-          id: "install-upgrade/install-preview",
+          label: "Start Streaming",
+          id: "install-upgrade/start-streaming",
         },
         {
           type: "doc",
@@ -64,42 +94,14 @@ module.exports = {
           label: "Rolling Upgrades",
           id: "install-upgrade/rolling-upgrade",
         },
-      ],
-    },
-    {
-      type: "category",
-      label: "60-Second Guides",
-      collapsible: true,
-      collapsed: true,
-      link: { type: "doc", id: "quickstart/index" },
-      items: [
         {
           type: "doc",
-          label: "Docker",
-          id: "quickstart/quick-start-docker",
-        },
-        {
-          type: "doc",
-          label: "Linux",
-          id: "quickstart/quick-start-linux",
-        },
-        {
-          type: "doc",
-          label: "macOS",
-          id: "quickstart/quick-start-macos",
-        },
-        {
-          type: "doc",
-          label: "Windows",
-          id: "quickstart/quick-start-windows",
-        },
-        {
-          type: "doc",
-          label: "Kubernetes",
-          id: "quickstart/kubernetes-qs-dev",
+          label: "Installing Preview Versions",
+          id: "install-upgrade/install-preview",
         },
       ],
     },
+    
     {
       type: "category",
       label: "Deployment",
@@ -243,7 +245,6 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        "console/installation",
         {
           type: "category",
           label: "Features",
@@ -674,10 +675,6 @@ module.exports = {
           href: "https://github.com/redpanda-data/redpanda/releases",
         },
       ],
-    },
-    {
-      type: "doc",
-      id: "support",
     },
   ],
 };

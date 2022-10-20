@@ -1,13 +1,13 @@
 ---
-title: 60-Second Guide for Windows
+title: Installing Redpanda on Windows
 ---
 
 <head>
-    <meta name="title" content="Windows Quick Start Guide | Redpanda Docs"/>
+    <meta name="title" content="Installing Redpanda on Windows | Redpanda Docs"/>
     <meta name="description" content="Windows quick start guide."/>
 </head>
 
-You can only run Redpanda directly on Linux. However, you can run Redpanda on a Windows machine in a Docker container. This 60-Second Guide helps you get started with Redpanda for development and testing.
+You can only run Redpanda directly on Linux. However, you can run Redpanda on Windows in a Docker container. This guide helps you get started with Redpanda for development and testing on Windows.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
@@ -182,52 +182,6 @@ Creating redpanda-1 ... done
 ```
 
 You can also check Docker for Desktop for any container errors.
-
-## Start streaming
-
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
-
-View information about the cluster:
-
-```powershell
-docker exec -it redpanda-1 rpk cluster info
-```
-
-Create a topic called `twitch_chat`:
-
-```powershell
-docker exec -it redpanda-1 ^
-rpk topic create twitch_chat --brokers=localhost:9092
-```
-
-Produce messages to the topic:
-
-```powershell
-docker exec -it redpanda-1 ^
-rpk topic produce twitch_chat --brokers=localhost:9092
-``` 
-
-Type text into the topic and click Ctrl + D to separate between messages.
-
-Click Ctrl + C to exit the produce command.
-
-Consume (read) the messages in the topic:
-
-```powershell
-docker exec -it redpanda-1 ^
-rpk topic consume twitch_chat --brokers=localhost:9092
-```
-
-Each message is shown with its metadata, like this:
-
-```json
-{
-  "message": "How do you stream with Redpanda?\n",
-  "partition": 0,
-  "offset": 1,
-  "timestamp": "2021-02-10T15:52:35.251+02:00"
-}
-```
 
 ## Delete the containers
 

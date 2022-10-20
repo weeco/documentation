@@ -1,13 +1,13 @@
 ---
-title: 60-Second Guide for Docker
+title: Installing Redpanda on Docker
 ---
 
 <head>
-    <meta name="title" content="Docker Quick Start Guide | Redpanda Docs"/>
+    <meta name="title" content="Installing Redpanda on Docker | Redpanda Docs"/>
     <meta name="description" content="Docker quick start guide."/>
 </head>
 
-You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This 60-Second Guide helps you get started with Redpanda for development and testing. 
+You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This guide helps you get started with Redpanda for development and testing using Docker. 
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
@@ -210,41 +210,7 @@ To change the parameters, edit the `docker-compose` file, and run the command ag
 
 Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
 
-Create a topic called `twitch_chat`:
 
-```bash
-docker exec -it redpanda-1 \
-rpk topic create twitch_chat --brokers=localhost:9092
-```
-
-Produce messages to the topic:
-
-```bash
-docker exec -it redpanda-1 \
-rpk topic produce twitch_chat --brokers=localhost:9092
-```
-
-Type text into the topic, and click Ctrl + D to separate between messages.  
-
-Click Ctrl + C to exit the produce command.
-
-Consume (read) the messages in the topic:
-
-```bash
-docker exec -it redpanda-1 \
-rpk topic consume twitch_chat --brokers=localhost:9092
- ```
- 
-Each message is shown with its metadata, like this:
-    
-```bash
-{
-"message": "How do you stream with Redpanda?\n",
-"partition": 0,
-"offset": 1,
-"timestamp": "2021-02-10T15:52:35.251+02:00"
-}
- ```
 
 ## Delete the containers
 

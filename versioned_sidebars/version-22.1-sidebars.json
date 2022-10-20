@@ -256,10 +256,6 @@
           "href": "https://github.com/redpanda-data/redpanda/releases"
         }
       ]
-    },
-    {
-      "type": "doc",
-      "id": "support"
     }
   ]
 }

@@ -1,16 +1,16 @@
 ---
-title: 60-Second Guide for Kubernetes
+title: Installing Redpanda on Kubernetes
 ---
 
 <head>
-    <meta name="title" content="60-Second Guide for Kubernetes | Redpanda Docs"/>
-    <meta name="description" content="Kubernetes quickstart for developers."/>
+    <meta name="title" content="Installing Redpanda on Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Kubernetes quickstart guide."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This 60-Second Guide helps you get started with Redpanda for development and testing. 
+This guide helps you get started with Redpanda for development and testing on Kubernetes. 
 
 :::note
 This page uses the latest recommended Helm chart for installing Redpanda. For information about installing Redpanda on Kubernetes using the older Redpanda Operator, see [Redpanda Operator](../../reference/redpanda-operator).
@@ -148,126 +148,4 @@ When it's ready, the output should look similar to the following:
 
 ```text
 statefulset rolling update complete 3 pods at revision redpanda-8654f645b4...
-```
-
-## Connect to your new Redpanda cluster
-
-Set up an alias to simplify these commands:
-
-```bash
-alias rpk="kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers=redpanda-0.redpanda.redpanda.svc.cluster.local.:9093"
-```
-
-Get the API status:
-
-```bash
-rpk cluster info
-```
-
-Output:
-
-```text
-CLUSTER
-=======
-redpanda.825b69f2-84a6-4eaf-b2dd-4a19b69dd47c
-
-BROKERS
-=======
-ID    HOST                                             PORT
-0*    redpanda-0.redpanda.redpanda.svc.cluster.local.  9093
-1     redpanda-1.redpanda.redpanda.svc.cluster.local.  9093
-2     redpanda-2.redpanda.redpanda.svc.cluster.local.  9093
-```
-
-Create a topic:
-
-```bash
-rpk topic create test-topic
-```
-
-Output:
-
-```text
-TOPIC       STATUS
-test-topic  OK
-```
-
-Describe the topic:
-
-```bash
-rpk topic describe test-topic
-```
-
-Output:
-
-```text
-SUMMARY
-=======
-NAME        test-topic
-PARTITIONS  1
-REPLICAS    1
-
-CONFIGS
-=======
-KEY                     VALUE                          SOURCE
-cleanup.policy          delete                         DYNAMIC_TOPIC_CONFIG
-compression.type        producer                       DEFAULT_CONFIG
-message.timestamp.type  CreateTime                     DEFAULT_CONFIG
-partition_count         1                              DYNAMIC_TOPIC_CONFIG
-redpanda.datapolicy     function_name:  script_name:   DEFAULT_CONFIG
-redpanda.remote.read    false                          DEFAULT_CONFIG
-redpanda.remote.write   false                          DEFAULT_CONFIG
-replication_factor      1                              DYNAMIC_TOPIC_CONFIG
-retention.bytes         -1                             DEFAULT_CONFIG
-retention.ms            604800000                      DEFAULT_CONFIG
-segment.bytes           1073741824                     DEFAULT_CONFIG
-```
-
-Produce a message into the topic:
-
-```bash
-rpk topic produce test-topic
-```
-
-Enter a message:
-```text
-Pandas are fabulous!
-```
-Output:
-
-```text
-Produced to partition 0 at offset 0 with timestamp 1663282629789.
-```
-
-Click `ctrl-d` (or `ctrl-z` on Windows) to finish sending messages to the topic.
-
-Consume one message from the topic:
-
-```bash
-rpk topic consume test-topic --num 1
-```
-
-Each message is shown with its metadata, like this:
-
-```json
-{
-  "topic": "test-topic",
-  "value": "Pandas are fabulous!",
-  "timestamp": 1663282936833,
-  "partition": 0,
-  "offset": 0
-}
-```
-
-Delete the topic:
-
-```bash
-rpk topic delete test-topic
-```
-
-Output:
-
-```text
-TOPIC       STATUS
-test-topic  OK
 ```

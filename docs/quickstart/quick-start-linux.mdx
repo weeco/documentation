@@ -1,5 +1,5 @@
 ---
-title: 60-Second Guide for Linux
+title: Installing Redpanda in Linux
 ---
 
 <head>
@@ -10,7 +10,7 @@ title: 60-Second Guide for Linux
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-You can run Redpanda directly on Linux. This 60-Second Guide helps you get started with Redpanda for development and testing.
+You can run Redpanda directly on Linux. This guide helps you get started with Redpanda for development and testing on Linux.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
 
@@ -60,40 +60,3 @@ redpanda.service - Redpanda, the fastest queue in the West.
 ```
 
 You now have a single-node cluster running Redpanda.
-
-## Start streaming
-
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
-
-Create a topic called `twitch_chat`:
-
-```bash
-rpk topic create twitch_chat
-```
-
-Produce messages to the topic:
-
-```bash
-rpk topic produce twitch_chat
-```
-
-Type text into the topic and click Ctrl + D to seperate between messages.
-
-Click Ctrl + C to exit the produce command.
-
-Consume (read) the messages in the topic:
-
-```bash
-rpk topic consume twitch_chat
-```
-    
-Each message is shown with its metadata, like this:
-    
-```json
-{
-    "message": "How do you stream with Redpanda?\n",
-    "partition": 0,
-    "offset": 1,
-    "timestamp": "2021-02-10T15:52:35.251+02:00"
-}
-```
