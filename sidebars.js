@@ -227,6 +227,11 @@ module.exports = {
               label: "Configuring TLS on Kubernetes",
               id: "security/kubernetes-tls",
             },
+            {
+              type: "doc",
+              label: "Configuring SASL on Kubernetes",
+              id: "security/sasl-kubernetes",
+            },
           ],
         },
       ],

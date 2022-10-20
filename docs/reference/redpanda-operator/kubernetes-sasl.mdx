@@ -7,7 +7,11 @@ title: Configuring Redpanda SASL on Kubernetes
     <meta name="description" content="Configuring Redpanda SASL on Kubernetes."/>
 </head>
 
-This section provides details on how to enable SASL authentication on Kubernetes. Alone, SASL authenticates the server and the client. To encrypt communication between the server and the client, combine SASL authentication with TLS encryption. Redpanda supports the SASL/SCRAM authentication method for the Kafka API.
+:::important
+See [Configuring Redpanda SASL on Kubernetes](../../../security/sasl-kubernetes) for the most up-to-date instructions using the `redpanda` Helm chart. This page is based on the `redpanda-operator` Helm chart and is preserved only for backward compatibility.
+:::
+
+The Simple Authentication and Security Layer (SASL) is a method for adding authentication support to connection-based protocols. When using the Redpanda Operator, SASL provides authentication between the server and client. To encrypt communication, use TLS encryption. You must use TLS encryption to have secure authentication using SASL.
 
 For general security information, see [Redpanda Security on Kubernetes](../security-kubernetes).
 
@@ -194,7 +198,7 @@ kubectl exec -c redpanda <cluster_name>-0 -- rpk acl create --allow-principal Us
 --sasl-mechanism SCRAM-SHA-256
 ```
 
-2. Optionally, you can use the superuser to grant permissions to the new user for a topic within the cluster. The following command grants `describe` privileges to a topic that doesn’t exist yet. In the next step, you create the topic that you reference in this command. Note that if a user has `describe` privileges on a cluster, they do not automatically have `describe` privileges on topics within the cluster.
+1. Optionally, you can use the superuser to grant permissions to a new user for a topic within the cluster. The following command grants `describe` privileges to a topic that doesn’t exist yet. In the next step, you create the topic that you reference in this command. 
 
 ```bash
 kubectl exec -c redpanda <cluster_name>-0 -- rpk acl create --allow-principal User:<username> --operation describe --topic <topic_name> \
