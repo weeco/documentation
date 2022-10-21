@@ -99,6 +99,11 @@ module.exports = {
           label: "Installing Preview Versions",
           id: "install-upgrade/install-preview",
         },
+        {
+          type: "doc",
+          label: "Installing rpk",
+          id: "quickstart/rpk-install",
+        },
       ],
     },
     
