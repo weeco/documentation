@@ -78,6 +78,11 @@ module.exports = {
             },
           ],
         },
+        {
+          type: "doc",
+          label: "Install rpk",
+          id: "quickstart/rpk-install",
+        },
         "quickstart/console-installation",
         {
           type: "doc",
@@ -96,13 +101,8 @@ module.exports = {
         },
         {
           type: "doc",
-          label: "Installing Preview Versions",
+          label: "Install Preview Versions",
           id: "install-upgrade/install-preview",
-        },
-        {
-          type: "doc",
-          label: "Installing rpk",
-          id: "quickstart/rpk-install",
         },
       ],
     },
