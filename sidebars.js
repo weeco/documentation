@@ -99,11 +99,6 @@ module.exports = {
           label: "Rolling Upgrades",
           id: "install-upgrade/rolling-upgrade",
         },
-        {
-          type: "doc",
-          label: "Install Preview Versions",
-          id: "install-upgrade/install-preview",
-        },
       ],
     },
     
@@ -189,7 +184,6 @@ module.exports = {
         "data-management/tiered-storage",
         "data-management/data-archiving",
         "data-management/remote-read-replicas",
-        "data-management/data-transform",
         "data-management/data-migration",
         "data-management/rack-awareness",
       ],
@@ -681,5 +675,17 @@ module.exports = {
         },
       ],
     },
+    {      
+      type: "category",
+      label: "Labs",
+      link: { type: "doc", id: "labs/index" },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        "labs/install-preview",
+        "labs/data-transform",
+       ],
+    }
+
   ],
 };
