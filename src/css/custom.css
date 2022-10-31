@@ -467,3 +467,8 @@ h5 {
 [class*=iconExternalLink] {
   display: none;
 }
+
+.alert a {
+  color : var(--ifm-color-primary);
+  text-decoration-color : var(--ifm-color-primary);
+}
