@@ -21,9 +21,8 @@ docker run --network=host \
 
 :::note
 The host networking driver only works on Linux hosts, and is not supported on Docker Desktop for Mac, 
-Docker Desktop for Windows, or Docker EE for Windows Server. The recommended approach to test Redpanda Console
-on a local machine is to run it with [Docker compose](../../console/reference/docker-compose) 
-so that it can share the network scope with the container that runs the Kafka cluster.
+Docker Desktop for Windows, or Docker EE for Windows Server. To get around this limitation, use `docker compose`. This way, the network scope is shared with the container that runs the Kafka cluster. See [Docker compose](../../console/reference/docker-compose) 
+for the `docker-compose.yml` file that starts the Redpanda Console along with Redpanda.
 ::: 
 
 To connect Redpanda Console to a remote Kafka cluster:
@@ -42,7 +41,7 @@ docker run -p 8080:8080 \
 The configuration above can be used to connect to a cluster that uses commonly trusted certificates in 
 combination with SASL plain authentication. To launch Redpanda Console with additional files, such 
 as certificates or a Redpanda license, you can mount a directory that contains those files.
-When you run the docker run command, specify the mount volume and the filepaths to the additional files.
+When you run the `docker run` command, specify the mount volume and the filepaths to the additional files.
 
 The following example mounts the directory
 `console-mounts` in your current path so that all files inside that directory become available at
