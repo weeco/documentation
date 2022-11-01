@@ -118,9 +118,9 @@ export function disconnect() {
 }
 ```
 
-That's it, a working producer that sends strings entered by the user to the 
-`chat-room` topic. We are sending the messages as JSON encoded strings here,
-but keep in mind that the producer just sends buffers, so you can encode the
+You now have a working producer that sends strings entered by the user to the 
+`chat-room` topic. Messages are sent as JSON encoded strings here,
+but keep in mind that the producer only sends buffers, so you can encode the
 messages however you like.
 
 ## Consumer code
