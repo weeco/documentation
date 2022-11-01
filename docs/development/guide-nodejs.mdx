@@ -13,7 +13,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 If you haven't already, install Node by following the appropriate steps for
 your OS [here](https://nodejs.org/en/download/package-manager/).
 
-As you may have heard by now, Redpanda is Kafka® API-compatible, which means
+Redpanda is Kafka® API-compatible, which means
 that although Redpanda is relatively new, you can leverage the countless client
 libraries created for Kafka® (if you find something that is not supported,
 reach out to our team on our <a href="https://redpanda.com/slack">Slack</a>).
@@ -23,7 +23,7 @@ In this example we will use [kafkajs](https://kafka.js.org/).
 # Create and enter the project folder
 mkdir redpanda-node
 cd redpanda-node
-# Generate package.json (the default values are fine)
+# Generate package.json (use the default values)
 npm init
 # Install required dependencies
 npm i -D typescript
@@ -66,7 +66,7 @@ NAME       PARTITIONS  REPLICAS
 chat-room  1           1
 ```
 
-It's just as easy to create topics programmatically too:
+You can create topics programmatically too:
 
 ```javascript title="src/admin.ts"
 import {Kafka} from "kafkajs"
@@ -89,7 +89,7 @@ export function createTopic(topic: string, partitions?: number, replicas?: numbe
 }
 ```
 
-Now that we have a cluster up and running, and a topic to store our data, let's
+Now that you have a cluster up and running, and a topic to store your data, you can 
 build a producer and consumer.
 
 ## Producer code
@@ -118,9 +118,9 @@ export function disconnect() {
 }
 ```
 
-That's it, a working producer that sends strings entered by the user to the 
-`chat-room` topic. We are sending the messages as JSON encoded strings here,
-but keep in mind that the producer just sends buffers, so you can encode the
+You now have a working producer that sends strings entered by the user to the 
+`chat-room` topic. Messages are sent as JSON encoded strings here,
+but keep in mind that the producer only sends buffers, so you can encode the
 messages however you like.
 
 ## Consumer code
@@ -152,10 +152,10 @@ export function disconnect() {
 }
 ```
 
-There you have it. A consumer that will read all messages from the `chat-room`
+You now have a consumer that will read all messages from the `chat-room`
 topic and print them to the console. You can start as many consumer groups as
-you like, but bear in mind that each group will read a message on once. That's
-why the example is using a generated uuid for the group id.
+you like, but bear in mind that each group will read a message only once, which is
+why the example is using a generated uuid for the group ID.
 
 ## Putting everything together
 
@@ -210,4 +210,3 @@ run as many as you like.
 ## Wrapping up
 
 Now you have the basic building blocks for working with Redpanda using Node.js.
-Try it yourself, there are endless use cases.

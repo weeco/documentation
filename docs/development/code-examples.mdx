@@ -1,5 +1,5 @@
 ---
-title: Kafka client code examples
+title: Kafka Client Code Examples
 ---
 
 <head>
@@ -10,21 +10,21 @@ title: Kafka client code examples
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-As you probably have heard by now, Redpanda is Kafka® API-compatible, which
+Redpanda is Kafka® API-compatible, which
 means that despite Redpanda being a new streaming data platform, you can 
 leverage the countless client libraries that have been created for Kafka®. If 
 you find something that is not supported, reach out to our team in the
 community <a href="https://redpanda.com/slack">Slack</a>.
 
-In this tutorial we will demonstrate how to get started with a variety of
+This tutorial walks you through how to get started with a variety of
 Kafka® client libraries by creating a topic, producing some data, and consuming
 it back.
 
-## Setup Redpanda
+## Set up Redpanda
 
-Follow our [quickstart](../../quickstart) guide to spin up a development
+Follow the [quickstart](../../quickstart) guide to spin up a development
 environment on your platform of choice. If you already have a Redpanda Cloud
-cluster, then you're good to go, we'll show you how to connect to that too.
+cluster, then you're good to go; we'll show you how to connect to that too.
 
 :::caution
 If you're running Redpanda on your laptop, or in a shared development
@@ -38,8 +38,8 @@ might affect your experience with other applications running on your machine.
 <Tabs groupId="lang">
 <TabItem value="go" label="Go" default>
 
-Download and install Go from the [go.dev](https://go.dev/doc/install) website.
-In this tutorial we will use the [franz-go](https://github.com/twmb/franz-go) 
+Download and install Go from [go.dev](https://go.dev/doc/install).
+This tutorial uses the [franz-go](https://github.com/twmb/franz-go) 
 library.
 
 ```bash
@@ -57,8 +57,7 @@ go get github.com/twmb/franz-go/pkg/sasl/scram@v1.9.0
 </TabItem>
 <TabItem value="js" label="Node.js" default>
 
-Download and install Node.js from [here](https://nodejs.org/en/download). In 
-this tutorial we will use the [KafkaJS](https://kafka.js.org/) library.
+Download and install Node.js from [here](https://nodejs.org/en/download). This tutorial uses the [KafkaJS](https://kafka.js.org/) library.
 
 ```bash
 # Create and enter the project folder
@@ -77,7 +76,7 @@ tsc --init
 <TabItem value="py" label="Python" default>
 
 Download and install Python 3 from 
-[python.org](https://www.python.org/downloads). In this tutorial we will use
+[python.org](https://www.python.org/downloads). This tutorial uses
 the [kafka-python](https://kafka-python.readthedocs.io/en/master/) library.
 
 ```bash
@@ -95,7 +94,7 @@ source .env/bin/activate
 
 ## Create topic
 
-Let's get started by creating our first Redpanda topic. You can create a topic
+Let's get started by creating your first Redpanda topic. You can create a topic
 using Redpanda's command line interface 
 [rpk](../reference/rpk/rpk-commands.mdx):
 
@@ -137,7 +136,7 @@ demo   OK
 </TabItem>
 </Tabs>
 
-It's just as easy to create a topic programmatically:
+You can also create a topic programmatically:
 
 <Tabs groupId="lang">
 <TabItem value="go" label="Go" default>
@@ -231,10 +230,10 @@ finally:
 ## Connecting to Redpanda Cloud
 
 Connecting to a local Redpanda cluster (or a cluster with no security) is as 
-simple as specifying a list of brokers, but how does this differ in Redpanda
-Cloud?
+simple as specifying a list of brokers; however, this is done differently in Redpanda
+Cloud.
 
-Redpanda Cloud can be configured to use SASL/SCRAM (username and password) or
+You can configure Redpanda Cloud to use SASL/SCRAM (username and password) or
 mTLS based [authentication](../security/authentication.mdx). These modes of
 security require some additional parameters to be specified when creating a
 client connection.
@@ -345,7 +344,7 @@ producer = KafkaProducer(
 
 ## Create producer
 
-Now that we have a topic, let's create a producer and send some messages:
+Now that you have a topic, you can create a producer and send some messages:
 
 <Tabs groupId="lang">
 <TabItem value="go" label="Go" default>
@@ -522,7 +521,7 @@ for i in range(200, 300):
 
 ## Create consumer
 
-Finally, let's create a consumer to read the data back out of the topic:
+Now you can create a consumer to read the data back out of the topic:
 
 <Tabs groupId="lang">
 <TabItem value="go" label="Go" default>
@@ -684,7 +683,7 @@ from a Redpanda cluster running in a local environment, or in Redpanda Cloud.
 The code examples provided in this tutorial are intentionally simple to help
 you get started. For more advanced examples, including how to build stream 
 processing applications that can aggregate, join, and filter your data streams,
-please check out the following links:
+check out the following links:
 
 * [Redpanda University](https://university.redpanda.com/)
 * [Redpanda Blog](https://redpanda.com/blog)
