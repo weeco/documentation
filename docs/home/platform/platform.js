@@ -31,7 +31,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/console/installation',
+    url: '/docs/platform/quickstart/console-installation',
   },
   {
     title: 'rpk Command Reference',
@@ -51,7 +51,7 @@ const FeatureList = [
         Save storage costs by offloading log segments to the cloud.
       </>
     ),
-    url: '/docs/data-management/tiered-storage',
+    url: '/docs/platform/data-management/tiered-storage',
   },
   {
     title: 'Sizing Guidelines',

@@ -98,3 +98,6 @@
 
 #Tech Preview
 /docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!
+
+#Data Management 
+/docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!

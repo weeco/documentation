@@ -51,7 +51,7 @@ const FeatureList = [
         Save storage costs by offloading log segments to the cloud.
       </>
     ),
-    url: '/docs/data-management/tiered-storage',
+    url: '/docs/platform/data-management/tiered-storage',
   },
   {
     title: 'Sizing Guidelines',
