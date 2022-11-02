@@ -10,15 +10,15 @@ title: Kafka Client Code Examples
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda is Kafka® API-compatible, which
-means that despite Redpanda being a new streaming data platform, you can 
-leverage the countless client libraries that have been created for Kafka®. If 
-you find something that is not supported, reach out to our team in the
-community <a href="https://redpanda.com/slack">Slack</a>.
+Redpanda is Kafka® API-compatible, which means that despite Redpanda being a
+new streaming data platform, you can leverage the countless client libraries
+that have been created for Kafka®. If you find something that is not
+supported, reach out to our team in the community
+<a href="https://redpanda.com/slack">Slack</a>.
 
-This tutorial walks you through how to get started with a variety of
-Kafka® client libraries by creating a topic, producing some data, and consuming
-it back.
+This example walks you through how to get started with a variety of Kafka®
+client libraries by creating a topic, producing some data, and consuming it
+back.
 
 ## Set up Redpanda
 
@@ -57,7 +57,8 @@ go get github.com/twmb/franz-go/pkg/sasl/scram@v1.9.0
 </TabItem>
 <TabItem value="js" label="Node.js" default>
 
-Download and install Node.js from [here](https://nodejs.org/en/download). This tutorial uses the [KafkaJS](https://kafka.js.org/) library.
+Download and install Node.js from [here](https://nodejs.org/en/download).
+This example uses the [KafkaJS](https://kafka.js.org/) library.
 
 ```bash
 # Create and enter the project folder
@@ -76,8 +77,8 @@ tsc --init
 <TabItem value="py" label="Python" default>
 
 Download and install Python 3 from 
-[python.org](https://www.python.org/downloads). This tutorial uses
-the [kafka-python](https://kafka-python.readthedocs.io/en/master/) library.
+[python.org](https://www.python.org/downloads). This example uses the
+[kafka-python](https://kafka-python.readthedocs.io/en/master/) library.
 
 ```bash
 # Create and enter the project folder
@@ -676,14 +677,14 @@ tsc consumer.ts && node consumer.js
 
 ## Wrapping up
 
-In this tutorial you have developed the building blocks of a Redpanda client
+In this example you have developed the building blocks of a Redpanda client
 application that creates a topic, produces messages to, and consumes messages
 from a Redpanda cluster running in a local environment, or in Redpanda Cloud.
 
-The code examples provided in this tutorial are intentionally simple to help
-you get started. For more advanced examples, including how to build stream 
-processing applications that can aggregate, join, and filter your data streams,
-check out the following links:
+The code provided in this example is intentionally simple to help you get
+started. For more advanced examples, including how to build stream processing
+applications that can aggregate, join, and filter your data streams, check out
+the following links:
 
 * [Redpanda University](https://university.redpanda.com/)
 * [Redpanda Blog](https://redpanda.com/blog)
