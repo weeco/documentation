@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import styles from './platform.module.css';
 
 const FeatureList = [
   {
@@ -11,7 +11,7 @@ const FeatureList = [
         Try out Redpanda.
       </>
     ),
-    url: '/docs/core/quickstart/',
+    url: '/docs/platform/quickstart/',
   },
   {
     title: 'Deploying for Production',
@@ -21,7 +21,7 @@ const FeatureList = [
         Install and configure Redpanda.
       </>
     ),
-    url: '/docs/core/deployment/production-deployment',
+    url: '/docs/platform/deployment/production-deployment',
   },
   {
     title: 'Redpanda Console',
@@ -31,7 +31,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/core/console/installation',
+    url: '/docs/console/installation',
   },
   {
     title: 'rpk Command Reference',
@@ -41,7 +41,7 @@ const FeatureList = [
         Browse all commands for running Redpanda.
       </>
     ),
-    url: '/docs/22.1/reference/rpk-commands',
+    url: '/docs/platform/reference/rpk',
   },
   {
     title: 'Tiered Storage',

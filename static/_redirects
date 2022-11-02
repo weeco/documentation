@@ -1,82 +1,100 @@
 # Introduction
-/docs/reference/autotune   /docs/introduction/autotune  301!
-/docs/features/intro-to-events   /docs/introduction/intro-to-events  301!
+/docs/platform/reference/autotune   /docs/platform/introduction/autotune  301!
+/docs/platform/features/intro-to-events   /docs/platform/introduction/intro-to-events  301!
 
 # Quickstart
-/docs/getting-started/quick-start-kubernetes   /docs/quickstart/ 301!
-/docs/getting-started/kubernetes-qs-cloud   /docs/quickstart/kubernetes-qs-cloud/  301!
-/docs/quickstart/kubernetes-qs-cloud   /docs/reference/redpanda-operator/kubernetes-qs-cloud  301!
-/docs/getting-started/kubernetes-qs-local-access   /docs/quickstart/kubernetes-qs-local-access  301!
-/docs/quickstart/kubernetes-qs-local-access  /docs/reference/redpanda-operator/kubernetes-qs-local-access  301!
-/docs/getting-started/kubernetes-qs-minikube   /docs/quickstart/kubernetes-qs-minikube  301!
-/docs/quickstart/kubernetes-qs-minikube  /docs/reference/redpanda-operator/kubernetes-qs-minikube  301!
-/docs/getting-started/index   /docs/quickstart/index  301!
-/docs/getting-started/quick-start-docker   /docs/quickstart/quick-start-docker  301!
-/docs/getting-started/quick-start-linux   /docs/quickstart/quick-start-linux  301!
-/docs/getting-started/quick-start-macos   /docs/quickstart/quick-start-macos  301!
-/docs/getting-started/quick-start-windows   /docs/quickstart/quick-start-windows  301!
+/docs/platform/getting-started/quick-start-kubernetes   /docs/platform/quickstart/kubernetes-qs-cloud/  301!
+/docs/platform/getting-started/kubernetes-qs-cloud   /docs/platform/quickstart/kubernetes-qs-cloud/  301!
+/docs/platform/getting-started/kubernetes-qs-local-access   /docs/platform/quickstart/kubernetes-qs-local-access  301!
+/docs/platform/getting-started/kubernetes-qs-minikube   /docs/platform/quickstart/kubernetes-qs-minikube  301!
+/docs/platform/getting-started/kubernetes-qs-minikube   /docs/platform/quickstart/kubernetes-qs-minikube  301!
+/docs/platform/getting-started/index   /docs/platform/quickstart/index  301!
+/docs/platform/getting-started/quick-start-docker   /docs/platform/quickstart/quick-start-docker  301!
+/docs/platform/getting-started/quick-start-linux   /docs/platform/quickstart/quick-start-linux  301!
+/docs/platform/getting-started/quick-start-macos   /docs/platform/quickstart/quick-start-macos  301!
+/docs/platform/getting-started/quick-start-windows   /docs/platform/quickstart/quick-start-windows  301!
+
+/docs/platform/quickstart/kubernetes-qs-cloud   /docs/platform/reference/redpanda-operator/kubernetes-qs-cloud  301!
+/docs/platform/quickstart/kubernetes-qs-local-access  /docs/platform/reference/redpanda-operator/kubernetes-qs-local-access  301!
+/docs/platform/quickstart/kubernetes-qs-minikube  /docs/platform/reference/redpanda-operator/kubernetes-qs-minikube  301!
+
 
 # Development
-/docs/features/guide-nodejs   /docs/development/guide-nodejs  301!
+/docs/platform/features/guide-nodejs   /docs/platform/development/guide-nodejs  301!
 
 # Deployment
-/docs/deploy-self-hosted/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
-/docs/deployment/arbitrary-configuration   /docs/deployment/kubernetes-additional-config  301!
-/docs/features/guide-rpk-container   /docs/deployment/guide-rpk-container  301!
-/docs/features/kubernetes-additional-config   /docs/deployment/kubernetes-additional-config  301!
-/docs/features/kubernetes-connectivity   /docs/deployment/kubernetes-connectivity  301!
-/docs/features/kubernetes-external-connect   /docs/deployment/kubernetes-external-connect  301!
-/docs/deploy-self-hosted/production-deployment-automation   /docs/deployment/production-deployment-automation  301!
-/docs/deploy-self-hosted/production-deployment   /docs/deployment/production-deployment  301!
-/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
-/docs/reference/well-known-io   /docs/deployment/well-known-io  301!
-/docs/deployment/well-known-io   /docs/deployment/performance-storage-tuning  301!
-/docs/getting-started/install-preview   /docs/deployment/install-preview  301!
-/docs/deployment/performance-storage-tuning   /docs/deployment/disk-utilization  301!  
+/docs/platform/deploy-self-hosted/arbitrary-configuration   /docs/platform/deployment/kubernetes-additional-config  301!
+/docs/platform/deployment/arbitrary-configuration   /docs/platform/deployment/kubernetes-additional-config  301!
+/docs/platform/features/guide-rpk-container   /docs/platform/deployment/guide-rpk-container  301!
+/docs/platform/features/kubernetes-additional-config   /docs/platform/deployment/kubernetes-additional-config  301!
+/docs/platform/features/kubernetes-connectivity   /docs/platform/deployment/kubernetes-connectivity  301!
+/docs/platform/features/kubernetes-external-connect   /docs/platform/deployment/kubernetes-external-connect  301!
+/docs/platform/deploy-self-hosted/production-deployment-automation   /docs/platform/deployment/production-deployment-automation  301!
+/docs/platform/deploy-self-hosted/production-deployment   /docs/platform/deployment/production-deployment  301!
+/docs/platform/deployment/well-known-io   /docs/platform/deployment/performance-storage-tuning  301!
+/docs/platform/reference/well-known-io   /docs/platform/deployment/well-known-io  301!
+/docs/platform/deployment/well-known-io   /docs/platform/deployment/performance-storage-tuning  301!
+/docs/platform/getting-started/install-preview   /docs/platform/deployment/install-preview  301!
+/docs/deployment/performance-storage-tuning   /docs/deployment/disk-utilization  301!
 /docs/deployment/kubernetes-additional-config  /docs/reference/redpanda-operator/kubernetes-additional-config  301!
 /docs/deployment/arbitrary-configuration  /docs/reference/redpanda-operator/arbitrary-configuration  301!
 /docs/deployment/kubernetes-external-connect  /docs/reference/redpanda-operator/kubernetes-external-connect  301!
-/docs/deployment/kubernetes-connectivity  /docs/reference/redpanda-operator/kubernetes-connectivity  301!  
+/docs/deployment/kubernetes-connectivity  /docs/reference/redpanda-operator/kubernetes-connectivity  301!
 
 # Cluster Administration
-/docs/deploy-self-hosted/configuration   /docs/cluster-administration/configuration  301!
-/docs/deploy-self-hosted/monitoring   /docs/cluster-administration/monitoring  301!
-/docs/reference/version-upgrade   /docs/cluster-administration/version-upgrade  301!
-/docs/cluster-management/configuration   /docs/cluster-administration/configuration  301!
-/docs/cluster-management/monitoring   /docs/cluster-administration/monitoring  301!
-/docs/cluster-management/version-upgrade   /docs/install-upgrade/version-upgrade  301!
-/docs/cluster-administration/version-upgrade   /docs/install-upgrade/version-upgrade  301!
+/docs/platform/deploy-self-hosted/configuration   /docs/platform/cluster-administration/configuration  301!
+/docs/platform/deploy-self-hosted/monitoring   /docs/platform/cluster-administration/monitoring  301!
+/docs/platform/reference/version-upgrade   /docs/platform/cluster-administration/version-upgrade  301!
+/docs/platform/cluster-management/configuration   /docs/platform/cluster-administration/configuration  301!
+/docs/platform/cluster-management/monitoring   /docs/platform/cluster-administration/monitoring  301!
+/docs/platform/cluster-management/version-upgrade   /docs/platform/install-upgrade/version-upgrade  301!
+/docs/platform/cluster-administration/version-upgrade   /docs/install-upgrade/version-upgrade  301!
 
 # Data Management
-/docs/data-management/shadow-indexing /docs/data-management/tiered-storage 301!
+/docs/platform/data-management/shadow-indexing /docs/platform/data-management/tiered-storage 301!
 
 # Security
-/docs/features/acls   /docs/security/acls  301!
-/docs/features/tls-kubernetes   /docs/security/tls-kubernetes  301!
+/docs/platform/features/acls   /docs/platform/security/acls  301!
+/docs/platform/features/tls-kubernetes   /docs/platform/security/tls-kubernetes  301!
 /docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
-/docs/security/acls  /docs/security/index  301!
-/docs/security/kubernetes-security  /docs/security/security-kubernetes/  301!
+/docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
+/docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
+/docs/platform/security/acls  /docs/platform/security/index  301!
+/docs/platform/security/kubernetes-security  /docs/platform/security/security-kubernetes/  301!
 /docs/security/security-kubernetes  /docs/reference/redpanda-operator/security-kubernetes  301!
 /docs/security/kubernetes-mtls  /docs/reference/redpanda-operator/kubernetes-mtls  301!
 /docs/security/kubernetes-sasl  /docs/reference/redpanda-operator/kubernetes-sasl  301!
 
 # Reference
 /docs/reference/faq   /docs/home  301!
+/docs/security/security-kubernetes  /docs/platform/reference/redpanda-operator/security-kubernetes  301!
+/docs/security/kubernetes-mtls  /docs/platform/reference/redpanda-operator/kubernetes-mtls  301!
+/docs/security/kubernetes-sasl  /docs/platform/reference/redpanda-operator/kubernetes-sasl  301!
+
+# Reference
+/docs/reference/faq   /docs/home  301!
 
 # Fix for google result on 'redpanda encryption'
-/docs/21.1/security/acls   /docs/21.11/security/acls  301!
+/docs/platform/21.1/security/acls   /docs/platform/21.11/security/acls  301!
 
 #Fix for old blog post
+/docs/platform/introduction/consumer-offsets /docs/platform/development/consumer-offsets 301!
+
+#Fix for new rpk page
+/docs/reference/rpk-commands  /docs/platform/reference/rpk 301!
+
+#Fix for duplicate rpk container page
+/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-macos 301!
 /docs/introduction/consumer-offsets /docs/development/consumer-offsets 301!
 
 #Fix for new rpk page
-/docs/reference/rpk-commands  /docs/reference/rpk 301!
+/docs/reference/rpk-commands  /docs/platform/reference/rpk 301!
 
 #Fix for duplicate rpk container page
-/docs/deployment/guide-rpk-container /docs/quickstart/quick-start-macos 301!
+/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-macos 301!
 
 #Redpanda console
-/docs/console/installation /docs/quickstart/console-installation 301!
+/docs/console/installation /docs/platform/quickstart/console-installation 301!
 
 #Tech Preview
-/docs/introduction/tech-preview /docs/install-upgrade/install-preview 301!
+/docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!

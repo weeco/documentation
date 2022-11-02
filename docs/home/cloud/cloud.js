@@ -1,67 +1,67 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import styles from './cloud.module.css';
 
 const FeatureList = [
   {
-    title: '60-Second Guides',
-    image: require('../../../static/img/quickstart.png').default,
+    title: 'Managed Connectors',
+    image: require('../../../static/img/onboard.png').default,
     description: (
       <>
-        Try out Redpanda.
+        Export data from topics to external systems using managed connectors.
       </>
     ),
-    url: '/docs/core/quickstart/',
+    url: '/docs/cloud/managed-connectors/',
   },
   {
-    title: 'Deploying for Production',
-    image: require('../../../static/img/deployment.png').default,
+    title: 'Dedicated vs BYOC',
+    image: require('../../../static/img/console-icon.png').default,
     description: (
       <>
-        Install and configure Redpanda.
+        Understand the differences between deploying in Redpanda's dedicated cloud and deploying in your own VPC.
       </>
     ),
-    url: '/docs/core/deployment/production-deployment',
+    url: '/docs/cloud/dedicated-byoc',
   },
   {
-    title: 'Redpanda Console',
-    image: require('../../../static/img/console-docs.png').default,
+    title: 'Create a Dedicated Cluster',
+    image: require('../../../static/img/deploy.png').default,
     description: (
       <>
-        Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
+        Deploy a cluster in Redpanda's VPC.
       </>
     ),
-    url: '/docs/core/console/installation',
+    url: '/docs/cloud/create-dedicated-cloud-cluster-aws',
   },
   {
-    title: 'rpk Command Reference',
-    image: require('../../../static/img/RPK-commands.png').default,
+    title: 'Create a BYOC cluster',
+    image: require('../../../static/img/multi-cluster.png').default,
     description: (
       <>
-        Browse all commands for running Redpanda.
+        Bring Your Own Cloud (BYOC) and deploy a Redpanda cluster.
       </>
     ),
-    url: '/docs/22.1/reference/rpk-commands',
+    url: '/docs/cloud/create-byoc-cluster-aws',
   },
   {
-    title: 'Tiered Storage',
-    image: require('../../../static/img/try-now.png').default,
+    title: 'VPC Peering',
+    image: require('../../../static/img/cloud.png').default,
     description: (
       <>
-        Save storage costs by offloading log segments to the cloud.
+        Create a networking connection between your VPC and Redpanda's VPC.
       </>
     ),
-    url: '/docs/data-management/tiered-storage',
+    url: '/docs/cloud/vpc-peering/',
   },
   {
-    title: 'Sizing Guidelines',
-    image: require('../../../static/img/get-started.png').default,
+    title: 'Create a topic',
+    image: require('../../../static/img/new-try-now.png').default,
     description: (
       <>
-        Size your production clusters to maximize performance.
+        Create a topic in Redpanda's Cloud. 
       </>
     ),
-    url: 'https://redpanda.com/blog/sizing-redpanda-cluster-best-practices',
+    url: '/docs/cloud/create-topic/',
   },
 ];
 
@@ -75,7 +75,7 @@ function Feature({image, title, description, url}) {
             <img src={image} className={styles.featureSvg} alt={title} />
             </a>
           </div>
-        <div className="text--left padding-horiz--md">
+        <div className={styles.box} >
           <a href={url}>
           <span className={styles.body_title}>{title}</span>
           </a>

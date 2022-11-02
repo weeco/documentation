@@ -13,6 +13,8 @@ import Content from '@theme/DocSidebar/Desktop/Content';
 import DocsVersionDropdownNavbarItem from '@theme/NavbarItem/DocsVersionDropdownNavbarItem';
 import SearchBar from '@theme/SearchBar';
 import styles from './styles.module.css';
+import { useLocation } from 'react-router-dom';
+
 
 function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
   const {
@@ -28,15 +30,27 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
       )}>
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <div className={styles.topPanel}>
-      <SearchBar />
-          <div className={styles.searchPlaceholder}></div>
-          <div className={styles.topPanelLanguageContainer} ><label>Language:</label> English</div>
-          <div className={styles.topPanelVersionContainer}><label>Version:</label>
-            <DocsVersionDropdownNavbarItem 
-              docsPluginId={'default'}
+        <SearchBar />
+        <div className={styles.searchPlaceholder}></div>
+        <div className={styles.topPanelLanguageContainer}>
+          <label>Language:</label> English
+        </div>
+
+        {!(
+              useLocation().pathname.includes("/docs/cloud")||
+              useLocation().pathname.includes("/docs/home/cloud")||
+              useLocation().pathname == "/docs/home/" ||
+              useLocation().pathname == "/docs/home" 
+              ) && (
+          <div className={styles.topPanelVersionContainer}>
+            <label>Version:</label>
+            <DocsVersionDropdownNavbarItem
+              docsPluginId={"default"}
               dropdownItemsBefore={[]}
-              dropdownItemsAfter={[]} />
+              dropdownItemsAfter={[]}
+            />
           </div>
+        )}
       </div>
       <Content path={path} sidebar={sidebar} />
       {hideableSidebar && <CollapseButton onClick={onCollapse} />}

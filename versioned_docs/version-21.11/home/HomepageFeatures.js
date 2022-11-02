@@ -4,7 +4,7 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Install Redpanda',
+    title: '60-Second Guides',
     image: require('../../../static/img/quickstart.png').default,
     description: (
       <>
@@ -44,14 +44,14 @@ const FeatureList = [
     url: '/docs/21.11/reference/rpk-commands',
   },
   {
-    title: 'I/O Optimization',
+    title: 'Tiered Storage',
     image: require('../../../static/img/try-now.png').default,
     description: (
       <>
-        Learn how to leverage Redpanda's optimization tools.
+        Save storage costs by offloading log segments to the cloud.
       </>
     ),
-    url: '/docs/deployment/io-optimization',
+    url: '/docs/data-management/tiered-storage',
   },
   {
     title: 'Sizing Guidelines',

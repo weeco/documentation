@@ -14,6 +14,8 @@ import styles from './styles.module.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
+import { useLocation } from 'react-router-dom';
+
 
 /**
  * Decide if the toc should be rendered, on mobile or desktop viewports
@@ -45,7 +47,14 @@ export default function DocItemLayout({children}) {
         <div className={styles.docItemContainer}>
           <article>
             <DocBreadcrumbs />
-            <DocVersionBadge />
+            {console.log(useLocation())}
+            {!(
+              useLocation().pathname.includes("/docs/cloud")||
+              useLocation().pathname.includes("/docs/home/cloud")||
+              useLocation().pathname == "/docs/home/" ||
+              useLocation().pathname == "/docs/home"
+              ) 
+            && <DocVersionBadge />}
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
             <DocItemFooter />
