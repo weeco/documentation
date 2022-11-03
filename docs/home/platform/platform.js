@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import styles from './platform.module.css';
 
 const FeatureList = [
   {
@@ -11,7 +11,7 @@ const FeatureList = [
         Try out Redpanda.
       </>
     ),
-    url: '/docs/quickstart/',
+    url: '/docs/platform/quickstart/',
   },
   {
     title: 'Deploying for Production',
@@ -21,7 +21,7 @@ const FeatureList = [
         Install and configure Redpanda.
       </>
     ),
-    url: '/docs/deployment/production-deployment',
+    url: '/docs/platform/deployment/production-deployment',
   },
   {
     title: 'Redpanda Console',
@@ -31,7 +31,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/console/installation',
+    url: '/docs/platform/quickstart/console-installation',
   },
   {
     title: 'rpk Command Reference',
@@ -41,7 +41,7 @@ const FeatureList = [
         Browse all commands for running Redpanda.
       </>
     ),
-    url: '/docs/21.11/reference/rpk-commands',
+    url: '/docs/platform/reference/rpk',
   },
   {
     title: 'Tiered Storage',
@@ -77,16 +77,16 @@ function Feature({image, title, description, url}) {
           </div>
         <div className="text--left padding-horiz--md">
           <a href={url}>
-          <span className={styles.body_title}>{title}</span> 
-          </a> 
+          <span className={styles.body_title}>{title}</span>
+          </a>
           <div className={styles.body_text}>
             <p>{description}</p>
-            
+
           </div>
           <div className={styles.learn}>
               <a href={url}><p>Learn more -> </p></a>
             </div>
-          
+
         </div>
       </div>
     </div>

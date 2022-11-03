@@ -89,26 +89,3 @@ rpk redpanda admin config log-level [command]
     </tr>
   </tbody>
 </table>
-
-### Example
-
-To see more details in the log, run the following command:
-
-```bash
-journalctl -u redpanda
-```
-
-This command prints out log messages since the node's last start. Include the `-f` flag in the command above to follow the log and see new messages as they appear. Most lines in the log follow this pattern:
-
-```
-<log date> <hostname> <command>: <loglevel> <event date> [shard <shard index>] <subsystem> - <message>
-```
-
-Each subsystem can have its own log level. Valid logging level options are `error`, `warn`, `info`, `debug`, and `trace` (the default level is `debug`).  To get the most detailed level of logging for the `cloud_storage` subsystem, for example, set the log level to `trace` as shown:
-
-```bash
-rpk redpanda admin config log-level set cloud_storage -l trace --host <hostname_or_ip>:9644
-```
-
-
- 
