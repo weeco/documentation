@@ -318,12 +318,6 @@ module.exports = {
             "platform/console/features/topic-documentation",
             "platform/console/features/programmable-push-filters",
             "platform/console/features/http-path-rewrites",
-          ],
-        },
-        {
-          type: "category",
-          label: "Single Sign On",
-          items: [
             {
               type: "doc",
               label: "Redpanda Console Configuration",
