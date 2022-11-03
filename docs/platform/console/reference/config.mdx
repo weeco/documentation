@@ -71,15 +71,25 @@ kafka:
     # Valid mechanisms are: PLAIN, SCRAM-SHA-256, 
     # SCRAM-SHA-512, GSSAPI, OAUTHBEARER and AWS_MSK_IAM.
     mechanism: PLAIN
+    # Kerberos implements the GSSAPI protocol. Below configurations
+    # can be used to connect Console to a Kerberos protected Kafka API.
     gssapi:
+      # AuthType must be either USER_AUTH or KEYTAB_AUTH
       authType:
+      # Filepath to the keytab file that contains the pairs of Kerberos
+      # principals and encrypted password keys. AuthType must be set to
+      # KEYTAB_AUTH to load the keytab file.
       keyTabPath:
+      # Path to the krb5.conf file that contains Kerberos configuration 
+      # information, such as the locations of KDCs.
       kerberosConfigPath:
       serviceName:
       username:
       # Password can be set via the --kafka.sasl.gssapi.password flag as well
       password:
       realm:
+      # EnableFAST enables FAST, which is a pre-authentication framework
+      # for Kerberos.
       enableFast: true
     oauth:
       # can be set via the --kafka.sasl.oauth.token flag as well
