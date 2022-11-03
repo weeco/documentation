@@ -311,13 +311,6 @@ module.exports = {
           type: "category",
           label: "Reference",
           items: [
-            "platform/console/features/kafka-connect",
-            "platform/console/features/record-deserialization",
-            "platform/console/features/schema-registry",
-            "platform/console/features/protobuf",
-            "platform/console/features/topic-documentation",
-            "platform/console/features/programmable-push-filters",
-            "platform/console/features/http-path-rewrites",
             {
               type: "doc",
               label: "Redpanda Console Configuration",
