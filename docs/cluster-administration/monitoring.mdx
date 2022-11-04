@@ -137,21 +137,23 @@ Kafka producer rate
 
 | Metric | Definition | Labels | Type |
 | --- | --- | --- | --- |
+| redpanda_cpu_busy_seconds_total | Total CPU busy time in seconds. | none | gauge |
 | redpanda_io_queue_total_read_ops | Total read operations passed in the queue. | class ("default" \| "compaction" \| "raft"), ioshard, mountpoint, shard | counter |
 | redpanda_io_queue_total_write_ops | Total write operations passed in the queue. | class ("default" \| "compaction" \| "raft"), ioshard, mountpoint, shard | counter |
-| redpanda_storage_disk_free_bytes | Disk storage bytes free. | none | counter |
-| redpanda_storage_disk_total_bytes | Total size of attached storage, in bytes. | none | counter |
-| redpanda_storage_disk_free_space_alert | Status of low storage space alert: 0-OK, 1-low space 2-degraded | none | gauge |
 | redpanda_memory_allocated_memory | Allocated memory size in bytes. | shard | gauge |
 | redpanda_memory_free_memory | Free memory size in bytes. | shard | gauge |
 | redpanda_rpc_request_errors_total | Number of RPC errors. | redpanda_server ("kafka" \| "internal") | counter |
 | redpanda_rpc_request_latency_seconds | RPC latency. | redpanda_server ("kafka" \| "internal") | histogram |
+| redpanda_storage_disk_free_bytes | Disk storage bytes free. | none | counter |
+| redpanda_storage_disk_free_space_alert | Status of low storage space alert: 0-OK, 1-low space 2-degraded | none | gauge |
+| redpanda_storage_disk_total_bytes | Total size of attached storage, in bytes. | none | counter |
+| redpanda_uptime_seconds_total | Total CPU busy time in seconds. | none | gauge |
 
 #### Infrastructure-level queries
 
 Redpanda CPU
 
-    rate(redpanda_runtime_seconds_total[5m])
+    rate(redpanda_uptime_seconds_total[5m]) 
     rate(redpanda_cpu_busy_seconds_total[5m])
 
 Redpanda memory
