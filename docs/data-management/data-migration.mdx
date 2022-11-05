@@ -1,5 +1,5 @@
 ---
-title: Migrating data to Redpanda
+title: Migrating Data to Redpanda
 ---
 
 <head>
@@ -11,29 +11,27 @@ One of the more elegant aspects of Redpanda is that it is compatible with the [K
 So when you want to migrate data from Kafka or replicate data between Redpanda clusters,
 the MirrorMaker 2 tool bundled in the [Kafka download package](https://kafka.apache.org/downloads) is a natural solution.
 
-In this article, we'll go through the process of configuring MirrorMaker to replicate data from one Redpanda cluster to another.
+This section describes the process of configuring MirrorMaker to replicate data from one Redpanda cluster to another.
 In short, MirrorMaker reads a configuration file that specifies the connection details for the Redpanda clusters, as well as other options.
 After you start MirrorMaker, the data migration continues according to the configuration at launch time until you shutdown the MirrorMaker process.
 
-For all of the details on MirrorMaker and its options, check out the [Kafka documentation](https://kafka.apache.org/documentation/#georeplication).
+For details on MirrorMaker and its options, see the [Kafka documentation](https://kafka.apache.org/documentation/#georeplication).
 
 ## Prerequisites
 
-To set up the replication, we'll need:
+To set up the replication, you need:
 
 - 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](../../quickstart/kubernetes-qs-dev/), [Docker](../../quickstart/quick-start-docker), [Linux](../../quickstart/quick-start-linux), or [MacOS](../../quickstart/quick-start-macos).
 
 - MirrorMaker host - You install MirrorMaker on a separate system or on one of the Redpanda clusters, as long as the IP addresses and ports on each cluster are accessible from the MirrorMaker host.
 You must install the [Java Runtime Engine (JRE)](https://docs.oracle.com/javase/10/install/toc.htm) on the MirrorMaker host.
 
-## Installing MirrorMaker
+## Install MirrorMaker
 
 MirrorMaker 2 is run by a shell script that is part of the Kafka download package.
 To install MirrorMaker 2 on the machine that you want to run the replication between the clusters:
 
-1. Download the latest [Kafka download package](https://kafka.apache.org/downloads).
-
-    For example:
+1. Download the latest [Kafka download package](https://kafka.apache.org/downloads). For example:
 
     ```bash
     curl -O https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
@@ -45,7 +43,7 @@ To install MirrorMaker 2 on the machine that you want to run the replication bet
     tar -xvf kafka_2.13-3.0.0.tgz
     ```
 
-## Create the MirrorMaker 2 config files
+## Create the MirrorMaker 2 configuration files
 
 MirrorMaker uses configuration files to get the connection details for the clusters.
 You can find the MirrorMaker script and configuration files in the expanded Kafka directory.
@@ -59,9 +57,9 @@ You can find the MirrorMaker script and configuration files in the expanded Kafk
         └── connect-mirror-maker.properties
 ```
 
-The sample configuration is a great place to understand a number of the settings for MirrorMaker.
+The sample configuration describes a number of the settings for MirrorMaker.
 
-To create a basic configuration file, go to the `config` and run this command:
+To create a basic configuration file, go to the `config` and run:
 
 ```bash
 cat << EOF > mm2.properties
@@ -93,36 +91,46 @@ With this command, MirrorMaker consumes all topics from the redpanda1 cluster an
 MirrorMaker adds the prefix `redpanda1` to the names of replicated topics.
 
 :::note
-MirrorMaker uses the `__consumer_offsets` topic to replicate consumer offsets between clusters. This is currently not supported in Redpanda, but you can follow the progress of this issue at: https://github.com/redpanda-data/redpanda/issues/1752
+- MirrorMaker uses the `__consumer_offsets` topic to replicate consumer offsets between clusters. This is not supported in Redpanda (you can follow the progress of this issue at: https://github.com/redpanda-data/redpanda/issues/1752).
 :::
+
+## Change topic replication factor
+
+The `replication.factor` property is a topic property set at topic creation. A replication factor of three generally provides a good balance between broker loss and replication overhead.
+
+You can increase or decrease the replication factor on an existing topic. For example, if topics were initially created in a test environment with a replication factor of `1` (no replication), to change the topic replication factor to `3`, run: 
+
+```
+rpk topic alter-config [TOPICS...] --set replication.factor 3
+```
 
 ## See migration in action
 
 Here are the basic commands to produce and consume streams:
 
-1. Create a topic in the source cluster. We'll call it "twitch_chat":
+1. Create a topic in the source cluster called "twitch_chat":
 
     ```bash
     rpk topic create twitch_chat --brokers <node IP>:<kafka API port>
     ```
 
-1. Produce messages to the topic:
+2. Produce messages to the topic:
 
     ```bash
     rpk topic produce twitch_chat --brokers <node IP>:<kafka API port>
     ```
 
-    Type text into the topic and press Ctrl + D to seperate between messages.
+    Enter text into the topic and click Ctrl + D to separate between messages.
 
     Press Ctrl + C to exit the produce command.
 
-1. Consume (or read) the messages from the destination cluster:
+3. Consume (read) the messages from the destination cluster:
 
     ```bash
     rpk topic consume twitch_chat --brokers <node IP>:<kafka API port>
     ```
     
-    Each message is shown with its metadata, like this:
+    Each message is shown with its metadata like the following:
     
     ```json
     {
@@ -137,8 +145,8 @@ Now you know the replication is working!
 
 ## Stop MirrorMaker
 
-To stop the MirrorMaker process, use `top` to find its process ID and then run: `kill <MirrorMaker pid>`
+To stop the MirrorMaker process, use `top` to find its process ID, and then run `kill <MirrorMaker pid>`.
 
 ## Troubleshooting
 
-If you run into any difficulty with data migration, contact us in our [Slack](https://vectorized.io/slack) community so we can help you succeed.
+If you run into any difficulty with data migration, you can request help in the Redpanda [Slack](https://vectorized.io/slack) community.
