@@ -202,6 +202,7 @@ module.exports = {
         "development/guide-nodejs",
         "development/consumer-offsets",
         "development/idempotent-producers",
+        "development/transactions",
         "development/http-proxy",
       ],
     },
