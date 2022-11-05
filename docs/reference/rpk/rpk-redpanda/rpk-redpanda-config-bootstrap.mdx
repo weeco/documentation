@@ -9,77 +9,22 @@ title: rpk redpanda config bootstrap
 
 Initialize the configuration to bootstrap a cluster.
 
-`--id` is mandatory. bootstrap will expect the machine it's running on
-to have only one private non-loopback IP address associated to it,
-and use it in the configuration as the node's address.
-
-If it has multiple IPs, `--self` must be specified.
-In that case, the given IP will be used without checking whether it's
-among the machine's addresses or not.
-
-The elements in `--ips` must be separated by a comma, no spaces.
-
-If omitted, the node will be configured as a root node, that other
-ones can join later.
+This command expects the machine it's running on to have only one private non-loopback IP address associated to it. It uses that in the configuration as the node's address.
 
 ### Usage
 
 ```
-rpk redpanda config bootstrap --id <id> [--self &lt;ip&gt;] [--ips <ip1,ip2,...>] [flags]
+rpk redpanda config bootstrap [--self] [--ips <ip1,ip2,...>] [flags]
 ```
 
 ### Flags
 
-<table>
-  <tbody>
-    <tr>
-      <td>
-        <strong> Value</strong>
-      </td>
-      <td>
-        <strong> Type</strong>
-      </td>
-      <td>
-        <strong> Description</strong>
-      </td>
-    </tr>
-    <tr>
-      <td>--config</td>
-      <td>string</td>
-      <td>
-        Redpanda config file, if not set the file will be searched for in the
-        default location.
-      </td>
-    </tr>
-    <tr>
-      <td>-h, --help</td>
-      <td>-</td>
-      <td> Help for bootstrap.</td>
-    </tr>
-    <tr>
-      <td>--id</td>
-      <td>int</td>
-      <td> This node's ID (required). (default -1).</td>
-    </tr>
-    <tr>
-      <td>--ips</td>
-      <td>strings</td>
-      <td> The list of known node addresses or hostnames.</td>
-    </tr>
-    <tr>
-      <td>--self</td>
-      <td>string</td>
-      <td>
-        Hint at this node's IP address from within the list passed in{" "}
-        <code>--ips</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>-v, --verbose</td>
-      <td>-</td>
-      <td>
-        Enable verbose logging (default <code>false</code>).
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+| Value | Type | Description |
+| ---               | ---            |  ---                          |
+| --config          | string         |   Redpanda configuration file. If not set, the file is searched for in the default location.|
+| h, --help         | -              |  Help for bootstrap.                          |
+| --id              | int            |  Sets the node ID in `redpanda.yaml`. If not set, Redpanda assigns one automatically.   |
+| --ips             | string         |  Comma-separated list of known node addresses or hostnames.      |
+| --self            | string         |  Hint at this node's IP address from within the list passed in <code>--ips</code>.<br/><br/>If the cluster has multiple IPs, <code>--self</code> must be specified. In that case, the given IP is used without checking whether it's among the machine's addresses or not.  |
+| -v, --verbose     | -              |  Enable verbose logging (default <code>false</code>).                          |

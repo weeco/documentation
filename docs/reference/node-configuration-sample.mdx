@@ -27,8 +27,13 @@ redpanda:
   data_directory: "var/lib/redpanda/data"
     
   # Unique ID identifying the node in the cluster.
-  # Required.
+  # Optional.
   node_id: 1
+
+  # Controls how a new cluster is formed. This property must have the same value 
+  # in all nodes in a cluster.
+  # Optional.
+  empty_seed_starts_cluster: false
       
   # Enable the admin API.
   # Default: true
@@ -127,7 +132,7 @@ redpanda:
     name: external
     port: 9093
   
-  # List of the seed server IP addresses and ports used to join current cluster.
+  # List of the seed server addresses and ports used to join current cluster.
   # If the seed_server list is empty the node will be a cluster root and it will form a new cluster.
   # Default: []
   seed_servers:

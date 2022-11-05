@@ -9,7 +9,7 @@ title: 60-Second Guide for Docker
 
 You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This 60-Second Guide helps you get started with Redpanda for development and testing. 
 
-For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
+See also: [Deploying for Production](../../deployment/production-deployment).
 
 ## Get your cluster ready
 
@@ -28,10 +28,11 @@ docker run -d --pull=always --name=redpanda-1 --rm \
 docker.redpanda.com/vectorized/redpanda:latest \
 redpanda start \
 --overprovisioned \
+--seeds "redpanda-1:33145" \
+--set redpanda.empty_seed_starts_cluster=false \
 --smp 1  \
 --memory 1G \
 --reserve-memory 0M \
---node-id 0 \
 --check=false
 ```
 
@@ -80,7 +81,8 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
---node-id 0 \
+--set redpanda.empty_seed_starts_cluster=false
+--seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082 \
 --advertise-pandaproxy-addr INSIDE://redpanda-1:28082,OUTSIDE://localhost:8082 \
@@ -102,7 +104,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
---node-id 1 \
+--set redpanda.empty_seed_starts_cluster=false
 --seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28083,OUTSIDE://0.0.0.0:8083 \
@@ -125,7 +127,6 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
---node-id 2 \
 --seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28084,OUTSIDE://0.0.0.0:8084 \
@@ -180,8 +181,8 @@ services:
     - --reserve-memory
     - 0M
     - --overprovisioned
-    - --node-id
-    - '0'
+    - --set redpanda.empty_seed_starts_cluster=false
+    - --seeds "redpanda-1:33145"
     - --kafka-addr
     - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
     - --advertise-kafka-addr
@@ -224,7 +225,7 @@ docker exec -it redpanda-1 \
 rpk topic produce twitch_chat --brokers=localhost:9092
 ```
 
-Type text into the topic, and click Ctrl + D to separate between messages.  
+Enter text into the topic, and click Ctrl + D to separate between messages.  
 
 Click Ctrl + C to exit the produce command.
 
