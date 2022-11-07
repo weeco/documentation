@@ -15,6 +15,9 @@ If you would like to integrate an OpenID Connect (OIDC) compatible identity prov
 you can configure the generic OIDC provider. To do so, you first have to create an OAuth application in your identity provider
 and then provide this application's credentials in the configuration:
 
+- **Application type:** Web application
+- **Authorized redirect URI:** `https://console.yourcompany.com/login/callbacks/oidc`
+
 ```yaml
 login:
   enabled: true
@@ -52,9 +55,13 @@ login:
     userIdentifyingClaimKey: "sub"
 ```
 
+:::note
+The `userIdentifyingClaimKey` can only be used for claims that have a string value. You cannot use it for the `groups` claim in AzureAD, for example, because the claim value is a string array.
+:::
+
 ## Define role-bindings
 
-When you have setup the OIDC login configuration, you can now bind users to roles. Below you can find a sample
+After you set up the OIDC login configuration, you can bind users to roles. Below is a sample
 role binding:
 
 ```yaml
@@ -62,6 +69,8 @@ roleBindings:
   - metadata:
       name: Developers
     subjects:
+        # Kind must always be set to `user` for the OIDC provider, as the claims always belong to 
+        # an individual user.  This is also true if you match a claim against a group.
       - kind: user
         provider: OIDC
         # Name must match the value of your configured claim key
