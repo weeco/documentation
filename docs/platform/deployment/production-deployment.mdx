@@ -119,7 +119,7 @@ A Redpanda cluster starts with the seed nodes that are specified in the `--ips` 
 - It's possible to change the seed nodes for a short period of time after a cluster has been created. For example, you may want to designate one additional node as a seed node to increase availability. To do this without cluster downtime, add the new node to [`seed_servers`](../../reference/node-properties/) and restart Redpanda to apply the change on a node-by-node basis.
 :::
 
-If clients will connect from a different subnet, see [Configuring Listeners](/docs/cluster-administration/listener-configuration).
+If clients will connect from a different subnet, see [Configuring Listeners](../../cluster-administration/listener-configuration).
 
 ## Configure and start other nodes
 

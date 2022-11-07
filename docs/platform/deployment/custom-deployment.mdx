@@ -66,7 +66,6 @@ set up authentication using cluster configuration.
 The Admin API is used to create SASL user accounts and ACLs, so it's
 important to think about how you secure it when creating a cluster.
 
-There are three ways to authenticate the Admin API:
 - No authentication, but listening only on 127.0.0.1: This may be appropriate
   if your Redpanda processes are running in an environment where only
   administrators can access the host.
@@ -78,36 +77,38 @@ There are three ways to authenticate the Admin API:
   authentication. You probably still want to enable TLS on the Admin API
   endpoint to protect credentials in flight.
 
-## Configure seed_servers list
+## Configure the seed servers
 
-The `seed_servers` node configuration property controls how Redpanda
-finds its peers when initially forming a cluster. Redpanda clusters form with these guidelines:
-- When a node starts with an empty `seed_servers` list, it creates a single
-  node cluster with itself as the only member.
-- When a node starts with a non-empty `seed_servers` list, it sends requests
-  to the nodes in that list to join the cluster.
+Seed servers help new nodes join a cluster by directing requests from newly-started nodes to an existing cluster. The `seed_servers` node configuration property controls how Redpanda finds its peers when initially forming a cluster. It is dependent on the `empty_seed_starts_cluster` node configuration property.
 
-Therefore, it's essential that only one node has an empty `seed_servers`
-list.
+Starting in Redpanda version 22.3, you should explicitly set `empty_seed_starts_cluster` to `false` on every node, and every node in the cluster should have the same value set for `seed_servers`. With this set of configurations, Redpanda clusters form with these guidelines:
+
+- When a node starts and it is a seed server (its address is in the `seed_servers` list), it waits for all other seed servers to start up, and it forms a cluster with all seed servers as members.
+- When a node starts and it is not a seed server, it sends requests to the seed servers to join the cluster. 
+ 
+It is essential that all seed servers have identical values for the `seed_servers` list. Redpanda strongly recommends at least three seed nodes when forming a cluster. Each seed server decreases the likelihood of unintentionally forming a split brain cluster. To ensure nodes can always discover the cluster, at least one seed node should be available at all times.
+
+By default, for backward compatibility, `empty_seed_starts_cluster` is set to `true`, and Redpanda clusters form with the guidelines used prior to version 22.3:
+- When a node starts with an empty `seed_servers` list, it creates a single node cluster with itself as the only member.
+- When a node starts with a non-empty `seed_servers` list, it sends requests to the nodes in that list to join the cluster. 
+ 
+You should never have more than one node with an empty `seed_servers` list, which would result in the creation of multiple clusters.
 
 :::important
 Redpanda expects its storage to be persistent, and it's an error
 to erase a node's drive and restart it. However, in some environments (like when migrating to a different node pool on Kubernetes), truly persistent storage is unavailable,
-and nodes may find their data volumes erased. In this situation, the node should not have an empty `seed_servers`
-list. If it does, then when it starts with an
-empty data volume, it tries to initialize a new Redpanda cluster and write
-new content to its controller log unrelated to the previous state of the cluster. This
-can result in undefined behavior when the node later rejoins its peers and tries to
-reconcile its local controller log with the controller log from peers.
+and nodes may find their data volumes erased. For such environments, Redpanda recommends setting `empty_seed_starts_cluster` to false and designating a set of seed nodes such that they couldn't lose their storage simultaneously.
 :::
 
-## Use new node ID
+## Configure node IDs 
 
-Redpanda recommends using a fresh `node_id` each time you add a node
-to the cluster.
+Redpanda automatically generates unique node IDs for each new node. This means that you don't need to include node IDs in configuration files or worry about policies on `node_id` re-use. 
 
-In general, it is not safe to reuse a node ID (for example, when adding a new node after
-decommissioning the node with that node ID). While it's convenient to have low, consecutive node IDs, it's not necessary. Node IDs can take any value in the 32-bit space.
+If you choose to assign node IDs, make sure to use a fresh `node_id` each time you add a node to the cluster.
+
+:::caution
+Never reuse node IDs, even for nodes that have been decommissioned and restarted empty. Doing so can result in an inconsistent state.
+:::
 
 ## Upgrade considerations
 
@@ -117,4 +118,3 @@ Rolling restarts preserve high availability and reduce
 risk during upgrades. Check the cluster's health after upgrading each node. Rolling
 back an upgrade to an earlier feature release is only supported until the last node
 has been updated, so it's important to identify any issues before that point.
-pro
