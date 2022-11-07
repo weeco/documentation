@@ -40,7 +40,15 @@ login:
     # and the `issuer` returned in the response has to match this issuer url.
     issuerUrl: ""
 
-    # DisplayName is the name that shall be shown on the login page for this identity provider
+    # IssuerTLS is the TLS configuration used by the HTTP client to send requests
+	  # to the IssuerURL. If you don't set any certificate paths, the IssuerTLS defaults to 
+    # the system cert pool.
+    issuerTls:
+      caFilepath:
+      certFilepath:
+      keyFilepath:
+
+    # DisplayName is the name that will be shown on the login page for this identity provider
     displayName: ""
 
     # UserIdentifyingClaimKey is a relevant property if you want to use a specific claim key

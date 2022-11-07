@@ -278,7 +278,17 @@ login:
     enabled: false
     clientId: redacted
     clientSecret: redacted
-    domain: example-endpoint.us.auth0.com # OIDC endpoint
+    # IssuerUrl is the identity provider's URL; for example, https://accounts.google.com.
+    # Redpanda Console will send a GET request to `${issuerUrl}/.well-known/openid-configuration` 
+    # and the `issuer` returned in the response has to match this issuer url.
+    issuerUrl: https://login.microsoftonline.com/your-uuid/v2.0
+    # IssuerTLS is the TLS configuration used by the HTTP client to send requests
+	  # to the IssuerURL. If you don't set any certificate paths, the IssuerTLS defaults to 
+    # the system cert pool.
+    issuerTls:
+      caFilepath:
+      certFilepath:
+      keyFilepath:
     userIdentifyingClaimKey: sub
   github:
     enabled: false
