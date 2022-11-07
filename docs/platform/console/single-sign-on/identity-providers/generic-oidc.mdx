@@ -56,8 +56,7 @@ login:
 ```
 
 :::note
-The `userIdentifyingClaimKey` can only be used for claims that have a string value. For example it is
-not possible to match on the `groups` claim in AzureAD because the claim value is a string array.
+The `userIdentifyingClaimKey` can only be used for claims that have a string value. You cannot use it for the `groups` claim in AzureAD, for example, because the claim value is a string array.
 :::
 
 ## Define role-bindings
