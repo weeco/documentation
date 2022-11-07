@@ -596,6 +596,7 @@ module.exports = {
                   items: [
                     "platform/reference/rpk/rpk-redpanda/rpk-redpanda-config",
                     "platform/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap",
+                    "platform/reference/rpk/rpk-redpanda/rpk-redpanda-config-init",
                     "platform/reference/rpk/rpk-redpanda/rpk-redpanda-config-set",
                   ],
                 },
