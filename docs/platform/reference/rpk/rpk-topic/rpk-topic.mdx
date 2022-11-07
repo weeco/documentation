@@ -132,6 +132,11 @@ The percent encodings are represented like this:
 <tr>
 <td><code>%%</code></td>
 
+<td>Record attributes (formatting described below).</td>
+</tr>
+<tr>
+<td><code>%a</code></td>
+
 <td>Percent sign</td>
 </tr>
 <tr>
@@ -139,11 +144,11 @@ The percent encodings are represented like this:
 <td>Left brace.</td>
 </tr>
 <tr>
-<td>%}</td>
+<td><code>%}</code></td>
 <td>Right brace.</td>
 </tr>
 <tr>
-<td>%i</td>
+<td><code>%i</code></td>
 <td>The number of records formatted.</td>
 </tr>
 </tbody>
@@ -257,8 +262,11 @@ Formatting number values can have the following modifiers:
         <code>byte</code>
       </td>
       <td>One byte number.</td>
-    </tr>
-  </tbody>
+    </tr><tr>
+<td><code>bool</code></td>
+<td><code>true</code> if the number is non-zero, <code>false</code> if the number is zero</td>
+</tr>
+</tbody>
 </table>
 
 All numbers are truncated as necessary per the modifier. Printing `%V{byte}` for
@@ -301,6 +309,52 @@ be found at [Go's time documentation website](https://pkg.go.dev/time).
 Further details on `strftime`
 formatting can be read by running `man strftime`.
 
+## Attributes
+
+Each record (or batch of records) has a set of possible attributes. Internally,
+these are packed into bit flags. Printing an attribute requires first selecting
+which attribute you want to print, and then optionally specifying how you want
+it to be printed:
+
+```bash
+  %a{compression}
+  %a{compression;number}
+  %a{compression;big64}
+  %a{compression;hex8}
+```
+
+Compression is by default printed as text (`none`, `gzip`, ...). Compression
+can be printed as a number with `;number`, where number is any number
+formatting option described above. No compression is `0`, gzip is `1`, etc.
+
+```bash
+  %a{timestamp-type}
+  %a{timestamp-type;big64}
+```
+
+The record's timestamp type is printed as:
+*  `-1` for very old records (before timestamps existed)
+*  `0` for client generated timestamps
+*  `1` for broker generated timestamps. 
+
+:::note
+Number formatting can be controlled with `;number`.
+:::
+
+```bash
+%a{transactional-bit}
+%a{transactional-bit;bool}
+```
+
+Prints `1` if the record a part of a transaction or `0` if it is not.
+
+```bash
+  %a{control-bit}
+  %a{control-bit;bool}
+```
+
+Prints `1` if the record is a commit marker or `0` if it is not.
+
 ### Text
 
 Text fields without modifiers default to writing the raw bytes. Alternatively,
@@ -326,6 +380,12 @@ there are the following modifiers:
     </tr>
     <tr>
       <td>
+        <code>%k&#123;base64raw}</code>
+      </td>
+      <td>Base64 encoding raw</td>
+    </tr>
+    <tr>
+      <td>
         <code>%v&#123;unpack[&lt;bBhH&gt;iIqQc.$]}</code>
       </td>
       <td>
@@ -336,10 +396,10 @@ there are the following modifiers:
   </tbody>
 </table>
 
-The hex modifier hex encodes the text, and the base64 modifier base64 encodes
-the text with standard encoding. The unpack modifier has a further internal
+The hex modifier hex encodes the text, the `base64` modifier base64 encodes the
+text with standard encoding, and the `base64raw` modifier encodes the text with
+raw standard encoding. The unpack modifier has a further internal
 specification, similar to timestamps above:
-
 <table>
   <tbody>
     <tr>
