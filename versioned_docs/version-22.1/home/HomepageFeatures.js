@@ -11,7 +11,7 @@ const FeatureList = [
         Try out Redpanda.
       </>
     ),
-    url: '/docs/quickstart/',
+    url: '/docs/core/quickstart/',
   },
   {
     title: 'Deploying for Production',
@@ -21,7 +21,7 @@ const FeatureList = [
         Install and configure Redpanda.
       </>
     ),
-    url: '/docs/deployment/production-deployment',
+    url: '/docs/core/deployment/production-deployment',
   },
   {
     title: 'Redpanda Console',
@@ -31,7 +31,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/console/installation',
+    url: '/docs/core/console/installation',
   },
   {
     title: 'rpk Command Reference',
@@ -51,7 +51,7 @@ const FeatureList = [
         Save storage costs by offloading log segments to the cloud.
       </>
     ),
-    url: '/docs/data-management/tiered-storage',
+    url: '/docs/platform/data-management/tiered-storage',
   },
   {
     title: 'Sizing Guidelines',
@@ -77,16 +77,16 @@ function Feature({image, title, description, url}) {
           </div>
         <div className="text--left padding-horiz--md">
           <a href={url}>
-          <span className={styles.body_title}>{title}</span> 
-          </a> 
+          <span className={styles.body_title}>{title}</span>
+          </a>
           <div className={styles.body_text}>
             <p>{description}</p>
-            
+
           </div>
           <div className={styles.learn}>
               <a href={url}><p>Learn more -> </p></a>
             </div>
-          
+
         </div>
       </div>
     </div>

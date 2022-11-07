@@ -1,26 +1,23 @@
 /* stylelint-disable docusaurus/copyright-header */
 
 .features {
+    padding: 2rem 0;
     display: flex;
     align-items: center;
-    padding: 2rem 0;
-    width: 100%;
+    justify-content: center;
   }
   
   .featureSvg {
-    height: auto;
-    width: auto;
+    height: 250px;
+    width: 250px;
     padding-top: 25px;
     padding-left: 15px;
     padding-right: 15px;
   }
 
-.border{
-  border: 1px solid #dadce0;
-  border-radius: 8px;
-  height: 350px;
-  padding-bottom: 20px;
-}
+  .border:hover {
+    background-color: var(--v-gray4);
+  }
 
 .body_text{
   font-size: 14px;
@@ -41,13 +38,21 @@
 }
 
 .body_title{
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 510;
   letter-spacing: 0;
   line-height: 26px;
-  margin: 0;
+  padding-right: 10px;
   
 }
+
 .padding{
-  padding-bottom: 20px;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+}
+
+border:hover{
+  color: green;
+  background-color: green;
 }

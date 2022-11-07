@@ -17,7 +17,7 @@ Tiered Storage is available for Redpanda 21.11.3 and later.
 
 The image below illustrates the Tiered Storage architecture. Remote write uploads data from Redpanda to cloud storage. Remote read fetches data from cloud storage to Redpanda. 
 
-![Tiered Storage architecture](../images/tiered_storage_arch.png)
+![Tiered Storage architecture](../../../static/img/tiered_storage_arch.png)
 
 ## Setting up
 
@@ -49,8 +49,8 @@ Complete the following tasks to create a cloud storage bucket and configure Redp
 
 1. Choose a uniform access control when you create the bucket. 
 2. Use a Google managed encryption key. 
-3. Set a [default project](https://cloud.google.com/storage/docs/migrating#defaultproj). 
-4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` parameters in the `redpanda.yaml` file.
+3. Set a [default project](https://cloud.google.com/storage/docs/core/migrating#defaultproj). 
+4. Create a service user with [HMAC keys](https://cloud.google.com/storage/docs/core/authentication/managing-hmackeys) and copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` parameters in the `redpanda.yaml` file.
 5. The sections below give detailed information on all of the cloud storage configuration options, but the parameters listed here are the minimum required parameters to use Tiered Storage for Google Cloud Storage:
 
 ```
