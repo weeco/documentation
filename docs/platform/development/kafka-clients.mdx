@@ -36,7 +36,7 @@ Redpanda does not support the following Apache Kafka capabilities:
 * Explicit partition assignments and altering partition assignments (with Kafka API)
 * Transactions (available in [Technical Preview](../../labs/install-preview), but not supported for production use)
 * Managing SASL users with Kafka APIs: DescribeUserSCRAMCredentialsRequest and AlterUserSCRAMCredentialsRequest APIs
-* Pandaproxy. Unlike other REST Proxy implementations in the Kafka Ecosystem, the Redpanda Pandaproxy does not support topic and ACLs CRUD through the HTTP proxy. Pandaproxy is designed for clients producing and consuming data, and that do not perform administrative functions.
+* HTTP Proxy (pandaproxy): Unlike other REST proxy implementations in the Kafka ecosystem, Redpanda HTTP Proxy does not support topic and ACLs CRUD through the HTTP Proxy. HTTP Proxy is designed for clients producing and consuming data that do not perform administrative functions.
 * Client quotas for bandwidth and request rate
 * Follower fetching
 * Record deletion

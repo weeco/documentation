@@ -8,8 +8,8 @@ title: Data Transforms
 </head>
 
 :::caution
-Lab features are not supported for production deployments. 
-- Redpanda recommends not using Data Transforms with Tiered Storage. 
+Lab features are not supported for production deployments.
+- Redpanda recommends not using Data Transforms with Tiered Storage.
 - Data Transforms are not supported in Redpanda Cloud.
 :::
 
@@ -31,7 +31,7 @@ Make sure you have the following prerequisites before you configure data transfo
 - Redpanda version v21.12.1-wasm-beta1 or later.
 - Node.js version 12 or later installed on the machine where you want to run the transform bundle.
 - A JavaScript script that transforms the data.
-- Source topics that you want to consume from. The destination topics can be generated on demand when your transformation runs. 
+- Source topics that you want to consume from. The destination topics can be generated on demand when your transformation runs.
 
 ## Set up
 
@@ -130,7 +130,7 @@ Save `redpanda.yaml`.
 
 ### Start the Wasm engine
 
-After the configuration is complete, start the Wasm engine. 
+After the configuration is complete, start the Wasm engine.
 
 To start the Wasm engine, run:
 
@@ -287,7 +287,7 @@ transform.subscribe[[<topic1>,<policyA>],[<topic2>,<policyB>]]
 ```
 
 :::note
-Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic doesn't exist when the transformation is deployed, you might encounter a deployment error. 
+Run `rpk create test-topic` to create the source topics before you deploy the transformation. If the topic doesn't exist when the transformation is deployed, you might encounter a deployment error.
 :::
 
 The `PolicyInjection` parameter can have the following values:  
@@ -349,7 +349,7 @@ transform.processRecord((recordBatch) => {
 exports["default"] = transform;
 ```
 
-You can change the `result-topic` to any topic name. 
+You can change the `result-topic` to any topic name.
 
 To produce onto more than one destination topic, add another line in the following format:
 
@@ -398,7 +398,7 @@ If you run different types of transformations on different topics, it's advantag
 
 ## After you run the transform
 
-After you run the transform, you can verify and clean your transform in Redpanda. 
+After you run the transform, you can verify and clean your transform in Redpanda.
 
 ### Verify the transform
 
@@ -443,7 +443,7 @@ See also [rpk Commands](../../reference/rpk).
 
 ### Produce directly into the coprocessor
 
-There's a global control topic for each Redpanda cluster with the name `coprocessor_internal_topic`. This allows support for any Kafka client, so you're not required to use rpk. If someone publishes to the topic, it invokes a deployer implicitly. However, you must publish with the correct headers and format. 
+There's a global control topic for each Redpanda cluster with the name `coprocessor_internal_topic`. This allows support for any Kafka client, so you're not required to use rpk. If someone publishes to the topic, it invokes a deployer implicitly. However, you must publish with the correct headers and format.
 
 ### Source code
 

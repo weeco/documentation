@@ -9,7 +9,7 @@ title: Cluster Balancing
 
 When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the node with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when nodes are added or decommissioned. 
 
-With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor node availability and disk usage. This enables self-healing clusters that dynamically balance partitions. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).
+With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor node and rack availability and disk usage. This enables self-healing clusters that dynamically balance partitions. It also continuously maintains adherence to rack-aware replica placement policy and self heals after rack (or availability zone) failure or replacement. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).
 
 Cluster balancing protects you from unbalanced systems that saturate resources on one or more nodes. This can affect throughput and latency. Furthermore, a cluster with replicas on a down node risks availability loss if more nodes fail, and a cluster that keeps losing nodes without healing eventually risks data loss.
 
@@ -35,5 +35,5 @@ Select your partition balancing setting with the `partition_autobalancing_mode` 
 | Setting      | Description |
 | ----------- | ----------- |
 | `node_add`      | Partition balancing happens when nodes are added.  <br /><br />This is the default setting.|
-| `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).<br /><br />This option requires an Enterprise license.         |
+| `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. It also monitors rack availability after failures, and for a given partition, it tries to move excess replicas from racks that have more than one replica to racks where there are none. See [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing).<br /><br />This option requires an Enterprise license.         |
 | `off`     | All partition balancing from Redpanda is turned off. <br /><br />This option is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |

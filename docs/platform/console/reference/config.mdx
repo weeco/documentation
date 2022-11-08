@@ -57,7 +57,7 @@ kafka:
   # Client ID that the Kafka client can use to identify itself 
   # against the target Kafka cluster.
   clientId: console
-  # In multi-zone Kafka clusters, you can reduce traffic costs 
+  # In multi-zone Kafka clusters, you can reduce traffic costs
   # by consuming messages from replica brokers in the same zone
   rackId:
   # SASL configuration for Console to connect to the Kafka API.
@@ -78,7 +78,7 @@ kafka:
       # principals and encrypted password keys. AuthType must be set to
       # KEYTAB_AUTH to load the keytab file.
       keyTabPath:
-      # Path to the krb5.conf file that contains Kerberos configuration 
+      # Path to the krb5.conf file that contains Kerberos configuration
       # information, such as the locations of KDCs.
       kerberosConfigPath:
       serviceName:
@@ -102,7 +102,7 @@ kafka:
   tls:
     # If you connect to a Cluster that uses commonly trusted 
     # certificates, enable TLS and do not provide a certificate 
-    # authority in the caFilepath. In this case, 
+    # authority in the caFilepath. In this case,
     # the system's cert pool is used.
     enabled: false
     caFilepath:
@@ -117,7 +117,7 @@ kafka:
     urls: [] 
     # Basic auth username
     username: 
-    # Basic auth password. This can also be set using the --schema.registry.password 
+    # Basic auth password. This can also be set using the --schema.registry.password
     # flag
     password: 
     # Can also be set using the --schema.registry.token flag
@@ -125,7 +125,7 @@ kafka:
     tls:
       # If you connect to a schema registry that uses commonly trusted 
       # certificates, enable TLS and do not provide a certificate 
-      # authority in the caFilepath. In this case, 
+      # authority in the caFilepath. In this case,
       # the system's cert pool is used.
       enabled: false 
       caFilepath: 
@@ -148,7 +148,7 @@ kafka:
     schemaRegistry:
       enabled: false
       refreshInterval: 5m
-    # Configure the fileSystem if you want Redpanda Console to 
+    # Configure the fileSystem if you want Redpanda Console to
     # search the local file system for the .proto files
     fileSystem:
       enabled: false
@@ -160,11 +160,11 @@ kafka:
       repository:
         url:
         branch: (defaults to primary/default branch)
-      # How often Redpanda Console pulls the repository to look for new files. 
+      # How often Redpanda Console pulls the repository to look for new files.
       # Set to 0 to disable periodic pulls
       refreshInterval: 1m
       # Basic Auth
-      # To use GitHub's personal access tokens, use `token` 
+      # To use GitHub's personal access tokens, use `token`
       # as username and pass the token as password
       basicAuth:
         enabled: true
@@ -186,7 +186,7 @@ kafka:
 
 connect:
   enabled: false
-  # The default for clusters is an empty array. To start Redpanda Console, 
+  # The default for clusters is an empty array. To start Redpanda Console,
   # specify at least one cluster as soon as you enable Kafka connect.
   clusters: []
     - name: xy
@@ -209,8 +209,8 @@ console:
   # Configuration to use for embedded topic documentation
   topicDocumentation:
     enabled: false
-    # Configure the git repository that contains the topic documentation. 
-    # Redpanda Console clones the git repository and periodically pulls for new 
+    # Configure the git repository that contains the topic documentation.
+    # Redpanda Console clones the git repository and periodically pulls for new
     # changes so it can render the markdown files within the topic view.
     git:
       enabled: false
@@ -221,7 +221,7 @@ console:
       # How often Console pulls the repository to look for new files.
       # Set to 0 to disable periodic pulls.
       refreshInterval: 1m
-      # To use GitHub's personal access tokens, use `token` 
+      # To use GitHub's personal access tokens, use `token`
       # for the username and pass the token as password.
       basicAuth:
         enabled: true
@@ -252,7 +252,7 @@ redpanda:
       insecureSkipTlsVerify:
 
 # Filepath to your redpanda.license file
-# This is only required if you want to use an Enterprise feature 
+# This is only required if you want to use an Enterprise feature
 # such as SSO or RBAC.
 licenseFilepath:
 
@@ -262,7 +262,7 @@ licenseFilepath:
 # This feature requires an Enterprise license.
 login:
   enabled: false
-  # jwtSecret is a secret string that signs and encrypts 
+  # jwtSecret is a secret string that signs and encrypts
   # the JSON Web tokens used by the backend for session management.
   jwtSecret: redacted
   google:
@@ -281,7 +281,17 @@ login:
     enabled: false
     clientId: redacted
     clientSecret: redacted
-    domain: example-endpoint.us.auth0.com # OIDC endpoint
+    # IssuerUrl is the identity provider's URL; for example, https://accounts.google.com.
+    # Redpanda Console will send a GET request to `${issuerUrl}/.well-known/openid-configuration`
+    # and the `issuer` returned in the response has to match this issuer url.
+    issuerUrl: https://login.microsoftonline.com/your-uuid/v2.0
+    # IssuerTLS is the TLS configuration used by the HTTP client to send requests
+	  # to the IssuerURL. If you don't set any certificate paths, the IssuerTLS defaults to
+    # the system cert pool.
+    issuerTls:
+      caFilepath:
+      certFilepath:
+      keyFilepath:
     userIdentifyingClaimKey: sub
   github:
     enabled: false
@@ -295,7 +305,7 @@ login:
     enabled: false
     clientId: redacted
     clientSecret: redacted
-    # The directory configuration is only required if you 
+    # The directory configuration is only required if you
     # use Okta groups in your RBAC role bindings.
     directory:
       apiToken: redacted
@@ -305,7 +315,7 @@ login:
 enterprise:
   rbac:
     # Whether or not RBAC is used. This must be enabled
-    # if login is enabled. By default, no authenticated user 
+    # if login is enabled. By default, no authenticated user
     # has any permissions.
     enabled: false
     # Path to YAML file that contains all role bindings
