@@ -20,8 +20,8 @@ This page uses the latest recommended Helm chart for installing Redpanda. For in
 
 Verify that you have the following software installed:
 
-* [kubectl](https://kubernetes.io/docs/tasks/tools/) - version 1.21 or later
-* [Helm](https://github.com/helm/helm/releases) - version 3.0.0 or later
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) - version 1.21 or later (the EKS route below requires Kubernetes version 1.22)
+* [Helm](https://helm.sh/docs/intro/install/) - version 3.6 or later (the EKS route below requires the [latest 3.8 version](https://github.com/helm/helm/releases/tag/v3.8.2))
 * [Go](https://go.dev/doc/install) - v1.17 or later (only required for Windows setup)
 
 ## Create a Kubernetes cluster
@@ -70,7 +70,13 @@ kubectl taint node \
   </TabItem>
   <TabItem value="eks" label="Amazon EKS">
 
-Create an Elastic Kubernetes Service (EKS) cluster:
+> There are two additional CLIs needed for creating a Kubernetes cluster in AWS:
+> 1. [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+> 2. [eksctl <= v0.114.0](https://github.com/weaveworks/eksctl/releases/tag/v0.114.0), more details on how to install [here](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+
+> You must ensure that appropriate IAM permissions are applied to the user who will be running the following commands. More details can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html).
+
+Create an Elastic Kubernetes Service (EKS) cluster. The cluster will be created in your default region (see `~/.aws/config`):
 
 ```bash
 eksctl create cluster --name redpanda \
@@ -80,6 +86,14 @@ eksctl create cluster --name redpanda \
     --nodes-min 3 \
     --nodes-max 4
 ```
+
+Once the cluster is created, make sure your local kubeconfig is updated to point to this cluster:
+
+```bash
+aws eks update-kubeconfig --region us-east-2  --name redpanda
+```
+
+Replace the region `us-east-2` in the command above with your default region.
   </TabItem>
   <TabItem value="gke" label="Google GKE">
 
