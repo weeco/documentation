@@ -373,6 +373,19 @@ module.exports = {
             }, //acl
             {
               type: "category",
+              label: "rpk cloud",
+              link: {
+                type: "doc",
+                id: "platform/reference/rpk/rpk-cloud/rpk-cloud",
+              },
+              items: [
+                "platform/reference/rpk/rpk-cloud/rpk-cloud",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-login",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-logout"
+              ]
+            },
+            {
+              type: "category",
               label: "rpk cluster",
               link: {
                 type: "doc",
