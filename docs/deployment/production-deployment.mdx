@@ -111,7 +111,8 @@ every other one joins it, forming a cluster along the way.
 For the root node, choose 0 as its ID. The `--self` option tells the node which interface address to bind to. Usually you want that to be its private IP.
 
 ```bash
-sudo rpk config bootstrap --id 0 --self <ip> && \
+sudo rpk config bootstrap --self <private ip> --ips <seed nodes ips> && \
+sudo rpk config set redpanda.empty_seed_starts_cluster false && \ 
 sudo systemctl start redpanda-tuner redpanda
 ```
 
@@ -123,9 +124,8 @@ For every other node, you have to choose a unique integer ID for it, and let
 it know where to reach the root node.
 
 ```bash
-sudo rpk config bootstrap --id <unique id> \
---self <private ip>                        \
---ips <root node ip> &&                    \
+sudo rpk config bootstrap --self <private ip> --ips <seed nodes ips> && \
+sudo rpk config set redpanda.empty_seed_starts_cluster false && \ 
 sudo systemctl start redpanda-tuner redpanda
 ```
 
