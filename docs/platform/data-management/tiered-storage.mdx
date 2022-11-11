@@ -43,7 +43,7 @@ To create a cloud storage bucket and configure Redpanda:
 
 1. Specify the expiration rules for the files that are based on the `rp-type` file tags. 
 2. Use [IAM roles](../../security/iam-roles) to create a user who can access S3.
-3. Grant the user permission to read and create objects on the bucket to be used with the cluster (or on all buckets).
+3. Grant the user the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`.
 4. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 5. Edit the the following required properties with the `rpk cluster config edit` command:
 
