@@ -380,6 +380,9 @@ module.exports = {
               },
               items: [
                 "platform/reference/rpk/rpk-cloud/rpk-cloud",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc-install",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc-uninstall",
                 "platform/reference/rpk/rpk-cloud/rpk-cloud-login",
                 "platform/reference/rpk/rpk-cloud/rpk-cloud-logout"
               ]

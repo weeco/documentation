@@ -10,16 +10,15 @@ title: rpk plugin
 List, download, update, and remove `rpk` plugins.
 Plugins augment `rpk` with new commands.
 
-For a plugin to be used, it must be somewhere discoverable by `rpk` in your `$PATH`. All plugins follow a defined naming scheme:
+For a plugin to be used, it must be in `$HOME/.local/bin` or somewhere
+discoverable by `rpk` in your `$PATH`. All plugins follow a defined naming scheme:
 
-For example:
-
+```bash
+.rpk-|name|
+.rpk.ac-|name|
 ```
-rpk-&lt;name&gt;
-rpk.ac-&lt;name&gt;
-```
 
-All plugins are prefixed with either `.rpk-` or `.rpk.ac-`. When `rpk` starts up, it
+All plugins are prefixed with either `.rpk-` or `.rpk.ac-.` When `rpk` starts up, it
 searches all directories in your `$PATH` for any executable binary that begins
 with either of those prefixes. For any binary it finds, `rpk` adds a command for
 that name to the `rpk` command space itself.
@@ -33,7 +32,7 @@ The second will be ignored.
 Plugins that have an `.rpk.ac-` prefix indicate that they support the
 `--help-autocomplete` flag. If `rpk` sees this, `rpk` will exec the plugin with that
 flag when `rpk` starts up, and the plugin will return all commands it supports as
-well as short and long help test for each command. Rpk uses this return to
+well as short and long help test for each command. `rpk` uses this return to
 build a shadow command space within `rpk` itself so that it looks as if the
 plugin exists within `rpk`. This is particularly useful if you enable
 autocompletion.
@@ -54,9 +53,10 @@ Args []string `json:"args,omitempty"`
 where `path` is an underscore delimited argument path to a command. For
 example, `foo_bar_baz` corresponds to the command `rpk foo bar baz`.
 
+
 ### Usage
 
-```
+```bash
 rpk plugin [command]
 ```
 

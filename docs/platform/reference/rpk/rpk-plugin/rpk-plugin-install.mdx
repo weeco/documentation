@@ -9,15 +9,16 @@ title: rpk plugin install
 
 Install an `rpk` plugin.
 
-An `rpk` plugin must be saved in a directory that is in your `$PATH`. By default,
-this command installs plugins to the first directory in your `$PATH`. This can
-be overridden by specifying the `--bin-dir` flag.
+An `rpk` plugin must be saved in `$HOME/.local/bin` or in a directory that is in
+your `$PATH`. By default, this command installs plugins to `$HOME/.local/bin`. This
+can be overridden by specifying the `--dir` flag.
+
+If `--dir` is not present, `rpk` will create `$HOME/.local/bin` if it does not exist.
 
 ### Usage
 
-```
+```bash
 rpk plugin install [PLUGIN] [flags]
-
 ```
 
 ### Aliases
