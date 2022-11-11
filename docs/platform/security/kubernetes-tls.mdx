@@ -46,7 +46,7 @@ During install or upgrade, enable TLS configuration:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-  --set tls.enable=true --set external.domain=mydomain.dom
+  --set tls.enabled=true --set external.domain=mydomain.dom
 ```
 
   </TabItem>
@@ -58,7 +58,7 @@ Create a YAML file containing the values to override from the defaults.
 
 ```yaml
 tls:
-  enable: true
+  enabled: true
 external:
   domain: mydomain.dom
 ```
