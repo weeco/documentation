@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Patron, sans-serif;
-  --v-font-mono: 'Courier Prime', Courier, monospace;
+  --v-font: Inter, sans-serif;
+  --v-font-mono: Inter,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Patron, sans-serif;
+  --ifm-heading-font-family: Inter,Patron, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
