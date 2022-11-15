@@ -683,12 +683,7 @@ module.exports = {
                 "platform/reference/redpanda-operator/kubernetes-mtls",
               ],
             },
-
-            {
-              type: "link",
-              label: "Operator Custom Resource Definition (CRD)",
-              href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
-            },
+            "platform/reference/redpanda-operator/crd",
           ],
         },
         "platform/reference/internal-metrics",
