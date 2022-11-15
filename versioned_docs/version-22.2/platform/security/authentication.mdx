@@ -4,50 +4,54 @@ title: Configuring Authentication
 
 <head>
     <meta name="title" content="Configuring Authentication | Redpanda Docs"/>
-    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners."/>
+    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, basic authentication, and mTLS with principal mapping."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and mixed-mode with multiple listeners. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use. 
 
-See also: 
+Different components of Redpanda support different authentication methods. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure the `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use.
+
+See also:
 
 - [Configuring Listeners](../../cluster-administration/listener-configuration)
 - [Writing Custom Deployment Automation](../../deployment/custom-deployment)
 
 ## Enable authentication
 
-To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This user is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](../../cluster-administration/cluster-property-configuration).
+To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This superuser is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](../../cluster-administration/cluster-property-configuration).
 
 To update the `kafka_enable_authorization` property, run:
 
 ```bash
 rpk cluster config set kafka_enable_authorization true
 ```
-You can edit the superusers similarly. Redpanda recommends that you use the edit command to apply the new value:
+
+To specify a superuser, run:
+
+```bash
+rpk cluster config set superusers ['admin']
+```
+
+To edit a superuser, use the edit command to apply the new value:
 
 ```bash
 rpk cluster config edit
 ```
 
-To specify superusers using the `set` command, run:
-```bash
-rpk cluster config set superusers ['admin']
-```
-
 ### Create superusers
 
-When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](../../security/authorization#operations) on the cluster and grants permissions to new users. Without a superuser, you can create other users, but you can't grant them permissions to the cluster.
+When you configure authentication, you include one or more superusers in the Redpanda configuration file. This user has [ALL permissions](../../security/authorization#operations) on the cluster and grants permissions to new users.
+(Without a superuser, you can create other users, but you can't grant them permissions to the cluster.)
 
-You can specify the name of the superuser. For example, if you used superuser `admin`, Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run: 
+Specify the name of the superuser. This can be a new user or an existing user. For example, if you use the superuser named `admin`, then Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run:
 
 ```bash
-rpk acl user create <super_user_username> -p <super_user_password> 
+rpk acl user create <superuser_username> -p <superuser_password>
 ```
 
-You can specify another existing user or a user that does not exist yet. Adding the user name in the configuration file does not create the user, but when you create a user with the user name specified in the configuration file, that user has full access to the cluster. You can then use that superuser to grant permissions to other users. 
+Now the `admin` user has full access to the cluster and can grant permissions to other users.
 
 The Admin API defaults to `localhost:9644`. If you've configured the Admin API to use a different address/port, use the `--api-urls <address:port>` flag.
 
@@ -61,9 +65,11 @@ rpk acl user create admin \
 --api-urls localhost:9644
 ```
 
-For information about using `rpk` to manage ACL users, see [rpk acl](../../reference/rpk/rpk-acl/). 
+For information about using `rpk` to manage ACL users, see [rpk acl](../../reference/rpk/rpk-acl/).
 
-As a security best practice, you don't want to use the superuser to interact with the cluster, but you also don't want to delete the superuser (in case you need to grant permissions to new users later on). In addition, when you create the superuser, you specify a password for the user, which adds a level of security to the superuser. If you delete the user, someone else might re-create the user with a different password. 
+:::tip
+As a security best practice, don't use the superuser to interact with the cluster, and don't delete the superuser (in case you need to grant permissions to new users later). In addition, when you create the superuser, you specify a password, which adds a level of security. If you delete the user, someone else could re-create the user with a different password.
+:::
 
 ## SASL/SCRAM
 
@@ -73,7 +79,7 @@ Simple Authentication Security Layer (SASL) is an authentication framework that 
 SASL authentication is only available for the Kafka API.
 :::
 
-SASL provides authentication, but not encryption. You can, however, configure TLS to only handle encryption, and use SASL for authentication. This is useful if you require flexibility in the authorization mechanisms that you use.
+SASL provides authentication, but not encryption. You can, however, configure TLS to only handle encryption, and use SASL for authentication. This is useful if you require flexibility in your authorization mechanisms.
 
 SCRAM provides strong encryption for user names and passwords by default and does not require an external data store for user information. Redpanda supports the following SASL mechanisms: 
 
@@ -136,11 +142,11 @@ redpanda:
 // highlight-end
 ```
 
-### Configure SASL for HTTP Proxy and Schema Registry
+### Configure Schema Registry and HTTP Proxy to connect to Redpanda with SASL
 
-The HTTP Proxy and Schema Registry connect to Redpanda over the Kafka API, and must be configured with a username and password.
+Schema Registry and HTTP Proxy connect to Redpanda over the Kafka API, and must be configured with a username and password.
 
-For schema registry, the configuration node is `schema_registry_client`:
+The Schema Registry configuration node is `schema_registry_client`:
 
 ```yaml
 // highlight-start
@@ -220,11 +226,11 @@ message.timestamp.type  CreateTime  DEFAULT_CONFIG
 ...
 ```
 
-## Configure mTLS with authentication  
+## Configure mTLS with authentication
 
 For mTLS authentication, Redpanda uses configurable rules to extract the principal from the Distinguished Name (DN) of an mTLS (X.509) certificate. It uses the principal as the identity or user name.
 
-To enable mTLS authentication, set the `authentication_method` of the listener to `mtls_identity`. 
+To enable mTLS authentication, set `authentication_method` to `mtls_identity`.
 
 In `redpanda.yaml`, enter:
 
@@ -250,21 +256,23 @@ redpanda:
 // highlight-end
 ```
 
-By default, Redpanda matches the entire DN. To override the default, specify `kafka_mtls_principal_mapping_rules`. This is a list of rules that provide a mapping from DN to principal. Each rule has the following format: `RULE:pattern/replacement/[LU]`. Where:
- 
-*  `pattern` is a regular expression. For example, to extract the CN field: `.*CN=([^,]).*`   
-* `replace` is used to adjust the match. For example, to use just the first match, use: `$1`.     
-* `L` makes the match lowercase (optional)
-* `U` makes the match uppercase (optional)
+By default, Redpanda matches the entire DN. To override the default, specify `kafka_mtls_principal_mapping_rules`. This is a list of rules that provide a mapping from DN to principal.
 
-For example, assume a DN: `CN=www.redpanda.com,O=Redpanda,OU=Engineering,L=London,S=England,C=UK`
+Each rule has the following format: `RULE:pattern/replacement/[LU]`. Where:
+ 
+*  `pattern` is a regular expression. For example, to extract the CN field: `.*CN=([^,]+).*`.
+* `replace` is used to adjust the match. For example, to use just the first match, use: `$1`.     
+* `L` makes the match lowercase (optional).
+* `U` makes the match uppercase (optional).
+
+For example, with the DN: `CN=www.redpanda.com,O=Redpanda,OU=Engineering,L=London,S=England,C=UK`
 
 | Rule             | Principal   |
 | --------         | ------    |   
-| `RULE:.*CN=([^,]).*/$1/`        | `www.redpanda.com`    |
-| `RULE:.*O=([^,]).*/$1/`         | `Redpanda`    |
-| `RULE:.*O=([^,]).*/$1/L`        | `redpanda`    |
-| `RULE:.*O=([^,]),OU=([^,]),.*,C=([^,])/$1-$2-$3/L`         | `redpanda-engineering-uk`    |
+| `RULE:.*CN=([^,]+).*/$1/`        | `www.redpanda.com`    |
+| `RULE:.*O=([^,]+).*/$1/`         | `Redpanda`    |
+| `RULE:.*O=([^,]+).*/$1/L`        | `redpanda`    |
+| `RULE:.*O=([^,]+),OU=([^,]+),.*,C=([^,]+)/$1-$2-$3/L`         | `redpanda-engineering-uk`    |
 | `DEFAULT`        | `CN=www.redpanda.com,O=Redpanda,OU=Engineering,L=London,S=England,C=UK`    |
 
 The first rule that matches is used to extract a principal.
@@ -275,9 +283,9 @@ To update the `kafka_mtls_principal_mapping_rules` property, run:
 rpk cluster config set kafka_mtls_principal_mapping_rules '["DEFAULT"]'
 ```
 
-### Configure mTLS for HTTP Proxy and Schema Registry
+### Configure Schema Registry and HTTP Proxy to connect to Redpanda with mTLS
 
-The HTTP Proxy and Schema Registry require valid client certificates.
+Schema Registry and HTTP Proxy require valid client certificates to secure the connection to Redpanda. Continuing with the previous example, where the certificate contains an identity for authentication (`kafka_api` listener set to `mtls_identity`), the following example shows how to connect Schema Registry and HTTP Proxy to Redpanda with mTLS certificate-based identity.
 
 In `redpanda.yaml`, enter:
 
@@ -308,4 +316,33 @@ pandaproxy_client:
 
 ## Disable authentication
 
-To disable authentication for a listener, set `authentication_method` to `none`. If authorization is enabled, connections to this listener use the anonymous user.
+To disable authentication for a listener, set `authentication_method` to `none`:
+
+```
+pandaproxy:
+  pandaproxy_api:
+  - address: "localhost"
+    port: 8082
+    authentication_method: none
+
+schema_registry:
+  schema_registry_api:
+    address: "localhost"
+    port: 8081
+    authentication_method: none
+```
+
+If authorization is enabled, connections to this listener use the anonymous user.
+
+To disable authentication on the Kafka API, disable `kafka_enable_authorization` and set `authentication_method` to `none` for all listeners.
+
+For example, run `rpk cluster config set kafka_enable_authorization false`, and set the following:
+
+```
+redpanda:
+  kafka_api:
+    - address: 0.0.0.0
+      port: 9092
+      name: sasl_listener
+      authentication_method: none
+```
