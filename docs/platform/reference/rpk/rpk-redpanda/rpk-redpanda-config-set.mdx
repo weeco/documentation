@@ -23,9 +23,11 @@ rpk redpanda config set redpanda.developer_mode true
 The default format is to parse the value as yaml. Individual specific fields
 can be set, or full structs:
 
-```rpk redpanda config set rpk.tune_disk_irq true
-
 ```
+rpk redpanda config set rpk.tune_disk_irq true
+```
+
+or
 
 ```
 rpk redpanda config set redpanda.rpc_server '{address: 3.250.158.1, port: 9092}'
