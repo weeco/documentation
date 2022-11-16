@@ -104,8 +104,8 @@ sudo rpk iotune # takes 10mins
 Configure and start up the seed servers with the [`rpk config bootstrap`](../../reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap) command: 
 
 ```bash
-sudo rpk config bootstrap --self <private ip> --ips <seed nodes ips> && \
-sudo rpk config set redpanda.empty_seed_starts_cluster false && \ 
+sudo rpk redpanda config bootstrap --self <private ip> --ips <seed nodes ips> && \
+sudo rpk redpanda config set redpanda.empty_seed_starts_cluster false && \ 
 sudo systemctl start redpanda-tuner redpanda
 ```
 
@@ -127,8 +127,8 @@ If clients will connect from a different subnet, see [Configuring Listeners](../
 Let every other node know where to reach the seed nodes:
 
 ```bash
-sudo rpk config bootstrap --self <private ip> --ips <seed nodes ips> && \
-sudo rpk config set redpanda.empty_seed_starts_cluster false && \ 
+sudo rpk redpanda config bootstrap --self <private ip> --ips <seed nodes ips> && \
+sudo rpk redpanda config set redpanda.empty_seed_starts_cluster false && \ 
 sudo systemctl start redpanda-tuner redpanda
 ```
 
