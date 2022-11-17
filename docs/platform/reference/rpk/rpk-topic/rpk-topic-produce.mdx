@@ -44,8 +44,16 @@ rpk topic produce [TOPIC] [flags]
       <td>--acks</td>
       <td>int</td>
       <td>
-        Number of acks required for producing (-1=all, 0=none, 1=leader)
-        (default -1)
+        Number of acks required for producing (<code>-1=all</code>, <code>0=none</code>, <code>1=leader</code>)
+        (default <code>-1</code>)
+      </td>
+    </tr>
+    <tr>
+      <td>--allow-auto-topic-creation</td>
+      <td>-</td>
+      <td>
+        Auto-create non-existent topics; requires auto_create_topics_enabled on the
+        broker
       </td>
     </tr>
     <tr>
