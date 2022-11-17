@@ -35,13 +35,13 @@ To install MirrorMaker 2 on the machine that you want to run the replication bet
 1. Download the latest [Kafka download package](https://kafka.apache.org/downloads). For example:
 
     ```bash
-    curl -O https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+    curl -O https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
     ```
 
 2. Extract the files from the archive:
 
     ```bash
-    tar -xvf kafka_2.13-3.0.0.tgz
+    tar -xvf kafka_2.13-3.3.1.tgz
     ```
 
 ## Create the MirrorMaker 2 configuration files
@@ -49,9 +49,9 @@ To install MirrorMaker 2 on the machine that you want to run the replication bet
 MirrorMaker 2 uses configuration files to get the connection details for the clusters.
 You can find the MirrorMaker 2 script and configuration files in the expanded Kafka directory.
 
-```
+``` 
 .
-└── kafka_2.13-3.0.0
+└── kafka_2.13-3.3.1
     └── bin
         └── connect-mirror-maker.sh
     └── config
@@ -80,6 +80,9 @@ replication.factor = 1
 
 //Make sure that your target cluster can accept larger message sizes. For example, 30MB messages
 <cluster_name_2>.producer.max.request.size=31457280
+
+//Make sure topics are created without a prefix
+replication.policy.class=org.apache.kafka.connect.mirror.IdentityReplicationPolicy
 EOF
 ```
 
@@ -89,10 +92,10 @@ Remember to edit the variable names on the examples for your environment. For ex
 
 ## Run MirrorMaker 2 to start replication
 
-To start MirrorMaker 2 in the `kafka_2.13-3.0.0/bin/` directory, run:
+To start MirrorMaker 2 in the `kafka_2.13-3.3.1/bin/` directory, run:
 
 ```bash
-./kafka_2.13-3.0.0/bin/connect-mirror-maker.sh mm2.properties
+./kafka_2.13-3.3.1/bin/connect-mirror-maker.sh mm2.properties
 ```
 
 With this command, MirrorMaker 2 consumes all topics from the <cluster_name_1> cluster and replicates them into the <cluster_name_2> cluster.
