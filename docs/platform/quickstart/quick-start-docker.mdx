@@ -7,11 +7,13 @@ title: Installing Redpanda on Docker
     <meta name="description" content="Docker quick start guide."/>
 </head>
 
-You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This guide helps you get started with Redpanda for development and testing using Docker.
+You can only run Redpanda directly on Linux. However, you can use Docker to run Redpanda on any system supported by Docker. This guide helps you get started with Redpanda for development and testing.
 
 See also: [Deploying for Production](../../deployment/production-deployment).
 
-## Get your cluster ready
+## Run directly from Docker repository
+
+The [Docker image for Redpanda](https://hub.docker.com/r/vectorized/redpanda) is hosted in Docker Hub.
 
 To get a cluster ready for streaming, either run a single Docker container with Redpanda running, or run a cluster of three containers.
 
@@ -41,8 +43,16 @@ redpanda start \
 - `--pull=always` - makes sure that you're always working with the latest version
 :::
 
-You can do some [simple topic actions](#do-some-streaming) to start streaming.
-Otherwise, point your [Kafka-compatible client](../../development/kafka-clients) to 127.0.0.1:9092.
+Now you can point your [Kafka-compatible client](../../development/kafka-clients) to 127.0.0.1:9092.
+
+#### Clean up a one-node cluster
+
+When you're finished with the cluster, shut down and delete the container:
+
+```bash
+docker stop redpanda-1 \
+docker rm redpanda-1
+```
 
 ### Set up a three-node cluster
 
@@ -61,7 +71,7 @@ docker volume create redpanda2 && \
 docker volume create redpanda3
 ```
 
-#### Start Redpanda nodes
+#### Start Redpanda
 
 Start the nodes for the Redpanda cluster:
 
@@ -81,7 +91,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
---set redpanda.empty_seed_starts_cluster=false
+--set redpanda.empty_seed_starts_cluster=false \
 --seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082 \
@@ -104,7 +114,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
---set redpanda.empty_seed_starts_cluster=false
+--set redpanda.empty_seed_starts_cluster=false \
 --seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28083,OUTSIDE://0.0.0.0:8083 \
@@ -127,6 +137,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start \
 --memory 1G  \
 --reserve-memory 0M \
 --overprovisioned \
+--set redpanda.empty_seed_starts_cluster=false \
 --seeds "redpanda-1:33145" \
 --check=false \
 --pandaproxy-addr INSIDE://0.0.0.0:28084,OUTSIDE://0.0.0.0:8084 \
@@ -160,18 +171,34 @@ ID    HOST        PORT
 2     redpanda-3  29094
 ```
 
-### Bring up a docker-compose file
+#### Clean up a three-node cluster
 
-You can try out different Docker configuration parameters with a `docker-compose` file.
+When you're finished with the cluster, shut down and delete the containers:
 
-1. Save this content as `docker-compose.yml`:
+```bash
+docker stop redpanda-1 redpanda-2 redpanda-3 && \
+docker rm redpanda-1 redpanda-2 redpanda-3
+```
+
+If you set up volumes and a network, delete them:
+
+```bash
+docker volume rm redpanda1 redpanda2 redpanda3 && \
+docker network rm redpandanet
+```
+
+## Run with Docker Compose
+
+Another way to spin up a Redpanda cluster is with a `docker-compose` file.
+
+Copy this code, and save it as `docker-compose.yml`:
 
 ```yaml
 version: '3.7'
 services:
   redpanda:
     # NOTE: Please use the latest version here!
-    image: docker.redpanda.com/vectorized/redpanda:v21.11.15
+    image: docker.redpanda.com/vectorized/redpanda:latest
     container_name: redpanda-1
     command:
     - redpanda
@@ -199,34 +226,20 @@ services:
     - 29092:29092
 ```
 
-2. In the directory where the file is saved, run:
+#### Start up with Docker Compose
 
-    ```bash
-    docker-compose up -d
-    ```
+In the directory where the file is saved, run:
+
+```bash
+docker-compose up -d
+```
 
 To change the parameters, edit the `docker-compose` file, and run the command again.
 
-## Start streaming
+#### Clean up with Docker Compose
 
-Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../reference/rpk/rpk-topic). Here are some sample commands to produce and consume streams:
-
-
-
-## Delete the containers
-
-When you're finished with the cluster, shut down and delete the containers. The following commands show how to do this for a three-node cluster. 
+When you're finished with the cluster, stop and remove the containers: 
 
 ```bash
-docker stop redpanda-1 redpanda-2 redpanda-3 && \
-docker rm redpanda-1 redpanda-2 redpanda-3
+docker-compose down
 ```
-
-If you set up volumes and a network, delete them:
-
-```bash
-docker volume rm redpanda1 redpanda2 redpanda3 && \
-docker network rm redpandanet
-```
-
-<img src="https://static.scarf.sh/a.png?x-pxid=3c187215-e862-4b67-8057-45aa9a779055" />
