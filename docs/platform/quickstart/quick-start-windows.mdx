@@ -7,19 +7,24 @@ title: Installing Redpanda on Windows
     <meta name="description" content="Windows quick start guide."/>
 </head>
 
-You can only run Redpanda directly on Linux. However, you can run Redpanda on Windows in a Docker container. This guide helps you get started with Redpanda for development and testing on Windows.
+You can only run Redpanda directly on Linux. However, you can run Redpanda on Windows in a Docker container. This guide helps you get started with Redpanda for development and testing.
 
-For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
+See also: [Deploying for Production](../../deployment/production-deployment).
 
 ## Prerequisites
 
-Before you start, you must install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) and [Docker for Windows](https://docs.docker.com/desktop/windows/install/). Additionally, for Docker for Windows to work, you must [enable your Hypervisor service](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) in the Windows Control Panel.
+Verify that you have the following software installed:
+
+- [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install)
+- [Docker for Windows](https://docs.docker.com/desktop/windows/install/) 
+- [Hypervisor service](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) enabled in the Windows Control Panel (required for Docker for Windows)
 
 
 ## Run directly from Docker repository
 
 The [Docker image for Redpanda](https://hub.docker.com/r/vectorized/redpanda) is hosted in Docker Hub.
 
+To get a cluster ready for streaming, either run a single Docker container with Redpanda running, or run a cluster of three containers.
 
 ### Set up a one-node cluster
 Copy and paste this command to create a one-node cluster:
@@ -33,12 +38,23 @@ docker run -d --pull=always --name=redpanda-1 --rm ^
 docker.redpanda.com/vectorized/redpanda:latest ^
 redpanda start ^
 --overprovisioned ^
+--seeds "redpanda-1:33145" ^
+--set redpanda.empty_seed_starts_cluster=false ^
 --smp 1  ^
 --memory 1G ^
 --reserve-memory 0M ^
---node-id 0 ^
 --check=false
 ```
+
+#### Clean up a one-node cluster
+
+When you're finished with the cluster, shut down and delete the container:
+
+```bash
+docker stop redpanda-1 ^
+docker rm redpanda-1
+```
+
 ### Set up a three-node cluster
 
 To test out the interaction between nodes in a cluster, set up a Docker network with three containers in a cluster.
@@ -56,7 +72,7 @@ docker volume create redpanda2 && ^
 docker volume create redpanda3
 ```
 
-#### Start Redpanda nodes
+#### Start Redpanda
 
 Start the nodes for the Redpanda cluster:
 
@@ -76,7 +92,8 @@ docker.redpanda.com/vectorized/redpanda redpanda start ^
 --memory 1G  ^
 --reserve-memory 0M ^
 --overprovisioned ^
---node-id 0 ^
+--set redpanda.empty_seed_starts_cluster=false ^
+--seeds "redpanda-1:33145" ^
 --check=false ^
 --pandaproxy-addr INSIDE://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082 ^
 --advertise-pandaproxy-addr INSIDE://redpanda-1:28082,OUTSIDE://localhost:8082 ^
@@ -98,7 +115,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start ^
 --memory 1G  ^
 --reserve-memory 0M ^
 --overprovisioned ^
---node-id 1 ^
+--set redpanda.empty_seed_starts_cluster=false ^
 --seeds "redpanda-1:33145" ^
 --check=false ^
 --pandaproxy-addr INSIDE://0.0.0.0:28083,OUTSIDE://0.0.0.0:8083 ^
@@ -121,7 +138,7 @@ docker.redpanda.com/vectorized/redpanda redpanda start ^
 --memory 1G  ^
 --reserve-memory 0M ^
 --overprovisioned ^
---node-id 2 ^
+--set redpanda.empty_seed_starts_cluster=false ^
 --seeds "redpanda-1:33145" ^
 --check=false ^
 --pandaproxy-addr INSIDE://0.0.0.0:28084,OUTSIDE://0.0.0.0:8084 ^
@@ -132,9 +149,26 @@ docker.redpanda.com/vectorized/redpanda redpanda start ^
 --advertise-rpc-addr redpanda-3:33147
 ```
 
-## Run with a docker-compose file
+#### Clean up a three-node cluster
+
+When you're finished with the cluster, shut down and delete the containers.
+
+```powershell
+docker stop redpanda-1 redpanda-2 redpanda-3 && ^
+docker rm redpanda-1 redpanda-2 redpanda-3
+```
+
+If you set up volumes and a network, delete them:
+
+```powershell
+docker volume rm redpanda1 redpanda2 redpanda3 && ^
+docker network rm redpandanet
+```
+
+## Run with Docker Compose
 
 Another way to spin up a Redpanda cluster is with a `docker-compose` file.
+
 Copy this code, and save it as `docker-compose.yaml`:
 
 ```yaml 
@@ -142,7 +176,7 @@ version: '3.7'
 services:
   redpanda:
     # NOTE: Please use the latest version here!
-    image: docker.redpanda.com/vectorized/redpanda:v21.11.15
+    image: docker.redpanda.com/vectorized/redpanda:latest
     container_name: redpanda-1
     command:
     - redpanda
@@ -152,8 +186,8 @@ services:
     - --reserve-memory
     - 0M
     - --overprovisioned
-    - --node-id
-    - '0'
+    - --set redpanda.empty_seed_starts_cluster=false
+    - --seeds "redpanda-1:33145"
     - --kafka-addr
     - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
     - --advertise-kafka-addr
@@ -169,7 +203,9 @@ services:
     - 28082:28082
     - 29092:29092
 ```   
-  
+
+#### Start up with Docker Compose
+
 In the directory where you saved the file, open your CMD and run:     
  
 ```powershell
@@ -183,19 +219,10 @@ Creating redpanda-1 ... done
 
 You can also check Docker for Desktop for any container errors.
 
-## Delete the containers
+#### Clean up with Docker Compose
 
-When you're finished with the cluster, shut down and delete the containers.
-Change the commands below accordingly if you used the one-cluster option or the three-cluster option.
+When you're finished with the cluster, stop and remove the containers: 
 
-```powershell
-docker stop redpanda-1 redpanda-2 redpanda-3 && ^
-docker rm redpanda-1 redpanda-2 redpanda-3
-```
-
-If you set up volumes and a network, delete them:
-
-```powershell
-docker volume rm redpanda1 redpanda2 redpanda3 && ^
-docker network rm redpandanet
+```bash
+docker-compose down
 ```

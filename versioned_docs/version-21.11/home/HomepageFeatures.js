@@ -4,7 +4,7 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: '60-Second Guides',
+    title: 'Get Started with Redpanda',
     image: require('../../../static/img/quickstart.png').default,
     description: (
       <>

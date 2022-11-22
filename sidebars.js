@@ -218,6 +218,7 @@ module.exports = {
         "platform/development/guide-nodejs",
         "platform/development/consumer-offsets",
         "platform/development/idempotent-producers",
+        "platform/development/transactions",
         "platform/development/http-proxy",
       ],
     },
@@ -312,13 +313,6 @@ module.exports = {
           type: "category",
           label: "Reference",
           items: [
-            "platform/console/features/kafka-connect",
-            "platform/console/features/record-deserialization",
-            "platform/console/features/schema-registry",
-            "platform/console/features/protobuf",
-            "platform/console/features/topic-documentation",
-            "platform/console/features/programmable-push-filters",
-            "platform/console/features/http-path-rewrites",
             {
               type: "doc",
               label: "Redpanda Console Configuration",
@@ -379,6 +373,22 @@ module.exports = {
                 }, //acl user
               ],
             }, //acl
+            {
+              type: "category",
+              label: "rpk cloud",
+              link: {
+                type: "doc",
+                id: "platform/reference/rpk/rpk-cloud/rpk-cloud",
+              },
+              items: [
+                "platform/reference/rpk/rpk-cloud/rpk-cloud",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc-install",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-byoc-uninstall",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-login",
+                "platform/reference/rpk/rpk-cloud/rpk-cloud-logout"
+              ]
+            },
             {
               type: "category",
               label: "rpk cluster",
@@ -690,12 +700,7 @@ module.exports = {
                 "platform/reference/redpanda-operator/kubernetes-mtls",
               ],
             },
-
-            {
-              type: "link",
-              label: "Operator Custom Resource Definition (CRD)",
-              href: "https://doc.crds.dev/github.com/vectorizedio/redpanda",
-            },
+            "platform/reference/redpanda-operator/crd",
           ],
         },
         "platform/reference/internal-metrics",

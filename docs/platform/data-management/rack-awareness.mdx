@@ -19,6 +19,10 @@ When rack awareness is enabled, the Redpanda software places replicas according 
 - Number of available CPU cores - Nodes with more available CPU cores are chosen over nodes with fewer available CPU cores.
 - Node utilization - Nodes with fewer partitions are chosen over nodes with more partitions.
 
+:::tip
+Use [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing/) to continually maintain the configured replication level, even after infrastructure failure. For a given partition, Redpanda tries to move excess replicas from racks that have more than one replica to racks where there are none.
+:::
+
 ## Setting up rack awareness
 
 The instructions in this section are based on a cluster with five nodes and three failure zones. The failure zones, or racks, are identified as A, B, and C. 

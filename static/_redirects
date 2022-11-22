@@ -44,11 +44,11 @@
 # Cluster Administration
 /docs/platform/deploy-self-hosted/configuration   /docs/platform/cluster-administration/configuration  301!
 /docs/platform/deploy-self-hosted/monitoring   /docs/platform/cluster-administration/monitoring  301!
-/docs/platform/reference/version-upgrade   /docs/platform/cluster-administration/version-upgrade  301!
 /docs/platform/cluster-management/configuration   /docs/platform/cluster-administration/configuration  301!
 /docs/platform/cluster-management/monitoring   /docs/platform/cluster-administration/monitoring  301!
-/docs/platform/cluster-management/version-upgrade   /docs/platform/install-upgrade/version-upgrade  301!
+/docs/platform/cluster-management/version-upgrade   /docs/install-upgrade/version-upgrade  301!
 /docs/platform/cluster-administration/version-upgrade   /docs/install-upgrade/version-upgrade  301!
+/docs/platform/reference/version-upgrade   /docs/platform/install-upgrade/version-upgrade  301!
 
 # Data Management
 /docs/platform/data-management/shadow-indexing /docs/platform/data-management/tiered-storage 301!
@@ -56,6 +56,7 @@
 # Security
 /docs/platform/features/acls   /docs/platform/security/acls  301!
 /docs/platform/features/tls-kubernetes   /docs/platform/security/tls-kubernetes  301!
+/docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
 /docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
 /docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
 /docs/security/tls-kubernetes  /docs/reference/redpanda-operator/tls-kubernetes  301!
@@ -70,6 +71,9 @@
 /docs/security/security-kubernetes  /docs/platform/reference/redpanda-operator/security-kubernetes  301!
 /docs/security/kubernetes-mtls  /docs/platform/reference/redpanda-operator/kubernetes-mtls  301!
 /docs/security/kubernetes-sasl  /docs/platform/reference/redpanda-operator/kubernetes-sasl  301!
+/docs/security/security-kubernetes  /docs/reference/redpanda-operator/security-kubernetes  301!
+/docs/security/kubernetes-mtls  /docs/reference/redpanda-operator/kubernetes-mtls  301!
+/docs/security/kubernetes-sasl  /docs/reference/redpanda-operator/kubernetes-sasl  301!
 
 # Reference
 /docs/reference/faq   /docs/home  301!
@@ -99,7 +103,7 @@
 #Tech Preview
 /docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!
 
-#Data Management 
+#Data Management
 /docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!
 
 ##Platform folder

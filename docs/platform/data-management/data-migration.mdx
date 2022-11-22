@@ -20,7 +20,7 @@ For details on MirrorMaker 2 and its options, see the [Kafka documentation](http
 
 ## Prerequisites
 
-To set up the replication, we'll need:
+To set up the replication, you need:
 
 - 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](../../quickstart/kubernetes-qs-dev/), [Docker](../../quickstart/quick-start-docker), [Linux](../../quickstart/quick-start-linux), or [MacOS](../../quickstart/quick-start-macos).
 
@@ -32,28 +32,26 @@ You must install the [Java Runtime Engine (JRE)](https://docs.oracle.com/javase/
 MirrorMaker 2 is run by a shell script that is part of the Kafka download package.
 To install MirrorMaker 2 on the machine that you want to run the replication between the clusters:
 
-1. Download the latest [Kafka download package](https://kafka.apache.org/downloads).
-
-    For example:
+1. Download the latest [Kafka download package](https://kafka.apache.org/downloads). For example:
 
     ```bash
-    curl -O https://dlcdn.apache.org/kafka/3.0.0/kafka_2.13-3.0.0.tgz
+    curl -O https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
     ```
 
 2. Extract the files from the archive:
 
     ```bash
-    tar -xvf kafka_2.13-3.0.0.tgz
+    tar -xvf kafka_2.13-3.3.1.tgz
     ```
 
-## Create the MirrorMaker 2 config files
+## Create the MirrorMaker 2 configuration files
 
 MirrorMaker 2 uses configuration files to get the connection details for the clusters.
 You can find the MirrorMaker 2 script and configuration files in the expanded Kafka directory.
 
-```
+``` 
 .
-└── kafka_2.13-3.0.0
+└── kafka_2.13-3.3.1
     └── bin
         └── connect-mirror-maker.sh
     └── config
@@ -62,7 +60,7 @@ You can find the MirrorMaker 2 script and configuration files in the expanded Ka
 
 The sample configuration describes a number of the settings for MirrorMaker 2.
 
-To create a basic configuration file, go to the `config` and run this command:
+To create a basic configuration file, go to the `config` and run:
 
 ```bash
 cat << EOF > mm2.properties
@@ -82,6 +80,9 @@ replication.factor = 1
 
 //Make sure that your target cluster can accept larger message sizes. For example, 30MB messages
 <cluster_name_2>.producer.max.request.size=31457280
+
+//Make sure topics are created without a prefix
+replication.policy.class=org.apache.kafka.connect.mirror.IdentityReplicationPolicy
 EOF
 ```
 
@@ -91,26 +92,37 @@ Remember to edit the variable names on the examples for your environment. For ex
 
 ## Run MirrorMaker 2 to start replication
 
-To start MirrorMaker 2 in the `kafka_2.13-3.0.0/bin/` directory, run:
+To start MirrorMaker 2 in the `kafka_2.13-3.3.1/bin/` directory, run:
 
 ```bash
-./kafka_2.13-3.0.0/bin/connect-mirror-maker.sh mm2.properties
+./kafka_2.13-3.3.1/bin/connect-mirror-maker.sh mm2.properties
 ```
 
 With this command, MirrorMaker 2 consumes all topics from the <cluster_name_1> cluster and replicates them into the <cluster_name_2> cluster.
 MirrorMaker 2 adds the prefix `<cluster_name_1>` to the names of replicated topics.
 
+
+## Change topic replication factor
+
+The `replication.factor` property is a topic property set at topic creation. A replication factor of three generally provides a good balance between broker loss and replication overhead.
+
+You can increase or decrease the replication factor on an existing topic. For example, if topics were initially created in a test environment with a replication factor of `1` (no replication), to change the topic replication factor to `3`, run: 
+
+```
+rpk topic alter-config [TOPICS...] --set replication.factor 3
+```
+
 ## See migration in action
 
 Here are the basic commands to produce and consume streams:
 
-1. Create a topic in the source cluster. We'll call it "twitch_chat":
+1. Create a topic in the source cluster called "twitch_chat":
 
     ```bash
     rpk topic create twitch_chat --brokers <node IP>:<kafka API port>
     ```
 
-1. Produce messages to the topic:
+2. Produce messages to the topic:
 
     ```bash
     rpk topic produce twitch_chat --brokers <node IP>:<kafka API port>
@@ -120,13 +132,13 @@ Here are the basic commands to produce and consume streams:
 
     Press Ctrl + C to exit the produce command.
 
-1. Consume (or read) the messages from the destination cluster:
+3. Consume (read) the messages from the destination cluster:
 
     ```bash
     rpk topic consume twitch_chat --brokers <node IP>:<kafka API port>
     ```
     
-    Each message is shown with its metadata, like this:
+    Each message is shown with its metadata like the following:
     
     ```json
     {
@@ -157,4 +169,4 @@ To address this issue, make sure that your `mm2.properties` configuration file o
 
 ## Troubleshooting
 
-If you run into any difficulty with data migration, contact us in our [Slack](https://vectorized.io/slack) community. 
+If you run into any difficulty with data migration, you can request help in the Redpanda [Slack](https://rpnda.co/slack) community.
