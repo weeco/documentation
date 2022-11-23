@@ -41,6 +41,10 @@ Based on these properties, Redpanda runs a log cleanup process in the background
 
 A message is deleted if its age exceeds the value specified in `delete_retention_ms` (the cluster-level property) or `retention.ms` (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
 
+:::note
+Time-based retention is calculated from the timestamp of batches in a segment. Segments are removed when they're closed: either when they reach the limit or when partition leadership changes. Each segment index stores the maximum timestamp in the segment. The timestamp policy can be either `CreateTime` (client timestamp set by producer) or `AppendTime` (server timestamp set by Redpanda).
+:::
+
 To set retention time for a single topic, use `retention.ms`, which overrides `delete_retention_ms`. 
 
 * `retention.ms` - Topic-level property that specifies how long a message stays on disk before it's deleted. 
