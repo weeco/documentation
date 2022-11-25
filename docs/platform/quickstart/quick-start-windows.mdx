@@ -43,7 +43,8 @@ redpanda start ^
 --smp 1  ^
 --memory 1G ^
 --reserve-memory 0M ^
---check=false
+--check=false ^
+--advertise-rpc-addr redpanda-1:33145
 ```
 
 #### Clean up a one-node cluster
@@ -175,7 +176,7 @@ Copy this code, and save it as `docker-compose.yaml`:
 version: '3.7'
 services:
   redpanda:
-    # NOTE: Please use the latest version here!
+    # NOTE: Use the latest version here!
     image: docker.redpanda.com/vectorized/redpanda:latest
     container_name: redpanda-1
     command:
@@ -196,6 +197,7 @@ services:
     - PLAINTEXT://0.0.0.0:28082,OUTSIDE://0.0.0.0:8082
     - --advertise-pandaproxy-addr
     - PLAINTEXT://redpanda:28082,OUTSIDE://localhost:8082
+    - --advertise-rpc-addr redpanda-1:33145
     ports:
     - 8081:8081
     - 8082:8082
