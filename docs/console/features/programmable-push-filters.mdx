@@ -9,7 +9,7 @@ title: Programmable Push Filters
 
 You can write a simple Javascript filter in Redpanda Console to search for and display messages that match the filter criteria. Since the filter is evaluated on the backend, Redpanda Console only displays matching messages in the browser.
 
-### Write a filter
+## Write a filter
 
 Filters are written in Javascript. A filter evaluates each record and must return a boolean value (`true` or `false`). If your code returns `true`, the backend sends the record to the frontend. 
 Otherwise, the record is skipped and Redpanda Console continues consuming records until the selected number of maximum search results has been reached, or there are no more messages.
@@ -17,6 +17,8 @@ Otherwise, the record is skipped and Redpanda Console continues consuming record
 :::note
 If your filter is a simple expression, you can omit the `return` keyword.
 :::
+
+### Function variables
 
 Redpanda Console injects the following variables into your function, which you can use in your filter code:
 
@@ -27,7 +29,7 @@ Redpanda Console injects the following variables into your function, which you c
 
 :::note
 Keys and values are passed into your JavaScript code in their decoded form. That means the
-deserialization logic (for example, decode an Avro serialized byte array to a JSON object)is applied first, before injecting it into
+deserialization logic (for example, decode an Avro serialized byte array to a JSON object) is applied first, before injecting it into
 the JavaScript function. If your message is presented as a JSON object in the UI, you can also access it
 like a JavaScript object in your filter code.
 :::
@@ -50,8 +52,7 @@ return value.item.id == "895e443a-f1b7-4fe5-ad66-b9adfe5420b9"
 ```
 
 Redpanda Console allows you to use more than one filter function at the same time. If you start a search while having multiple
-filters active, they are combined with a logical OR. Accordingly, as soon as one function returns true, the record will be sent
-to the frontend.
+filters active, they are combined with a logical OR. Accordingly, as soon as one function returns `true`, the record is sent to the frontend.
 
 ## Resource usage and performance
 
