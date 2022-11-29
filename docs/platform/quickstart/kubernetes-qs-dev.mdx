@@ -70,11 +70,11 @@ kubectl taint node \
   </TabItem>
   <TabItem value="eks" label="Amazon EKS">
 
-> There are two additional CLIs needed for creating a Kubernetes cluster in AWS:
-> 1. [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-> 2. [eksctl <= v0.114.0](https://github.com/weaveworks/eksctl/releases/tag/v0.114.0), more details on how to install [here](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+You need two additional CLIs to create a Kubernetes cluster in AWS:
+1. [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+2. [eksctl <= v0.114.0](https://github.com/weaveworks/eksctl/releases/tag/v0.114.0). Install details available  [here](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
 
-> You must ensure that appropriate IAM permissions are applied to the user who will be running the following commands. More details can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html).
+You must ensure that appropriate IAM permissions are granted to the user who will be running the following commands. More details can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html).
 
 Create an Elastic Kubernetes Service (EKS) cluster. The cluster will be created in your default region (see `~/.aws/config`):
 
@@ -87,7 +87,7 @@ eksctl create cluster --name redpanda \
     --nodes-max 4
 ```
 
-Once the cluster is created, make sure your local kubeconfig is updated to point to this cluster:
+After the cluster is created, be sure to update your local kubeconfig to point to this cluster:
 
 ```bash
 aws eks update-kubeconfig --region us-east-2  --name redpanda
