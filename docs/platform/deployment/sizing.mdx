@@ -7,15 +7,15 @@ title: Sizing Guidelines
     <meta name="description" content="How to size Redpanda clusters for low, medium, and high throughput use cases in your data center and in the cloud."/>
 </head>
 
-For best performance, a Redpanda cluster should be sized to handle the volume of data being produced, replicated, and consumed. The following variables affect cluster sizing:
+For best performance, properly size your Redpanda cluster to handle the volume of data being produced, replicated, and consumed. The following variables affect cluster sizing:
 
 - MB/sec of data being produced (after compression, if applied)
 - Topic replication factor
 - Number of consumers
 
-It helps to understand how your throughput and retention requirements can cause bottlenecks in the system, and how to translate those requirements into a cluster specification that can deliver the expected performance. An undersized Redpanda cluster could hit bottlenecks at some point along the data path. The clients might saturate the available network bandwidth, a disk might run out of IOPS and not be able to keep up with writes, or you may simply run out of disk space. An oversized Redpanda cluster could be underutilized and you pay for the excess infrastructure. 
+Throughput and retention requirements can cause bottlenecks in the system. On an undersized cluster, the clients could saturate the available network bandwidth, a disk could run out of IOPS and be unable to keep up with writes, or you could simply run out of disk space. On an oversized Redpanda cluster, you could overpay for the unnecessary infrastructure. For detailed sizing for low, medium, and high throughput, see [Sizing Use Cases](../../deployment/sizing-use-cases).
 
-Key sizing takeaways:
+This topic describes sizing considerations. In summary:
 - 2:1 core-to-local-disk ratio for maximum I/O performance (preferably NVMe SSD)
 - Minimum of 2GB memory per core, but more memory is better
 - Total network bandwidth needs to account for writes, replication, and reads
@@ -62,7 +62,7 @@ MBytes
 
 Topic partitions are the unit of parallelisation in Redpanda, and adding partitions is how you scale to meet the demands of your workload. Redpanda scales efficiently and is designed to scale up to utilize all available hardware and scale out to distribute performance across multiple nodes.
 
-Redpanda implements a [thread-per-core programming model](https://redpanda.com/blog/tpc-buffers?utm_medium=content&utm_assetname=sizing_guide&utm_assettype=report&utm_source=gated_content&utm_campaign=tpc_architecture_blog) through its use of the [Seastar](https://seastar.io/) library, which is an advanced framework for high-performance server applications on modern hardware. This allows Redpanda to pin each of its application threads to a CPU core to avoid 
+Redpanda implements a through its use of the [Seastar](https://seastar.io/) library, which is an advanced framework for high-performance server applications on modern hardware. This allows Redpanda to pin each of its application threads to a CPU core to avoid 
 context switching and blocking, significantly improving processing performance and efficiency.
 
 Redpanda can handle approximately 1 GB/sec of writes per core, depending on the workload. Since NVMe disks can have a sustained write speed of over one GB/sec, it takes two cores to saturate a single NVMe disk. At higher throughput rates, a 2:1 core-to-disk ratio is important to avoid I/O bottlenecks, and a minimum of four cores is needed for any meaningful workload.
@@ -105,12 +105,12 @@ $ sudo fio fio-seq-write.job
 FIO’s output is comprehensive and contains a lot of detail. 
 
 Key performance metrics:
-- IOPS: Input and output operations per second. In this case, IOPS represents how many sequential write operations per second the volume can handle.
-- BW: Average bandwidth measured in MB per second. Bandwidth divided by the write block size (for example, bs=16K) is the IOPS.
-- slat: Submission latency. The time in microseconds to submit the I/O to the kernel.
-- clat: Completion latency. The time in microseconds after slat until the device has completed the I/O.
-- lat: Overall latency in microseconds.
-- clat percentiles: Completion tail latency. Pay particular attention to p90 and above. This is a good indication of whether the volume can deliver predictable, consistent performance.
+- IOPS = input and output operations per second. IOPS represents how many sequential write operations per second the volume can handle.
+- BW = average bandwidth measured in MB per second. Bandwidth divided by the write block size (for example, bs=16K) is the IOPS.
+- slat = submission latency. The time in microseconds to submit the I/O to the kernel.
+- clat = completion latency. The time in microseconds after slat until the device has completed the I/O.
+- lat = overall latency in microseconds.
+- clat percentiles = completion tail latency. Pay particular attention to p90 and above. This is a good indication of whether the volume can deliver predictable, consistent performance.
 
 ### Data retention
 
@@ -122,123 +122,30 @@ Both settings are enforced at the partition level. Each partition writes to its 
 
 - `retention.ms` also controls the size of a partition directory, but it does so based on the age of log segments rather than their combined size. Log segments are discarded when their maximum timestamp grows older than `retention.ms`.
 
+For more information, see [Configure message retention](../../platform/deployment/disk-utilization/#configure-message-retention).
+
 ### Tiered Storage
 
 The downside to having only local storage is that data retention is limited to the provisioned capacity, and you’re forced to decide between using what’s available with a limit on the amount of data you can retain in the system, or provisioning more nodes to increase capacity. The latter is an expensive way to meet your data retention needs, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, this leads to underutilization and higher operational costs.
 
-Redpanda has another option in the form of [Tiered Storage](../../platform/data-management/tiered-storage/), which is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
+Redpanda has another option in the form of Tiered Storage, which is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
 
 When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured S3 bucket. As described in the previous section, the default log segment size is set to 1GB, so by default, a topic’s object store lags approximately 1GB behind the local copy. Lowering segment.bytes is one way to reduce this lag as it allows Redpanda to archive smaller log segments more frequently, at the cost of increasing I/O and file count. An idle timeout can also be set to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. Being able to reason about and adjust how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point and time objectives.
 
 All of this is encapsulated in the Kafka API, meaning that clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage.Combining Tiered Storage and local storage also allows you to optimize the size of your Redpanda clusters to meet your performance requirements without having to worry about data retention, saving on infrastructure, and operational costs.
 
+For more information, see [Tiered Storage](../../platform/data-management/tiered-storage/).
+
 ### Production settings
 
-Before running performance benchmark testing, [set Redpanda into production mode](../../platform/deployment/production-deployment/#set-redpanda-production-mode) and run the auto tuning tool on every node. This enables the necessary hardware optimizations and ensures that the kernel parameters are set correctly.
+Before running performance benchmark testing, set Redpanda into production mode and run the auto tuning tool on every node. This enables the necessary hardware optimizations and ensures that the kernel parameters are set correctly.
+
+See [Set Redpanda production mode](../../platform/deployment/production-deployment/#set-redpanda-production-mode).
 
 ### Open Messaging Benchmark
 
 Performance benchmarking a distributed system like Redpanda is complex and requires careful orchestration, instrumentation, and measurement. Every cluster destined for production should be subject to performance benchmarking for validation and confidence in the setup.
 
-The [Open Messaging Benchmark (OMB)](https://github.com/redpanda-data/openmessaging-benchmark) framework simplifies the process. OMB consists of a set of extensible tests that replicate realworld stress on a streaming platform and can accurately measure throughput and latency over given time periods. OMB is a great tool for verifying that a Redpanda cluster, deployed in your own data center or in the cloud, is sized appropriately for your use case. 
+The [Open Messaging Benchmark (OMB)](https://github.com/redpanda-data/openmessaging-benchmark) framework simplifies the process. OMB consists of a set of extensible tests that replicate realworld stress on a streaming platform to measure throughput and latency over given time periods. OMB can verify that a Redpanda cluster, deployed in your own data center or in the cloud, is sized appropriately for your use case. 
 
-For information on how to get started, see [Redpanda Benchmarks](https://github.com/redpanda-data/openmessaging-benchmark/blob/main/driver-redpanda/README.md).
-
-## Sizing Use Cases
-
-The following scenarios demonstrate how to size Redpanda clusters for low, medium, and high throughput use cases in your data center and in the cloud.
-
-### Use case: low throughput, short retention
-
-- Average message size: 250 KB
-- Producer rate: 300 messages per second
-- Producer throughput: 75 MB/sec (600 Mbps)
-- Consumer rate: 300 messages per second
-- Consumer throughput: 75 MB/sec (600 Mbps)
-- Data retention: 3 days
-- Failure tolerance: 1 node
-
-This use case requires the minimum number of Redpanda nodes. Despite the relatively low throughput of 150 MB/sec (producer and consumer), it’s important to calculate the expected bandwidth utilization and to use a network testing tool like iperf to verify that the bandwidth is available and sustainable. Assume a single topic with a replication factor of three, producing 75 MB/sec generates an additional 150 MB/sec of data transmitted over the network for replication, and a further 75 MB/sec for the consumer group. That equates to an aggregate network bandwidth of 300 MB/sec or 2.4 Gbps in networking terms.
-
-Three nodes satisfy Redpanda’s minimum deployment requirement (so Raft can form quorums), and also the single node failure tolerance. The throughput is not high enough to warrant any more than two cores and a single NVMe SSD disk. Just be mindful of predicted future growth and estimate how much head room the cluster has now and when it might need to scale up or out.
-
-With an average producer throughput of 75 MB/sec and a replication factor of 3, each node is going to be writing 254 GB of data per hour, and 6.4 TB of data per day. In order to satisfy the data retention requirement of 3 days, each node needs at least 20 TB of storage.
-
-Taking all of this into consideration, the following machine specifications provide a sensible minimum for a bare metal cluster or its cloud-based equivalent.
-
-| ----------- | Bare Metal | AWS | GCP | Azure |
-| ----------- | ----------- | ----------- | ----------- | ----------- |
-| Instance Type | - | m5.large | n2-standard-2 | F2s_v2 |
-| Nodes | 3 | 3 | 3 | 3 |
-| Cores | 2 | 2 | 2 | 2 |
-| Memory | 4 GB | 8 GB | 8 GB | 4 GB |
-| Instance Storage | 20 TB (NVMe) | - | - | 16 GB (SSD) |
-| Persistant Storage | - | 20 TB 9gb3) | 20 TB (Zonal SSD PD) | 20 TB (Standard SSD) |
-| Network | 4 Gbps | Up to 10 Gbps | 10 Gbps | 5 Gbps |
-| Tiered Storage | False | False | False | False |
-
-
-### Use case: medium throughput, high retention
-
-- Average message size: 250 KB
-- Producer rate: 2,000 messages per second
-- Producer throughput: ~500 MB/sec (~4,000 Mbps)
-- Consumer rate: 4,000 messages per second
-- Consumer throughput: ~1,000 MB/sec (~8,000 Mbps)
-- Data retention: 1 year
-- Failure tolerance: 1 node
-
-This use case requires a much longer retention of data. Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth when factoring in the replication traffic. Cloud providers have fast networks, so this amount of bandwidth is attainable, but expensive, and these speeds are not as prevalent throughout a typical data center.
-
-Given at least one partition per core, the 500 MB/sec of data coming from the producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases when factoring data replication into the equation:
-
-| Producer MB/sec | Consumer MB/sec | Avg. Repl Factor | Nodes | Writes per node MB/sec | Reads per node MB/sec |
-| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
-| 500 | 1,500 | 3 | 3 | 500/3*3=500 | 1500/3=500 |
-| 500 | 1,500 | 3 | 5 | 500/5*3=300 | 1500/5=300 |
-| 500 | 1,500 | 3 | 7 | 500/7*3=215 | 1500/7=215 |
-| 500 | 1,500 | 5 | 7 | 500/7*5=358 | 1500/7=215 |
-
-Note the additional 500 MB/sec added to the consumer throughput. That is to account for the use of Tiered Storage and the additional bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
-
-Producing an average of 500 MB every second equates to over 40 TB of data per day, and with a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t as much of an issue in the cloud with an abundance of high-performance persistent storage options (for example. io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
-
-This is why we built Tiered Storage. A topic with Tiered Storage enabled has the ability to write to faster local storage that is managed by local retention settings, and at the same time, write the data to object storage that is managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
-
-| ----------- | Bare Metal | AWS | GCP | Azure |
-| ----------- | ----------- | ----------- | ----------- | ----------- |
-| Instance Type | - | i3en.6xlarge | n2-standard-32 | F48s_v2 |
-| Nodes | 3 | 3 | 3 | 3 |
-| Cores | 24 | 24 | 32 | 48 |
-| Memory | 192 GB | 192 GB | 128 GB | 96 GB |
-| Instance Storage | 30 TB (NVMe) | 15 TB (NVM3) | 9 TB (SSD) | 384 TB (SSD) |
-| Persistant Storage | - | - | - | 20 TB (Standard SSD) |
-| Network | 25 Gbps | 25 Gbps | 32 Gbps | 21 Gbps |
-| Tiered Storage | True | True | True | True |
-
-### Use case: high throughput, high retention
-
-- Average message size: 250 KB
-- Producer rate: 4,000 messages per second
-- Producer throughput: 1000 MB/sec (8,000 Mbps)
-- Consumer rate: 8,000 messages per second
-- Consumer throughput: 2,000 MB/sec (16,000 Mbps)
-- Data retention: 1 year
-- Failure tolerance: 2 nodes
-
-This use case has lots of topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is towards the upper limit of what a single NVMe disk can sustain.
-
-At this scale, you get significant performance gains by distributing the writes over many cores and disks to better leverage Redpanda’s thread-per-core model. For example, given five nodes with 24 cores each, start with at least a partition per core (120 partitions in total) and scale up.
-
-At this scale, Redpanda is going to be generating over three TBs of writes per hour, and over 80 TB per day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
-
-| ----------- | Bare Metal | AWS | GCP | Azure |
-| ----------- | ----------- | ----------- | ----------- | ----------- |
-| Instance Type | - | i3en.12xlarge | n2-standard-48 | F48s_v2 |
-| Nodes | 5 | 5 | 5 | 5 |
-| Cores | 24 | 48 | 48 | 48 |
-| Memory | 192 GB | 384 GB | 192 GB | 96 GB |
-| Instance Storage | 30 TB (NVMe) | 30 TB (NVM3) | 9 TB (SSD) | 384 TB (SSD) |
-| Persistant Storage | - | - | - | 30 TB (Ultra SSD) |
-| Network | 25 Gbps | 25 Gbps | 32 Gbps | 21 Gbps |
-| Tiered Storage | True | True | True | True |
+For more information, see [Redpanda Benchmarks](https://github.com/redpanda-data/openmessaging-benchmark/blob/main/driver-redpanda/README.md).

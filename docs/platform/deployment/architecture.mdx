@@ -1,5 +1,5 @@
 ---
-title: Redpanda's Architecture
+title: Redpanda Architecture
 ---
 
 <head>
@@ -7,7 +7,7 @@ title: Redpanda's Architecture
     <meta name="description" content="Redpanda is a distributed system that is composed of multiple nodes (servers) and data producers and consumers (clients)."/>
 </head>
 
-Redpanda is a distributed system that is composed of multiple nodes (servers) and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi on its way to pick you up, or pressing play on the first episode of a new TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
+Redpanda is a distributed system composed of multiple nodes (servers) and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi on its way to pick you up, or pressing play on the first episode of a new TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
 
 Producers and consumers interact with Redpanda using the Kafka API. To achieve high scalability, they are fully decoupled. Redpanda provides strong guarantees to producers that events are stored durably within the system, and consumers can subscribe to Redpanda and read the events asynchronously. Redpanda achieves this decoupling by organizing events into topics. Topics, given any name, represent a logical grouping of events that are written to the same log. A topic can have multiple producers writing events to it and multiple consumers reading events from it.
 
@@ -37,13 +37,13 @@ When this happens, the follower increments its term and votes for itself to be t
 
 - It receives a majority of votes to win the election and become the leader. Raft provides strict guarantees for election safety to ensure that at most one candidate can be elected the leader for a given term.
 
-- Another follower establishes itself as the leader. While waiting for votes, the candidate may receive communication from another node in the group claiming to be the leader. The candidate only accepts the claim if its term is greater than or equal to the candidates term, otherwise the communication is rejected and the candidate continues to wait for votes.
+- Another follower establishes itself as the leader. While waiting for votes, the candidate may receive communication from another node in the group claiming to be the leader. The candidate only accepts the claim if its term is greater than or equal to the candidate's term, otherwise the communication is rejected and the candidate continues to wait for votes.
 
 - No leader is elected over a period of time. If multiple followers all timeout and become election candidates at the same time, then it is possible that no candidate obtains a majority of votes. When this happens, each candidate increments its term and triggers a new election round. Raft uses a random timeout between 150-300 milliseconds to ensure that split votes are rare and resolved quickly. See the interactive visualization here.
 
-As long as there is a timing inequality between heartbeat time, election timeout, and mean time between node failures (MTBF), then Raft can elect and maintain a steady leader and make progress. So, a leader can maintain its position as long as one of the ten heartbeat messagesit sends to all of its followers every 1.5 seconds is received; otherwise, a new leader is elected.
+As long as there is a timing inequality between heartbeat time, election timeout, and mean time between node failures (MTBF), then Raft can elect and maintain a steady leader and make progress. So, a leader can maintain its position as long as one of the ten heartbeat messages it sends to all of its followers every 1.5 seconds is received; otherwise, a new leader is elected.
 
-If a follower triggers an election, but the incumbent leader subsequently springs back to life and starts sending data again, then it’s too late. As part of the election process, the follower (now an election candidate) has incremented the term and rejects requests from the previous term, essentially forcing a leadership change. If a cluster is experiencing wider network infrastructure problems that result in latencies above the heartbeat timeout, then back-to-back election rounds can be triggered. During this period of infrastructure, instability Raft groups may not be able to form a quorum, which results in partitions rejecting writes, but no data loss can occur.
+If a follower triggers an election, but the incumbent leader subsequently springs back to life and starts sending data again, then it’s too late. As part of the election process, the follower (now an election candidate) has incremented the term and rejects requests from the previous term, essentially forcing a leadership change. If a cluster is experiencing wider network infrastructure problems that result in latencies above the heartbeat timeout, then back-to-back election rounds can be triggered. During this period of infrastructure, unstable Raft groups may not be able to form a quorum, which results in partitions rejecting writes, but no data loss can occur.
 
 Redpanda has a Raft-priority implementation that allows the system to settle quickly after network outages.
 
