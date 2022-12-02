@@ -31,6 +31,11 @@ module.exports = {
       items: [
         {
           type: "doc",
+          label: "Introducing Redpanda",
+          id: "platform/introduction/architecture",
+        },
+        {
+          type: "doc",
           label: "Introduction to Events and Streaming",
           id: "platform/introduction/intro-to-events",
         },
@@ -119,9 +124,7 @@ module.exports = {
           type: "category",
           label: "Performance and Tuning",
           items: [
-            "platform/deployment/architecture",
-            "platform/deployment/sizing",
-            "platform/deployment/sizing-use-cases",
+            "platform/deployment/high-availability",
             "platform/deployment/disk-utilization",
             "platform/deployment/io-optimization",
           ],

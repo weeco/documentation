@@ -21,13 +21,13 @@ For details about sizing considerations, see [Sizing Guidelines](../../deploymen
 - Data retention: 3 days
 - Failure tolerance: 1 node
 
-This use case requires the minimum number of Redpanda nodes. Despite the relatively low throughput of 150 MB/sec (producer and consumer), it’s important to calculate the expected bandwidth utilization and to use a network testing tool like iperf to verify that the bandwidth is available and sustainable. Assume a single topic with a replication factor of three, producing 75 MB/sec generates an additional 150 MB/sec of data transmitted over the network for replication, and a further 75 MB/sec for the consumer group. That equates to an aggregate network bandwidth of 300 MB/sec or 2.4 Gbps in networking terms.
+This use case uses the minimum number of Redpanda nodes. Despite the relatively low throughput of 150 MB/sec (producer and consumer), it’s important to calculate the expected bandwidth utilization and to use a network testing tool like iperf to verify that the bandwidth is available and sustainable. With a single topic with a replication factor of three, producing 75 MB/sec generates an additional 150 MB/sec of data transmitted over the network for replication, and a further 75 MB/sec for the consumer group. That equates to an aggregate network bandwidth of 300 MB/sec, or 2.4 Gbps in networking terms.
 
-Three nodes satisfy Redpanda’s minimum deployment requirement (so Raft can form quorums), and also the single node failure tolerance. The throughput is not high enough to warrant any more than two cores and a single NVMe SSD disk. Just be mindful of predicted future growth and estimate how much head room the cluster has now and when it might need to scale up or out.
+Three nodes satisfy Redpanda’s minimum deployment requirement (so Raft can form quorums) and also the single node failure tolerance. The throughput is not high enough to warrant any more than two cores and a single NVMe SSD disk. Be mindful of predicted growth, and estimate how much room the cluster has now and when it might need to scale up or out.
 
-With an average producer throughput of 75 MB/sec and a replication factor of 3, each node is going to be writing 254 GB of data per hour, and 6.4 TB of data per day. In order to satisfy the data retention requirement of 3 days, each node needs at least 20 TB of storage.
+With an average producer throughput of 75 MB/sec and a replication factor of three, each node writes 254 GB of data per hour and 6.4 TB of data per day. To satisfy the data retention requirement of three days, each node needs at least 20 TB of storage.
 
-Taking all of this into consideration, the following machine specifications provide a sensible minimum for a bare metal cluster or its cloud-based equivalent.
+The following machine specifications provide a minimum for a bare metal cluster or its cloud-based equivalent.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -50,22 +50,22 @@ Taking all of this into consideration, the following machine specifications prov
 - Data retention: 1 year
 - Failure tolerance: 1 node
 
-This use case requires a much longer retention of data. Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth when factoring in the replication traffic. Cloud providers have fast networks, so this amount of bandwidth is attainable, but expensive, and these speeds are not as prevalent throughout a typical data center.
+This use case requires a much longer retention of data. Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth for replication traffic. This is attainable but expensive with cloud providers, and these speeds are not as prevalent throughout a typical data center.
 
-Given at least one partition per core, the 500 MB/sec of data coming from the producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases when factoring data replication into the equation:
+Given at least one partition per core, the 500 MB/sec of data from producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases with data replication:
 
-| Producer MB/sec | Consumer MB/sec | Avg. Repl Factor | Nodes | Writes per node MB/sec | Reads per node MB/sec |
+| Producer MB/sec | Consumer MB/sec | Avg. Replication Factor | Nodes | Writes per node MB/sec | Reads per node MB/sec |
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
-| 500 | 1,500 | 3 | 3 | 500/3*3=500 | 1500/3=500 |
-| 500 | 1,500 | 3 | 5 | 500/5*3=300 | 1500/5=300 |
-| 500 | 1,500 | 3 | 7 | 500/7*3=215 | 1500/7=215 |
-| 500 | 1,500 | 5 | 7 | 500/7*5=358 | 1500/7=215 |
+| 500 | 1,500 | 3 | 3 | 500/3 * 3 = 500 | 1500/3 = 500 |
+| 500 | 1,500 | 3 | 5 | 500/5 * 3 = 300 | 1500/5 = 300 |
+| 500 | 1,500 | 3 | 7 | 500/7 * 3 = 215 | 1500/7 = 215 |
+| 500 | 1,500 | 5 | 7 | 500/7 * 5 = 358 | 1500/7 = 215 |
 
-Note the additional 500 MB/sec added to the consumer throughput. That is to account for the use of Tiered Storage and the additional bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
+Note the additional 500 MB/sec added to the consumer throughput. That's for Tiered Storage and the additional bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
 
-Producing an average of 500 MB every second equates to over 40 TB of data per day, and with a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t as much of an issue in the cloud with an abundance of high-performance persistent storage options (for example. io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
+Producing an average of 500 MB every second equates to over 40 TB of data per day. With a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t an issue in the cloud with high-performance persistent storage options (for example, io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
 
-This is why we built Tiered Storage. A topic with Tiered Storage enabled has the ability to write to faster local storage that is managed by local retention settings, and at the same time, write the data to object storage that is managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
+A topic with Tiered Storage enabled can write to faster local storage that is managed by local retention settings, and at the same time, write the data to object storage that is managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -88,11 +88,11 @@ This is why we built Tiered Storage. A topic with Tiered Storage enabled has the
 - Data retention: 1 year
 - Failure tolerance: 2 nodes
 
-This use case has lots of topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is towards the upper limit of what a single NVMe disk can sustain.
+This use case has lots of topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is toward the upper limit of what a single NVMe disk can sustain.
 
 At this scale, you get significant performance gains by distributing the writes over many cores and disks to better leverage Redpanda’s thread-per-core model. For example, given five nodes with 24 cores each, start with at least a partition per core (120 partitions in total) and scale up.
 
-At this scale, Redpanda is going to be generating over three TBs of writes per hour, and over 80 TB per day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
+At this scale, Redpanda generates over three TBs of writes per hour and over 80 TB per day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |

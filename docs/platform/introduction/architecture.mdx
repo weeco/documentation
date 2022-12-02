@@ -1,5 +1,5 @@
 ---
-title: Redpanda Architecture
+title: Introduction to Redpanda
 ---
 
 <head>
@@ -7,11 +7,35 @@ title: Redpanda Architecture
     <meta name="description" content="Redpanda is a distributed system that is composed of multiple nodes (servers) and data producers and consumers (clients)."/>
 </head>
 
-Redpanda is a distributed system composed of multiple nodes (servers) and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi on its way to pick you up, or pressing play on the first episode of a new TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
+Redpanda is a modern data streaming platform. The world has a continuous flow of information, from financial transactions to social media posts, and sensor data coming from IoT devices. Redpanda helps organizations harness this real-time data to make more informed and timely decisions for a competitive advantage.
+
+## Redpanda features
+
+### Fast
+  
+Redpanda is designed from the ground up for maximum performance. It can scale up to use all available resources on a single machine and scale out to distribute performance across multiple machines to meet the demands of any data streaming workload. This enables new use cases that require high throughput and low latency, with a minimal hardware footprint that saves infrastructure costs.
+
+### Simple
+  
+Redpanda is packaged as a single binary. It does not rely on any external systems. It’s easy to install, configure, and operate in any production environment. Redpanda is fully compatible with the Apache Kafka© API, so it works with the entire ecosystem of tools and integrations that have been built on the Kafka protocol, making it easy for developers to adopt. It can be deployed on bare metal, containers, and virtual machines, in your data center or in the cloud.
+
+### Reliable
+  
+At its core, Redpanda is a durable and fault tolerant transaction log for storing data streams. It uses the Raft consensus algorithm to write data to log files and safely replicate that data across multiple servers. Raft facilitates communication between the servers in a Redpanda cluster to make sure that they agree on any changes and remain in sync, even if a minority of servers are in a failure state. This enables Redpanda to ride out partial environmental failures to deliver a predictable performance, even at high loads.
+
+### Unified
+  
+Redpanda’s [Tiered Storage](../../platform/data-management/tiered-storage/) enables limitless processing of both real-time and historical data through a single API. With Tiered Storage enabled on your topics, Redpanda stores data both locally and remotely in S3-compatible object storage to provide unlimited data retention and disaster recovery.
+
+Local storage is finite and managed by Redpanda’s local data retention settings. The size of the provisioned storage determines how much data your topics can retain. This is typically no more than a few weeks, but it depends on the size of your cluster. Tiered Storage works in unison with local storage to offer unlimited data retention and the ability to recover topics in the event of a disaster. Consumers that read from more recent offsets continue to read from local storage, whereas consumers that read from historical offsets read from object storage, all with the same API.
+
+## Redpanda Architecture
+
+Redpanda is a distributed system composed of multiple nodes (servers) and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi on its way to pick you up, or someone pressing play on the first episode of a new TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
 
 Producers and consumers interact with Redpanda using the Kafka API. To achieve high scalability, they are fully decoupled. Redpanda provides strong guarantees to producers that events are stored durably within the system, and consumers can subscribe to Redpanda and read the events asynchronously. Redpanda achieves this decoupling by organizing events into topics. Topics, given any name, represent a logical grouping of events that are written to the same log. A topic can have multiple producers writing events to it and multiple consumers reading events from it.
 
-Redpanda stores events locally for a finite amount of time, based on the capacity of the provisioned local storage. This can be combined with Redpanda’s [Tiered Storage](../../platform/data-management/tiered-storage/) to retain the full history of events in cloud object storage. Consumers can read and reread events from any point within the maximum retention period, whether the events reside on local or remote storage.
+Redpanda stores events locally for a finite amount of time, based on the capacity of the provisioned local storage. This can be combined with Redpanda’s Tiered Storage to retain the full history of events in cloud object storage. Consumers can read and reread events from any point within the maximum retention period, whether the events reside on local or remote storage.
 
 Topics are scaled by sharding them into one or more partitions that are distributed between the nodes in a Redpanda cluster. Diving the data and communication allows clients to write data to, and read data from, many nodes at the same time. When producers write to a topic, they route events to one of the topic’s partitions. Events with the same key (like a stock ticker) are always routed to the same partition, and Redpanda guarantees the order of events at the partition level. That is, consumers read events from a partition in the order that they were written.
 
@@ -19,15 +43,15 @@ The figure above illustrates a single topic with two partitions. The partitions 
 
 Not only is Redpanda highly scalable, but it also provides strong guarantees for data safety and fault tolerance. Events written to a topic-partition are appended to a log file on disk. They can be replicated to other nodes in the cluster and appended to their copies of the log file on disk to prevent data loss in the event of failure. The [Raft consensus algorithm](https://raft.github.io/) is used for data replication. According to Raft’s website:
 
-Consensus is a fundamental problem in fault-tolerant distributed systems. Consensus involves multiple servers agreeing on values. Once they reach a decision on a value, that decision is final. Raft makes progress when any majority of the servers are available; for example, a cluster of 5 servers can continue to operate even if 2 servers fail. If more servers fail, they stop making progress (but will never return an incorrect result).
+Consensus is a fundamental problem in fault-tolerant distributed systems. Consensus involves multiple servers agreeing on values. Once they reach a decision on a value, that decision is final. Raft makes progress when any majority of the servers are available; for example, a cluster of five servers can continue to operate even if two servers fail. If more servers fail, they stop making progress (but never return an incorrect result).
 
 Every topic-partition forms a Raft group consisting of a single elected leader and zero or more followers (as specified by the topic’s replication factor). A Raft group can tolerate ƒ failures given 2ƒ+1 nodes. For example, in a cluster with five nodes and a topic with a replication factor of five, the topic remains fully operational if two nodes fail.
 
-Raft is a “majority vote” algorithm, meaning that for a leader to acknowledge that an event has been committed to a partition, a majority of its replicas must have written that event to their copy of the log. When a majority (or quorum) of responses have been received, the leader can make the event available to consumers (that is, increment the high watermark) and respond to the producer to acknowledge receipt of the event.
+Raft is a majority vote algorithm, meaning that for a leader to acknowledge that an event has been committed to a partition, a majority of its replicas must have written that event to their copy of the log. When a majority (or quorum) of responses have been received, the leader can make the event available to consumers (that is, increment the high watermark) and respond to the producer to acknowledge receipt of the event.
 
 As long as a majority of the replicas including the leader are stable, then Redpanda can tolerate disturbances in a minority of the replicas. If so-called gray failures are causing a minority of replicas to respond slower than normal, then the leader does not have to wait for their  responses to progress, and any additional latency is not passed on to the clients. The result is Redpanda is less sensitive to faults and is able to deliver a predictable performance.
 
-## Partition leadership elections
+### Partition leadership elections
 
 Every partition forms a Raft group consisting of a single elected leader and zero or more followers (as specified by the replication factor). Raft uses a heartbeat mechanism to maintain leadership authority and to trigger leader elections.
 
@@ -41,16 +65,23 @@ When this happens, the follower increments its term and votes for itself to be t
 
 - No leader is elected over a period of time. If multiple followers all timeout and become election candidates at the same time, then it is possible that no candidate obtains a majority of votes. When this happens, each candidate increments its term and triggers a new election round. Raft uses a random timeout between 150-300 milliseconds to ensure that split votes are rare and resolved quickly. See the interactive visualization here.
 
-As long as there is a timing inequality between heartbeat time, election timeout, and mean time between node failures (MTBF), then Raft can elect and maintain a steady leader and make progress. So, a leader can maintain its position as long as one of the ten heartbeat messages it sends to all of its followers every 1.5 seconds is received; otherwise, a new leader is elected.
+As long as there is a timing inequality between heartbeat time, election timeout, and mean time between node failures (MTBF), then Raft can elect and maintain a steady leader and make progress. So, a leader can maintain its position as long as one of the ten heartbeat messages it sends to all of its followers every 1.five seconds is received; otherwise, a new leader is elected.
 
 If a follower triggers an election, but the incumbent leader subsequently springs back to life and starts sending data again, then it’s too late. As part of the election process, the follower (now an election candidate) has incremented the term and rejects requests from the previous term, essentially forcing a leadership change. If a cluster is experiencing wider network infrastructure problems that result in latencies above the heartbeat timeout, then back-to-back election rounds can be triggered. During this period of infrastructure, unstable Raft groups may not be able to form a quorum, which results in partitions rejecting writes, but no data loss can occur.
 
 Redpanda has a Raft-priority implementation that allows the system to settle quickly after network outages.
 
-## Thread-per-core model
+### Thread-per-core model
 
 Redpanda is designed to exploit the advances in modern hardware, from the network down to the disks. Network bandwidth has increased considerably in recent years, especially in the cloud, and spinning disks have been replaced by SSD devices that deliver significantly better I/O performance. CPUs are faster too, but this is largely due to the increased core counts as opposed to the increase in single-core speeds.
 
-To exploit many-core systems, Redpanda uses an advanced [thread-per-core model](https://redpanda.com/blog/tpc-buffers?utm_medium=content&utm_assetname=sizing_guide&utm_assettype=report&utm_source=gated_content&utm_campaign=tpc_architecture_blog) to pin its application threads to the cores on a modern CPU. It combines this with structured message passing (SMP) to asynchronously communicate between the pinned threads. This allows Redpanda to avoid the overhead of context switching and expensive locking operations to significantly improve processing performance and efficiency.
+To exploit many-core systems, Redpanda uses an advanced thread-per-core model to pin its application threads to the cores on a modern CPU. It combines this with structured message passing (SMP) to asynchronously communicate between the pinned threads. This allows Redpanda to avoid the overhead of context switching and expensive locking operations to significantly improve processing performance and efficiency.
 
 From a sizing perspective, Redpanda’s ability to efficiently use all available hardware lets it scale up to get the most out of your infrastructure, before you’re forced to scale out to meet the demands of your workload. Redpanda delivers better performance with a smaller footprint, resulting in reduced operational costs and complexity.
+
+See also: [Sizing Guidelines](../../deployment/sizing)
+
+---
+## Suggested reading
+
+- [Thread-per-core buffer management for a modern Kafka-API storage system](https://redpanda.com/blog/tpc-buffers?utm_medium=content&utm_assetname=sizing_guide&utm_assettype=report&utm_source=gated_content&utm_campaign=tpc_architecture_blog)

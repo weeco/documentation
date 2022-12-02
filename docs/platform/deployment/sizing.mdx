@@ -7,15 +7,15 @@ title: Sizing Guidelines
     <meta name="description" content="How to size Redpanda clusters for low, medium, and high throughput use cases in your data center and in the cloud."/>
 </head>
 
-For best performance, properly size your Redpanda cluster to handle the volume of data being produced, replicated, and consumed. The following variables affect cluster sizing:
+For best performance, size your Redpanda cluster to handle the volume of data being produced, replicated, and consumed. The following variables affect cluster sizing:
 
 - MB/sec of data being produced (after compression, if applied)
 - Topic replication factor
 - Number of consumers
 
-Throughput and retention requirements can cause bottlenecks in the system. On an undersized cluster, the clients could saturate the available network bandwidth, a disk could run out of IOPS and be unable to keep up with writes, or you could simply run out of disk space. On an oversized Redpanda cluster, you could overpay for the unnecessary infrastructure. For detailed sizing for low, medium, and high throughput, see [Sizing Use Cases](../../deployment/sizing-use-cases).
+Throughput and retention requirements can cause bottlenecks in the system. On an undersized cluster, the clients could saturate the available network bandwidth, a disk could run out of IOPS and be unable to keep up with writes, or you could simply run out of disk space. On an oversized Redpanda cluster, you could overpay for unnecessary infrastructure. For detailed sizing for low, medium, and high throughput, see [Sizing Use Cases](../../deployment/sizing-use-cases).
 
-This topic describes sizing considerations. In summary:
+This topic describes sizing considerations. In general:
 - 2:1 core-to-local-disk ratio for maximum I/O performance (preferably NVMe SSD)
 - Minimum of 2GB memory per core, but more memory is better
 - Total network bandwidth needs to account for writes, replication, and reads
@@ -27,11 +27,9 @@ This topic describes sizing considerations. In summary:
 
 ### Network
 
-A basic Redpanda cluster can have three nodes, a topic with a single partition and a replication factor of three, and a single producer and consumer. For every 100 MB written to the partition’s leader, 200 MB is transmitted across the network to the other nodes for data replication, and a further 100 MB is transmitted to the consumer. In this case, producing 100 MB/sec equates to 400 MB/sec (3,200 Mbps) of network traffic being used. Even with the same amount of data being produced, increasing the replication factor or the number of consumers increases bandwidth utilization.
+A basic Redpanda cluster can have three nodes, a topic with a single partition and a replication factor of three, and a single producer and consumer. For every 100 MB written to the partition’s leader, 200 MB is transmitted across the network to other nodes for replication, and 100 MB is transmitted to the consumer. In this case, producing 100 MB/sec equates to 400 MB/sec (3,200 Mbps) of network traffic. Even with the same amount of data produced, increasing the replication factor or the number of consumers increases bandwidth utilization.
 
-It’s important to measure the network bandwidth between nodes, and between clients and nodes, to make sure that you’re getting the expected performance from the network. This is especially important for cloud deployments where network bandwidth is not always guaranteed.
-
-For example, AWS i3en instances only guarantee network bandwidth above a certain instance size (`i3en.6xlarge`) and below that size network bandwidth is advertised as “up to 25 Gbps”. For this reason, soak test the network to understand how it behaves over longer periods of time. 
+It’s important to measure the network bandwidth between nodes, and between clients and nodes, to make sure that you’re getting the expected performance from the network. This is especially important for cloud deployments where network bandwidth is not always guaranteed. For example, AWS i3en instances only guarantee network bandwidth above a certain instance size (`i3en.6xlarge`). Below that size, network bandwidth is advertised as “up to 25 Gbps”. For this reason, soak test the network to understand how it behaves over longer periods of time. 
 
 The following example uses [iPerf3](https://iperf.fr/) to test the network bandwidth between two Debian-based servers:
 
@@ -60,26 +58,23 @@ MBytes
 
 ### CPU and memory
 
-Topic partitions are the unit of parallelisation in Redpanda, and adding partitions is how you scale to meet the demands of your workload. Redpanda scales efficiently and is designed to scale up to utilize all available hardware and scale out to distribute performance across multiple nodes.
+Topic partitions are the unit of parallelisation in Redpanda. Adding partitions is how you scale to meet workload demands. Redpanda is designed to scale up to utilize all available hardware and scale out to distribute performance across multiple nodes.
 
-Redpanda implements a through its use of the [Seastar](https://seastar.io/) library, which is an advanced framework for high-performance server applications on modern hardware. This allows Redpanda to pin each of its application threads to a CPU core to avoid 
-context switching and blocking, significantly improving processing performance and efficiency.
+Redpanda implements a thread-per-core programming model through its use of the [Seastar](https://seastar.io/) library. This allows Redpanda to pin each of its application threads to a CPU core to avoid context switching and blocking, significantly improving processing performance and efficiency.
 
-Redpanda can handle approximately 1 GB/sec of writes per core, depending on the workload. Since NVMe disks can have a sustained write speed of over one GB/sec, it takes two cores to saturate a single NVMe disk. At higher throughput rates, a 2:1 core-to-disk ratio is important to avoid I/O bottlenecks, and a minimum of four cores is needed for any meaningful workload.
+Redpanda can handle approximately 1 GB/sec of writes per core, depending on the workload. Since NVMe disks can have a sustained write speed of over one GB/sec, it takes two cores to saturate a single NVMe disk. At higher throughput rates, a 2:1 core-to-disk ratio is important to avoid I/O bottlenecks, and a minimum of four cores is needed.
 
-Redpanda is basically a distributed transaction log, with well understood access patterns. It appends data to the end of log files, and sequentially reads data from log files. For this reason, Redpanda bypasses the Linux page cache and manages its own memory and disk I/O. This gives Redpanda complete control over the underlying hardware to optimize I/O performance, deliver predictable tail latencies, and minimize its memory footprint. A minimum of 2GB of memory per core is recommended, but more is better.
+Redpanda is basically a distributed transaction log, with well-understood access patterns. It appends data to the end of log files, and sequentially reads data from log files. For this reason, Redpanda bypasses the Linux page cache and manages its own memory and disk I/O. This gives Redpanda complete control over the underlying hardware to optimize I/O performance, deliver predictable tail latencies, and minimize its memory footprint. A minimum of 2GB of memory per core is recommended, but more is better.
 
 ### Storage
 
 Your best storage solution for your workload depends on your performance and data retention requirements. 
 
-If high throughput and low latency is most important, then use locally-attached NVMe SSD disks. This is also a good option in the cloud. Just remember that local disks are ephemeral and data is wiped when an instance is restarted. An alternative in the cloud is to use SSD-backed remote storage to persist data in between instance restarts. The hyper-clouds provide some options for guaranteeing performance in terms of throughput and provisioned IOPS, at a cost.
+If high throughput and low latency is most important, then use locally-attached NVMe SSD disks. This is also a good option in the cloud. Just remember that local disks are ephemeral and data is wiped when an instance is restarted. An alternative in the cloud is to use SSD-backed remote storage to persist data in between instance restarts. The hyper-clouds provide options for guaranteeing performance in terms of throughput and provisioned IOPS.
 
-For example, AWS io2 volumes offer up to 64,000 IOPS and 1,000 MB/sec throughput with single-digit millisecond latency. This is an expensive option, so if you can trade performance for cost, then AWS gp3 volumes offer a good alternative. GCP has comparable options with their high-end Extreme persistent disks and the lesser SSD persistent disk options. Likewise, Azure has Ultra, Premium, and Standard persistent disk options for choosing the right balance of performance versus cost.
+For example, AWS io2 volumes offer up to 64,000 IOPS and 1,000 MB/sec throughput with single-digit millisecond latency. This is an expensive option, so if you can trade performance for cost, then AWS gp3 volumes offer a good alternative. GCP has comparable options with high-end Extreme persistent disks and the lesser SSD persistent disks. Likewise, Azure has Ultra, Premium, and Standard persistent disk options for choosing the right balance of performance versus cost.
 
-Whichever option you choose, benchmark Redpanda’s underlying storage to set your expectations for read and write performance, at least from an I/O point of view. FIO is a great tool for replicating Redpanda’s sequential write pattern and load. 
-
-The following example shows how to run FIO on a Debian-based server:
+Whichever option you choose, benchmark Redpanda’s underlying storage for read and write performance, at least from an I/O point of view. FIO is a good tool for replicating Redpanda’s sequential write pattern and load. The following example shows how to run FIO on a Debian-based server:
 
 ```bash
 $ sudo apt -y update; sudo apt -y install fio
@@ -102,45 +97,43 @@ iodepth=16
 $ sudo fio fio-seq-write.job
 ```
 
-FIO’s output is comprehensive and contains a lot of detail. 
-
 Key performance metrics:
-- IOPS = input and output operations per second. IOPS represents how many sequential write operations per second the volume can handle.
-- BW = average bandwidth measured in MB per second. Bandwidth divided by the write block size (for example, bs=16K) is the IOPS.
-- slat = submission latency. The time in microseconds to submit the I/O to the kernel.
-- clat = completion latency. The time in microseconds after slat until the device has completed the I/O.
-- lat = overall latency in microseconds.
-- clat percentiles = completion tail latency. Pay particular attention to p90 and above. This is a good indication of whether the volume can deliver predictable, consistent performance.
+- IOPS = Input and output operations per second. IOPS represents how many sequential write operations per second the volume can handle.
+- BW = Average bandwidth measured in MB per second. Bandwidth divided by the write block size (for example, bs=16K) is the IOPS.
+- slat = Submission latency. The time in microseconds to submit the I/O to the kernel.
+- clat = Completion latency. The time in microseconds after slat until the device has completed the I/O.
+- lat = Overall latency in microseconds.
+- clat percentiles = Completion tail latency. Pay particular attention to p90 and above. This is a good indication of whether the volume can deliver predictable, consistent performance.
 
 ### Data retention
 
 As specified by the Kafka API, data retention in Redpanda is based on partition size (`retention.bytes`) or age (`retention.ms`), whichever comes first. These settings create a sliding window of opportunity for consumers to read data from Redpanda before the retention process kicks in and older data is no longer available.
 
-Both settings are enforced at the partition level. Each partition writes to its own data directory, into one or more log segments. The size of each log segment is determined by the setting `segment.bytes`, which has a default value of 1GB. As data is produced on a partition, it is appended to the open log segment. When that log segment reaches `segment.bytes` in size, it is closed, and a new log segment is opened.
+Both settings are enforced at the partition level. Each partition writes to its own data directory, into one or more log segments. The size of each log segment is determined by `segment.bytes`, which has a default value of 1GB. As data is produced on a partition, it is appended to the open log segment. When that log segment reaches `segment.bytes` in size, it is closed, and a new log segment is opened.
 
-- `retention.bytes` controls the maximum size of a partition directory. When the total size of all log segments in a partition directory reaches this value, the retention process discards old log segments. Multiply `retention.bytes` by the number of partitions in your topic to get the topic-level retention in bytes.
+- `retention.bytes`: This controls the maximum size of a partition directory. When the total size of all log segments in a partition directory reaches this value, the retention process discards old log segments. Multiply `retention.bytes` by the number of partitions in your topic to get the topic-level retention in bytes.
 
-- `retention.ms` also controls the size of a partition directory, but it does so based on the age of log segments rather than their combined size. Log segments are discarded when their maximum timestamp grows older than `retention.ms`.
+- `retention.ms`: This also controls the size of a partition directory, but it does so based on the age of log segments rather than their combined size. Log segments are discarded when their maximum timestamp grows older than `retention.ms`.
 
-For more information, see [Configure message retention](../../platform/deployment/disk-utilization/#configure-message-retention).
+See also: [Configure message retention](../../platform/deployment/disk-utilization/#configure-message-retention)
 
 ### Tiered Storage
 
-The downside to having only local storage is that data retention is limited to the provisioned capacity, and you’re forced to decide between using what’s available with a limit on the amount of data you can retain in the system, or provisioning more nodes to increase capacity. The latter is an expensive way to meet your data retention needs, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, this leads to underutilization and higher operational costs.
+With only local storage, data retention is limited to the provisioned capacity: you must either use the limited amount of data you can retain in the system or provision more nodes to increase capacity. Adding nodes is expensive, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, this leads to underutilization and higher operational costs.
 
-Redpanda has another option in the form of Tiered Storage, which is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
+Redpanda Tiered Storage is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
 
-When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured S3 bucket. As described in the previous section, the default log segment size is set to 1GB, so by default, a topic’s object store lags approximately 1GB behind the local copy. Lowering segment.bytes is one way to reduce this lag as it allows Redpanda to archive smaller log segments more frequently, at the cost of increasing I/O and file count. An idle timeout can also be set to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. Being able to reason about and adjust how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point and time objectives.
+When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured S3 bucket. The default log segment size is set to 1GB, so by default, a topic’s object store lags approximately 1GB behind the local copy. Lowering `segment.bytes` is one way to reduce this lag, as it lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count. You can also set an idle timeout to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. Adjusting how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point-and-time objectives.
 
-All of this is encapsulated in the Kafka API, meaning that clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage.Combining Tiered Storage and local storage also allows you to optimize the size of your Redpanda clusters to meet your performance requirements without having to worry about data retention, saving on infrastructure, and operational costs.
+This is encapsulated in the Kafka API, so clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage. 
 
-For more information, see [Tiered Storage](../../platform/data-management/tiered-storage/).
+See also: [Tiered Storage](../../platform/data-management/tiered-storage/)
 
 ### Production settings
 
 Before running performance benchmark testing, set Redpanda into production mode and run the auto tuning tool on every node. This enables the necessary hardware optimizations and ensures that the kernel parameters are set correctly.
 
-See [Set Redpanda production mode](../../platform/deployment/production-deployment/#set-redpanda-production-mode).
+See also: [Set Redpanda production mode](../../platform/deployment/production-deployment/#set-redpanda-production-mode)
 
 ### Open Messaging Benchmark
 
@@ -148,4 +141,9 @@ Performance benchmarking a distributed system like Redpanda is complex and requi
 
 The [Open Messaging Benchmark (OMB)](https://github.com/redpanda-data/openmessaging-benchmark) framework simplifies the process. OMB consists of a set of extensible tests that replicate realworld stress on a streaming platform to measure throughput and latency over given time periods. OMB can verify that a Redpanda cluster, deployed in your own data center or in the cloud, is sized appropriately for your use case. 
 
-For more information, see [Redpanda Benchmarks](https://github.com/redpanda-data/openmessaging-benchmark/blob/main/driver-redpanda/README.md).
+See also: [Redpanda Benchmarks](https://github.com/redpanda-data/openmessaging-benchmark/blob/main/driver-redpanda/README.md)
+
+---
+## Suggested reading
+
+- [Thread-per-core buffer management for a modern Kafka-API storage system](https://redpanda.com/blog/tpc-buffers?utm_medium=content&utm_assetname=sizing_guide&utm_assettype=report&utm_source=gated_content&utm_campaign=tpc_architecture_blog)
