@@ -31,7 +31,7 @@ module.exports = {
       items: [
         {
           type: "doc",
-          label: "Introducing Redpanda",
+          label: "Introduction to Redpanda",
           id: "platform/introduction/architecture",
         },
         {
