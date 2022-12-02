@@ -7,7 +7,7 @@ title: Sizing Use Cases
     <meta name="description" content="How to size Redpanda clusters for low, medium, and high throughput use cases in your data center or in the cloud."/>
 </head>
 
-The following scenarios show how to size Redpanda clusters for low, medium, and high throughput use cases in your data center and in the cloud.
+The following scenarios show how to size Redpanda clusters for different throughput and retention use cases in your data center and in the cloud.
 
 For details about sizing considerations, see [Sizing Guidelines](../../deployment/sizing).
 
@@ -52,7 +52,7 @@ The following machine specifications provide a minimum for a bare metal cluster 
 
 This use case requires a much longer retention of data. Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth for replication traffic. This is attainable but expensive with cloud providers, and these speeds are not as prevalent throughout a typical data center.
 
-Given at least one partition per core, the 500 MB/sec of data from producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases with data replication:
+Given at least one partition per core, the 500 MB/sec of data from producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases with data replication.
 
 | Producer MB/sec | Consumer MB/sec | Avg. Replication Factor | Nodes | Writes per node MB/sec | Reads per node MB/sec |
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -61,11 +61,11 @@ Given at least one partition per core, the 500 MB/sec of data from producers is 
 | 500 | 1,500 | 3 | 7 | 500/7 * 3 = 215 | 1500/7 = 215 |
 | 500 | 1,500 | 5 | 7 | 500/7 * 5 = 358 | 1500/7 = 215 |
 
-Note the additional 500 MB/sec added to the consumer throughput. That's for Tiered Storage and the additional bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
+The additional 500 MB/sec for consumer throughput is for Tiered Storage and the bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
 
-Producing an average of 500 MB every second equates to over 40 TB of data per day. With a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t an issue in the cloud with high-performance persistent storage options (for example, io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
+Producing an average of 500 MB every second equates to over 40 TB of data per day. With a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t an issue in the cloud with high-performance persistent storage options (like io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
 
-A topic with Tiered Storage enabled can write to faster local storage that is managed by local retention settings, and at the same time, write the data to object storage that is managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
+A topic with Tiered Storage enabled can write to faster local storage managed by local retention settings, and at the same time, it can write the data to object storage managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -88,11 +88,11 @@ A topic with Tiered Storage enabled can write to faster local storage that is ma
 - Data retention: 1 year
 - Failure tolerance: 2 nodes
 
-This use case has lots of topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is toward the upper limit of what a single NVMe disk can sustain.
+This use case has many topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is toward the upper limit of what a single NVMe disk can sustain.
 
 At this scale, you get significant performance gains by distributing the writes over many cores and disks to better leverage Redpanda’s thread-per-core model. For example, given five nodes with 24 cores each, start with at least a partition per core (120 partitions in total) and scale up.
 
-At this scale, Redpanda generates over three TBs of writes per hour and over 80 TB per day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
+At this scale, Redpanda generates over three TB of writes per hour and over 80 TB per day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |

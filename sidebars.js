@@ -31,13 +31,13 @@ module.exports = {
       items: [
         {
           type: "doc",
-          label: "Introduction to Redpanda",
-          id: "platform/introduction/architecture",
+          label: "Introduction to Events and Streaming",
+          id: "platform/introduction/intro-to-events",
         },
         {
           type: "doc",
-          label: "Introduction to Events and Streaming",
-          id: "platform/introduction/intro-to-events",
+          label: "How Redpanda Works",
+          id: "platform/introduction/architecture",
         },
         {
           type: "doc",
