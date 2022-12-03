@@ -1,0 +1,561 @@
+---
+title: Schema Registry
+---
+
+<head>
+    <meta name="title" content="Redpanda Schema Registry | Redpanda Docs"/>
+    <meta name="description" content="Overview, concepts, and tutorials of the schema registry in Redpanda."/>
+</head>
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Redpanda's schema registry provides the interface to store and manage event schemas:
+
+- Query supported serialization formats.
+- Register schemas for a subject.
+- Retrieve schemas of specific versions.
+- Configure schema compatibilty checking.
+
+Redpanda built the schema registry directly into the Redpanda binary. The schema registry runs out-of-the-box with Redpanda's default configuration, and it requires no new binaries to install and no new services to deploy or maintain.
+
+The schema registry supports different serialization formats:
+- Avro
+- Protocol buffers 
+
+## Concepts
+
+A schema is an external mechanism to describe the structure of data and its encoding.  
+
+Using schemas provides multiple benefits:
+- Enables a loosely coupled, data centric architecture that minimizes dependencies in code, between teams, and between producers and consumers.
+- Provides human-readable documentation for an API.
+- Verifies that data conforms to an API.
+- Supports the generation of serializers for data.
+- Manages the compatibility of evolving APIs, allowing new versions of services to be rolled out independently.
+
+By defining an API, or in this case the event, with a schema, disparate teams can start work on the subsystems that produce and consume those events with minimal communication overhead.
+
+Schemas are stored in a standard compacted topic. Redpanda uses optimistic concurrency control at the topic level to allow mutating REST calls to any broker. Every broker is symmetric, so there is no need to configure leadership or failover strategies.
+
+## Tutorial
+
+This tutorial covers the basic functionality of the Redpanda schema registry with an example Avro schema, `sensor_sample`, that represents a measurement from a sensor for the value of the `sensor` topic:
+
+```json
+{
+  "type": "record",
+  "name": "sensor_sample",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "identifier",
+      "type": "string",
+      "logicalType": "uuid"
+    },
+    {
+      "name": "value",
+      "type": "long"
+    }
+  ]
+}
+```
+
+### Prerequisites
+
+1. Download the [jq utility](https://stedolan.github.io/jq/download/). 
+2. Install [curl](https://curl.se/) or [Python](https://www.python.org/).
+    - If using Python, install the [Requests module](https://requests.readthedocs.io/en/latest/user/install/#install), then create an interactive Python session:
+
+        ```python
+        import requests
+        import json
+        def pretty(text):
+          print(json.dumps(text, indent=2))
+
+        base_uri = "http://localhost:8081"
+        ```
+3. [Install Redpanda](/docs/platform/quickstart/index.mdx). This tutorial uses [Redpanda with Docker](/docs/platform/quickstart/quick-start-docker).
+4. Start Redpanda with Docker:
+
+    ```bash
+    docker network create redpanda-sr
+    docker volume create redpanda-sr
+    docker run \
+    --pull=always \
+    --name=redpanda-sr \
+    --net=redpanda-sr \
+    -v "redpanda-sr:/var/lib/redpanda/data" \
+    -p 8081:8081 \
+    -p 8082:8082 \
+    -p 9092:9092 \
+    --detach \
+    docker.vectorized.io/vectorized/redpanda start \
+    --overprovisioned \
+    --smp 1 \
+    --memory 1G \
+    --reserve-memory 0M \
+    --node-id 0 \
+    --check=false \
+    --pandaproxy-addr 0.0.0.0:8082 \
+    --advertise-pandaproxy-addr 127.0.0.1:8082 \
+    --kafka-addr 0.0.0.0:9092 \
+    --advertise-kafka-addr redpanda-sr:9092
+    ```
+
+    - Once Redpanda is running, endpoints are documented at `http://localhost:8081/v1`.
+
+### Query supported schema formats
+
+To get the supported data serialization formats in the schema registry, make a GET request to the `/schemas/types` endpoint:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s "http://localhost:8081/schemas/types" | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/schemas/types').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the supported serialization formats:
+
+```
+[
+  "PROTOBUF",
+  "AVRO"
+]
+```
+
+### Register a schema
+
+A schema is registered in the registry with a *subject*: a name that is associated with the schema as it evolves. Subjects are typically in the form `<topic-name>-key` or `<topic-name>-value`.
+
+To register the `sensor_sample` schema, make a POST request to the `/subjects/sensor-value/versions` endpoint with the Content-Type `application/vnd.schemaregistry.v1+json`:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X POST \
+  "http://localhost:8081/subjects/sensor-value/versions" \
+  -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+  -d '{"schema": "{\"type\":\"record\",\"name\":\"sensor_sample\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"identifier\",\"type\":\"string\",\"logicalType\":\"uuid\"},{\"name\":\"value\",\"type\":\"long\"}]}"}' \
+  | jq
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+sensor_schema = {
+  "type": "record",
+  "name": "sensor_sample",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "identifier",
+      "type": "string",
+      "logicalType": "uuid"
+    },
+    {
+      "name": "value",
+      "type": "long"
+    }
+  ]
+}
+
+res = requests.post(
+    url=f'{base_uri}/subjects/sensor-value/versions',
+    data=json.dumps({
+      'schema': json.dumps(sensor_schema)
+    }),
+    headers={'Content-Type': 'application/vnd.schemaregistry.v1+json'}).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns an `id` unique for the schema in the Redpanda cluster:
+
+```json
+{
+  "id": 1
+}
+```
+
+### Retrieve a schema
+
+To retrieve a registered schema from the registry, make a GET request to the `/schemas/ids/<id>` endpoint: 
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/schemas/ids/1" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/schemas/ids/1').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the schema:
+
+```json
+{
+  "schema": "{\"type\":\"record\",\"name\":\"sensor_sample\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"identifier\",\"type\":\"string\",\"logicalType\":\"uuid\"},{\"name\":\"value\",\"type\":\"long\"}]}"
+}
+```
+
+### List registry subjects
+
+To list all registry subjects, make a GET request to the `/subjects` endpoint:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/subjects').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the subject:
+
+```json
+[
+  "sensor-value"
+]
+```
+
+### Retrieve schema versions of a subject
+
+To query the schema versions of a subject, make a GET request to the `/subjects/<subject-name>/versions` endpoint. 
+
+For example, to get the schema versions of the `sensor-value` subject:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects/sensor-value/versions" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/subjects/sensor-value/versions').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the version ID:
+
+```json
+[
+  1
+]
+```
+
+### Retrieve a schema of a subject
+
+To retrieve a schema associated with a subject, make a GET request to the `/subjects/<subject-name>/versions/<version-id>`:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects/sensor-value/versions/1" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/subjects/sensor-value/versions/1').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the subject and associated schema:
+
+```json
+{
+  "subject": "sensor-value",
+  "id": 1,
+  "version": 1,
+  "schema": "{\"type\":\"record\",\"name\":\"sensor_sample\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"identifier\",\"type\":\"string\",\"logicalType\":\"uuid\"},{\"name\":\"value\",\"type\":\"long\"}]}"
+}
+```
+
+To get the latest version, use `latest` as the version ID:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects/sensor-value/versions/latest" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/subjects/sensor-value/versions/latest').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+
+To get only the schema, append `/schema` to the endpoint path:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects/sensor-value/versions/latest/schema" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.get(f'{base_uri}/subjects/sensor-value/versions/latest/schema').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the schema:
+
+```json
+{
+  "type": "record",
+  "name": "sensor_sample",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "identifier",
+      "type": "string",
+      "logicalType": "uuid"
+    },
+    {
+      "name": "value",
+      "type": "long"
+    }
+  ]
+}
+```
+
+### Configure schema compatibility
+
+As applications change and their schemas evolve, the compatibility of schemas between producers and consumers must be managed. How do you want a consumer to handle data from a producer using an older or newer schema?
+
+The schema registry provides configuration of different types of schema compatibility, applied per subject when a new schema is registered:
+
+- `BACKWARD` (*default*) - consumers using the new schema (for example, version 10) can read data from producers using the previous schema (for example, version 9).
+- `BACKWARD_TRANSITIVE` - consumers using the new schema (for example, version 10) can read data from producers using all previous schemas (for example, versions 1-9).
+- `FORWARD` - consumers using the previous schema (for example, version 9) can read data from producers using the new schema (for example, version 10).
+- `FORWARD_TRANSITIVE` - consumers using any previous schema (for example, versions 1-9) can read data from producers using the new schema (for example, version 10).
+- `FULL` - the new schema is compatible with all previous schemas.
+- `NONE` - no schema compatiblity checks are done.
+
+To set the compatibility type for a subject, make a PUT request to `/config/<subject-name>` with the specific compatibility type:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X PUT \
+  "http://localhost:8081/config/sensor-value" \
+  -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+  -d '{"compatibility": "BACKWARD"}' \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.put(
+    url=f'{base_uri}/config/sensor-value',
+    data=json.dumps(
+        {'compatibility': 'BACKWARD'}
+      ),
+    headers={'Content-Type': 'application/vnd.schemaregistry.v1+json'}).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+On success, it returns the new compatibility type:
+
+```json
+{
+  "compatibility": "BACKWARD"
+}
+```
+
+Posting an incompatible schema change returns an error. For example, given our `BACKWARD` compatible subject `sensor-value`, registering a new schema with its `value` field's type changed from `long` to `int` returns an error due to incompatibility:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X POST \
+  "http://localhost:8081/subjects/sensor-value/versions" \
+  -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+  -d '{"schema": "{\"type\":\"record\",\"name\":\"sensor_sample\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"identifier\",\"type\":\"string\",\"logicalType\":\"uuid\"},{\"name\":\"value\",\"type\":\"int\"}]}"}' \
+  | jq
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+sensor_schema["fields"][2]["type"] = "int"
+
+res = requests.post(
+    url=f'{base_uri}/subjects/sensor-value/versions',
+    data=json.dumps({
+      'schema': json.dumps(sensor_schema)
+    }),
+    headers={'Content-Type': 'application/vnd.schemaregistry.v1+json'}).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+The returned error:
+
+```json
+{
+  "error_code": 409,
+  "message": "Schema being registered is incompatible with an earlier schema for subject \"{sensor-value}\""
+}
+```
+
+For an example of a compatible change, register a schema with the `value` field's type changed from `long` to `double`:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X POST \
+  "http://localhost:8081/subjects/sensor-value/versions" \
+  -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+  -d '{"schema": "{\"type\":\"record\",\"name\":\"sensor_sample\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"identifier\",\"type\":\"string\",\"logicalType\":\"uuid\"},{\"name\":\"value\",\"type\":\"double\"}]}"}' \
+  | jq
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+sensor_schema["fields"][2]["type"] = "double"
+
+res = requests.post(
+    url=f'{base_uri}/subjects/sensor-value/versions',
+    data=json.dumps({
+      'schema': json.dumps(sensor_schema)
+    }),
+    headers={'Content-Type': 'application/vnd.schemaregistry.v1+json'}).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+A successful registration returns the schema's `id`:
+
+```json
+{
+  "id": 2
+}
+```
+
+### Cleanup 
+
+When done with the tutorial, stop and cleanup Redpanda:
+
+```bash
+docker stop redpanda-sr
+docker rm redpanda-sr
+docker volume remove redpanda-sr
+docker network remove redpanda-sr
+```
+
+## Related topics
+
+- [Schema Registry API reference](../../reference/schema-registry-api)
+- [Sample Redpanda node configuration file](../../reference/node-configuration-sample) (search for `schema_registry`)
+- [Serialization/Deserialization in Redpanda Console ](../../console/features/schema-registry)
+- [Monitoring schema registry service-level metrics](../../cluster-administration/monitoring#service-level-queries)
+- [Configuring Redpanda node properties for schema registry](../../cluster-administration/node-property-configuration)
+- [Configuring schema registry for protobuf deserialization](../../console/features/protobuf#schema-registry)
+- [Redpanda Console record deserialization](../../console/features/record-deserialization)
+- [Provisioning ports for deployment](../../deployment/production-deployment#prepare-infrastructure)
