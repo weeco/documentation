@@ -1,0 +1,64 @@
+---
+title: Kubernetes Helm chart: rack awareness
+---
+
+<head>
+    <meta name="title" content="Kubernetes Helm chart: rack awareness | Redpanda Docs"/>
+    <meta name="description" content="Setting up rack awareness with the Kubernetes helm chart."/>
+</head>
+
+import styles from './rack-awareness.module.css';
+
+For more information about what Redpanda rack awareness is and why it's used, see [data-management/rack-awareness](./rack-awareness)
+
+## Setting up rack awareness with the Redpanda Helm chart
+
+By convention, the major cloud services annotate Kubernetes Nodes with the availability zone that the Node instance is placed in.
+To use that annotation to inform Redpanda to use those zones for fault tolerance at the data level, apply values to enable the feature:
+
+### Step 1
+
+Create a configuration file to enable rack awareness:
+
+_rack_awareness.yaml_
+
+```yaml
+rackAwareness:
+    enabled: true
+serviceAccount:
+    create: true
+rbac:
+    enabled: true
+```
+
+See the Helm chart's [values.yaml](https://github.com/joejulian/helm-charts/tree/main/charts/redpanda/values.yaml) to see additional options to rackAwareness, serviceAccount, and rbac.
+
+The rackAwareness configuration defaults to using the [well-known](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) Node annotation (`rackAwareness.nodeAnnotation`): `topology.kubernetes.io/zone`, setting the redpanda configuration flag to enable rack awareness, and setting the `rack` configuration to the value of the node annotation.
+
+The serviceAccount configuration allows the Helm chart to create a ServiceAccount.
+
+The rbac configuration allows the Helm chart to create ClusterRoles and ClusterRoleBindings that allow the Redpanda initialization container to read the annotation from the Node.
+
+### Step 2
+
+Create a new Redpanda cluster or apply this change to an existing Redpanda cluster with Helm:
+
+```sh
+helm repo add redpanda https://charts.redpanda.com/
+helm repo update
+helm upgrade --install redpanda redpanda/redpanda redpanda \
+  --namespace redpanda --create-namespace \
+  --values rack_awareness.yaml
+```
+
+## Annotating nodes in non-cloud settings
+
+The common convention for annotating Kubernetes Nodes is to use the `topology.kubernetes.io/zone` key. Label the nodes based on your own fault-tolerance requirements. Set this annotation by running:
+
+```sh
+kubectl annotate node dc1r12c22 topology.kubernetes.io/zone=dc1r12
+```
+
+Where dc1r12c22 is an example Node name of compute node 22 in rack 12 in datacenter 1. We set the annotation to dc1r12 so that any Redpanda pod that gets scheduled on that Node with have it's `rack` setting configured to `dc1r12`.
+
+If you already have an annotation model that you use, you can set the `rackAwareness.nodeAnnotation` to match your existing key.
