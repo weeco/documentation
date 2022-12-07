@@ -59,6 +59,6 @@ The common convention for annotating Kubernetes Nodes is to use the `topology.ku
 kubectl annotate node dc1r12c22 topology.kubernetes.io/zone=dc1r12
 ```
 
-Where dc1r12c22 is an example Node name of compute node 22 in rack 12 in datacenter 1. We set the annotation to dc1r12 so that any Redpanda pod that gets scheduled on that Node with have it's `rack` setting configured to `dc1r12`.
+In this example, dc1r12c22 is the node name for compute node 22 in rack 12 in datacenter 1. The annotation is set to dc1r12 so that any Redpanda pod that gets scheduled on that Node will have its `rack` setting configured to `dc1r12`.
 
 If you already have an annotation model that you use, you can set the `rackAwareness.nodeAnnotation` to match your existing key.
