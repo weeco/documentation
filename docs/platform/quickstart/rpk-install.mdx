@@ -18,7 +18,7 @@ For a list of all `rpk` commands and their syntax, refer to [rpk documentation](
 To install the rpk binary as a standalone application, follow the instructions for your operating system.
 
 <Tabs>
-  <TabItem value="ubuntu" label="Linux" default>
+<TabItem value="ubuntu" label="Linux" default>
 
 Download the `rpk` archive for Linux:
 
@@ -44,12 +44,12 @@ Unzip the `rpk` files to your `~/.local/bin/` directory:
 unzip rpk-linux-amd64.zip -d ~/.local/bin/
 ```
 
-  </TabItem>
+</TabItem>
 
-  <TabItem value="macos" label="macOS" default>
+<TabItem value="macos" label="macOS" default>
 
-  <Tabs>
-    <TabItem value="intelmac" label="Intel macOS" default>  
+<Tabs>
+<TabItem value="intelmac" label="Intel macOS" default>  
 
 Download the `rpk` archive for macOS:
 
@@ -66,19 +66,20 @@ mkdir -p ~/.local/bin
 Add it to your `$PATH`:
 
 ```bash
-export PATH="~/.local/bin:$PATH"
+export PATH=$PATH:~/.local/bin
 ```
 
-  Unzip the `rpk` files to your `~/.local/bin/` directory:
+Unzip the `rpk` files to your `~/.local/bin/` directory:
 
 ```bash
 unzip rpk-darwin-amd64.zip -d ~/.local/bin/
 ```
 
-  </TabItem>
+</TabItem>
 
-  <TabItem value="applesilicon" label="Apple Silicon" default>
-  Download the `rpk` archive for macOS:
+<TabItem value="applesilicon" label="Apple Silicon" default>
+
+Download the `rpk` archive for macOS:
 
 ```bash
 curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-arm64.zip
@@ -93,7 +94,7 @@ mkdir -p ~/.local/bin
 Add it to your `$PATH`:
 
 ```bash
-export PATH="~/.local/bin:$PATH"
+export PATH=$PATH:~/.local/bin
 ```
 
 Unzip the `rpk` files to your `~/.local/bin/` directory:
@@ -101,10 +102,11 @@ Unzip the `rpk` files to your `~/.local/bin/` directory:
 ```bash
 unzip rpk-darwin-arm64.zip -d ~/.local/bin/
 ```
+
 </TabItem>
 </Tabs>
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 After the files have been unzipped, run `rpk version` to display the rpk binary version.
@@ -116,5 +118,5 @@ rpk version
 The output displays the version number. For example: 
 
 ```bash
-v22.2.6 (rev 449eef2)
+v22.3.5 (rev 28b2443c33b0c2f8807bc5c460cc2478cfee1044)
 ```
