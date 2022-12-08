@@ -40,7 +40,7 @@ Schemas are stored in a standard compacted topic. Redpanda uses optimistic concu
 
 ## Tutorial
 
-This tutorial covers the basic functionality of the Redpanda schema registry with an example Avro schema, `sensor_sample`, that represents a measurement from a sensor for the value of the `sensor` topic:
+The following examples cover the basic functionality of the Redpanda schema registry based on an example Avro schema called `sensor_sample`. This schema contains fields that represent a measurement from a sensor for the value of the `sensor` topic, as defined below.
 
 ```json
 {
@@ -142,7 +142,7 @@ On success, it returns the supported serialization formats:
 
 ### Register a schema
 
-A schema is registered in the registry with a *subject*: a name that is associated with the schema as it evolves. Subjects are typically in the form `<topic-name>-key` or `<topic-name>-value`.
+A schema is registered in the registry with a *subject*, which is a name that is associated with the schema as it evolves. Subjects are typically in the form `<topic-name>-key` or `<topic-name>-value`.
 
 To register the `sensor_sample` schema, make a POST request to the `/subjects/sensor-value/versions` endpoint with the Content-Type `application/vnd.schemaregistry.v1+json`:
 
@@ -408,9 +408,9 @@ On success, it returns the schema:
 
 ### Configure schema compatibility
 
-As applications change and their schemas evolve, the compatibility of schemas between producers and consumers must be managed. How do you want a consumer to handle data from a producer using an older or newer schema?
+As applications change and their schemas evolve, you may find that producer schemas and consumer schemas are no longer compatible. You'll need to decide how you want a consumer to handle data from a producer that uses an older or newer schema.
 
-The schema registry provides configuration of different types of schema compatibility, applied per subject when a new schema is registered:
+You can configure different types of schema compatibility, which are applied to a subject when a new schema is registered. The schema registry supports the following compatibility types:
 
 - `BACKWARD` (*default*) - consumers using the new schema (for example, version 10) can read data from producers using the previous schema (for example, version 9).
 - `BACKWARD_TRANSITIVE` - consumers using the new schema (for example, version 10) can read data from producers using all previous schemas (for example, versions 1-9).
@@ -457,7 +457,7 @@ On success, it returns the new compatibility type:
 }
 ```
 
-Posting an incompatible schema change returns an error. For example, given our `BACKWARD` compatible subject `sensor-value`, registering a new schema with its `value` field's type changed from `long` to `int` returns an error due to incompatibility:
+If you POST an incompatible schema change, the request returns an error. For example, if you try to register a new schema with the `value` field's type changed from `long` to `int`, and compatibility is set to `BACKWARD`,  the request returns an error due to incompatibility:
 
 <Tabs>
 <TabItem value="curl" label="Curl" default>
@@ -489,7 +489,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-The returned error:
+The request returns this error:
 
 ```json
 {
