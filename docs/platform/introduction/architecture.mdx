@@ -7,21 +7,21 @@ title: How Redpanda Works
     <meta name="description" content="Redpanda is a distributed system that is composed of multiple nodes (servers) and data producers and consumers (clients)."/>
 </head>
 
-Redpanda is a modern data streaming platform that helps organizations harness real-time data. It's fast, it's easy, and it keeps your data safe. 
+Redpanda provides mission-critical data infrastructure for streaming real-time data. It's fast, it's easy, and it keeps your data safe. 
 
 ## Redpanda features
 
 ### Fast
   
-Redpanda is designed from the ground up for maximum performance on any data streaming workload. It can scale up to use all available resources on a single machine and scale out to distribute performance across multiple machines. This enables new use cases that require high throughput and low latency, with a minimal hardware footprint to save infrastructure costs.
+Redpanda is designed from the ground up for maximum performance on any data streaming workload. It can scale up to use all available resources on a single machine and scale out to distribute performance across multiple machines. This enables new use cases that require high throughput and low latency, with a minimal hardware footprint.
 
 ### Simple
   
-Redpanda is packaged as a single binary. It does not rely on any external systems. It’s easy to install, configure, and operate in any production environment. Redpanda is fully compatible with the Apache Kafka© API, so it works with the entire ecosystem of tools and integrations that have been built on the Kafka protocol, making it easy for developers to adopt. It can be deployed on bare metal, containers, and virtual machines, in your data center or in the cloud.
+Redpanda is packaged as a single binary. It does not rely on any external systems. It’s easy to install, configure, and operate in any production environment. Redpanda is fully compatible with the Apache Kafka© API, so it works with the ecosystem of tools and integrations that have been built on the Kafka protocol. It can be deployed in your data center or in the cloud on bare metal, containers, and virtual machines.
 
 ### Reliable
   
-At its core, Redpanda is a durable and fault-tolerant transaction log for storing data streams. It uses the [Raft consensus algorithm](https://raft.github.io/) to write data to log files and safely replicate that data across multiple servers. Raft facilitates communication between the servers in a Redpanda cluster to make sure that they agree on any changes and remain in sync, even if a minority of servers are in a failure state. This enables Redpanda to ride out partial environmental failures to deliver a predictable performance, even at high loads.
+At its core, Redpanda is a durable and fault-tolerant transaction log for storing data streams. It uses the [Raft consensus algorithm](https://raft.github.io/) to write data to log files and replicate that data across multiple servers. Raft facilitates communication between the nodes in a Redpanda cluster to make sure that they agree on changes and remain in sync, even if a minority of them are in a failure state. This enables Redpanda to ride out partial environmental failures to deliver a predictable performance, even at high loads.
 
 ### Unified
   
