@@ -10,20 +10,16 @@ title: Schema Registry
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda's schema registry provides the interface to store and manage event schemas:
+Redpanda's schema registry provides the interface to store and manage event schemas. Its API endpoints support the following functionality: 
 
-- Query supported serialization formats.
-- Register schemas for a subject.
-- Retrieve schemas of specific versions.
-- Configure schema compatibilty checking.
-
-Redpanda built the schema registry directly into the Redpanda binary. The schema registry runs out-of-the-box with Redpanda's default configuration, and it requires no new binaries to install and no new services to deploy or maintain.
-
-The schema registry supports different serialization formats:
-- Avro
-- Protocol buffers 
+- Querying supported serialization formats.
+- Registering schemas for a subject.
+- Retrieving schemas of specific versions.
+- Configuring schema compatibilty checking.
 
 ## Concepts
+
+### Schema
 
 A schema is an external mechanism to describe the structure of data and its encoding.  
 
@@ -34,9 +30,20 @@ Using schemas provides multiple benefits:
 - Supports the generation of serializers for data.
 - Manages the compatibility of evolving APIs, allowing new versions of services to be rolled out independently.
 
-By defining an API, or in this case the event, with a schema, disparate teams can start work on the subsystems that produce and consume those events with minimal communication overhead.
+#### Serialization format
 
-Schemas are stored in a standard compacted topic. Redpanda uses optimistic concurrency control at the topic level to allow mutating REST calls to any broker. Every broker is symmetric, so there is no need to configure leadership or failover strategies.
+ A data serialization format defines how data is converted to and from the bytes that are stored, published, and received. 
+ 
+Redpanda's schema registry supports the following data serialization formats for its schemas:
+
+- Avro
+- Protobuf
+
+### Redpanda design overview
+
+Redpanda built the schema registry directly into the Redpanda binary. The schema registry runs out-of-the-box with Redpanda's default configuration, and it requires no new binaries to install and no new services to deploy or maintain.
+
+Schemas are stored in the registry as a standard compacted topic. To support updating schemas in the registry, Redpanda uses optimistic concurrency control at the topic level to allow mutating REST calls to any broker. Every broker is symmetric, so there is no need to configure leadership or failover strategies.
 
 ## Tutorial
 
@@ -79,7 +86,7 @@ The following examples cover the basic functionality of the Redpanda schema regi
 
         base_uri = "http://localhost:8081"
         ```
-3. [Install Redpanda](/docs/platform/quickstart/index.mdx). This tutorial uses [Redpanda with Docker](/docs/platform/quickstart/quick-start-docker).
+3. [Install Redpanda with Docker](/docs/platform/quickstart/quick-start-docker).
 4. Start Redpanda with Docker:
 
     ```bash
@@ -131,7 +138,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the supported serialization formats:
+If the request is successful, it returns the supported serialization formats:
 
 ```
 [
@@ -195,13 +202,15 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns an `id` unique for the schema in the Redpanda cluster:
+If the request is successful, it returns a version `id` unique for the schema in the Redpanda cluster:
 
 ```json
 {
   "id": 1
 }
 ```
+
+Registering an evolved schema for an existing subject returns an incremented `id`.
 
 ### Retrieve a schema
 
@@ -227,7 +236,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the schema:
+If the request is successful, it returns the schema:
 
 ```json
 {
@@ -259,7 +268,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the subject:
+If the request is successful, it returns the subject:
 
 ```json
 [
@@ -293,7 +302,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the version ID:
+If the request is successful, it returns the version ID:
 
 ```json
 [
@@ -325,7 +334,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the subject and associated schema:
+If the request is successful, it returns the subject and associated schema:
 
 ```json
 {
@@ -381,7 +390,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the schema:
+If the request is successful, it returns the schema:
 
 ```json
 {
@@ -449,7 +458,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-On success, it returns the new compatibility type:
+If the request is successful, it returns the new compatibility type:
 
 ```json
 {
@@ -540,7 +549,7 @@ A successful registration returns the schema's `id`:
 
 ### Cleanup 
 
-When you're finished , stop and clean up Redpanda:
+When you're finished, stop and clean up Redpanda:
 
 ```bash
 docker stop redpanda-sr
