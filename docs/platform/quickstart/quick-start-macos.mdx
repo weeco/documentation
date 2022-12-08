@@ -7,6 +7,9 @@ title: Installing Redpanda on macOS
     <meta name="description" content="MacOS quick start guide."/>
 </head>
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 You can only run Redpanda directly on Linux. However, you can run Redpanda on macOS in a Docker container. This guide helps you get started with Redpanda for development and testing on macOS.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
@@ -25,8 +28,37 @@ You can install `rpk` on MacOS either with [Homebrew](https://brew.sh/), or you 
 - To install `rpk` with Homebrew: `brew install redpanda-data/tap/redpanda`
 - To download the `rpk` binary:
 
-    1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip) with `curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip`.
-    2. Unpack the archive to `/usr/local/bin` or any location in your `$PATH` with `unzip rpk-darwin-amd64.zip`.
+<Tabs>
+<TabItem value="intelmac" label="Intel macOS" default>
+
+1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip):
+
+```bash
+curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip
+```
+2. Unpack the archive to `/usr/local/bin` or any location in your `$PATH`:
+   
+```bash
+unzip rpk-darwin-amd64.zip
+```
+</TabItem>  
+
+<TabItem value="applesilicon" label="Apple Silicon" default>
+
+1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-arm64.zip): 
+
+```bash
+curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-arm64.zip
+```
+
+2. Unpack the archive to `/usr/local/bin` or any location in your `$PATH`:
+
+```bash
+unzip rpk-darwin-arm64.zip
+```
+
+</TabItem>
+</Tabs>
 
 ### Run a Redpanda cluster
 
