@@ -1,0 +1,60 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="intelmac" label="Intel macOS" default>  
+
+Download the `rpk` archive for macOS:
+
+```bash
+curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip
+```
+
+Ensure that you have the folder `~/.local/bin`:
+
+```bash
+mkdir -p ~/.local/bin
+```
+
+Add it to your `$PATH`:
+
+```bash
+export PATH=$PATH:~/.local/bin
+```
+
+Unzip the `rpk` files to your `~/.local/bin/` directory:
+
+```bash
+unzip rpk-darwin-amd64.zip -d ~/.local/bin/
+```
+
+</TabItem>
+
+<TabItem value="applesilicon" label="Apple Silicon" default>
+
+Download the `rpk` archive for macOS:
+
+```bash
+curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-arm64.zip
+```
+
+Ensure that you have the folder `~/.local/bin`:
+
+```bash
+mkdir -p ~/.local/bin
+```
+
+Add it to your `$PATH`:
+
+```bash
+export PATH=$PATH:~/.local/bin
+```
+
+Unzip the `rpk` files to your `~/.local/bin/` directory:
+
+```bash
+unzip rpk-darwin-arm64.zip -d ~/.local/bin/
+```
+
+</TabItem>
+</Tabs>
