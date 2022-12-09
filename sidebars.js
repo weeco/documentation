@@ -124,6 +124,8 @@ module.exports = {
           type: "category",
           label: "Performance and Tuning",
           items: [
+            "platform/deployment/sizing",
+            "platform/deployment/sizing-use-cases",
             "platform/deployment/disk-utilization",
             "platform/deployment/io-optimization",
           ],

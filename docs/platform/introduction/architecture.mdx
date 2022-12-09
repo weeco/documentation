@@ -32,8 +32,8 @@ Redpanda is a distributed system composed of multiple nodes (servers) and data p
 Producers and consumers interact with Redpanda using the Kafka API. To achieve high scalability, they are fully decoupled. Redpanda provides strong guarantees to producers that events are stored durably within the system, and consumers can subscribe to Redpanda and read the events asynchronously. Redpanda achieves this decoupling by organizing events into topics. Topics represent a logical grouping of events that are written to the same log. A topic can have multiple producers writing events to it and multiple consumers reading events from it.
 
 ### Tiered Storage
-  
-[Tiered Storage](../../data-management/tiered-storage/) allows unlimited data retention and disaster recovery. With Tiered Storage enabled on your topics, you can retain the full history of events in cloud object storage. 
+
+Redpanda [Tiered Storage](../../data-management/tiered-storage/) is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
 
 Consumers that read from more recent offsets continue to read from local storage, and consumers that read from historical offsets read from object storage, all with the same API. Consumers can read and reread events from any point within the maximum retention period, whether the events reside on local or remote storage.
 
@@ -57,9 +57,7 @@ As long as the leader and a majority of the replicas are stable, Redpanda can to
 
 ### Partition leadership elections
 
-Raft uses a heartbeat mechanism to maintain leadership authority and to trigger leader elections.
-
-The partition leader sends a periodic heartbeat to all followers to assert its leadership in the current term (default = 150 milliseconds). A term is an arbitrary period of time that starts when a leadership election is triggered. If a follower does not receive a heartbeat over a period of time (default = 1.5 seconds), then it triggers an election to choose a new partition leader.
+Raft uses a heartbeat mechanism to maintain leadership authority and to trigger leader elections. The partition leader sends a periodic heartbeat to all followers to assert its leadership in the current term (default = 150 milliseconds). A term is an arbitrary period of time that starts when a leadership election is triggered. If a follower does not receive a heartbeat over a period of time (default = 1.5 seconds), then it triggers an election to choose a new partition leader.
 
 When this happens, the follower increments its term and votes for itself to be the leader for that term. It then sends a vote request to the other nodes and waits until one of the following:
 
