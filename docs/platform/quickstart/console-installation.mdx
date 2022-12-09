@@ -12,14 +12,11 @@ title: Install Redpanda Console
 
 ### Redpanda platform with Docker Compose
 
-The easiest way to get started with Redpanda Console on a local machine is to start Redpanda platform
-with Docker compose. Refer to the [Docker Compose page](../console/reference/docker-compose.mdx) to
-launch Redpanda platform locally.
+The recommended way to get started with Redpanda Console on a local machine is to start Redpanda platform with Docker compose. Refer to [Docker Compose](../console/reference/docker-compose.mdx) for details about launching Redpanda platform locally.
 
 ### Connect to a remote cluster
 
-To connect Redpanda Console to a Kafka cluster that does not run on the same machine where you want
-to run Console, use this command:
+To connect Redpanda Console to a Kafka cluster that is not running on the same machine where you want to run Console:
 
 ```shell
 docker run -p 8080:8080 \
@@ -58,13 +55,13 @@ docker run -p 8080:8080 \
 ```
 
 :::note
-The full list of configurations can be found in the [Console reference config](../console/reference/config.mdx).
+Refer to the [Console reference config](../console/reference/config.mdx) for a full list of configurations.
 :::
 
 ### Connect to a local cluster
 
 To connect Redpanda Console to a Kafka cluster that is running on your local machine
-or in another Docker container run:
+or in another Docker container:
 
 ```shell
 docker run --network=host \
@@ -72,7 +69,7 @@ docker run --network=host \
   docker.redpanda.com/vectorized/console:latest
 ```
 
-Take note that only the initial connection is made through your provided `KAFKA_RBOKERS` address.
+Note that only the initial connection is made through the `KAFKA_RBOKERS` address you specified.
 After the initial connection is established, your client application will talk to the cluster to
 get all broker' addresses so that it can communicate to all brokers directly. Each broker returns
 the configured `advertised_listener` address that matches the port the initial connection has been
