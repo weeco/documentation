@@ -20,7 +20,7 @@ To run `docker compose` you have to install Docker on your machine. Please refer
 version: '3.7'
 services:
   redpanda:
-    image: docker.redpanda.com/vectorized/redpanda:v22.2.2
+    image: docker.redpanda.com/vectorized/redpanda:v22.3.5
     command:
       - redpanda start
       - --smp 1
@@ -38,7 +38,7 @@ services:
       - 29092:29092
 
   console:
-    image: docker.redpanda.com/vectorized/console:latest
+    image: docker.redpanda.com/vectorized/console:v2.1.1
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
@@ -77,7 +77,7 @@ services:
       - redpanda
 
   connect:
-    image: docker.cloudsmith.io/redpanda/connectors/connectors:624ff9e
+    image: docker.redpanda.com/vectorized/connectors:1.0.0-dev-dff1c57
     hostname: connect
     container_name: connect
     depends_on:
@@ -85,18 +85,21 @@ services:
     ports:
       - "8083:8083"
     environment:
-      KAFKA_CONNECT_CONFIGURATION: |
-        offset.storage.topic=docker-connect-offsets
-        value.converter=org.apache.kafka.connect.json.JsonConverter
-        config.storage.topic=docker-connect-configs
-        key.converter=org.apache.kafka.connect.json.JsonConverter
-        group.id=compose-connect-group
-        status.storage.topic=docker-connect-status
-        config.storage.replication.factor=1
-        offset.storage.replication.factor=1
-        status.storage.replication.factor=1
-      KAFKA_CONNECT_METRICS_ENABLED: "false"
-      KAFKA_CONNECT_BOOTSTRAP_SERVERS: redpanda:29092
-      KAFKA_GC_LOG_ENABLED: "false"
-      KAFKA_HEAP_OPTS: -Xms128M
+      CONNECT_CONFIGURATION: |
+          key.converter=org.apache.kafka.connect.converters.ByteArrayConverter
+          value.converter=org.apache.kafka.connect.converters.ByteArrayConverter
+          group.id=connectors-cluster
+          offset.storage.topic=_internal_connectors_offsets
+          config.storage.topic=_internal_connectors_configs
+          status.storage.topic=_internal_connectors_status
+          config.storage.replication.factor=-1
+          offset.storage.replication.factor=-1
+          status.storage.replication.factor=-1
+          offset.flush.interval.ms=1000
+          producer.linger.ms=50
+          producer.batch.size=131072
+      CONNECT_BOOTSTRAP_SERVERS: redpanda:29092
+      CONNECT_GC_LOG_ENABLED: "false"
+      CONNECT_HEAP_OPTS: -Xms512M -Xmx512M
+      CONNECT_LOG_LEVEL: info
 ```
