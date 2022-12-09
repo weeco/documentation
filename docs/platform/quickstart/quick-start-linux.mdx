@@ -16,40 +16,34 @@ For production or benchmarking, see [Deploying for Production](../../deployment/
 
 ## Install and run Redpanda
 
-Installation requires just a few commands:
+Run the following commands to download and install the Redpanda repository, install Redpanda, and start Redpanda as a service.
 
 <Tabs>
-    <TabItem value="fedora" label="Fedora/RedHat" default>
-
+<TabItem value="fedora" label="Fedora/RedHat" default>
 
   ```bash
-  ## Run the setup script to download and install the repo
   curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && \
-  ## Use yum to install redpanda
   sudo yum install redpanda -y && \
-  ## Start redpanda as a service 
   sudo systemctl start redpanda
   ```
 
-
-  </TabItem>
-      <TabItem value="debian" label="Debian/Ubuntu" default>
+</TabItem>
+<TabItem value="debian" label="Debian/Ubuntu" default>
 
 ```bash
-## Run the setup script to download and install the repo
 curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | sudo -E bash && \
-## Use apt to install redpanda
 sudo apt install redpanda -y && \
-## Start redpanda as a service 
 sudo systemctl start redpanda
 ```
 
-  </TabItem>
-    </Tabs>
+</TabItem>
+</Tabs>
 
 Verify that Redpanda is up and running: 
 
-`sudo systemctl status redpanda`
+```bash
+sudo systemctl status redpanda`
+```
 
 The output should look similar to the following:
 

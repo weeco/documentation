@@ -7,6 +7,9 @@ title: Installing Redpanda on macOS
     <meta name="description" content="MacOS quick start guide."/>
 </head>
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 You can only run Redpanda directly on Linux. However, you can run Redpanda on macOS in a Docker container. This guide helps you get started with Redpanda for development and testing on macOS.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
@@ -18,21 +21,43 @@ Make sure that you install [Docker](https://docs.docker.com/docker-for-mac/insta
 
 To customize the containers, you can also set up your own [Redpanda containers in Docker](../../quickstart/quick-start-docker).
 
-### Install `rpk`
+### Install rpk
 
-You can install `rpk` on MacOS either with [Homebrew](https://brew.sh/), or you can just download the binary.
+You can install `rpk` on MacOS either by using [Homebrew](https://brew.sh/) or by downloading the binary.
 
-- To install `rpk` with Homebrew: `brew install redpanda-data/tap/redpanda`
-- To download the `rpk` binary:
+<Tabs>
+<TabItem value="homebrew" label="Homebrew">
 
-    1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip) with `curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip`.
-    2. Unpack the archive to `/usr/local/bin` or any location in your `$PATH` with `unzip rpk-darwin-amd64.zip`.
+```shell
+brew install redpanda-data/tap/redpanda
+```
+
+</TabItem>
+<TabItem value="download" label="Download">
+
+1. Download the [rpk archive](https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip):
+
+  ```bash
+  curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-darwin-amd64.zip
+  ```
+
+2. Unpack the archive to `/usr/local/bin` or any location in your `$PATH`: 
+
+  ```bash
+  cd /usr/local/bin
+  unzip rpk-darwin-amd64.zip
+  ```
+
+</TabItem>
+</Tabs>
 
 ### Run a Redpanda cluster
 
 Run Redpanda in a three-node cluster: 
 
-`rpk container start -n 3`
+```bash
+rpk container start -n 3
+```
 
 The first time you run `rpk container start`, it downloads an image matching the rpk version (you can check it by running `rpk version`).
 You now have a three-node cluster running Redpanda.
