@@ -141,7 +141,7 @@ kubectl apply -f https://raw.githubusercontent.com/redpanda-data/redpanda-exampl
 You must create the superuser through the Admin API. This user has [ALL permissions](../../../security/authorization#operations) on the cluster and is the user that grants permissions to new users. Without a superuser, you can create other users, but you will not be able to grant them permissions to the cluster.
 
 :::note
-Passwords are in single quotes for potential special characters.
+Passwords are in single quotes to avoid conflicts with special characters. Enclosing characters in single quotes preserves the literal value of each character.
 :::
 
 To create the superuser and specify a password for the user, run:
