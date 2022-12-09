@@ -25,7 +25,7 @@ auth:
     enabled: true
     users:
       - name: admin
-        password: `changeme`
+        password: 'changeme'
 ```
 
 :::note notes
@@ -48,11 +48,11 @@ Create users (not superusers) and set passwords for the new users. By default, t
 As a security best practice, superusers should not run commands on the cluster. Instead, have these additional or new users interact with the cluster.
 :::
 
-To create the user `myuser` with a password `changethispassword`, run:
+To create the user `myuser` with a password 'changethispassword', run:
 
 ```bash
 kubectl exec -n redpanda -c redpanda redpanda-0 -- \
-  rpk acl user create myuser -p `changethispassword`
+  rpk acl user create myuser -p 'changethispassword'
 ```
 
 ## Grant permissions
@@ -66,7 +66,7 @@ The superuser can grant permissions to additional users through access control l
     rpk acl create --allow-principal User:myuser \
     --operation create,describe \
     --cluster \
-    --user admin --password `changeme` --sasl-mechanism SCRAM-SHA-256
+    --user admin --password 'changeme' --sasl-mechanism SCRAM-SHA-256
   ```
 
 2. Optionally, you can use the superuser to grant permissions to a new user for a topic. The following command grants `describe` privileges to a topic:
@@ -76,7 +76,7 @@ The superuser can grant permissions to additional users through access control l
     rpk acl create --allow-principal User:myuser \
     --operation describe \
     --topic myfirsttopic \
-    --user admin --password `changeme` --sasl-mechanism SCRAM-SHA-256
+    --user admin --password 'changeme' --sasl-mechanism SCRAM-SHA-256
   ```
 
 :::note
@@ -92,7 +92,7 @@ To create a topic:
 ```bash
 kubectl exec -n redpanda -c redpanda redpanda-0 -- \
   rpk topic create myfirsttopic \
-  --user myuser --password `changethispassword` --sasl-mechanism SCRAM-SHA-256
+  --user myuser --password 'changethispassword' --sasl-mechanism SCRAM-SHA-256
 ```
 
 To describe the topic:
@@ -100,5 +100,5 @@ To describe the topic:
 ```bash
 kubectl exec -n redpanda -c redpanda <cluster_name>-0 -- \
   rpk topic describe myfirsttopic \
-  --user myuser --password `changethispassword` --sasl-mechanism SCRAM-SHA-256
+  --user myuser --password 'changethispassword' --sasl-mechanism SCRAM-SHA-256
 ```

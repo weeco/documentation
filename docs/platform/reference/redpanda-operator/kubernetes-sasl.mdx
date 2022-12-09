@@ -147,13 +147,13 @@ Passwords are in single quotes for potential special characters.
 To create the superuser and specify a password for the user, run:
 
 ```bash
-kubectl exec -c redpanda <cluster_name>-0 -- rpk acl user create <super_user_username> \
--p <`superuser_password`> 
+kubectl exec -c redpanda <cluster_name>-0 -- rpk acl user create <superuser_username> \
+-p <'superuser_password'> 
 ```
 
 The `-0` in this command refers to the first node of the cluster. You can change this integer to specify a different node in the cluster. 
 
-The `super_user_username` is the superuser that you defined in the cluster specification file. 
+The 'superuser_username' is the superuser that you defined in the cluster specification file. 
 
 :::note
 If you changed the Admin API port from the default, you must add the following line to each command that creates a new user, in this step and the next step: 
@@ -166,8 +166,8 @@ If you changed the Admin API port from the default, you must add the following l
 This command executes the `rpk` command from within a Redpanda cluster container, using the local host. To run the command from another pod, you must include the broker location with the command. The text below shows the full command with the broker location highlighted:
 
 ```bash
-kubectl exec -c redpanda <cluster_name>-0 -- rpk acl user create <super_user_username> \
--p <`superuser_password`> \
+kubectl exec -c redpanda <cluster_name>-0 -- rpk acl user create <superuser_username> \
+-p <'superuser_password'> \
 --api-urls localhost:<port>
 // highlight-start
 --brokers <cluster_name>-0.<cluster_name>.default.svc.cluster.local:<port>
@@ -186,7 +186,7 @@ For each user that you want to create, run:
 
 ```bash
 kubectl exec -c redpanda external-connectivity-0 -- rpk acl user create <username> \
--p <`password`> \
+-p <'password'> \
 ```
 
 ## Step 5: Grant permissions
@@ -197,8 +197,8 @@ The superuser can grant permissions to additional users through access control l
 
 ```bash
 kubectl exec -c redpanda <cluster_name>-0 -- rpk acl create --allow-principal User:<username> --operation create,describe --cluster \
---user <super_user_username> \
---password <`superuser_password`> \
+--user <superuser_username> \
+--password <'superuser_password'> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
@@ -206,8 +206,8 @@ kubectl exec -c redpanda <cluster_name>-0 -- rpk acl create --allow-principal Us
 
 ```bash
 kubectl exec -c redpanda <cluster_name>-0 -- rpk acl create --allow-principal User:<username> --operation describe --topic <topic_name> \
---user <super_user_username> \
---password <`superuser_password`> \
+--user <superuser_username> \
+--password <'superuser_password'> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
@@ -220,7 +220,7 @@ To create a topic, run:
 ```bash
 kubectl exec -c redpanda <cluster_name>-0 -- rpk topic create <topic_name> \
 --user <username> \
---password <`user_password`> \
+--password <'user_password'> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
@@ -229,7 +229,7 @@ To describe the topic, run:
 ```bash
 kubectl exec -c redpanda <cluster_name>-0 -- rpk topic describe <topic_name> \
 --user <username> \
---password <`user_password`> \
+--password <'user_password'> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
