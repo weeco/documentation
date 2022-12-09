@@ -18,6 +18,10 @@ See also:
 - [Configuring Listeners](../../cluster-administration/listener-configuration)
 - [Writing Custom Deployment Automation](../../deployment/custom-deployment)
 
+:::note
+Passwords are in single quotes for potential special characters.
+:::
+
 ## Enable authentication
 
 To enable authentication, set `kafka_enable_authorization` to `true`, and specify at least one value for the `superusers` property. This superuser is used to bootstrap permissions for other users in the cluster. See [Cluster configuration properties](../../cluster-administration/cluster-property-configuration).
@@ -48,7 +52,7 @@ When you configure authentication, you include one or more superusers in the Red
 Specify the name of the superuser. This can be a new user or an existing user. For example, if you use the superuser named `admin`, then Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run:
 
 ```bash
-rpk acl user create <superuser_username> -p <superuser_password>
+rpk acl user create <superuser_username> -p <`superuser_password`>
 ```
 
 Now the `admin` user has full access to the cluster and can grant permissions to other users.
@@ -61,7 +65,7 @@ To create users and set passwords, run:
 
 ```bash
 rpk acl user create admin \
--p <password> \
+-p <`password`> \
 --api-urls localhost:9644
 ```
 
@@ -97,7 +101,7 @@ For example, to use the `SCRAM-SHA-256` mechanism, run:
 ```bash
 rpk topic create littlefoot \
 --user panda \
---password pandaPassword \
+--password `pandaPassword` \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
@@ -159,7 +163,7 @@ schema_registry_client:
     - address: 127.0.0.1
       port: 9092
   scram_username: panda
-  scram_password: pandaPassword
+  scram_password: `pandaPassword`
   sasl_mechanism: SCRAM-SHA-256
 // highlight-end
 ```
@@ -179,7 +183,7 @@ schema_registry_client:
     enabled: true
 // highlight-end
   scram_username: panda
-  scram_password: pandaPassword
+  scram_password: `pandaPassword`
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -198,7 +202,7 @@ pandaproxy_client:
     truststore_file: ca.crt
     enabled: true
   scram_username: panda
-  scram_password: pandaPassword
+  scram_password: `pandaPassword`
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -209,7 +213,7 @@ You can use the newly-created user to interact with Redpanda with `rpk`:
 ```bash
 rpk topic describe test-topic \
 --user admin \
---password <password> \
+--password <`password`> \
 --sasl-mechanism SCRAM-SHA-256 \
 --brokers localhost:9092
 ```
@@ -265,9 +269,9 @@ schema_registry:
 Then to use basic authentication:
 
 ```
-rpk acl user create foo --password bar # Creates SASL user "foo" for the Kafka API
-curl -u "foo:bar" "http://localhost:8082/topics" # A request to the HTTP Proxy with user foo. Don't forget the colon!
-curl -u "foo:bar" "http://localhost:8081/subjects" # A request to the Schema Registry with user foo. Don't forget the colon!
+rpk acl user create foo --password `bar` # Creates SASL user "foo" for the Kafka API
+curl -u "foo:`bar`" "http://localhost:8082/topics" # A request to the HTTP Proxy with user foo. Don't forget the colon!
+curl -u "foo:`bar`" "http://localhost:8081/subjects" # A request to the Schema Registry with user foo. Don't forget the colon!
 ```
 
 ## Configure mTLS with authentication

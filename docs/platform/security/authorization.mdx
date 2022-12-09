@@ -242,7 +242,7 @@ For example, to create a user:
 ```bash
 rpk acl user create \
 --new-username Jack \
---new-password <password> \
+--new-password <`password`> \
 --api-urls localhost:9644
 ```
  
@@ -326,7 +326,7 @@ Every `rpk acl` command can use these flags:
 </tr>
 <tr>
 <td>--password</td>
-<td>SASL password to be used for authentication.</td>
+<td>SASL password to be used for authentication. Passwords with special characters must be in single quotes.</td>
 </tr>
 <tr>
 <td>--sasl-mechanism</td>
@@ -570,7 +570,7 @@ Before a created SASL account can be used, you must also create ACLs to grant th
 To create a SASL user, run:
  
 ```bash
-rpk acl user create [USER] -p [PASSWORD] [globalACLFlags] [globalUserFlags] [localFlags]
+rpk acl user create [user] -p [`password`] [globalACLFlags] [globalUserFlags] [localFlags]
 ```
  
 Here are the local flags:

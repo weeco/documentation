@@ -65,6 +65,7 @@ kafka:
     enabled: false
     username:
     # Password can also be set using the --kafka.sasl.password flag.
+    # Put passwords with special characters in single quotes.
     password:
     # Valid mechanisms are: PLAIN, SCRAM-SHA-256, 
     # SCRAM-SHA-512, GSSAPI, OAUTHBEARER and AWS_MSK_IAM.
@@ -118,6 +119,7 @@ kafka:
     # Basic auth username
     username: 
     # Basic auth password. This can also be set using the --schema.registry.password
+    # Put passwords with special characters in single quotes.
     # flag
     password: 
     # Can also be set using the --schema.registry.token flag
@@ -166,6 +168,7 @@ kafka:
       # Basic Auth
       # To use GitHub's personal access tokens, use `token`
       # as username and pass the token as password
+      # Put passwords with special characters in single quotes.
       basicAuth:
         enabled: true
         username: token
@@ -223,6 +226,7 @@ console:
       refreshInterval: 1m
       # To use GitHub's personal access tokens, use `token`
       # for the username and pass the token as password.
+      # Put passwords with special characters in single quotes.
       basicAuth:
         enabled: true
         username: token
@@ -243,6 +247,7 @@ redpanda:
     # Username for basic auth
     username:
     # Password for basic auth
+    # Put passwords with special characters in single quotes.
     password:
     tls:
       enabled: false

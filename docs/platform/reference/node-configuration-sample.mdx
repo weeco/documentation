@@ -262,6 +262,7 @@ pandaproxy_client:
   scram_username: ""
 
   # Password for SCRAM authentication mechanisms
+  # Use single quotes for potential special characters.
   # Default: ""
   scram_password: ""
 
@@ -334,7 +335,7 @@ rpk:
     # The SASL config, if enabled in the brokers.
     sasl:
       user: user
-      password: pass
+      password: `pass`
       type: SCRAM-SHA-256
 
   # The Admin API configuration
