@@ -30,7 +30,7 @@ auth:
 
 :::note notes
 - In this YAML document, `users` is a list of superusers.
-- Passwords are in single quotes for potential special characters.
+- Passwords are in single quotes to avoid conflicts with special characters. Enclosing characters in single quotes preserves the literal value of each character.
 :::
 
 During install or upgrade, enable SASL configuration:
