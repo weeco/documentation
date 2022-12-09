@@ -19,7 +19,7 @@ This topic describes sizing considerations. In general:
 - 2:1 core-to-local-disk ratio for maximum I/O performance (preferably NVMe SSD)
 - Minimum of 2GB memory for each core, but more memory is better
 - Total network bandwidth needs to account for writes, replication, and reads
-- Test with i3en (AWS), n2-standard (GCP), and lsv2 (Azure) cloud instance types
+- Test with I3en (AWS), n2-standard (GCP), and lsv2 (Azure) cloud instance types
 - Use Tiered Storage to unify historical and real-time data
 - Run hardware and Redpanda benchmark tests to provide a performance baseline
 
@@ -29,7 +29,7 @@ This topic describes sizing considerations. In general:
 
 A basic Redpanda cluster can have three nodes, a topic with a single partition and a replication factor of three, and a single producer and consumer. For every 100 MB written to the partition’s leader, 200 MB is transmitted across the network to other nodes for replication, and 100 MB is transmitted to the consumer. In this case, producing 100 MB/sec equates to 400 MB/sec (3,200 Mbps) of network traffic. Even with the same amount of data produced, increasing the replication factor or the number of consumers increases bandwidth utilization.
 
-It’s important to measure the network bandwidth between nodes, and between clients and nodes, to make sure that you’re getting the expected performance from the network. This is especially important for cloud deployments where network bandwidth is not always guaranteed. For example, AWS i3en instances only guarantee network bandwidth above a certain instance size (`i3en.6xlarge`). Below that size, network bandwidth is advertised as “up to 25 Gbps”. For this reason, soak test the network to understand how it behaves over longer periods of time. 
+It’s important to measure the network bandwidth between nodes, and between clients and nodes, to make sure that you’re getting the expected performance from the network. This is especially important for cloud deployments where network bandwidth is not always guaranteed. For example, AWS I3en instances only guarantee network bandwidth above a certain instance size (`i3en.6xlarge`). Below that size, network bandwidth is advertised as “up to 25 Gbps”. For this reason, soak test the network to understand how it behaves over longer periods of time. 
 
 The following example uses [iPerf3](https://iperf.fr/) to test the network bandwidth between two Debian-based servers:
 
@@ -115,7 +115,7 @@ The settings are enforced at the partition level. Each partition writes to its o
 
 - `retention.ms`: This also controls the size of a partition directory, but it does so based on the age of log segments rather than their combined size. Log segments are discarded when their maximum timestamp grows older than `retention.ms`.
 
-See also: [Configure message retention](../../platform/deployment/disk-utilization/#configure-message-retention)
+See also: [Configure message retention](../../deployment/disk-utilization/#configure-message-retention)
 
 ### Tiered Storage
 
@@ -127,13 +127,13 @@ When Tiered Storage is enabled on a topic, it immediately copies closed log segm
 
 This is encapsulated in the Kafka API, so clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage. 
 
-See also: [Tiered Storage](../../platform/data-management/tiered-storage/)
+See also: [Tiered Storage](../../data-management/tiered-storage/)
 
 ### Production settings
 
 Before running performance benchmark testing, set Redpanda into production mode and run the auto-tuning tool on every node. This enables the necessary hardware optimizations and ensures that the kernel parameters are set correctly.
 
-See also: [Set Redpanda production mode](../../platform/deployment/production-deployment/#set-redpanda-production-mode)
+See also: [Set Redpanda production mode](../../deployment/production-deployment/#set-redpanda-production-mode)
 
 ### Open Messaging Benchmark
 

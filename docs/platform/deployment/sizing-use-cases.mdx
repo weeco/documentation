@@ -88,11 +88,11 @@ A topic with Tiered Storage enabled can write to faster local storage managed by
 - Data retention: 1 year
 - Failure tolerance: 2 nodes
 
-This use case has many topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic. Plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is near the upper limit of what a single NVMe disk can sustain.
+This use case has many topics, hundreds of partitions, and a high throughput. The combined producer and replication data equates to 8 Gbps of network traffic, plus 16 Gbps for the consumers and 8 Gbps for Tiered Storage. In total, that’s at least 32 Gbps of network bandwidth required to sustain this level of throughput. Writing at 1,000 MB/sec is near the upper limit of what a single NVMe disk can sustain.
 
 At this scale, you get significant performance gains by distributing the writes over many cores and disks to better leverage Redpanda’s thread-per-core model. For example, given five nodes with 24 cores each, start with at least one partition for each core (120 partitions in total) and scale up.
 
-At this scale, Redpanda generates over three TB of writes each hour and over 80 TB each day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, Tiered Storage is essential.
+At this scale, Redpanda generates over three TB of writes each hour and over 80 TB each day. Local storage is going to fill up quickly, and the window of opportunity for consumers to read from local storage is going to be shorter than in the other scenarios. In this use case, [Tiered Storage](../../data-management/tiered-storage/) is essential.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
