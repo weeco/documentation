@@ -69,16 +69,16 @@ docker run --network=host \
   docker.redpanda.com/vectorized/console:latest
 ```
 
-Note that only the initial connection is made through the `KAFKA_RBOKERS` address you specified.
-After the initial connection is established, your client application will talk to the cluster to
-get all broker' addresses so that it can communicate to all brokers directly. Each broker returns
-the configured `advertised_listener` address that matches the port the initial connection has been
-made to. Make sure that this address is reachable by your client application.
+Note that only the initial connection is made through the `KAFKA_BROKERS` address specified.
+After the initial connection is established, your client application communicate with the cluster to
+get all broker addresses so that it can communicate with all brokers directly. Each broker returns
+the configured `advertised_listener` address that matches the port to which the initial connection has been made.
+made. Ensure that this address is reachable by your client application.
 
 :::note
 The host networking driver only works on Linux hosts, and is not supported on Docker Desktop for Mac, 
-Docker Desktop for Windows, or Docker EE for Windows Server. An alternative way is to use the right
-binary for your OS and run this binary instead. We provide [binaries](#binaries-and-linux-packages) 
+Docker Desktop for Windows, or Docker EE for Windows Server. An alternative way is to use the correct
+binary for your OS and run it instead. Redpanda provides [binaries](#binaries-and-linux-packages) 
 for all major operating systems and architectures.
 ::: 
 
