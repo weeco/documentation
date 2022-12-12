@@ -9,9 +9,9 @@ title: Sizing Guidelines
 
 For best performance, size your Redpanda cluster to handle the volume of data being produced, replicated, and consumed. The following variables affect cluster sizing:
 
-- MB/sec of data being produced (after compression, if applied)
+- MB/sec of data being produced and consumed (after compression, if applied)
 - Topic replication factor
-- Number of consumers
+- Number of producers and consumers
 
 Throughput and retention requirements can cause bottlenecks in the system. On an undersized cluster, clients could saturate the available network bandwidth, a disk could run out of IOPS and be unable to keep up with writes, or you could simply run out of disk space. On an oversized Redpanda cluster, you could overpay for unnecessary infrastructure. For detailed sizing on various throughput and retention scenarios, see [Sizing Use Cases](../../deployment/sizing-use-cases).
 
@@ -107,21 +107,15 @@ Key performance metrics:
 
 ### Data retention
 
-As specified by the Kafka API, data retention in Redpanda is based on partition size (`retention.bytes`) or age (`retention.ms`), whichever comes first. These settings create a sliding window of opportunity for consumers to read data from Redpanda before the retention process kicks in and older data is unavailable.
-
-The settings are enforced at the partition level. Each partition writes to its own data directory, into one or more log segments. The size of each log segment is determined by `segment.bytes` (default = one GB). As data is produced on a partition, it is appended to the open log segment. When that log segment reaches `segment.bytes` in size, it is closed, and a new log segment is opened.
-
-- `retention.bytes`: This controls the maximum size of a partition directory. When the total size of all log segments in a partition directory reaches this value, the retention process discards old log segments. Multiply `retention.bytes` by the number of partitions in your topic to get the topic-level retention in bytes.
-
-- `retention.ms`: This also controls the size of a partition directory, but it does so based on the age of log segments rather than their combined size. Log segments are discarded when their maximum timestamp grows older than `retention.ms`.
+Retention properties control how long messages are kept on disk before they're deleted or compacted. You can configure data retention until message age or aggregate message size in the topic is exceeded. Setting retention properties (at the topic level or the cluster level) is the best way to prevent old messages from accumulating on disk to the point that the disk becomes full. 
 
 See also: [Configure message retention](../../deployment/disk-utilization/#configure-message-retention)
 
 ### Tiered Storage
 
-With only local storage, data retention is limited to the provisioned capacity: you must either use the limited amount of data you can retain in the system or provision more nodes to increase capacity. Adding nodes is expensive, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, this leads to underutilization and higher operational costs.
+With only local storage, data retention is limited to the provisioned capacity: you must provision more nodes to increase capacity. Adding nodes is expensive, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, this leads to underutilization and higher operational costs.
 
-Redpanda Tiered Storage is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
+Redpanda Tiered Storage enables multi-tiered remote storage that archives log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis. Retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in the cloud until it reaches the configured time or size limit. 
 
 When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured S3 bucket. The default log segment size is set to one GB, so by default, a topic’s object store lags approximately one GB behind the local copy. Lowering `segment.bytes` is one way to reduce this lag. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count. You can also set an idle timeout to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. Adjusting how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point in time objectives.
 
