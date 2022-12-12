@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Helm chart: rack awareness
+title: Configuring Rack Awareness in Kubernetes using the Helm Chart
 ---
 
 <head>
@@ -7,7 +7,6 @@ title: Kubernetes Helm chart: rack awareness
     <meta name="description" content="Setting up rack awareness with the Kubernetes helm chart."/>
 </head>
 
-import styles from './rack-awareness.module.css';
 
 For more information about what Redpanda rack awareness is and why it's used, see [data-management/rack-awareness](./rack-awareness)
 
@@ -16,7 +15,7 @@ For more information about what Redpanda rack awareness is and why it's used, se
 By convention, the major cloud services annotate Kubernetes Nodes with the availability zone that the Node instance is placed in.
 To use that annotation to inform Redpanda to use those zones for fault tolerance at the data level, apply values to enable the feature:
 
-### Step 1
+### Create a configuration file
 
 Create a configuration file to enable rack awareness:
 
@@ -31,9 +30,12 @@ rbac:
     enabled: true
 ```
 
-See the Helm chart's [values.yaml](https://github.com/joejulian/helm-charts/tree/main/charts/redpanda/values.yaml) to see additional options to rackAwareness, serviceAccount, and rbac.
+See the Helm chart's [values.yaml](https://github.com/redpanda-data/helm-charts/tree/main/charts/redpanda/values.yaml) for additional options to `rackAwareness`, `serviceAccount`, and `rbac`
 
-The rackAwareness configuration defaults to using the [well-known](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) Node annotation (`rackAwareness.nodeAnnotation`): `topology.kubernetes.io/zone`, setting the redpanda configuration flag to enable rack awareness, and setting the `rack` configuration to the value of the node annotation.
+The `rackAwareness` configuration uses the following default values:
+- The [well-known](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) node annotation (`rackAwareness.nodeAnnotation`): `topology.kubernetes.io/zone`.
+- The `redpanda.yaml` configuration flag is set to enable rack awareness.
+- The `rack` configuration is set to the value of the node annotation.
 
 The serviceAccount configuration allows the Helm chart to create a ServiceAccount.
 
