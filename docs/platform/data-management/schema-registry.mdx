@@ -10,13 +10,15 @@ title: Schema Registry
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda's schema registry provides the interface to store and manage event schemas. Producers register the schemas of data they send, and consumers retrieve the schemas of data they receive. The registry manages the compatibility between different versions of schemas, and it notifies producers and consumers when they exchange data with incompatible schemas.
+Redpanda's schema registry provides the interface to store and manage event schemas. Producers register the schemas of data they send, and consumers retrieve the schemas of data they receive. The registry manages the different versions of schemas as they evolve, so producers and consumers can determine whether the data they exchange is incompatible.
 
 Its API endpoints support the following functionality: 
 
 - Querying supported serialization formats.
 - Registering schemas for a subject.
 - Retrieving schemas of specific versions.
+- Retrieving a list of subjects.
+- Retrieving a list of schema versions for a subject.
 - Configuring schema compatibilty checking.
 
 ## Schema
@@ -43,7 +45,7 @@ Redpanda's schema registry supports the following data serialization formats for
 
 Redpanda built the schema registry directly into the Redpanda binary. The schema registry runs out-of-the-box with Redpanda's default configuration, and it requires no new binaries to install and no new services to deploy or maintain.
 
-Schemas are stored in the registry as a standard compacted topic. To support updating schemas in the registry, Redpanda uses optimistic concurrency control at the topic level to allow mutating REST calls to any broker. Every broker is symmetric, so there is no need to configure leadership or failover strategies.
+Every broker allows mutating REST calls, so there is no need to configure leadership or failover strategies. Schema are stored in a compacted topic, and the registry uses optimistic concurrency control at the topic level to detect and avoid collisions.
 
 ## Examples
 
@@ -312,7 +314,7 @@ If the request is successful, it returns the version ID:
 
 ### Retrieve a schema of a subject
 
-To retrieve a schema associated with a subject, make a GET request to the `/subjects/<subject-name>/versions/<version-id>`:
+To retrieve a schema associated with a subject, make a GET request to the `/subjects/<subject-name>/versions/<version-id>` endpoint:
 
 <Tabs>
 <TabItem value="curl" label="Curl" default>
