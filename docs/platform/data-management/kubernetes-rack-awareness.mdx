@@ -8,7 +8,7 @@ title: Configuring Rack Awareness in Kubernetes using the Helm Chart
 </head>
 
 
-For more information about what Redpanda rack awareness is and why it's used, see [data-management/rack-awareness](./rack-awareness)
+When you enable rack awareness in the Helm chart, Kubernetes failure zones are treated as racks. Redpanda maps each rack to a failure zone and places partition replicas across them. For more information about what Redpanda rack awareness is and why it's used, see [data-management/rack-awareness](./rack-awareness). For more details about Kubernetes failure zones, see the [Kubernetes documentation](https://kubernetes.io/docs/setup/best-practices/multiple-zones/).
 
 ## Setting up rack awareness with the Redpanda Helm chart
 
@@ -37,9 +37,9 @@ The `rackAwareness` configuration uses the following default values:
 - The `redpanda.yaml` configuration flag is set to enable rack awareness.
 - The `rack` configuration is set to the value of the node annotation.
 
-The serviceAccount configuration allows the Helm chart to create a ServiceAccount.
+The `serviceAccount` configuration allows the Helm chart to create a ServiceAccount.
 
-The rbac configuration allows the Helm chart to create ClusterRoles and ClusterRoleBindings that allow the Redpanda initialization container to read the annotation from the Node.
+The `rbac` configuration allows the Helm chart to create ClusterRoles and ClusterRoleBindings that allow the Redpanda initialization container to read the annotation from the Node.
 
 ### Install or Update your Helm release
 
