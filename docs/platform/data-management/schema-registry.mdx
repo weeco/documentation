@@ -549,6 +549,142 @@ A successful registration returns the schema's `id`:
 }
 ```
 
+### Delete a schema
+
+The schema registry API provides DELETE endpoints for deleting a schema or all schemas of a subject: 
+- `/subjects/<subject>/versions/<version>`
+- `/subjects/<subject>`
+
+A schema can be soft deleted (impermanently) or hard deleted (permanantly), based on the boolean query parameter `permanent`. A soft deleted schema can be retrieved and re-registered. A hard deleted schema cannot be recovered.
+
+#### Soft delete a schema
+
+To soft delete a schema, make a DELETE request with the subject and version ID (where `permanent=false` is the default parameter value):
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X DELETE \
+  "http://localhost:8081/subjects/sensor-value/versions/1" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.delete(f'{base_uri}/subjects/sensor-value/versions/1').json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+If the request is successful, it returns the ID of the soft deleted schema:
+
+```bash
+1
+```
+
+Doing a soft delete for an already deleted schema returns an error. For example:
+
+```json
+{
+  "error_code": 40406,
+  "message": "Subject 'sensor-value' Version 1 was soft deleted.Set permanent=true to delete permanently"
+}
+```
+
+To list subjects of soft deleted schemas, make a GET request with the `deleted` parameter set true, `/subjects?deleted=true`:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  "http://localhost:8081/subjects?deleted=true" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+payload = { 'deleted' : 'true' }
+res = requests.get(f'{base_uri}/subjects', params=payload).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+If the request is successful, it returns all subjects, including deleted ones:
+
+```json
+[
+  "sensor-value"
+]
+```
+
+To undo a soft deletion, follow the steps first to [retrieve the schema](#retrieve-a-schema-of-a-subject) then to [register the schema](#register-a-schema).
+
+
+#### Hard delete a schema
+
+:::caution
+We don't recommend hard (permanently) deleting schemas in a production system. 
+
+The DELETE APIs are provided primarily for use during the development phase, when schemas are being iterated and revised.
+:::
+
+To hard delete a schema, make two DELETE requests with the second request setting the `permanent` parameter to true, `/subjects/<subject>/versions/<version>?permanent=true`:
+
+<Tabs>
+<TabItem value="curl" label="Curl" default>
+
+```bash
+curl -s \
+  -X DELETE \
+  "http://localhost:8081/subjects/sensor-value/versions/1" \
+  | jq .
+curl -s \
+  -X DELETE \
+  "http://localhost:8081/subjects/sensor-value/versions/1?permanent=true" \
+  | jq .
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+res = requests.delete(f'{base_uri}/subjects/sensor-value/versions/1').json()
+pretty(res)
+payload = { 'permanent' : 'true' }
+res = requests.delete(f'{base_uri}/subjects/sensor-value/versions/1', params=payload).json()
+pretty(res)
+```
+
+</TabItem>
+</Tabs>
+
+If the requests are successful, each request return the version ID of the deleted schema:
+
+```json
+1
+1
+```
+
+A request for a hard deleted schema returns an error. For example:
+
+```json
+{
+  "error_code": 40401,
+  "message": "Subject 'sensor-value' not found."
+}
+```
+
 ### Cleanup 
 
 When you're finished, stop and clean up Redpanda:
