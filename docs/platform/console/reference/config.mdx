@@ -142,6 +142,11 @@ kafka:
           # and/or value (just one will work too)
           # valueProtoType: fake_model.Order
           # keyProtoType: package.Type
+    # By default, the baseDir/root is used to import proto files from. To use
+    # multiple import paths relative to the baseDir, set this configuration.
+    # The behavior is similar to the `-I` flag of the proto cli.
+    # This flag only affects the git provider.
+    importPaths: []
     # SchemaRegistry does not require any mappings to be specified. 
     # The schema registry client that is configured in the 
     # kafka config block will be reused.
@@ -265,6 +270,15 @@ login:
   # jwtSecret is a secret string that signs and encrypts
   # the JSON Web tokens used by the backend for session management.
   jwtSecret: redacted
+  # Cookies in Console are used to store user's session data. The session data
+  # is relatively large because Console does not store the session data in a
+  # database, but uses cookies instead. In most cases a single cookie that can
+  # store up to 4KiB in most browsers is sufficient. If your access or refresh
+  # token is too large, you may exceed this maximum size which is enforced in
+  # browser. You can enable cookie chunking to split a single big cookie into
+  # multiple smaller cookie chunks whose size is below the commonly enforced
+  # limit of 4KiB.
+  useCookieChunking: false
   google:
     enabled: false
     clientId: redacted.apps.googleusercontent.com
@@ -320,6 +334,13 @@ enterprise:
     enabled: false
     # Path to YAML file that contains all role bindings
     roleBindingsFilepath:
+
+# Analytics is a config block that configures the telemetry sender.
+# By default sending anonymized usage statistics is enabled. The data is
+# sent to Redpanda's analytics ingestion endpoint. Redpanda uses the data to
+# evaluate feature usage.
+analytics:
+  enabled: true
 
 # Server configures Redpanda Console's HTTP server that serves all resources, including the Frontend application.
 server:
