@@ -122,7 +122,7 @@ The following examples cover the basic functionality of the Redpanda schema regi
 
 To get the supported data serialization formats in the schema registry, make a GET request to the `/schemas/types` endpoint:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -155,7 +155,7 @@ A schema is registered in the registry with a *subject*, which is a name that is
 
 To register the `sensor_sample` schema, make a POST request to the `/subjects/sensor-value/versions` endpoint with the Content-Type `application/vnd.schemaregistry.v1+json`:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -218,7 +218,7 @@ Registering an evolved schema for an existing subject returns an incremented `id
 
 To retrieve a registered schema from the registry, make a GET request to the `/schemas/ids/<id>` endpoint: 
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -250,7 +250,7 @@ If the request is successful, it returns the schema:
 
 To list all registry subjects, make a GET request to the `/subjects` endpoint:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -284,7 +284,7 @@ To query the schema versions of a subject, make a GET request to the `/subjects/
 
 For example, to get the schema versions of the `sensor-value` subject:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -316,7 +316,7 @@ If the request is successful, it returns the version ID:
 
 To retrieve a schema associated with a subject, make a GET request to the `/subjects/<subject-name>/versions/<version-id>` endpoint:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -349,7 +349,7 @@ If the request is successful, it returns the subject and associated schema:
 
 To get the latest version, use `latest` as the version ID:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -372,7 +372,7 @@ pretty(res)
 
 To get only the schema, append `/schema` to the endpoint path:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -432,7 +432,7 @@ You can configure different types of schema compatibility, which are applied to 
 
 To set the compatibility type for a subject, make a PUT request to `/config/<subject-name>` with the specific compatibility type:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -470,7 +470,7 @@ If the request is successful, it returns the new compatibility type:
 
 If you POST an incompatible schema change, the request returns an error. For example, if you try to register a new schema with the `value` field's type changed from `long` to `int`, and compatibility is set to `BACKWARD`,  the request returns an error due to incompatibility:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -511,7 +511,7 @@ The request returns this error:
 
 For an example of a compatible change, register a schema with the `value` field's type changed from `long` to `double`:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -561,7 +561,7 @@ A schema can be soft deleted (impermanently) or hard deleted (permanantly), base
 
 To soft delete a schema, make a DELETE request with the subject and version ID (where `permanent=false` is the default parameter value):
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -599,7 +599,7 @@ Doing a soft delete for an already deleted schema returns an error. For example:
 
 To list subjects of soft deleted schemas, make a GET request with the `deleted` parameter set true, `/subjects?deleted=true`:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
@@ -641,7 +641,7 @@ The DELETE APIs are provided primarily for use during the development phase, whe
 
 To hard delete a schema, make two DELETE requests with the second request setting the `permanent` parameter to true, `/subjects/<subject>/versions/<version>?permanent=true`:
 
-<Tabs>
+<Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
 
 ```bash
