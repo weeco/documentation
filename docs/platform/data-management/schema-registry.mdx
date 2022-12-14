@@ -213,7 +213,7 @@ If the request is successful, it returns a version `id` unique for the schema in
 }
 ```
 
-Registering an evolved schema for an existing subject returns an incremented `id`.
+When you register an evolved schema for an existing subject, the version `id` is incremented by 1.
 
 ### Retrieve a schema
 
@@ -552,7 +552,7 @@ A successful registration returns the schema's `id`:
 
 ### Delete a schema
 
-The schema registry API provides DELETE endpoints for deleting a schema or all schemas of a subject: 
+The schema registry API provides DELETE endpoints for deleting a single schema or all schemas of a subject: 
 - `/subjects/<subject>/versions/<version>`
 - `/subjects/<subject>`
 
@@ -598,7 +598,7 @@ Doing a soft delete for an already deleted schema returns an error. For example:
 }
 ```
 
-To list subjects of soft deleted schemas, make a GET request with the `deleted` parameter set true, `/subjects?deleted=true`:
+To list subjects of soft-deleted schemas, make a GET request with the `deleted` parameter set to `true`, `/subjects?deleted=true`:
 
 <Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
@@ -629,13 +629,13 @@ If the request is successful, it returns all subjects, including deleted ones:
 ]
 ```
 
-To undo a soft deletion, follow the steps first to [retrieve the schema](#retrieve-a-schema-of-a-subject) then to [register the schema](#register-a-schema).
+To undo a soft deletion, first follow the steps to [retrieve the schema](#retrieve-a-schema-of-a-subject), then [register the schema](#register-a-schema).
 
 
 #### Hard delete a schema
 
 :::caution
-We don't recommend hard (permanently) deleting schemas in a production system. 
+Redpanda doesn't recommend hard (permanently) deleting schemas in a production system. 
 
 The DELETE APIs are provided primarily for use during the development phase, when schemas are being iterated and revised.
 :::
