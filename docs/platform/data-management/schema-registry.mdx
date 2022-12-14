@@ -12,21 +12,21 @@ import TabItem from '@theme/TabItem';
 
 Redpanda's schema registry provides the interface to store and manage event schemas. Producers register the schemas of data they send, and consumers retrieve the schemas of data they receive. The registry manages the different versions of schemas as they evolve, so producers and consumers can determine whether the data they exchange is incompatible.
 
-Its API endpoints support the following functionality: 
+The schema registry has API endpoints that allow you to perform the following tasks:
 
-- Querying supported serialization formats.
-- Registering schemas for a subject.
-- Retrieving schemas of specific versions.
-- Retrieving a list of subjects.
-- Retrieving a list of schema versions for a subject.
-- Configuring schema compatibilty checking.
+- Query supported serialization formats.
+- Register schemas for a subject.
+- Retrieve schemas of specific versions.
+- Retrieve a list of subjects.
+- Retrieve a list of schema versions for a subject.
+- Configure schema compatibility checking.
 
 ## Schema
 
 A schema is an external mechanism to describe the structure of data and its encoding.  
 
 Using schemas provides multiple benefits:
-- Enables a loosely coupled, data centric architecture that minimizes dependencies in code, between teams, and between producers and consumers.
+- Enables a loosely coupled, data-centric architecture that minimizes dependencies in code, between teams, and between producers and consumers.
 - Provides human-readable documentation for an API.
 - Verifies that data conforms to an API.
 - Supports the generation of serializers for data.
@@ -336,7 +336,7 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-If the request is successful, it returns the subject and associated schema:
+If the request is successful, it returns the subject and its associated schema:
 
 ```json
 {
@@ -555,7 +555,7 @@ The schema registry API provides DELETE endpoints for deleting a schema or all s
 - `/subjects/<subject>/versions/<version>`
 - `/subjects/<subject>`
 
-A schema can be soft deleted (impermanently) or hard deleted (permanantly), based on the boolean query parameter `permanent`. A soft deleted schema can be retrieved and re-registered. A hard deleted schema cannot be recovered.
+A schema can be soft deleted (impermanently) or hard deleted (permanently), based on the boolean query parameter `permanent`. A soft deleted schema can be retrieved and re-registered. A hard deleted schema cannot be recovered.
 
 #### Soft delete a schema
 
