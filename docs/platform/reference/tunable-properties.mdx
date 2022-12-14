@@ -1,7 +1,7 @@
 ---
 title: Tunable Configuration Properties
 toc_min_heading_level: 2
-toc_max_heading_level: 2
+toc_max_heading_level: 3
 ---
 
 <head>
@@ -17,6 +17,17 @@ Tunable properties are cluster properties that are specifically designed for tun
 For information on how to edit tunable properties, refer to [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
 
 ## Properties
+
+<!--
+import TOCInline from '@theme/TOCInline';
+
+<TOCInline
+  // Only show h3 (properties) headings
+  toc={toc.filter((node) => node.level === 3)}
+  minHeadingLevel={3}
+  maxHeadingLevel={3}
+/>
+-->
 
 ### abort_index_segment_size
 
@@ -394,19 +405,23 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### create_topic_timeout_ms
 
-**Units**: 
+Timeout to wait for new topic creation.
 
-**Default**: 
+**Units**: milliseconds
 
-**Range**: [1, ...]
+**Default**: 2000
+
+**Range**: [0, ...]
 
 ---
 
 ### default_num_windows
 
-**Units**: 
+Default number of quota tracking windows.
 
-**Default**: 
+**Units**: number of windows
+
+**Default**: 10
 
 **Range**: [1, ...]
 
@@ -414,9 +429,11 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### default_window_sec
 
-**Units**: 
+Default duration of quota tracking window.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 1000
 
 **Range**: [1, ...]
 
@@ -424,29 +441,37 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### developer_mode
 
-**Units**: 
+Flag to enable developer mode. Not recommended for production. 
 
-**Default**: 
+To print the value of the flag, run rpk with the command: 
 
-**Range**: [1, ...]
+```bash
+rpk redpanda admin config print
+```
+
+**Type**: boolean
+
+**Default**: false
 
 ---
 
 ### disable_batch_cache
 
-**Units**: 
+Flag to disable the batch cache in log manager.
 
-**Default**: 
+**Type**: boolean
 
-**Range**: [1, ...]
+**Default**: false
 
 ---
 
 ### election_timeout_ms
 
-**Units**: 
+Raft election timeout.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 1500
 
 **Range**: [1, ...]
 
@@ -454,9 +479,11 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### enable_pid_file
 
-**Units**: 
+Enables creation of a process ID lock file. Recommended to be set true. 
 
-**Default**: 
+**Type**: boolean
+
+**Default**: true
 
 **Range**: [1, ...]
 
@@ -464,19 +491,21 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### features_auto_enable
 
-**Units**: 
+Flag to auto-enable new feature flags after upgrades.
 
-**Default**: 
+**Type**: boolean 
 
-**Range**: [1, ...]
+**Default**: true
 
 ---
 
 ### fetch_reads_debounce_timeout
 
-**Units**: 
+Duration to wait for the next read in fetch request when minimum number of requested bytes wasn't read.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 1
 
 **Range**: [1, ...]
 
@@ -484,9 +513,11 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### fetch_session_eviction_timeout_ms
 
-**Units**: 
+Minimum time before an unused session will get evicted. Maximum time after which inactive session will be deleted is twice the given configuration value cache.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 60000
 
 **Range**: [1, ...]
 
@@ -494,11 +525,11 @@ Interval for which coprocessor offsets are flushed to disk. For details, see [En
 
 ### full_raft_configuration_recovery_pattern
 
-**Units**: 
+Recover raft configurations on start for NTPs that match this pattern.
 
-**Default**: 
+**Type**: string, or list of strings
 
-**Range**: [1, ...]
+**Default**: {}
 
 ---
 

@@ -117,7 +117,11 @@ module.exports = {
         "platform/deployment/production-deployment-automation",
         {
           type: "category",
-          label: "Performance and storage tuning",
+          label: "Performance and Storage Tuning",
+          link: {
+            type: "doc",
+            id: "platform/deployment/performance-storage-tuning",
+          },
           items: [
             "platform/deployment/disk-utilization",
             "platform/deployment/io-optimization",
