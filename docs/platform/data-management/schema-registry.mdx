@@ -637,10 +637,10 @@ To undo a soft deletion, first follow the steps to [retrieve the schema](#retrie
 :::caution
 Redpanda doesn't recommend hard (permanently) deleting schemas in a production system. 
 
-The DELETE APIs are provided primarily for use during the development phase, when schemas are being iterated and revised.
+The DELETE APIs are primarily used during the development phase, when schemas are being iterated and revised.
 :::
 
-To hard delete a schema, make two DELETE requests with the second request setting the `permanent` parameter to true, `/subjects/<subject>/versions/<version>?permanent=true`:
+To hard delete a schema, make two DELETE requests with the second request setting the `permanent` parameter to `true`, `/subjects/<subject>/versions/<version>?permanent=true`:
 
 <Tabs groupId="curl-python">
 <TabItem value="curl" label="Curl" default>
@@ -670,14 +670,14 @@ pretty(res)
 </TabItem>
 </Tabs>
 
-If the requests are successful, each request return the version ID of the deleted schema:
+If the requests are successful, each request returns the version ID of the deleted schema:
 
 ```json
 1
 1
 ```
 
-A request for a hard deleted schema returns an error. For example:
+A request for a hard-deleted schema returns an error. For example:
 
 ```json
 {
