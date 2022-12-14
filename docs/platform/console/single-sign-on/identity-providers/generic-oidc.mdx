@@ -43,6 +43,14 @@ login:
     # and the `issuer` returned in the response has to match this issuer url.
     issuerUrl: ""
 
+    # IssuerTLS is the TLS configuration used by the HTTP client to send requests
+	  # to the IssuerURL. If you don't set any certificate paths, the IssuerTLS defaults to
+    # the system cert pool.
+    issuerTls:
+      caFilepath:
+      certFilepath:
+      keyFilepath:
+
     # DisplayName is the name that shall be shown on the login page for this identity provider
     displayName: ""
 
@@ -77,3 +85,53 @@ roleBindings:
         name: joe@yourcompany.com
     roleName: editor
 ```
+
+## Troubleshooting
+
+### Used claim key did not exist in user's id token
+
+If you used a claim key in the role bindings that did not exist in the id token, Console will print
+an error message in the backend to assist you with this. The error message contains the claim key 
+that Console tried to look up, as well as all existing claim keys for this specific user.
+
+The error message may look similar to this:
+
+> ```
+> {
+>   "level": "error",
+>    "msg": "the specified user identifying claim does not exist for the user that has logged in",
+>    "found_claim_keys": ["oid", "aud", "sub"],
+>    "used_claim_key": "uid"
+> }
+> ```
+
+### User claim keys and values are unknown
+
+If you are unsure what claim keys and values would be attached to your id token by your identity provider,
+this section guides you how to extract these claims for inspection. Because the claim values may be 
+sensitive, these will never be logged in the backend and instead the claims can only be inspected for your
+own account in the browser.
+
+When you browse to the Console login landing page it will ask you to authetncate with your configured
+OIDC provider. Open your browser's developer tools and head to the place where you can inspect network
+requests. Some browsers such as Google Chrome will truncate the network request logs after you've been
+redirected. For this troubleshooting guide we want to preserve these logs and thus make sure to enable
+the preserve log option.
+
+Now start the login flow, by clicking the OIDC login button and authenticate with your identity provider.
+After successful authentication you will see various network requests. Search the list for a request
+that starts with the relative path `/auth/callbacks/oidc?code=`. The HTTP response contains a `set-cookie`
+header, where we set the `jwt` cookie. The value of that cookie is an encrypted and compressed JSON web token.
+Copy the value and initiate a request to the decode endpoint which will print the decoded values:
+
+```
+curl -sL -X POST 'https://your-console-url.com/admin/session-token/decode' \
+-H 'Content-Type: application/json' \
+--data-raw '{
+    "token": "ey..."
+}'
+```
+
+Replace `ey...` with your copied token. You will receive a JSON formatted response which includes
+your `oAuthToken.access_token`. Copy this token, head to https://jwt.io, paste the token value
+and you can inspect all decoded claims that can be used in your role bindings.
