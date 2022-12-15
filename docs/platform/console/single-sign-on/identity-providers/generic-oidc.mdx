@@ -90,11 +90,11 @@ roleBindings:
 
 ### Used claim key did not exist in user's id token
 
-If you used a claim key in the role bindings that did not exist in the id token, Console will print
+If the claim key in a role binding does not exist in the ID token, Redpanda Console prints
 an error message in the backend to assist you with this. The error message contains the claim key 
-that Console tried to look up, as well as all existing claim keys for this specific user.
+that Redpanda Console tried to look up, as well as all existing claim keys for this specific user.
 
-The error message may look similar to this:
+Here is an example error message:
 
 > ```
 > {
@@ -105,33 +105,35 @@ The error message may look similar to this:
 > }
 > ```
 
-### User claim keys and values are unknown
+### Find your claim keys and values
 
-If you are unsure what claim keys and values would be attached to your id token by your identity provider,
-this section guides you how to extract these claims for inspection. Because the claim values may be 
-sensitive, these will never be logged in the backend and instead the claims can only be inspected for your
-own account in the browser.
+If you are unsure about which claim keys and values that your identity provider attached to your ID token,
+you can extract them from the JSON web token that is sent to your browser as a cookie. Because the claim values may be 
+sensitive, Redpanda Console never logs them in the backend.
 
-When you browse to the Console login landing page it will ask you to authetncate with your configured
-OIDC provider. Open your browser's developer tools and head to the place where you can inspect network
-requests. Some browsers such as Google Chrome will truncate the network request logs after you've been
-redirected. For this troubleshooting guide we want to preserve these logs and thus make sure to enable
-the preserve log option.
+1. Open the Redpanda Console login page. Don't click the OIDC login button yet.
 
-Now start the login flow, by clicking the OIDC login button and authenticate with your identity provider.
-After successful authentication you will see various network requests. Search the list for a request
-that starts with the relative path `/auth/callbacks/oidc?code=`. The HTTP response contains a `set-cookie`
-header, where we set the `jwt` cookie. The value of that cookie is an encrypted and compressed JSON web token.
-Copy the value and initiate a request to the decode endpoint which will print the decoded values:
+1. Open your browser's developer tools and inspect the network requests.
 
-```
-curl -sL -X POST 'https://your-console-url.com/admin/session-token/decode' \
--H 'Content-Type: application/json' \
---data-raw '{
-    "token": "ey..."
-}'
-```
+1. If your browser has the option to preserve logs, enable it.
+  Without this option enabled, some browsers such as Google Chrome truncate the network request logs after a redirection.
+  
+1. Click the OIDC login button and authenticate with your identity provider.
 
-Replace `ey...` with your copied token. You will receive a JSON formatted response which includes
-your `oAuthToken.access_token`. Copy this token, head to https://jwt.io, paste the token value
-and you can inspect all decoded claims that can be used in your role bindings.
+1. Search the network requests in your browser's developer tools for a request that starts with the relative path `/auth/callbacks/oidc?code=`.
+
+1. Copy the value of the `jwt` cookie in the `set-cookie` header. The value of that cookie is an encrypted and compressed JSON web token.
+
+1. Send the JSON web token to Redpanda Console to decode.
+
+  \```bash
+  curl -sL -X POST 'https://your-console-url.com/admin/session-token/decode' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{
+      "token": "<your-token>"
+  }'
+  \```
+
+  The response is a JSON object, which includes your token in the `oAuthToken.access_token` field.
+
+8. Paste your token into [https://jwt.io/](https://jwt.io/), where you can inspect all your decoded claim keys.
