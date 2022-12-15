@@ -142,10 +142,9 @@ kafka:
           # and/or value (just one will work too)
           # valueProtoType: fake_model.Order
           # keyProtoType: package.Type
-    # By default, the baseDir/root is used to import proto files from. To use
-    # multiple import paths relative to the baseDir, set this configuration.
-    # The behavior is similar to the `-I` flag of the proto cli.
-    # This flag only affects the git provider.
+    # importPaths is a list of paths from which to import Proto files into Redpanda Console.
+    # Paths are relative to the root directory.
+    # The `git` configuration must be enabled to use this feature.
     importPaths: []
     # SchemaRegistry does not require any mappings to be specified. 
     # The schema registry client that is configured in the 
@@ -270,14 +269,11 @@ login:
   # jwtSecret is a secret string that signs and encrypts
   # the JSON Web tokens used by the backend for session management.
   jwtSecret: redacted
-  # Cookies in Console are used to store user's session data. The session data
-  # is relatively large because Console does not store the session data in a
-  # database, but uses cookies instead. In most cases a single cookie that can
-  # store up to 4KiB in most browsers is sufficient. If your access or refresh
-  # token is too large, you may exceed this maximum size which is enforced in
-  # browser. You can enable cookie chunking to split a single big cookie into
-  # multiple smaller cookie chunks whose size is below the commonly enforced
-  # limit of 4KiB.
+# Redpanda Console stores users' session data in cookies with no fixed size.
+# Because some browsers enforce maximum size limits on cookies, 
+# you can enable useCookieChunking to split a single big cookie into multiple smaller ones.
+# When useCookieChunking is enabled, cookies are kept below 4KiB, 
+# which is a maximum size limit that is set by most browsers.
   useCookieChunking: false
   google:
     enabled: false
@@ -335,10 +331,8 @@ enterprise:
     # Path to YAML file that contains all role bindings
     roleBindingsFilepath:
 
-# Analytics is a config block that configures the telemetry sender.
-# By default sending anonymized usage statistics is enabled. The data is
-# sent to Redpanda's analytics ingestion endpoint. Redpanda uses the data to
-# evaluate feature usage.
+# analytics configures the telemetry service that sends anonymized usage statistics to Redpanda.
+# Redpanda uses these statistics to evaluate feature usage.
 analytics:
   enabled: true
 
