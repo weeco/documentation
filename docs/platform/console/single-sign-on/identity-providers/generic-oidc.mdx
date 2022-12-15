@@ -126,13 +126,12 @@ sensitive, Redpanda Console never logs them in the backend.
 
 1. Send the JSON web token to Redpanda Console to decode.
 
-  \```bash
+  ```bash
   curl -sL -X POST 'https://your-console-url.com/admin/session-token/decode' \
   -H 'Content-Type: application/json' \
   --data-raw '{
       "token": "<your-token>"
   }'
-  \```
 
   The response is a JSON object, which includes your token in the `oAuthToken.access_token` field.
 
