@@ -96,14 +96,14 @@ that Redpanda Console tried to look up, as well as all existing claim keys for t
 
 Here is an example error message:
 
-> ```
-> {
->   "level": "error",
->    "msg": "the specified user identifying claim does not exist for the user that has logged in",
->    "found_claim_keys": ["oid", "aud", "sub"],
->    "used_claim_key": "uid"
-> }
-> ```
+```
+{
+  "level": "error",
+  "msg": "the specified user identifying claim does not exist for the user that has logged in",
+  "found_claim_keys": ["oid", "aud", "sub"],
+  "used_claim_key": "uid"
+}
+```
 
 ### Find your claim keys and values
 
@@ -132,6 +132,7 @@ sensitive, Redpanda Console never logs them in the backend.
   --data-raw '{
       "token": "<your-token>"
   }'
+  ```
 
   The response is a JSON object, which includes your token in the `oAuthToken.access_token` field.
 
