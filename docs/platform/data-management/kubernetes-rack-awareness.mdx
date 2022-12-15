@@ -1,66 +1,156 @@
 ---
-title: Configuring Rack Awareness in Kubernetes using the Helm Chart
+title: Enabling Rack Awareness in Kubernetes
 ---
 
 <head>
-    <meta name="title" content="Kubernetes Helm chart: rack awareness | Redpanda Docs"/>
-    <meta name="description" content="Setting up rack awareness with the Kubernetes helm chart."/>
+    <meta name="title" content="Enabling Rack Awareness in Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Enable rack awareness to place partition replicas across different failure zones."/>
 </head>
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import AboutRackAwareness from './shared/_rack-awareness.mdx';
 
-When you enable rack awareness in the Helm chart, Kubernetes failure zones are treated as racks. Redpanda maps each rack to a failure zone and places partition replicas across them. For more information about what Redpanda rack awareness is and why it's used, see [data-management/rack-awareness](./rack-awareness). For more details about Kubernetes failure zones, see the [Kubernetes documentation](https://kubernetes.io/docs/setup/best-practices/multiple-zones/).
+<AboutRackAwareness/>
 
-## Setting up rack awareness with the Redpanda Helm chart
+When you enable rack awareness in the `redpanda` Helm chart, Kubernetes failure zones are treated as racks. Redpanda maps each rack to a failure zone and places partition replicas across them. For more details about Kubernetes failure zones, see the [Kubernetes documentation](https://kubernetes.io/docs/setup/best-practices/multiple-zones/).
 
-By convention, the major cloud services annotate Kubernetes Nodes with the availability zone that the Node instance is placed in.
-To use that annotation to inform Redpanda to use those zones for fault tolerance at the data level, apply values to enable the feature:
+## Prerequisites
 
-### Create a configuration file
+Make sure that each of your Node resources is annotated with a key/value pair that corresponds to a failure zone. The Helm chart assigns each Redpanda broker to a particular rack, according to the failure zone of the Kubernetes node on which the broker is running.
 
-Create a configuration file to enable rack awareness:
+<Tabs>
+<TabItem value="cloud" label="Managed" default>
 
-_rack_awareness.yaml_
+Managed Kubernetes platforms in the cloud usually annotate Node resources with the availability zone in which the node instance is placed. For example `topology.kubernetes.io/zone=us-east-1a`.
 
-```yaml
-rackAwareness:
-    enabled: true
-serviceAccount:
-    create: true
-rbac:
-    enabled: true
+To check the value of the `topology.kubernetes.io/zone` key, do the following:
+
+```bash
+kubectl get node \
+-o=custom-columns=NODE:.metadata.name,ZONE:.metadata.annotations."topology\.kubernetes\.io/zone"
 ```
 
-See the Helm chart's [values.yaml](https://github.com/redpanda-data/helm-charts/tree/main/charts/redpanda/values.yaml) for additional options to `rackAwareness`, `serviceAccount`, and `rbac`
+<details>
+<summary>
+Example output
+</summary>
 
-The `rackAwareness` configuration uses the following default values:
-- The [well-known](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) node annotation (`rackAwareness.nodeAnnotation`): `topology.kubernetes.io/zone`.
-- The `redpanda.yaml` configuration flag is set to enable rack awareness.
-- The `rack` configuration is set to the value of the node annotation.
-
-The `serviceAccount` configuration allows the Helm chart to create a ServiceAccount.
-
-The `rbac` configuration allows the Helm chart to create ClusterRoles and ClusterRoleBindings that allow the Redpanda initialization container to read the annotation from the Node.
-
-### Install or Update your Helm release
-
-Create a new Redpanda cluster or apply this change to an existing Redpanda cluster with Helm:
-
-```sh
-helm repo add redpanda https://charts.redpanda.com/
-helm repo update
-helm upgrade --install redpanda redpanda/redpanda redpanda \
-  --namespace redpanda --create-namespace \
-  --values rack_awareness.yaml
+```
+NODE                 ZONE
+example-worker       us-east-1a
+example-worker2      us-east-1b
+example-worker3      us-east-1c
 ```
 
-## Annotating nodes in non-cloud settings
+If you don't see any values in the Zone column, see the **Self-Managed** tab.
 
-The common convention for annotating Kubernetes Nodes is to use the `topology.kubernetes.io/zone` key. Label the nodes based on your own fault-tolerance requirements. Set this annotation by running:
+</details>
 
-```sh
-kubectl annotate node dc1r12c22 topology.kubernetes.io/zone=dc1r12
+</TabItem>
+
+<TabItem value="self" label="Self-Managed" default>
+
+Make sure to annotate your Node resources with key/value pairs that correspond to your fault-tolerance requirements. For example:
+
+```bash
+kubectl annotate node kind-worker kind-worker2 kind-worker3 topology.kubernetes.io/zone=rack1
 ```
 
-In this example, dc1r12c22 is the node name for compute node 22 in rack 12 in datacenter 1. The annotation is set to dc1r12 so that any Redpanda pod that gets scheduled on that Node will have its `rack` setting configured to `dc1r12`.
+In this example, dc1r12c22 is the node name for compute node 22 in rack 12 in data center 1. The annotation is set to dc1r12 so that any Redpanda broker that gets scheduled on that node has its `rack` configuration set to `dc1r12`.
 
-If you already have an annotation model that you use, you can set the `rackAwareness.nodeAnnotation` to match your existing key.
+</TabItem>
+</Tabs>
+
+## Enable rack awareness
+
+To enable rack awareness in your Redpanda cluster, you need to override the default configuration in the Helm chart.
+
+1. Create a file called `rack-awareness.yaml` in which to add the rack awareness configuration overrides.
+
+    - If your Node resources are annotated with the `topology.kubernetes.io/zone` key, add the following:
+
+        ```yaml
+        rackAwareness:
+            enabled: true
+        serviceAccount:
+            create: true
+        rbac:
+            enabled: true
+        ```
+
+        By default, the Helm chart sets the rack to the value in the [well-known](https://kubernetes.io/docs/reference/labels-annotations-taints/#topologykubernetesiozone) `topology.kubernetes.io/zone` key.
+
+    - If your Node resources are annotated with a different key, set the `rackAwareness.nodeAnnotation` to match your annotation key.
+
+        ```yaml
+        rackAwareness:
+            enabled: true
+            nodeAnnotation: 'example'
+        serviceAccount:
+            create: true
+        rbac:
+            enabled: true
+        ```
+
+    The `serviceAccount` and `rbac` configurations are required. These configurations allow the initialization container to securely read the node annotations using the Kubernetes API.
+
+1. Create a new Redpanda cluster with your configuration overrides or apply the configuration overrides to an existing Redpanda cluster:
+
+    ```bash
+    helm repo add redpanda https://charts.redpanda.com/
+    helm repo update
+    helm upgrade --install redpanda redpanda/redpanda \
+    --namespace redpanda --create-namespace \
+    --values rack-awareness.yaml
+    ```
+
+## Verify that rack awareness is enabled
+
+After deploying Redpanda, make sure that rack awareness is enabled and configured on your Redpanda brokers.
+
+1. Make sure that your Node resources include the correct annotations. For example, to check the value of the `topology.kubernetes.io/zone` key, do the following:
+
+    ```bash
+    kubectl get node \
+    -o=custom-columns=NODE:.metadata.name,ZONE:.metadata.annotations."topology\.kubernetes\.io/zone"
+    ```
+
+    <details>
+    <summary>
+    Example output
+    </summary>
+
+    ```
+    NODE                 ZONE
+    example-worker       us-east-1a
+    example-worker2      us-east-1b
+    example-worker3      us-east-1c
+    ```
+
+    </details>
+
+1. Make sure that rack awareness has been enabled and configured on your Redpanda brokers:
+
+    ```bash
+    kubectl -ti -n redpanda exec redpanda-0 -c redpanda -- \
+    grep 'rack' etc/redpanda/redpanda.yaml
+    ```
+
+    <details>
+    <summary>
+    Example output
+    </summary>
+
+    ```
+    rack: us-east-1a
+    enable_rack_awareness: true
+    ```
+
+    </details>
+
+## Next steps
+
+Use rack awareness with [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing/) to continually maintain the configured replication level, even after a rack failure. For a given partition, Redpanda tries to move excess replicas from racks that have more than one replica to racks that have no replicas.
+
+See the Helm chart's [values.yaml](https://github.com/redpanda-data/helm-charts/tree/main/charts/redpanda/values.yaml) file for more details about the `rackAwareness`, `serviceAccount`, and `rbac` configuration options.

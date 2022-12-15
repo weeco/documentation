@@ -199,7 +199,24 @@ module.exports = {
         "platform/data-management/data-archiving",
         "platform/data-management/remote-read-replicas",
         "platform/data-management/data-migration",
-        "platform/data-management/rack-awareness",
+        {
+          type: "category",
+          label: "Rack Awareness",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "Manual Deployment",
+              id: "platform/data-management/rack-awareness",
+            },
+            {
+              type: "doc",
+              label: "Kubernetes Deployment",
+              id: "platform/data-management/kubernetes-rack-awareness",
+            },
+          ],
+        },
       ],
     },
     {
