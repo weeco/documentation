@@ -78,7 +78,7 @@ kafka:
 To provide the proto files through a GitHub repository, first place the files in a directory. The directory doesn't matter, because 
 Redpanda Console searches for all files with the `.proto` extension, up to a directory depth of five levels. To
 use multiple different import paths, set the `importPaths` property. For example, if your repository includes
-third-party Protobuf types, such as Google, that are in a different directory to your own types.
+third-party Protobuf types, such as Google's types, that are in a different directory to your own types, set the `importPaths` property to both directories.
 
 Enable `git` in the `config.yaml` file, as shown in the following example.
 
