@@ -54,7 +54,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript']
+      additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript', 'python']
     },
     algolia: {
       // The application ID provided by Algolia

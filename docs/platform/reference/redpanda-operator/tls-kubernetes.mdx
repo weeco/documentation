@@ -7,7 +7,7 @@ title: "Configuring Redpanda TLS on Kubernetes"
     <meta name="description" content="This section explains how to enable Transport Layer Security (TLS) on Kubernetes."/>
 </head>
 
-:::important
+:::danger
 See [Configuring Redpanda TLS on Kubernetes](../../../security/kubernetes-tls) for the most up-to-date instructions using the `redpanda` Helm chart. This page is based on the `redpanda-operator` Helm chart and is preserved only for backward compatibility.
 :::
 
@@ -389,5 +389,5 @@ kubectl delete -f <cluster_specification.yaml> -f <tls_config_map.yaml> -f <tls_
 
 ## Suggested reading
 
-- [Working with schema registry](https://redpanda.com/blog/schema_registry/)
+- [Working with schema registry](../../../data-management/schema-registry)
 - [Configuring TLS for Redpanda with rpk](https://redpanda.com/blog/tls-config/)

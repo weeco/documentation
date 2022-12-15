@@ -142,6 +142,10 @@ kafka:
           # and/or value (just one will work too)
           # valueProtoType: fake_model.Order
           # keyProtoType: package.Type
+    # importPaths is a list of paths from which to import Proto files into Redpanda Console.
+    # Paths are relative to the root directory.
+    # The `git` configuration must be enabled to use this feature.
+    importPaths: []
     # SchemaRegistry does not require any mappings to be specified. 
     # The schema registry client that is configured in the 
     # kafka config block will be reused.
@@ -265,6 +269,12 @@ login:
   # jwtSecret is a secret string that signs and encrypts
   # the JSON Web tokens used by the backend for session management.
   jwtSecret: redacted
+# Redpanda Console stores users' session data in cookies with no fixed size.
+# Because some browsers enforce maximum size limits on cookies, 
+# you can enable useCookieChunking to split a single big cookie into multiple smaller ones.
+# When useCookieChunking is enabled, cookies are kept below 4KiB, 
+# which is a maximum size limit that is set by most browsers.
+  useCookieChunking: false
   google:
     enabled: false
     clientId: redacted.apps.googleusercontent.com
@@ -320,6 +330,11 @@ enterprise:
     enabled: false
     # Path to YAML file that contains all role bindings
     roleBindingsFilepath:
+
+# analytics configures the telemetry service that sends anonymized usage statistics to Redpanda.
+# Redpanda uses these statistics to evaluate feature usage.
+analytics:
+  enabled: true
 
 # Server configures Redpanda Console's HTTP server that serves all resources, including the Frontend application.
 server:
