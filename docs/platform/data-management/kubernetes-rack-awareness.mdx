@@ -54,10 +54,10 @@ If you don't see any values in the Zone column, see the **Self-Managed** tab.
 Make sure to annotate your Node resources with key/value pairs that correspond to your fault-tolerance requirements. For example:
 
 ```bash
-kubectl annotate node kind-worker kind-worker2 kind-worker3 topology.kubernetes.io/zone=rack1
+kubectl annotate node example-worker topology.kubernetes.io/zone=rack1
+kubectl annotate node example-worker2 topology.kubernetes.io/zone=rack2
+kubectl annotate node example-worker3 topology.kubernetes.io/zone=rack3
 ```
-
-In this example, dc1r12c22 is the node name for compute node 22 in rack 12 in data center 1. The annotation is set to dc1r12 so that any Redpanda broker that gets scheduled on that node has its `rack` configuration set to `dc1r12`.
 
 </TabItem>
 </Tabs>
@@ -101,8 +101,8 @@ To enable rack awareness in your Redpanda cluster, you need to override the defa
     helm repo add redpanda https://charts.redpanda.com/
     helm repo update
     helm upgrade --install redpanda redpanda/redpanda \
-    --namespace redpanda --create-namespace \
-    --values rack-awareness.yaml
+        --namespace redpanda --create-namespace \
+        --values rack-awareness.yaml
     ```
 
 ## Verify that rack awareness is enabled
@@ -134,7 +134,7 @@ After deploying Redpanda, make sure that rack awareness is enabled and configure
 
     ```bash
     kubectl -ti -n redpanda exec redpanda-0 -c redpanda -- \
-    grep 'rack' etc/redpanda/redpanda.yaml
+        grep 'rack' etc/redpanda/redpanda.yaml
     ```
 
     <details>
