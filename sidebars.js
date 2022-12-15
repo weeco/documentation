@@ -216,6 +216,7 @@ module.exports = {
         "platform/data-management/remote-read-replicas",
         "platform/data-management/data-migration",
         "platform/data-management/rack-awareness",
+        "platform/data-management/schema-registry",
       ],
     },
     {
@@ -359,6 +360,7 @@ module.exports = {
         "platform/reference/tunable-properties",
         "platform/reference/node-properties",
         "platform/reference/node-configuration-sample",
+        "platform/reference/schema-registry-api",
         {
           type: "category",
           label: "rpk Commands",
