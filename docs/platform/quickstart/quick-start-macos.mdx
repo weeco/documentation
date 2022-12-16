@@ -20,12 +20,12 @@ Make sure that you install [Docker](https://docs.docker.com/docker-for-mac/insta
 
 To customize the containers, you can also set up your own [Redpanda containers in Docker](../../quickstart/quick-start-docker).
 
-### Install `rpk`
+### Install rpk
 
-You can install `rpk` on MacOS either with [Homebrew](https://brew.sh/), or you can just download the binary.
+You can install `rpk` on MacOS either by using [Homebrew](https://brew.sh/) or by downloading the binary.
 
-- To install `rpk` with Homebrew: `brew install redpanda-data/tap/redpanda`
-- To download the `rpk` binary:
+<Tabs>
+<TabItem value="homebrew" label="Homebrew">
 
 <InstallRpkMacOS/>
 
@@ -33,7 +33,9 @@ You can install `rpk` on MacOS either with [Homebrew](https://brew.sh/), or you 
 
 Run Redpanda in a three-node cluster: 
 
-`rpk container start -n 3`
+```bash
+rpk container start -n 3
+```
 
 The first time you run `rpk container start`, it downloads an image matching the rpk version (you can check it by running `rpk version`).
 You now have a three-node cluster running Redpanda.
