@@ -35,6 +35,11 @@ module.exports = {
           id: "platform/introduction/intro-to-events",
         },
         {
+          type: "category",
+          label: "Working with Redpanda",
+          id: "platform/introduction/work-with-rp",
+        },
+        {
           type: "doc",
           label: "Designed for Performance",
           id: "platform/introduction/autotune",
