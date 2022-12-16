@@ -16,6 +16,31 @@ Tunable properties are cluster properties that are specifically designed for tun
 
 For information on how to edit tunable properties, refer to [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
 
+
+## Terminology
+
+This section defines Redpanda terminology used in tunable properties.
+
+### Coprocessor (coproc) mode
+
+Redpanda's [data transform](../labs/data-transform.mdx) feature requires [enabling a coprocessor](../../labs/data-transform/#enable-data-transforms) in order for it to run.  
+
+
+### PID controller
+
+A proportional-integral-derivative (PID) controller is a common control algorithm. Redpanda uses a PID controller for [cloud storage uploads](../../data-management/tiered-storage#upload-controller) and [topic compaction](../../data-management/tiered-storage/#set-retention-limits).  
+
+
+### Leader balancer
+
+When a cluster node crashes or restarts, its leadership of partitions with replicas assigned to it must either be assigned back to the node after it restarts or reassigned to another node. The leader balancer manages the transfer of partition leadership between nodes.
+
+
+### Queue depth control (QDC)
+
+Redpanda uses a latency-based queue depth control (QDC) algorithm to monitor and bound producer latency by adjusting the queue depth. 
+
+
 ## Properties
 
 <!--
@@ -183,7 +208,7 @@ Log segment upload timeout.
 
 ### cloud_storage_upload_ctrl_d_coeff
 
-Derivative coefficient of the upload proportional-integral-derivative (PID) controller. For details, see [Upload controller](../../data-management/tiered-storage#upload-controller).
+Derivative coefficient of the upload PID controller.
 
 **Type**: double
 
@@ -195,7 +220,7 @@ Derivative coefficient of the upload proportional-integral-derivative (PID) cont
 
 ### cloud_storage_upload_ctrl_max_shares
 
-Maximum number of IO and CPU shares that the archival upload can use. For details, see [Upload controller](../../data-management/tiered-storage#upload-controller).
+Maximum number of IO and CPU shares that the archival upload can use. 
 
 **Units**: number of IO and CPU shares
 
@@ -207,7 +232,7 @@ Maximum number of IO and CPU shares that the archival upload can use. For detail
 
 ### cloud_storage_upload_ctrl_min_shares 
 
-Minimum number of IO and CPU shares that the archival upload can use. For details, see [Upload controller](../../data-management/tiered-storage#upload-controller).
+Minimum number of IO and CPU shares that the archival upload can use.
 
 **Units**: number of IO and CPU shares
 
@@ -219,7 +244,7 @@ Minimum number of IO and CPU shares that the archival upload can use. For detail
 
 ### cloud_storage_upload_ctrl_p_coeff
 
-Proportional coefficient of the upload proportional-integral-derivative (PID) controller. For details, see [Upload controller](../../data-management/tiered-storage#upload-controller).
+Proportional coefficient of the upload PID controller.
 
 **Type**: double
 
@@ -231,7 +256,7 @@ Proportional coefficient of the upload proportional-integral-derivative (PID) co
 
 ### cloud_storage_upload_ctrl_update_interval_ms
 
-Sampling interval of the upload proportional-integral-derivative (PID) controller. For details, see [Upload controller](../../data-management/tiered-storage#upload-controller).
+Sampling interval of the upload PID controller.
 
 **Units**: milliseconds
 
@@ -271,7 +296,7 @@ Size of the compaction backlog of the backlog controller. If empty (null), defau
 
 ### compaction_ctrl_d_coeff
 
-Derivative coefficient for compaction proportional-integral-derivative (PID) controller.
+Derivative coefficient for compaction PID controller.
 
 **Type**: double
 
@@ -283,7 +308,7 @@ Derivative coefficient for compaction proportional-integral-derivative (PID) con
 
 ### compaction_ctrl_i_coeff
 
-Integral coefficient for compaction proportional-integral-derivative (PID) controller.
+Integral coefficient for compaction PID controller.
 
 **Type**: double
 
@@ -321,7 +346,7 @@ Minimum number of IO and CPU shares that the compaction process can use.
 
 ### compaction_ctrl_p_coeff
 
-Proportional coefficient for compaction proportional-integral-derivative (PID) controller. Must be negative to decrease the compaction backlog when compaction shares increase.
+Proportional coefficient for compaction PID controller. Must be negative to decrease the compaction backlog when compaction shares increase.
 
 **Type**: double
 
@@ -333,7 +358,7 @@ Proportional coefficient for compaction proportional-integral-derivative (PID) c
 
 ### compaction_ctrl_update_interval_ms
 
-Sampling interval of the compaction proportional-integral-derivative (PID) controller.
+Sampling interval of the compaction PID controller.
 
 **Units**: milliseconds
 
@@ -357,7 +382,7 @@ Duration between iterations of the controller backend's housekeeping loop.
 
 ### coproc_max_batch_size
 
-Maximum size of one topic read in coprocessing mode. For details, see [Enable data transforms](../../labs/data-transform/#enable-data-transforms).
+Maximum size of one topic read in coprocessing mode. 
 
 **Units**: bytes
 
@@ -859,7 +884,7 @@ Duration between members backend reconciliation loop retries.
 
 **Units**: milliseconds
 
-**Default**: 5000 (5 seconds)
+**Default**: 5000 
 
 **Range**: [1, ...]
 
@@ -871,7 +896,7 @@ Interval for metadata dissemination batching.
 
 **Units**: milliseconds
 
-**Default**: 3000 (3 seconds)
+**Default**: 3000 
 
 **Range**: [1, ...]
 
@@ -891,9 +916,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### metadata_dissemination_retry_delay_ms
 
-**Units**: 
+Delay before retrying a topic-lookup in a shard or other meta-tables.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 500
 
 **Range**: [1, ...]
 
@@ -901,9 +928,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### metadata_status_wait_timeout_ms
 
-**Units**: 
+Maximum duration to wait in metadata request for cluster health to be refreshed.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 2000
 
 **Range**: [1, ...]
 
@@ -911,9 +940,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### metrics_reporter_report_interval
 
-**Units**: 
+Interval of reports sent to clients from the metrics reporter.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 86400000 (24 hours)
 
 **Range**: [1, ...]
 
@@ -921,9 +952,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### metrics_reporter_tick_interval
 
-**Units**: 
+Tick timer interval for capturing metrics. 
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 60000 (1 minute)
 
 **Range**: [1, ...]
 
@@ -931,9 +964,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### node_management_operation_timeout_ms
 
-**Units**: 
+Timeout for executing node management operations.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 5000
 
 **Range**: [1, ...]
 
@@ -941,9 +976,11 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 ### quota_manager_gc_sec
 
-**Units**: 
+Period of the quota manager's GC timer.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 30000 (30 seconds)
 
 **Range**: [1, ...]
 
