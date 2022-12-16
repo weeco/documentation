@@ -10,6 +10,8 @@ title: Deploying Redpanda for Production
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import InstallRedpandaLinux from '../../partial_docs/_install-redpanda-linux.mdx';
+
 This section describes how to set up a production cluster of Redpanda.
 
 See also:
@@ -41,29 +43,7 @@ Install Redpanda on each system you want to be part of your cluster. There are b
 
 You can also install Redpanda using an [Ansible playbook](../../deployment/production-deployment-automation).
 
-<Tabs>
-  <TabItem value="fedora" label="Fedora/RedHat" default>
-
-```bash
-curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | \
-sudo -E bash && sudo yum install redpanda -y
-```
-
-
-  </TabItem>
-
-  <TabItem value="debian" label="Debian">
-
-```bash
-curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | \
-sudo -E bash && sudo apt install redpanda -y
-```
-
-
-  </TabItem>
-
-</Tabs>
-
+<InstallRedpandaLinux/>
 
 ## Set Redpanda production mode
 

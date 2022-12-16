@@ -4,7 +4,8 @@ title: Installing rpk
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import InstallRpkMacOS from './_install-rpk-macos.mdx';
+import InstallRpkMacOS from '../../partial_docs/_install-rpk-macos.mdx';
+import InstallRpkLinux from '../../partial_docs/_install-rpk-linux.mdx';
 
 Redpanda Keeper (rpk) is a single binary application that provides a way to interact with your Redpanda clusters from the command line. 
 
@@ -21,29 +22,8 @@ To install the rpk binary as a standalone application, follow the instructions f
 <Tabs>
 <TabItem value="ubuntu" label="Linux" default>
 
-Download the `rpk` archive for Linux:
+<InstallRpkLinux/>
 
-```bash
-curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-linux-amd64.zip
-```
-
-Ensure that you have the folder `~/.local/bin`:
-
-```bash
-mkdir -p ~/.local/bin
-```
-
-Add it to your `$PATH`:
-
-```bash
-export PATH="~/.local/bin:$PATH"
-```
-
-Unzip the `rpk` files to your `~/.local/bin/` directory:
-
-```bash
-unzip rpk-linux-amd64.zip -d ~/.local/bin/
-```
 
 </TabItem>
 

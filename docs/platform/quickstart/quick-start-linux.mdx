@@ -10,6 +10,8 @@ title: Installing Redpanda in Linux
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+import InstallRedpandaLinux from '../../partial_docs/_install-redpanda-linux.mdx';
+
 You can run Redpanda directly on Linux. This guide helps you get started with Redpanda for development and testing on Linux.
 
 For production or benchmarking, see [Deploying for Production](../../deployment/production-deployment).
@@ -18,31 +20,12 @@ For production or benchmarking, see [Deploying for Production](../../deployment/
 
 Run the following commands to download and install the Redpanda repository, install Redpanda, and start Redpanda as a service.
 
-<Tabs>
-<TabItem value="fedora" label="Fedora/RedHat" default>
+<InstallRedpandaLinux/>
 
-  ```bash
-  curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && \
-  sudo yum install redpanda -y && \
-  sudo systemctl start redpanda
-  ```
-
-</TabItem>
-<TabItem value="debian" label="Debian/Ubuntu" default>
+## Verify that Redpanda is up and running
 
 ```bash
-curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | sudo -E bash && \
-sudo apt install redpanda -y && \
-sudo systemctl start redpanda
-```
-
-</TabItem>
-</Tabs>
-
-Verify that Redpanda is up and running: 
-
-```bash
-sudo systemctl status redpanda`
+sudo systemctl status redpanda
 ```
 
 The output should look similar to the following:

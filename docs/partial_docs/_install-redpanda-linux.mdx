@@ -1,0 +1,23 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="fedora" label="Fedora/RedHat" default>
+
+```bash
+curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && \
+sudo yum install redpanda -y && \
+sudo systemctl start redpanda
+```
+
+</TabItem>
+<TabItem value="debian" label="Debian/Ubuntu" default>
+
+```bash
+curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | sudo -E bash && \
+sudo apt install redpanda -y && \
+sudo systemctl start redpanda
+```
+
+</TabItem>
+</Tabs>
