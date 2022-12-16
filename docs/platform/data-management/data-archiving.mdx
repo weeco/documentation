@@ -7,9 +7,9 @@ title: Data Archiving
     <meta name="description" content="Set up data archiving on Redpanda."/>
 </head>
 
-:::info
-This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
-:::
+import EnterpriseLicense from '../../partial_docs/_enterprise-license.mdx'
+
+<EnterpriseLicense/>
 
 Data archiving is one use case for Tiered Storage. With data archiving, you can enable remote write so you can back up topics to cloud storage. In the event of a data center failure, data corruption, or cluster migration, you can recover your archived data from the cloud back to your cluster. 
 

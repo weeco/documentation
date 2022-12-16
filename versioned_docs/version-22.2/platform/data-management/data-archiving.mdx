@@ -7,9 +7,9 @@ title: Data Archiving
     <meta name="description" content="Set up data archiving on Redpanda."/>
 </head>
 
-:::info
-This feature requires an [Enterprise license](../../introduction/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
-:::
+import EnterpriseLicense from '../../partial_docs/_enterprise-license.mdx'
+
+<EnterpriseLicense/>
 
 When producers send events to Redpanda, Redpanda stores those events on a local storage volume.
 Redpanda then replicates the data to other nodes,
