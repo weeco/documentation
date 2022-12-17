@@ -33,7 +33,7 @@ Producers and consumers interact with Redpanda using the Kafka API. To achieve h
 
 ### Tiered Storage
 
-Redpanda [Tiered Storage](../../data-management/tiered-storage/) is a multi-tiered remote storage solution that provides the ability to archive log segments to S3-compatible object storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
+Redpanda [Tiered Storage](../../data-management/tiered-storage/) is a multi-tiered remote storage solution that provides the ability to archive log segments to cloud storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
 
 Consumers that read from more recent offsets continue to read from local storage, and consumers that read from historical offsets read from object storage, all with the same API. Consumers can read and reread events from any point within the maximum retention period, whether the events reside on local or remote storage.
 
@@ -53,7 +53,7 @@ Every topic-partition forms a Raft group consisting of a single elected leader a
 
 Raft is a majority vote algorithm. For a leader to acknowledge that an event has been committed to a partition, a majority of its replicas must have written that event to their copy of the log. When a majority (quorum) of responses have been received, the leader can make the event available to consumers and respond to the producer to acknowledge receipt of the event.
 
-As long as the leader and a majority of the replicas are stable, Redpanda can tolerate disturbances in a minority of the replicas. If gray failures cause a minority of replicas to respond slower than normal, then the leader does not have to wait for their  responses to progress, and any additional latency is not passed on to the clients. The result is that Redpanda is less sensitive to faults and can deliver predictable performance.
+As long as the leader and a majority of the replicas are stable, Redpanda can tolerate disturbances in a minority of the replicas. If gray failures cause a minority of replicas to respond slower than normal, then the leader does not have to wait for their responses to progress, and any additional latency is not passed on to the clients. The result is that Redpanda is less sensitive to faults and can deliver predictable performance.
 
 ### Partition leadership elections
 
