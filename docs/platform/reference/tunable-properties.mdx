@@ -21,24 +21,34 @@ For information on how to edit tunable properties, refer to [Configuring Cluster
 
 This section defines Redpanda terminology used in tunable properties.
 
-### Coprocessor (coproc) mode
+### Coprocessor mode
 
-Redpanda's [data transform](../labs/data-transform.mdx) feature requires [enabling a coprocessor](../../labs/data-transform/#enable-data-transforms) in order for it to run.  
+Redpanda's [data transform](../labs/data-transform.mdx) feature, built on top of WebAssembly (Wasm), requires [enabling a coprocessor](../../labs/data-transform/#enable-data-transforms) in order for it to run. 
 
+Properties with `coproc` in their names configure the coprocessor for data transforms.
 
 ### PID controller
 
-A proportional-integral-derivative (PID) controller is a common control algorithm. Redpanda uses a PID controller for [cloud storage uploads](../../data-management/tiered-storage#upload-controller) and [topic compaction](../../data-management/tiered-storage/#set-retention-limits).  
+A proportional-integral-derivative (PID) controller is a common control algorithm. 
+
+Redpanda uses a PID controller for [cloud storage uploads](../../data-management/tiered-storage#upload-controller) and [topic compaction](../../data-management/tiered-storage/#set-retention-limits). Properties with `upload_ctrl` in their names configure the cloud storage upload controller. Properties with `compaction_ctrl` in their names configure the topic compaction controller.
 
 
 ### Leader balancer
 
 When a cluster node crashes or restarts, its leadership of partitions with replicas assigned to it must either be assigned back to the node after it restarts or reassigned to another node. The leader balancer manages the transfer of partition leadership between nodes.
 
+Properties with `leader_balancer` in their names configure the leader balancer.
 
 ### Queue depth control (QDC)
 
 Redpanda uses a latency-based queue depth control (QDC) algorithm to monitor and bound producer latency by adjusting the queue depth. 
+
+Properties with `qdc` in their names configure queue depth control.
+
+### Raft
+
+
 
 
 ## Properties
@@ -270,7 +280,7 @@ Sampling interval of the upload PID controller.
 
 Size of a compacted log segment.
 
-**Type**: int
+**Type**: integer
 
 **Units**: bytes
 
@@ -284,7 +294,7 @@ Size of a compacted log segment.
 
 Size of the compaction backlog of the backlog controller. If empty (null), defaults to 10% of disk capacity.
 
-**Type**: int
+**Type**: integer
 
 **Units**: bytes
 
@@ -322,7 +332,7 @@ Integral coefficient for compaction PID controller.
 
 Maximum number of IO and CPU shares that the compaction process can use. 
 
-**Units**: int
+**Units**: integer
 
 **Default**: 1000
 
@@ -334,7 +344,7 @@ Maximum number of IO and CPU shares that the compaction process can use.
 
 Minimum number of IO and CPU shares that the compaction process can use. 
 
-**Type**: int
+**Type**: integer
 
 **Units**: number of shares
 
@@ -394,7 +404,7 @@ Maximum size of one topic read in coprocessing mode.
 
 ### coproc_max_inflight_bytes
 
-Maximum size of inflight data when sending to the Wasm engine. For details, see [Enable data transforms](../../labs/data-transform/#enable-data-transforms).
+Maximum size of inflight data when sending to the Wasm engine.
 
 **Units**: bytes
 
@@ -406,7 +416,7 @@ Maximum size of inflight data when sending to the Wasm engine. For details, see 
 
 ### coproc_max_ingest_bytes
 
-Maximum size of input logs in memory. For details, see [Enable data transforms](../../labs/data-transform/#enable-data-transforms).
+Maximum size of input logs in memory.
 
 **Units**: bytes
 
@@ -418,7 +428,7 @@ Maximum size of input logs in memory. For details, see [Enable data transforms](
 
 ### coproc_offset_flush_interval_ms
 
-Interval for which coprocessor offsets are flushed to disk. For details, see [Enable data transforms](../../labs/data-transform/#enable-data-transforms).
+Interval for which coprocessor offsets are flushed to disk.
 
 **Units**: milliseconds
 
@@ -634,7 +644,7 @@ Period at which the health monitor refreshes cluster state.
 
 Size of one batch message (one log record) of an ID allocator log.
 
-**Type**: int
+**Type**: integer
 
 **Units**: bytes
 
@@ -648,7 +658,7 @@ Size of one batch message (one log record) of an ID allocator log.
 
 Maximum number of messages (batches) of an ID allocator log. Once the log reaches this limit, it is compacted.
 
-**Type**: int
+**Type**: integer
 
 **Units**: number of log messages (batches)
 
@@ -674,7 +684,7 @@ Duration between cluster join retries.
 
 Maximum amount of data a consumer receives when fetching a record.
 
-**Type**: int
+**Type**: integer
 
 **Units**: bytes
 
@@ -792,7 +802,7 @@ Flush interval of the key-value store.
 
 Maximum size of a segment of the key-value store.
 
-**Type**: int
+**Type**: integer
 
 **Units**: bytes
 
@@ -842,7 +852,7 @@ Timeout used to mute a node, where a muted node is removed from consideration as
 
 Default size of a log segment, for topics which do not set `segment.bytes`.
 
-**Type**: unsigned 64-bit int
+**Type**: unsigned 64-bit integer
 
 **Units**: bytes
 
@@ -856,7 +866,7 @@ Default size of a log segment, for topics which do not set `segment.bytes`.
 
 Max compacted segment size after consolidation.
 
-**Type**: size_t
+**Type**: unsigned integer
 
 **Units**: bytes
 
@@ -988,19 +998,25 @@ Period of the quota manager's GC timer.
 
 ### raft_heartbeat_disconnect_failures
 
-**Units**: 
+Number of consecutive failed heartbeat responses before forcibly closing an unresponsive TCP connection. Disabled when set to 0. 
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: number of consecutive failed heartbeat responses
+
+**Default**: 3
+
+**Range**: [0, ...]
 
 ---
 
 ### raft_heartbeat_interval_ms
 
-**Units**: 
+Period of raft leader heartbeat.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 150
 
 **Range**: [1, ...]
 
@@ -1008,9 +1024,11 @@ Period of the quota manager's GC timer.
 
 ### raft_heartbeat_timeout_ms
 
-**Units**: 
+Timeout duration of raft leader heartbeat RPC.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 3000
 
 **Range**: [1, ...]
 
@@ -1018,9 +1036,11 @@ Period of the quota manager's GC timer.
 
 ### raft_io_timeout_ms
 
-**Units**: 
+Timeout duration for raft I/O.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 10000 (10 seconds)
 
 **Range**: [1, ...]
 
@@ -1028,9 +1048,13 @@ Period of the quota manager's GC timer.
 
 ### raft_max_concurrent_append_requests_per_follower
 
-**Units**: 
+Maximum number of concurrent requests per follower.
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: number of concurrent requests per follower
+
+**Default**: 16
 
 **Range**: [1, ...]
 
@@ -1038,29 +1062,41 @@ Period of the quota manager's GC timer.
 
 ### raft_max_recovery_memory
 
-**Units**: 
+Maximum amount of memory available for raft follower recovery. If `null`, defaults to 10% of total memory.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: bytes
+
+**Default**: null
+
+**Range**: [32 MiB, ...]
 
 ---
 
 ### raft_recovery_default_read_size
 
-**Units**: 
+Default size of a read issued during raft follower recovery.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: bytes
+
+**Default**: 524288 (512 KiB)
+
+**Range**: [128, 5 MiB]
 
 ---
 
 ### raft_replicate_batch_window_size
 
-**Units**: 
+Maximum size of a batch for raft replication.
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 1048576 (1 MiB)
 
 **Range**: [1, ...]
 
@@ -1068,9 +1104,19 @@ Period of the quota manager's GC timer.
 
 ### raft_smp_max_non_local_requests
 
-**Units**: 
+Maximum number of non-local requests that can execute concurrently on a CPU core (seastar 'shard'). If `null`, defaults to the value determined by the following formula:
 
-**Default**: 
+```
+topic_partitions_per_shard * (266) * (<number of CPU cores> - 1)
+```
+
+For details, see [seastar::smp_service_group_config](https://docs.seastar.io/master/namespaceseastar.html#structseastar_1_1smp__service__group__config).
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
 
 **Range**: [1, ...]
 
@@ -1078,9 +1124,11 @@ Period of the quota manager's GC timer.
 
 ### raft_timeout_now_timeout_ms
 
-**Units**: 
+Timeout of the raft 'timeout now' RPC request.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 1000
 
 **Range**: [1, ...]
 
@@ -1088,9 +1136,11 @@ Period of the quota manager's GC timer.
 
 ### raft_transfer_leader_recovery_timeout_ms
 
-**Units**: 
+Timeout waiting for follower recovery when transferring leadership.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 10000 (10 seconds)
 
 **Range**: [1, ...]
 
@@ -1098,9 +1148,11 @@ Period of the quota manager's GC timer.
 
 ### readers_cache_eviction_timeout_ms
 
-**Units**: 
+Duration after which inactive readers will be evicted from the cache of readers.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 30000 (30 seconds)
 
 **Range**: [1, ...]
 
@@ -1108,9 +1160,13 @@ Period of the quota manager's GC timer.
 
 ### reclaim_batch_cache_min_free
 
-**Units**: 
+Minimum amount of free memory maintained by the batch cache.
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 67108864 (64 MiB)
 
 **Range**: [1, ...]
 
@@ -1118,19 +1174,23 @@ Period of the quota manager's GC timer.
 
 ### reclaim_growth_window
 
-**Units**: 
+Starting from the last point in time where memory was reclaimed from the batch cache, this is the duration during which the amount of memory to reclaim grows at a significant amount, based on heuristics about the amount of available memory.  
 
-**Default**: 
+**Units**: milliseconds
 
-**Range**: [1, ...]
+**Default**: 3000
+
+**Range**: [1, ...], <= [reclaim_stable_window](#reclaim_stable_window)
 
 ---
 
 ### reclaim_max_size
 
-**Units**: 
+Maximum batch cache reclaim size.
 
-**Default**: 
+**Units**: bytes
+
+**Default**: 4194304 (4 MiB)
 
 **Range**: [1, ...]
 
@@ -1138,9 +1198,11 @@ Period of the quota manager's GC timer.
 
 ### reclaim_min_size
 
-**Units**: 
+Minimum batch cache reclaim size.
 
-**Default**: 
+**Units**: bytes
+
+**Default**: 131072 (128 KiB)
 
 **Range**: [1, ...]
 
@@ -1148,19 +1210,23 @@ Period of the quota manager's GC timer.
 
 ### reclaim_stable_window
 
-**Units**: 
+If the duration since the last time memory was reclaimed has been longer than this property, the memory usage of the batch cache is considered as stable, so only the minimum size ([reclaim_min_size](#reclaim_min_size)) is set to be reclaimed.  
 
-**Default**: 
+**Units**: milliseconds
 
-**Range**: [1, ...]
+**Default**: 10000 (10 seconds)
+
+**Range**: [1, ...], >= [reclaim_growth_window](#reclaim_growth_window)
 
 ---
 
 ### recovery_append_timeout_ms
 
-**Units**: 
+Timeout for raft's append entries RPC.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 5000
 
 **Range**: [1, ...]
 
@@ -1168,19 +1234,21 @@ Period of the quota manager's GC timer.
 
 ### release_cache_on_segment_roll
 
-**Units**: 
+Flag for whether to release cache when a full segment is rolled.
 
-**Default**: 
+**Type**: boolean
 
-**Range**: [1, ...]
+**Default**: false
 
 ---
 
 ### replicate_append_timeout_ms
 
-**Units**: 
+Timeout for raft's append entries RPCs issued while replicating entries.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 3000
 
 **Range**: [1, ...]
 
@@ -1188,9 +1256,11 @@ Period of the quota manager's GC timer.
 
 ### segment_appender_flush_timeout_ms
 
-**Units**: 
+Maximum duration until buffered data is written.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 1000
 
 **Range**: [1, ...]
 
@@ -1198,19 +1268,27 @@ Period of the quota manager's GC timer.
 
 ### segment_fallocation_step
 
-**Units**: 
+Size of a file allocation (fallocation) step of a segment.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: bytes
+
+**Default**: 33554432 (32 MiB)
+
+**Range**: [4096, 1 GiB]. Must be 4096-byte aligned.
 
 ---
 
 ### storage_read_buffer_size
 
-**Units**: 
+Size of a read buffer (one per in-flight read, one per log segment).
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 131072 (128 KiB)
 
 **Range**: [1, ...]
 
@@ -1218,9 +1296,13 @@ Period of the quota manager's GC timer.
 
 ### storage_read_readahead_count
 
-**Units**: 
+Number of read-ahead reads when reading from a segment.
 
-**Default**: 
+**Type**: signed short
+
+**Units**: number of reads
+
+**Default**: 10
 
 **Range**: [1, ...]
 
@@ -1228,49 +1310,69 @@ Period of the quota manager's GC timer.
 
 ### storage_space_alert_free_threshold_bytes
 
-**Units**: 
+The threshold of free storage (in bytes of free storage) below which a low storage-space alert is logged.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: bytes of free storage
+
+**Default**: 0
+
+**Range**: [0, ...]
 
 ---
 
 ### storage_space_alert_free_threshold_percent
 
-**Units**: 
+The threshold of free storage (in percentage of total storage that is free) below which a low storage-space alert is logged.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: percentage of total storage that is free
+
+**Default**: 5
+
+**Range**: [0, 50]
 
 ---
 
 ### topic_fds_per_partition
 
-**Units**: 
+The number of file descriptors reserved for topics per partition.
 
-**Default**: 
+**Type**: integer
 
-**Range**: [1, ...]
+**Units**: number of file descriptors
+
+**Default**: 5
+
+**Range**: [1, 1000]
 
 ---
 
 ### topic_memory_per_partition
 
-**Units**: 
+The amount of memory reserved for topics per partition.
 
-**Default**: 
+**Type**: unsigned integer
 
-**Range**: [1, ...]
+**Units**: bytes
+
+**Default**: 1048576 (1 MiB)
+
+**Range**: [1, 100 MiB]
 
 ---
 
 ### transaction_coordinator_log_segment_size
 
-**Units**: 
+Size of the log segment of the Kafka broker's transaction coordinator.
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 1073741824 (1 GiB)
 
 **Range**: [1, ...]
 
@@ -1278,9 +1380,11 @@ Period of the quota manager's GC timer.
 
 ### wait_for_leader_timeout_ms
 
-**Units**: 
+Timeout to wait for leader election.
 
-**Default**: 
+**Units**: milliseconds
+
+**Default**: 5000
 
 **Range**: [1, ...]
 
@@ -1288,9 +1392,13 @@ Period of the quota manager's GC timer.
 
 ### zstd_decompress_workspace_bytes
 
-**Units**: 
+Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) in which a decompressed object is emplaced.
 
-**Default**: 
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 8388608 (8 MiB)
 
 **Range**: [1, ...]
 
