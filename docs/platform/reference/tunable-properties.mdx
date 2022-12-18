@@ -17,100 +17,47 @@ Tunable properties are cluster properties that are specifically designed for tun
 For information on how to edit tunable properties, refer to [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
 
 
-## Terminology
+## Admin properties
 
-This section defines Redpanda terminology used in tunable properties.
+### developer_mode
 
-### Coprocessor mode
+Flag to enable developer mode. Not recommended for production. 
 
-Redpanda's [data transform](../labs/data-transform.mdx) feature, built on top of WebAssembly (Wasm), requires [enabling a coprocessor](../../labs/data-transform/#enable-data-transforms) in order for it to run. 
+To print the value of the flag, run rpk with the command: 
 
-Properties with `coproc` in their names configure the coprocessor for data transforms.
+```bash
+rpk redpanda admin config print
+```
 
-### PID controller
+**Type**: boolean
 
-A proportional-integral-derivative (PID) controller is a common control algorithm. 
+**Default**: false
 
-Redpanda uses a PID controller for [cloud storage uploads](../../data-management/tiered-storage#upload-controller) and [topic compaction](../../data-management/tiered-storage/#set-retention-limits). Properties with `upload_ctrl` in their names configure the cloud storage upload controller. Properties with `compaction_ctrl` in their names configure the topic compaction controller.
+--- 
 
+### enable_pid_file
 
-### Leader balancer
+Enables creation of a process ID lock file. Recommended to be set true. 
 
-When a cluster node crashes or restarts, its leadership of partitions with replicas assigned to it must either be assigned back to the node after it restarts or reassigned to another node. The leader balancer manages the transfer of partition leadership between nodes.
+**Type**: boolean
 
-Properties with `leader_balancer` in their names configure the leader balancer.
+**Default**: true
 
-### Queue depth control (QDC)
-
-Redpanda uses a latency-based queue depth control (QDC) algorithm to monitor and bound producer latency by adjusting the queue depth. 
-
-Properties with `qdc` in their names configure queue depth control.
-
-### Raft
-
-
-
-
-## Properties
-
-<!--
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline
-  // Only show h3 (properties) headings
-  toc={toc.filter((node) => node.level === 3)}
-  minHeadingLevel={3}
-  maxHeadingLevel={3}
-/>
--->
-
-### abort_index_segment_size
-
-Capacity of an abort index segment.
-
-**Units**: number of transactions
-
-**Default**: 50000
-
-**Range**: [1, ...] 
+**Range**: [1, ...]
 
 ---
 
-### abort_timed_out_transactions_interval_ms
+### features_auto_enable
 
-Timer timeout to check for and abort inactive transactions.
+Flag to auto-enable new feature flags after upgrades.
 
-**Units**: milliseconds
+**Type**: boolean 
 
-**Default**: 10000
+**Default**: true
 
-**Range**: [1, ...] 
+--------------------------------------------------------------------------------
 
----
-
-### alter_topic_cfg_timeout_ms
-
-Time to wait for entries replication in controller log when executing alter configuration request.
-
-**Units**: milliseconds
-
-**Default**: 5000
-
-**Range**: [1, ...] 
-
----
-
-### append_chunk_size
-
-Size of direct-write operations to disk.
-
-**Units**: bytes
-
-**Default**: 16 KB
-
-**Range**: [4096, 32 MiB]. Must be 4096-byte aligned. 
-
----
+## Cloud storage properties
 
 ### cloud_storage_cache_check_interval
 
@@ -260,8 +207,6 @@ Proportional coefficient of the upload PID controller.
 
 **Default**: -2.0
 
-**Range**: (VERIFY)
-
 ---
 
 ### cloud_storage_upload_ctrl_update_interval_ms
@@ -274,109 +219,9 @@ Sampling interval of the upload PID controller.
 
 **Range**: [1, ...]
 
----
+--------------------------------------------------------------------------------
 
-### compacted_log_segment_size
-
-Size of a compacted log segment.
-
-**Type**: integer
-
-**Units**: bytes
-
-**Default**: 268435456 (256 MiB)
-
-**Range**: [1 MiB, ...]
-
----
-
-### compaction_ctrl_backlog_size
-
-Size of the compaction backlog of the backlog controller. If empty (null), defaults to 10% of disk capacity.
-
-**Type**: integer
-
-**Units**: bytes
-
-**Default**: null
-
-**Range**: [1 MiB, ...]
-
----
-
-### compaction_ctrl_d_coeff
-
-Derivative coefficient for compaction PID controller.
-
-**Type**: double
-
-**Default**: 0.2
-
-**Range**: [0.0, ...]
-
----
-
-### compaction_ctrl_i_coeff
-
-Integral coefficient for compaction PID controller.
-
-**Type**: double
-
-**Default**: 0.0
-
-**Range**: [0.0, ...]
-
----
-
-### compaction_ctrl_max_shares
-
-Maximum number of IO and CPU shares that the compaction process can use. 
-
-**Units**: integer
-
-**Default**: 1000
-
-**Range**:
-
----
-
-### compaction_ctrl_min_shares
-
-Minimum number of IO and CPU shares that the compaction process can use. 
-
-**Type**: integer
-
-**Units**: number of shares
-
-**Default**: 10
-
-**Range**:
-
----
-
-### compaction_ctrl_p_coeff
-
-Proportional coefficient for compaction PID controller. Must be negative to decrease the compaction backlog when compaction shares increase.
-
-**Type**: double
-
-**Default**: -12.5
-
-**Range**: [..., 0.0)
-
----
-
-### compaction_ctrl_update_interval_ms
-
-Sampling interval of the compaction PID controller.
-
-**Units**: milliseconds
-
-**Default**: 30000
-
-**Range**: [1, ...]
-
----
+## Cluster management properties
 
 ### controller_backend_housekeeping_interval_ms
 
@@ -385,220 +230,6 @@ Duration between iterations of the controller backend's housekeeping loop.
 **Units**: milliseconds
 
 **Default**: 1000
-
-**Range**: [1, ...]
-
----
-
-### coproc_max_batch_size
-
-Maximum size of one topic read in coprocessing mode. 
-
-**Units**: bytes
-
-**Default**: 32 KB
-
-**Range**: [1, ...]
-
----
-
-### coproc_max_inflight_bytes
-
-Maximum size of inflight data when sending to the Wasm engine.
-
-**Units**: bytes
-
-**Default**: 10485760 (10 MiB)
-
-**Range**: [1, ...]
-
----
-
-### coproc_max_ingest_bytes
-
-Maximum size of input logs in memory.
-
-**Units**: bytes
-
-**Default**: 655360 (64 KiB)
-
-**Range**: [1, ...]
-
----
-
-### coproc_offset_flush_interval_ms
-
-Interval for which coprocessor offsets are flushed to disk.
-
-**Units**: milliseconds
-
-**Default**: 300000
-
-**Range**: [1, ...]
-
----
-
-### create_topic_timeout_ms
-
-Timeout to wait for new topic creation.
-
-**Units**: milliseconds
-
-**Default**: 2000
-
-**Range**: [0, ...]
-
----
-
-### default_num_windows
-
-Default number of quota tracking windows.
-
-**Units**: number of windows
-
-**Default**: 10
-
-**Range**: [1, ...]
-
----
-
-### default_window_sec
-
-Default duration of quota tracking window.
-
-**Units**: milliseconds
-
-**Default**: 1000
-
-**Range**: [1, ...]
-
----
-
-### developer_mode
-
-Flag to enable developer mode. Not recommended for production. 
-
-To print the value of the flag, run rpk with the command: 
-
-```bash
-rpk redpanda admin config print
-```
-
-**Type**: boolean
-
-**Default**: false
-
----
-
-### disable_batch_cache
-
-Flag to disable the batch cache in log manager.
-
-**Type**: boolean
-
-**Default**: false
-
----
-
-### election_timeout_ms
-
-Raft election timeout.
-
-**Units**: milliseconds
-
-**Default**: 1500
-
-**Range**: [1, ...]
-
----
-
-### enable_pid_file
-
-Enables creation of a process ID lock file. Recommended to be set true. 
-
-**Type**: boolean
-
-**Default**: true
-
-**Range**: [1, ...]
-
----
-
-### features_auto_enable
-
-Flag to auto-enable new feature flags after upgrades.
-
-**Type**: boolean 
-
-**Default**: true
-
----
-
-### fetch_reads_debounce_timeout
-
-Duration to wait for the next read in fetch request when minimum number of requested bytes wasn't read.
-
-**Units**: milliseconds
-
-**Default**: 1
-
-**Range**: [1, ...]
-
----
-
-### fetch_session_eviction_timeout_ms
-
-Minimum time before an unused session will get evicted. Maximum time after which inactive session will be deleted is twice the given configuration value cache.
-
-**Units**: milliseconds
-
-**Default**: 60000
-
-**Range**: [1, ...]
-
----
-
-### full_raft_configuration_recovery_pattern
-
-Recover raft configurations on start for NTPs that match this pattern.
-
-**Type**: string, or list of strings
-
-**Default**: {}
-
----
-
-### group_initial_rebalance_delay
-
-A delay at the start of a consumer group rebalancing event to wait for new members.
-
-**Units**: milliseconds
-
-**Default**: 3000
-
-**Range**: [0, ...]
-
----
-
-### group_new_member_join_timeout
-
-Timeout to wait for new members to join a consumer group.
-
-**Units**: milliseconds
-
-**Default**: 30000
-
-**Range**: [0, ...]
-
----
-
-### group_topic_partitions
-
-Number of partitions in the internal group membership topic.
-
-**Units**: number of partitions
-
-**Default**: 16
 
 **Range**: [1, ...]
 
@@ -675,6 +306,200 @@ Duration between cluster join retries.
 **Units**: milliseconds
 
 **Default**: 5000 (5 seconds)
+
+**Range**: [1, ...]
+
+---
+
+### leader_balancer_idle_timeout
+
+Timeout at which to run the leader balancer when in an idle state. 
+
+**Units**: milliseconds
+
+**Default**: 120000 (2 minutes)
+
+**Range**: [1, ...]
+
+---
+
+### leader_balancer_mute_timeout
+
+Timeout used to mute groups, where muted groups are removed from consideration as leadership rebalancing targets.
+
+**Units**: milliseconds
+
+**Default**: 300000 (5 minutes)
+
+**Range**: [1, ...]
+
+---
+
+### leader_balancer_node_mute_timeout
+
+Timeout used to mute a node, where a muted node is removed from consideration as leadership rebalancing target.
+
+**Units**: milliseconds
+
+**Default**: 20000 (20 seconds)
+
+**Range**: [1, ...]
+
+---
+
+### members_backend_retry_ms
+
+Duration between members backend reconciliation loop retries.
+
+**Units**: milliseconds
+
+**Default**: 5000 
+
+**Range**: [1, ...]
+
+---
+
+### metadata_dissemination_interval_ms
+
+Interval for metadata dissemination batching.
+
+**Units**: milliseconds
+
+**Default**: 3000 
+
+**Range**: [1, ...]
+
+---
+
+### metadata_dissemination_retries
+
+Number of attempts of looking up a topic's meta data like shard before failing a request.
+
+**Units**: number of retries
+
+**Default**: 30
+
+**Range**: [1, ...]
+
+---
+
+### metadata_dissemination_retry_delay_ms
+
+Delay before retrying a topic-lookup in a shard or other meta-tables.
+
+**Units**: milliseconds
+
+**Default**: 500
+
+**Range**: [1, ...]
+
+---
+
+### metadata_status_wait_timeout_ms
+
+Maximum duration to wait in metadata request for cluster health to be refreshed.
+
+**Units**: milliseconds
+
+**Default**: 2000
+
+**Range**: [1, ...]
+
+---
+
+### node_management_operation_timeout_ms
+
+Timeout for executing node management operations.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ...]
+
+-----------------------------------------------------------------------------------
+
+## Kafka properties
+
+### default_num_windows
+
+Default number of quota tracking windows.
+
+**Units**: number of windows
+
+**Default**: 10
+
+**Range**: [1, ...]
+
+---
+
+### default_window_sec
+
+Default duration of quota tracking window.
+
+**Units**: milliseconds
+
+**Default**: 1000
+
+**Range**: [1, ...]
+
+---
+
+### fetch_reads_debounce_timeout
+
+Duration to wait for the next read in fetch request when minimum number of requested bytes wasn't read.
+
+**Units**: milliseconds
+
+**Default**: 1
+
+**Range**: [1, ...]
+
+---
+
+### fetch_session_eviction_timeout_ms
+
+Minimum time before an unused session will get evicted. Maximum time after which inactive session will be deleted is twice the given configuration value cache.
+
+**Units**: milliseconds
+
+**Default**: 60000
+
+**Range**: [1, ...]
+
+---
+
+### group_initial_rebalance_delay
+
+A delay at the start of a consumer group rebalancing event to wait for new members.
+
+**Units**: milliseconds
+
+**Default**: 3000
+
+**Range**: [0, ...]
+
+---
+
+### group_new_member_join_timeout
+
+Timeout to wait for new members to join a consumer group.
+
+**Units**: milliseconds
+
+**Default**: 30000
+
+**Range**: [0, ...]
+
+---
+
+### group_topic_partitions
+
+Number of partitions in the internal group membership topic.
+
+**Units**: number of partitions
+
+**Default**: 16
 
 **Range**: [1, ...]
 
@@ -786,99 +611,9 @@ Duration of a time window used by the queue depth control algorithm.
 
 ---
 
-### kvstore_flush_interval
-
-Flush interval of the key-value store.
-
-**Units**: milliseconds
-
-**Default**: 10
-
-**Range**: [1, ...]
-
----
-
-### kvstore_max_segment_size
-
-Maximum size of a segment of the key-value store.
-
-**Type**: integer
-
-**Units**: bytes
-
-**Default**: 16777216 (16 MiB)
-
-**Range**: [1, ...]
-
----
-
-### leader_balancer_idle_timeout
-
-Timeout at which to run the leader balancer when in an idle state. 
-
-**Units**: milliseconds
-
-**Default**: 120000 (2 minutes)
-
-**Range**: [1, ...]
-
----
-
-### leader_balancer_mute_timeout
-
-Timeout used to mute groups, where muted groups are removed from consideration as leadership rebalancing targets.
-
-**Units**: milliseconds
-
-**Default**: 300000 (5 minutes)
-
-**Range**: [1, ...]
-
----
-
-### leader_balancer_node_mute_timeout
-
-Timeout used to mute a node, where a muted node is removed from consideration as leadership rebalancing target.
-
-**Units**: milliseconds
-
-**Default**: 20000 (20 seconds)
-
-**Range**: [1, ...]
-
----
-
-### log_segment_size
-
-Default size of a log segment, for topics which do not set `segment.bytes`.
-
-**Type**: unsigned 64-bit integer
-
-**Units**: bytes
-
-**Default**: 1073741824 (1 GiB)
-
-**Range**: [1 MiB, ...]
-
----
-
-### max_compacted_log_segment_size
-
-Max compacted segment size after consolidation.
-
-**Type**: unsigned integer
-
-**Units**: bytes
-
-**Default**: 5368709120 (5 GiB)
-
-**Range**: [1, ...]
-
----
-
 ### max_kafka_throttle_delay_ms
 
-Fail-safe maximum throttle delay on kafka requests.
+Fail-safe maximum throttle delay on Kafka requests.
 
 **Units**: milliseconds 
 
@@ -888,65 +623,31 @@ Fail-safe maximum throttle delay on kafka requests.
 
 ---
 
-### members_backend_retry_ms
+### quota_manager_gc_sec
 
-Duration between members backend reconciliation loop retries.
-
-**Units**: milliseconds
-
-**Default**: 5000 
-
-**Range**: [1, ...]
-
----
-
-### metadata_dissemination_interval_ms
-
-Interval for metadata dissemination batching.
+Period of the quota manager's GC timer.
 
 **Units**: milliseconds
 
-**Default**: 3000 
+**Default**: 30000 (30 seconds)
 
 **Range**: [1, ...]
 
 ---
 
-### metadata_dissemination_retries
+### wait_for_leader_timeout_ms
 
-Number of attempts of looking up a topic's meta data like shard before failing a request.
-
-**Units**: number of retries
-
-**Default**: 30
-
-**Range**: [1, ...]
-
----
-
-### metadata_dissemination_retry_delay_ms
-
-Delay before retrying a topic-lookup in a shard or other meta-tables.
+Timeout to wait for leader election.
 
 **Units**: milliseconds
 
-**Default**: 500
+**Default**: 5000
 
 **Range**: [1, ...]
 
----
+--------------------------------------------------------------------------------
 
-### metadata_status_wait_timeout_ms
-
-Maximum duration to wait in metadata request for cluster health to be refreshed.
-
-**Units**: milliseconds
-
-**Default**: 2000
-
-**Range**: [1, ...]
-
----
+## Metrics properties
 
 ### metrics_reporter_report_interval
 
@@ -970,29 +671,29 @@ Tick timer interval for capturing metrics.
 
 **Range**: [1, ...]
 
----
+--------------------------------------------------------------------------------
 
-### node_management_operation_timeout_ms
+## Raft properties
 
-Timeout for executing node management operations.
+### election_timeout_ms
+
+Raft election timeout.
 
 **Units**: milliseconds
 
-**Default**: 5000
+**Default**: 1500
 
 **Range**: [1, ...]
 
 ---
 
-### quota_manager_gc_sec
+### full_raft_configuration_recovery_pattern
 
-Period of the quota manager's GC timer.
+Recover raft configurations on start for NTPs that match this pattern.
 
-**Units**: milliseconds
+**Type**: string, or list of strings
 
-**Default**: 30000 (30 seconds)
-
-**Range**: [1, ...]
+**Default**: {}
 
 ---
 
@@ -1146,6 +847,210 @@ Timeout waiting for follower recovery when transferring leadership.
 
 ---
 
+### recovery_append_timeout_ms
+
+Timeout for raft's append entries RPC.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ...]
+
+--------------------------------------------------------------------------------
+
+## Storage properties
+
+### abort_index_segment_size
+
+Capacity of an abort index segment.
+
+**Units**: number of transactions
+
+**Default**: 50000
+
+**Range**: [1, ...] 
+
+---
+
+### append_chunk_size
+
+Size of direct-write operations to disk.
+
+**Units**: bytes
+
+**Default**: 16 KB
+
+**Range**: [4096, 32 MiB]. Must be 4096-byte aligned. 
+
+---
+
+### compacted_log_segment_size
+
+Size of a compacted log segment.
+
+**Type**: integer
+
+**Units**: bytes
+
+**Default**: 268435456 (256 MiB)
+
+**Range**: [1 MiB, ...]
+
+---
+
+### compaction_ctrl_backlog_size
+
+Size of the compaction backlog of the backlog controller. If empty (null), defaults to 10% of disk capacity.
+
+**Type**: integer
+
+**Units**: bytes
+
+**Default**: null
+
+**Range**: [1 MiB, ...]
+
+---
+
+### compaction_ctrl_d_coeff
+
+Derivative coefficient for compaction PID controller.
+
+**Type**: double
+
+**Default**: 0.2
+
+**Range**: [0.0, ...]
+
+---
+
+### compaction_ctrl_i_coeff
+
+Integral coefficient for compaction PID controller.
+
+**Type**: double
+
+**Default**: 0.0
+
+**Range**: [0.0, ...]
+
+---
+
+### compaction_ctrl_max_shares
+
+Maximum number of IO and CPU shares that the compaction process can use. 
+
+**Units**: integer
+
+**Default**: 1000
+
+**Range**:
+
+---
+
+### compaction_ctrl_min_shares
+
+Minimum number of IO and CPU shares that the compaction process can use. 
+
+**Type**: integer
+
+**Units**: number of shares
+
+**Default**: 10
+
+**Range**:
+
+---
+
+### compaction_ctrl_p_coeff
+
+Proportional coefficient for compaction PID controller. Must be negative to decrease the compaction backlog when compaction shares increase.
+
+**Type**: double
+
+**Default**: -12.5
+
+**Range**: [..., 0.0)
+
+---
+
+### compaction_ctrl_update_interval_ms
+
+Sampling interval of the compaction PID controller.
+
+**Units**: milliseconds
+
+**Default**: 30000
+
+**Range**: [1, ...]
+
+---
+
+### disable_batch_cache
+
+Flag to disable the batch cache in log manager.
+
+**Type**: boolean
+
+**Default**: false
+
+---
+
+### kvstore_flush_interval
+
+Flush interval of the key-value store.
+
+**Units**: milliseconds
+
+**Default**: 10
+
+**Range**: [1, ...]
+
+---
+
+### kvstore_max_segment_size
+
+Maximum size of a segment of the key-value store.
+
+**Type**: integer
+
+**Units**: bytes
+
+**Default**: 16777216 (16 MiB)
+
+**Range**: [1, ...]
+
+---
+
+### log_segment_size
+
+Default size of a log segment, for topics which do not set `segment.bytes`.
+
+**Type**: unsigned 64-bit integer
+
+**Units**: bytes
+
+**Default**: 1073741824 (1 GiB)
+
+**Range**: [1 MiB, ...]
+
+---
+
+### max_compacted_log_segment_size
+
+Max compacted segment size after consolidation.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 5368709120 (5 GiB)
+
+**Range**: [1, ...]
+
+---
+
 ### readers_cache_eviction_timeout_ms
 
 Duration after which inactive readers will be evicted from the cache of readers.
@@ -1220,18 +1125,6 @@ If the duration since the last time memory was reclaimed has been longer than th
 
 ---
 
-### recovery_append_timeout_ms
-
-Timeout for raft's append entries RPC.
-
-**Units**: milliseconds
-
-**Default**: 5000
-
-**Range**: [1, ...]
-
----
-
 ### release_cache_on_segment_roll
 
 Flag for whether to release cache when a full segment is rolled.
@@ -1244,7 +1137,7 @@ Flag for whether to release cache when a full segment is rolled.
 
 ### replicate_append_timeout_ms
 
-Timeout for raft's append entries RPCs issued while replicating entries.
+Timeout for append entries RPCs issued while replicating entries.
 
 **Units**: milliseconds
 
@@ -1336,6 +1229,46 @@ The threshold of free storage (in percentage of total storage that is free) belo
 
 ---
 
+### zstd_decompress_workspace_bytes
+
+Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) in which a decompressed object is emplaced.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 8388608 (8 MiB)
+
+**Range**: [1, ...]
+
+--------------------------------------------------------------------------------
+
+## Topic and partition properties
+
+### alter_topic_cfg_timeout_ms
+
+Time to wait for entries replication in controller log when executing alter configuration request.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ...] 
+
+---
+
+### create_topic_timeout_ms
+
+Timeout to wait for new topic creation.
+
+**Units**: milliseconds
+
+**Default**: 2000
+
+**Range**: [0, ...]
+
+---
+
 ### topic_fds_per_partition
 
 The number of file descriptors reserved for topics per partition.
@@ -1362,6 +1295,21 @@ The amount of memory reserved for topics per partition.
 
 **Range**: [1, 100 MiB]
 
+
+-----------------------------------------------------------------------------------
+
+## Transaction properties
+
+### abort_timed_out_transactions_interval_ms
+
+Timer timeout to check for and abort inactive transactions.
+
+**Units**: milliseconds
+
+**Default**: 10000
+
+**Range**: [1, ...] 
+
 ---
 
 ### transaction_coordinator_log_segment_size
@@ -1376,33 +1324,65 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 
 **Range**: [1, ...]
 
----
+--------------------------------------------------------------------------------
 
-### wait_for_leader_timeout_ms
+## Wasm properties
 
-Timeout to wait for leader election.
+:::caution
+[Redpanda Data Transforms](../labs/data-transform.mdx), built on top of Wasm, is a lab feature and is not supported for production deployments.
+:::
 
-**Units**: milliseconds
+### coproc_max_batch_size
 
-**Default**: 5000
-
-**Range**: [1, ...]
-
----
-
-### zstd_decompress_workspace_bytes
-
-Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) in which a decompressed object is emplaced.
-
-**Type**: unsigned integer
+Maximum size of one topic read in coprocessing mode. 
 
 **Units**: bytes
 
-**Default**: 8388608 (8 MiB)
+**Default**: 32 KB
 
 **Range**: [1, ...]
 
-## Suggested reading
+---
 
+### coproc_max_inflight_bytes
+
+Maximum size of inflight data when sending to the Wasm engine.
+
+**Units**: bytes
+
+**Default**: 10485760 (10 MiB)
+
+**Range**: [1, ...]
+
+---
+
+### coproc_max_ingest_bytes
+
+Maximum size of input logs in memory.
+
+**Units**: bytes
+
+**Default**: 655360 (64 KiB)
+
+**Range**: [1, ...]
+
+---
+
+### coproc_offset_flush_interval_ms
+
+Interval for which coprocessor offsets are flushed to disk.
+
+**Units**: milliseconds
+
+**Default**: 300000
+
+**Range**: [1, ...]
+
+----------------------------------------------------------
+
+## Related topics
+
+- [Cluster Configurable Properties](./cluster-properties.mdx)
+- [Node Configuration Properties](./node-properties.mdx)
 - Benchmark of Redpanda and Apache Kafka [article](https://redpanda.com/blog/fast-and-safe/)
 - Fast distributed transactions with Redpanda [article](https://redpanda.com/blog/fast-transactions/)
