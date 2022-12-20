@@ -7,7 +7,7 @@ title: Rolling Upgrades
     <meta name="description" content="One of the primary uses for maintenance mode is to perform a rolling upgrade on each node in the cluster."/>
 </head>
 
-One of the primary uses for maintenance mode is to perform a rolling upgrade on each node in the cluster. This process involves putting a node into maintenance mode, upgrading the node, waiting to see if there are any issues, taking the node out of maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster while reducing the risk of interruption or degradation in service.
+One of the primary uses for maintenance mode is to perform a rolling upgrade on each node in the cluster. This process involves putting a node into maintenance mode, upgrading the node, taking the node out of maintenance mode, and then repeating the process on the next node in the cluster. Placing nodes into maintenance mode ensures a smooth upgrade of your cluster while reducing the risk of interruption or degradation in service.
 
 :::note
 If you are using the Redpanda Kubernetes Operator to trigger an upgrade, then node maintenance mode is automatically incorporated into the upgrade process.
