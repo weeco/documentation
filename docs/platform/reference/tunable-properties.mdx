@@ -9,7 +9,7 @@ toc_max_heading_level: 3
     name="title"
     content="Tunable configuration properties | Redpanda Docs"
   />
-  <meta name="description" content="Tunable configuration properties reference." />
+  <meta name="description" content="Reference of tunable cluster properties." />
 </head>
 
 Tunable properties are cluster properties that are specifically designed for tuning a cluster.
@@ -19,31 +19,13 @@ For information on how to edit tunable properties, refer to [Configuring Cluster
 
 ## Admin properties
 
-### developer_mode
-
-Flag to enable developer mode. Not recommended for production. 
-
-To print the value of the flag, run rpk with the command: 
-
-```bash
-rpk redpanda admin config print
-```
-
-**Type**: boolean
-
-**Default**: false
-
---- 
-
 ### enable_pid_file
 
-Enables creation of a process ID lock file. Recommended to be set true. 
+Enables creation of a process ID lock file. Recommended to be set `true`. 
 
 **Type**: boolean
 
 **Default**: true
-
-**Range**: [1, ...]
 
 ---
 
@@ -65,9 +47,47 @@ Timeout to check if cache eviction should be triggered.
 
 **Units**: milliseconds
 
-**Default**: 30000
+**Default**: 30000 (30 seconds)
 
-**Range**: [1, ...]
+---
+
+### cloud_storage_enable_compacted_topic_reupload
+
+Enable re-upload of data for compacted topics.
+
+**Type**: boolean
+
+**Default**: true
+
+---
+
+### cloud_storage_enable_remote_read
+
+Enable remote reads for all topics.
+
+**Type**: boolean
+
+**Default**: false
+
+---
+
+### cloud_storage_enable_remote_write
+
+Enable remote writes for all topics.
+
+**Type**: boolean
+
+**Default**: false
+
+---
+
+### cloud_storage_housekeeping_interval_ms
+
+Interval for cloud storage housekeeping tasks.
+
+**Units**: milliseconds
+
+**Default**: 300000 (5 minutes)
 
 ---
 
@@ -79,8 +99,6 @@ Initial backoff time for exponential backoff algorithm.
 
 **Default**: 100
 
-**Range**: [1, ...]
-
 ---
 
 ### cloud_storage_manifest_upload_timeout_ms
@@ -89,9 +107,7 @@ Manifest upload timeout.
 
 **Units**: milliseconds
 
-**Default**: 10000
-
-**Range**: [1, ...]
+**Default**: 10000 (10 seconds)
 
 ---
 
@@ -103,7 +119,61 @@ Maximum HTTPS connection idle time.
 
 **Default**: 5000
 
-**Range**: [1, ...]
+---
+
+### cloud_storage_max_materialized_segments_per_shard
+
+Maximum number of concurrent readers of remote data per shard (CPU core).  If `null`, the value of [topic_partitions_per_shard](#topic_partitions_per_shard) multiplied by 2 is used.
+
+**Type**: unsigned integer
+
+**Units**: number of concurrent readers
+
+**Default**: null
+
+---
+
+### cloud_storage_max_readers_per_shard
+
+Maximum concurrent readers of remote data per shard (CPU core).  If `null`, the value of [topic_partitions_per_shard](#topic_partitions_per_shard) is used, with one reader per partition if the shard is at its maximum partition capacity.
+
+**Type**: unsigned integer
+
+**Units**: number of concurrent readers
+
+**Default**: null
+
+---
+
+### cloud_storage_max_segments_pending_deletion_per_partition
+
+The maximum limit per partition for the number of segments pending deletion from the cloud. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments will be orphaned in the cloud and will have to be removed manually.
+
+**Type**: unsigned integer
+
+**Units**: number of segments
+
+**Default**: 5000
+
+---
+
+### cloud_storage_metadata_sync_timeout_ms
+
+Timeout for shadow indexing (SI) metadata synchronization.
+
+**Units**: milliseconds
+
+**Default**: 10000 (10 seconds)
+
+---
+
+### cloud_storage_readreplica_manifest_sync_timeout_ms
+
+Timeout to check if new data is available for a partition in S3 for read replica.
+
+**Units**: milliseconds
+
+**Default**: 30000 (30 seconds)
 
 ---
 
@@ -115,19 +185,15 @@ Interval at which the archival service runs reconciliation.
 
 **Default**: 1000
 
-**Range**: [1, ...]
-
 ---
 
 ### cloud_storage_segment_max_upload_interval_sec
 
-Duration that a segment can be kept in local storage without uploading it to remote storage.
+Duration that a segment can be kept in local storage without uploading it to remote storage. If `null`, defaults to infinite duration.
 
 **Units**: seconds
 
 **Default**: null (infinite duration)
-
-**Range**: [1, ...] or null (infinite)
 
 ---
 
@@ -137,9 +203,7 @@ Log segment upload timeout.
 
 **Units**: milliseconds
 
-**Default**: 30000
-
-**Range**: [1, ...]
+**Default**: 30000 (30 seconds)
 
 ---
 
@@ -151,8 +215,6 @@ Derivative coefficient of the upload PID controller.
 
 **Default**: 0.0
 
-**Range**: [0.0, ...]
-
 ---
 
 ### cloud_storage_upload_ctrl_max_shares
@@ -163,8 +225,6 @@ Maximum number of IO and CPU shares that the archival upload can use.
 
 **Default**: 1000
 
-**Range**: [1, ...]
-
 ---
 
 ### cloud_storage_upload_ctrl_min_shares 
@@ -174,8 +234,6 @@ Minimum number of IO and CPU shares that the archival upload can use.
 **Units**: number of IO and CPU shares
 
 **Default**: 100
-
-**Range**: [1, ...]
 
 ---
 
@@ -195,9 +253,27 @@ Sampling interval of the upload PID controller.
 
 **Units**: milliseconds
 
-**Default**: 60000
+**Default**: 60000 (1 minute)
 
-**Range**: [1, ...]
+---
+
+### cloud_storage_upload_loop_initial_backoff_ms
+
+Initial backoff interval when there is nothing to upload for a partition.
+
+**Units**: milliseconds
+
+**Default**: 100
+
+---
+
+### cloud_storage_upload_loop_max_backoff_ms
+
+Maximum backoff interval when there is nothing to upload for a partition.
+
+**Units**: milliseconds
+
+**Default**: 10000 (10 seconds)
 
 --------------------------------------------------------------------------------
 
@@ -205,13 +281,11 @@ Sampling interval of the upload PID controller.
 
 ### controller_backend_housekeeping_interval_ms
 
-Duration between iterations of the controller backend's housekeeping loop.
+Interval between iterations of the controller backend's housekeeping loop.
 
 **Units**: milliseconds
 
 **Default**: 1000
-
-**Range**: [1, ...]
 
 ---
 
@@ -223,8 +297,6 @@ Period at which the health manager runs.
 
 **Default**: 180000 (3 minutes)
 
-**Range**: [1, ...]
-
 ---
 
 ### health_monitor_max_metadata_age
@@ -235,8 +307,6 @@ Maximum duration that metadata is cached in the health monitor of a non-controll
 
 **Default**: 10000 (10 seconds)
 
-**Range**: [1, ...]
-
 ---
 
 ### health_monitor_tick_interval
@@ -246,8 +316,6 @@ Period at which the health monitor refreshes cluster state.
 **Units**: milliseconds
 
 **Default**: 10000 (10 seconds)
-
-**Range**: [1, ...]
 
 ---
 
@@ -261,8 +329,6 @@ Size of one batch message (one log record) of an ID allocator log.
 
 **Default**: 1000
 
-**Range**: [1, ...]
-
 ---
 
 ### id_allocator_log_capacity
@@ -275,8 +341,6 @@ Maximum number of messages (batches) of an ID allocator log. Once the log reache
 
 **Default**: 100
 
-**Range**: [1, ...]
-
 ---
 
 ### join_retry_timeout_ms
@@ -286,8 +350,6 @@ Duration between cluster join retries.
 **Units**: milliseconds
 
 **Default**: 5000 (5 seconds)
-
-**Range**: [1, ...]
 
 ---
 
@@ -299,8 +361,6 @@ Timeout at which to run the leader balancer when in an idle state.
 
 **Default**: 120000 (2 minutes)
 
-**Range**: [1, ...]
-
 ---
 
 ### leader_balancer_mute_timeout
@@ -310,8 +370,6 @@ Timeout used to mute groups, where muted groups are removed from consideration a
 **Units**: milliseconds
 
 **Default**: 300000 (5 minutes)
-
-**Range**: [1, ...]
 
 ---
 
@@ -323,7 +381,31 @@ Timeout used to mute a node, where a muted node is removed from consideration as
 
 **Default**: 20000 (20 seconds)
 
-**Range**: [1, ...]
+---
+
+### leader_balancer_transfer_limit_per_shard
+
+Maximum limit per shard (CPU core) on the number of in-progress leadership transfers.
+
+**Type**: unsigned integer
+
+**Units**: number of in-progress leadership transfers per shard
+
+**Default**: 512
+
+**Range**: [1, 2048]
+
+---
+
+### max_concurrent_producer_ids
+
+Maximum number of producer IDs that the resource manager state machine caches in internal state. 
+
+**Type**: unsigned integer
+
+**Units**: number of IDs
+
+**Default**: `std::numeric_limits<uint64_t>::max()`
 
 ---
 
@@ -335,8 +417,6 @@ Duration between members backend reconciliation loop retries.
 
 **Default**: 5000 
 
-**Range**: [1, ...]
-
 ---
 
 ### metadata_dissemination_interval_ms
@@ -346,8 +426,6 @@ Interval for metadata dissemination batching.
 **Units**: milliseconds
 
 **Default**: 3000 
-
-**Range**: [1, ...]
 
 ---
 
@@ -359,8 +437,6 @@ Number of attempts of looking up a topic's meta data like shard before failing a
 
 **Default**: 30
 
-**Range**: [1, ...]
-
 ---
 
 ### metadata_dissemination_retry_delay_ms
@@ -370,8 +446,6 @@ Delay before retrying a topic-lookup in a shard or other meta-tables.
 **Units**: milliseconds
 
 **Default**: 500
-
-**Range**: [1, ...]
 
 ---
 
@@ -383,8 +457,6 @@ Maximum duration to wait in metadata request for cluster health to be refreshed.
 
 **Default**: 2000
 
-**Range**: [1, ...]
-
 ---
 
 ### node_management_operation_timeout_ms
@@ -395,7 +467,105 @@ Timeout for executing node management operations.
 
 **Default**: 5000
 
-**Range**: [1, ...]
+---
+
+### node_status_interval
+
+Time interval between two node status messages, which establish liveness status outside of the Raft protocol.
+
+**Units**: milliseconds
+
+**Default**: 100
+
+---
+
+### partition_autobalancing_concurrent_moves
+
+Number of partitions that can be reassigned at once by the partition auto-balancer.
+
+**Type**: unsigned integer
+
+**Units**: number of partitions
+
+**Default**: 50
+
+---
+
+### partition_autobalancing_tick_interval_ms
+
+Tick interval of the partition auto-balancer.
+
+**Units**: milliseconds
+
+**Default**: 30000 (30 seconds)
+
+---
+
+### partition_autobalancing_movement_batch_size_bytes
+
+Total size of partitions that the partition auto-balancer moves in one batch.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 5368709120 (5 GiB)
+
+--- 
+
+### rps_limit_acls_and_users_operations
+
+Rate limit for controller access control lists (ACL) and user operations.
+
+**Default**: 1000
+
+---
+
+### rps_limit_topic_operations
+
+Rate limit for controller topic operations.
+
+**Default**: 1000
+
+--- 
+
+### controller_log_accummulation_rps_capacity_acls_and_users_operations
+
+Maximum capacity of rate limit accumulation in controller acls and users operations limit.
+
+**Default**: null
+
+---
+
+### rps_limit_node_management_operations
+
+Rate limit for controller node management operations.
+
+**Default**: 1000
+
+--- 
+
+### controller_log_accummulation_rps_capacity_node_management_operations
+
+Maximum capacity of rate limit accumulation in controller node management operations limit.
+
+**Default**: null
+
+---
+
+### rps_limit_move_operations
+
+---
+
+### controller_log_accummulation_rps_capacity_move_operations
+
+---
+
+### rps_limit_configuration_operations
+
+---
+
+### controller_log_accummulation_rps_capacity_configuration_operations
 
 -----------------------------------------------------------------------------------
 
@@ -409,8 +579,6 @@ Default number of quota tracking windows.
 
 **Default**: 10
 
-**Range**: [1, ...]
-
 ---
 
 ### default_window_sec
@@ -420,8 +588,6 @@ Default duration of quota tracking window.
 **Units**: milliseconds
 
 **Default**: 1000
-
-**Range**: [1, ...]
 
 ---
 
@@ -433,8 +599,6 @@ Duration to wait for the next read in fetch request when minimum number of reque
 
 **Default**: 1
 
-**Range**: [1, ...]
-
 ---
 
 ### fetch_session_eviction_timeout_ms
@@ -443,9 +607,7 @@ Minimum time before an unused session will get evicted. Maximum time after which
 
 **Units**: milliseconds
 
-**Default**: 60000
-
-**Range**: [1, ...]
+**Default**: 60000 (1 minute)
 
 ---
 
@@ -477,11 +639,23 @@ Timeout to wait for new members to join a consumer group.
 
 Number of partitions in the internal group membership topic.
 
+**Type**: integer
+
 **Units**: number of partitions
 
 **Default**: 16
 
-**Range**: [1, ...]
+---
+
+### kafka_batch_max_bytes
+
+Maximum size of a batch processed by the server. If the batch is compressed, this limit applies to the compressed batch size.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 1048576 (1 MiB)
 
 ---
 
@@ -494,8 +668,6 @@ Maximum amount of data a consumer receives when fetching a record.
 **Units**: bytes
 
 **Default**: 67108864 (64 MiB)
-
-**Range**: [1, ...]
 
 ---
 
@@ -517,8 +689,6 @@ The update frequency of the queue depth control algorithm.
 
 **Default**: 7000 (7 seconds)
 
-**Range**: [1, ...]
-
 ---
 
 ### kafka_qdc_idle_depth
@@ -528,8 +698,6 @@ Queue depth of the queue depth control algorithm when in an idle state.
 **Units**: number of queue entries
 
 **Default**: 10
-
-**Range**: [1, ...]
 
 ---
 
@@ -551,7 +719,7 @@ Maximum queue depth of the queue depth control algorithm.
 
 **Default**: 100
 
-**Range**: [1, ...], >= [kafka_qdc_min_depth](#kafka_qdc_min_depth)
+**Range**: >= [kafka_qdc_min_depth](#kafka_qdc_min_depth)
 
 ---
 
@@ -563,7 +731,7 @@ Minimum queue depth of the queue depth control algorithm.
 
 **Default**: 1
 
-**Range**: [1, ...], <= [kafka_qdc_max_depth](#kafka_qdc_max_depth)
+**Range**: <= [kafka_qdc_max_depth](#kafka_qdc_max_depth)
 
 ---
 
@@ -575,8 +743,6 @@ Number of time windows used by the queue depth control algorithm.
 
 **Default**: 12
 
-**Range**: [1, ...]
-
 ---
 
 ### kafka_qdc_window_size_ms
@@ -587,7 +753,31 @@ Duration of a time window used by the queue depth control algorithm.
 
 **Default**: 1500
 
-**Range**: [1, ...]
+---
+
+### kafka_request_max_bytes
+
+Maximum size of a request processed by a Kafka API.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 104857600 (100 MiB)
+
+---
+
+### kafka_rpc_server_stream_recv_buf
+
+Maximum size of the user-space receive buffer. If `null`, this limit is not applied.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: null
+
+**Range**: [512, 512 KiB]. Must be 4096-byte aligned.
 
 ---
 
@@ -599,8 +789,6 @@ Fail-safe maximum throttle delay on Kafka requests.
 
 **Default**: 60000 (1 minute)
 
-**Range**: [1, ...]
-
 ---
 
 ### quota_manager_gc_sec
@@ -611,7 +799,7 @@ Period of the quota manager's GC timer.
 
 **Default**: 30000 (30 seconds)
 
-**Range**: [1, ...]
+
 
 ---
 
@@ -622,8 +810,6 @@ Timeout to wait for leader election.
 **Units**: milliseconds
 
 **Default**: 5000
-
-**Range**: [1, ...]
 
 --------------------------------------------------------------------------------
 
@@ -637,8 +823,6 @@ Interval of reports sent to clients from the metrics reporter.
 
 **Default**: 86400000 (24 hours)
 
-**Range**: [1, ...]
-
 ---
 
 ### metrics_reporter_tick_interval
@@ -648,8 +832,6 @@ Tick timer interval for capturing metrics.
 **Units**: milliseconds
 
 **Default**: 60000 (1 minute)
-
-**Range**: [1, ...]
 
 --------------------------------------------------------------------------------
 
@@ -663,8 +845,6 @@ Raft election timeout.
 
 **Default**: 1500
 
-**Range**: [1, ...]
-
 ---
 
 ### full_raft_configuration_recovery_pattern
@@ -673,7 +853,13 @@ Recover raft configurations on start for NTPs that match this pattern.
 
 **Type**: string, or list of strings
 
-**Default**: {}
+**Default**: {} (empty)
+
+---
+
+### node_status_interval
+
+
 
 ---
 
@@ -699,8 +885,6 @@ Period of raft leader heartbeat.
 
 **Default**: 150
 
-**Range**: [1, ...]
-
 ---
 
 ### raft_heartbeat_timeout_ms
@@ -711,8 +895,6 @@ Timeout duration of raft leader heartbeat RPC.
 
 **Default**: 3000
 
-**Range**: [1, ...]
-
 ---
 
 ### raft_io_timeout_ms
@@ -722,8 +904,6 @@ Timeout duration for raft I/O.
 **Units**: milliseconds
 
 **Default**: 10000 (10 seconds)
-
-**Range**: [1, ...]
 
 ---
 
@@ -736,8 +916,6 @@ Maximum number of concurrent requests per follower.
 **Units**: number of concurrent requests per follower
 
 **Default**: 16
-
-**Range**: [1, ...]
 
 ---
 
@@ -779,8 +957,6 @@ Maximum size of a batch for raft replication.
 
 **Default**: 1048576 (1 MiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### raft_smp_max_non_local_requests
@@ -799,8 +975,6 @@ For details, see [seastar::smp_service_group_config](https://docs.seastar.io/mas
 
 **Default**: null
 
-**Range**: [1, ...]
-
 ---
 
 ### raft_timeout_now_timeout_ms
@@ -810,8 +984,6 @@ Timeout of the raft 'timeout now' RPC request.
 **Units**: milliseconds
 
 **Default**: 1000
-
-**Range**: [1, ...]
 
 ---
 
@@ -823,8 +995,6 @@ Timeout waiting for follower recovery when transferring leadership.
 
 **Default**: 10000 (10 seconds)
 
-**Range**: [1, ...]
-
 ---
 
 ### recovery_append_timeout_ms
@@ -835,8 +1005,6 @@ Timeout for raft's append entries RPC.
 
 **Default**: 5000
 
-**Range**: [1, ...]
-
 --------------------------------------------------------------------------------
 
 ## Storage properties
@@ -845,11 +1013,11 @@ Timeout for raft's append entries RPC.
 
 Capacity of an abort index segment.
 
+**Type**: unsigned integer
+
 **Units**: number of transactions
 
 **Default**: 50000
-
-**Range**: [1, ...] 
 
 ---
 
@@ -857,9 +1025,11 @@ Capacity of an abort index segment.
 
 Size of direct-write operations to disk.
 
+**Type**: unsigned integer
+
 **Units**: bytes
 
-**Default**: 16 KB
+**Default**: 16384 (16 KiB)
 
 **Range**: [4096, 32 MiB]. Must be 4096-byte aligned. 
 
@@ -869,7 +1039,7 @@ Size of direct-write operations to disk.
 
 Size of a compacted log segment.
 
-**Type**: integer
+**Type**: unsigned 64-bit integer
 
 **Units**: bytes
 
@@ -881,7 +1051,7 @@ Size of a compacted log segment.
 
 ### compaction_ctrl_backlog_size
 
-Size of the compaction backlog of the backlog controller. If empty (null), defaults to 10% of disk capacity.
+Size of the compaction backlog of the backlog controller. If `null` (empty), defaults to 10% of disk capacity.
 
 **Type**: integer
 
@@ -901,8 +1071,6 @@ Derivative coefficient for compaction PID controller.
 
 **Default**: 0.2
 
-**Range**: [0.0, ...]
-
 ---
 
 ### compaction_ctrl_i_coeff
@@ -919,27 +1087,25 @@ Integral coefficient for compaction PID controller.
 
 ### compaction_ctrl_max_shares
 
-Maximum number of IO and CPU shares that the compaction process can use. 
+Maximum number of I/O and CPU shares that the compaction process can use. 
 
-**Units**: integer
+**Units**: short
+
+**Units**: number of shares
 
 **Default**: 1000
-
-**Range**:
 
 ---
 
 ### compaction_ctrl_min_shares
 
-Minimum number of IO and CPU shares that the compaction process can use. 
+Minimum number of I/O and CPU shares that the compaction process can use. 
 
-**Type**: integer
+**Type**: short
 
 **Units**: number of shares
 
 **Default**: 10
-
-**Range**:
 
 ---
 
@@ -961,9 +1127,7 @@ Sampling interval of the compaction PID controller.
 
 **Units**: milliseconds
 
-**Default**: 30000
-
-**Range**: [1, ...]
+**Default**: 30000 (30 seconds)
 
 ---
 
@@ -985,27 +1149,23 @@ Flush interval of the key-value store.
 
 **Default**: 10
 
-**Range**: [1, ...]
-
 ---
 
 ### kvstore_max_segment_size
 
 Maximum size of a segment of the key-value store.
 
-**Type**: integer
+**Type**: unsigned integer
 
 **Units**: bytes
 
 **Default**: 16777216 (16 MiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### log_segment_size
 
-Default size of a log segment, for topics which do not set `segment.bytes`.
+Default size of log segment. Per topic, it is superseded by topic property `segment.bytes`.
 
 **Type**: unsigned 64-bit integer
 
@@ -1014,6 +1174,50 @@ Default size of a log segment, for topics which do not set `segment.bytes`.
 **Default**: 1073741824 (1 GiB)
 
 **Range**: [1 MiB, ...]
+
+---
+
+### log_segment_size_max
+
+Upper limit of topic `segment.bytes`. Higher values will be clamped to this limit. 
+
+If `null`, no limit is applied.
+
+**Type**: unsigned 64-bit integer
+
+**Units**: bytes
+
+**Default**: null (no limit applied)
+
+---
+
+### log_segment_size_min
+
+Lower limit of topic `segment.bytes`. Lower values will be clamped to this limit. 
+
+If `null`, no limit is applied.
+
+**Type**: unsigned 64-bit integer
+
+**Units**: bytes
+
+**Default**: null (no limit applied)
+
+---
+
+### log_segment_size_jitter_percent
+
+Configures the amount of size variation added to a segment used for each partition: a percentage value in the range [0, log_segment_size_jitter_percent] is randomly chosen and that percentage of the original segment size limit is added. 
+
+Applying segment size jitter is a good defensive measure to space out the overhead created from segment rolls over time.
+
+**Type**: unsigned short
+
+**Units**: percent of segment size that
+
+**Default**: 5
+
+**Range**: [0, 99]
 
 ---
 
@@ -1027,8 +1231,6 @@ Max compacted segment size after consolidation.
 
 **Default**: 5368709120 (5 GiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### readers_cache_eviction_timeout_ms
@@ -1039,7 +1241,7 @@ Duration after which inactive readers will be evicted from the cache of readers.
 
 **Default**: 30000 (30 seconds)
 
-**Range**: [1, ...]
+
 
 ---
 
@@ -1053,8 +1255,6 @@ Minimum amount of free memory maintained by the batch cache.
 
 **Default**: 67108864 (64 MiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### reclaim_growth_window
@@ -1065,7 +1265,7 @@ Starting from the last point in time where memory was reclaimed from the batch c
 
 **Default**: 3000
 
-**Range**: [1, ...], <= [reclaim_stable_window](#reclaim_stable_window)
+**Range**: <= [reclaim_stable_window](#reclaim_stable_window)
 
 ---
 
@@ -1077,8 +1277,6 @@ Maximum batch cache reclaim size.
 
 **Default**: 4194304 (4 MiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### reclaim_min_size
@@ -1088,8 +1286,6 @@ Minimum batch cache reclaim size.
 **Units**: bytes
 
 **Default**: 131072 (128 KiB)
-
-**Range**: [1, ...]
 
 ---
 
@@ -1101,7 +1297,7 @@ If the duration since the last time memory was reclaimed has been longer than th
 
 **Default**: 10000 (10 seconds)
 
-**Range**: [1, ...], >= [reclaim_growth_window](#reclaim_growth_window)
+**Range**: >= [reclaim_growth_window](#reclaim_growth_window)
 
 ---
 
@@ -1123,8 +1319,6 @@ Timeout for append entries RPCs issued while replicating entries.
 
 **Default**: 3000
 
-**Range**: [1, ...]
-
 ---
 
 ### segment_appender_flush_timeout_ms
@@ -1134,8 +1328,6 @@ Maximum duration until buffered data is written.
 **Units**: milliseconds
 
 **Default**: 1000
-
-**Range**: [1, ...]
 
 ---
 
@@ -1153,6 +1345,48 @@ Size of a file allocation (fallocation) step of a segment.
 
 ---
 
+### storage_compaction_index_memory
+
+Maximum number of bytes that may be used on each shard (CPU core) by compaction index writers.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 134217728 (128 MiB)
+
+**Range**: [16 MiB, 100 GiB]
+
+---
+
+### storage_max_concurrent_replay
+
+Maximum number of partition logs that will be replayed concurrently on startup or flushed concurrently on shutdown.
+
+**Type**: unsigned integer
+
+**Units** number of concurrently replayed logs
+
+**Default**: 1024
+
+**Range**: [128, ...]
+
+---
+
+### storage_min_free_bytes
+
+Threshold of minimum amount of free space before rejecting producers.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 5368709120 (5 GiB)
+
+**Range**: [10 MiB, ...]
+
+---
+
 ### storage_read_buffer_size
 
 Size of a read buffer (one per in-flight read, one per log segment).
@@ -1163,21 +1397,17 @@ Size of a read buffer (one per in-flight read, one per log segment).
 
 **Default**: 131072 (128 KiB)
 
-**Range**: [1, ...]
-
 ---
 
 ### storage_read_readahead_count
 
 Number of read-ahead reads when reading from a segment.
 
-**Type**: signed short
+**Type**: short
 
 **Units**: number of reads
 
 **Default**: 10
-
-**Range**: [1, ...]
 
 ---
 
@@ -1209,6 +1439,20 @@ The threshold of free storage (in percentage of total storage that is free) belo
 
 ---
 
+### storage_target_replay_bytes
+
+Target bytes to replay from disk on startup after a clean shutdown. Controls the frequency of snapshots and checkpoints.
+
+**Type**: unsigned integer
+
+**Units**: bytes
+
+**Default**: 10737418240 (10 GiB)
+
+**Range**: [128 MiB, 1 TiB]
+
+---
+
 ### zstd_decompress_workspace_bytes
 
 Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) in which a decompressed object is emplaced.
@@ -1219,7 +1463,7 @@ Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) i
 
 **Default**: 8388608 (8 MiB)
 
-**Range**: [1, ...]
+
 
 --------------------------------------------------------------------------------
 
@@ -1227,13 +1471,13 @@ Size of the Zstandard (zstd) compression algorithm's memory buffer (workspace) i
 
 ### alter_topic_cfg_timeout_ms
 
-Time to wait for entries replication in controller log when executing alter configuration request.
+Time to wait for entries replication in controller log when executing alter topic configuration request.
 
 **Units**: milliseconds
 
 **Default**: 5000
 
-**Range**: [1, ...] 
+ 
 
 ---
 
@@ -1244,8 +1488,6 @@ Timeout to wait for new topic creation.
 **Units**: milliseconds
 
 **Default**: 2000
-
-**Range**: [0, ...]
 
 ---
 
@@ -1275,6 +1517,33 @@ The amount of memory reserved for topics per partition.
 
 **Range**: [1, 100 MiB]
 
+---
+
+### topic_partitions_per_shard
+
+Maximum number of partitions which may be allocated per shard (CPU core).
+
+**Type**: unsigned integer
+
+**Units**: number of partitions
+
+**Default**: 7000
+
+**Range**: [16, 131072]
+
+---
+
+### topic_partitions_reserve_shard0
+
+Reserved partition slots on shard (CPU core) 0 on each node.  If this is >= [topic_partitions_per_shard](#topics_partitions_per_shard), no data partitions will be scheduled on shard 0.
+
+**Type**: unsigned integer
+
+**Units**: number of partitions
+
+**Default**: 2
+
+**Range**: [0, 131072]
 
 -----------------------------------------------------------------------------------
 
@@ -1286,9 +1555,7 @@ Timer timeout to check for and abort inactive transactions.
 
 **Units**: milliseconds
 
-**Default**: 10000
-
-**Range**: [1, ...] 
+**Default**: 10000 (10 seconds)
 
 ---
 
@@ -1301,8 +1568,6 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 **Units**: bytes
 
 **Default**: 1073741824 (1 GiB)
-
-**Range**: [1, ...]
 
 --------------------------------------------------------------------------------
 
@@ -1320,7 +1585,7 @@ Maximum size of one topic read in coprocessing mode.
 
 **Default**: 32 KB
 
-**Range**: [1, ...]
+
 
 ---
 
@@ -1328,11 +1593,11 @@ Maximum size of one topic read in coprocessing mode.
 
 Maximum size of inflight data when sending to the Wasm engine.
 
+**Type**: unsigned integer 
+
 **Units**: bytes
 
 **Default**: 10485760 (10 MiB)
-
-**Range**: [1, ...]
 
 ---
 
@@ -1340,23 +1605,21 @@ Maximum size of inflight data when sending to the Wasm engine.
 
 Maximum size of input logs in memory.
 
+**Type**: unsigned integer
+
 **Units**: bytes
 
-**Default**: 655360 (64 KiB)
-
-**Range**: [1, ...]
+**Default**: 655360 (640 KiB)
 
 ---
 
 ### coproc_offset_flush_interval_ms
 
-Interval for which coprocessor offsets are flushed to disk.
+Interval for which all coprocessor offsets are flushed to disk.
 
 **Units**: milliseconds
 
-**Default**: 300000
-
-**Range**: [1, ...]
+**Default**: 300000 (5 minutes)
 
 ----------------------------------------------------------
 
