@@ -43,6 +43,14 @@ login:
     # and the `issuer` returned in the response has to match this issuer url.
     issuerUrl: ""
 
+    # IssuerTLS is the TLS configuration used by the HTTP client to send requests
+	  # to the IssuerURL. If you don't set any certificate paths, the IssuerTLS defaults to
+    # the system cert pool.
+    issuerTls:
+      caFilepath:
+      certFilepath:
+      keyFilepath:
+
     # DisplayName is the name that shall be shown on the login page for this identity provider
     displayName: ""
 
@@ -77,3 +85,55 @@ roleBindings:
         name: joe@yourcompany.com
     roleName: editor
 ```
+
+## Troubleshooting
+
+### Used claim key did not exist in user's id token
+
+If the claim key in a role binding does not exist in the ID token, Redpanda Console prints
+an error message in the backend to assist you with this. The error message contains the claim key 
+that Redpanda Console tried to look up, as well as all existing claim keys for this specific user.
+
+Here is an example error message:
+
+```
+{
+  "level": "error",
+  "msg": "the specified user identifying claim does not exist for the user that has logged in",
+  "found_claim_keys": ["oid", "aud", "sub"],
+  "used_claim_key": "uid"
+}
+```
+
+### Find your claim keys and values
+
+If you are unsure about which claim keys and values that your identity provider attached to your ID token,
+you can extract them from the JSON web token that is sent to your browser as a cookie. Because the claim values may be 
+sensitive, Redpanda Console never logs them in the backend.
+
+1. Open the Redpanda Console login page. Don't click the OIDC login button yet.
+
+1. Open your browser's developer tools and inspect the network requests.
+
+1. If your browser has the option to preserve logs, enable it.
+  Without this option enabled, some browsers such as Google Chrome truncate the network request logs after a redirection.
+  
+1. Click the OIDC login button and authenticate with your identity provider.
+
+1. Search the network requests in your browser's developer tools for a request that starts with the relative path `/auth/callbacks/oidc?code=`.
+
+1. Copy the value of the `jwt` cookie in the `set-cookie` header. The value of that cookie is an encrypted and compressed JSON web token.
+
+1. Send the JSON web token to Redpanda Console to decode.
+
+  ```bash
+  curl -sL -X POST 'https://your-console-url.com/admin/session-token/decode' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{
+      "token": "<your-token>"
+  }'
+  ```
+
+  The response is a JSON object, which includes your token in the `oAuthToken.access_token` field.
+
+8. Paste your token into [https://jwt.io/](https://jwt.io/), where you can inspect all your decoded claim keys.

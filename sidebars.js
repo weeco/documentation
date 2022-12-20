@@ -117,12 +117,9 @@ module.exports = {
         "platform/deployment/production-deployment-automation",
         {
           type: "category",
-          label: "Performance and Storage Tuning",
-          link: {
-            type: "doc",
-            id: "platform/deployment/performance-storage-tuning",
-          },
+          label: "Performance and Tuning",
           items: [
+            "platform/deployment/high-availability",
             "platform/deployment/disk-utilization",
             "platform/deployment/io-optimization",
           ],
@@ -199,11 +196,27 @@ module.exports = {
       collapsible: true,
       collapsed: true,
       items: [
-        "platform/data-management/tiered-storage",
-        "platform/data-management/data-archiving",
+        {
+          type: "category",
+          label: "Tiered Storage",
+          collapsible: true,
+          collapsed: true,
+          link: {
+            type: "doc",
+            id: "platform/data-management/tiered-storage",
+          },
+          items: [
+            {
+              type: "doc",
+              label: "Data Archiving",
+              id: "platform/data-management/data-archiving",
+            },
+          ],
+        },
         "platform/data-management/remote-read-replicas",
         "platform/data-management/data-migration",
         "platform/data-management/rack-awareness",
+        "platform/data-management/schema-registry",
       ],
     },
     {
@@ -347,6 +360,7 @@ module.exports = {
         "platform/reference/tunable-properties",
         "platform/reference/node-properties",
         "platform/reference/node-configuration-sample",
+        "platform/reference/schema-registry-api",
         {
           type: "category",
           label: "rpk Commands",
