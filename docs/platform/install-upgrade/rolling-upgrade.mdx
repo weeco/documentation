@@ -50,7 +50,7 @@ Repeat this process for each node to upgrade.
     rpk cluster maintenance status
     ```
     
-    When rpk returns, confirm that `FINISHED` is `true`.
+    Confirm that `FINISHED` is `true`.
 
 4. Validate again the health of the cluster:
 
@@ -71,11 +71,11 @@ Repeat this process for each node to upgrade.
 
 ### 2. Upgrade node
 
-If successfully in maintenance mode, perform a node upgrade by following the [version upgrade](../../install-upgrade/version-upgrade/) process specific to your deployment model.
+After the node is in maintenance mode, perform a node upgrade by following the [version upgrade](../../install-upgrade/version-upgrade/) process specific to your deployment model.
 
 ### 3. Disable maintenance mode
 
-Once you've successfully upgraded the node:
+After you've successfully upgraded the node:
 
 1. Take the node out of maintenance mode: 
 
@@ -91,7 +91,7 @@ Once you've successfully upgraded the node:
 
 ### 4. Restart node
 
-Once you're out of maintenance mode, restart the node's Redpanda service.
+After you're out of maintenance mode, restart the node's Redpanda service.
 
 :::note
 You can stop the upgrade process and roll back to the original version as long as you have not upgraded every node and restarted the cluster.
