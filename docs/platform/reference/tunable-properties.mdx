@@ -16,6 +16,7 @@ Tunable properties are cluster properties that are specifically designed for tun
 
 For information on how to edit tunable properties, refer to [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
 
+--------------------------------------------------------------------------------
 
 ## Admin properties
 
@@ -289,6 +290,62 @@ Interval between iterations of the controller backend's housekeeping loop.
 
 ---
 
+### controller_log_accummulation_rps_capacity_acls_and_users_operations
+
+Maximum capacity of accumulated requests for the cluster controller's access control list (ACL) operations and user operations. If `null`, no maximum capacity is applied.
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
+
+**Related properties**: [rps_limit_acls_and_users_operations](#rps_limit_acls_and_users_operations) 
+
+---
+
+### controller_log_accummulation_rps_capacity_configuration_operations
+
+Maximum capacity of accumulated requests for the cluster controller's configuration operations. If `null`, no maximum capacity is applied.
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
+
+**Related properties**: [rps_limit_configuration_operations](#rps_limit_configuration_operations) 
+
+---
+
+### controller_log_accummulation_rps_capacity_move_operations
+
+Maximum capacity of accumulated requests for the cluster controller's move operations. If `null`, no maximum capacity is applied.
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
+
+**Related properties**: [rps_limit_move_operations](#rps_limit_move_operations) 
+
+---
+
+### controller_log_accummulation_rps_capacity_node_management_operations
+
+Maximum capacity of accumulated requests for the cluster controller's node management operations. If `null`, no maximum capacity is applied.
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
+
+**Related properties**: [rps_limit_node_management_operations](#rps_limit_node_management_operations) 
+
+---
+
 ### health_manager_tick_interval
 
 Period at which the health manager runs.
@@ -515,57 +572,61 @@ Total size of partitions that the partition auto-balancer moves in one batch.
 
 ### rps_limit_acls_and_users_operations
 
-Rate limit for controller access control lists (ACL) and user operations.
+Request-per-second (rps) rate limit for the cluster controller's access control list (ACL) operations and user operations.
+
+**Type**: unsigned integer
+
+**Units**: requests per second
 
 **Default**: 1000
-
----
-
-### rps_limit_topic_operations
-
-Rate limit for controller topic operations.
-
-**Default**: 1000
-
---- 
-
-### controller_log_accummulation_rps_capacity_acls_and_users_operations
-
-Maximum capacity of rate limit accumulation in controller acls and users operations limit.
-
-**Default**: null
-
----
-
-### rps_limit_node_management_operations
-
-Rate limit for controller node management operations.
-
-**Default**: 1000
-
---- 
-
-### controller_log_accummulation_rps_capacity_node_management_operations
-
-Maximum capacity of rate limit accumulation in controller node management operations limit.
-
-**Default**: null
-
----
-
-### rps_limit_move_operations
-
----
-
-### controller_log_accummulation_rps_capacity_move_operations
 
 ---
 
 ### rps_limit_configuration_operations
 
+Request-per-second (rps) rate limit for the cluster controller's configuration operations.
+
+**Type**: unsigned integer
+
+**Units**: requests per second
+
+**Default**: 1000
+
 ---
 
-### controller_log_accummulation_rps_capacity_configuration_operations
+### rps_limit_move_operations
+
+Request-per-second (rps) rate limit for the cluster controller's move operations.
+
+**Type**: unsigned integer
+
+**Units**: requests per second
+
+**Default**: 1000
+
+---
+
+### rps_limit_node_management_operations
+
+Request-per-second (rps) rate limit for the cluster controller's node management operations.
+
+**Type**: unsigned integer
+
+**Units**: requests per second
+
+**Default**: 1000
+
+--- 
+
+### rps_limit_topic_operations
+
+Request-per-second (rps) rate limit for the cluster controller's topic operations.
+
+**Type**: unsigned integer
+
+**Units**: requests per second
+
+**Default**: 1000
 
 -----------------------------------------------------------------------------------
 
@@ -854,12 +915,6 @@ Recover raft configurations on start for NTPs that match this pattern.
 **Type**: string, or list of strings
 
 **Default**: {} (empty)
-
----
-
-### node_status_interval
-
-
 
 ---
 
