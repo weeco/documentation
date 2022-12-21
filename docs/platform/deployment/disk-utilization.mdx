@@ -39,13 +39,17 @@ Based on these properties, Redpanda runs a log cleanup process in the background
 
 ### Set time-based retention
 
-A message is deleted if its age exceeds the value specified in `delete_retention_ms` (the cluster-level property) or `retention.ms` (the topic-level property). If `retention.ms` is not set at the topic-level, the topic inherits the `delete_retention_ms` setting.
+A message is deleted if its age exceeds the value specified in `delete_retention_ms` (the cluster-level property) or `retention.ms` (the topic-level property). If `retention.ms` is not set at the topic level, the topic inherits the `delete_retention_ms` setting.
+
+:::note
+Time-based retention is calculated from the batch timestamp in a segment. Each segment index stores the timestamp. The timestamp policy can be either `CreateTime` (client timestamp set by producer) or `AppendTime` (server timestamp set by Redpanda). Segments are closed when partition leadership changes or when the segment size limit is reached. 
+:::
 
 To set retention time for a single topic, use `retention.ms`, which overrides `delete_retention_ms`. 
 
 * `retention.ms` - Topic-level property that specifies how long a message stays on disk before it's deleted. 
   
-  To minimize the likelihood of out-of-disk outages, set `retention.ms` to `86400000`. There is no default.
+  To minimize the likelihood of out-of-disk outages, set `retention.ms` to `86400000`, which is one day. There is no default.
   
   To set `retention.ms`: 
 
@@ -58,7 +62,7 @@ To set retention time for a single topic, use `retention.ms`, which overrides `d
   To minimize the likelihood of out-of-disk outages, set `delete_retention_ms` to `86400000`, which is one day. The default is `604800000`, which is one week.
 
 :::caution 
-Do not set `delete_retention_ms` to `-1` unless you're using [remote write with Tiered Storage](../../data-management/tiered-storage#remote-write) to upload segments to remote storage. Setting it to `-1` configures indefinite retention, which can fill disk space. 
+Do not set `delete_retention_ms` to `-1` unless you're using [remote write with Tiered Storage](../../data-management/tiered-storage#remote-write) to upload segments to remote storage. Setting it to `-1` configures indefinite retention, which can fill disk space.  
 :::
 
 ### Set size-based retention

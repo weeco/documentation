@@ -7,6 +7,9 @@ title: Migrating Data to Redpanda with MirrorMaker 2
     <meta name="description" content="Migrate external data to Redpanda with MirrorMaker 2."/>
 </head>
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 One of the more elegant aspects of Redpanda is that it is compatible with the [Kafka API and ecosystem](../../development/kafka-clients).
 So when you want to migrate data from Kafka or replicate data between Redpanda clusters,
 the MirrorMaker 2 (MM2) tool bundled in the [Kafka download package](https://kafka.apache.org/downloads) is a natural solution.
@@ -166,6 +169,74 @@ To address this issue, make sure that your `mm2.properties` configuration file o
 ```bash
 <cluster_name_2>.producer.max.request.size=31457280
 ```
+
+## Running MirrorMaker 2 as a service
+
+For production usage Redpanda recommends that you run MirrorMaker 2 as a SystemD unit file.
+
+To run MirrorMaker 2 as a SystemD unit file:
+
+1. Edit `/etc/systemd/system/multi-user.target.wants/mm2.service` and add the following:
+
+
+```
+[Unit]
+Description=Mirror Maker 2 service
+After=network.target
+#StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+LimitNOFILE=49152
+RestartSec=1
+User=root
+Environment=JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+ExecStart=/home/ec2-user/kafka_2.13-3.3.1/bin/connect-mirror-maker.sh /home/ec2-user/mm2.properties
+
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mm2
+
+[Install]
+WantedBy=multi-user.target
+```
+
+:::note
+The home directory and where you are running MirrorMaker2 from may vary. Note the Kafka folder location, as it may vary by version.
+::: 
+
+2. Run: 
+
+```bash
+sudo systemctl daemon-reload
+```
+
+3. Run:
+   
+```bash
+sudo systemctl start mm2.service
+```
+
+You can follow the progress with the `tail` command:
+
+<Tabs>
+<TabItem value="fedora" label="Fedora/RedHat" default>
+
+```bash
+tail -f /var/log/messages | grep mm2
+```
+
+</TabItem>
+
+<TabItem value="debian" label="Debian/Ubuntu" default>
+
+```bash
+tail -f /var/log/syslog | grep mm2
+```
+</TabItem>
+</Tabs>
+
 
 ## Troubleshooting
 
