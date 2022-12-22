@@ -58,6 +58,10 @@ To set up rack awareness for this cluster:
 8. Log in to the remaining brokers and edit their `redpanda.yaml` files. For broker 2, set `rack` to `A`. For broker 3, set `rack` to `B`. For brokers 4 and 5, set `rack` to `C`.
 9. Restart each broker in the cluster for the rack assignments to take effect.
 
+:::tip
+For high availability, Redpanda recommends adding one or more brokers from each zone to the `seed_servers` configuration.
+:::
+
 ## Next steps
 
 Use rack awareness with [Continuous Data Balancing](../../cluster-administration/continuous-data-balancing/) to continually maintain the configured replication level, even after a rack failure. For a given partition, Redpanda tries to move excess replicas from racks that have more than one replica to racks that have no replicas.
