@@ -753,6 +753,13 @@ module.exports = {
       collapsed: true,
       items: ["platform/labs/install-preview", "platform/labs/data-transform"],
     },
+    {
+      type: "category",
+      label: "Glossary",
+      collapsible: true,
+      collapsed: true,
+      items: ["terms/rpk"],
+    },
   ],
   cloudSidebar: [
     {
