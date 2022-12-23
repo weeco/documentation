@@ -14,7 +14,7 @@ toc_max_heading_level: 3
 
 Tunable properties are cluster properties that are specifically designed for tuning a cluster.
 
-For information on how to edit tunable properties, refer to [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
+For information on how to edit tunable properties, see [Configuring Cluster Properties](../../cluster-administration/cluster-property-configuration).
 
 --------------------------------------------------------------------------------
 
@@ -124,7 +124,7 @@ Maximum HTTPS connection idle time.
 
 ### cloud_storage_max_materialized_segments_per_shard
 
-Maximum number of concurrent readers of remote data per shard (CPU core).  If `null`, the value of [topic_partitions_per_shard](#topic_partitions_per_shard) multiplied by 2 is used.
+Maximum number of concurrent readers of remote data per shard (CPU core).  If `null`, the value of [topic_partitions_per_shard](#topic_partitions_per_shard) multiplied by two is used.
 
 **Type**: unsigned integer
 
@@ -148,7 +148,7 @@ Maximum concurrent readers of remote data per shard (CPU core).  If `null`, the 
 
 ### cloud_storage_max_segments_pending_deletion_per_partition
 
-The maximum limit per partition for the number of segments pending deletion from the cloud. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments will be orphaned in the cloud and will have to be removed manually.
+The maximum limit per partition for the number of segments pending deletion from the cloud. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments are orphaned in the cloud and must be removed manually.
 
 **Type**: unsigned integer
 
@@ -488,7 +488,7 @@ Interval for metadata dissemination batching.
 
 ### metadata_dissemination_retries
 
-Number of attempts of looking up a topic's meta data like shard before failing a request.
+Number of attempts looking up a topic's metadata, like shard, before failing a request.
 
 **Units**: number of retries
 
@@ -664,7 +664,7 @@ Duration to wait for the next read in fetch request when minimum number of reque
 
 ### fetch_session_eviction_timeout_ms
 
-Minimum time before an unused session will get evicted. Maximum time after which inactive session will be deleted is twice the given configuration value cache.
+Minimum time before an unused session gets evicted. The maximum time after which an inactive session is deleted is twice the given configuration value cache.
 
 **Units**: milliseconds
 
@@ -1234,7 +1234,7 @@ Default size of log segment. Per topic, it is superseded by topic property `segm
 
 ### log_segment_size_max
 
-Upper limit of topic `segment.bytes`. Higher values will be clamped to this limit. 
+Upper limit of topic `segment.bytes`. Higher values are clamped to this limit. 
 
 If `null`, no limit is applied.
 
@@ -1248,7 +1248,7 @@ If `null`, no limit is applied.
 
 ### log_segment_size_min
 
-Lower limit of topic `segment.bytes`. Lower values will be clamped to this limit. 
+Lower limit of topic `segment.bytes`. Lower values are clamped to this limit. 
 
 If `null`, no limit is applied.
 
@@ -1290,7 +1290,7 @@ Max compacted segment size after consolidation.
 
 ### readers_cache_eviction_timeout_ms
 
-Duration after which inactive readers will be evicted from the cache of readers.
+Duration after which inactive readers are evicted from the cache of readers.
 
 **Units**: milliseconds
 
@@ -1416,7 +1416,7 @@ Maximum number of bytes that may be used on each shard (CPU core) by compaction 
 
 ### storage_max_concurrent_replay
 
-Maximum number of partition logs that will be replayed concurrently on startup or flushed concurrently on shutdown.
+Maximum number of partition logs that are replayed concurrently on startup or flushed concurrently on shutdown.
 
 **Type**: unsigned integer
 
@@ -1590,7 +1590,7 @@ Maximum number of partitions which may be allocated per shard (CPU core).
 
 ### topic_partitions_reserve_shard0
 
-Reserved partition slots on shard (CPU core) 0 on each node.  If this is >= [topic_partitions_per_shard](#topics_partitions_per_shard), no data partitions will be scheduled on shard 0.
+Reserved partition slots on shard (CPU core) 0 on each node. If this is >= [topic_partitions_per_shard](#topics_partitions_per_shard), no data partitions are scheduled on shard 0.
 
 **Type**: unsigned integer
 
@@ -1682,5 +1682,6 @@ Interval for which all coprocessor offsets are flushed to disk.
 
 - [Cluster Configurable Properties](./cluster-properties.mdx)
 - [Node Configuration Properties](./node-properties.mdx)
-- Benchmark of Redpanda and Apache Kafka [article](https://redpanda.com/blog/fast-and-safe/)
-- Fast distributed transactions with Redpanda [article](https://redpanda.com/blog/fast-transactions/)
+## Suggested reading
+- [Benchmark of Redpanda and Apache Kafka](https://redpanda.com/blog/fast-and-safe/)
+- [Fast distributed transactions with Redpanda](https://redpanda.com/blog/fast-transactions/)
