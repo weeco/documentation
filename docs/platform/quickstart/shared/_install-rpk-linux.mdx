@@ -1,0 +1,26 @@
+import RpkVersion from "./_run-rpk-version.mdx"
+
+1. Download the `rpk` archive for Linux:
+
+    ```bash
+    curl -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-linux-amd64.zip
+    ```
+
+2. Ensure that you have the folder `~/.local/bin`:
+
+    ```bash
+    mkdir -p ~/.local/bin
+    ```
+
+3. Add it to your `$PATH`:
+
+    ```bash
+    export PATH="~/.local/bin:$PATH"
+    ```
+
+4. Unzip the `rpk` files to your `~/.local/bin/` directory:
+
+    ```bash
+    unzip rpk-linux-amd64.zip -d ~/.local/bin/
+    ```
+5. <RpkVersion/>
