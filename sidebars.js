@@ -234,7 +234,7 @@ module.exports = {
         "platform/development/code-examples",
         "platform/development/guide-nodejs",
         "platform/development/consumer-offsets",
-        "platform/development/configure-producers"
+        "platform/development/configure-producers",
         "platform/development/idempotent-producers",
         "platform/development/transactions",
         "platform/development/http-proxy",
