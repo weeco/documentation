@@ -48,7 +48,7 @@ Redpanda built the schema registry directly into the Redpanda binary. The schema
 
 Every broker allows mutating REST calls, so there is no need to configure leadership or failover strategies. Schema are stored in a compacted topic, and the registry uses optimistic concurrency control at the topic level to detect and avoid collisions.
 
-## Examples
+## Use schema registry
 
 The following examples cover the basic functionality of the Redpanda schema registry based on an example Avro schema called `sensor_sample`. This schema contains fields that represent a measurement from a sensor for the value of the `sensor` topic, as defined below.
 
@@ -76,6 +76,8 @@ The following examples cover the basic functionality of the Redpanda schema regi
 ```
 
 ### Prerequisites
+
+To run the sample commands and code in each example, follow these steps to set up Redpanda and other tools:
 
 1. Download the [jq utility](https://stedolan.github.io/jq/download/). 
 2. Install [curl](https://curl.se/) or [Python](https://www.python.org/).
@@ -429,7 +431,7 @@ You can configure different types of schema compatibility, which are applied to 
 - `FORWARD` - consumers using the previous schema (for example, version 9) can read data from producers using the new schema (for example, version 10).
 - `FORWARD_TRANSITIVE` - consumers using any previous schema (for example, versions 1-9) can read data from producers using the new schema (for example, version 10).
 - `FULL` - the new schema is compatible with all previous schemas.
-- `NONE` - no schema compatiblity checks are done.
+- `NONE` - no schema compatibility checks are done.
 
 To set the compatibility type for a subject, make a PUT request to `/config/<subject-name>` with the specific compatibility type:
 

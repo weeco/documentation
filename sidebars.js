@@ -233,6 +233,7 @@ module.exports = {
             },
           ],
         },
+        "platform/data-management/schema-registry",
       ],
     },
     {
