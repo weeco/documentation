@@ -17,17 +17,17 @@ Redpanda is designed from the ground up for maximum performance on any data stre
 
 ### Simple
   
-Redpanda is packaged as a single binary. It does not rely on any external systems. It’s easy to install, configure, and operate in any production environment. Redpanda is fully compatible with the Apache Kafka© API, so it works with the ecosystem of tools and integrations that have been built on the Kafka protocol. It can be deployed in your data center or in the cloud on bare metal, containers, and virtual machines.
+Redpanda is packaged as a single binary. It does not rely on any external systems. Redpanda is fully compatible with the Apache Kafka© API, so it works with the ecosystem of tools and integrations that have been built on the Kafka protocol. It can be deployed in your data center or in the cloud on bare metal, containers, and virtual machines.
 
 ### Reliable
   
-At its core, Redpanda is a durable and fault-tolerant transaction log for storing data streams. It uses the Raft consensus algorithm to write data to log files and replicate that data across multiple servers. Raft facilitates communication between the nodes in a Redpanda cluster to make sure that they agree on changes and remain in sync, even if a minority of them are in a failure state. This enables Redpanda to ride out partial environmental failures to deliver a predictable performance, even at high loads.
+At its core, Redpanda is a durable and fault-tolerant transaction log for storing data streams. It uses the [Raft consensus algorithm](https://raft.github.io/) to write data to log files and replicate that data across multiple servers. Raft facilitates communication between the nodes in a Redpanda cluster to make sure that they agree on changes and remain in sync, even if a minority of them are in a failure state. This enables Redpanda to ride out partial environmental failures to deliver a predictable performance, even at high loads.
 
 ## Redpanda architecture
 
 ### Producers, consumers, and topics
 
-Redpanda is a distributed system composed of multiple nodes (servers) and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi, or someone pressing play on a TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
+Redpanda is a distributed system composed of multiple nodes (servers), and data producers and consumers (clients). Producers are client applications that write data to Redpanda in the form of events. An event is simply a record of something changing state, like a credit card transaction, new coordinates of a taxi, or someone pressing play on a TV series. Consumers read these events from Redpanda for processing and forwarding on to downstream systems.
 
 Producers and consumers interact with Redpanda using the Kafka API. To achieve high scalability, they are fully decoupled. Redpanda provides strong guarantees to producers that events are stored durably within the system, and consumers can subscribe to Redpanda and read the events asynchronously. Redpanda achieves this decoupling by organizing events into topics. Topics represent a logical grouping of events that are written to the same log. A topic can have multiple producers writing events to it and multiple consumers reading events from it.
 
@@ -78,6 +78,11 @@ Redpanda is designed to exploit advances in modern hardware, from the network do
 Redpanda implements a thread-per-core programming model through its use of the [Seastar](https://seastar.io/) library. This allows Redpanda to pin each of its application threads to a CPU core to avoid context switching and blocking. It combines this with structured message passing (SMP) to asynchronously communicate between the pinned threads. This allows Redpanda to avoid the overhead of context switching and expensive locking operations to improve processing performance and efficiency.
 
 From a sizing perspective, Redpanda’s ability to efficiently use all available hardware lets it scale up to get the most out of your infrastructure, before you’re forced to scale out to meet the demands of your workload. Redpanda delivers better performance with a smaller footprint, resulting in reduced operational costs and complexity.
+
+## Next steps
+
+- [Redpanda Licensing](../../introduction/licenses)
+- [Install Redpanda](../../quickstart/)
 
 ---
 ## Suggested reading
