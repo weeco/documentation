@@ -14,15 +14,16 @@ Along with brokers, topics, consumers, and producers are one of the essential
 components of a Redpanda deployment. Within streaming applications, producers
 are responsible for sending data to brokers, which are stored in topics made
 up of partitions. Producers are client applications that write data to Redpanda
-in the form of events. In other woords, the role of the producer is to send
-messagesto a topic in the cluster. Producers communicate with Redpanda through
-the Kafka Producer API.
+in the form of events. In other words, the role of the producer is to send
+messages to a topic in the cluster. Producers communicate with Redpanda through
+the Kafka API.
 
-When a producer publishes a message to a Redpanda cluster, the leader broker of
-the partition being written to receives that message and appends it to the
-partition in the target topic, which then sends it to the follower brokers for
-replication, making that message immediately durable and resilient to node loss.
-Producers can also publish messages to a particular partition.
+When a producer publishes a message to a Redpanda cluster, it sends it to a
+specific partition.  Every event consists of a key and value. To select
+which partition to produce to, if the key is blank the producer round-robins
+between the topic's partitions. If a key is provided, then the partitioner
+hashes the key using the murmur2 algorithm and modules across the number of
+partitions.
 
 ## Producer configuration options
 
@@ -37,7 +38,7 @@ for optimal results.
 Producer acknowledgment defines how producer clients and broker leaders
 communicate their status while transferring data. The `acks` (abbreviation of
 "acknowledgments") parameter controls the behavior of the producer when a message
-is not acknowledged by the broker, and is useful when you are working with
+is acknowledged by the broker, and is useful when you are working with
 Redpanda clusters.
 
 While it may seem logical that the producer should wait for the broker to
@@ -81,9 +82,9 @@ before any followers manage to replicate the message.
 
 #### `acks=all`
 
-The producer receives an acknowledgment after the leader and the majority of
-(and therefore, implicitly, all) replicas acknowledge the message. This increases
-durability at the expense of lower throughput and increased latency.
+The producer receives an acknowledgment after the majority of (implicitly, all)
+replicas acknowledge the message. This increases durability at the expense of
+lower throughput and increased latency.
 
 Sometimes referred to as `acks = -1`, this option instructs the broker that
 replication is considered complete when the message has been replicated (and
@@ -191,7 +192,7 @@ messages can be compressed easier. The batching configuration can be tuned using
     the broker. However, the producer does not necessarily wait (for as much time
     as set using `linger.ms`) until the batch is full. Sometimes, it can even send
     single-message batches. This means that setting the batch size too large is
-    not necessarily undesireable, as it won't cause throttling when sending
+    not necessarily undesirable, as it won't cause throttling when sending
     messages; rather, it will only cause increased memory usage.
 
     Conversely, setting the batch size too small can cause the producer to send
@@ -219,7 +220,7 @@ messages can be compressed easier. The batching configuration can be tuned using
     messages before sending it to the broker. The default is `none`, which means
     the batch of messages will not be compressed at all. Compression occurs on
     full batches, so you can improve batching throughput by setting this
-    parameter to use one of the available compression algorithms (along wth
+    parameter to use one of the available compression algorithms (along with
     increasing batch size). The available options are: `zstd`, `lz4`, `gzip`,
     and `snappy`.
 
@@ -248,7 +249,7 @@ Note that there are a wide variety of configuration options within Redpanda. The
 configuration options mentioned here work best when combined with other
 broker and consumer configuration options. For details, refer to
 [Configuring Node Properties](../../cluster-administration/node-property-configuration)
-and [Consumer Offsets](../consumer-offsets). 
+and [Consumer Offsets](../consumer-offsets).
 
 #### Optimizing for speed
 
@@ -275,7 +276,7 @@ and `batch.size` to `1`, you can achieve lower latency, but sacrifice throughput
 
 For applications where you must guarantee that there are no lost messages,
 duplicates, or service downtime, you can test `acks` settings. If you set
-`acks=all`, then the producer will wait for all replicas to acknowledge the
+`acks=all`, then the producer will wait for a majority of replicas to acknowledge the
 message before it can send the next message, resulting in lower latency, because
 there is more communication required between brokers. This approach can
 guarantee higher durability because the message will be replicated to all brokers.
