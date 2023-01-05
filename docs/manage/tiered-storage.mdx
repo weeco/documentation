@@ -56,7 +56,7 @@ To configure access to an Amazon S3 bucket with an IAM role:
 
 To configure access to Amazon S3 with access keys instead of IAM roles:
 
-1. Grant a user the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`.
+1. Grant a user the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`, `PutObjectTagging`, `ListBucket`.
 2. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 3. Run the `rpk cluster config edit` command, then edit the following required properties:
 

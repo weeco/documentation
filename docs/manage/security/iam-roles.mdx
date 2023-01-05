@@ -28,25 +28,59 @@ If you are using Amazon Web Services (AWS) as your cloud provider, you must sati
 1. [Create an S3 storage bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html).
 2. [Create an IAM policy](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/).
 3. [Create an IAM role and assign the policy to that role](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions_create-policies.html). 
-4. Tiered Storage with AWS requires that the user have the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`. 
+4. Tiered Storage with AWS requires that the user have the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`, `PutObjectTagging`, `ListBucket`. 
 5. [Bind the VM](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role), or [Pod in the case of Kubernetes](https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html), to the IAM role.
+
+:::caution
+`GetObject`, `DeleteObject`, `PutObject`, `PutObjectTagging`, and `ListBucket` are required to fully utilize cloud storage. If the bucket is dedicated to Redpanda, we recommend allowing all (*) actions within the bucket.
+:::
 
 #### Sample full access IAM policy
 
-The following example policy grants all permissions associated with an S3 bucket, and full access to all resources. This particular example also includes all permissions associated with `s3-object-lambda`, which you can use to perform operations on the data in the S3 bucket. 
+The following example policy grants full access to the `test` S3 bucket. 
 
 ```
-# AmazonS3FullAccess
 {
     "Version": "2012-10-17",
     "Statement": [
         {
             "Effect": "Allow",
             "Action": [
-                "s3:*",
-                "s3-object-lambda:*"
+                "s3:*"
             ],
-            "Resource": "*"
+            "Resource": [
+	        "arn:aws:s3:::test",
+	        "arn:aws:s3:::test/*"
+	    ]
+        }
+    ]
+}
+```
+
+#### Sample minimum read/write IAM policy
+
+This policy represents a minimum IAM policy for the `test` S3 buckets required when using Tiered Storage.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectTagging",
+                "s3:GetObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::test/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": "arn:aws:s3:::test"
         }
     ]
 }
@@ -57,17 +91,22 @@ The following example policy grants all permissions associated with an S3 bucket
 A more restrictive "read-only" IAM policy is shown below. This policy only allows a user to get and list objects in the `test` S3 bucket. Such a policy could be used for a read replica topic on a remote cluster that hosts read replica topics, but not Tiered Storage topics.
 
 ```
-# AmazonS3ReadOnlyAccess
 {
     "Version": "2012-10-17",
     "Statement": [
         {
             "Effect": "Allow",
             "Action": [
-                "s3:Get*",
-                "s3:List*",
-                "s3-object-lambda:Get*",
-                "s3-object-lambda:List*"
+                "s3:GetObject"
+            ],
+            "Resource": [
+	        "arn:aws:s3:::test/*"
+	    ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
             ],
             "Resource": "arn:aws:s3:::test"
         }
