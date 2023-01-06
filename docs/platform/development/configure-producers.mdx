@@ -27,7 +27,7 @@ partitions.
 
 ## Producer configuration options
 
-Redpanda provides a myriad of configuration options for all components of a
+There are a myriad of configuration options for all components of a
 cluster. Finding the optimal combination of these components depends largely on
 your specific use case. The following sections describe producer configuration
 options, and how to combine these options with other component configurations
@@ -56,12 +56,13 @@ The producer doesn’t wait for acknowledgments from the leader and doesn’t re
 sending messages. This increases throughput and lowers latency of the system at
 the expense of durability.
 
-This option allows Redpanda to immediately consider a message acknowledged when
-it is sent to the broker. This means that Redpanda does not have to wait for any
-kind of response from the broker. This is the least safe option because a
-single-node crash can cause data loss. However, this setting is useful in cases
-where you want to optimize for the highest throughput, and are willing to risk
-some data loss.
+This option allows a producer to immediately consider a message acknowledged when
+it is sent to the Redpanda broker. This means that a producer does not have to wait
+for any kind of response from the Redpanda broker. This is the least safe option
+because a leader-node crash can cause data loss if the data has not yet
+replicated to the other nodes in the replica set. However, this setting is useful
+in cases where you want to optimize for the highest throughput, and are willing
+to risk some data loss.
 
 Because of the lack of guarantees, this setting is the most network bandwidth-
 efficient. This makes it useful for use cases like IoT/sensor data collection
@@ -71,7 +72,7 @@ as possible in a given time interval.
 #### `acks=1`
 
 The producer waits for an acknowledgment from the leader, but it doesn’t wait
-for the leader to get acknowledgments from replicas. This setting doesn’t
+for the leader to get acknowledgments from followers. This setting doesn’t
 prioritize throughput, latency, or durability. Instead, `acks=1` attempts to
 provide a balance between all of them.
 
@@ -212,7 +213,7 @@ messages can be compressed easier. The batching configuration can be tuned using
     efficient batches of messages. If you set the value to `0`, there is still a
     high chance messages arrive around the same time to be batched together.
 
-### Additional producer configuration options
+### Commonly-used producer configuration options
 
 * `compression.type`
 
