@@ -1,7 +1,7 @@
 ---
 title: Tunable Configuration Properties
 toc_min_heading_level: 2
-toc_max_heading_level: 3
+toc_max_heading_level: 2
 ---
 
 <head>
@@ -11,6 +11,8 @@ toc_max_heading_level: 3
   />
   <meta name="description" content="Reference of tunable cluster properties." />
 </head>
+
+import Aliases from "@site/static/aliases.mdx";
 
 Tunable properties are cluster properties that are specifically designed for tuning a cluster.
 
@@ -179,6 +181,8 @@ Timeout to check if new data is available for a partition in S3 for read replica
 ---
 
 ### cloud_storage_reconciliation_interval_ms
+
+<Aliases name="badge-deprecated" />
 
 Interval at which the archival service runs reconciliation.
 
