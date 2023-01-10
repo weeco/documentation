@@ -66,7 +66,7 @@ Enable re-upload of data for compacted topics.
 
 ### cloud_storage_enable_remote_read
 
-Enable remote reads for new topics.
+Default remote read configuration value for new topics.
 
 **Type**: boolean
 
@@ -76,7 +76,7 @@ Enable remote reads for new topics.
 
 ### cloud_storage_enable_remote_write
 
-Enable remote writes for new topics.
+Default remote write configuration value for new topics.
 
 **Type**: boolean
 
@@ -462,11 +462,13 @@ Maximum limit per shard (CPU core) on the number of in-progress leadership trans
 
 Maximum number of producer IDs that the resource manager state machine caches in internal state. 
 
-**Type**: unsigned integer
+**Type**: 64-bit unsigned integer
 
 **Units**: number of IDs
 
-**Default**: `std::numeric_limits<uint64_t>::max()`
+**Default**: maximum value of a 64-bit unsigned integer
+
+**Range**: [1, maximum value of a 64-bit unsigned integer]
 
 ---
 
@@ -1260,7 +1262,7 @@ If `null`, no limit is applied.
 
 **Units**: bytes
 
-**Default**: null (no limit applied)
+**Default**: 1048576 (1 MiB)
 
 ---
 
