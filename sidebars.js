@@ -215,7 +215,24 @@ module.exports = {
         },
         "platform/data-management/remote-read-replicas",
         "platform/data-management/data-migration",
-        "platform/data-management/rack-awareness",
+        {
+          type: "category",
+          label: "Rack Awareness",
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "Manual Deployment",
+              id: "platform/data-management/rack-awareness",
+            },
+            {
+              type: "doc",
+              label: "Kubernetes Deployment",
+              id: "platform/data-management/kubernetes-rack-awareness",
+            },
+          ],
+        },
         "platform/data-management/schema-registry",
       ],
     },
@@ -234,6 +251,7 @@ module.exports = {
         "platform/development/code-examples",
         "platform/development/guide-nodejs",
         "platform/development/consumer-offsets",
+        "platform/development/configure-producers",
         "platform/development/idempotent-producers",
         "platform/development/transactions",
         "platform/development/http-proxy",
@@ -763,6 +781,11 @@ module.exports = {
       type: "doc",
       label: "Creating a BYOC Cluster on AWS",
       id: "cloud/create-byoc-cluster-aws",
+    },
+    {
+      type: "doc",
+      label: "Creating a BYOC Cluster on GCP",
+      id: "cloud/create-byoc-cluster-gcp",
     },
     {
       type: "doc",

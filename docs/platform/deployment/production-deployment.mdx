@@ -133,7 +133,7 @@ journalctl -u redpanda
 If topics were initially created in a test environment with a replication factor of `1`, use `rpk topic alter-config` to change the topic replication factor: 
 
 ```
-rpk topic alter-config [TOPICS...] --set replication.factor 3
+rpk topic alter-config [TOPICS...] --set replication.factor=3
 ```
 
 To create a topic:

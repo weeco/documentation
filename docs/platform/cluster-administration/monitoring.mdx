@@ -72,10 +72,6 @@ count(count by (redpanda_topic, redpanda_partition)
 
 ## Enable statistics
 
-Redpanda ships with an additional `systemd` service that runs periodically
-and reports resource usage and configuration data to Redpanda's metrics API.
-This is enabled by default, and the data is anonymous.
-
 To identify your cluster's data, so Redpanda can monitor it and alert you to
 possible issues, set the `organization` (your company domain) and
 `cluster_id` (usually your team or project name) configuration fields. For
@@ -147,7 +143,7 @@ Kafka producer rate
 | redpanda_storage_disk_free_bytes | Disk storage bytes free. | none | counter |
 | redpanda_storage_disk_free_space_alert | Status of low storage space alert: 0-OK, 1-low space 2-degraded | none | gauge |
 | redpanda_storage_disk_total_bytes | Total size of attached storage, in bytes. | none | counter |
-| redpanda_uptime_seconds_total | Total CPU busy time in seconds. | none | gauge |
+| redpanda_uptime_seconds_total | Redpanda uptime in seconds. | none | gauge |
 
 #### Infrastructure-level queries
 

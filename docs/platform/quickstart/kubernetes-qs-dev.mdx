@@ -20,7 +20,7 @@ Looking for the Redpanda Operator?
 If you're an existing user of the Redpanda Operator, see the [Redpanda Operator documentation](../../reference/redpanda-operator). 
 
 :::warning
-Redpanda does not recommend the Redpanda Operator for new deployments. The Redpanda Operator was built for Redpanda Cloud and has unique features and workflows for that specific use case. If you're not already using the Redpanda Operator, continue with this tutorial to get started with the `redpanda` Helm chart.
+Redpanda does not recommend the Redpanda Operator for new deployments. The Redpanda Operator was built for Redpanda Cloud and has unique features and workflows for that specific use case. If you're not already using the Redpanda Operator, continue with this tutorial to get started with the Redpanda Helm chart.
 :::
 
 </details>
@@ -226,7 +226,7 @@ gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nod
   ```bash
   kubectl get pod -n redpanda \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name \
-  | grep redpanda-[0-9]
+  | grep 'redpanda-[0-9]'
   ```
 
   <details>

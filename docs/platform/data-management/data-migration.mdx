@@ -112,7 +112,7 @@ The `replication.factor` property is a topic property set at topic creation. A r
 You can increase or decrease the replication factor on an existing topic. For example, if topics were initially created in a test environment with a replication factor of `1` (no replication), to change the topic replication factor to `3`, run: 
 
 ```
-rpk topic alter-config [TOPICS...] --set replication.factor 3
+rpk topic alter-config [TOPICS...] --set replication.factor=3
 ```
 
 ## See migration in action
