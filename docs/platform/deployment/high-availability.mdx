@@ -97,10 +97,7 @@ Raft uses a heartbeat mechanism to maintain leadership authority and to trigger 
 
 ### Producer acknowledgment
 
-Producer acknowledgment defines how producer clients and broker leaders communicate their status while transferring data. The following `acks` values determine producer and broker behavior when writing data to the event bus.
-- `acks=0`: The producer doesn’t wait for acknowledgments from the leader and doesn’t retry sending messages. This increases throughput and lowers latency of the system at the expense of durability.
-- `acks=1`: The producer waits for an acknowledgment from the leader, but it doesn’t wait for the leader to get acknowledgments from replicas. This setting doesn’t prioritize throughput, latency, or durability. Instead, `acks=1` attempts to provide a balance between all of them.
-- `acks=all`: The producer receives an acknowledgment after the leader and the majority of (and therefore, implicitly, all) replicas acknowledge the message. This increases durability at the expense of lower throughput and increased latency.
+Producer acknowledgment defines how producer clients and broker leaders communicate their status while transferring data. The `acks` values determine producer and broker behavior when writing data to the event bus. For more details on the available values, see [this section](https://docs.redpanda.com/docs/platform/development/configure-producers/#producer-acknowledgement-settings) in the producer configuration page.
 
 ### Partition rebalancing
 
