@@ -1040,7 +1040,7 @@ For details, see [seastar::smp_service_group_config](https://docs.seastar.io/mas
 
 ### raft_timeout_now_timeout_ms
 
-Timeout of the raft 'timeout now' RPC request.
+Timeout of the raft `timeout now` RPC request.
 
 **Units**: milliseconds
 
@@ -1268,7 +1268,7 @@ If `null`, no limit is applied.
 
 ### log_segment_size_jitter_percent
 
-Configures the amount of size variation added to a segment used for each partition: a percentage value in the range [0, log_segment_size_jitter_percent] is randomly chosen and that percentage of the original segment size limit is added. 
+Configures the amount of size variation added to a segment used for each partition: a percentage value in the range [0, `log_segment_size_jitter_percent`] is randomly chosen and that percentage of the original segment size limit is added. 
 
 Applying segment size jitter is a good defensive measure to space out the overhead created from segment rolls over time.
 
@@ -1320,7 +1320,7 @@ Minimum amount of free memory maintained by the batch cache.
 
 ### reclaim_growth_window
 
-Starting from the last point in time where memory was reclaimed from the batch cache, this is the duration during which the amount of memory to reclaim grows at a significant amount, based on heuristics about the amount of available memory.  
+Starting from the last point in time when memory was reclaimed from the batch cache, this is the duration during which the amount of memory to reclaim grows at a significant rate, based on heuristics about the amount of available memory.  
 
 **Units**: milliseconds
 
@@ -1352,7 +1352,7 @@ Minimum batch cache reclaim size.
 
 ### reclaim_stable_window
 
-If the duration since the last time memory was reclaimed has been longer than this property, the memory usage of the batch cache is considered as stable, so only the minimum size ([reclaim_min_size](#reclaim_min_size)) is set to be reclaimed.  
+If the duration since the last time memory was reclaimed has been longer than this property, the memory usage of the batch cache is considered stable, so only the minimum size ([reclaim_min_size](#reclaim_min_size)) is set to be reclaimed.  
 
 **Units**: milliseconds
 
@@ -1374,7 +1374,7 @@ Flag for whether to release cache when a full segment is rolled.
 
 ### replicate_append_timeout_ms
 
-Timeout for append entries RPCs issued while replicating entries.
+Timeout for append entry's RPCs issued while replicating entries.
 
 **Units**: milliseconds
 
@@ -1394,7 +1394,7 @@ Maximum duration until buffered data is written.
 
 ### segment_fallocation_step
 
-Size of a file allocation (fallocation) step of a segment.
+Size of a file allocation (_f_ allocation) step of a segment.
 
 **Type**: unsigned integer
 
