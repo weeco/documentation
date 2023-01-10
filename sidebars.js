@@ -784,6 +784,11 @@ module.exports = {
     },
     {
       type: "doc",
+      label: "Creating a BYOC Cluster on GCP",
+      id: "cloud/create-byoc-cluster-gcp",
+    },
+    {
+      type: "doc",
       label: "VPC Peering",
       id: "cloud/vpc-peering",
     },
