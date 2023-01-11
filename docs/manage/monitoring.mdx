@@ -1,8 +1,8 @@
 ---
-title: Monitor Redpanda
+title: Monitoring
 ---
 <head>
-    <meta name="title" content="Monitor Redpanda | Redpanda Docs"/>
+    <meta name="title" content="Monitoring | Redpanda Docs"/>
     <meta name="description" content="Metrics to monitor the health of your system to predict issues and optimize performance."/>
 </head>
 
@@ -314,3 +314,142 @@ REST proxy request rate
 REST proxy request error rate
 
     rate(redpanda_rest_proxy_request_errors_total[5m])
+
+
+
+## Cluster stability
+
+### Partition leadership changes
+
+Stable clusters have a consistent balance of leaders across all nodes, with few to no leadership transfers between nodes.
+
+Metrics of cluster stability:
+
+- Under-replicated partitions by cluster
+- Number of groups for which a node is a leader
+- Frequency and total number of leadership transfers
+- Partition leadership per broker
+
+
+## Read/write traffic
+
+When you see abnormal, unhealthy spikes or dips in read/write traffic, look for correlation with the number of connections and logged errors.
+
+Metrics of read/write traffic:
+
+- CPU utilization
+- Write traffic
+- Read traffic
+- Rate of logged errors
+- Current number of active connections
+- SLA sidecar message traffic
+
+
+# Latency degradation
+
+Take periodic snapshots and watch out for significant changes over a short duration.
+
+- Producer latency
+- Fetch latency
+
+Track the latency of Redpanda's internal inter-node RPCs (raft, etc.) and correlate it with Kafka 
+
+- kafka_rpc
+- internal_rpc
+
+## Cluster level metrics
+
+### Throughput
+
+- Consumption (bytes/sec)
+- Production (bytes/sec)
+
+### Storage
+
+- Ratio of used/available capacity storage in cluster (bytes)
+
+
+### General
+
+- Number of brokers
+- Number of topics
+- Number of partitions
+- Number of online (available) partitions
+- Number of offline (unavailable) partitions
+- Number of under replicated partitions (low replication factor)
+
+
+
+## Throughput
+
+The 
+
+Query the aggregated throughput of total bytes of Kafka produce/consume requests for a cluster:
+
+```
+{
+    "refId": "",
+    "expr": "sum(rate(redpanda_kafka_request_bytes_total[$__rate_interval])) by (redpanda_request)",
+    "intervalFactor": 2,
+    "step": 10,
+    "legendFormat": "redpanda_request: {{redpanda_request}}",
+    "format": "time_series"
+}
+```
+
+## Leadership transfers
+
+A stable cluster has a consistent balance of leaders across all nodes, with a low rate of change in leadership between nodes.
+
+Query the rate of leadership changes across all partitions of a given topic:
+
+```
+"list": [
+{
+    "name": "aggr_criteria",
+    "datasource": "prometheus",
+    "label": "Aggregate by",
+    "type": "custom",
+    "refresh": 1,
+    "options": [
+     {
+      "text": "Cluster",
+      "value": "",
+      "selected": false
+     },
+     {
+      "text": "Instance",
+      "value": "instance,",
+      "selected": false
+     },
+     {
+      "text": "Instance, Shard",
+      "value": "instance,shard,",
+      "selected": false
+     }
+    ],
+    "includeAll": false,
+    "allFormat": "",
+    "allValue": "",
+    "multi": false,
+    "multiFormat": "",
+    "query": "Cluster : cluster,Instance : instance,Instance\\,Shard : instance\\,shard",
+    "current": {
+     "text": "Cluster",
+     "value": ""
+    },
+    "hide": 0,
+    "sort": 1
+   }
+]
+...
+
+{
+    "refId": "",
+    "expr": "sum(rate(redpanda_raft_leadership_changes{instance=~\"$node\"}[$__rate_interval])) by ($aggr_criteria)",
+    "intervalFactor": 2,
+    "step": 10,
+    "legendFormat": "node: {{instance}}, redpanda_namespace: {{redpanda_namespace}}, redpanda_topic: {{redpanda_topic}}",
+    "format": "time_series"
+}
+```
