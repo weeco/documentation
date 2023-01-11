@@ -29,7 +29,7 @@
         },
         "/consumers/{group_name}": {
           "post": {
-            "summary": "Create a consumer for the group",
+            "summary": "Create a consumer for the group.",
             "operationId": "create_consumer",
             "consumes": ["application/vnd.kafka.v2+json"],
             "parameters": [
@@ -104,7 +104,7 @@
         },
         "/consumers/{group_name}/instances/{instance}": {
           "delete": {
-            "summary": "Remove a consumer for the group",
+            "summary": "Remove a consumer for the group.",
             "operationId": "remove_consumer",
             "consumes": ["application/vnd.kafka.v2+json"],
             "parameters": [
@@ -137,7 +137,7 @@
         },
         "/consumers/{group_name}/instances/{instance}/offsets": {
           "get": {
-            "summary": "Get committed group offsets for given partitions",
+            "summary": "Get committed group offsets for given partitions.",
             "operationId": "get_consumer_offsets",
             "consumes": ["application/vnd.kafka.v2+json"],
             "parameters": [
@@ -216,7 +216,7 @@
             }
           },
           "post": {
-            "summary": "Commit offsets for a consumer",
+            "summary": "Commit offsets for a consumer.",
             "operationId": "post_consumer_offsets",
             "consumes": ["application/vnd.kafka.v2+json"],
             "parameters": [
@@ -275,7 +275,7 @@
         },
         "/consumers/{group_name}/instances/{instance}/records": {
           "get": {
-            "summary": "Fetch data for the consumer assignments",
+            "summary": "Fetch data for the consumer assignments.",
             "operationId": "consumer_fetch",
             "parameters": [
               {
@@ -350,7 +350,7 @@
         },
         "/consumers/{group_name}/instances/{instance}/subscription": {
         "post": {
-          "summary": "Subscribe a consumer group to topics",
+          "summary": "Subscribe a consumer group to topics.",
           "operationId": "subscribe_consumer",
           "consumes": ["application/vnd.kafka.v2+json"],
           "parameters": [
