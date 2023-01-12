@@ -130,6 +130,35 @@ module.exports = {
           id: "platform/deployment/production-deployment",
         },
         {
+          type: "category",
+          label: "Kubernetes",
+          link: { type: "doc", id: "platform/deploy/kubernetes-production-deployment" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "Kubernetes Cluster Requirements",
+              id: "platform/deploy/kubernetes-cluster-requirements",
+            },
+            {
+              type: "doc",
+              label: "Deployment Best Practices",
+              id: "platform/deploy/kubernetes-best-practices",
+            },
+            {
+              type: "doc",
+              label: "Tune Worker Nodes",
+              id: "platform/deploy/kubernetes-tune-workers",
+            },
+            {
+              type: "doc",
+              label: "Deploy in Kubernetes",
+              id: "platform/deploy/kubernetes-deploy",
+            },
+          ]
+        },
+        {
           type: "doc",
           label: "Writing Custom Deployment",
           id: "platform/deployment/custom-deployment",
