@@ -154,12 +154,19 @@ Redpanda monitors disk space and updates these metrics and the `storage_space_al
 
 A ballast file is an empty file that takes up disk space. If Redpanda runs out of disk space and becomes unavailable, you can delete the ballast file as a last resort. This clears up some space and gives you time to delete topics or records and change your retention properties. 
 
-To create a ballast file, set the following properties in the `redpanda.yaml` file: 
+To create a ballast file, set the following properties in the rpk section of the `redpanda.yaml` file: 
 
 ```yaml
-tune_ballast_file: true
-ballast_file_path: "/var/lib/redpanda/data/ballast"
-ballast_file_size: "1GiB"
+rpk:
+  tune_ballast_file: true
+  ballast_file_path: "/var/lib/redpanda/data/ballast"
+  ballast_file_size: "1GiB"
+```
+
+and then run: 
+
+```bash
+rpk redpanda tune ballast_file
 ```
 
 | Property | Description | 
