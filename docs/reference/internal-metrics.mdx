@@ -11,6 +11,18 @@ This page describes the original metrics available on `<node ip>:9644/metrics`. 
 
 For information about the latest metrics available on `:9644/public_metrics`, see [Monitoring](../../manage/monitoring).
 
+The `/metrics` endpoint supports aggregation across labels. To enable aggregation, set the [aggregate_metrics](../../reference/cluster-properties#aggregate_metrics) property.
+
+:::caution
+Enabling aggregation with `/metrics` generates a lot of monitoring data. It should be enabled only for development and testing when partition-granularity metrics are needed; it should not be enabled for production systems.
+:::
+
+To see all available metrics, query the admin server:
+
+```bash
+curl <broker-address>:9644/metrics | grep "[HELP|TYPE]"
+```
+
 ## Configure Prometheus: internal metrics
 
 [Prometheus](https://prometheus.io/) is a systems monitoring and alerting tool. It collects and stores metrics as time-series data identified by metric name and key/value pairs. 
