@@ -1,16 +1,19 @@
 ---
-title: Configuring TLS on Kubernetes
+title: Configuring TLS in Kubernetes
+tags:
+  - Helm
+  - Helm configuration
 ---
 
 <head>
-    <meta name="title" content="Configuring TLS on Kubernetes | Redpanda Docs"/>
-    <meta name="description" content="Encrypt with Transport Layer Security (TLS) on Kubernetes."/>
+    <meta name="title" content="Configuring TLS in Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Encrypt with Transport Layer Security (TLS) in Kubernetes."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Redpanda supports Transport Layer Security (TLS) encryption on Kubernetes. For certificate management, the Redpanda Helm chart uses cert-manager with either a self-signed Issuer or your own custom Issuer.
+Redpanda supports Transport Layer Security (TLS) encryption in Kubernetes. For certificate management, the Redpanda Helm chart uses cert-manager with either a self-signed Issuer or your own custom Issuer.
 
 :::note
 This page uses the recommended Redpanda Helm chart for configuring TLS. For information about using the `redpanda-operator` Helm chart (supported for backward compatibility), see [Redpanda Operator](../../reference/redpanda-operator).
@@ -54,9 +57,7 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 
 Create a YAML file containing the values to override from the defaults.
 
-`tls_enable.yaml`
-
-```yaml
+```yaml title="tls-enable.yaml"
 tls:
   enabled: true
 external:
@@ -67,7 +68,7 @@ During install or upgrade, reference the TLS configuration values file:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-  --values tls_enable.yaml
+  --values tls-enable.yaml
 ```
 
 :::tip
@@ -105,9 +106,7 @@ See the [cert-manager documentation](https://cert-manager.io/docs/concepts/issue
 
 Create a YAML file containing the values to override the defaults.
 
-`tls_enable.yaml`
-
-```yaml
+```yaml title="tls-enable.yaml"
 tls:
   enable: true
   certs:
@@ -123,5 +122,5 @@ During install or upgrade, reference the TLS configuration values file:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-  --values tls_enable.yaml
+  --values tls-enable.yaml
 ```

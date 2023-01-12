@@ -1,10 +1,13 @@
 ---
-title: Configuring Redpanda SASL on Kubernetes
+title: Configuring Redpanda SASL in Kubernetes
+tags:
+  - Helm
+  - Helm configuration
 ---
 
 <head>
-    <meta name="title" content="Configuring Redpanda SASL on Kubernetes | Redpanda Docs"/>
-    <meta name="description" content="Configuring Redpanda SASL on Kubernetes."/>
+    <meta name="title" content="Configuring Redpanda SASL in Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Configuring Redpanda SASL in Kubernetes."/>
 </head>
 
 Simple Authentication and Security Layer (SASL) is a method for adding authentication support to connection-based protocols. When using the Redpanda Helm chart, SASL provides authentication between the server and client. To encrypt communication, use TLS encryption. You must use TLS encryption to have secure authentication using SASL.
@@ -17,9 +20,7 @@ This page uses the recommended Redpanda Helm chart for configuring SASL. For inf
 
 Create a YAML file containing the values to override from the defaults:
 
-`sasl_enable.yaml`
-
-```yaml
+```yaml title="sasl-enable.yaml"
 auth:
   sasl:
     enabled: true
@@ -36,7 +37,7 @@ During install or upgrade, enable SASL configuration:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-  --values sasl_enable.yaml
+  --values sasl-enable.yaml
 ```
 
 ## Create users

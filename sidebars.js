@@ -195,6 +195,21 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Manage Redpanda in Kubernetes",
+          link: {
+            type: "doc",
+            id: "platform/manage/helm-configuration",
+          },
+          items: [
+            {
+              type: "doc",
+              label: "Configuring Storage Volumes",
+              id: "platform/manage/configure-storage",
+            },
+          ]
+        },
+        {
+          type: "category",
           label: "Cluster balancing",
           collapsible: true,
           collapsed: true,
