@@ -236,7 +236,7 @@
       },
       "/schemas/ids/{id}": {
         "get": {
-          "summary": "Get a schema by id.",
+          "summary": "Get a schema by ID.",
           "operationId": "get_schemas_ids_id",
           "consumes": [
             "application/vnd.schemaregistry.v1+json",
@@ -284,7 +284,7 @@
       },
       "/schemas/ids/{id}/versions": {
         "get": {
-          "summary": "Get a list of subject-version for the schema id.",
+          "summary": "Get a list of subject-version for the schema ID.",
           "operationId": "get_schemas_ids_id_versions",
           "consumes": [
             "application/vnd.schemaregistry.v1+json",
