@@ -425,7 +425,7 @@ module.exports = {
         "platform/reference/tunable-properties",
         "platform/reference/node-properties",
         "platform/reference/node-configuration-sample",
-        "platform/reference/schema-registry-api",
+        "platform/reference/api-reference",
         {
           type: "category",
           label: "rpk Commands",
