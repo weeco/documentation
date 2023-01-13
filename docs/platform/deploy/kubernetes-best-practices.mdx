@@ -62,7 +62,7 @@ As a result, it's important to consider your volume’s reclaim policy when crea
 - `Delete` - The volume is deleted when you delete the PersistentVolumeClaim.
 - `Reclaim` - The volume is not deleted when you delete the PersistentVolumeClaim, allowing you to reclaim it with a new PersistentVolumeClaim.
 
-Learn [how to configure storage in the Helm chart](../../manage-kubernetes/configure-storage).
+Learn [how to configure storage in the Helm chart](../../manage/configure-storage).
 
 ### Local PersistentVolumes
 
@@ -136,7 +136,7 @@ If you choose to use another Service, consider the impact on the cost and perfor
 
 - Ingress - To make each Redpanda broker accessible with Ingress, you need to run an Ingress controller and set up routing to each Redpanda broker. Routing adds latency and can be a throughput bottleneck.
 
-See [Networking and Connectivity in Kubernetes](../../manage-kubernetes/networking-and-connectivity)
+See [Networking and Connectivity in Kubernetes](../../manage/networking-and-connectivity)
 
 ## Security
 
