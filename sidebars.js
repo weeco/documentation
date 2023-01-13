@@ -31,9 +31,10 @@ module.exports = {
       items: [
         {
           type: "doc",
-          label: "Introduction to Events and Streaming",
+          label: "Introduction to Redpanda",
           id: "platform/introduction/intro-to-events",
         },
+        "platform/introduction/architecture",
         {
           type: "doc",
           label: "Designed for Performance",
