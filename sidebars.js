@@ -31,9 +31,10 @@ module.exports = {
       items: [
         {
           type: "doc",
-          label: "Introduction to Events and Streaming",
+          label: "Introduction to Redpanda",
           id: "platform/introduction/intro-to-events",
         },
+        "platform/introduction/architecture",
         {
           type: "doc",
           label: "Designed for Performance",
@@ -120,6 +121,8 @@ module.exports = {
           label: "Performance and Tuning",
           items: [
             "platform/deployment/high-availability",
+            "platform/deployment/sizing",
+            "platform/deployment/sizing-use-cases",
             "platform/deployment/disk-utilization",
             "platform/deployment/io-optimization",
           ],
@@ -128,6 +131,35 @@ module.exports = {
           type: "doc",
           label: "Deploying for Production",
           id: "platform/deployment/production-deployment",
+        },
+        {
+          type: "category",
+          label: "Kubernetes",
+          link: { type: "doc", id: "platform/deploy/kubernetes-production-deployment" },
+          collapsible: true,
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "Kubernetes Cluster Requirements",
+              id: "platform/deploy/kubernetes-cluster-requirements",
+            },
+            {
+              type: "doc",
+              label: "Deployment Best Practices",
+              id: "platform/deploy/kubernetes-best-practices",
+            },
+            {
+              type: "doc",
+              label: "Tune Worker Nodes",
+              id: "platform/deploy/kubernetes-tune-workers",
+            },
+            {
+              type: "doc",
+              label: "Deploy in Kubernetes",
+              id: "platform/deploy/kubernetes-deploy",
+            },
+          ]
         },
         {
           type: "doc",
@@ -163,6 +195,21 @@ module.exports = {
             },
             "platform/cluster-administration/listener-configuration",
           ],
+        },
+        {
+          type: "category",
+          label: "Manage Redpanda in Kubernetes",
+          link: {
+            type: "doc",
+            id: "platform/manage/helm-configuration",
+          },
+          items: [
+            {
+              type: "doc",
+              label: "Configuring Storage Volumes",
+              id: "platform/manage/configure-storage",
+            },
+          ]
         },
         {
           type: "category",
@@ -251,6 +298,7 @@ module.exports = {
         "platform/development/code-examples",
         "platform/development/guide-nodejs",
         "platform/development/consumer-offsets",
+        "platform/development/configure-producers",
         "platform/development/idempotent-producers",
         "platform/development/transactions",
         "platform/development/http-proxy",
@@ -780,6 +828,11 @@ module.exports = {
       type: "doc",
       label: "Creating a BYOC Cluster on AWS",
       id: "cloud/create-byoc-cluster-aws",
+    },
+    {
+      type: "doc",
+      label: "Creating a BYOC Cluster on GCP",
+      id: "cloud/create-byoc-cluster-gcp",
     },
     {
       type: "doc",

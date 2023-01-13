@@ -8,7 +8,9 @@ title: Get Started with Redpanda in Kubernetes using the Helm Chart
 </head>
 
 import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem'; 
+import TabItem from '@theme/TabItem';
+import Versions from '@site/docs/platform/shared/versions.mdx'
+
 
 In this tutorial, you learn how to deploy a Redpanda cluster in Kubernetes for development and testing. You'll create a Redpanda cluster, explore the Kubernetes components that are created, and use rpk both as an internal client and an external client to interact with your Redpanda cluster from the command line.
 
@@ -29,13 +31,13 @@ Redpanda does not recommend the Redpanda Operator for new deployments. The Redpa
 
 Before you begin, make sure that you have the correct software for your chosen Kubernetes platform:
 
-* [`kubectl`](https://kubernetes.io/docs/tasks/tools/) - client version 1.21 or later (included with minikube)
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Minimum required Kubernetes version: <Versions name="kubernetes"/>
 
   ```bash
   kubectl version
   ```
 
-* [Helm](https://helm.sh/docs/intro/install/) - version 3.6 or later (included with minikube)
+* [Helm](https://helm.sh/docs/intro/install/). Minimum required Helm version: <Versions name="helm"/>
 
   ```bash
   helm version
@@ -219,14 +221,14 @@ gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nod
   statefulset rolling update complete 3 pods at revision redpanda-8654f645b4...
   ```
 
-  If your cluster remains in a pending state, see [Troubleshooting](#ts-statefulset)
+  If your cluster remains in a pending state, see [Troubleshooting](#troubleshooting)
   
 1. Verify that each Redpanda broker is scheduled on only one Kubernetes node:
 
   ```bash
   kubectl get pod -n redpanda \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name \
-  | grep redpanda-[0-9]
+  | grep 'redpanda-[0-9]'
   ```
 
   <details>
