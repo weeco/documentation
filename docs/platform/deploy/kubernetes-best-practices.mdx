@@ -44,7 +44,7 @@ helm upgrade --install redpanda redpanda/redpanda \
 Redpanda recommends using PersistentVolumes that are backed by NVMe SSD disks.
 For scalability, it's best to use a StorageClass with a dynamic provisioner. 
 Dynamic provisioners make it easier to scale your Redpanda clusters because they provision new volumes when new Redpanda brokers are added to the cluster.
-Without a dynamic provisioner, you would need to create the PersistentVolumes manually before deploying Redpanda.
+Without a dynamic provisioner, you would need to create the PersistentVolumes manually in order to bind it to corresponding PersistentVolumeClaim.
 
 PersistentVolumes should be one of the following types:
 
