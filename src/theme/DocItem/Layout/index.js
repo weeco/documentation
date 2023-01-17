@@ -143,10 +143,7 @@ export default function DocItemLayout({ children }) {
             <DocBreadcrumbs />
             {console.log(useLocation())}
             {!(
-              useLocation().pathname.includes("/docs/cloud")||
-              useLocation().pathname.includes("/docs/home/cloud")||
-              useLocation().pathname == "/docs/home/" ||
-              useLocation().pathname == "/docs/home"
+              useLocation().pathname.includes("/docs/platform/deployment/cloud")
               ) 
             && <DocVersionBadge />}
             {docTOC.mobile}
@@ -163,7 +160,7 @@ export default function DocItemLayout({ children }) {
                     
                   </div>
                   <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon)}>
-                    <div>Was this page helpful ?</div>
+                    <div>Was this page helpful?</div>
 
                     <div>
                       <button
