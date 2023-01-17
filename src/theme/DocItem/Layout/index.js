@@ -73,10 +73,12 @@ const MyModal = (props) => {
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
+                    <input type="hidden" name="feedbackForm" value="feedbackForm"/>
                       <label>
                         <input type="radio" name="feedbackOptions" id="easyToUnderstand" value="understand" onChange={() => {setOther(false); setDisableButton(true);}} />
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
+                      
                       <label>
                         <input type="radio" name="feedbackOptions" id="solvedProblem" value="solved"onChange={() => {setOther(false); setDisableButton(true);}}/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
