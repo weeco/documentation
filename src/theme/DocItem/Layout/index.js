@@ -44,7 +44,7 @@ const MyModal = (props) => {
   }
 
   return (
-    <form data-netlify="true" netlify name="submissionForm" >
+    <form data-netlify="true" netlify name="submissionForm"  >
       <div className={styles.modal} onClick={props.onClose}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {!feedbackSubmited ? (
