@@ -43,8 +43,26 @@ const MyModal = (props) => {
     
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const myForm = event.target;
+    const formData = new FormData(myForm);
+    
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        'form-name': 'feedbackForm',
+        ...formData
+      }).toString(),
+    })
+      .then(() => console.log("Form successfully submitted"))
+      .catch((error) => alert(error));
+  };
+
   return (
-    <form data-netlify="true" netlify name="submissionForm"  >
+    <form data-netlify="true" name="feedbackForm" method="POST" onSubmit={handleSubmit}>
       <div className={styles.modal} onClick={props.onClose}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {!feedbackSubmited ? (
