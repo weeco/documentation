@@ -1,165 +1,158 @@
 ---
-title: Install Labs
+title: Install Redpanda Labs
 ---
 
 <head>
-    <meta name="title" content="Installing Labs | Redpanda Docs"/>
-    <meta name="description" content="Redpanda is constantly updating and adding new features and capabilities."/>
+    <meta name="title" content="Install Redpanda Labs | Redpanda Docs"/>
+    <meta name="description" content="Install a version of Redpanda labs to test lab features that are in development."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Cautions from './shared/cautions.mdx'
 
-:::caution
-Lab features may be tied to specific product release versions and are not supported in production deployments.
-:::
+Install a version of Redpanda labs to test lab features that are in development.
 
+<Cautions/>
 
-## What is a Redpanda lab?
+## Install Redpanda labs
 
-Redpanda continuously adds new features and feature updates. Lab features are designed for user testing and feedback in development and testing environments. For example, [Tiered Storage](../../manage/tiered-storage) was a lab feature in preview before it was promoted to general availability. Your feedback helps shape the future of the Redpanda platform. 
+<Tabs groupId="operating-systems">
+<TabItem value="linux" label="Linux" default>
 
-Lab features are subject to change and may not become available in future releases.
+1. Install the latest version of Redpanda labs:
 
-Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions). 
-
-## Lab features
-
-Current lab features are:
-
-
-<table >
-  <tr>
-   <td><strong> Lab Feature </strong>
-   </td>
-   <td><strong> Version started as lab </strong>
-   </td>
-  </tr>
-  <tr>
-   <td><a target="_self" href="https://docs.redpanda.com/docs/data-management/data-transform/">Data transforms with WebAssembly</a>
-   </td>
-   <td> v 21.12.1-wasm-beta1
-   </td>
-  </tr>
-</table>
-
-
-## Installation
-
-<Tabs>
-  <TabItem value="install-debian" label="Debian/Ubuntu" default>
-
-```bash
-## Run the setup script to download and install the unstable repo
-curl -1sLf 'https://dl.redpanda.com/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.deb.sh' | 
-sudo -E bash && \
-## Use apt to install redpanda
-sudo apt install redpanda
-```
-  </TabItem>
+  <Tabs>
   <TabItem value="install-fedora" label="Fedora/RedHat/Amazon Linux" default>
 
-```bash
-## Run the setup script to download and install the unstable repo
-curl -1sLf 'https://dl.redpanda.com/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.rpm.sh' | 
-sudo -E bash && \
-## Use yum to install redpanda
-sudo yum install redpanda
-```
-  </TabItem>
-  <TabItem value="install-docker" label="Docker" default>
-
-There are several ways to choose a version of Redpanda for Docker. See [quickstart guide on Docker](../../get-started/quick-start/quick-start-docker) for more information.
-
-For example, to pull a Docker image:
-
-```bash
-docker pull docker.redpanda.com/vectorized/redpanda-unstable:v22.2.1-rc2
-```
-  
-  </TabItem>
-  <TabItem value="install-Kubernetes" label="Kubernetes" default>
-
-1. Check which version you want to download at [release page](https://github.com/redpanda-data/redpanda/tags).
-2. Install the Redpanda operator CRD: 
-
-```bash
-kubectl apply \
--k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=<VERSION>
-```
-
-  Replace the version variable below with your desired version.
-
-
-  For example, to download v22.2.1-rc2, the command looks like the following:
-
   ```bash
-  kubectl apply \
-  -k https://github.com/redpanda-data/redpanda/src/go/k8s/config/crd?ref=v22.2.1-rc2
+  ## Run the setup script to download and install the unstable repo
+  curl -1sLf 'https://dl.redpanda.com/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.rpm.sh' | 
+  sudo -E bash && \
+  ## Use yum to install redpanda
+  sudo yum install redpanda -y
   ```
 
-3. Update your Helm chart:
+  </TabItem>
+  <TabItem value="install-debian" label="Debian/Ubuntu">
 
-```bash
-helm repo update
-```
-
-4. Install the Redpanda operator on your Kubernetes cluster with:
-
-```bash
-helm install \
-redpanda-operator \
-redpanda/redpanda-operator \
---namespace redpanda-system \
---create-namespace \
---version <VERSION>
-```
-For more information about installing Redpanda in Kubernetes, see [Redpanda Operator](../../reference/redpanda-operator).
+  ```bash
+  ## Run the setup script to download and install the unstable repo
+  curl -1sLf 'https://dl.redpanda.com/E4xN1tVe3Xy60GTx/redpanda-unstable/setup.deb.sh' | 
+  sudo -E bash && \
+  ## Use apt to install redpanda
+  sudo apt install redpanda -y
+  ```
 
   </TabItem>
+  </Tabs>
+
+1. Make sure that the installation was successful:
+
+  ```bash
+  rpk version
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```bash
+  v22.3.11 (rev 9eefb90)
+  ```
+
+  </details>
+
+</TabItem>
+<TabItem value="install-docker" label="Docker" default>
+
+
+1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/vectorized/redpanda-unstable/tags). 
+
+1. Run your chosen version of Redpanda labs.
+
+  Replace the `<version>` placeholder with a version tag.
+
+  ```bash
+  docker run --name=redpanda -d docker.redpanda.com/vectorized/redpanda-unstable:<version>
+  ```
+
+1. Make sure that the installation was successful:
+
+  ```bash
+  docker exec -it redpanda rpk version 
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```bash
+  v22.3.11 (rev 9eefb90)
+  ```
+  </details>
+
+For more information about installing Redpanda in Docker, see the [Redpanda Quickstart](../../get-started/quick-start/quick-start-docker).
+  
+</TabItem>
+<TabItem value="install-Kubernetes" label="Kubernetes" default>
+
+1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/vectorized/redpanda-unstable/tags). 
+
+1. Install your chosen version of Redpanda labs using Helm.
+
+  Replace the `<version>` placeholder with a version tag.
+
+  ```bash
+  helm upgrade --install redpanda redpanda/redpanda \
+    --set image.repository=vectorized/redpanda-unstable \
+    --set image.tag=<version>
+  ```
+
+  The installation displays some tips for getting started.
+
+1. Wait for the Redpanda cluster to be ready:
+
+  ```bash
+  kubectl -n redpanda rollout status statefulset redpanda --watch
+  ```
+
+  When the Redpanda cluster is ready, the output should look similar to the following:
+
+  ```text
+  statefulset rolling update complete 3 pods at revision redpanda-8654f645b4...
+  ```
+
+1. Make sure that the installation was successful:
+
+  ```bash
+  kubectl exec redpanda-0 -c redpanda -n redpanda -- rpk version
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```bash
+  v22.3.11 (rev 9eefb90)
+  ```
+
+  </details>
+
+For more information about installing Redpanda in Kubernetes, see [Redpanda in Kubernetes](../../deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment).
+
+</TabItem>
 </Tabs>
 
+## Share your feedback
 
-## Verify install
+Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions).
 
-<Tabs>
-  <TabItem value="verify-install" label="Linux" default>
+## Next steps
 
-Run `rpk` to get the version:
+Test a lab feature:
 
-```bash
-rpk version
-```
-
-  </TabItem>
-  <TabItem value="verify-docker" label="Docker" default>
-
-Run a `docker exec` with `rpk` to get the version:
-
-```bash
-docker exec -it <container-name> rpk version 
-```
-
-  </TabItem>
-  <TabItem value="verify-kubernetes" label="Kubernetes" default>
-
-1. To start a bash inside the cluster, run:
-
-```bash
-kubectl exec --stdin --tty <cluster-name> -- /bin/bash
-```
-
-2. Run `rpk` to get the version:
-
-```bash
-rpk version
-```
-
-  </TabItem>
-</Tabs>
-
-The result is similar to the following:
-
-```bash
-v22.2.1-rc2 (rev b33ceb1)
-```
+- [Data transforms with WebAssembly](../data-transform)
