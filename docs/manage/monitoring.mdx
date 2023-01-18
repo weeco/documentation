@@ -52,7 +52,43 @@ The number of targets may change depending on the total running nodes.
 
 Save the configuration file, and restart Prometheus to apply changes.
 
-After you have the metrics, you can use a tool like [Grafana](https://grafana.com/oss/grafana/) to query, visualize, and generate alerts. For example, to display the total number of partitions in your cluster, run this query on Grafana:
+:::note
+You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
+:::
+
+## Configure Grafana
+
+After you have the metrics, you can use a tool like [Grafana](https://grafana.com/oss/grafana/) to query, visualize, and generate alerts. Grafana talks to Prometheus and lets you create dashboards with graphic components.
+
+To generate a comprehensive Grafana dashboard, run:
+
+`rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url>`
+
+where:
+* `<name>` is the name of the Prometheus data source configured in your
+Grafana instance.
+* `<url>` is the address to a Redpanda node's metrics endpoint. The default is `<node ip>:9644/metrics`.
+
+Out of the box, Grafana generates panels tracking latency for 50%, 95%, and
+99% (based on the maximum latency set), throughput, and error segmentation by type.
+
+Pipe the command's output to a file, and import it into Grafana.
+
+```bash
+rpk generate grafana-dashboard \
+  --datasource prometheus \
+  --metrics-endpoint 172.31.18.237:9642/metrics > redpanda-dashboard.json                
+```
+
+In Grafana, import this generated JSON file. The default Grafana dashboard shows information about available Redpanda nodes, partitions, latency, and throughput graphics. You can use the imported dashboard to create new panels. 
+1. Click **+** in the left pane, and select **Add a new panel**. 
+2. On the **Query** tab, select **Prometheus** data source. 
+3. Decide which metric you want to monitor, click **Metrics browser**, and start typing `vectorized` to show available metrics from the Redpanda cluster.
+
+Another way to see available metrics with their description is to access the cluster using a web browser on port 9644. (The port can change depending on your configuration.)
+You can dynamically set queries to calculate the values in the format you want.
+
+For example, to display the total number of partitions in your cluster, run this query on Grafana:
 
 ```
  redpanda_cluster_partitions
@@ -64,11 +100,6 @@ To show the number of partitions for a specific topic, run:
 count(count by (redpanda_topic, redpanda_partition)
  (redpanda_kafka_max_offset{redpanda_topic="<topic_name>"}))
 ```
-
-:::note
-* You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
-* You can use `rpk` to configure Prometheus, but do not use `rpk` to generate a Grafana dashboard for `public_metrics`.
-:::
 
 ## Enable statistics
 
