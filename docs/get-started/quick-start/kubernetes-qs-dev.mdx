@@ -130,7 +130,7 @@ In this step, you create the Kubernetes nodes to host the Pods for the Redpanda 
 
   ```bash
   eksctl create cluster --name redpanda \
-      --external-dns-access
+      --external-dns-access \
       --nodegroup-name standard-workers \
       --node-type m5.xlarge \
       --nodes 3 \
