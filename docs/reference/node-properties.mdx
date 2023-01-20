@@ -109,11 +109,13 @@ Flag to enable developer mode, which skips most of the checks performed at start
 
 Controls how a new cluster is formed. This property must have the same value in all nodes in a cluster.
 
+If `true`, an empty [seed_servers](#seed_servers) list will denote that this node should form a cluster. At most, one node in the cluster should be configured with an empty seed_servers list. If no such configured node exists, or if configured to be `false`, all nodes denoted by the seed_servers list must be identical among those nodes' configurations, and those nodes will form the initial cluster.
+
 :::tip
-While `false` by default for backward compatibility, `empty_seed_starts_cluster` is recommended to be set to `true`.
+While it's set `true` by default for backward compatibility, Redpanda recommends that you set `empty_seed_starts_cluster` to `false`.
 :::
 
-**Default**: false
+**Default**: true
 
 ---
 

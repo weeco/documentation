@@ -221,7 +221,7 @@ important to think about how you secure it when creating a cluster.
 
 ## Configure the seed servers
 
-Seed servers help new nodes join a cluster by directing requests from newly-started nodes to an existing cluster. The `seed_servers` node configuration property controls how Redpanda finds its peers when initially forming a cluster. It is dependent on the `empty_seed_starts_cluster` node configuration property.
+Seed servers help new nodes join a cluster by directing requests from newly-started nodes to an existing cluster. The [seed_servers](../../../../../../reference/node-properties#seed_servers) node configuration property controls how Redpanda finds its peers when initially forming a cluster. It is dependent on the [empty_seed_starts_cluster](../../../../../../reference/node-properties#empty_seed_starts_cluster) node configuration property.
 
 Starting in Redpanda version 22.3, you should explicitly set `empty_seed_starts_cluster` to `false` on every node, and every node in the cluster should have the same value set for `seed_servers`. With this set of configurations, Redpanda clusters form with these guidelines:
 
