@@ -29,9 +29,10 @@ When monitoring internal metrics, consider enabling [aggregate_metrics](../refer
 
 The rest of this topic covers the following about monitoring Redpanda metrics:
 
-- How to configure Prometheus to monitor Redpanda metrics
-- Key metrics to monitor for performance
-- References of available metrics 
+- [Configure Prometheus to monitor Redpanda metrics](#configure-prometheus)
+- [Generate a Grafana dashboard](#generate-grafana-dashboard)
+- [Metrics and queries to monitor for system performance and health](#monitor-for-performance-and-health)
+- [References of public and internal metrics](#references) 
 
 ## Configure Prometheus
 
@@ -122,6 +123,14 @@ This section provides guidelines and example queries using Redpanda's public met
 :::tip
 To help detect and mitigate anomalous system behaviors, capture baseline metrics of your healthy system at different stages (at start-up, under high load, in steady state) so you can set thresholds and alerts according to those baselines.
 :::
+
+### Redpanda architecture
+
+Understanding the following unique aspects about Redpanda's architecture and data path will improve your performance debugging and tuning skills:
+
+- Redpanda replicates partitions across nodes in a cluster by using the [Raft consensus protocol](../../get-started/architecture#raft-consensus-algorithm), where each partition is a Raft consensus group. A message written from the Kafka API flows down to the Raft implementation layer that eventually directs it to a node to be stored. Observing metrics about the Raft layer thus can reveal the health of partitions and data flowing within Redpanda.
+
+- Redpanda is designed with a [thread-per-core model](../../get-started/architecture#raft-consensus-algorithm) that it implements with the Seastar library. With each application thread pinned to a CPU core, when observing or analyzing the behavior of a specific application, monitor the relevant metrics with the label for the specific CPU core ('shard'), if available.
 
 ### Infrastructure resources
 
