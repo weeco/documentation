@@ -1,5 +1,7 @@
 ---
 title: Internal Metrics Reference
+toc_min_heading_level: 2
+toc_max_heading_level: 2
 ---
 
 <head>
@@ -23,123 +25,9 @@ curl <node-addr>:9644/metrics | grep "[HELP|TYPE]"
 ```
 :::
 
-## Configure Prometheus: internal metrics
+## Internal metrics
 
-[Prometheus](https://prometheus.io/) is a systems monitoring and alerting tool. It collects and stores metrics as time-series data identified by metric name and key/value pairs. 
-
-Redpanda exports Prometheus metrics on `:9644/public_metrics`, which has been available since v22.2. To generate the Redpanda configuration on an existing Prometheus instance for both the `/public_metrics` endpoint as well as the `/metrics` endpoint, run: 
-
-```
-rpk generate prometheus-config --job-name redpanda-metrics-test --node-addrs 'localhost:9644' --internal-metrics
-```
-
-The output is a YAML object that you can add to the `scrape_configs` list.
-
-```yaml
-- job_name: redpanda-node
-  static_configs:
-  - targets:
-    - 172.31.18.239:9644
-    - 172.31.18.238:9644
-    - 172.31.18.237:9644
-```
-
-Edit the `prometheus.yml` file in the Prometheus root folder to add the Redpanda configuration under the `scrape_configs`: 
-
-```…
-scrape_configs:
-…
-  - job_name: redpanda
-    static_configs:
-      - targets: 
-        - 172.31.18.239:9644
-        - 172.31.18.238:9644
-        - 172.31.18.237:9644
-…
-```
-
-The number of targets may change depending on the total number of running nodes.
-
-Save the configuration file, and restart Prometheus to apply changes.
-
-:::note
-* You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
-* See rpk details in the [rpk command reference](../../reference/rpk/rpk-generate/rpk-generate-prometheus-config/) for Prometheus. 
-:::
-
-## Configure Grafana: internal metrics
-
-Now that you have the metrics, you need a tool to query, visualize, and generate alerts.
-[Grafana](https://grafana.com/oss/grafana/) talks to Prometheus and lets you create dashboards with multiple graphic components.
-
-To generate a comprehensive Grafana dashboard, run:
-
-`rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url>`
-
-where:
-* `<name>` is the name of the Prometheus data source configured in your
-Grafana instance.
-* `<url>` is the address to a Redpanda node's metrics endpoint. The default is `<node ip>:9644/metrics`.
-
-See details in the [rpk command reference](../../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard/) for Grafana. 
-
-Out of the box, Grafana generates panels tracking latency for 50%, 95%, and
-99% (based on the maximum latency set), throughput, and error segmentation by type.
-
-Pipe the command's output to a file, and import it into Grafana.
-
-```bash
-rpk generate grafana-dashboard \
-  --datasource prometheus \
-  --metrics-endpoint 172.31.18.237:9642/metrics > redpanda-dashboard.json
-                    
-```
-
-In Grafana, import this generated JSON file. The default Grafana dashboard shows information about available Redpanda nodes, partitions, latency, and throughput graphics.
-
-You can use the imported dashboard to create new panels. 
-1. Click **+** in the left pane, and select **Add a new panel**. 
-2. On the **Query** tab, select **Prometheus** data source. 
-3. Decide which metric you want to monitor, click **Metrics browser**, and start typing `vectorized` to show available metrics from the Redpanda cluster.
-
-Another way to see available metrics with their description is to access the cluster using a web browser on port 9644. (The port can change depending on your configuration.)
-You can dynamically set queries to calculate the values in the format you want.
-
-For example, to display the total number of partitions in your cluster, run this query on Grafana:
-
-```
-count(count by (topic,partition) 
- (vectorized_storage_log_partition_size{namespace="kafka"}))
-```
-
-To show the number of partitions for a specific topic, run:
-
-```
-count(count by (topic,partition) 
- (vectorized_storage_log_partition_size{topic="<topic_name>"}))
-```
-
-## Enable statistics 
-
-To identify your cluster's data, so Redpanda can monitor it and alert you to
-possible issues, set the `organization` (your company domain) and
-`cluster_id` (usually your team or project name) configuration fields. For
-example:
-
-```bash
-rpk config set organization 'vectorized.io'
-rpk config set cluster_id 'us-west-2'
-```
-
-To opt out of all metrics reporting, set `rpk.enable_usage_stats` to false:
-
-```bash
-rpk config set rpk.enable_usage_stats false
-```
-
-## Internal metrics reference
-
-Most metrics are useful for debugging, but the following metrics can be useful to measure system health:
+Most internal metrics are useful for debugging. The following metrics can be useful to monitor system health.
 
 ### vectorized_application_uptime
 
@@ -261,3 +149,10 @@ Total number of bytes read.
 ### vectorized_storage_log_written_bytes
 
 Total number of bytes written.
+
+---
+
+## Related topics
+
+- [Learn how to monitor Redpanda](../../manage/monitoring)
+- [Public metrics reference](../public-metrics-reference)

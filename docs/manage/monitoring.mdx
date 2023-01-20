@@ -107,6 +107,14 @@ Redpanda supports generating Grafana dashboards from its metrics endpoints with 
 
 For details about the command, refer to the [rpk generate grafana-dashboard](../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard.mdx) reference.
 
+In Grafana, import the generated JSON file to create a dashboard. The default dashboard shows information about available Redpanda nodes, partitions, latency, and throughput graphics.
+
+You can use the imported dashboard to create new panels.
+
+1. Click **+** in the left pane, and select **Add a new panel**. 
+1. On the **Query** tab, select **Prometheus** data source. 
+1. Decide which metric you want to monitor, click **Metrics browser**, and type `redpanda` to show available public metrics from the Redpanda cluster.
+
 ## Monitor for performance and health
 
 This section provides guidelines and example queries using Redpanda's public metrics to optimize your system's performance and to monitor its health.
@@ -339,6 +347,5 @@ rate(redpanda_rest_proxy_request_errors_total[5m])
 
 ## References
 
-See the [Public Metrics Reference](../../reference/public-metrics-reference).
-
-See the [Internal Metrics Reference](../../reference/internal-metrics-reference).
+- [Public Metrics Reference](../../reference/public-metrics-reference).
+- [Internal Metrics Reference](../../reference/internal-metrics-reference).
