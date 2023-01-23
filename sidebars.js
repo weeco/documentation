@@ -317,6 +317,11 @@ module.exports = {
                 label: "Cluster Maintenance",
                 link: { type: "doc", id: "manage/cluster-maintenance/index" },
                 items: [
+                  {
+                    type: "doc",
+                    label: "Cluster Configuration",
+                    id: "manage/cluster-maintenance/configuration",
+                  },
                   "manage/cluster-maintenance/cluster-balancing",
                   {
                     type: "doc",

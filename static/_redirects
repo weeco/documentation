@@ -354,3 +354,5 @@ docs/quickstart/quick-start-windows/                                            
 /docs/home/platform                                                                   /docs/home/index 301!
 /docs/home/cloud/index                                                                /docs/home/index 301!
 /docs/home/cloud                                                                      /docs/home/index 301!
+/docs/cluster-administration/configuration                                            /docs/manage/cluster-maintenance/configuration 301!  
+/docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
