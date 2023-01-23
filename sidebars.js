@@ -263,13 +263,30 @@ module.exports = {
                 items: [
                   {
                     type: "doc",
-                    label: "Helm Configuration",
-                    id: "manage/kubernetes/helm-configuration",
+                    label: "Storage",
+                    id: "manage/kubernetes/configure-storage",
                   },
                   {
-                    type: "doc",
-                    label: "Rack Awareness",
-                    id: "manage/kubernetes/kubernetes-rack-awareness",
+                    type: "category",
+                    label: "Networking and Connectivity",
+                    link: { type: "doc", id: "manage/kubernetes/networking/networking-and-connectivity" },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Use a NodePort Service",
+                        id: "manage/kubernetes/networking/configure-external-access-nodeport",
+                      },
+                      {
+                        type: "doc",
+                        label: "Use LoadBalancer Services",
+                        id: "manage/kubernetes/networking/configure-external-access-loadbalancer",
+                      },
+                      {
+                        type: "doc",
+                        label: "Configure Listeners",
+                        id: "manage/kubernetes/networking/configure-listeners",
+                      }
+                    ],
                   },
                   {
                     type: "category",
@@ -290,8 +307,8 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Configure Storage",
-                    id: "manage/kubernetes/configure-storage",
+                    label: "Rack Awareness",
+                    id: "manage/kubernetes/kubernetes-rack-awareness",
                   },
                 ],
               },

@@ -200,6 +200,8 @@
 /docs/platform/labs                                                                  /docs/labs/index 301!
 /docs/platform/labs/install-preview                                                   /docs/labs/install-preview 301!
 /docs/platform/manage/configure-storage                                               /docs/manage/kubernetes/configure-storage 301!
+/docs/platform/manage/helm-configuration                                              /docs/manage/kubernetes/index 301!
+/docs/manage/kubernetes/helm-configuration                                            /docs/manage/kubernetes/index 301!
 /docs/platform/manage/helm-configuration                                              /docs/manage/kubernetes/helm-configuration 301!
 /docs/platform/quickstart/console-installation                                        /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/quick-start/quick-start-console                                        /docs/get-started/quick-start/quick-start-docker 301!

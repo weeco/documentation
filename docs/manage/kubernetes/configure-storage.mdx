@@ -7,7 +7,7 @@ tags:
 
 <head>
     <meta name="title" content="Configure Storage in the Helm Chart | Redpanda Docs"/>
-    <meta name="description" content="Configure the Helm chart to use emptyDir volumes, hostPath volumes, or PersistentVolumes."/>
+    <meta name="description" content="Configure the Helm chart to use PersistentVolumes, hostPath volumes, or emptyDir volumes."/>
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -15,13 +15,9 @@ import TabItem from '@theme/TabItem';
 
 Redpanda brokers must store their data on disk. You can customize the Helm chart to use the following storage types:
 
-- [Prerequisites](#prerequisites)
-- [Use PersistentVolumes](#use-persistentvolumes)
-  - [Resize PersistentVolumes](#resize-persistentvolumes)
-  - [Delete PersistentVolumeClaims](#delete-persistentvolumeclaims)
-- [Use hostPath volumes](#use-hostpath-volumes)
-- [Use emptyDir volumes](#use-emptydir-volumes)
-- [Next steps](#next-steps)
+- [PersistentVolumes](#use-persistentvolumes)
+- [hostPath volumes](#use-hostpath-volumes)
+- [emptyDir volumes](#use-emptydir-volumes)
 
 By default, the Redpanda Helm chart uses the default StorageClass in a Kubernetes cluster to create one PersistentVolumeClaim for each Pod that runs a Redpanda broker. The default StorageClass in your Kubernetes cluster depends on the Kubernetes platform that you are using.
 
@@ -47,7 +43,7 @@ Redpanda recommends using a StorageClass with a dynamic provisioner. See the [be
 
 When you use a dynamic provisioner, it creates a PersistentVolume on demand for each Redpanda broker.
 
-Managed Kubernetes platforms and self-managed cloud environments usually provide a dynamic provisioner.
+Managed Kubernetes platforms and cloud environments usually provide a dynamic provisioner.
 If you are running Kubernetes on-premise, you may need to deploy a dynamic provisioner for your storage type.
 
 1. Make sure that you have at least one StorageClass in the cluster:
