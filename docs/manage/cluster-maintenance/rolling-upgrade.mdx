@@ -20,9 +20,8 @@ The upgrade process cannot be applied to downgrades between major versions, sinc
 To perform a rolling upgrade on a node in the cluster:
 
 1. [Enable maintenance mode](#1-enable-maintenance-mode).
-2. [Upgrade the node](#2-upgrade-node).
-3. [Disable maintenance mode](#3-disable-maintenance-mode).
-4. [Restart the node](#4-restart-node).
+2. [Disable maintenance mode](#2-disable-maintenance-mode).
+3. [Restart the node](#3-restart-node).
 
 Repeat this process for each node to upgrade.
 
@@ -85,7 +84,7 @@ After you've successfully upgraded the node:
     rpk cluster maintenance status
     ```
 
-### 4. Restart node
+### 3. Restart node
 
 After you're out of maintenance mode, restart the node's Redpanda service.
 
