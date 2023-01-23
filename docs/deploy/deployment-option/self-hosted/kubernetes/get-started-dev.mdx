@@ -133,7 +133,7 @@ In this step, you create the Kubernetes nodes to host the Pods for the Redpanda 
 
   ```bash
   eksctl create cluster --name redpanda \
-      --external-dns-access
+      --external-dns-access \
       --nodegroup-name standard-workers \
       --node-type m5.xlarge \
       --nodes 3 \
@@ -413,7 +413,7 @@ helm install redpanda-console redpanda/console \
 - `--set service.type=NodePort`: The Service that Redpanda Console should be exposed to. A NodePort Service allows you to access Redpand Console from outside Kubernetes.
 - `--set service.targetPort=8080` The port on which the Redpanda Console container expects traffic.
 
-## Produce to and consume from a topic
+## Start streaming
 
 Each Redpanda broker comes with rpk, which is a CLI tool for connecting to and interacting with Redpanda brokers. You can use rpk inside one of the Redpanda broker's Docker containers to create a topic, produce messages to it, and consume messages from it.
 
@@ -897,10 +897,12 @@ On Windows, the minikube tool is meant for local testing. To test external acces
 
 5. Create a file called `my-values.yaml` and add the external IP addresses of your Kubernetes nodes to the `redpanda.external.addresses` field, making sure to match the order of the Pod names.
 
-  ```yaml
+  ```yaml title="my-values.yaml"
   external:
-    addressType: ip
-    addresses: "203.0.113.3 203.0.113.5 203.0.113.7"
+    addresses: 
+    - 203.0.113.3
+    - 203.0.113.5
+    - 203.0.113.7
   ```
 
   :::note
@@ -1014,10 +1016,12 @@ On Windows, the minikube tool is meant for local testing. To test external acces
 
 5. Create a file called `my-values.yaml` and add the external IP addresses of your Kubernetes nodes to the `redpanda.external.addresses` field, making sure to match the order of the Pod names.
 
-  ```yaml
+  ```yaml title="my-values.yaml"
   external:
-    addressType: ip
-    addresses: "203.0.113.3 203.0.113.5 203.0.113.7"
+    addresses: 
+    - 203.0.113.3
+    - 203.0.113.5
+    - 203.0.113.7
   ```
 
   :::note

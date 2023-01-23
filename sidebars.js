@@ -38,36 +38,9 @@ module.exports = {
           id: "get-started/licenses",
         },
         {
-          type: "category",
+          type: "doc",
           label: "Redpanda Quickstart",
-          link: { type: "doc", id: "get-started/quick-start/index" },
-          items: [
-            {
-              type: "doc",
-              label: "Docker",
-              id: "get-started/quick-start/quick-start-docker",
-            },
-            {
-              type: "doc",
-              label: "Linux",
-              id: "get-started/quick-start/quick-start-linux",
-            },
-            {
-              type: "doc",
-              label: "macOS",
-              id: "get-started/quick-start/quick-start-macos",
-            },
-            {
-              type: "doc",
-              label: "Kubernetes",
-              id: "get-started/quick-start/kubernetes-qs-dev",
-            },
-            {
-              type: "doc",
-              label: "Introduction to Redpanda Console",
-              id: "get-started/quick-start/quick-start-console",
-            },
-          ]
+          id: "get-started/quick-start/quick-start-docker",
         },
         {
           type: "doc",
@@ -146,13 +119,18 @@ module.exports = {
                   items: [
                     {
                       type: "doc",
-                      label: "Kubernetes Cluster Requirements",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
+                      label: "Redpanda in Kubernetes Overview",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
                     },
                     {
                       type: "doc",
-                      label: "Kubernetes Production Deployment",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
+                      label: "Tutorial: Get Started with Kubernetes",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/get-started-dev",
+                    },
+                    {
+                      type: "doc",
+                      label: "Kubernetes Cluster Requirements",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
                     },
                     {
                       type: "doc",
@@ -840,14 +818,14 @@ module.exports = {
               label: "Redpanda Console Role-Binding Configuration",
               id: "reference/console/role-bindings",
             },
-            {
-              type: "doc",
-              label: "Docker Compose Templates",
-              id: "reference/console/docker-compose",
-            },
             "reference/console/record-deserialization",
             "reference/console/programmable-push-filters",
           ],
+        },
+        {
+          type: "doc",
+          label: "Docker Compose Samples",
+          id: "reference/docker-compose",
         },
       ],
     },

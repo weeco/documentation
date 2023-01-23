@@ -14,7 +14,7 @@ import TabItem from '@theme/TabItem';
 
 This topic explains Redpanda's tips and recommendations for Kubernetes deployments.
 
-## Overriding Helm chart defaults
+## Use separate YAML files to override Helm chart defaults
 
 Redpanda recommends creating separate YAML files for each configuration block that you need to override in the Helm chart. The Redpanda documentation follows this best practice.
 This way, it's clearer to understand what you've overridden from the `helm` command.
@@ -38,8 +38,13 @@ helm upgrade --install redpanda redpanda/redpanda \
     --values enable-tls.yaml
 ```
 
+## Deploy at least three Pod replicas
 
-## Storage
+It's best practice to deploy at least three Pod replicas (Redpanda brokers).
+
+By default, the Helm chart deploys a StatefulSet with three Redpanda brokers. You can specify the number of Redpanda brokers in the `statefulset.replicas` configuration.
+
+## Use PersistentVolumes
 
 Redpanda recommends using PersistentVolumes that are backed by NVMe SSD disks.
 For scalability, it's best to use a StorageClass with a dynamic provisioner. 
@@ -114,16 +119,7 @@ Redpanda recommends the Balance PD, Performance (PD-SSD), or Extreme PD disk typ
 </TabItem>
 </Tabs>
 
-## Worker nodes and Pod replicas
-
-Each Pod replica that runs a Redpanda broker requires its own dedicated worker node for the following reasons:
-
-- Redpanda brokers are designed to have access to all resources, such as CPU and memory, on their host machine.
-- External clients access Redpanda brokers using the address of a worker node. See [External networking](#external-networking).
-
-By default, the Helm chart deploys a StatefulSet with three Redpanda brokers. You can specify the number of Redpanda brokers in the `statefulset.replicas` configuration.
-
-## External networking
+## Use a NodePort Service for external networking
 
 Redpanda recommends using a NodePort Service to expose worker nodes and to give external clients access to the Redpanda brokers running on them.
 The NodePort Service provides the lowest latency of all the Services because it does not include any unnecessary routing or middleware.
@@ -136,7 +132,7 @@ If you choose to use another Service, consider the impact on the cost and perfor
 
 - Ingress - To make each Redpanda broker accessible with Ingress, you need to run an Ingress controller and set up routing to each Redpanda broker. Routing adds latency and can be a throughput bottleneck.
 
-## Security
+## Secure your cluster
 
 To protect your Kubernetes cluster, do the following:
 

@@ -26,18 +26,30 @@ Make sure that your Kubernetes cluster meets the [requirements](../kubernetes-cl
   helm repo add redpanda https://charts.redpanda.com/
   ```
 
-2. Update the repository index:
+1. Update the repository index:
 
   ```bash
   helm repo update
   ```
 
-3. Install the Redpanda Helm chart:
+1. Install the Redpanda Helm chart:
 
   ```bash
   helm install redpanda redpanda/redpanda \
     --namespace redpanda \
     --create-namespace
+  ```
+
+1. Wait for the Redpanda cluster to be ready:
+
+  ```bash
+  kubectl -n redpanda rollout status statefulset redpanda --watch
+  ```
+
+  When the Redpanda cluster is ready, the output should look similar to the following:
+
+  ```
+  statefulset rolling update complete 3 pods at revision redpanda-8654f645b4...
   ```
 
 The `helm install` command always pulls the latest version of the chart. To list the current latest version of the Redpanda Helm chart, use the `helm search` command:

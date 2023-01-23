@@ -1,12 +1,12 @@
 ---
-title: Kubernetes Production Cluster Requirements
+title: Kubernetes Cluster Requirements
 tags:
   - Kubernetes
 ---
 
 <head>
     <meta name="title" content="Kubernetes Cluster Requirements for Redpanda in Production | Redpanda Docs"/>
-    <meta name="description" content="A list of requirements and recommendations for provisioning Kubernetes cluster and worker nodes for running Redpanda in production."/>
+    <meta name="description" content="A list of requirements for provisioning Kubernetes clusters and worker nodes for running Redpanda in production."/>
 </head>
 
 import Versions from '../../../../shared/_versions.mdx'
@@ -33,6 +33,13 @@ Minimum required Helm version: <Versions name="helm"/>
 
 [Install Helm](https://helm.sh/docs/intro/install/).
 
+## Number of worker nodes
+
+You must provision one worker node for each Redpanda broker that you plan to deploy in your Redpanda cluster. Each Pod replica that runs a Redpanda broker requires its own dedicated worker node for the following reasons:
+
+- Redpanda brokers are designed to have access to all resources, such as CPU and memory, on their host machine.
+- External clients access Redpanda brokers using the address of a worker node. See [External networking](#external-networking).
+
 ## Storage volumes
 
 Redpanda brokers must store their data on disk. As a result, each Pod that runs a Redpanda broker must have its own storage volume.
@@ -46,18 +53,18 @@ To learn how to configure storage, see [Configure storage](../../../../../manage
 For external access, each worker node in your cluster must have a static, externally accessible IP address to allow clients to connect to the NodePort Service and access the Redpanda broker.
 Redpanda uses the following default ports:
 
-| Node port | Pod port | Purpose |
-|---|---|---|
-| 30081 | 8080 | Schema registry |
-| 30082 | 8083 | HTTP proxy |
-| 31092 | 9094 | Kafka API |
-| 31644 | 9644 | Admin API |
+| Node port | Purpose |
+|---|---|
+| 30081 | Schema registry |
+| 30082 | HTTP proxy |
+| 31092 | Kafka API |
+| 31644 | Admin API |
 
 Redpanda recommends using NodePorts instead of Loadbalancers. See the [external networking best practices](../kubernetes-best-practices#external-networking).
 
 ## Tuning
 
-Each worker node that runs Redpanda must be tuned to optimize the Linux kernel for running Redpanda in production.
+Before deploying Redpanda to production, each worker node that runs Redpanda must be tuned to optimize the Linux kernel for Redpanda processes.
 
 See [Tuning Kubernetes Worker Nodes for Production](../kubernetes-tune-workers)
 
