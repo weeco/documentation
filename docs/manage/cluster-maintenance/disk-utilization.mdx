@@ -112,11 +112,11 @@ rpk topic alter-config <topic> --set segment.bytes=<segment_size>
  
 Compaction saves space by retaining only the last known value for each message key within the segment. The latest value for each key is preserved, and all older values are discarded. 
 
-When compaction is configured, topics take their size from `compacted_log_segment_size`. The `log_segment_size` property does not apply to compacted topics. 
+When compaction is configured, topics take their size from [compacted_log_segment_size](../../../reference/tunable-properties#compacted_log_segment_size). The [log_segment_size](../../../reference/tunable-properties#log_segment_size) property does not apply to compacted topics. 
 
 Setting a `segment.bytes` size on a topic applies whether the topic is compacted or not, and the `max_compacted_log_segment_size` property applies to compacted topics regardless of the other properties. It controls how many segments are merged together. For example, if you set `segment.bytes` to 128MB, but leave `max_compacted_log_segment_size` at 5GB, you get 128MB segments when they're written, but up to 5GB segments after compaction.
 
-Keep in mind that very large segments prevent compaction, and very small segments increase the risk of encountering resource limits. To calculate an upper limit on segment size, divide the disk size by the number of partitions. For example, if you have a 128 GB disk and 1000 partitions, the upper limit of the segment size is `134217728`. Default is `1073741824`. 
+Keep in mind that very large segments prevent compaction, and very small segments increase the risk of encountering resource limits. To calculate an upper limit on segment size, divide the disk size by the number of partitions. For example, if you have a 128 GB disk and 1000 partitions, the upper limit of the segment size is `134217728`. Compare your limit with the default [log_segment_size](../../../reference/tunable-properties#log_segment_size) and default [compacted_log_segment_size](../../../reference/tunable-properties#compacted_log_segment_size). 
 
 For details about how to modify cluster configuration properties, see [Cluster configuration](../cluster-property-configuration). 
 
