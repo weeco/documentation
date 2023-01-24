@@ -16,11 +16,26 @@ import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 import { useLocation } from 'react-router-dom';
 
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&')
+}
+
 
 const MyModal = (props) => {
   const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
+  const [formData, setFormData] = useState({})
+
+  const handleChange = (e) => {
+    setOther(false)
+    if (e.target.name=='other') setOther(true)
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+    setDisableButton(true)
+  }
+
   let title,whatWeDo,easyRadio, solvedRadio,otherRadio;
   
   otherRadio = "Other";
@@ -45,15 +60,14 @@ const MyModal = (props) => {
     if (feedbackSubmitted) return;
 
     const myForm = event.target;
-    const formData = new FormData(myForm);
     
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
+      body: encode({
         'form-name': 'feedbackForm',
         ...formData
-      }).toString(),
+      })
     })
       .then(() => {
         console.log("Form successfully submitted")
@@ -77,16 +91,16 @@ const MyModal = (props) => {
                     <div className={styles.radioButtons}>
                     <input type="hidden" name="form-name" value="feedbackForm"/>
                       <label>
-                        <input type="radio" name="feedbackOptions" id="easyToUnderstand" value="understand" onChange={() => {setOther(false); setDisableButton(true);}} />
+                        <input type="radio" name="easyToUnderstand" id="easyToUnderstand" value="understand" onChange={handleChange}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
                       
                       <label>
-                        <input type="radio" name="feedbackOptions" id="solvedProblem" value="solved"onChange={() => {setOther(false); setDisableButton(true);}}/>
+                        <input type="radio" name="solvedProblem" id="solvedProblem" value="solved" onChange={handleChange}/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
                       </label><br />
                       <label>
-                        <input type="radio" name="feedbackOptions" id="other" value="other" onChange={() => {setOther(true); setDisableButton(true);}} />
+                        <input type="radio" name="other" id="other" value="other" onChange={handleChange} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
@@ -94,13 +108,13 @@ const MyModal = (props) => {
                       If we can contact you with more questions, please enter your
                       email address:
                     </div>
-                    <input type="text" name="email" id="email" placeholder="email@example.com" className={styles.moreQuestions}/><br />
+                    <input type="text" name="email" id="email" onChange={handleChange} placeholder="email@example.com" className={styles.moreQuestions}/><br />
                     {other && (
                       <div>
                         <div className={styles.boxSizing + " " + styles.padding}>
                           {whatWeDo}
                         </div>
-                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback."></textarea>
+                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback." onChange={handleChange}></textarea>
                       </div>
                     )}
                 </div>
