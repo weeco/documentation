@@ -16,16 +16,34 @@ import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 import { useLocation } from 'react-router-dom';
 
+function encode(data) {
+  return Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&')
+}
 
-const MyModal = (props) => {
+const FeedbackForm = (props) => {
   const [other, setOther] = useState(false);
-  const [feedbackSubmited, setfeedbackSubmited] = useState(false);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
-  let title,whatWeDo,easyRadio, solvedRadio,otherRadio;
-  
-  if (!props.show) {
-    return null;
+  const [formData, setFormData] = useState({})
+
+  const handleChange = (e) => {
+    if (e.target.id=='other') setOther(true)
+    else {
+      setOther(false)
+      const textarea = document.getElementById("otherText")
+      textarea.value = ''
+    }
+    handleFormData(e)
   }
+
+ const handleFormData = (e) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value })
+  setDisableButton(true)
+ }
+
+  let title,whatWeDo,easyRadio, solvedRadio,otherRadio;
   
   otherRadio = "Other";
 
@@ -43,11 +61,33 @@ const MyModal = (props) => {
     
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (feedbackSubmitted) return;
+    
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        'form-name': 'feedbackForm',
+        ...formData
+      })
+    })
+      .then(() => {
+        console.log("Form successfully submitted")
+        setFeedbackSubmitted(true)
+        setTimeout(props.onClose,30000)
+      })
+      .catch((error) => alert(error));
+  };
+
   return (
-    <form data-netlify="true" netlify name="submissionForm" >
-      <div className={styles.modal} onClick={props.onClose}>
+    <form className={`${props.show ? `${styles.modal}` : `${styles.hide}`}`} data-netlify="true" name="feedbackForm" method="POST" onSubmit={handleSubmit}   netlify-honeypot="bot-field"
+    >
+      <div onClick={props.onClose}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        {!feedbackSubmited ? (
+        {!feedbackSubmitted ? (
           <div>
               
                 <div className={styles.modalHeader}>
@@ -55,16 +95,23 @@ const MyModal = (props) => {
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
+                    <input type="hidden" name="form-name" value="feedbackForm"/>
+                        <p class="hidden">
+                        <label>
+                          Beep-Boop. Bot-field <input name="bot-field" />
+                        </label>
+                      </p>
                       <label>
-                        <input type="radio" name="feedbackOptions" id="easyToUnderstand" value="understand" onChange={() => {setOther(false); setDisableButton(true);}} />
+                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleChange}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
+                      
                       <label>
-                        <input type="radio" name="feedbackOptions" id="solvedProblem" value="solved"onChange={() => {setOther(false); setDisableButton(true);}}/>
+                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange}/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
                       </label><br />
                       <label>
-                        <input type="radio" name="feedbackOptions" id="other" value="other" onChange={() => {setOther(true); setDisableButton(true);}} />
+                        <input type="radio" name="feedback" id="other" value="other" onChange={handleChange} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
@@ -72,19 +119,17 @@ const MyModal = (props) => {
                       If we can contact you with more questions, please enter your
                       email address:
                     </div>
-                    <input type="text" name="email" id="email" placeholder="email@example.com" className={styles.moreQuestions}/><br />
-                    {other && (
-                      <div>
-                        <div className={styles.boxSizing + " " + styles.padding}>
-                          {whatWeDo}
-                        </div>
-                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback."></textarea>
+                    <input type="text" name="email" id="email" onChange={handleFormData} placeholder="email@example.com" className={styles.moreQuestions}/><br />
+                    <div>
+                      <div className={`${other ? `${styles.boxSizing} + " " + ${styles.padding}` : `${styles.hide}`}`}>
+                        {whatWeDo}
                       </div>
-                    )}
+                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please provide details of  your feedback." onChange={handleFormData}></textarea>
+                    </div>
                 </div>
                 <div className={styles.modalFooter}>
-                  {!feedbackSubmited &&
-                  <button type= "submit" onSubmit={() => {setfeedbackSubmited(true); setTimeout(props.onClose,30000)}} className={clsx("button", styles.submitButton)} disabled={!disableButton}>Submit</button>
+                {!feedbackSubmitted &&
+                  <button type= "submit" onSubmit={handleSubmit} className={clsx("button", styles.submitButton)} disabled={!disableButton}>Submit</button>
                 }
                   <button type ="button" onClick={props.onClose}  className={clsx("button", styles.closeButton)}>Close</button>
                 </div>
@@ -92,14 +137,12 @@ const MyModal = (props) => {
             </div>): 
             
             (<div className={styles.modalBody}>
-              <div className={styles.feedbackSubmited}>
-              <Icon className={styles.feedbackSubmitedIcon}>checkmark</Icon><br/>
+              <div className={styles.feedbackSubmitted}>
+              <Icon className={styles.feedbackSubmittedIcon}>checkmark</Icon><br/>
               Thank you for submitting your feedback.
               <button onClick={props.onClose}  className={clsx("button", styles.closeButton)}>Close</button>
               </div>
               
-              
-
             </div>)}
             
           </div>
@@ -141,7 +184,6 @@ export default function DocItemLayout({ children }) {
         <div className={styles.docItemContainer}>
           <article>
             <DocBreadcrumbs />
-            {console.log(useLocation())}
             {!(
               useLocation().pathname.includes("/docs/platform/deployment/cloud")
               ) 
@@ -153,64 +195,64 @@ export default function DocItemLayout({ children }) {
           {/* BEGIN COMPONENT SWIZZLING. Add link to repository.
            */}
           <section className={styles.issueLinkSeparator}>
+          <FeedbackForm onClose={() => setShow(false)} show={show} positiveFeedback={positiveFeedback}></FeedbackForm>
+          <div className="row">
+            <div>
+              
+            </div>
+            <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon)}>
+              <div>Was this page helpful?</div>
+
+              <div>
+                <button
+                  className={
+                    styles.mailIcon + " " + styles.thumbsUpSeparator
+                  }
+                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
+                >
+                  <Icon>thumb_up</Icon>
+                </button>
+
+                <button
+                  className={
+                    styles.mailIcon + " " + styles.thumbsUpSeparator
+                  }
+                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
+                >
+                  <Icon>thumb_down</Icon>
+                </button>
+              </div>
+            </div>
+            <div className="col">
+              <a href="https://redpanda.com/slack" alt="Slack Community"><Icon className={styles.mailIcon}>group</Icon> Ask in the community</a>
+            </div>
+            <div className="col">
             <BrowserOnly>
               {() => (
-                <div className="row">
-                  <div>
-                    
-                  </div>
-                  <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon)}>
-                    <div>Was this page helpful?</div>
-
-                    <div>
-                      <button
-                        className={
-                          styles.mailIcon + " " + styles.thumbsUpSeparator
-                        }
-                        onClick={() => {setShow(true); setPositiveFeedback(true);}}
-                      >
-                        <Icon>thumb_up</Icon>
-                      </button>
-
-                      <button
-                        className={
-                          styles.mailIcon + " " + styles.thumbsUpSeparator
-                        }
-                        onClick={() => {setShow(true); setPositiveFeedback(false);}}
-                      >
-                        <Icon>thumb_down</Icon>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <a href="https://redpanda.com/slack" alt="Slack Community"><Icon className={styles.mailIcon}>group</Icon> Ask in the community</a>
-                  </div>
-                  <div className="col">
-                    <a
-                      href={
-                        "mailto:rp-docs-feedback@redpanda.com?subject=Documentation Feedback&body=Doc url: " +
-                        window.location.href
-                      }
-                    >
-                      <Icon className={styles.mailIcon}>email</Icon>
-                      <span> Share your feedback</span>
-                    </a>
-                  </div>
-                  <div className={clsx("col", styles.reportIssueText)}>
-                    <a
-                      href={editUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={styles.contributionIcon}
-                    >
-                      <ContributionIcon />
-                      <span> Make a contribution</span>
-                    </a>
-                  </div>
-                  <MyModal onClose={() => setShow(false)} show={show} positiveFeedback={positiveFeedback} className={styles.mymodal}></MyModal>
-                </div>
+              <a
+                href={
+                  "mailto:rp-docs-feedback@redpanda.com?subject=Documentation Feedback&body=Doc url: " +
+                  window.location.href
+                }
+              >
+                <Icon className={styles.mailIcon}>email</Icon>
+                <span> Share your feedback</span>
+              </a>
               )}
-            </BrowserOnly>
+              </BrowserOnly>
+            </div>
+            <div className={clsx("col", styles.reportIssueText)}>
+              <a
+                href={editUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className={styles.contributionIcon}
+              >
+                <ContributionIcon />
+                <span> Make a contribution</span>
+              </a>
+            </div>
+          </div>
           </section>
           <DocItemPaginator />
         </div>
