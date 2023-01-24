@@ -22,16 +22,14 @@ function encode(data) {
     .join('&')
 }
 
-
-const MyModal = (props) => {
+const FeedbackForm = (props) => {
   const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
   const [formData, setFormData] = useState({})
 
   const handleChange = (e) => {
-    setOther(false)
-    if (e.target.value=='other') setOther(true)
+    if (e.target.value == 'other') setOther(true)
     setFormData({ ...formData, [e.target.name]: e.target.value })
     setDisableButton(true)
   }
@@ -54,12 +52,10 @@ const MyModal = (props) => {
     
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     if (feedbackSubmitted) return;
-
-    const myForm = event.target;
     
     fetch("/", {
       method: "POST",
@@ -109,14 +105,12 @@ const MyModal = (props) => {
                       email address:
                     </div>
                     <input type="text" name="email" id="email" onChange={handleChange} placeholder="email@example.com" className={styles.moreQuestions}/><br />
-                    {other && (
-                      <div>
-                        <div className={styles.boxSizing + " " + styles.padding}>
-                          {whatWeDo}
-                        </div>
-                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback."></textarea>
+                    <div>
+                      <div className={`${other ? `${styles.boxSizing} + " " + ${styles.padding}` : `${styles.hide}`}`}>
+                        {whatWeDo}
                       </div>
-                    )}
+                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please provide details of  your feedback." onChange={handleChange}></textarea>
+                    </div>
                 </div>
                 <div className={styles.modalFooter}>
                 {!feedbackSubmitted &&
@@ -186,7 +180,7 @@ export default function DocItemLayout({ children }) {
           {/* BEGIN COMPONENT SWIZZLING. Add link to repository.
            */}
           <section className={styles.issueLinkSeparator}>
-          <MyModal onClose={() => setShow(false)} show={show} positiveFeedback={positiveFeedback}></MyModal>
+          <FeedbackForm onClose={() => setShow(false)} show={show} positiveFeedback={positiveFeedback}></FeedbackForm>
           <div className="row">
             <div>
               
