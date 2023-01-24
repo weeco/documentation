@@ -23,8 +23,8 @@ The output is a YAML object that you can add to the `scrape_configs` list.
   static_configs:
   - targets:
     - 172.31.18.239:9644
-    - 172.31.18.238:9643
-    - 172.31.18.237:9642
+    - 172.31.18.238:9644
+    - 172.31.18.237:9644
   metrics_path: /public_metrics
 ```
 
@@ -42,8 +42,8 @@ scrape_configs:
   static_configs:
     - targets:
         - 172.31.18.239:9644
-        - 172.31.18.239:9643
-        - 172.31.18.239:9642
+        - 172.31.18.238:9644
+        - 172.31.18.237:9644
   metrics_path: /public_metrics
 …
 ```
@@ -65,10 +65,38 @@ count(count by (redpanda_topic, redpanda_partition)
  (redpanda_kafka_max_offset{redpanda_topic="<topic_name>"}))
 ```
 
-:::note
-* You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
-* You can use `rpk` to configure Prometheus, but do not use `rpk` to generate a Grafana dashboard for `public_metrics`.
-:::
+## Generate Grafana dashboard
+
+[Grafana](https://grafana.com/oss/grafana/) is a tool to query, visualize, and generate alerts for metrics.
+
+Redpanda supports generating Grafana dashboards from its metrics endpoints with `rpk generate grafana-dashboard`.
+
+To generate a comprehensive Grafana dashboard, run the following command and pipe the output to a file that can be imported into Grafana:
+
+```
+rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url> > <output-file>
+```
+
+- `<name>` is the name of the Prometheus data source configured in your Grafana instance.
+- `<url>` is the address to a Redpanda node's metrics endpoint (public or internal).
+    
+For `/public_metrics`, for example, run the following command: 
+
+    ```
+    rpk generate grafana-dashboard \
+    --datasource prometheus \
+    --metrics-endpoint <node-addr>:9644/public_metrics> redpanda-dashboard.json 
+    ```
+
+For details about the command, refer to the [rpk generate grafana-dashboard](../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard.mdx) reference.
+
+In Grafana, import the generated JSON file to create a dashboard. Out of the box, Grafana generates panels tracking latency for 50%, 95%, and 99% (based on the maximum latency set), throughput, and error segmentation by type.
+
+You can use the imported dashboard to create new panels.
+
+1. Click **+** in the left pane, and select **Add a new panel**. 
+1. On the **Query** tab, select **Prometheus** data source. 
+1. Decide which metric you want to monitor, click **Metrics browser**, and type `redpanda` to show available public metrics from the Redpanda cluster.
 
 ## Enable statistics
 
