@@ -91,16 +91,16 @@ const MyModal = (props) => {
                     <div className={styles.radioButtons}>
                     <input type="hidden" name="form-name" value="feedbackForm"/>
                       <label>
-                        <input type="radio" name="easyToUnderstand" id="easyToUnderstand" value="understand" onChange={handleChange}/>
+                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleChange}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
                       
                       <label>
-                        <input type="radio" name="solvedProblem" id="solvedProblem" value="solved" onChange={handleChange}/>
+                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange}/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
                       </label><br />
                       <label>
-                        <input type="radio" name="other" id="other" value="other" onChange={handleChange} />
+                        <input type="radio" name="feedback" id="other" value="other" onChange={handleChange} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
@@ -114,7 +114,7 @@ const MyModal = (props) => {
                         <div className={styles.boxSizing + " " + styles.padding}>
                           {whatWeDo}
                         </div>
-                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback." onChange={handleChange}></textarea>
+                        <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please describe in more details your feedback."></textarea>
                       </div>
                     )}
                 </div>
