@@ -96,8 +96,8 @@ const FeedbackForm = (props) => {
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
                     <input type="hidden" name="form-name" value="feedbackForm"/>
-                      <p class="hidden" className={styles.hide}>
-                        <label>
+                      <p className={styles.hide}>
+                        <label className={styles.hide}>
                           Beep-Boop. Bot-field <input name="bot-field" />
                         </label>
                       </p>
