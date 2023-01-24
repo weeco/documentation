@@ -31,7 +31,7 @@ const MyModal = (props) => {
 
   const handleChange = (e) => {
     setOther(false)
-    if (e.target.name=='other') setOther(true)
+    if (e.target.value=='other') setOther(true)
     setFormData({ ...formData, [e.target.name]: e.target.value })
     setDisableButton(true)
   }
