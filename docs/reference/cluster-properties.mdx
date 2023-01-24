@@ -292,6 +292,18 @@ The minimum allowed session timeout for registered consumers. Shorter timeouts r
 
 ---
 
+### kafka_admin_topic_api_rate
+
+Target quota rate for partition mutations per [default_window_sec](../tunable-properties#default_window_sec). It's an optional property; if `null`, the property is disabled.
+
+**Units**: partition mutations per default_window_second
+
+**Default**: null
+
+**Range**: [1, ...]
+
+---
+
 ### kafka_connection_rate_limit
 
 Maximum connections per second for one core. If `null` (the default), the number of connections per second is unlimited.
@@ -318,6 +330,20 @@ Overrides the maximum connections per second for one core for the specified IP a
 
 ---
 
+### kafka_enable_authorization
+
+Flag to require authorization for Kafka connections. If `null`, the property is disabled, and authorization is instead enabled by [enable_sasl](#enable_sasl). 
+
+**Type**: boolean
+
+**Default**: null
+
+**Related properties**:
+- [enable_sasl](#enable_sasl)
+- `kafka_api[].authentication_method`
+
+---
+
 ### kafka_group_recovery_timeout_ms
 
 Kafka group recovery timeout.
@@ -325,6 +351,26 @@ Kafka group recovery timeout.
 **Units**: milliseconds
 
 **Default**: 30000 (30 sec)
+
+**Restart required**: no
+
+---
+
+### kafka_nodelete_topics
+
+A list of topics that are not deleted by the Kafka API. Set by default to a list of Redpanda internal topics.
+
+**Default**: {"__audit", "__consumer_offsets", "__redpanda_e2e_probe", "__schemas"}
+
+**Restart required**: no
+
+---
+
+### kafka_noproduce_topics
+
+A list of topics that have no messages produced to them by the Kafka API. Set by default to a list of Redpanda internal topics.
+
+**Default**: {"__audit"}
 
 **Restart required**: no
 
@@ -405,6 +451,18 @@ Internal RPC TCP send buffer size. If `null` (the default value), no buffer size
 **Range**: [32 KiB, ...], aligned to 4096 bytes
 
 **Restart required**: yes
+
+---
+
+### target_fetch_quota_byte_rate
+
+Target fetch-size quota byte rate. It's an optional property; if `null`, the property is disabled.
+
+**Units**: bytes per second
+
+**Default**: null
+
+**Restart required**: no
 
 ---
 
@@ -519,6 +577,20 @@ Default topic compression type (gzip, snappy, lz4, zstd, producer, or none).
 **Default**: `producer`
 
 **Valid values**: `gzip`, `snappy`, `lz4`, `zstd`, `producer`, `none`
+
+**Restart required**: no
+
+---
+
+### log_segment_ms
+
+Default lifetime of log segments for topics which do not set `segment.ms`. It's an optional property; if `null`, the property is disabled.
+
+**Units**: milliseconds
+
+**Default**: null
+
+**Range**: [60000 (60 sec), ...] or `null`
 
 **Restart required**: no
 

@@ -826,6 +826,30 @@ Timeout to wait for new members to join a consumer group.
 
 ---
 
+### group_offset_retention_check_ms
+
+Period at which Redpanda checks for expired group offsets.
+
+**Units**: milliseconds
+
+**Default**: 600000 (10 min)
+
+**Restart required**: no
+
+---
+
+### group_offset_retention_sec
+
+Retention duration of a consumer group offset. Once elapsed, an offset is considered to be expired. If `null`, the property is disabled.
+
+**Units**: seconds
+
+**Default**: 604800 (7 days)
+
+**Restart required**: no
+
+---
+
 ### group_topic_partitions
 
 Number of partitions in the internal group membership topic.
@@ -995,6 +1019,20 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 **Range**: [512, 512 KiB]. Must be 4096-byte aligned.
 
 **Restart required**: yes
+
+---
+
+### legacy_group_offset_retention_enabled
+
+Flag to enable group offset retention for upgraded deployments of Redpanda. 
+
+Group offset retention is enabled by default in Redpanda versions 23.1 and later. To enable offset retention after upgrading from a version earlier than 23.1, set this property to `true`.
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: no
 
 ---
 
@@ -1436,6 +1474,42 @@ Maximum size of a segment of the key-value store.
 
 ---
 
+### log_segment_ms_min
+
+The lower bound for the topic `segment.ms` property, where lower values are clamped to this.
+
+**Units**: milliseconds
+
+**Default**: 60000 (60 sec)
+
+**Range**: [60000 (60 sec), ...]
+
+**Restart required**: no
+
+**Related properties**: 
+- [log_segment_ms_max](#log_segment_ms_max)
+- [log_segment_ms](../cluster-properties#log_segment_ms)
+
+---
+
+### log_segment_ms_max
+
+The upper bound for the topic `segment.ms` property, where higher values are clamped to this.
+
+**Units**: milliseconds
+
+**Default**: 31536000000 (1 year)
+
+**Range**: [60000 (60 sec), ...]
+
+**Restart required**: no
+
+**Related properties**: 
+- [log_segment_ms_min](#log_segment_ms_min)
+- [log_segment_ms](../cluster-properties#log_segment_ms)
+
+---
+
 ### log_segment_size
 
 Default size of log segment. Per topic, it is superseded by topic property `segment.bytes`.
@@ -1761,6 +1835,18 @@ Target bytes to replay from disk on startup after a clean shutdown. Controls the
 **Default**: 10737418240 (10 GiB)
 
 **Range**: [128 MiB, 1 TiB]
+
+**Restart required**: no
+
+---
+
+### tx_log_stats_interval_s
+
+Period for which to log transmit (tx) statistics per partition.  Requires the tx logger's log-level to be at least `debug`.
+
+**Units**: seconds
+
+**Default**: 10
 
 **Restart required**: no
 
