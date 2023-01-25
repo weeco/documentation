@@ -44,6 +44,50 @@ List of superuser usernames.
 
 ## Cloud storage properties
 
+### cloud_storage_azure_storage_account
+
+The name of the Azure storage account to use with Tiered Storage. If `null`, the property is disabled.
+
+**Type**: string
+
+**Default**: null
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_azure_container
+
+The name of the Azure container to use with Tiered Storage. If `null`, the property is disabled.
+
+:::note
+The container must belong to [cloud_storage_azure_storage_account](#cloud_storage_azure_storage_account).
+:::
+
+**Type**: string
+
+**Default**: null
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_azure_shared_key
+
+The shared key to be used for Azure Shared Key authentication with the Azure storage account configured by [cloud_storage_azure_storage_account](#cloud_storage_azure_storage_account).  If `null`, the property is disabled.
+
+:::note
+Redpanda expects this key string to be Base64 encoded.
+:::
+
+**Type**: string
+
+**Default**: null
+
+**Restart required**: yes
+
+---
+
 ### cloud_storage_access_key
 
 AWS or GCP access key.
@@ -206,6 +250,18 @@ Enable automatic partition rebalancing when new nodes are added.
 
 ---
 
+### enable_controller_log_rate_limiting
+
+Flag to enable limiting the write rate for the controller log.
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: no
+
+---
+
 ### enable_leader_balancer
 
 Enable automatic leadership rebalancing.
@@ -227,6 +283,45 @@ Enable rack-aware replica assignment.
 **Default**: false
 
 **Restart required**: no
+
+---
+
+### partition_autobalancing_mode
+
+Mode of [partition balancing](../../manage/cluster-maintenance/cluster-balancing#partition-balancing) for a cluster.
+
+Available modes:
+- `node_add`: partition balancing happens when a node is added
+- `continuous`: partition balancing happens automatically to maintain optimal performance and availability, based on continuous monitoring for node failures and high disk usage. This option requires an [Enterprise license](../../get-started/licenses).  
+- `off`: partition balancing is disabled. This option is not recommended for production clusters.
+
+**Default**: `node_add`
+
+**Restart required**: no
+
+---
+
+### partition_autobalancing_node_availability_timeout_sec
+
+When a node is unavailable for at least this timeout duration, it triggers Redpanda to move partitions off of the node.
+
+**Units**: seconds
+
+**Default**: 900 (15 min)
+
+**Restart required**: no
+
+---
+
+### partition_autobalancing_max_disk_usage_percent
+
+When the disk usage of a node exceeds this threshold, it triggers Redpanda to moving partitions off of the node.
+
+**Units**: percent of disk used
+
+**Default**: 80
+
+**Range**: [5, 100]
 
 -------------------------------------------------------------------------------
 
@@ -302,6 +397,42 @@ Target quota rate for partition mutations per [default_window_sec](../tunable-pr
 
 **Range**: [1, ...]
 
+**Restart required**: no
+
+---
+
+### kafka_client_group_byte_rate_quota
+
+A map specifying the produce-rate quota per client group. 
+
+The keys of the map:
+- `group_name`: name of a client group
+- `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
+- `quota`: produce-rate quota, in bytes per second
+
+An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
+
+**Default**: {} (empty map)
+
+**Restart required**: no
+
+---
+
+### kafka_client_group_fetch_byte_rate_quota
+
+A map specifying the fetch-rate quota per client group. 
+
+The keys of the map:
+- `group_name`: name of a client group
+- `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
+- `quota`: fetch-rate quota, in bytes per second
+
+An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
+
+**Default**: {} (empty map)
+
+**Restart required**: no
+
 ---
 
 ### kafka_connection_rate_limit
@@ -330,6 +461,40 @@ Overrides the maximum connections per second for one core for the specified IP a
 
 ---
 
+### kafka_connections_max
+
+Maximum number of Kafka client connections per broker. If `null`, the property is disabled.
+
+**Units**: number of Kafka client connections per broker.
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
+### kafka_connections_max_per_ip
+
+Maximum number of Kafka client connections per IP address, per broker. If `null`, the property is disabled.
+
+**Units**: number of Kafka client connections per IP address, per broker.
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
+### kafka_connections_max_overrides
+
+A list of IP addresses for which Kafka client connection limits are overridden and don't apply. For example, `(['127.0.0.1:90', '50.20.1.1:40']).`
+
+**Default**: {} (empty list)
+
+**Restart required**: no
+
+---
+
 ### kafka_enable_authorization
 
 Flag to require authorization for Kafka connections. If `null`, the property is disabled, and authorization is instead enabled by [enable_sasl](#enable_sasl). 
@@ -351,6 +516,16 @@ Kafka group recovery timeout.
 **Units**: milliseconds
 
 **Default**: 30000 (30 sec)
+
+**Restart required**: no
+
+---
+
+### kafka_mtls_principal_mapping_rules
+
+Principal mapping rules for mTLS authentication on the Kafka API. If `null`, the property is disabled. Replaces `kafka_api_tls.principal_mapping_rules` of Redpanda versions earlier than v22.2.1. 
+
+**Default**: null
 
 **Restart required**: no
 
@@ -397,6 +572,44 @@ Maximum latency threshold for Kafka queue depth control depth tracking.
 **Default**: 80
 
 **Restart required**: yes
+
+---
+
+### kafka_quota_balancer_window
+
+Time window used to average the current throughput measurement for the quota balancer.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ]
+
+**Restart required**: no
+
+---
+
+### kafka_rpc_server_tcp_recv_buf
+
+Size of the Kafka server TCP receive buffer. If `null`, the property is disabled.
+
+**Units**: bytes
+
+**Default**: null
+
+**Range**: [32 KiB, ...], aligned to 4096 bytes
+
+---
+
+### kafka_rpc_server_tcp_send_buf
+
+Size of the Kafka server TCP transmit buffer. If `null`, the property is disabled.
+
+**Units**: bytes
+
+**Default**: null
+
+**Range**: [32 KiB, ...], aligned to 4096 bytes
 
 ---
 
@@ -603,6 +816,30 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 **Default**: `CreateTime`
 
 **Valid values**: `CreateTime`, `LogAppendTime`
+
+**Restart required**: no
+
+---
+
+### retention_local_target_bytes_default
+
+Local retention size target for partitions of topics with cloud storage write enabled. If `null`, the property is disabled.
+
+**Units**: bytes
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
+### retention_local_target_ms_default
+
+Local retention time target for partitions of topics with cloud storage write enabled.
+
+**Units**: milliseconds
+
+**Default**: 86400000 (24 hours)
 
 **Restart required**: no
 
