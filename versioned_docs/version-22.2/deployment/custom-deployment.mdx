@@ -101,6 +101,12 @@ can result in undefined behavior when the node later rejoins its peers and tries
 reconcile its local controller log with the controller log from peers.
 :::
 
+## Configure strict data volumes
+
+When Redpanda starts, by default it looks for its data volume and initializes it if it's empty. However, there can be cases when a node's drive is accidentally erased or an incorrect drive is mounted to the data volume. Redpanda has no way to distinguish whether or not the data volume is incorrect upon start; consequently, there is no way for it to avoid this type of error. You can avoid such errors by setting the configuration option `storage_strict_data_init`, which enables Redpanda to distinguish between a purposefully empty data volume and an inadvertently empty one.
+
+When `storage_strict_data_init` is set to `true` on a node, Redpanda looks in the root of its data volume for an empty file named `.redpanda_data_dir`. If the file is not there Redpanda will not start. You must create this file manually when the data volume is created. Its existence enables Redpanda to distinguish whether or not the data volume it's reading from is correct.
+
 ## Use new node ID 
 
 Redpanda recommends using a fresh `node_id` each time you add a node
@@ -117,4 +123,3 @@ Rolling restarts preserve high availability and reduce
 risk during upgrades. Check the cluster's health after upgrading each node. Rolling
 back an upgrade to an earlier feature release is only supported until the last node
 has been updated, so it's important to identify any issues before that point.
-pro
