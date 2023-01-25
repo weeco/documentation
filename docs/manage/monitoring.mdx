@@ -39,11 +39,11 @@ This topic covers the following about monitoring Redpanda metrics:
 
 [Prometheus](https://prometheus.io/) is a system monitoring and alerting tool. It collects and stores metrics as time-series data identified by a metric name and key/value pairs.
 
-To configure and use Prometheus to monitor Redpanda metrics:
-
 :::note
 Redpanda recommends creating monitoring dashboards with `/public_metrics`.
 :::
+
+To configure and use Prometheus to monitor Redpanda metrics:
 
 1. Generate the configuration on an existing Prometheus instance.
 
@@ -214,13 +214,6 @@ For the consume rate, create a query to get the total consume rate across all to
 ```
 sum(rate(redpanda_kafka_request_bytes_total{redpanda_request="consume"} [5m] )) by (redpanda_request)
 ```
-
-#### RPC rate
-
-The rate of RPC requests handled should correlate with overall throughput. 
-
-Any errors (redpanda_node_status_rpcs_timed_out
-
 
 ### Latency
 
