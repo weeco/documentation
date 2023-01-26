@@ -388,6 +388,92 @@ Maximum latency threshold for Kafka queue depth control depth tracking.
 
 ---
 
+### kafka_quota_balancer_node_period
+
+The period at which the intra-node throughput quota balancer runs. If `0`, the balancer is disabled and all throughput quotas are immutable.
+
+**Units**: milliseconds
+
+**Default**: 750
+
+**Range**: [0, ]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_min_shard_thoughput_ratio
+
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of default shard quota. If `0`, the minimum is disabled. If `1`, no quota can be taken away by the balancer.
+
+**Type**: double
+
+**Units**: ratio of default shard quota
+
+**Default**: 0.01
+
+**Range**: [0.0, 1.0]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_min_shard_thoughput_bps
+
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed in bytes per second. If `0`, no minimum is enforced.
+
+**Units**: bytes per second
+
+**Default**: 256
+
+**Range**: [0, ...]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_window
+
+Time window used to average the current throughput measurement for the quota balancer.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ]
+
+**Restart required**: no
+
+---
+
+### kafka_throughput_limit_node_in_bps
+
+The maximum rate of ingress Kafka traffic for a node. If `null`, the property is disabled. 
+
+**Units**: bytes per second
+
+**Default**: null
+
+**Range**: [1, ...]
+
+**Restart required**: no
+
+---
+
+### kafka_throughput_limit_node_out_bps
+
+The maximum rate of egress Kafka traffic for a node. If `null`, the property is disabled. 
+
+**Units**: bytes per second
+
+**Default**: null
+
+**Range**: [number of available CPU cores, ...]
+
+**Restart required**: no
+
+---
+
 ### rm_sync_timeout_ms
 
 Resource manager's synchronization timeout. Maximum time for this node to wait for internal state machine to catch up with all events written by previous leaders before rejecting a request.
