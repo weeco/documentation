@@ -26,7 +26,7 @@ module.exports = {
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
-        { href: 'https://redpanda.com/', label: 'redpanda.com', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/', label: 'Redpanda.com', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/resources/', label: 'Resources', position: 'right', target: '_self' },
         { href: 'https://university.redpanda.com/', label: 'Training', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/blog/', label: 'Blog', position: 'right', target: '_self' },
