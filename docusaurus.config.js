@@ -47,7 +47,7 @@ module.exports = {
         {
         }
       ],
-      copyright: '<p style=" color: #808080">© 2022 Redpanda Data Inc. All Rights Reserved.</p>'
+      copyright: '<p style=" color: #808080">© 2023 Redpanda Data Inc. All Rights Reserved.</p>'
     },
     prism: {
       theme: lightCodeTheme,
