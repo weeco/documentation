@@ -19,11 +19,12 @@ The following cluster properties limit the number of connections:
 
 - [kafka_connections_max](../../../reference/cluster-properties#kafka_connections_max): Similar to Kafka's `max.connections`, this property sets the maximum number of connections created by a node.
 - [kafka_connections_max_per_ip](../../../reference/cluster-properties#kafka_connections_max_per_ip): Similar to Kafka's `max.connections.per.ip`, this property sets the maximum number of connections created per IP address by a node.
+- [kafka_connections_max_overrides](../../../reference/cluster-properties#kafka_connections_max_overrides): A list of IP addresses for which [kafka_connections_max_per_ip](../../../reference/cluster-properties#kafka_connections_max_per_ip) is overridden and doesn't apply.
 
 Redpanda also provides properties to manage the rate of connection creation:
 
 - [kafka_connection_rate_limit](../../../reference/cluster-properties#kafka_connection_rate_limit): This property limits the maximum rate of connections created per second. It applies per CPU core.
-- [kafka_connection_rate_limit_overrides](../../../reference/cluster-properties#kafka_connection_rate_limit_overrides): For targeted overrides of `kafka_connection_rate_limit`, this property enables unlimited connection creation to the IP addresses specified in the property's list.
+- [kafka_connection_rate_limit_overrides](../../../reference/cluster-properties#kafka_connection_rate_limit_overrides): A list of IP addresses for which [kafka_connection_rate_limit](../../../reference/cluster-properties#kafka_connection_rate_limit) is overridden and doesn't apply.
 
 :::note notes
 - These connection limit properties are disabled by default. You must manually enable them.
