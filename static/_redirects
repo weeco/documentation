@@ -204,6 +204,12 @@
 /docs/manage/kubernetes/helm-configuration                                            /docs/manage/kubernetes/index 301!
 /docs/platform/manage/helm-configuration                                              /docs/manage/kubernetes/helm-configuration 301!
 /docs/platform/quickstart/console-installation                                        /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start                                                         /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/index                                                   /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-linux                                       /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-macos                                       /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-console                                     /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/kubernetes-qs-dev                                       /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev 301!
 /docs/platform/quick-start/quick-start-console                                        /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/quickstart/index                                                       /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/quickstart                                                             /docs/get-started/quick-start/quick-start-docker 301!
