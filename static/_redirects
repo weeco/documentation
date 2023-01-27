@@ -1,5 +1,5 @@
 # Introduction
-/docs/platform/reference/autotune   /docs/platform/introduction/autotune  301!
+/docs/platform/reference/autotune   /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/  301!
 /docs/platform/features/intro-to-events   /docs/platform/introduction/intro-to-events  301!
 
 # Quickstart
@@ -108,7 +108,7 @@
 #Data Management
 /docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!
 
-/docs/platform/introduction/autotune/ /docs/platform/introduction/intro-to-events 301!
+/docs/platform/introduction/autotune/ /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 
 ## New landing page + sidebar
 /docs/cloud/create-byoc-cluster-aws                                                   /docs/deploy/deployment-option/cloud/create-byoc-cluster-aws 301!
@@ -190,7 +190,6 @@
 /docs/platform/install-upgrade/start-streaming                                        /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/install-upgrade/version-upgrade                                        /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/introduction/architecture                                              /docs/get-started/architecture 301!
-/docs/platform/introduction/autotune                                                  /docs/get-started/architecture 301!
 /docs/platform/introduction/index                                                     /docs/get-started/index 301!
 /docs/platform/introduction                                                          /docs/get-started/index 301!
 /docs/platform/introduction/intro-to-events                                           /docs/get-started/intro-to-events 301!
@@ -362,3 +361,4 @@ docs/quickstart/quick-start-windows/                                            
 /docs/home/cloud                                                                      /docs/home/index 301!
 /docs/cluster-administration/configuration                                            /docs/manage/cluster-maintenance/configuration 301!  
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
+/docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
