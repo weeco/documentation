@@ -14,7 +14,6 @@ import styles from "./styles.module.css";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
-import { useLocation } from 'react-router-dom';
 
 function encode(data) {
   return Object.keys(data)
@@ -25,7 +24,6 @@ function encode(data) {
 const FeedbackForm = (props) => {
   const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
-  const [disableButton, setDisableButton] = useState(false);
   const [formData, setFormData] = useState({})
 
   const handleChange = (e) => {
@@ -40,7 +38,6 @@ const FeedbackForm = (props) => {
 
  const handleFormData = (e) => {
   setFormData({ ...formData, [e.target.name]: e.target.value })
-  setDisableButton(true)
  }
 
   let title,whatWeDo,easyRadio, solvedRadio,otherRadio;
@@ -49,14 +46,14 @@ const FeedbackForm = (props) => {
 
   if(props.positiveFeedback){
     title = "What do you like about this doc?";
-    easyRadio = "Easy to understand";
     solvedRadio = "Solved my problem";
+    easyRadio = "Easy to understand";
     whatWeDo = "Let us know what we do well:";
   }
   else{
     title = "What did you not like about this doc?";
-    easyRadio = "Hard to understand";
     solvedRadio = "Did not solve my problem";
+    easyRadio = "Hard to understand";
     whatWeDo = "Let us know what we can improve:";
     
   }
@@ -85,8 +82,8 @@ const FeedbackForm = (props) => {
   return (
     <form className={`${props.show ? `${styles.modal}` : `${styles.hide}`}`} data-netlify="true" name="feedbackForm" method="POST" onSubmit={handleSubmit}   netlify-honeypot="bot-field"
     >
-      <div onClick={props.onClose}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+      <div>
+          <div className={styles.modalContent}>
         {!feedbackSubmitted ? (
           <div>
               
@@ -102,36 +99,33 @@ const FeedbackForm = (props) => {
                         </label>
                       </p>
                       <label>
+                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange} defaultChecked/>
+                        <span className={styles.labelMargin}>{solvedRadio}</span>
+                      </label><br />
+                      <label>
                         <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleChange}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
-                      
-                      <label>
-                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange}/>
-                        <span className={styles.labelMargin}>{solvedRadio}</span>
-                      </label><br />
                       <label>
                         <input type="radio" name="feedback" id="other" value="other" onChange={handleChange} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
                     <div className={styles.boxSizing}>
-                      If we can contact you with more questions, please enter your
-                      email address:
+                    Optional: Share your email address if we can contact you about your feedback.
                     </div>
                     <input type="text" name="email" id="email" onChange={handleFormData} placeholder="email@example.com" className={styles.moreQuestions}/><br />
                     <div>
                       <div className={`${other ? `${styles.boxSizing} + " " + ${styles.padding}` : `${styles.hide}`}`}>
                         {whatWeDo}
                       </div>
-                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please provide details of  your feedback." onChange={handleFormData}></textarea>
+                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please share details or suggestions for this topic." onChange={handleFormData}></textarea>
                     </div>
                 </div>
                 <div className={styles.modalFooter}>
                 {!feedbackSubmitted &&
-                  <button type= "submit" onSubmit={handleSubmit} className={clsx("button", styles.submitButton)} disabled={!disableButton}>Submit</button>
+                  <button type= "submit" onSubmit={handleSubmit} className={clsx("button", styles.submitButton)}>Submit</button>
                 }
-                  <button type ="button" onClick={props.onClose}  className={clsx("button", styles.closeButton)}>Close</button>
                 </div>
               
             </div>): 
@@ -184,25 +178,18 @@ export default function DocItemLayout({ children }) {
         <div className={styles.docItemContainer}>
           <article>
             <DocBreadcrumbs />
-            {!(
-              useLocation().pathname.includes("/docs/platform/deployment/cloud")
-              ) 
-            && <DocVersionBadge />}
+            <DocVersionBadge />
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
             <DocItemFooter />
           </article>
-          {/* BEGIN COMPONENT SWIZZLING. Add link to repository.
-           */}
           <section className={styles.issueLinkSeparator}>
           <FeedbackForm onClose={() => setShow(false)} show={show} positiveFeedback={positiveFeedback}></FeedbackForm>
-          <div className="row">
-            <div>
-              
-            </div>
+          <div className={clsx("row", styles.alignCenter)}>
             <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon)}>
-              <div>Was this page helpful?</div>
-
+              <div>
+                Was this helpful?
+              </div>
               <div>
                 <button
                   className={
@@ -257,7 +244,33 @@ export default function DocItemLayout({ children }) {
           <DocItemPaginator />
         </div>
       </div>
-      {docTOC.desktop && <div className="col col--3">{docTOC.desktop}</div>}
+      {docTOC.desktop && <div className="col col--3">
+      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightnav)}>
+      {docTOC.desktop}
+              <div>
+                Was this helpful?
+              </div>
+              <div>
+                <button
+                  className={
+                    styles.mailIcon + " " + styles.thumbsUpSeparator
+                  }
+                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
+                >
+                  <Icon>thumb_up</Icon>
+                </button>
+
+                <button
+                  className={
+                    styles.mailIcon + " " + styles.thumbsUpSeparator
+                  }
+                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
+                >
+                  <Icon>thumb_down</Icon>
+                </button>
+              </div>
+            </div>
+      </div>}
     </div>
   );
 }

@@ -45,11 +45,7 @@
   top: 7px;
 }
 
-@media (min-width: 997px) {
-  .reportIssueText {
-    text-align: right;
-  }
-}
+
 
 .feedBackSection {
   color: var(--ifm-link-color);
@@ -72,9 +68,8 @@
 }
 
 .modalFooter {
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  text-align: center;
 }
 
 .modalTitle {
@@ -194,4 +189,14 @@ input[type="text"]:focus {
 .moreQuestions {
   width: 400px;
   background-color: var(--v-gray3);
+}
+
+.rightnav{
+  max-height: calc(100vh - (var(--ifm-navbar-height) + 2rem));
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+.alignCenter{
+  text-align: center;
 }
