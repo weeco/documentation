@@ -336,6 +336,11 @@ module.exports = {
                   "manage/cluster-maintenance/disk-utilization",
                   {
                     type: "doc",
+                    label: "Configure Availability",
+                    id: "manage/cluster-maintenance/configure-availability",
+                  },
+                  {
+                    type: "doc",
                     label: "Cluster Properties",
                     id: "manage/cluster-maintenance/cluster-property-configuration",
                   },  
