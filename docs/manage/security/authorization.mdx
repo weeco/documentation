@@ -240,18 +240,23 @@ rpk acl [command] [flags]
 For example, to create a user:
  
 ```bash
-rpk acl user create \
---new-username Jack \
---new-password <password> \
+rpk acl user create Jack \
+--password <password> \
 --api-urls localhost:9644
 ```
  
-Result:
- 
+
+<details>
+<summary>
+Example output
+</summary>
+
 ```bash
 Created user 'Jack'
 ```
- 
+
+</details>
+
 Here are all the available commands and how they interact with Redpanda:
  
 <table>
