@@ -7,6 +7,8 @@ title: Cluster Maintenance
     <meta name="description" content="Cluster Maintenance"/>
 </head>
 
+import ConfigureAvailabilityIntro from './shared/_intro-configure-availability.mdx'
+
 - [Cluster Balancing](../cluster-maintenance/cluster-balancing)
 
     When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the node with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when nodes are added or decommissioned. 
@@ -22,6 +24,10 @@ title: Cluster Maintenance
 - [Manage Disk Space](../cluster-maintenance/disk-utilization)
 
     Redpanda provides several ways to manage disk space to ensure the production stability of the cluster.
+
+- [Configure Availability](../cluster-maintenance/configure-availability)
+
+    <ConfigureAvailabilityIntro/>
 
 - [Cluster Properties](../cluster-maintenance/cluster-property-configuration)
 
