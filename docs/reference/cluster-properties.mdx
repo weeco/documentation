@@ -320,7 +320,7 @@ Overrides the maximum connections per second for one core for the specified IP a
 
 ### kafka_connections_max
 
-Maximum number of Kafka client connections per broker. If `null`, the property is disabled.
+The maximum number of Kafka client connections per broker. If `null`, the property is disabled, and no limit is applied to the number of Kafka client connections.
 
 **Units**: number of Kafka client connections per broker
 
@@ -332,7 +332,7 @@ Maximum number of Kafka client connections per broker. If `null`, the property i
 
 ### kafka_connections_max_overrides
 
-A list of IP addresses for which Kafka client connection limits are overridden and don't apply. For example, `(['127.0.0.1:90', '50.20.1.1:40']).`
+A list of IP addresses that are exempt from the limit on Kafka client connections ([`kafka_connections_max_per_ip`](#kafka_connections_max_per_ip)). For example, `(['127.0.0.1:90', '50.20.1.1:40']).`
 
 **Default**: {} (empty list)
 
@@ -342,7 +342,7 @@ A list of IP addresses for which Kafka client connection limits are overridden a
 
 ### kafka_connections_max_per_ip
 
-Maximum number of Kafka client connections per IP address, per broker. If `null`, the property is disabled.
+The maximum number of Kafka client connections per IP address, per broker. If `null`, the property is disabled, and no limit is applied to the number of Kafka client connections.
 
 **Units**: number of Kafka client connections per IP address, per broker
 

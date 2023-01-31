@@ -87,7 +87,7 @@ IP address and port for supervisor service.
 
 ### crash_loop_limit
 
-A limit on the number of consecutive crashes (unclean shutdowns) of a node within a short duration of each other, after which the node cannot restart until its crash-tracking logic is reset. It prevents a node from getting stuck in an infinite cycle of crashes.
+A limit on the number of consecutive times a broker can crash within one hour before its crash-tracking logic is reset. This limit prevents a broker from getting stuck in an infinite cycle of crashes.
 
 If `null`, the property is disabled and no limit is applied.
 
