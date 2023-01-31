@@ -131,9 +131,9 @@ Tiered Storage can be combined with local storage to provide infinite data reten
 
 Ideally, a cluster should be sized such that the cluster's local storage can service the majority of its consumers within a normal amount of lag, with Tiered Storage used to service any slow readers (for example, in the event of some downstream failure). 
 
-When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured storage bucket or container. The default log segment size is set to one GB, so by default, a topic’s object store lags approximately one GB behind the local copy. 
-- You can lower `segment.bytes` to reduce this lag. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count. 
-- You can also set an idle timeout to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. 
+When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured storage bucket or container. The default log segment size is set to one GiB, so by default, a topic’s object store lags approximately one GiB behind the local copy. To reduce this lag:
+- You can lower `segment.bytes`. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count. 
+- You can set an idle timeout with `cloud_storage_segment_max_upload_interval_sec` to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. 
 
 Adjusting how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point-in-time objectives. This is encapsulated in the Kafka API, so clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage. 
 
