@@ -95,6 +95,8 @@ Changes to the Linux kernel are not persisted. If a worker node restarts, make s
 You can use a privileged DaemonSet to schedule the auto-tuning tool on each worker node that runs a Redpanda broker. Apply taints to Nodes that successfully complete the auto-tuning command. Use tolerations on your Pods so that they are scheduled only on tuned worker nodes.
 :::
 
+For details about each tuner of the auto-tuning tool, including how to enable or disable an individual tuner, see [Autotuner Reference](../../../../../reference/autotuner).
+
 ## Next steps
 
 [Deploy the Redpanda cluster](../kubernetes-deploy).

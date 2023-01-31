@@ -101,3 +101,24 @@ rpk redpanda tune list [flags]
     </tr>
   </tbody>
 </table>
+
+### Example output
+
+The output of the command lists each available tuner and whether it's enabled or supported (with a reason if it's unsupported).
+
+```bash
+TUNER                  ENABLED  SUPPORTED  UNSUPPORTED-REASON
+aio_events             true     true       
+ballast_file           true     true       
+clocksource            true     false      Clocksource setting not available for this architecture
+coredump               false    true       
+cpu                    true     true       
+disk_irq               true     true       
+disk_nomerges          true     true       
+disk_scheduler         true     false      open : no such file or directory
+disk_write_cache       true     false      Disk write cache tuner is only supported in GCP
+fstrim                 false    false      dial unix /var/run/dbus/system_bus_socket: connect: no such file or directory
+net                    true     true       
+swappiness             true     true       
+transparent_hugepages  false    true 
+```

@@ -869,6 +869,11 @@ module.exports = {
           label: "Docker Compose Samples",
           id: "reference/docker-compose",
         },
+        {
+          type: "doc",
+          label: "Redpanda Autotuner ",
+          id: "reference/autotuner",
+        },
       ],
     },
     {
