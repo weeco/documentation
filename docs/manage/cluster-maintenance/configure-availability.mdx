@@ -33,7 +33,7 @@ Redpanda also provides properties to manage the rate of connection creation:
 
 ## Prevent crash loops
 
-A Redpanda node creates a non-insignificant amount of log segments at startup. If a node were to crash after startup, and if it were to get stuck in a crash loop, it would produce progressively more state that uses more disk space and takes more time for each restart to process.  
+A Redpanda node may create a non-insignificant amount of log segments at startup. If a node were to crash after startup, and if it were to get stuck in a crash loop, it would produce progressively more state that uses more disk space and takes more time for each restart to process.  
 
 To prevent infinite crash loops, the node property [crash_loop_limit](../../../reference/node-properties#crash_loop_limit) sets an upper limit on the number of consecutive crashes that can happen within one hour of each other. Once it reaches the limit, a node cannot restart until its internal consecutive crash counter is reset to zero by one of the following conditions:
 
