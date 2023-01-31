@@ -11,7 +11,7 @@ import ConfigureAvailabilityIntro from './shared/_intro-configure-availability.m
 
 <ConfigureAvailabilityIntro/>
 
-## Limit Client Connections
+## Limit client connections
 
 A malicious Kafka client application may create many network connections to execute its attacks. A poorly configured application may also create an excessive number of connections. To mitigate the risk of a client creating too many connections and using too many system resources, you can configure a Redpanda cluster to impose limits on the number of created client connections for its Kafka protocol server nodes. 
 
@@ -29,4 +29,20 @@ Redpanda also provides properties to manage the rate of connection creation:
 :::note notes
 - These connection limit properties are disabled by default. You must manually enable them.
 - Typically, a client opens two or three connections, so the total number of connections is not equal to the number of clients. For example, to support 100 clients, you might set your connection limit to 300.
+:::
+
+## Prevent crash loops
+
+A Redpanda node creates a non-insignificant amount of log segments at startup. If a node were to crash after startup, and if it were to get stuck in a crash loop, it could eventually run low on disk space.
+
+To prevent infinite crash loops, the node property [crash_loop_limit](../../../reference/node-properties#crash_loop_limit) sets an upper limit on the number of consecutive crashes that can happen within one hour of each other. After `crash_loop_limit` is reached, a node cannot restart until its crash-tracking logic is reset by one of the following conditions:
+
+- The node configuration file, `redpanda.yaml`, is updated.
+- The `startup_log` file in the node's [data_directory](../../../reference/node-properties#data_directory) is manually deleted.
+- One hour elapses since the last crash.
+
+A node's crash-tracking logic is also reset by a clean shutdown.
+
+:::note 
+The limit property is disabled by default. You must manually enable it by setting it to a non-zero value.
 :::

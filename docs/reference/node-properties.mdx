@@ -85,6 +85,24 @@ IP address and port for supervisor service.
 
 ---
 
+### crash_loop_limit
+
+A limit on the number of consecutive crashes (unclean shutdowns) of a node within a short duration of each other, after which the node cannot restart until its crash-tracking logic is reset. It prevents a node from getting stuck in an infinite cycle of crashes.
+
+If `null`, the property is disabled and no limit is applied.
+
+The crash-tracking logic is reset (to zero consecutive crashes) by any of the following conditions:
+- The node shuts down cleanly.
+- One hour elapses since the last crash.
+- The node configuration file, `redpanda.yaml`, is updated.
+- The `startup_log` file in the node's [data_directory](#data_directory) is manually deleted.
+
+**Units**: number of consecutive crashes of a node
+
+**Default**: null
+
+---
+
 ### dashboard_dir
 
 Path to the directory where the HTTP dashboard is located. 
