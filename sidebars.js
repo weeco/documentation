@@ -38,36 +38,9 @@ module.exports = {
           id: "get-started/licenses",
         },
         {
-          type: "category",
+          type: "doc",
           label: "Redpanda Quickstart",
-          link: { type: "doc", id: "get-started/quick-start/index" },
-          items: [
-            {
-              type: "doc",
-              label: "Docker",
-              id: "get-started/quick-start/quick-start-docker",
-            },
-            {
-              type: "doc",
-              label: "Linux",
-              id: "get-started/quick-start/quick-start-linux",
-            },
-            {
-              type: "doc",
-              label: "macOS",
-              id: "get-started/quick-start/quick-start-macos",
-            },
-            {
-              type: "doc",
-              label: "Kubernetes",
-              id: "get-started/quick-start/kubernetes-qs-dev",
-            },
-            {
-              type: "doc",
-              label: "Introduction to Redpanda Console",
-              id: "get-started/quick-start/quick-start-console",
-            },
-          ]
+          id: "get-started/quick-start/quick-start-docker",
         },
         {
           type: "doc",
@@ -146,13 +119,18 @@ module.exports = {
                   items: [
                     {
                       type: "doc",
-                      label: "Kubernetes Cluster Requirements",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
+                      label: "Redpanda in Kubernetes Overview",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
                     },
                     {
                       type: "doc",
-                      label: "Kubernetes Production Deployment",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
+                      label: "Tutorial: Get Started with Kubernetes",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/get-started-dev",
+                    },
+                    {
+                      type: "doc",
+                      label: "Kubernetes Cluster Requirements",
+                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
                     },
                     {
                       type: "doc",
@@ -285,13 +263,30 @@ module.exports = {
                 items: [
                   {
                     type: "doc",
-                    label: "Helm Configuration",
-                    id: "manage/kubernetes/helm-configuration",
+                    label: "Storage",
+                    id: "manage/kubernetes/configure-storage",
                   },
                   {
-                    type: "doc",
-                    label: "Rack Awareness",
-                    id: "manage/kubernetes/kubernetes-rack-awareness",
+                    type: "category",
+                    label: "Networking and Connectivity",
+                    link: { type: "doc", id: "manage/kubernetes/networking/networking-and-connectivity" },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Use a NodePort Service",
+                        id: "manage/kubernetes/networking/configure-external-access-nodeport",
+                      },
+                      {
+                        type: "doc",
+                        label: "Use LoadBalancer Services",
+                        id: "manage/kubernetes/networking/configure-external-access-loadbalancer",
+                      },
+                      {
+                        type: "doc",
+                        label: "Configure Listeners",
+                        id: "manage/kubernetes/networking/configure-listeners",
+                      }
+                    ],
                   },
                   {
                     type: "category",
@@ -312,8 +307,8 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Configure Storage",
-                    id: "manage/kubernetes/configure-storage",
+                    label: "Rack Awareness",
+                    id: "manage/kubernetes/kubernetes-rack-awareness",
                   },
                 ],
               },
@@ -322,6 +317,11 @@ module.exports = {
                 label: "Cluster Maintenance",
                 link: { type: "doc", id: "manage/cluster-maintenance/index" },
                 items: [
+                  {
+                    type: "doc",
+                    label: "Cluster Configuration",
+                    id: "manage/cluster-maintenance/configuration",
+                  },
                   "manage/cluster-maintenance/cluster-balancing",
                   {
                     type: "doc",
@@ -845,14 +845,14 @@ module.exports = {
               label: "Redpanda Console Role-Binding Configuration",
               id: "reference/console/role-bindings",
             },
-            {
-              type: "doc",
-              label: "Docker Compose Templates",
-              id: "reference/console/docker-compose",
-            },
             "reference/console/record-deserialization",
             "reference/console/programmable-push-filters",
           ],
+        },
+        {
+          type: "doc",
+          label: "Docker Compose Samples",
+          id: "reference/docker-compose",
         },
       ],
     },

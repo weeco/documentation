@@ -1,5 +1,5 @@
 # Introduction
-/docs/platform/reference/autotune   /docs/platform/introduction/autotune  301!
+/docs/platform/reference/autotune   /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/  301!
 /docs/platform/features/intro-to-events   /docs/platform/introduction/intro-to-events  301!
 
 # Quickstart
@@ -11,9 +11,9 @@
 /docs/platform/getting-started/index   /docs/platform/quickstart/index  301!
 /docs/platform/getting-started   /docs/platform/quickstart/index  301!
 /docs/platform/getting-started/quick-start-docker   /docs/platform/quickstart/quick-start-docker  301!
-/docs/platform/getting-started/quick-start-linux   /docs/platform/quickstart/quick-start-linux  301!
-/docs/platform/getting-started/quick-start-macos   /docs/platform/quickstart/quick-start-macos  301!
-/docs/platform/getting-started/quick-start-windows   /docs/platform/quickstart/quick-start-windows  301!
+/docs/platform/getting-started/quick-start-linux   /docs/platform/quickstart/quick-start-docker  301!
+/docs/platform/getting-started/quick-start-macos   /docs/platform/quickstart/quick-start-docker  301!
+/docs/platform/getting-started/quick-start-windows   /docs/platform/quickstart/quick-start-docker  301!
 
 /docs/platform/quickstart/kubernetes-qs-cloud   /docs/platform/reference/redpanda-operator/kubernetes-qs-cloud  301!
 /docs/platform/quickstart/kubernetes-qs-local-access  /docs/platform/reference/redpanda-operator/kubernetes-qs-local-access  301!
@@ -89,17 +89,18 @@
 /docs/reference/rpk-commands  /docs/platform/reference/rpk 301!
 
 #Fix for duplicate rpk container page
-/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-macos 301!
+/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-docker 301!
 /docs/introduction/consumer-offsets /docs/development/consumer-offsets 301!
 
 #Fix for new rpk page
 /docs/reference/rpk-commands  /docs/platform/reference/rpk 301!
 
 #Fix for duplicate rpk container page
-/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-macos 301!
+/docs/deployment/guide-rpk-container /docs/platform/quickstart/quick-start-docker 301!
 
 #Redpanda console
-/docs/console/installation /docs/platform/quickstart/console-installation 301!
+/docs/console/installation /docs/platform/quickstart/quick-start-docker 301!
+/docs/platform/quickstart/console-installation /docs/platform/quickstart/quick-start-docker 301!
 
 #Tech Preview
 /docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!
@@ -107,7 +108,7 @@
 #Data Management
 /docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!
 
-/docs/platform/introduction/autotune/ /docs/platform/introduction/intro-to-events 301!
+/docs/platform/introduction/autotune/ /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 
 ## New landing page + sidebar
 /docs/cloud/create-byoc-cluster-aws                                                   /docs/deploy/deployment-option/cloud/create-byoc-cluster-aws 301!
@@ -139,7 +140,8 @@
 /docs/platform/console/features/schema-registry                                       /docs/manage/schema-registry 301!
 /docs/platform/console/features/topic-documentation                                   /docs/manage/console/topic-documentation 301!
 /docs/platform/console/reference/config                                               /docs/reference/console/config 301!
-/docs/platform/console/reference/docker-compose                                       /docs/reference/console/docker-compose 301!
+/docs/platform/console/reference/docker-compose                                       /docs/reference/docker-compose 301!
+/docs/reference/console/docker-compose                                                /docs/reference/docker-compose 301!
 /docs/platform/console/reference/role-bindings                                        /docs/reference/console/role-bindings 301!
 /docs/platform/console/single-sign-on/authentication                                  /docs/manage/security/console/authentication 301!
 /docs/platform/console/single-sign-on/authorization                                   /docs/manage/security/console/authorization 301!
@@ -182,13 +184,12 @@
 /docs/platform/development                                                           /docs/develop/index 301!
 /docs/platform/development/kafka-clients                                              /docs/develop/kafka-clients 301!
 /docs/platform/development/transactions                                               /docs/develop/transactions 301!
-/docs/platform/install-upgrade/index                                                  /docs/get-started/quick-start/index 301!
-/docs/platform/install-upgrade                                                       /docs/get-started/quick-start/index 301!
+/docs/platform/install-upgrade/index                                                  /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/install-upgrade                                                       /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/install-upgrade/rolling-upgrade                                        /docs/manage/cluster-maintenance/rolling-upgrade 301!
 /docs/platform/install-upgrade/start-streaming                                        /docs/get-started/quick-start/quick-start-docker 301!
-/docs/platform/install-upgrade/version-upgrade                                        /docs/get-started/quick-start/index 301!
+/docs/platform/install-upgrade/version-upgrade                                        /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/introduction/architecture                                              /docs/get-started/architecture 301!
-/docs/platform/introduction/autotune                                                  /docs/get-started/architecture 301!
 /docs/platform/introduction/index                                                     /docs/get-started/index 301!
 /docs/platform/introduction                                                          /docs/get-started/index 301!
 /docs/platform/introduction/intro-to-events                                           /docs/get-started/intro-to-events 301!
@@ -198,19 +199,31 @@
 /docs/platform/labs                                                                  /docs/labs/index 301!
 /docs/platform/labs/install-preview                                                   /docs/labs/install-preview 301!
 /docs/platform/manage/configure-storage                                               /docs/manage/kubernetes/configure-storage 301!
+/docs/platform/manage/helm-configuration                                              /docs/manage/kubernetes/index 301!
+/docs/manage/kubernetes/helm-configuration                                            /docs/manage/kubernetes/index 301!
 /docs/platform/manage/helm-configuration                                              /docs/manage/kubernetes/helm-configuration 301!
-/docs/platform/quickstart/console-installation                                        /docs/get-started/quick-start/quick-start-console 301!
-/docs/platform/quickstart/index                                                       /docs/get-started/quick-start/index 301!
-/docs/platform/quickstart                                                            /docs/get-started/quick-start/index 301!
-/docs/platform/quickstart/kubernetes-qs-dev                                           /docs/get-started/quick-start/kubernetes-qs-dev 301!
+/docs/platform/quickstart/console-installation                                        /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start                                                         /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/index                                                   /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-linux                                       /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-macos                                       /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/quick-start-console                                     /docs/get-started/quick-start/quick-start-docker 301!
+docs/get-started/quick-start/kubernetes-qs-dev                                       /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev 301!
+/docs/platform/quick-start/quick-start-console                                        /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/index                                                       /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart                                                             /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/kubernetes-qs-dev                                           /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev 301!
+/docs/platform/get-started/quick-start/kubernetes-qs-dev                              /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev 301!
 /docs/platform/quickstart/quick-start-docker                                          /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/quick-start-linux                                           /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/quick-start-macos                                           /docs/get-started/quick-start/quick-start-docker 301!
 docs/quickstart/quick-start-docker/                                                   /docs/get-started/quick-start/quick-start-docker 301!
-docs/quickstart/kubernetes-qs-dev/                                                    /docs/get-started/quick-start/kubernetes-qs-dev 301!
-docs/quickstart/quick-start-linux/                                                    /docs/get-started/quick-start/quick-start-linux 301!
-docs/quickstart/quick-start-macos/                                                    /docs/get-started/quick-start/quick-start-macos 301!
-docs/quickstart/quick-start-windows/                                                  /docs/get-started/quick-start/quick-start-windows 301!
-/docs/platform/quickstart/quick-start-linux                                           /docs/get-started/quick-start/quick-start-linux 301!
-/docs/platform/quickstart/quick-start-macos                                           /docs/get-started/quick-start/quick-start-macos 301!
+docs/quickstart/kubernetes-qs-dev/                                                    /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev 301!
+docs/quickstart/quick-start-linux/                                                    /docs/get-started/quick-start/quick-start-docker 301!
+docs/quickstart/quick-start-macos/                                                    /docs/get-started/quick-start/quick-start-docker 301!
+docs/quickstart/quick-start-windows/                                                  /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/quick-start-linux                                           /docs/get-started/quick-start/quick-start-docker 301!
+/docs/platform/quickstart/quick-start-macos                                           /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/quickstart/quick-start-windows                                         /docs/get-started/quick-start/quick-start-docker 301!
 /docs/platform/quickstart/rpk-install                                                 /docs/get-started/rpk-install 301!
 /docs/platform/reference/api-reference                                                /docs/reference/index 301!
@@ -346,3 +359,6 @@ docs/quickstart/quick-start-windows/                                            
 /docs/home/platform                                                                   /docs/home/index 301!
 /docs/home/cloud/index                                                                /docs/home/index 301!
 /docs/home/cloud                                                                      /docs/home/index 301!
+/docs/cluster-administration/configuration                                            /docs/manage/cluster-maintenance/configuration 301!  
+/docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
+/docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!

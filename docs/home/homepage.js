@@ -13,7 +13,7 @@ const FeatureList = [
         Try out Redpanda.
       </>
     ),
-    url: '/docs/get-started/quick-start',
+    url: '/docs/get-started/quick-start/quick-start-docker',
     learnText: true,
   },
   {
@@ -46,7 +46,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/get-started/quick-start/quick-start-console',
+    url: '/docs/get-started/quick-start/quick-start-docker',
     learnText: true,
   },
   {

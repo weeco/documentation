@@ -7,8 +7,6 @@ module.exports = {
   url: 'https://docs.redpanda.com',
   baseUrl: '/',
   trailingSlash: 'true',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/Redpanda_Favicon_32px.svg',
   organizationName: 'redpanda-data', // Usually your GitHub org/user name.
   projectName: 'redpanda', // Usually your repo name.,
@@ -28,7 +26,7 @@ module.exports = {
       items: [
         // { type: 'docsVersionDropdown',position: 'right'},
         // { type: 'localeDropdown',position: 'right'},
-        { href: 'https://redpanda.com/', label: 'Redpanda', position: 'right', target: '_self' },
+        { href: 'https://redpanda.com/', label: 'Redpanda.com', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/resources/', label: 'Resources', position: 'right', target: '_self' },
         { href: 'https://university.redpanda.com/', label: 'Training', position: 'right', target: '_self' },
         { href: 'https://redpanda.com/blog/', label: 'Blog', position: 'right', target: '_self' },
@@ -49,7 +47,7 @@ module.exports = {
         {
         }
       ],
-      copyright: '<p style=" color: #808080">© 2022 Redpanda Data Inc. All Rights Reserved.</p>'
+      copyright: '<p style=" color: #808080">© 2023 Redpanda Data Inc. All Rights Reserved.</p>'
     },
     prism: {
       theme: lightCodeTheme,
@@ -91,7 +89,7 @@ module.exports = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '22.3',
+              label: '23.1',
             },
           },
         },

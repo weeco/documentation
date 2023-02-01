@@ -56,7 +56,7 @@ To configure access to an Amazon S3 bucket with an IAM role:
 
 To configure access to Amazon S3 with access keys instead of IAM roles:
 
-1. Grant a user the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`.
+1. Grant a user the following permissions to read and create objects on the bucket to be used with the cluster (or on all buckets): `GetObject`, `DeleteObject`, `PutObject`, `PutObjectTagging`, `ListBucket`.
 2. Copy the access key and secret key for the `cloud_storage_access_key` and `cloud_storage_secret_key` cluster properties.
 3. Run the `rpk cluster config edit` command, then edit the following required properties:
 
@@ -127,13 +127,14 @@ When you enable Tiered Storage on a cluster, it becomes enabled for already-exis
 
 ### Enable Tiered Storage for a topic
 
-Tiered Storage also uses the following topic configuration flags:
+Tiered Storage uses the following topic-level properties:
 
-| Flag      | Description |
+| Property      | Description |
 | ----------- | ----------- |
 | `redpanda.remote.write` | Uploads data from Redpanda to cloud storage. Overrides the cluster-level `cloud_storage_enable_remote_write` configuration for the topic. |
 | `redpanda.remote.read` | Fetches data from cloud storage to Redpanda. Overrides the cluster-level `cloud_storage_enable_remote_read` configuration for the topic. |
 | `redpanda.remote.recovery` | Recovers or reproduces a topic from cloud storage. Use this flag during topic creation. It does not apply to existing topics.  |
+| `redpanda.remote.delete` | When set to `true`, deleting a topic also deletes its objects in remote storage. Both `redpanda.remote.write` and `redpanda.remote.read` must be enabled, and the topic must not be a Remote Read Replica topic.<br/><br/> When set to `false`, deleting a topic does not delete its objects in remote storage.  <br/><br/>Default is `true` for new topics, including new topics on upgraded clusters. Default is `false` for topics created prior to release 22.3. |
 
 Topic configuration flags override any cluster-level configuration. For example, on new topics, if `cloud_storage_enable_remote_write` is set to `true`, you can set `redpanda.remote.write` to `false` to turn it off for a particular topic. Or, if you have Tiered Storage turned off for the cluster, you can enable it for individual topics with the topic flags. When cluster-level properties are changed, the changes apply only to new topics, not existing topics.
 
@@ -240,7 +241,9 @@ rpk topic alter-config <topic_name> --set redpanda.remote.write=true
 
 If remote write is enabled, log segments are not deleted until they’re uploaded to remote storage. Because of this, the log segments may exceed the configured retention period until they’re uploaded, so the topic might require more disk space. This prevents data loss if segments cannot be uploaded fast enough or if the retention period is very short.
 
-Starting in release 22.3, when you delete a topic in Redpanda, the data is also deleted in cloud storage. Topics created prior to 22.3 can alter their configuration to this behavior on a topic level after upgrading.
+:::note
+Starting in version 22.3, when you delete a topic in Redpanda, the data is also deleted in cloud storage. See [Enable Tiered Storage for a topic](../../manage/tiered-storage/#enable-tiered-storage-for-a-topic)
+:::
 
 ### Idle timeout
 
