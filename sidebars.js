@@ -466,6 +466,23 @@ module.exports = {
         "reference/api-reference",
         {
           type: "category",
+          label: "Monitoring Metrics",
+          link: { type: "doc", id: "reference/monitor-metrics" },
+          items: [
+            {
+              type: "doc",
+              label: "Public Metrics Reference",
+              id: "reference/public-metrics-reference",
+            },
+            {
+              type: "doc",
+              label: "Internal Metrics Reference",
+              id: "reference/internal-metrics-reference",
+            }, 
+          ]
+        },
+        {
+          type: "category",
           label: "rpk Commands",
           link: { type: "doc", id: "reference/rpk/index" },
           items: [
@@ -824,7 +841,6 @@ module.exports = {
             "reference/redpanda-operator/crd",
           ],
         },
-        "reference/internal-metrics",
         {
           type: "link",
           label: "Release Notes",

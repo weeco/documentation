@@ -458,6 +458,18 @@ Target quota byte rate.
 
 ## Metrics properties
 
+### aggregate_metrics
+
+Enable aggregation of metrics returned by the [/metrics](./internal-metrics-reference) endpoint. Metric aggregation is performed by summing the values of samples by labels and is done when it makes sense by the shard and/or partition labels.
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: yes
+
+---
+
 ### disable_metrics
 
 Disable registering metrics exposed on the internal metrics endpoint.
