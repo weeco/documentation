@@ -6,24 +6,24 @@ tags:
 
 <head>
     <meta name="title" content="Tune Kubernetes Worker Nodes for Production | Redpanda Docs"/>
-    <meta name="description" content="To get the best performance from your hardware, set Redpanda to production mode and run the auto-tuning tool. The auto-tuning tool identifies your hardware configuration and tunes itself to give you the best performance."/>
+    <meta name="description" content="To get the best performance from your hardware, set Redpanda to production mode and run the autotuner tool. The autotuner identifies your hardware configuration and tunes itself to give you the best performance."/>
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Versions from '../../../../shared/_versions.mdx'
 
-To get the best performance from your hardware, set Redpanda to production mode on each worker node and run the auto-tuning tool. The auto-tuning tool identifies the hardware configuration on your worker node and optimizes the Linux kernel to give you the best performance.
+To get the best performance from your hardware, set Redpanda to production mode on each worker node and run the [autotuner tool](../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune). The autotuner identifies the hardware configuration on your worker node and optimizes the Linux kernel to give you the best performance.
 
 ## Prerequisites
 
-Make sure that your current Linux user has root privileges. The auto-tuning tool requires privileged access to the Linux kernel settings.
+Make sure that your current Linux user has root privileges. The autotuner requires privileged access to the Linux kernel settings.
 
 Make sure that your Linux kernel is at least version <Versions name="linux-kernel"/>.
 
 ## Install Redpanda
 
-To run the auto-tuning tool, you need to install the Redpanda binary on each worker node.
+To run the autotuner, you need to install the Redpanda binary on each worker node.
 
 <Tabs>
 <TabItem value="fedora" label="Fedora/RedHat" default>
@@ -48,9 +48,9 @@ sudo apt install redpanda -y
 </TabItem>
 </Tabs>
 
-## Run the auto-tuning tool 
+## Run the autotuner 
 
-Run the auto-tuning tool on each worker node that runs a Redpanda broker.
+Run the autotuner on each worker node that runs a Redpanda broker.
 
 1. Set Redpanda to production mode:
 
@@ -58,7 +58,7 @@ Run the auto-tuning tool on each worker node that runs a Redpanda broker.
   sudo rpk redpanda mode production
   ```
 
-1. Run the auto-tuning tool:
+1. Run the autotuner:
 
   ```bash
   sudo rpk redpanda tune all
@@ -92,10 +92,10 @@ Run the auto-tuning tool on each worker node that runs a Redpanda broker.
 Changes to the Linux kernel are not persisted. If a worker node restarts, make sure to run `sudo rpk redpanda tune all` on it again.
 
 :::tip
-You can use a privileged DaemonSet to schedule the auto-tuning tool on each worker node that runs a Redpanda broker. Apply taints to Nodes that successfully complete the auto-tuning command. Use tolerations on your Pods so that they are scheduled only on tuned worker nodes.
+You can use a privileged DaemonSet to schedule the autotuner on each worker node that runs a Redpanda broker. Apply taints to Nodes that successfully complete the autotuner command. Use tolerations on your Pods so that they are scheduled only on tuned worker nodes.
 :::
 
-For details about each tuner of the auto-tuning tool, including how to enable or disable an individual tuner, see [Autotuner Reference](../../../../../reference/autotuner).
+For details about the autotuner, including how to enable or disable an individual tuner, see [Autotuner Reference](../../../../../reference/autotuner).
 
 ## Next steps
 

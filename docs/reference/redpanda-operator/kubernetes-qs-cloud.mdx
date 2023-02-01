@@ -91,7 +91,7 @@ eksctl create cluster \
 --nodes-max 1
 ```
 
-Alternatively, to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
+Alternatively, to create an Amazon EKS cluster for running Redpanda that is tuned by the [autotuner](../../rpk/rpk-redpanda/rpk-redpanda-tune), copy the following text and save it as `eks-bootstrap.yaml`: 
 
   ```yaml
   apiVersion: eksctl.io/v1alpha5
