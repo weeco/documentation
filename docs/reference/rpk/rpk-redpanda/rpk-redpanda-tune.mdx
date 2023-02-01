@@ -67,7 +67,10 @@ rpk redpanda tune <list of elements to tune> [command] [flags]
     <tr>
       <td>-h, --help</td>
       <td>-</td>
-      <td> Help for tune.</td>
+      <td> Help for tune.
+        <p>Get a help description for a specific tuner:</p>
+        <code>rpk redpanda tune help 	&lt;tuner&gt;</code>
+      </td>
     </tr>
     <tr>
       <td>-m, --mode</td>
@@ -180,7 +183,7 @@ When running `rpk redpanda tune`, make sure that your current Linux user has roo
     rpk redpanda tune <tuner>
     ```
 
-- To learn more about a tuner, use the [rpk redpanda tune help](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune-help) command:
+- To learn more about a tuner, use the [rpk redpanda tune help](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune) command for the tuner:
 
     ```
     rpk redpanda tune help <tuner>
@@ -189,7 +192,7 @@ When running `rpk redpanda tune`, make sure that your current Linux user has roo
 
 ### Tuners
 
-This section describes each tuner and their configuration settings in [redpanda.yaml](../../../../reference/node-configuration-sample). It provides overlapping and additional content to the descriptions returned by [rpk redpanda tune help](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune-help).
+This section describes each tuner and their configuration settings in [redpanda.yaml](../../../../reference/node-configuration-sample). It provides overlapping and additional content to the descriptions returned by [rpk redpanda tune help](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune).
 
 #### aio_events
 
@@ -352,4 +355,3 @@ Configuration (yaml):
 - [Tune Kubernetes Worker Nodes for Production](../../../../deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers)
 - [rpk redpanda mode production](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-mode)
 - [rpk redpanda tune list](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune-list)
-- [rpk redpanda tune help](../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune-help)
