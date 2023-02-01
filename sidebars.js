@@ -768,7 +768,6 @@ module.exports = {
                   },
                   items: [
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune",
-                    "reference/rpk/rpk-redpanda/rpk-redpanda-tune-help",
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune-list",
                   ],
                 },
