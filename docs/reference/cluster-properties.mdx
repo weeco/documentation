@@ -404,7 +404,9 @@ The period at which the intra-node throughput quota balancer runs. If `0`, the b
 
 ### kafka_quota_balancer_min_shard_thoughput_ratio
 
-The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of default shard quota. If `0`, the minimum is disabled. If `1`, no quota can be taken away by the balancer.
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of default shard quota. While the value applies equally to ingress and egress traffic, the default shard quota can be different for ingress and egress and therefore result in different minimum throughput bps values. 
+
+If `0`, the minimum is disabled. If `1`, no quota can be taken away by the balancer.
 
 **Type**: double
 
@@ -418,9 +420,14 @@ The minimum value of the throughput quota a shard can get in the process of quot
 
 ---
 
-### kafka_quota_balancer_min_shard_thoughput_bps
+### kafka_quota_balancer_min_shard_throughput_bps
 
-The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed in bytes per second. If `0`, no minimum is enforced.
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed in bytes per second. The value applies equally to ingress and egress traffic.
+
+kafka_quota_balancer_min_shard_throughput_bps doesn't override the limit settings, [kafka_throughput_limit_node_in_bps](#kafka_throughput_limit_node_in_bps) and [kafka_throughput_limit_node_out_bps](#kafka_throughput_limit_node_out_bps). Consequently, the value of 
+`kafka_throughput_limit_node_in_bps / kafka_throughput_limit_node_out_bps` can result in lesser throughput than kafka_quota_balancer_min_shard_throughput_bps.
+
+If `0`, no minimum is enforced.
 
 **Units**: bytes per second
 
@@ -448,7 +455,9 @@ Time window used to average the current throughput measurement for the quota bal
 
 ### kafka_throughput_limit_node_in_bps
 
-The maximum rate of ingress Kafka traffic for a node. If `null`, the property is disabled. 
+The maximum rate of all ingress Kafka API traffic for a node. Includes all Kafka API traffic (requests, responses, headers, fetched data, produced data, etc.).
+
+If `null`, the property is disabled, and traffic is not limited.
 
 **Units**: bytes per second
 
@@ -462,7 +471,9 @@ The maximum rate of ingress Kafka traffic for a node. If `null`, the property is
 
 ### kafka_throughput_limit_node_out_bps
 
-The maximum rate of egress Kafka traffic for a node. If `null`, the property is disabled. 
+The maximum rate of all egress Kafka traffic for a node. Includes all Kafka API traffic (requests, responses, headers, fetched data, produced data, etc.).
+
+If `null`, the property is disabled, and traffic is not limited. 
 
 **Units**: bytes per second
 
