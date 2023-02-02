@@ -153,7 +153,7 @@ kubectl exec -c redpanda <cluster_name>-0 -- rpk acl user create <superuser_user
 
 The `-0` in this command refers to the first node of the cluster. You can change this integer to specify a different node in the cluster. 
 
-The 'superuser_username' is the superuser that you defined in the cluster specification file. 
+The `superuser_username` is the superuser that you defined in the cluster specification file. 
 
 :::note
 If you changed the Admin API port from the default, you must add the following line to each command that creates a new user, in this step and the next step: 
