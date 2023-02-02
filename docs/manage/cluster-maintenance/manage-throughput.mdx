@@ -24,7 +24,7 @@ The properties for node-wide throughput quota balancing are configured at the cl
 - [kafka_throughput_limit_node_in_bps](../../../reference/cluster-properties#kafka_throughput_limit_node_in_bps): a node's total throughput limit for ingress traffic.
 - [kafka_throughput_limit_node_out_bps](../../../reference/cluster-properties#kafka_throughput_limit_node_out_bps): a node's total throughput limit for egress traffic.
 - [kafka_quota_balancer_node_period_ms](../../../reference/cluster-properties#kafka_quota_balancer_node_period_ms): the period at which the quota balancer runs to balance throughput quota between a node's shards.
-- [kafka_quota_balancer_min_shard_throughput_ratio](../../../reference/cluster-properties#kafka_quota_balancer_min_shard_throughput_ratio):	the lowest value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of the default shard quota (internally and dynamically determined by the quota balancer). Zero means there is no minimum, while one means no quota can be taken away by the balancer.
+- [kafka_quota_balancer_min_shard_throughput_ratio](../../../reference/cluster-properties#kafka_quota_balancer_min_shard_throughput_ratio):	the lowest value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of the default shard quota. Zero means there is no minimum, while one means no quota can be taken away by the balancer.
 - [kafka_quota_balancer_min_shard_throughput_bps](../../../reference/cluster-properties#kafka_quota_balancer_min_shard_throughput_bps):	the lowest value of the throughput quota a shard can get in the process of quota balancing, in bytes per second. Zero means there is no minimum.
 
 :::note notes
