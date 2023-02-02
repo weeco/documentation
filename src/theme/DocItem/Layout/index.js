@@ -65,15 +65,16 @@ const FeedbackForm = (props) => {
       formData=defaultRadio;
     }
     const currentUrl = window.location.href
+    const beta = window.location.href.includes('preview')
     let version = 'latest'; //TODO this should capture the value from docusaurus.config.js
-    if(/\d/.test(currentUrl)){
+    if(/\d/.test(currentUrl) && !beta){
       version = currentUrl.substring(currentUrl.indexOf("docs/")+5); 
       version = version.substring(0,version.indexOf("/"));
     }
     formData.version = version
     formData.url=currentUrl
     formData.positiveFeedback = props.positiveFeedback
-    formData.beta = window.location.href.includes('preview')
+    formData.beta = beta
     formData.date = new Date()
     formData.navigator = navigator.userAgent
     
