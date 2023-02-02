@@ -1,0 +1,34 @@
+---
+title: Manage Throughput
+---
+
+<head>
+    <meta name="title" content="Manage Throughput | Redpanda Docs"/>
+    <meta name="description" content="Manage throughput of cluster nodes."/>
+</head>
+
+import ManageThroughputIntro from './shared/_intro-manage-throughput.mdx' 
+
+<ManageThroughputIntro/>
+
+## Node-wide rate limits
+
+The network bandwidth and disk utilization of cluster nodes may be overloaded by clients that consume throughput without limits. To prevent resource overloading caused by unconstrained throughput, Redpanda provides runtime configurable properties that limit and balance throughput of Kafka API traffic. 
+
+Redpanda's [thread-per-core model](../../../get-started/architecture#thread-per-core-model) necessitates inter-shard (intra-node) communication channels. A proper balancing of throughput for all intra-node channels requires throttling down throughput for shards that are experiencing backpressure, while throttling up throughput for shards that aren't experiencing backpressure. 
+
+To manage intra-node throughput, Redpanda implements a throughput quota balancer for its nodes. The quota balancer applies for all Kafka API traffic in and out of a node. It has configurable node-wide limits of total throughput: one for total ingress traffic, and one for total egress traffic. To distribute the total throughput, the quota balancer periodically monitors the throughput rate of a node's shards, and it distributes quota to the shards that can accept it. The quota balancer determines a dynamically changing default quota per shard. Each shard has a minimum throughput quota value, which is configurable both as a percentage of the default quota and as an absolute rate limit.
+
+The properties for node-wide throughput quota balancing are configured at the cluster level, for all nodes in a cluster:
+
+- [kafka_throughput_limit_node_in_bps](../../../reference/cluster-properties#kafka_throughput_limit_node_in_bps): a node's total throughput limit for ingress traffic.
+- [kafka_throughput_limit_node_out_bps](../../../reference/cluster-properties#kafka_throughput_limit_node_out_bps): a node's total throughput limit for egress traffic.
+- [kafka_quota_balancer_node_period_ms](../../../reference/cluster-properties#kafka_quota_balancer_node_period_ms): the period at which the quota balancer runs to balance throughput quota between a node's shards.
+- [kafka_quota_balancer_min_shard_throughput_ratio](../../../reference/cluster-properties#kafka_quota_balancer_min_shard_throughput_ratio):	the lowest value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of the default shard quota (internally and dynamically determined by the quota balancer). Zero means there is no minimum, while one means no quota can be taken away by the balancer.
+- [kafka_quota_balancer_min_shard_throughput_bps](../../../reference/cluster-properties#kafka_quota_balancer_min_shard_throughput_bps):	the lowest value of the throughput quota a shard can get in the process of quota balancing, in bytes per second. Zero means there is no minimum.
+
+:::note notes
+- By default, all of the listed properties are disabled and no throughput limits or quota balancing are applied. You must manually set them to enable throughput limits and quota balancing.
+- kafka_quota_balancer_min_shard_throughput_bps doesn't override the kafka_throughput_limit_node_in_bps and kafka_throughput_limit_node_out_bps limit settings. Consequently, the value of 
+`kafka_throughput_limit_node_in_bps / kafka_throughput_limit_node_out_bps` can result in lesser throughput than kafka_quota_balancer_min_shard_throughput_bps.
+:::
