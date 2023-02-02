@@ -24,7 +24,7 @@ function encode(data) {
 const FeedbackForm = (props) => {
   const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
-  const [formData, setFormData] = useState({})
+  let [formData, setFormData] = useState({})
 
   const handleChange = (e) => {
     if (e.target.id=='other') setOther(true)
@@ -60,7 +60,24 @@ const FeedbackForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const defaultRadio = {feedback:solvedRadio};
+    if(Object.keys(formData).length==0){
+      formData=defaultRadio;
+    }
+    const currentUrl = window.location.href
+    const beta = window.location.href.includes('preview')
+    let version = 'latest'; //TODO this should capture the value from docusaurus.config.js
+    if(/\d/.test(currentUrl) && !beta){
+      version = currentUrl.substring(currentUrl.indexOf("docs/")+5); 
+      version = version.substring(0,version.indexOf("/"));
+    }
+    formData.version = version
+    formData.url=currentUrl
+    formData.positiveFeedback = props.positiveFeedback
+    formData.beta = beta
+    formData.date = new Date()
+    formData.navigator = navigator.userAgent
+    
     if (feedbackSubmitted) return;
     
     fetch("/", {
@@ -86,18 +103,25 @@ const FeedbackForm = (props) => {
           <div className={styles.modalContent}>
         {!feedbackSubmitted ? (
           <div>
-              
                 <div className={styles.modalHeader}>
                   <h4>{title}</h4>
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
                     <input type="hidden" name="form-name" value="feedbackForm"/>
+
                       <p className={styles.hide}>
                         <label className={styles.hide}>
                           Beep-Boop. Bot-field <input name="bot-field" />
                         </label>
                       </p>
+                      <input className={styles.hide} name="version"/>
+                      <input className={styles.hide} name="url"/>
+                      <input className={styles.hide} name="positiveFeedback"/>
+                      <input className={styles.hide} name="beta"/>
+                      <input className={styles.hide} name="date"/>
+                      <input className={styles.hide} name="navigator"/>
+
                       <label>
                         <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange} defaultChecked/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
@@ -244,32 +268,32 @@ export default function DocItemLayout({ children }) {
           <DocItemPaginator />
         </div>
       </div>
-      {docTOC.desktop && <div className="col col--3">
-      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightnav)}>
+      {docTOC.desktop && <div className={clsx("col col--3", styles.stickyToc)}>
       {docTOC.desktop}
-              <div>
-                Was this helpful?
-              </div>
-              <div>
-                <button
-                  className={
-                    styles.mailIcon + " " + styles.thumbsUpSeparator
-                  }
-                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
-                >
-                  <Icon>thumb_up</Icon>
-                </button>
+      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightNavFeedback)}>
+      <div>
+        Was this helpful?
+      </div>
+      <div>
+        <button
+          className={
+            styles.mailIcon + " " + styles.thumbsUpSeparator
+          }
+          onClick={() => {setShow(true); setPositiveFeedback(true);}}
+        >
+          <Icon>thumb_up</Icon>
+        </button>
 
-                <button
-                  className={
-                    styles.mailIcon + " " + styles.thumbsUpSeparator
-                  }
-                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
-                >
-                  <Icon>thumb_down</Icon>
-                </button>
-              </div>
-            </div>
+        <button
+          className={
+            styles.mailIcon + " " + styles.thumbsUpSeparator
+          }
+          onClick={() => {setShow(true); setPositiveFeedback(false);}}
+        >
+          <Icon>thumb_down</Icon>
+        </button>
+      </div>
+    </div>
       </div>}
     </div>
   );
