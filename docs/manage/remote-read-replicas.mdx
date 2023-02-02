@@ -11,7 +11,7 @@ title: Remote Read Replicas
 This feature requires an [Enterprise license](../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda).
 :::
 
-A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster. Remote Read Replicas work with both [Tiered Storage](../tiered-storage/) and archival storage.
+A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster. Remote Read Replicas work with both [Tiered Storage](../tiered-storage/) and [archival storage](../data-archiving).
 
 When a topic has cloud storage enabled, you can create a separate remote cluster just for consumers of this topic, and populate its topics from remote storage. A read-only topic on a remote cluster can serve any consumer, without increasing the load on the origin cluster. Sample use cases for Remote Read Replicas include data analytics, offline model training, and development clusters.
 
