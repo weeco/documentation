@@ -181,7 +181,33 @@ function useDocTOC() {
   const mobile = canRender ? <DocItemTOCMobile /> : undefined;
   const desktop =
     canRender && (windowSize === "desktop" || windowSize === "ssr") ? (
+      <>
       <DocItemTOCDesktop />
+      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightNavFeedback)}>
+      <div>
+        Was this helpful?
+      </div>
+      <div>
+        <button
+          className={
+            styles.mailIcon + " " + styles.thumbsUpSeparator
+          }
+          onClick={() => {setShow(true); setPositiveFeedback(true);}}
+        >
+          <Icon>thumb_up</Icon>
+        </button>
+
+        <button
+          className={
+            styles.mailIcon + " " + styles.thumbsUpSeparator
+          }
+          onClick={() => {setShow(true); setPositiveFeedback(false);}}
+        >
+          <Icon>thumb_down</Icon>
+        </button>
+      </div>
+    </div>
+    </>
     ) : undefined;
   return {
     hidden,
@@ -268,32 +294,8 @@ export default function DocItemLayout({ children }) {
           <DocItemPaginator />
         </div>
       </div>
-      {docTOC.desktop && <div className="col col--3">
-      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightnav)}>
+      {docTOC.desktop && <div className={clsx("col col--3", styles.stickyToc)}>
       {docTOC.desktop}
-              <div>
-                Was this helpful?
-              </div>
-              <div>
-                <button
-                  className={
-                    styles.mailIcon + " " + styles.thumbsUpSeparator
-                  }
-                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
-                >
-                  <Icon>thumb_up</Icon>
-                </button>
-
-                <button
-                  className={
-                    styles.mailIcon + " " + styles.thumbsUpSeparator
-                  }
-                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
-                >
-                  <Icon>thumb_down</Icon>
-                </button>
-              </div>
-            </div>
       </div>}
     </div>
   );
