@@ -24,7 +24,7 @@ function encode(data) {
 const FeedbackForm = (props) => {
   const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
-  const [formData, setFormData] = useState({})
+  let [formData, setFormData] = useState({})
 
   const handleChange = (e) => {
     if (e.target.id=='other') setOther(true)
@@ -60,7 +60,23 @@ const FeedbackForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const defaultRadio = {feedback:solvedRadio};
+    if(Object.keys(formData).length==0){
+      formData=defaultRadio;
+    }
+    const currentUrl = window.location.href
+    let version = 'latest'; //TODO this should capture the value from docusaurus.config.js
+    if(/\d/.test(currentUrl)){
+      version = currentUrl.substring(currentUrl.indexOf("docs/")+5); 
+      version = version.substring(0,version.indexOf("/"));
+    }
+    formData.version = version
+    formData.url=currentUrl
+    formData.positiveFeedback = props.positiveFeedback
+    formData.beta = window.location.href.includes('preview')
+    formData.date = new Date()
+    formData.navigator = navigator.userAgent
+    
     if (feedbackSubmitted) return;
     
     fetch("/", {
@@ -86,7 +102,6 @@ const FeedbackForm = (props) => {
           <div className={styles.modalContent}>
         {!feedbackSubmitted ? (
           <div>
-              
                 <div className={styles.modalHeader}>
                   <h4>{title}</h4>
                 </div>
