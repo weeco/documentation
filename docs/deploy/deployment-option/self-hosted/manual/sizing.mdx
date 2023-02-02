@@ -133,7 +133,7 @@ Ideally, a cluster should be sized such that the cluster's local storage can ser
 
 When Tiered Storage is enabled on a topic, Redpanda copies closed log segments to the configured object store. Log segments are closed when the value of the segment size has been reached. A topic’s object store thus lags behind the local copy by the [`log_segment_size`](../../../../../reference/tunable-properties#log_segment_size) or, if set, by the topic's `segment.bytes` value. To reduce this lag in availability, you can:
 
-- You can lower `segment.bytes`. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count.  
+- Lower `segment.bytes`. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count.  
 - Set an idle timeout with `cloud_storage_segment_max_upload_interval_sec` to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. 
 
 Adjusting how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point-in-time objectives. This is encapsulated in the Kafka API, so clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage. 
