@@ -108,11 +108,19 @@ const FeedbackForm = (props) => {
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
                     <input type="hidden" name="form-name" value="feedbackForm"/>
+
                       <p className={styles.hide}>
                         <label className={styles.hide}>
                           Beep-Boop. Bot-field <input name="bot-field" />
                         </label>
                       </p>
+                      <input className={styles.hide} name="version"/>
+                      <input className={styles.hide} name="url"/>
+                      <input className={styles.hide} name="positiveFeedback"/>
+                      <input className={styles.hide} name="beta"/>
+                      <input className={styles.hide} name="date"/>
+                      <input className={styles.hide} name="navigator"/>
+
                       <label>
                         <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange} defaultChecked/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
