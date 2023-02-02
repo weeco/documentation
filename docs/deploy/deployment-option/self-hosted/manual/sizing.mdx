@@ -131,7 +131,7 @@ Tiered Storage can be combined with local storage to provide infinite data reten
 
 Ideally, a cluster should be sized such that the cluster's local storage can service the majority of its consumers within a normal amount of lag, with Tiered Storage used to service any slow readers (for example, in the event of some downstream failure). 
 
-When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured storage bucket or container. A topic’s object store thus lags behind the local copy by the default [log segment size](../../../../../reference/tunable-properties#log_segment_size).
+When Tiered Storage is enabled on a topic, Redpanda copies closed log segments to the configured object store. Log segments are closed when the value of the segment size has been reached. A topic’s object store thus lags behind the local copy by the [`log_segment_size`](../../../../../reference/tunable-properties#log_segment_size) or, if set, by the topic's `segment.bytes`. To reduce this lag in availability:
 
 - You can lower `segment.bytes`. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count.  
 - You can set an idle timeout with `cloud_storage_segment_max_upload_interval_sec` to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. 
