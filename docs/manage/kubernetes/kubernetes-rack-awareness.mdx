@@ -94,8 +94,8 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
   --set rackAwareness.enabled=true \
-  --set rackAwareness.serviceAccount.create=true \
-  --set rackAwareness.rbac.enabled=true 
+  --set serviceAccount.create=true \
+  --set rbac.enabled=true 
 ```
 
 </TabItem>
@@ -134,8 +134,8 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
   --set rackAwareness.enabled=true \
   --set rackAwareness.nodeAnnotation='example' \
-  --set rackAwareness.serviceAccount.create=true \
-  --set rackAwareness.rbac.enabled=true 
+  --set serviceAccount.create=true \
+  --set rbac.enabled=true 
 ```
 
 </TabItem>
