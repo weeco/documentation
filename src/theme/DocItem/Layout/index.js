@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { useWindowSize } from "@docusaurus/theme-common";
 import { useDoc } from "@docusaurus/theme-common/internal";
@@ -195,6 +195,22 @@ export default function DocItemLayout({ children }) {
   const { editUrl } = metadata;
   const [show, setShow] = useState(false);
   const [positiveFeedback, setPositiveFeedback] = useState(true);
+  // Hide the feedback thumbs in the Toc when the user reaches the bottom of the page.
+  useEffect(() => {
+    document.addEventListener('scroll', function(e){
+      let documentHeight = document.body.scrollHeight;
+      let currentScroll = window.scrollY + window.innerHeight;
+      // Wait until the user is [modifier]px from the bottom.
+      let modifier = 300; 
+      const feedback = document.getElementById('feedbackToc');
+      if (!feedback) return
+      if(currentScroll + modifier > documentHeight) {
+          feedback.style.display = 'none';
+      } else {
+        feedback.style.display = 'block';
+      }
+    })
+  },[])
   return (
     <div className="row">
       <div className={clsx("col", !docTOC.hidden && styles.docItemCol)}>
@@ -270,7 +286,7 @@ export default function DocItemLayout({ children }) {
       </div>
       {docTOC.desktop && <div className={clsx("col col--3", styles.stickyToc)}>
       {docTOC.desktop}
-      <div className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightNavFeedback)}>
+      <div id="feedbackToc" className={clsx("col", styles.feedBackSection + " " + styles.mailIcon + " "+ styles.rightNavFeedback)}>
       <div>
         Was this helpful?
       </div>

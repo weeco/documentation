@@ -201,6 +201,6 @@ input[type="text"]:focus {
 .stickyToc {
   position: sticky;
   top: calc(var(--ifm-navbar-height) + 1rem);
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100vh - (var(--ifm-navbar-height) + 2rem));
 }
