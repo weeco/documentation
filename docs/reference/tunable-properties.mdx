@@ -1000,7 +1000,7 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 
 ### max_kafka_throttle_delay_ms
 
-Fail-safe maximum throttle delay on Kafka requests.
+The maximum throttle delay for Kafka responses. Used as a fail-safe when throttle values for request-responses are not set. Also used by the [throughput quota balancer](../../manage/cluster-maintenance/manage-throughput#node-wide-rate-limits) as the maximum delay when allocating quota.
 
 **Units**: milliseconds 
 
