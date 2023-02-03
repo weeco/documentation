@@ -100,8 +100,8 @@ For example, to use the `SCRAM-SHA-256` mechanism, run:
 
 ```bash
 rpk topic create littlefoot \
---user panda \
---password 'pandaPassword' \
+--user <username> \
+--password <password> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
@@ -162,8 +162,8 @@ schema_registry_client:
   brokers:
     - address: 127.0.0.1
       port: 9092
-  scram_username: panda
-  scram_password: 'pandaPassword'
+  scram_username: <user>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 // highlight-end
 ```
@@ -182,8 +182,8 @@ schema_registry_client:
     truststore_file: ca.crt
     enabled: true
 // highlight-end
-  scram_username: panda
-  scram_password: 'pandaPassword'
+  scram_username: <user>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -201,8 +201,8 @@ pandaproxy_client:
     cert_file: server.crt
     truststore_file: ca.crt
     enabled: true
-  scram_username: panda
-  scram_password: 'pandaPassword'
+  scram_username: <user>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -213,7 +213,7 @@ You can use the newly-created user to interact with Redpanda with `rpk`:
 ```bash
 rpk topic describe test-topic \
 --user admin \
---password <'password'> \
+--password <password> \
 --sasl-mechanism SCRAM-SHA-256 \
 --brokers localhost:9092
 ```
