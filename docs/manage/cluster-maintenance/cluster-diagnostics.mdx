@@ -1,0 +1,113 @@
+---
+title: Cluster Diagnostics
+---
+
+<head>
+    <meta name="title" content="Cluster Diagnostics | Redpanda Docs"/>
+    <meta name="description" content="Use tools and tests to help diagnose and debug a Redpanda cluster."/>
+</head>
+
+Use tools and tests to help diagnose and debug a Redpanda cluster.
+
+## Self-test
+
+When anomalous behavior arises in a cluster and you're trying to figure out whether it's caused by faulty hardware (disks, NICs), run `rpk cluster self-test` (self-test) to characterize the baseline performance of the hardware.
+
+Self-test runs a set of benchmarks to determine the maximum performance of a machine's disks and NICs. For disks, it runs throughput and latency tests by reading and writing messages sequentially. For NICs, it selects unique pairs of Redpanda nodes as client/server pairs, then it runs a throughput test between the pairs. Self-test uns each benchmark for a configurable duration (default: 5 seconds), and it returns IOPS, throughput, and latency metrics.
+
+To use self-test, first start the test.
+
+```
+rpk cluster self-test start
+```
+
+<details>
+<summary>Example start output</summary>
+Before starting, self-test asks for your confirmation to run its large workload.
+
+```
+$ rpk cluster self-test start
+? Invoking the redpanda self tests may put excessive pressure on your system. It attempts to benchmark disk and network hardware to find their max throughputs. Its advised to not start the test if there are already large workloads running on the system. (Y/n)
+Redpanda self-test has started, test identifier: "031be460-246b-46af-98f2-5fc16f03aed3", To check the status run:
+    rpk cluster self-test status
+$    
+```
+
+</details>
+
+The start command returns, and self-test runs its benchmarks asynchronously.
+
+To check on the status of self-test, run its status command:
+
+```
+rpk cluster self-test status
+```
+
+If benchmarks are currently running, self-test returns a test-in-progress message.
+
+<details>
+<summary>Example status output: in progress</summary>
+
+```
+Nodes [0] are still running jobs
+```
+
+</details>
+
+If benchmarks have completed, self-test returns their results.
+
+<details>
+<summary>Example status output: test results</summary>
+
+```
+NODE ID: 0 | STATUS: IDLE
+=========================
+NAME        512K sequential r/w throughput disk test
+INFO        write run
+TYPE        disk
+TEST ID     031be460-246b-46af-98f2-5fc16f03aed3
+TIMEOUTS    0
+DURATION    5068ms
+IOPS        16218 req/sec
+THROUGHPUT  7.919GiB/sec
+LATENCY     P50    P90    P99    P999   MAX
+            247us  287us  383us  831us  69631us
+
+NAME        512K sequential r/w throughput disk test
+INFO        read run
+TYPE        disk
+TEST ID     031be460-246b-46af-98f2-5fc16f03aed3
+TIMEOUTS    0
+DURATION    5000ms
+IOPS        16357 req/sec
+THROUGHPUT  7.987GiB/sec
+LATENCY     P50    P90    P99    P999   MAX
+            247us  287us  367us  463us  1791us
+
+NAME        4k sequential r/w latency/iops disk test
+INFO        write run
+TYPE        disk
+TEST ID     031be460-246b-46af-98f2-5fc16f03aed3
+TIMEOUTS    0
+DURATION    5069ms
+IOPS        15134 req/sec
+THROUGHPUT  7.39GiB/sec
+LATENCY     P50    P90    P99    P999   MAX
+            127us  151us  231us  959us  73727us
+
+NAME        4k sequential r/w latency/iops disk test
+INFO        read run
+TYPE        disk
+TEST ID     031be460-246b-46af-98f2-5fc16f03aed3
+TIMEOUTS    0
+DURATION    5000ms
+IOPS        14765 req/sec
+THROUGHPUT  7.21GiB/sec
+LATENCY     P50    P90    P99    P999   MAX
+            143us  159us  199us  271us  1343us
+```
+
+</details>
+
+For more details about self-test, including flags, see the rpk cluster self-test command reference.   
+

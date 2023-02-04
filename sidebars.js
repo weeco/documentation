@@ -344,6 +344,11 @@ module.exports = {
                     label: "Cluster Properties",
                     id: "manage/cluster-maintenance/cluster-property-configuration",
                   },  
+                  {
+                    type: "doc",
+                    label: "Cluster Diagnostics",
+                    id: "manage/cluster-maintenance/cluster-diagnostics",
+                  }, 
                 ]
               },
               
