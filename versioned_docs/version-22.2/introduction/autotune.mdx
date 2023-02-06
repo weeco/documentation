@@ -33,7 +33,7 @@ sequence of operations, or to amortize the cost of synchronization events.
 
 ## Network
 
-Modern network interface controllers (NICs) can drive multi-gigabit traffic to hosts. Redpanda ships with %%rpk|rpk%%, which probes the hardware
+Modern network interface controllers (NICs) can drive multi-gigabit traffic to hosts. Redpanda ships with rpk, which probes the hardware
 (taking into account the number of CPUs) and automatically chooses the best
 setting to drive high-throughput traffic to the machine. The modes are all but
 cpu0, cpu0 + hyper-thread sibling, or distributed across all cores. This is in addition

@@ -5,6 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
+    "build-local": "docusaurus parse --dry-run && docusaurus build",
     "build": "docusaurus parse && docusaurus glossary && docusaurus build",
     "test-terms": "docusaurus parse --dry-run",
     "swizzle": "docusaurus swizzle",

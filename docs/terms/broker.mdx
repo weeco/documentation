@@ -1,0 +1,18 @@
+---
+id: broker
+title: Redpanda Broker
+hoverText: An instance of the Redpanda service, which includes the Kafka API, Schema Registry, the Admin API, and the HTTP proxy (PandaProxy).
+---
+
+A Redpanda broker is an instance of the Redpanda service, which includes the Kafka API, Schema Registry, the Admin API, and the HTTP proxy (PandaProxy).
+
+## Brokers vs nodes
+
+You may see the terms 'node' and 'broker' used interchangeably. However, 'node' is also a generic term, which can refer to the machine on which a Redpanda broker is running. A machine could be a separate server, a cloud virtual machine (instance), or a docker container. For example, 'each Redpanda broker is running in an AWS instance'.
+
+Using both node and broker as synonyms can make it difficult to determine what is being referring to. Sometimes, the documentation must distinguish between actions to take on the machine that is running Redpanda and the Redpanda broker itself. For example tuning and sizing is done on the machine rather than the broker. Furthermore, in Kubernetes, the term 'node', or 'worker node', refers to the machine that Redpanda runs on.
+
+:::info
+The Redpanda documentation is being updated to use the term 'broker' consistently to avoid ambiguity with the use of the term 'node'.
+:::
+

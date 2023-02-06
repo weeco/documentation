@@ -5,6 +5,9 @@ tags:
   - Helm configuration
 ---
 
+import Term from "@lunaticmuch/docusaurus-terminology/components/tooltip.js";
+
+
 <head>
     <meta name="title" content="Enable Rack Awareness in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="Enable rack awareness to place partition replicas across different failure zones."/>
@@ -15,6 +18,8 @@ import TabItem from '@theme/TabItem';
 import AboutRackAwareness from '../../manage/shared/_rack-awareness.mdx';
 
 <AboutRackAwareness/>
+
+<Term popup="An instance of the Redpanda service, which includes the Kafka API, Schema Registry, the Admin API, and the HTTP proxy (PandaProxy)." reference="/docs/terms/broker">brokers</Term>
 
 When you enable rack awareness in the Redpanda Helm chart, Kubernetes failure zones are treated as racks. Redpanda maps each rack to a failure zone and places partition replicas across them. For more details about Kubernetes failure zones, see the [Kubernetes documentation](https://kubernetes.io/docs/setup/best-practices/multiple-zones/).
 
