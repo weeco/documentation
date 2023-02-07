@@ -90,7 +90,8 @@ module.exports = {
           versions: {
             current: {
               label: 'Beta 🚧',
-              banner: 'unreleased'
+              banner: 'unreleased',
+              path: '/beta'
             },
           },
         },
