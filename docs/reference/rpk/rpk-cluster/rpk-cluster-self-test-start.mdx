@@ -1,0 +1,223 @@
+---
+title: rpk cluster self-test start
+---
+
+<head>
+  <meta name="title" content="rpk cluster self-test start | Redpanda Docs" />
+  <meta name="description" content="rpk cluster self-test start" />
+</head>
+
+Starts one or more pre-canned tests on a selection or all nodes
+of the cluster. Current tests that will run are:
+
+* Disk tests:
+  * Throughput test: 512k r/w sequential
+    * Higher request sizes and deeper io queue depth will sacrifice IOPS /
+      latency numbers in order to write / read more bytes in a shorter amount
+      of time.
+  * Latency test: 4k r/w sequential
+    * Smaller request sizes and lower levels of parallelism to achieve higher
+      IOPS and lower latency results.
+
+* Network tests:
+  * 8192b throughput test
+    * Unique pairs of redpanda nodes will act as either a client or server.
+    * Benchmark attempts to push as much data over the wire within the test
+      parameters.
+
+This command will immediately return once invoked with success. It is up to the
+user to periodically check back for the result set using the 'self-test status'
+command.
+
+### Usage
+
+```
+rpk cluster self-test start [flags]
+```
+
+### Flags
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong> Value</strong>
+      </td>
+      <td>
+        <strong> Type</strong>
+      </td>
+      <td>
+        <strong> Description</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>-h, --help</td>
+      <td>-</td>
+      <td> Help for start.</td>
+    </tr>
+    <tr>
+      <td>--disk-duration-ms</td>
+      <td>uint</td>
+      <td>The duration, in milliseconds, of one run of a disk benchmark test (default: 5000)</td>
+    </tr>
+    <tr>
+      <td>--network-duration-ms</td>
+      <td>uint</td>
+      <td>The duration, in milliseconds, of one run of a network benchmark test (default: 5000)</td>
+    </tr>
+    <tr>
+      <td>--no-confirm</td>
+      <td>-</td>
+      <td>Acknowledge warning prompt skipping read from stdin</td>
+    </tr>
+    <tr>
+      <td>--only-disk-test</td>
+      <td>-</td>
+      <td>Run only disk benchmark tests.</td>
+    </tr>
+    <tr>
+      <td>--only-network-test</td>
+      <td>-</td>
+      <td>Run only network benchmark tests.</td>
+    </tr>
+    <tr>
+      <td>--participant-node-ids</td>
+      <td>ints</td>
+      <td>IDs of nodes that the benchmark tests will run on. If not set, tests will be run on all nodes.</td>
+    </tr>
+    <tr>
+      <td>--admin-api-tls-cert</td>
+      <td>string</td>
+      <td>The certificate to be used for TLS authentication with the Admin API.</td>
+    </tr>
+    <tr>
+      <td>--admin-api-tls-enabled</td>
+      <td>-</td>
+      <td>Enable TLS for the Admin API. Not necessary if specifying custom certs.</td>
+    </tr>
+    <tr>
+      <td>--admin-api-tls-key</td>
+      <td>string</td>
+      <td>The certificate key to be used for TLS authentication with the Admin API.</td>
+    </tr>
+    <tr>
+      <td>--admin-api-tls-truststore</td>
+      <td>string</td>
+      <td>The truststore to be used for TLS communication with the Admin API.</td>
+    </tr>
+    <tr>
+      <td>--api-urls</td>
+      <td>strings</td>
+      <td>Comma-separated list of admin API addresses (&lt;IP&gt;:&lt;port&gt;)</td>
+    </tr>
+    <tr>
+      <td>--brokers</td>
+      <td>strings</td>
+      <td>Comma-separated list of broker ip:port pairs. For example:
+          <p/><code>--brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092'</code>. 
+          <p/>Alternatively, you may set the <code>REDPANDA_BROKERS</code> environment variable with the comma-separated list of broker addresses.</td>
+    </tr>
+    <tr>
+      <td>--config           
+      </td>
+      <td>string</td>
+      <td>Redpanda config file. If not set, the file will be searched for in the default locations.</td>
+    </tr>
+    <tr>
+      <td>--password         
+      </td>
+      <td>string</td>
+      <td>SASL password to be used for authentication</td>
+    </tr>
+    <tr>
+      <td>--sasl-mechanism   
+      </td>
+      <td>string</td>
+      <td>The authentication mechanism to use.<p/>Supported values: <code>SCRAM-SHA-256</code>, <code>SCRAM-SHA-512</code></td>
+    </tr>
+    <tr>
+      <td>--tls-cert</td>
+      <td>string</td>
+      <td>The certificate to be used for TLS authentication with the broker.</td>
+    </tr>
+    <tr>
+      <td>--tls-enabled             </td>
+      <td>-</td>
+      <td>Enable TLS for the Kafka API (not necessary if specifying custom certs).</td>
+    </tr>
+    <tr>
+      <td>--tls-key</td>
+      <td>string</td>
+      <td>The certificate key to be used for TLS authentication with the broker.</td>
+    </tr> 
+    <tr>
+      <td>--tls-truststore</td>   
+      <td>string</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
+    </tr> 
+    <tr>
+      <td>--user</td>
+      <td>string</td>
+      <td>SASL user for authentication.</td>
+    </tr> 
+    <tr>
+      <td>-v, --verbose</td>
+      <td>-</td>
+      <td>Enable verbose logging (default: false).</td>
+    </tr>   
+  </tbody>
+</table>
+
+```
+$ rpk cluster self-test start --help
+Starts one or more pre-canned tests on a selection or all nodes
+of the cluster. Current tests that will run are:
+
+* Disk tests:
+  * Throughput test: 512k r/w sequential
+    * Higher request sizes and deeper io queue depth will sacrifice IOPS /
+      latency numbers in order to write / read more bytes in a shorter amount
+      of time.
+  * Latency test: 4k r/w sequential
+    * Smaller request sizes and lower levels of parallelism to achieve higher
+      IOPS and lower latency results.
+
+* Network tests:
+  * 8192b throughput test
+    * Unique pairs of redpanda nodes will act as either a client or server.
+    * Benchmark attempts to push as much data over the wire within the test
+      parameters.
+
+This command will immediately return once invoked with success. It is up to the
+user to periodically check back for the result set using the 'self-test status'
+command.
+
+Usage:
+  rpk cluster self-test start [flags]
+
+Flags:
+
+
+Global Flags:
+      --admin-api-tls-cert string         The certificate to be used for TLS authentication with the Admin API
+      --admin-api-tls-enabled             Enable TLS for the Admin API (not necessary if specifying custom certs)
+      --admin-api-tls-key string          The certificate key to be used for TLS authentication with the Admin API
+      --admin-api-tls-truststore string   The truststore to be used for TLS communication with the Admin API
+      --api-urls string                   Comma-separated list of admin API addresses (<IP>:<port>)
+      --brokers strings                   Comma-separated list of broker ip:port pairs (e.g. --brokers
+                                          '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092').
+                                          Alternatively, you may set the REDPANDA_BROKERS environment variable
+                                          with the comma-separated list of broker addresses
+      --config string                     Redpanda config file, if not set the file will be searched for in the
+                                          default locations
+      --password string                   SASL password to be used for authentication
+      --sasl-mechanism string             The authentication mechanism to use. Supported values: SCRAM-SHA-256,
+                                          SCRAM-SHA-512
+      --tls-cert string                   The certificate to be used for TLS authentication with the broker
+      --tls-enabled                       Enable TLS for the Kafka API (not necessary if specifying custom certs)
+      --tls-key string                    The certificate key to be used for TLS authentication with the broker
+      --tls-truststore string             The truststore to be used for TLS communication with the broker
+      --user string                       SASL user to be used for authentication
+  -v, --verbose                           Enable verbose logging (default: false)
+$ 
+```
