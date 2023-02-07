@@ -412,7 +412,7 @@ The minimum value of the throughput quota a shard can get in the process of quot
 
 Both `kafka_quota_balancer_min_shard_throughput_ratio` and [kafka_quota_balancer_min_shard_throughput_bps](#kafka_quota_balancer_min_shard_throughput_bps) can be specified at the same time. In this case, the balancer will not decrease the effective shard quota below the largest bps value of each of these two properties.
 
-If set to `0.0`, the minimum is disabled. If set to greater than `1.0 / <number-of-shards>`, where each shard is allocated more than an equal share of total quota, then the balancer won't be able to rebalance quota without violating this ratio, consequently precluding the balancer from running; this is effectively the same as disabling the balancer.
+If set to `0.0`, the minimum is disabled. If set to greater than `1.0 / <number-of-shards>`, where each shard is supposed to have allocated more than an equal share of total quota, then the balancer won't be able to rebalance quota without violating this ratio, consequently precluding the balancer from adjusting shards' quotas.
 
 **Type**: double
 

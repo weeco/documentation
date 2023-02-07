@@ -1000,7 +1000,7 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 
 ### max_kafka_throttle_delay_ms
 
-The maximum delay inserted in the data path of Kafka API requests to throttle them down. Enables a configurable request timeout so that it can be less than (fit within) the request timeout(s) of your Kafka client(s). 
+The maximum delay inserted in the data path of Kafka API requests to throttle them down. Ensures that responses to Kafka API calls will not be delayed beyond the timeout set by your Kafka client because of throttling.
 
 **Units**: milliseconds 
 
