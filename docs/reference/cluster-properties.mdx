@@ -431,7 +431,7 @@ If set to `0.0`, the minimum is disabled. If set to greater than `1.0 / <number-
 The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed in bytes per second. The value applies equally to ingress and egress traffic.
 
 kafka_quota_balancer_min_shard_throughput_bps doesn't override the limit settings, [kafka_throughput_limit_node_in_bps](#kafka_throughput_limit_node_in_bps) and [kafka_throughput_limit_node_out_bps](#kafka_throughput_limit_node_out_bps). Consequently, the value of 
-`kafka_throughput_limit_node_in_bps / kafka_throughput_limit_node_out_bps` can result in lesser throughput than kafka_quota_balancer_min_shard_throughput_bps.
+`kafka_throughput_limit_node_in_bps` or `kafka_throughput_limit_node_out_bps` can result in lesser throughput than kafka_quota_balancer_min_shard_throughput_bps.
 
 Both [kafka_quota_balancer_min_shard_throughput_ratio](#kafka_quota_balancer_min_shard_throughput_ratio) and kafka_quota_balancer_min_shard_throughput_bps can be specified at the same time. In this case, the balancer will not decrease the effective shard quota below the largest bps value of each of these two properties.
 
