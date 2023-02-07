@@ -9,11 +9,13 @@ title: Cluster Diagnostics
 
 Use tools and tests to help diagnose and debug a Redpanda cluster.
 
-## Self-test
+## Disk and network self-test benchmarks
 
-When anomalous behavior arises in a cluster and you're trying to figure out whether it's caused by faulty hardware (disks, NICs), run `rpk cluster self-test` (self-test) to characterize the baseline performance of the hardware.
+When anomalous behavior arises in a cluster and you're trying to figure out whether it's caused by faulty hardware (disks, NICs) of a cluster's machines, run [rpk cluster self-test](../../../reference/rpk/rpk-cluster/rpk-cluster-self-test) (self-test) to characterize their performance and compare it with their expected, vendor-specified performance.
 
-Self-test runs a set of benchmarks to determine the maximum performance of a machine's disks and NICs. For disks, it runs throughput and latency tests by reading and writing messages sequentially. For NICs, it selects unique pairs of Redpanda nodes as client/server pairs, then it runs a throughput test between the pairs. Self-test uns each benchmark for a configurable duration (default: 5 seconds), and it returns IOPS, throughput, and latency metrics.
+Self-test runs a set of benchmarks to determine the maximum performance of a machine's disks and NICs. For disks, it runs throughput and latency tests by reading and writing messages sequentially. For NICs, it selects unique pairs of Redpanda nodes as client/server pairs, then it runs a throughput test between the pairs. Self-test runs each benchmark for a configurable duration (default: 5 seconds), and it returns IOPS, throughput, and latency metrics.
+
+### Self-test command examples
 
 To begin using self-test, run the `start` command.
 
@@ -120,4 +122,3 @@ For more details about self-test (including command flags), see the rpk command 
 - [rpk cluster self-test start](../../../reference/rpk/rpk-cluster/rpk-cluster-self-test-start)
 - [rpk cluster self-test status](../../../reference/rpk/rpk-cluster/rpk-cluster-self-test-status)
 - [rpk cluster self-test stop](../../../reference/rpk/rpk-cluster/rpk-cluster-self-test-stop)
-
