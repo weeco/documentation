@@ -33,7 +33,7 @@ The properties for node-wide throughput quota balancing are configured at the cl
 
 :::note notes
 
-- By default, both `kafka_throughput_limit_node_in_bps` and `kafka_throughput_limit_node_out_bps` are disabled, so no throughput limits or quota balancing are applied. You must manually set them to turn on quota balancing.
+- By default, both `kafka_throughput_limit_node_in_bps` and `kafka_throughput_limit_node_out_bps` are disabled, no throughput limits are applied. You must manually set them to enable quota balancing with throughput limits.
 - `kafka_quota_balancer_min_shard_throughput_bps` doesn't override the `kafka_throughput_limit_node_in_bps` and `kafka_throughput_limit_node_out_bps` limit settings. Consequently, the value of
   `kafka_throughput_limit_node_in_bps / kafka_throughput_limit_node_out_bps` can result in lesser throughput than `kafka_quota_balancer_min_shard_throughput_bps`.
 
