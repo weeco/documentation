@@ -19,7 +19,7 @@ Automatic leadership balancing improves cluster performance by transferring lead
 
 Leadership balancing is enabled by default with the `enable_leader_balancer` property.
 
-## Partition balancing
+## Partition balancing in Redpanda
 
 Partition balancing moves data from hot-loaded nodes to least-loaded nodes to ensure steady-state performance. It ensures predictable and even performance across all nodes in a cluster. Partition balancing is invoked periodically, determined by the `partition_autobalancing_tick_interval_ms` property. Default is 30 seconds.
 
@@ -39,7 +39,7 @@ Select your partition balancing setting with the `partition_autobalancing_mode` 
 | `off`     | All partition balancing from Redpanda is turned off. <br /><br />This option is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |
 
 
-## Balancing partitions directly with the Kafka API
+## Partition balancing in Kafka API
 
 As an alternative to Redpanda cluster balancing, you can also assign and change partition assignments explicitely with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the API.
 
