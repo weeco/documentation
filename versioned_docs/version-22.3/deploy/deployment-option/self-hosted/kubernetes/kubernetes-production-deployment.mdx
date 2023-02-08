@@ -6,7 +6,7 @@ tags:
 
 <head>
     <meta name="title" content="Redpanda in Kubernetes | Redpanda Docs"/>
-    <meta name="description" content="Learn about Redpanda in Kubernetes and the tools that are available"/>
+    <meta name="description" content="Learn about Redpanda in Kubernetes and the tools that are available."/>
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -79,21 +79,16 @@ These instances are pre-configured with the Kubernetes agent software and automa
 
 Bare-metal Kubernetes environments include any deployments where you are responsible for the control plane and the master nodes.
 
-## Get started for development
+## Get started
 
-To learn the basics of Redpanda in Kubernetes, [deploy a cluster to use for development and testing](../kubernetes-deploy).
+To get started, follow one of these guides:
 
-## Production deployment workflow
+- [Azure Kubernetes Service](../aks-guide) (AKS)
+- [Elastic Kubernetes Service](../eks-guide) (EKS)
+- [Google Kubernetes Engine](../gke-guide) (GKE)
+- [Local](../local-guide) (kind and Minikube)
 
-The production deployment tasks may involve Kubernetes administrators as well as Kubernetes users. The administrator prepares the cluster with the prerequisites and tunes the worker nodes. The user deploys Redpanda.
-
-1. [Prepare the Kubernetes cluster](../kubernetes-cluster-requirements).
-
-1. [Review the best practices](../kubernetes-best-practices).
-
-1. [Tune the worker nodes](../kubernetes-tune-workers).
-
-1. [Deploy Redpanda](../kubernetes-deploy).
+Or, see the [production deployment workflow](../production-workflow).
 
 ## Documentation conventions
 

@@ -40,7 +40,7 @@ helm upgrade --install redpanda redpanda/redpanda \
 
 ## Deploy at least three Pod replicas
 
-It's best practice to deploy at least three Pod replicas (Redpanda brokers).
+Redpanda recommends at least three Pod replicas (Redpanda brokers) to use as _seed servers_. Seed servers are used to bootstrap the gossip process for new brokers joining a cluster. When a new broker joins, it connects to the seed servers to find out the topology of the Redpanda cluster. A larger number of seed servers makes consensus more robust and minimizes the chance of unwanted clusters forming when brokers are restarted without any data.
 
 By default, the Helm chart deploys a StatefulSet with three Redpanda brokers. You can specify the number of Redpanda brokers in the `statefulset.replicas` configuration.
 
@@ -125,16 +125,16 @@ Redpanda recommends using a NodePort Service to expose worker nodes and to give 
 The NodePort Service provides the lowest latency of all the Services because it does not include any unnecessary routing or middleware.
 Client connections go to the Redpanda brokers in the most direct way possible, through the worker nodes.
 
-For security reasons, you may not want to expose worker nodes directly to clients using a NodePort Service.
+Depending on your deployment and security policies, you may not be able to access worker nodes through a NodePort Service.
 If you choose to use another Service, consider the impact on the cost and performance of your deployment:
 
-- LoadBalancer Service - To make each Redpanda broker accessible with LoadBalancer Services, you need one for each Redpanda broker so that requests can be routed to specific brokers rather than balancing requests across all brokers. Load balancers are expensive, add latency and occasional packet loss, and add an unnecessary layer of complexity.
+- LoadBalancer Service - To make each Redpanda broker accessible with LoadBalancer Services, you need one LoadBalancer Service for each Redpanda broker so that requests can be routed to specific brokers rather than balancing requests across all brokers. Load balancers are expensive, add latency and occasional packet loss, and add an unnecessary layer of complexity.
 
 - Ingress - To make each Redpanda broker accessible with Ingress, you need to run an Ingress controller and set up routing to each Redpanda broker. Routing adds latency and can be a throughput bottleneck.
 
 See [Networking and Connectivity](../../../../../manage/kubernetes/networking/networking-and-connectivity).
 
-## Secure yor cluster
+## Secure your cluster
 
 To protect your Kubernetes cluster, do the following:
 
