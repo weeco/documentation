@@ -826,6 +826,39 @@ Timeout to wait for new members to join a consumer group.
 
 ---
 
+### group_offset_retention_check_ms
+
+Period at which Redpanda checks for expired consumer group offsets.
+
+**Units**: milliseconds
+
+**Default**: 600000 (10 min)
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_sec](#group_offset_retention_sec)
+- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
+
+---
+
+### group_offset_retention_sec
+
+Retention duration of an offset for an empty consumer group. Once elapsed, an offset is considered to be expired and is discarded. If `null`, the property is disabled, and no retention duration is set.
+
+**Units**: seconds
+
+**Default**: 604800 (7 days)
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
+- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
+
+
+---
+
 ### group_topic_partitions
 
 Number of partitions in the internal group membership topic.
@@ -995,6 +1028,24 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 **Range**: [512, 512 KiB]. Must be 4096-byte aligned.
 
 **Restart required**: yes
+
+---
+
+### legacy_group_offset_retention_enabled
+
+Flag to enable group offset retention for upgraded deployments of Redpanda. 
+
+Group offset retention is enabled by default in Redpanda versions 23.1 and later. To enable offset retention after upgrading from a version earlier than 23.1, set this property to `true`.
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_sec](#group_offset_retention_sec)
+- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
 
 ---
 
