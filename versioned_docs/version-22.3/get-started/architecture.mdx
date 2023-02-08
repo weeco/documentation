@@ -15,7 +15,7 @@ This page provides details about how Redpanda works. For a high-level overview, 
 
 ## Tiered Storage
 
-Redpanda [Tiered Storage](../../manage/tiered-storage) is a multi-tiered remote storage solution that provides the ability to offload log segments to cloud storage in near real time. Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis.
+Redpanda [Tiered Storage](../../manage/tiered-storage) is a multi-tiered remote storage solution that provides the ability to offload log segments to cloud storage in near real time. Tiered Storage can be combined with local storage to provide long-term data retention and disaster recovery on a per-topic basis.
 
 Consumers that read from more recent offsets continue to read from local storage, and consumers that read from historical offsets read from object storage, all with the same API. Consumers can read and reread events from any point within the maximum retention period, whether the events reside on local or remote storage.
 

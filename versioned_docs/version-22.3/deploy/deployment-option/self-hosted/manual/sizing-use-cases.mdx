@@ -61,7 +61,7 @@ The following machine specifications provide a minimum for a bare metal cluster 
 | Producer rate        | 2,000 messages per second |
 | Consumer throughput  | ~1,000 MB/sec (~8,000 Mbps) |
 | Consumer rate        | 4,000 messages per second |
-| Data retention       | 1 year                  |
+| Data retention       | 24 hours                  |
 | Average message size | 250 KB                  |
 | Failure tolerance    | 1 node                  |
 
@@ -82,7 +82,7 @@ Producing an average of 500 MB every second equates to over 40 TB of data each d
 
 To balance the available local disk, consider exactly how many reads can be serviced from local storage. Different instance types or locally-attached NVMe SSD disks provide different amounts of local storage, and therefore different amounts of available data without going back to the cloud.
 
-A topic with Tiered Storage enabled can write data to faster local storage managed by local retention settings, and at the same time, it can write data to object storagage managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
+A topic with Tiered Storage enabled can write data to faster local storage managed by local retention settings, and at the same time, it can write data to object storage managed by different retention settings, or left to grow for a longer period. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store enables a consumer to read from an older offset when necessary.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -96,7 +96,7 @@ A topic with Tiered Storage enabled can write data to faster local storage manag
 | Network | 25 Gbps | 25 Gbps | 32 Gbps | 21 Gbps |
 | Tiered Storage | True | True | True | True |
 
-## High throughput, long retention
+## High throughput, 24 hours
 
 | Metric               | Value                   |
 | :------------------- | :---------------------- |
@@ -104,7 +104,7 @@ A topic with Tiered Storage enabled can write data to faster local storage manag
 | Producer rate        | 4,000 messages per second |
 | Consumer throughput  | 2,000 MB/sec (16,000 Mbps) |
 | Consumer rate        | 8,000 messages per second |
-| Data retention       | 1 year                  |
+| Data retention       | 24 hours                 |
 | Average message size | 250 KB                  |
 | Failure tolerance    | 2 nodes                  |
 
