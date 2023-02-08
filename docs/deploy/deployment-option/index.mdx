@@ -8,32 +8,20 @@ title: Choose a Deployment Option
 </head>
 
 - [Self-Hosted](../deployment-option/self-hosted)
+
   - [Kubernetes](../deployment-option/self-hosted/kubernetes)
-    - [Kubernetes Cluster Requirements](../deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements)
+    
+    - [Overview](../deployment-option/self-hosted/kubernetes/kubernetes-production-deployment)
 
-        This topic is a checklist with the prerequisites and system requirements for installing production Redpanda in a Kubernetes cluster using the Helm chart.
+        Learn about Redpanda in Kubernetes and the tools that are available.
 
-    - [Kubernetes Production Deployment](../deployment-option/self-hosted/kubernetes/kubernetes-production-deployment)
+    - [Production Deployment Workflow](../deployment-option/self-hosted/kubernetes/production-workflow)
 
-        Redpanda offers two tools for deploying Redpanda clusters in Kubernetes:
+        The production deployment tasks involve Kubernetes administrators (admins) as well as Kubernetes users. The admin prepares the cluster with the prerequisites and tunes the worker nodes. The user deploys and configures Redpanda.
 
-        - Redpanda Helm chart (recommended)
-        - Redpanda Operator (not recommended for new deployments)
+    - [Guides](../deployment-option/self-hosted/kubernetes/get-started-dev)
 
-        Redpanda recommends the Helm chart for all new deployments.
-        As a result, the Kubernetes documentation in this section is for Helm chart deployments.
-
-    - [Best Practices](../deployment-option/self-hosted/kubernetes/kubernetes-best-practices)
-
-        This topic explains Redpanda's tips and recommendations for Kubernetes deployments.
-
-    - [Tune Worker Nodes](../deployment-option/self-hosted/kubernetes/kubernetes-tune-workers)
-
-        To get the best performance from your hardware, set Redpanda to production mode on each worker node and run the auto-tuning tool. The auto-tuning tool identifies the hardware configuration on your worker node and optimizes the Linux kernel to give you the best performance.
-
-    - [Deploy Redpanda](../deployment-option/self-hosted/kubernetes/kubernetes-deploy)
-
-        This topic describes how to use the Redpanda Helm chart to deploy a Redpanda cluster in Kubernetes.
+        Find a guide for setting up a three-broker Redpanda cluster in different Kubernetes platforms.
 
   - [Manual](../deployment-option/self-hosted/manual)
     - [Deploy for Production](../deployment-option/self-hosted/manual/production/production-deployment)
