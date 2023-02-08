@@ -18,7 +18,7 @@ The benchmark tests that can be run:
     - Smaller request size and lower levels of parallelism to achieve higher IOPS and lower latency results.
 
 - **Network tests**
-  - Throughput test (8192 byte messages)
+  - Throughput test (8192 bit messages)
     * Unique pairs of Redpanda nodes act as a client and a server.
     * Benchmark test pushes as much data over the wire within the duration of test parameters.
 
@@ -165,7 +165,7 @@ rpk cluster self-test start [flags]
 
 ### Related topics
 
-- [Guide for running self-test for cluster diagnostics](../../../../manage/cluster-maintenance/cluster-diagnostics#self-test)
+- [Guide for running self-test for cluster diagnostics](../../../../manage/cluster-maintenance/cluster-diagnostics#disk-and-network-self-test-benchmarks)
 - [rpk cluster self-test](../../rpk-cluster/rpk-cluster-self-test)
 - [rpk cluster self-test status](../../rpk-cluster/rpk-cluster-self-test-status)
 - [rpk cluster self-test stop](../../rpk-cluster/rpk-cluster-self-test-stop)
