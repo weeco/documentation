@@ -388,6 +388,24 @@ Maximum latency threshold for Kafka queue depth control depth tracking.
 
 ---
 
+### log_segment_ms
+
+Default lifetime of log segments for topics which do not set `segment.ms` to override it. If `null`, the property is disabled, and no default lifetime is set. It's also accessible via the Kafka API under its Kafka-compatible alias, `log.roll.ms`.
+
+**Units**: milliseconds
+
+**Default**: null
+
+**Range**: [60000 (60 sec), ...]
+
+**Restart required**: no
+
+**Related properties**: 
+- [log_segment_ms_min](../tunable-properties#log_segment_ms_min) 
+- [log_segment_ms_max](../tunable-properties#log_segment_ms_max)
+
+---
+
 ### rm_sync_timeout_ms
 
 Resource manager's synchronization timeout. Maximum time for this node to wait for internal state machine to catch up with all events written by previous leaders before rejecting a request.
