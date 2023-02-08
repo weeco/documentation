@@ -109,9 +109,11 @@ To tune the hardware, on each node, run:
 sudo rpk redpanda tune all
 ```
 
+For more details, see the [autotuner reference](../../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune).
+
 :::note Optional: Benchmark your SSD
 On taller machines, Redpanda recommends benchmarking your SSD. This can be done
-with `rpk iotune`. You only need to run this once.
+with [rpk iotune](../../../../../../reference/rpk/rpk-iotune). You only need to run this once.
 
 For reference, a local NVMe SSD should yield around 1GB/s sustained writes.
 `rpk iotune` captures SSD wear and tear and gives accurate measurements

@@ -13,6 +13,29 @@ Available modes:
   - `dev`
   - `prod`
 
+<details>
+  <summary>Enabled features in production mode</summary>
+
+Enabling production (`prod`) mode sets the following features:
+
+```yaml
+redpanda:
+  developer_mode: false
+rpk:
+  tune_network: true
+  tune_disk_scheduler: true
+  tune_disk_nomerges: true
+  tune_disk_write_cache: true
+  tune_disk_irq: true
+  tune_cpu: true
+  tune_aio_events: true
+  tune_clocksource: true
+  tune_swappiness: true
+  tune_ballast_file: true
+  overprovisioned: false
+``` 
+</details>
+
 ### Usage
 
 ```
