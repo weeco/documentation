@@ -89,7 +89,7 @@ module.exports = {
           lastVersion: '22.3',
           versions: {
             current: {
-              label: '23.1 Beta 🚧',
+              label: '23.1 Beta',
               banner: 'unreleased',
               path: '/beta'
             },

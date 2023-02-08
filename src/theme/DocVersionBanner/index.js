@@ -22,12 +22,12 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
         versionLabel: <b>{versionMetadata.label}</b>,
         releaseAnnouncement: (
            <p>
-            To access a preview and provide feedback, see the announcement in <a href="https://redpandacommunity.slack.com/archives/C01AJDUT88N/p1675453479074339">Redpanda Community</a>.
+            See the announcement for <b>{versionMetadata.label}</b> in <a href="https://redpandacommunity.slack.com/archives/C01AJDUT88N/p1675453479074339">Redpanda Community</a>.
           </p>
         ),
       }}>
       {
-        'This is unreleased documentation for {siteTitle} {versionLabel} version. {releaseAnnouncement}'
+        'This is unreleased documentation for Redpanda {versionLabel}. {releaseAnnouncement}'
       }
     </Translate>
   );
