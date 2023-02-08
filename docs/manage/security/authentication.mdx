@@ -7,9 +7,6 @@ title: Configure Authentication
     <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, basic authentication, and mTLS with principal mapping."/>
 </head>
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 
 Different components of Redpanda support different authentication methods. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure the `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use.
 
@@ -71,22 +68,23 @@ For information about using `rpk` to manage ACL users, see [rpk acl](../../../re
 As a security best practice, don't use the superuser to interact with the cluster, and don't delete the superuser (in case you need to grant permissions to new users later). In addition, when you create the superuser, you specify a password, which adds a level of security. If you delete the user, someone else could re-create the user with a different password.
 :::
 
-## SASL/SCRAM
-
-Simple Authentication Security Layer (SASL) is an authentication framework that lets the user choose the authentication mechanism. Redpanda supports the Salted Challenge Response Authentication Mechanism (SCRAM) authentication method.
+## Enable SASL authentication
 
 :::note
 SASL authentication is only available for the Kafka API.
 :::
 
-SASL provides authentication, but not encryption. You can, however, configure TLS to only handle encryption, and use SASL for authentication. This is useful if you require flexibility in your authorization mechanisms.
+Simple Authentication Security Layer (SASL) is a framework that lets you choose the authentication mechanism. The mechanism determines which authentication flow the client uses for that user/password. Redpanda supports the following authentication mechanisms:
 
-SCRAM provides strong encryption for user names and passwords by default and does not require an external data store for user information. Redpanda supports the following SASL mechanisms: 
+- SCRAM (Salted Challenge Response Authentication Mechanism): SCRAM provides strong encryption for user names and passwords by default and does not require an external data store for user information. Redpanda supports  `SCRAM-SHA-256` and `SCRAM-SHA-512`.
 
-* `SCRAM-SHA-256`
-* `SCRAM-SHA-512`
+- GSSAPI (Kerberos): Redpanda currently supports Kerberos for Bare Metal on-premise customers. 
 
-When you run a command with SASL authentication, you must include the mechanism with the following flag: 
+:::info
+Kerberos authentication requires an [Enterprise license](../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+:::
+
+When you run an rpk command with SASL/SCRAM, you must include the mechanism with the following flag:
 
 ```yaml
 --sasl-mechanism <mechanism>
@@ -96,14 +94,14 @@ For example, to use the `SCRAM-SHA-256` mechanism, run:
 
 ```bash
 rpk topic create littlefoot \
---user panda \
---password pandaPassword \
+--user <panda> \
+--password <pandaPassword> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
 ### Configure SASL authentication
 
-To configure SASL authentication for the Kafka API, set `authentication_method` of the listener to `sasl`. 
+To configure SASL authentication for the Kafka API, set the `authentication_method` property of the listener to `sasl`. 
 
 In `redpanda.yaml`, enter: 
 
@@ -119,6 +117,8 @@ redpanda:
 ```
 
 ### Enable SASL with TLS encryption 
+
+SASL provides authentication, but not encryption. To provide encryption, you can enable TLS in addition to SASL.
 
 To enable SASL authentication with TLS encryption for the Kafka API, in `redpanda.yaml`, enter: 
 
@@ -142,9 +142,124 @@ redpanda:
 // highlight-end
 ```
 
+### Enable Kerberos
+
+:::info
+Kerberos authentication requires an [Enterprise license](../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+:::
+
+You configure Kerberos authentication using a keytab, which contains credentials for the service.
+
+#### Prerequisites
+
+1. Ensure that host names are fully qualified domain names (FQDN).
+
+2. Ensure that each node has a [Kerberos configuration file](http://web.mit.edu/Kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html) set to use Active Directory or another corporate key distribution center (KDC). Default is at `/etc/krb5.conf`.
+
+3. Ensure that the KDC has a valid Kerberos service principal name (SPN) for each node in the form `primary/<FQDN>@<REALM>`.
+
+4. Ensure that each node has a keytab containing the SPN for that node. This must be located at an identical file path on each Redpanda node. Default is `/var/lib/redpanda/redpanda.keytab`.
+
+#### Enable Kerberos
+
+1. If the keytab is not in the default location, then set its location:
+
+  ```bash   
+  rpk cluster config set sasl_kerberos_keytab <path>
+  ```
+
+2. If the krb5.conf file is not in the default location, then set its location:
+
+  ```bash   
+  rpk cluster config set sasl_kerberos_config <path>
+  ```
+
+3. Define the primary of the Kerberos SPN to be used by Redpanda with the given keytab. Default is `redpanda`.
+
+  ```bash
+  rpk cluster config set sasl_kerberos_principal <name>
+  ```
+
+4. Set `sasl_kerberos_principal_mapping`. This maps Kerberos user principal names (UPNs) onto Redpanda principals used in the ACLs. For example:
+ 
+ ```bash
+  rpk cluster config set sasl_kerberos_principal_mapping '["RULE:[1:$1@$0](.*@MYDOMAIN.COM)s/@.*//","DEFAULT"]'
+  ```
+  
+  By default, Redpanda matches the primary of the Kerberos UPN of the user. Each rule has the following format:
+  
+   * `RULE:[n:string](regexp)s/pattern/replacement/g/c` where:
+    
+      * `n` is an integer that indicates how many components the target principal should have.
+      * If this matches, then a string is formed from `string`, substituting the realm of the principal for `$0` and the `n`’th component of the principal for `$n`. (For example, if the principal is `johndoe/admin@realm.com`, then `[2:$2$1foo]` results in the string `adminjohndoefoo`.)
+      * If this string matches `regexp`, then the `s//[g]` substitution command is run over the string. 
+      * `g` is optional. It causes the substitution to be global over the string, instead of replacing only the first match in the string.
+      * `c` is optional. It can be either `/L` or `/U` to make the match lowercase or uppercase.
+    
+	* `DEFAULT` The principal name is used as the local user name. If the principal has more than one component or is not in the default realm, then the conversion fails.
+  
+  Examples of a Kerberos UPN without a host (`jdoe@EXAMPLE.COM`) and with a host (`jdoe/host@EXAMPLE.COM`):
+  
+  | Translation | `jdoe@EXAMPLE.COM` | `jdoe/host@EXAMPLE.COM` |
+  | -- | -- | -- |
+  | `[1:$1@$0]` | `jdoe@EXAMPLE.COM` | Rule does not match ¹ |
+  | `[1:$1]` | `jdoe` | Rule does not match ¹ |
+  | `[1:$1.foo]` | `jdoe.foo` | Rule does not match ¹ |
+  | `[2:$1/$2@$0]` | Rule does not match ² | `jdoe/host@EXAMPLE.COM` |
+  | `[2:$1/$2]` | Rule does not match ² | `jdoe/host` |
+  | `[2:$1@$0]` | Rule does not match ² | `jdoe@EXAMPLE.COM` |
+  | `[2:$1]` | Rule does not match ² | `jdoe` |
+  | `DEFAULT` | `jdoe` | `jdoe` |
+  ¹ Rule does not match because there are two components in principal name `jdoe/host@EXAMPLE.COM`.
+
+  ² Rule does not match because there is one component in principal name `jdoe@EXAMPLE.COM`.
+  
+  The first rule that matches is used to extract a principal.
+
+1. Append the list of allowed SASL mechanisms that clients can use to authenticate against the Kafka API. 
+
+  To get the list of all allowed SASL mechanisms, run:
+
+  ```bash
+   rpk cluster config get sasl_mechanisms
+   ```
+
+   <details>
+   <summary>
+   Example output
+   </summary>
+
+  In this case, Redpanda supports only SCRAM:
+
+   ```bash
+   SCRAM
+   ```
+
+   </details>
+
+  To add support for Kerberos, append the `sasl_mechanisms` property with the value `GSSAPI`:
+
+  ```bash
+  rpk cluster config set sasl_mechanisms '["SCRAM","GSSAPI"]'
+  ```
+
+1. Enable SASL, if not already enabled:
+
+  ```bash
+  rpk cluster config set kafka_enable_authorization true
+  ```
+
+:::note
+If you're configuring authentication for the first time, you may need to configure [ACLs](../../security/authorization#acls) before users can access Redpanda resources.
+:::
+
 ### Configure Schema Registry and HTTP Proxy to connect to Redpanda with SASL
 
 Schema Registry and HTTP Proxy connect to Redpanda over the Kafka API. For the Kafka username and password, Redpanda uses ephemeral credentials internal to the cluster. Ephemeral credentials are regular SCRAM credentials, but they're only stored in memory and are lost when a node restarts. When the Schema Registry or HTTP Proxy start up, they broadcast an ephemeral credential to other nodes over the internal RPC. If authentication fails to a particular broker, new ephemeral credentials are sent to that broker, and the service reconnects.
+
+:::note
+Schema Registry and HTTP Proxy support SASL/SCRAM but do not support SASL/GSSAPI.
+:::
 
 #### Manual configuration
 
@@ -229,6 +344,9 @@ compression.type        producer    DEFAULT_CONFIG
 message.timestamp.type  CreateTime  DEFAULT_CONFIG
 ...
 ```
+:::note
+rpk supports SASL/SCRAM, but not SASL/GSSAPI. To create a SASL/SCRAM user, see [User create](../../security/authorization/#user-create).
+:::
 
 ## Configure basic authentication
 
