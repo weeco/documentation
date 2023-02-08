@@ -174,10 +174,11 @@ To create a new topic with Tiered Storage enabled:
 rpk topic create <topic_name> -c redpanda.remote.read=true -c redpanda.remote.write=true
 ```
 
-To enable Tiered Storage on an existing topic:
+To enable Tiered Storage on an existing topic, run both of these commands:
 
 ```bash
-rpk topic alter-config <topic_name> --set redpanda.remote.read=true --set redpanda.remote.write=true
+rpk topic alter-config <topic_name> --set redpanda.remote.read=true &&
+rpk topic alter-config <topic_name> --set redpanda.remote.write=true
 ```
 
 ### Set retention limits
