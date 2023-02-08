@@ -19,7 +19,7 @@ See also:
 - [Writing Custom Deployment Automation](../../deployment/custom-deployment)
 
 :::note
-Passwords are in single quotes to avoid conflicts with special characters. Enclosing characters in single quotes preserves the literal value of each character.
+Passwords are in single quotes to avoid conflicts with special characters. Ensure arguments are properly quoted.
 :::
 
 ## Enable authentication
@@ -52,7 +52,7 @@ When you configure authentication, you include one or more superusers in the Red
 Specify the name of the superuser. This can be a new user or an existing user. For example, if you use the superuser named `admin`, then Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run:
 
 ```bash
-rpk acl user create <superuser_username> -p <'superuser_password'>
+rpk acl user create <superuser_username> -p '<superuser_password>'
 ```
 
 Now the `admin` user has full access to the cluster and can grant permissions to other users.
@@ -65,7 +65,7 @@ To create users and set passwords, run:
 
 ```bash
 rpk acl user create admin \
--p <'password'> \
+-p '<password>' \
 --api-urls localhost:9644
 ```
 
