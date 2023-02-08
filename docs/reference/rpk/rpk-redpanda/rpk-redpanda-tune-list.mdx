@@ -140,7 +140,7 @@ Configuration (yaml):
 
 #### ballast_file
 
-The `ballast_file` tuner improves debuggability and recoverability of a system with a full disk by creating a ballast file: if the disk becomes full, the ballast file can be deleted, thereby allowing the the operating system to boot and the root cause to be troubleshooted.
+The `ballast_file` tuner improves debuggability and recoverability of a system with a full disk by creating a ballast file: if the disk becomes full, the ballast file can be deleted, thereby unblocking processes that are failing due to write failures and providing time for operators to stop any problematic processes causing the disk to fill, and to delete topics or records and change retention settings.
 
 Configuration (yaml):
 - `rpk.tune_ballast_file`: flag to enable the tuner (Default for production mode: true)
