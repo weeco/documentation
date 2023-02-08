@@ -4,7 +4,7 @@ title: Redpanda Quickstart
 
 <head>
     <meta name="title" content="Redpanda Quickstart | Redpanda Docs"/>
-    <meta name="description" content="Use Docker Compose to spin up a Redpanda cluster with three brokers, create a basic streaming application, and explore your cluster in Redpanda Console."/>
+    <meta name="description" content="Use Docker Compose to spin up a Redpanda cluster, create a basic streaming application, and explore your cluster in Redpanda Console."/>
 </head>
 
 import Tabs from "@theme/Tabs";
@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem";
 import InstallRpkHomebrew from "../../get-started/shared/_install-rpk-homebrew.mdx"
 import InstallRpkLinux from "../../get-started/shared/_install-rpk-linux.mdx"
 
-In this quickstart you'll use Docker Compose to spin up a Redpanda cluster with three brokers, produce to a topic and consume from a topic, and explore your cluster in Redpanda Console.
+In this quickstart you'll use Docker Compose to spin up a Redpanda cluster, produce to a topic and consume from a topic, and explore your cluster in Redpanda Console.
 
 You can use this quickstart to evaluate Redpanda on your Linux, macOS, or Windows machine.
 
@@ -38,6 +38,130 @@ docker compose version
 You should see the version of Docker Compose that's installed on your local machine.
 
 ## Start Redpanda
+
+For lightweight testing, you can start a single Redpanda broker, 
+or you can use a more robust example with three Redpanda brokers. 
+With three brokers, you can configure your topics with a replication factor of three 
+so that the cluster can recover from a single-broker failure.
+
+<Tabs groupId="num-brokers" queryString>
+<TabItem value="one" label="Single Broker">
+
+1. Copy and paste the following YAML content into a file named `docker-compose.yml` on your local filesystem.
+
+  <details>
+  <summary>
+  Reveal the YAML content
+  </summary>
+
+  ```yaml title="docker-compose.yml"
+  ---
+  version: "3.7"
+  name: redpanda-quickstart
+  networks:
+    redpanda_network:
+      driver: bridge
+  volumes:
+    redpanda-0: null
+  services:
+    redpanda-0:
+      command:
+        - redpanda
+        - start
+        - --kafka-addr
+        - internal://0.0.0.0:9092,external://0.0.0.0:19092
+        # use the internal addresses to connect to the Redpanda brokers'
+        # from inside the same Docker network.
+        #
+        # use the external addresses to connect to the Redpanda brokers'
+        # from outside the Docker network.
+        #
+        # address the broker advertises to clients that connect to the Kafka API.
+        - --advertise-kafka-addr
+        - internal://redpanda-0:9092,external://localhost:19092
+        - --pandaproxy-addr
+        - internal://0.0.0.0:8082,external://0.0.0.0:18082
+        # address the broker advertises to clients that connect to PandaProxy.
+        - --advertise-pandaproxy-addr
+        - internal://redpanda-0:8082,external://localhost:18082
+        - --schema-registry-addr
+        - internal://0.0.0.0:8081,external://0.0.0.0:18081
+        # Redpanda brokers use the RPC API to communicate with eachother internally.
+        - --rpc-addr
+        - redpanda-0:33145
+        - --advertise-rpc-addr
+        - redpanda-0:33145
+        # tells Seastar (the framework Redpanda uses under the hood) to use 1 core on the system.
+        - --smp 1
+        # the amount of memory to make available to Redpanda.
+        - --memory 1G
+        # the amount of memory that's left for the Seastar subsystem.
+        # For development purposes this is set to 0.
+        - --reserve-memory 0M
+        # Redpanda won't assume it has all of the provisioned CPU
+        # (to accommodate Docker resource limitations).
+        - --overprovisioned
+        # enable logs for debugging.
+        - --default-log-level=debug
+      image: docker.redpanda.com/vectorized/redpanda:v22.3.11
+      container_name: redpanda-0
+      volumes:
+        - redpanda-0:/var/lib/redpanda/data
+      networks:
+        - redpanda_network
+      ports:
+        - 18081:18081
+        - 18082:18082
+        - 19092:19092
+        - 19644:9644
+    console:
+      container_name: redpanda-console
+      image: docker.redpanda.com/vectorized/console:v2.1.1
+      networks:
+        - redpanda_network
+      entrypoint: /bin/sh
+      command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+      environment: 
+        CONFIG_FILEPATH: /tmp/config.yml
+        CONSOLE_CONFIG_FILE: |
+          kafka:
+            brokers: ["redpanda-0:9092"]
+            schemaRegistry:
+              enabled: true
+              urls: ["http://redpanda-0:8081"]
+          redpanda:
+            adminApi:
+              enabled: true
+              urls: ["http://redpanda-0:9644"]
+      ports:
+        - 8080:8080
+      depends_on:
+        - redpanda-0
+  ```
+  </details>
+
+1. Run the following in the directory where you saved the `docker-compose.yml` file:
+
+  ```bash
+  docker compose up -d
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```
+  [+] Running 3/3
+  ⠿ Network redpanda_network        Created  0.0s
+  ⠿ Container redpanda-0             Started  0.3s
+  ⠿ Container redpanda-console      Started  0.6s
+  ```
+
+  </details>
+
+</TabItem>
+<TabItem value="three" label="Three Brokers">
 
 1. Copy and paste the following YAML content into a file named `docker-compose.yml` on your local filesystem.
 
@@ -79,7 +203,7 @@ You should see the version of Docker Compose that's installed on your local mach
         - --advertise-pandaproxy-addr
         - internal://redpanda-0:8082,external://localhost:18082
         - --schema-registry-addr
-        - redpanda-0:8081
+        - internal://0.0.0.0:8081,external://0.0.0.0:18081
         # Redpanda brokers use the RPC API to communicate with eachother internally.
         - --rpc-addr
         - redpanda-0:33145
@@ -104,9 +228,9 @@ You should see the version of Docker Compose that's installed on your local mach
       networks:
         - redpanda_network
       ports:
-        - 18081:8081
-        - 18082:8082
-        - 19092:9092
+        - 18081:18081
+        - 18082:18082
+        - 19092:19092
         - 19644:9644
     redpanda-1:
       command:
@@ -121,7 +245,7 @@ You should see the version of Docker Compose that's installed on your local mach
         - --advertise-pandaproxy-addr
         - internal://redpanda-1:8082,external://localhost:28082
         - --schema-registry-addr
-        - redpanda-1:8081
+        - internal://0.0.0.0:8081,external://0.0.0.0:28081
         - --rpc-addr
         - redpanda-1:33145
         - --advertise-rpc-addr
@@ -139,9 +263,9 @@ You should see the version of Docker Compose that's installed on your local mach
       networks:
         - redpanda_network
       ports:
-        - 28081:8081
-        - 28082:8082
-        - 29092:9092
+        - 28081:28081
+        - 28082:28082
+        - 29092:29092
         - 29644:9644
       depends_on:
         - redpanda-0
@@ -158,7 +282,7 @@ You should see the version of Docker Compose that's installed on your local mach
         - --advertise-pandaproxy-addr
         - internal://redpanda-2:8082,external://localhost:38082
         - --schema-registry-addr
-        - redpanda-2:8081
+        - internal://0.0.0.0:8081,external://0.0.0.0:38081
         - --rpc-addr
         - redpanda-2:33145
         - --advertise-rpc-addr
@@ -176,9 +300,9 @@ You should see the version of Docker Compose that's installed on your local mach
       networks:
         - redpanda_network
       ports:
-        - 38081:8081
-        - 38082:8082
-        - 39092:9092
+        - 38081:38081
+        - 38082:38082
+        - 39092:39092
         - 39644:9644
       depends_on:
         - redpanda-0
@@ -229,6 +353,9 @@ You should see the version of Docker Compose that's installed on your local mach
   ```
 
   </details>
+
+</TabItem>
+</Tabs>
 
 ## Start streaming
 
@@ -377,9 +504,9 @@ The `rpk` binary is not supported on Windows.
   BROKERS
   =======
   ID    HOST        PORT
-  0*    172.24.1.2  9092
-  1     172.24.1.3  9092
-  2     172.24.1.4  9092
+  0*    127.0.0.1   19092
+  1     127.0.0.1   29092
+  2     127.0.0.1   39092
 
   TOPICS
   ======
@@ -404,7 +531,7 @@ docker compose down
 To delete the volumes along with all your cluster data, run the following:
 
 ```bash
-docker volume rm redpanda-quickstart_redpanda-0 redpanda-quickstart_redpanda-1 redpanda-quickstart_redpanda-2
+docker compose down -v
 ```
 
 ## Next steps
