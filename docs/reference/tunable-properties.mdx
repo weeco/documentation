@@ -844,7 +844,11 @@ Period at which Redpanda checks for expired consumer group offsets.
 
 ### group_offset_retention_sec
 
-Retention duration of an offset for an empty consumer group. Once elapsed, an offset is considered to be expired and is discarded. If `null`, the property is disabled, and no retention duration is set.
+The retention duration of consumer group offsets. Redpanda identifies offsets that are expired, based on this retention duration, and removes them to reclaim storage. For a consumer group, the retention timeout starts from when the group becomes empty by losing all its consumers; for a standalone consumer, the retention timeout starts from the time of the last commit. Once elapsed, an offset is considered to be expired and is discarded. 
+
+Redpanda periodically checks for expired offsets at the rate set by [group_offset_retention_check_ms](#group_offset_retention_check_ms). 
+
+If `null`, the automatic offset retention feature is disabled.
 
 **Units**: seconds
 
@@ -855,7 +859,6 @@ Retention duration of an offset for an empty consumer group. Once elapsed, an of
 **Related properties**: 
 - [group_offset_retention_check_ms](#group_offset_retention_check_ms)
 - [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
-
 
 ---
 
@@ -1033,9 +1036,15 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 
 ### legacy_group_offset_retention_enabled
 
-Flag to enable group offset retention for upgraded deployments of Redpanda. 
+With group offset retention enabled by default starting in Redpanda version 23.1, this flag enables group offset retention for deployments of Redpanda upgraded from earlier versions. 
 
-Group offset retention is enabled by default in Redpanda versions 23.1 and later. To enable offset retention after upgrading from a version earlier than 23.1, set this property to `true`.
+For Redpanda versions **23.1 and later**, this flag has no effect.
+
+For Redpanda versions **earlier than 23.1**: 
+- In upgraded clusters, to enable group offset retention, both this flag must be `true` and [group_offset_retention_check_ms](#group_offset_retention_check_ms) must be non-null.
+- When legacy group offset retention is enabled:
+  - Only offsets that were committed or updated following the upgrade to 23.1 or later will be automatically collected. Offsets that were committed prior to upgrading to 23.1 or later will never be automatically deleted, and instead need to be manually removed using the Offset Delete API.
+  - The age of an offset is calculated based on when it was committed.
 
 **Type**: boolean
 
