@@ -11,6 +11,14 @@ This page describes the original metrics available on `<node ip>:9644/metrics`. 
 
 For information about the latest metrics available on `:9644/public_metrics`, see [Monitoring](../../cluster-administration/monitoring).
 
+:::note notes
+The `/public_metrics` endpoint exports different metrics than the `/metrics` endpoint.
+
+Use `/public_metrics` for your primary dashboards for system health.
+
+Use `/metrics` for detailed analysis and debugging.
+:::
+
 ## Configure Prometheus: internal metrics
 
 [Prometheus](https://prometheus.io/) is a systems monitoring and alerting tool. It collects and stores metrics as time-series data identified by metric name and key/value pairs. 

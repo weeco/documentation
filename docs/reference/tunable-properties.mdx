@@ -614,6 +614,20 @@ Maximum duration to wait in metadata request for cluster health to be refreshed.
 
 ---
 
+### node_isolation_heartbeat_timeout
+
+If the duration since the last received response to a node's heartbeat request is greater than or equal to this timeout, then the node is considered to be isolated. Redpanda prevents isolated nodes from handling Kafka API requests. 
+
+**Units**: milliseconds
+
+**Default**: 3000
+
+**Range**: [100, 10000]
+
+**Restart required**: no
+
+---
+
 ### node_management_operation_timeout_ms
 
 Timeout for executing node management operations.
@@ -1000,7 +1014,7 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 
 ### max_kafka_throttle_delay_ms
 
-Fail-safe maximum throttle delay on Kafka requests.
+The maximum delay inserted in the data path of Kafka API requests to throttle them down. Configuring this to be less than the Kafka client timeout can ensure that the delay that's inserted won't be long enough to cause a client timeout by itself. 
 
 **Units**: milliseconds 
 
@@ -1901,7 +1915,7 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 ## Wasm properties
 
 :::caution
-[Redpanda Data Transforms](../labs/data-transform.mdx), built on top of Wasm, is a lab feature and is not supported for production deployments.
+[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
 :::
 
 ### coproc_max_batch_size
@@ -1958,8 +1972,8 @@ Interval for which all coprocessor offsets are flushed to disk.
 
 ## Related topics
 
-- [Cluster Configurable Properties](./cluster-properties.mdx)
-- [Node Configuration Properties](./node-properties.mdx)
+- [Cluster Configurable Properties](../cluster-properties)
+- [Node Configuration Properties](../node-properties)
 ## Suggested reading
 - [Benchmark of Redpanda and Apache Kafka](https://redpanda.com/blog/fast-and-safe/)
 - [Fast distributed transactions with Redpanda](https://redpanda.com/blog/fast-transactions/)

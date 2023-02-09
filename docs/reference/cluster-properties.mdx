@@ -318,6 +318,40 @@ Overrides the maximum connections per second for one core for the specified IP a
 
 ---
 
+### kafka_connections_max
+
+Maximum number of Kafka client connections per broker. If `null`, the property is disabled.
+
+**Units**: number of Kafka client connections per broker
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
+### kafka_connections_max_overrides
+
+A list of IP addresses for which Kafka client connection limits are overridden and don't apply. For example, `(['127.0.0.1:90', '50.20.1.1:40']).`
+
+**Default**: {} (empty list)
+
+**Restart required**: no
+
+---
+
+### kafka_connections_max_per_ip
+
+Maximum number of Kafka client connections per IP address, per broker. If `null`, the property is disabled.
+
+**Units**: number of Kafka client connections per IP address, per broker
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
 ### kafka_group_recovery_timeout_ms
 
 Kafka group recovery timeout.
@@ -351,6 +385,111 @@ Maximum latency threshold for Kafka queue depth control depth tracking.
 **Default**: 80
 
 **Restart required**: yes
+
+---
+
+### kafka_quota_balancer_node_period_ms
+
+The period at which the intra-node throughput quota balancer runs. 
+
+It may take longer for the balancer to complete a single balancing step than the period this property specifies, so the actual period may be more than configured here.
+
+If `0`, the balancer is disabled and all throughput quotas are immutable.
+
+**Units**: milliseconds
+
+**Default**: 750
+
+**Range**: [0, ]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_min_shard_throughput_ratio
+
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed as a ratio of default shard quota. While the value applies equally to ingress and egress traffic, the default shard quota can be different for ingress and egress and therefore result in different minimum throughput bytes-per-second (bps) values. 
+
+Both `kafka_quota_balancer_min_shard_throughput_ratio` and [kafka_quota_balancer_min_shard_throughput_bps](#kafka_quota_balancer_min_shard_throughput_bps) can be specified at the same time. In this case, the balancer will not decrease the effective shard quota below the largest bps value of each of these two properties.
+
+If set to `0.0`, the minimum is disabled. If set to greater than `1.0 / <number-of-shards>`, where each shard is supposed to have allocated more than an equal share of total quota, then the balancer won't be able to rebalance quota without violating this ratio, consequently precluding the balancer from adjusting shards' quotas.
+
+**Type**: double
+
+**Units**: ratio of default shard quota
+
+**Default**: 0.01
+
+**Range**: [0.0, 1.0]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_min_shard_throughput_bps
+
+The minimum value of the throughput quota a shard can get in the process of quota balancing, expressed in bytes per second. The value applies equally to ingress and egress traffic.
+
+kafka_quota_balancer_min_shard_throughput_bps doesn't override the limit settings, [kafka_throughput_limit_node_in_bps](#kafka_throughput_limit_node_in_bps) and [kafka_throughput_limit_node_out_bps](#kafka_throughput_limit_node_out_bps). Consequently, the value of 
+`kafka_throughput_limit_node_in_bps` or `kafka_throughput_limit_node_out_bps` can result in lesser throughput than kafka_quota_balancer_min_shard_throughput_bps.
+
+Both [kafka_quota_balancer_min_shard_throughput_ratio](#kafka_quota_balancer_min_shard_throughput_ratio) and kafka_quota_balancer_min_shard_throughput_bps can be specified at the same time. In this case, the balancer will not decrease the effective shard quota below the largest bps value of each of these two properties.
+
+If set to `0`, no minimum is enforced.
+
+**Units**: bytes per second
+
+**Default**: 256
+
+**Range**: [0, ...]
+
+**Restart required**: no
+
+---
+
+### kafka_quota_balancer_window_ms
+
+Time window used to average the current throughput measurement for the quota balancer.
+
+**Units**: milliseconds
+
+**Default**: 5000
+
+**Range**: [1, ...]
+
+**Restart required**: no
+
+---
+
+### kafka_throughput_limit_node_in_bps
+
+The maximum rate of all ingress Kafka API traffic for a node. Includes all Kafka API traffic (requests, responses, headers, fetched data, produced data, etc.).
+
+If `null`, the property is disabled, and traffic is not limited.
+
+**Units**: bytes per second
+
+**Default**: null
+
+**Range**: [1, ...]
+
+**Restart required**: no
+
+---
+
+### kafka_throughput_limit_node_out_bps
+
+The maximum rate of all egress Kafka traffic for a node. Includes all Kafka API traffic (requests, responses, headers, fetched data, produced data, etc.).
+
+If `null`, the property is disabled, and traffic is not limited. 
+
+**Units**: bytes per second
+
+**Default**: null
+
+**Range**: [1, ...]
+
+**Restart required**: no
 
 ---
 
@@ -408,6 +547,68 @@ Internal RPC TCP send buffer size. If `null` (the default value), no buffer size
 
 ---
 
+### sasl_kerberos_config
+
+The location of the Kerberos `krb5.conf` file for Redpanda.
+
+**Type**: string
+
+**Default**: `/etc/krb5.conf`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_keytab
+
+The location of the Kerberos keytab file for Redpanda.
+
+**Type**: string
+
+**Default**: `/var/lib/redpanda/redpanda.keytab`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_principal
+
+The primary of the Kerberos Service Principal Name (SPN) for Redpanda.
+
+**Type**: string
+
+**Default**: `redpanda`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_principal_mapping
+
+Rules for mapping Kerberos principal names to Redpanda user principals.
+
+**Type**: array of string
+
+**Default**: `["DEFAULT"]`
+
+**Restart required**: no
+
+---
+
+### sasl_mechanisms
+
+A list of supported SASL mechanisms. `SCRAM` and `GSSAPI` are allowed.
+
+**Type**: array of string
+
+**Default**: `["SCRAM"]`
+
+**Valid values**: `"SCRAM"`, `"GSSAPI"`
+
+**Restart required**: no
+
+---
+
 ### target_quota_byte_rate
 
 Target quota byte rate.
@@ -423,6 +624,18 @@ Target quota byte rate.
 -------------------------------------------------------------------------------
 
 ## Metrics properties
+
+### aggregate_metrics
+
+Enable aggregation of metrics returned by the [/metrics](../../reference/internal-metrics-reference) endpoint. Metric aggregation is performed by summing the values of samples by labels and is done when it makes sense by the shard and/or partition labels.
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: yes
+
+---
 
 ### disable_metrics
 
@@ -732,7 +945,7 @@ Delay before scheduling the next check for timed out transactions.
 ## Wasm properties
 
 :::caution
-[Redpanda Data Transforms](../labs/data-transform.mdx), built on top of Wasm, is a lab feature and is not supported for production deployments.
+[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
 :::
 
 ### enable_coproc

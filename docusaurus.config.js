@@ -86,10 +86,12 @@ module.exports = {
             '**/*.test.{js,jsx,ts,tsx}',
             '**/__tests__/**',
           ],
-          lastVersion: 'current',
+          lastVersion: '22.3',
           versions: {
             current: {
-              label: '22.3',
+              label: '23.1 Beta',
+              banner: 'unreleased',
+              path: '/beta'
             },
           },
         },

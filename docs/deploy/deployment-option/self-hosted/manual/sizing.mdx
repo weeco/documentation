@@ -28,10 +28,12 @@ In general, choose the number of nodes based on the following criteria, and add 
 
 To understand the network usage of a basic Redpanda cluster, consider a cluster with three nodes, a topic with a single partition and a replication factor of three, and a single producer and consumer. For every 75 MB written to the partition’s leader, 150 MB is transmitted across the network to other nodes for replication, and 75 MB is transmitted to the consumer. 
 
-The 150 MB/sec of bandwidth for replication is full duplex (where each byte sent by a broker is received by some other broker). The 75 MB/sec producer and consumer flows, however, are half-duplex, because the client endpoint in each case is outside of the cluster. Therefore, the intra-cluster bandwidth is 225 MB for incoming and outgoing flows:
+![3 node Redpanda cluster](../../../../../static/img/3-node-rp-cluster-alt.png)
+
+The 150 MB/sec of bandwidth for replication is full duplex (where each byte sent by a broker is received by some other broker). The 75 MB/sec producer and consumer flows, however, are half-duplex, because the client endpoint in each case is outside of the cluster. In a well-balanced scenario, the intra-cluster bandwidth is 225 MB for incoming and outgoing flows:
 - 150 MB/sec of intra-cluster full duplex bandwidth
-- 75 MB/sec of ingress from producers
-- 75 MB/sec of egress to consumers
+- 75 MB/sec of ingress from producers half-duplex bandwidth
+- 75 MB/sec of egress to consumers half-duplex bandwidth
 
 Even with the same amount of data produced, increasing the replication factor or the number of consumers increases bandwidth utilization.
 
@@ -127,13 +129,11 @@ Redpanda Tiered Storage enables multi-tiered remote storage. It archives log seg
 
 With only local storage, data retention is limited to the provisioned capacity: you must provision more nodes to increase capacity. Adding nodes is expensive, because you’re forced to overprovision infrastructure regardless of whether you need the additional compute power. In most cases, overprovisioning leads to underutilization and higher operational costs.
 
-Tiered Storage can be combined with local storage to provide infinite data retention and disaster recovery on a per-topic basis. Retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in the cloud until it reaches the configured time or size limit. 
+Tiered Storage can be combined with local storage to provide long-term data retention and disaster recovery on a per-topic basis. Retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in the cloud until it reaches the configured time or size limit. 
 
 Ideally, a cluster should be sized such that the cluster's local storage can service the majority of its consumers within a normal amount of lag, with Tiered Storage used to service any slow readers (for example, in the event of some downstream failure). 
 
-When Tiered Storage is enabled on a topic, it immediately copies closed log segments into the configured storage bucket or container. The default log segment size is set to one GB, so by default, a topic’s object store lags approximately one GB behind the local copy. 
-- You can lower `segment.bytes` to reduce this lag. This lets Redpanda archive smaller log segments more frequently, at the cost of increasing I/O and file count. 
-- You can also set an idle timeout to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time. 
+When Tiered Storage is enabled on a topic, it copies closed log segments to the configured storage bucket or container. Log segments are closed when the value of [`log_segment_size`](../../../../../reference/tunable-properties#log_segment_size) has been reached, so a topic’s object store lags behind the local copy. You can set an idle timeout to force Redpanda to periodically archive the contents of open log segments to object storage. This is useful if a topic’s write rate is low and log segments are kept open for long periods of time.
 
 Adjusting how much data the object store lags behind the local copy allows Redpanda to meet stricter recovery point-in-time objectives. This is encapsulated in the Kafka API, so clients can continue to produce and consume data from Redpanda in the same way. Consumers that keep up with producers continue to read from local storage and are subject to the local data retention policy. Consumers that want to read from older offsets do so with the same consumer API, and Redpanda handles fetching the necessary log segments from object storage. 
 
@@ -141,9 +141,9 @@ See also: [Tiered Storage](../../../../../manage/tiered-storage)
 
 ### Production settings
 
-Before running performance benchmark testing, set Redpanda into production mode and run the auto-tuning tool (`rpk redpanda tune all`) on every node. This enables the necessary hardware optimizations and ensures that kernel parameters are set correctly.
+Before running performance benchmark testing, set Redpanda into production mode and run the autotuner tool ([rpk redpanda tune all](../../../../.../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune)) on every node. This enables the necessary hardware optimizations and ensures that kernel parameters are set correctly.
 
-See also: [Set Redpanda production mode](../../manual/production/production-deployment/#set-redpanda-production-mode)
+See also: [Set Redpanda production mode](../../manual/production/production-deployment/#set-redpanda-production-mode) and [autotuner reference](../../../../.../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune).
 
 
 ### Open Messaging Benchmark

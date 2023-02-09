@@ -1,0 +1,304 @@
+---
+title: Deploy a Redpanda Cluster in Amazon Elastic Kubernetes Service
+---
+
+<head>
+    <meta name="title" content="Deploy a Redpanda Cluster in Amazon Elastic Kubernetes Service | Redpanda Docs"/>
+    <meta name="description" content="Set up a three-broker Redpanda cluster in Amazon Elastic Kubernetes Service (EKS)."/>
+</head>
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Versions from '../../../../shared/_versions.mdx'
+import InstallRpkHomebrew from "../../../../get-started/shared/_install-rpk-homebrew.mdx"
+import InstallRpkLinux from "../../../../get-started/shared/_install-rpk-linux.mdx"
+import OperatorNote from "./shared/guides/_operator-note.mdx"
+import DeployRedpanda from "./shared/guides/_deploy-redpanda.mdx"
+import DeployConsole from "./shared/guides/_deploy-console.mdx"
+import StartStreaming from "./shared/guides/_start-streaming.mdx"
+import ExploreTopics from "./shared/guides/_explore-topics.mdx"
+import NextSteps from "./shared/guides/_next-steps.mdx"
+import SuggestedReading from "./shared/guides/_suggested-reading.mdx"
+
+
+Deploy a Redpanda cluster and Redpanda Console in Amazon Elastic Kubernetes Service (EKS) using the Helm chart. 
+Then, use rpk both as an internal client and an external client to interact with your Redpanda cluster from the command line.
+
+<OperatorNote/>
+
+## Prerequisites
+
+Before you begin, you must have the following:
+
+* A user with [IAM permissions](https://docs.aws.amazon.com/eks/latest/userguide/security_iam_id-based-policy-examples.html) for creating clusters.
+
+* [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+
+* [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+* [jq](https://stedolan.github.io/jq/download/) for working with JSON results setting environment variables
+
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Minimum required Kubernetes version: <Versions name="kubernetes"/>
+
+  ```bash
+  kubectl version
+  ```
+
+* [Helm](https://helm.sh/docs/intro/install/). Minimum required Helm version: <Versions name="helm"/>
+
+  ```bash
+  helm version
+  ```
+
+## Create an EKS cluster
+
+1. Create an EKS cluster in your default region:
+
+  ```bash
+  eksctl create cluster --name redpanda \
+      --external-dns-access \
+      --nodegroup-name standard-workers \
+      --node-type m5.xlarge \
+      --nodes 3 \
+      --nodes-min 3 \
+      --nodes-max 4
+  ```
+
+  :::note
+  If your account is configured for OIDC, add the `--with-oidc` flag to the `create cluster` command.
+  :::
+
+  Your local `kubeconfig` file should now point to the new cluster.
+
+  ```bash
+  kubectl get service
+  ```
+
+1. If the `kubectl` command cannot connect to your cluster, update your local kubeconfig to point to your new cluster.
+
+  Replace the `<region>` placeholder with your default region, which is located in the `~/.aws/config` file.
+
+  ```bash
+  aws eks update-kubeconfig --region <region> --name redpanda
+  ```
+
+1. Create the IAM role needed for the Amazon Elastic Block Store (EBS) Cluster Storage Interface (CSI):
+
+  ```bash
+  eksctl create iamserviceaccount \
+      `# Do not change the name. It is required by EKS.` \
+      --name ebs-csi-controller-sa \
+      `# Do not change the namespace. It is required by EKS.` \
+      --namespace kube-system \
+      --cluster redpanda \
+      --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+      --approve \
+      --role-only \
+      --role-name AmazonEKS_EBS_CSI_DriverRole
+  ```
+
+1. Get your AWS account ID:
+
+  ```bash
+  AWS_ACCOUNT_ID=`aws sts get-caller-identity | jq -r '.Account'`
+  ```
+
+1. Add the EBS CSI add-on:
+
+  ```bash
+  eksctl create addon \
+      --name aws-ebs-csi-driver \
+      --cluster redpanda \
+      --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
+      --force
+  ```
+
+## Deploy Redpanda
+
+<DeployRedpanda/>
+
+## Deploy Redpanda Console
+
+<DeployConsole/>
+
+## Start streaming
+
+<StartStreaming/>
+
+## Explore your topic in Redpanda Console
+
+<ExploreTopics/>
+
+## Configure external access to the Redpanda brokers
+
+Because external clients are not in the Kubernetes cluster where the Redpanda brokers are running, they cannot resolve the internal addresses of the headless ClusterIP Service.
+Instead, Redpanda brokers must also advertise an externally accessible adress that external clients can connect to.
+
+The simplest option for development is to configure the Redpanda brokers to advertise the IP addresses of the worker nodes on which they are running, instead of the default `redpanda-<ordinal-number>.local` hostname.
+
+:::note Only for development and testing
+IP addresses can change. If the IP addresses of your LoadBalancer Services change, you must reconfigure the Redpanda brokers and all your external clients with the new IP addresses.
+:::
+
+:::tip
+In production environments, it's best practice to use DNS. See [Configure External Access through a NodePort Service](../../../../../manage/kubernetes/networking/configure-external-access-nodeport).
+:::
+
+1. Add inbound firewall rules to your instances so that external traffic can reach each node port on all Kubernetes worker nodes in the cluster. See the [Amazon EC2 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/authorizing-access-to-an-instance.html) for details.
+
+1. Find the external IP addresses of all worker nodes in the cluster:
+
+  ```bash
+  kubectl get nodes -o wide
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```text
+  NAME                  EXTERNAL-IP
+  example-worker        203.0.113.3
+  example-worke2        203.0.113.5
+  example-worker3       203.0.113.7
+  ```
+
+  </details>
+
+  This example shows three worker nodes with the external IP addresses `203.0.113.3`, `203.0.113.5`, and `203.0.113.7`.
+
+1. Find out on which worker node each Pod is running:
+
+  ```bash
+  kubectl get pods -o wide -n redpanda
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```text
+  NAME                 NODE
+  redpanda-0           example-worker
+  redpanda-1           example-worker2
+  redpanda-2           example-worker3
+  ```
+
+  </details>
+
+  This example shows that the `redpanda-0` Pod is running on a worker node called `example-worker`. 
+  
+1. Use the node names to find the external IP address of the worker node that runs each Pod. For these examples, the result is the following:
+
+  | Redpanda broker | External IP |
+  |---|---|
+  | redpanda-0 | 203.0.113.3 |
+  | redpanda-1 | 203.0.113.5 |
+  | redpanda-2 | 203.0.113.7 |
+
+  :::note
+  Make sure that the external IP address of the worker node matches the correct Redpanda broker. The worker nodes are not always displayed in the same order as the Pods.
+  :::
+
+1. Create a file called `my-values.yaml` and add the external IP addresses of your worker nodes to the `redpanda.external.addresses` field, making sure to match the order of the Pod names.
+
+  ```yaml title="my-values.yaml"
+  external:
+    addresses: 
+    - 203.0.113.3
+    - 203.0.113.5
+    - 203.0.113.7
+  ```
+
+  :::note
+  The order of the IP addresses is important. Each IP address is assigned to a Redpanda broker to advertise, starting from `redpanda-0`. This is how clients learn how to address individual Redpanda brokers.
+  :::
+
+1. Apply these updates to the Helm deployment:
+
+  ```bash
+  helm upgrade redpanda redpanda/redpanda -n redpanda -f my-values.yaml
+  ```
+
+1. Install rpk on your local machine, not on a Pod:
+
+  <Tabs>
+  <TabItem value="ubuntu" label="Linux" default>
+
+    <InstallRpkLinux/>
+
+  </TabItem>
+
+  <TabItem value="macos" label="macOS">
+
+    <InstallRpkHomebrew/>
+
+  </TabItem>
+  </Tabs>
+
+1. Set the `REDPANDA_BROKERS` environment variable to the external IP addresses of your worker nodes:
+
+  ```bash
+  export REDPANDA_BROKERS=203.0.113.3:31092,203.0.113.5:31092,203.0.113.7:31092
+  ```
+
+  :::note
+  31092 is the Kafka API port that's exposed by the default NodePort Service.
+  :::
+
+1. Get the cluster info:
+
+  ```bash
+  rpk cluster info
+  ```
+
+  <details>
+  <summary>
+  Example output
+  </summary>
+
+  ```text
+  CLUSTER
+  =======
+  redpanda.ad4a2f55-f34e-4a7f-babd-01d392cf4e80
+
+  BROKERS
+  =======
+  ID    HOST           PORT
+  0     203.0.113.3    31092
+  1*    203.0.113.5    31092
+  2     203.0.113.7    31092
+  ```
+
+  </details>
+
+
+## Troubleshooting
+
+### StatefulSet never rolls out
+
+If the StatefulSet Pods remain in a pending state, they may be waiting for resources to become available:
+
+* Make sure that you have a default StorageClass available in your Kubernetes cluster and that the underlying volumes have at least 20Gi of storage capacity.
+
+  ```bash
+  kubectl get storageclass
+  ```
+
+* Make sure that you installed the [Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html). This driver is required to allow EKS to create PersistentVolumes.
+
+### dig not defined
+
+`Error: parse error at (redpanda/templates/statefulset.yaml:203): function "dig" not defined`
+
+If you see this error, make sure that you are using the correct version of Helm. See the [Prerequisites](#prerequisites).
+
+## Next steps
+
+<NextSteps/>
+
+## Suggested reading
+
+<SuggestedReading/>
