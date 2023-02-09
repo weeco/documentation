@@ -4,7 +4,7 @@ title: Cluster Balancing
 
 <head>
     <meta name="title" content="Cluster balancing | Redpanda Docs"/>
-    <meta name="description" content="For balanced clusters, Redpanda provide leadership balancing and partition balancing."/>
+    <meta name="description" content="For balanced clusters, Redpanda provide leadership balancing and partition balancing. It also supports manual partition balancing with rpk and with the Kafka API and the Admin API."/>
 </head>
 
 When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the node with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when nodes are added or decommissioned. 
@@ -19,7 +19,7 @@ Automatic leadership balancing improves cluster performance by transferring lead
 
 Leadership balancing is enabled by default with the `enable_leader_balancer` property.
 
-## Partition balancing in Redpanda
+## Redpanda partition balancing
 
 Partition balancing moves data from hot-loaded nodes to least-loaded nodes to ensure steady-state performance. It ensures predictable and even performance across all nodes in a cluster. Partition balancing is invoked periodically, determined by the `partition_autobalancing_tick_interval_ms` property. Default is 30 seconds.
 
@@ -38,15 +38,36 @@ Select your partition balancing setting with the `partition_autobalancing_mode` 
 | `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. It also monitors rack availability after failures, and for a given partition, it tries to move excess replicas from racks that have more than one replica to racks where there are none. See [Continuous Data Balancing](../continuous-data-balancing).<br /><br />This option requires an Enterprise license.         |
 | `off`     | All partition balancing from Redpanda is turned off. <br /><br />This option is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |
 
+## Manual partition balancing
 
-## Partition balancing in Kafka API
+As an alternative to Redpanda partition balancing, there are several other ways you can to balance the load across the brokers.
 
-As an alternative to Redpanda cluster balancing, you can also assign and change partition assignments explicitely with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the API.
+### rpk
+
+You can move partitions between nodes with rpk: `rpk redpanda replicate`.
+
+### Kafka API
+
+For on-premise implementations, you can change partition assignments explicitly with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the Kafka API.
+
+To reassign partitions with the Kafka API:
+
+1. Set the `partition_autobalancing_mode` property to `off`.
+   
+2. Issue `AlterPartitionAssignments` or `ListPartitionReassignments` with the Kafka API. For example:
+
+  ```bash
+  NEED EXAMPLE USE CASES
+  ```
 
 :::note
-Redpanda does not make guarantees between the partition auto balancer and AlterPartitionReassignments requests. If the balancer is turned on, then it may change partition assignments regardless of an AlterPartitionReassignments request.
+When Redpanda cluster balancing is enabled, it may change partition assignments regardless of an `AlterPartitionReassignments` request.
 :::
 
-examples:
-- how to assign partitions at topic creation with the Kafka API 
-- how to issue AlterPartitionReassignments and ListPartitionReassignments requests with the Kafka API, the Admin API, and rpk
+### Admin API
+
+You can manually assign partitions at topic creation with the Admin API: 
+
+```
+kafka-topics.sh --create --bootstrap-server 127.0.0.1:9092 --topic custom-assignment --replica-assignment 0:1:2,0:1:2,0:1:2 
+```
