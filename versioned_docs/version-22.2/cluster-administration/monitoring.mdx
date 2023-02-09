@@ -10,6 +10,14 @@ You can monitor the health of your system to optimize performance. The most usef
 
 For information about the original metrics available on `:9644/metrics`, see [Internal Metrics](../../reference/internal-metrics).
 
+:::note notes
+The `/public_metrics` endpoint exports different metrics than the `/metrics` endpoint.
+
+Use `/public_metrics` for your primary dashboards for system health.
+
+Use `/metrics` for detailed analysis and debugging.
+:::
+
 ## Configure Prometheus
 
 [Prometheus](https://prometheus.io/) is a systems monitoring and alerting tool. It collects and stores metrics as time-series data identified by metric name and key/value pairs. Redpanda exports Prometheus metrics on `:9644/public_metrics`. To generate the configuration on an existing Prometheus instance, run:

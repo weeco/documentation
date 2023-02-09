@@ -20,9 +20,9 @@ See also:
 
 ## Prepare infrastructure
 
-For best performance, provision hardware according to these requirements:
+Provision hardware according to these requirements:
 
-- XFS for the data directory of Redpanda (`/var/lib/redpanda/data`)
+- XFS for the data directory of Redpanda (`/var/lib/redpanda/data`). NFS is not supported.
 - A kernel that is at least 3.10.0-514, 4.18 or newer
 - Local NVMe, RAID-0 when using multiple disks
 - 2GB of memory per core

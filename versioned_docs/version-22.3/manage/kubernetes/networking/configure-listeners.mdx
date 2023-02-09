@@ -12,6 +12,8 @@ tags:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ValuesYaml from '../shared/_values-yaml.mdx'
+
 
 You can customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether.
 
@@ -153,6 +155,10 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
 </TabItem>
 </Tabs>
+
+:::tip
+<ValuesYaml path="listeners"/>
+:::
 
 ### Disable external access
 
@@ -307,6 +313,10 @@ You can disable external access for all listeners or for individual listeners.
 
 </TabItem>
 </Tabs>
+
+:::tip
+<ValuesYaml path="listeners"/>
+:::
 
 ## Next steps
 

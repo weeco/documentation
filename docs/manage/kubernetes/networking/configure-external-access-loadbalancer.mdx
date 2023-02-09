@@ -12,8 +12,9 @@ tags:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ValuesYaml from '../shared/_values-yaml.mdx'
 
-To expose your Redpanda cluster externally though load balancers, you must do the following:
+To expose your Redpanda cluster externally through load balancers, you must do the following:
 
 1. [Create the LoadBalancer Services](#create-the-loadbalancer-services), one for each broker.
 1. [Configure each Redpanda broker with an advertised address](#configure-advertised-addresses) that points to its LoadBalancer Service.
@@ -174,8 +175,6 @@ If your load balancer instances have a default DNS name, you can configure each 
 
 1. Find the DNS names for each of your load balancers.
 
-  If you're using managed Kubernetes,
-
 1. Add the DNS names to the `external.addresses` field in order. For example, the first DNS name in the list is assigned to `redpanda-0`, the second is assigned to `redpanda-1`, and so on.
 
   <Tabs groupId="helm-config">
@@ -208,6 +207,10 @@ If your load balancer instances have a default DNS name, you can configure each 
 
   </TabItem>
   </Tabs>
+
+  :::tip
+  <ValuesYaml path="external"/>
+  :::
 
 1. Use the load balancers' DNS names to communicate with the Redpanda cluster from outside the Kubernetes cluster:
 
@@ -253,6 +256,10 @@ You can use a DNS provider to create CNAME records that route traffic from the d
 
   </TabItem>
   </Tabs>
+
+  :::tip
+  <ValuesYaml path="external"/>
+  :::
 
 1. Find the DNS names for each of your load balancers.
 
@@ -319,6 +326,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
+      :::tip
+      <ValuesYaml path="external"/>
+      :::
+
     - Or, to use custom subdomains that are suffixed with the index of the StatefulSet replica, do the following.
     
       Replace `<custom-domain>` with your domain, and replace `<custom-subdomain>` with your subdomain.
@@ -355,6 +366,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
+      :::tip
+      <ValuesYaml path="external"/>
+      :::
+
 1. Find the DNS names for each of your load balancers.
 
 1. Update the CNAME record for your domain so that each hostname (subdomain) points to the correct load balancer's DNS name.
@@ -375,6 +390,6 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
 ## Next steps
 
-[Configure security](../../security) for your listeners.
+- [Configure security](../../security) for your listeners.
 
-[Configure external access to specific listeners](../configure-listeners).
+- [Configure listeners](../configure-listeners).

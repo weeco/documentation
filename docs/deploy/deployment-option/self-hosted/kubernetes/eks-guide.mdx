@@ -86,9 +86,9 @@ Before you begin, you must have the following:
 
   ```bash
   eksctl create iamserviceaccount \
-      # Do not change the name. It is required by EKS.
+      `# Do not change the name. It is required by EKS.` \
       --name ebs-csi-controller-sa \
-      # Do not change the namespace. It is required by EKS.
+      `# Do not change the namespace. It is required by EKS.` \
       --namespace kube-system \
       --cluster redpanda \
       --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
