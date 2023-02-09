@@ -13,11 +13,11 @@ Node maintenance mode enables you to take a Redpanda node offline temporarily wh
 A node cannot be decommissioned while it is in maintenance mode. Take the node out of maintenance mode first by running `rpk cluster maintenance disable <node-id>`.
 :::
 
-When a node is placed in maintenance mode, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode.
+When a node is placed in maintenance mode, if the replication factor is greater than one, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode.
 
 :::note notes
 - Maintenance mode only transfers leadership. It does not move any partitions to other nodes in the cluster. 
-- If a node hosts a partition with a replica count of 1, the partition will be unavailable when the Redpanda process is not running.
+- If a node hosts a partition with a replica count of one, the partition will be unavailable when the Redpanda process is not running.
 :::
 
 The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters, draining leadership should take less than a minute. If the cluster is unhealthy (for example, a follower is not in sync with the leader), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
