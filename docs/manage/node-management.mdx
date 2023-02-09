@@ -18,7 +18,7 @@ When a node is placed in maintenance mode, if the replication factor is greater 
 :::note notes
 - Maintenance mode only transfers leadership. It does not move any partitions to other nodes in the cluster. 
 - If a node hosts a partition with a replica count of one, the partition will be unavailable when the Redpanda process is not running.
-:::
+::: 
 
 The amount of time it takes to drain a node and reassign leadership depends on the number of partitions and how healthy the cluster is. For healthy clusters, draining leadership should take less than a minute. If the cluster is unhealthy (for example, a follower is not in sync with the leader), then draining the node can take even longer. Note that the draining process won’t start until the cluster is healthy.
 
