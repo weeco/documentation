@@ -48,26 +48,47 @@ You can move partitions between nodes with rpk: `rpk redpanda replicate`.
 
 ### Kafka API
 
-For on-premise implementations, you can change partition assignments explicitly with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the Kafka API.
+For on-premise implementations, you can change partition assignments explicitly with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the Kafka API. 
 
 To reassign partitions with the Kafka API:
 
 1. Set the `partition_autobalancing_mode` property to `off`.
-   
-2. Issue `AlterPartitionAssignments` or `ListPartitionReassignments` with the Kafka API. For example:
+
+  If Redpanda partition balancing is enabled, Redpanda may change partition assignments regardless of an `AlterPartitionReassignments` request.
+
+1. Show initial replica sets:
 
   ```bash
-  NEED EXAMPLE USE CASES
+  kafka-topics.sh --describe --topic foo --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095
+  Topic: foo	TopicId: rGuGLk-4QN6GFjvDy-R3zA	PartitionCount: 3	ReplicationFactor: 3	Configs: 
+    	Topic: foo	Partition: 0	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1
+    	Topic: foo	Partition: 1	Leader: 3	Replicas: 3,1,0	Isr: 3,1,0
+	    Topic: foo	Partition: 2	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2
   ```
 
-:::note
-When Redpanda cluster balancing is enabled, it may change partition assignments regardless of an `AlterPartitionReassignments` request.
-:::
+3. Run alter partitions with kcl. This example requires replicas on each node for partitions 0-2.
+
+  ```bash
+  kcl -X seed_brokers=localhost:9092,localhost:9093,localhost:9094,localhost:9095 --no-config-file admin partas alter 'foo:0->0,1,2,3;1->0,1,2,3;2->0,1,2,3'
+  foo   2     OK    
+  foo   0     OK    
+  foo   1     OK    
+  ```
+
+4. Show new replica sets:
+
+  ```bash
+  kafka-topics.sh --describe --topic foo --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095
+  Topic: foo	TopicId: rGuGLk-4QN6GFjvDy-R3zA	PartitionCount: 3	ReplicationFactor: 4	Configs: 
+      Topic: foo	Partition: 0	Leader: 2	Replicas: 0,1,2,3	Isr: 2,3,1,0
+	    Topic: foo	Partition: 1	Leader: 3	Replicas: 0,1,2,3	Isr: 3,1,0,2
+	    Topic: foo	Partition: 2	Leader: 1	Replicas: 0,1,2,3	Isr: 1,0,2,3
+  ```
 
 ### Admin API
 
 You can manually assign partitions at topic creation with the Admin API: 
 
-```
+```bash
 kafka-topics.sh --create --bootstrap-server 127.0.0.1:9092 --topic custom-assignment --replica-assignment 0:1:2,0:1:2,0:1:2 
 ```
