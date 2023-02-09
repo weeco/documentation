@@ -547,6 +547,68 @@ Internal RPC TCP send buffer size. If `null` (the default value), no buffer size
 
 ---
 
+### sasl_kerberos_config
+
+The location of the Kerberos `krb5.conf` file for Redpanda.
+
+**Type**: string
+
+**Default**: `/etc/krb5.conf`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_keytab
+
+The location of the Kerberos keytab file for Redpanda.
+
+**Type**: string
+
+**Default**: `/var/lib/redpanda/redpanda.keytab`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_principal
+
+The primary of the Kerberos Service Principal Name (SPN) for Redpanda.
+
+**Type**: string
+
+**Default**: `redpanda`
+
+**Restart required**: no
+
+---
+
+### sasl_kerberos_principal_mapping
+
+Rules for mapping Kerberos principal names to Redpanda user principals.
+
+**Type**: array of string
+
+**Default**: `["DEFAULT"]`
+
+**Restart required**: no
+
+---
+
+### sasl_mechanisms
+
+A list of supported SASL mechanisms. `SCRAM` and `GSSAPI` are allowed.
+
+**Type**: array of string
+
+**Default**: `["SCRAM"]`
+
+**Valid values**: `"SCRAM"`, `"GSSAPI"`
+
+**Restart required**: no
+
+---
+
 ### target_quota_byte_rate
 
 Target quota byte rate.
