@@ -1044,7 +1044,7 @@ For Redpanda versions **earlier than 23.1**:
 - In upgraded clusters, to enable group offset retention, both this flag must be `true` and [group_offset_retention_check_ms](#group_offset_retention_check_ms) must be non-null.
 - When legacy group offset retention is enabled:
   - Only offsets that were committed or updated following the upgrade to 23.1 or later will be automatically collected. Offsets that were committed prior to upgrading to 23.1 or later will never be automatically deleted, and instead need to be manually removed using the Offset Delete API.
-  - The age of an offset is calculated based on when it was committed.
+  - The age of an offset is calculated based on when it was committed (including commits prior to upgrading Redpanda), rather than when this flag was enabled. 
 
 **Type**: boolean
 
