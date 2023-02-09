@@ -80,7 +80,7 @@ To reassign partitions with the Kafka API:
 	    Topic: foo	Partition: 2	Leader: 1	Replicas: 1,0,2	Isr: 1,0,2
   ```
 
-3. Run alter partitions with kcl. This example requires replicas on each node for partitions 0-2.
+3. Run alter partitions with `kcl`. This example requires replicas on each node for partitions 0-2.
 
   ```bash
   kcl -X seed_brokers=localhost:9092,localhost:9093,localhost:9094,localhost:9095 --no-config-file admin partas alter 'foo:0->0,1,2,3;1->0,1,2,3;2->0,1,2,3'
