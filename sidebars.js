@@ -272,7 +272,8 @@ module.exports = {
                       label: "Redpanda Cloud Security Overview",
                       id: "deploy/deployment-option/cloud/security/security-overview",
                     },
-                   ] 
+                   ]
+                }, 
                 {
                   type: "category",
                   label: "Managed Connectors",
