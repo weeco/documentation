@@ -614,6 +614,20 @@ Maximum duration to wait in metadata request for cluster health to be refreshed.
 
 ---
 
+### node_isolation_heartbeat_timeout
+
+If the duration since the last received response to a node's heartbeat request is greater than or equal to this timeout, then the node is considered to be isolated. Redpanda prevents isolated nodes from handling Kafka API requests. 
+
+**Units**: milliseconds
+
+**Default**: 3000
+
+**Range**: [100, 10000]
+
+**Restart required**: no
+
+---
+
 ### node_management_operation_timeout_ms
 
 Timeout for executing node management operations.
