@@ -13,6 +13,7 @@ tags:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import ListenerNodePorts from '../shared/_listener-nodeports.mdx'
+import ValuesYaml from '../shared/_values-yaml.mdx'
 
 By default, Redpanda clusters are exposed through a NodePort Service. When the `external.type` field is set to `NodePort`, the Helm chart creates a NodePort Service that routes external traffic to the following listeners on the Redpanda brokers:
 
@@ -71,6 +72,10 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
   ```
   </TabItem>
   </Tabs>
+
+  :::tip
+  <ValuesYaml path="external"/>
+  :::
 
 1. Find out on which worker nodes your Redpanda brokers are running.
 
@@ -153,6 +158,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
+      :::tip
+      <ValuesYaml path="external"/>
+      :::
+
     - Or, to use custom subdomains that are suffixed with the index of the StatefulSet replica, do the following.
     
       Replace `<custom-domain>` with your domain, and replace `<custom-subdomain>` with your subdomain.
@@ -188,6 +197,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       </TabItem>
       </Tabs>
+
+      :::tip
+      <ValuesYaml path="external"/>
+      :::
 
 1. Find out on which worker nodes your Redpanda brokers are running.
 
@@ -275,6 +288,10 @@ You can configure each Redpanda broker to advertise the IP address of the worker
   </TabItem>
   </Tabs>
 
+  :::tip
+  <ValuesYaml path="external"/>
+  :::
+
   :::warning
   IP addresses can change. If the IP addresses of your worker nodes change, you must reconfigure the Redpanda brokers and all your external clients with the new IP addresses.
   :::
@@ -287,7 +304,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
 
 ## Next steps
 
-[Configure individual listeners](#configure-specific-listeners).
+- [Configure security](../../security) for your listeners.
 
-[Configure security](../../security) for your listeners.
+- [Configure listeners](../configure-listeners).
 

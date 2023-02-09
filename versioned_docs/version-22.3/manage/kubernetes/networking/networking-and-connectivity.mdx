@@ -41,7 +41,7 @@ When a headless Service is associated with a StatefulSet, each Pod gets its own 
 3. Service namespace
 4. Cluster domain
 
-The Redpanda brokers advertise these addresses so that internal clients can connect to individual brokers, and brokers within the same cluster can communicate with eachother. For example, this is the Kafka API configuration for a Redpanda broker running in a Pod called `redpanda-0` in the `redpanda` namespace:
+The Redpanda brokers advertise these addresses so that internal clients can connect to individual brokers, and brokers within the same cluster can communicate with each other. For example, this is the Kafka API configuration for a Redpanda broker running in a Pod called `redpanda-0` in the `redpanda` namespace:
 
 ```yaml title="/etc/redpanda/redpanda.yaml"
 redpanda:
