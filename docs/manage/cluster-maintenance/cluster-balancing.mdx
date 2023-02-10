@@ -124,7 +124,7 @@ To reassign partitions with the Kafka API:
 
 - Redpanda supports shard-level partition assignments. Therefore, when resolving a partition reassignment, Redpanda automatically determines the shard placements. If you want a topic-partition on a specific shard, you must use the Admin API.
 
-- When there are two identical `AlterPartitionReassignments` requests, Redpanda rejects one of them with the error `no_reassignment_in_progress`.
+- When there are two identical partition reassignment requests, Redpanda rejects one of them with the error `no_reassignment_in_progress`.
 
 ### Assign partitions with Admin API
 
