@@ -44,7 +44,7 @@ As an alternative to Redpanda partition balancing, you can change partition assi
 
 To reassign partitions with the Kafka API:
 
-1. Set the `partition_autobalancing_mode` property to `off`. If Redpanda partition balancing is enabled, Redpanda may change partition assignments regardless of an `AlterPartitionReassignments` request.
+1. Set the `partition_autobalancing_mode` property to `off`. If Redpanda partition balancing is enabled, Redpanda may change partition assignments regardless of what you do through the Kafka API.
 
 2. Show initial replica sets. For example, for topic `foo`:
   ```bash
