@@ -118,7 +118,7 @@ To reassign partitions with the Kafka API:
 
 - Kafka comes with a shell script to issue `AlterPartitionReassignments` requests: `kafka-reassign-partitions.sh`. This script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flag `--preserve-throttles` to avoid errors.
 
-- Kafka supports `AlterPartitionReassignments` requests to upreplicate or dereplicate a topic partition. Redpanda currently doesn't support this.
+- Kafka supports uprelication or dereplication via partition reassignments. Redpanda currently doesn't support this.
 
 - In a partition reassignment, users must provide the node ID for each replica. Kafka validates the node ID for any new replica (that wasn't in the previous replica set) against the list of alive nodes. Redpanda validates all replicas against the list of alive nodes.
 
