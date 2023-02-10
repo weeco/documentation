@@ -120,7 +120,7 @@ To reassign partitions with the Kafka API:
 
 - Kafka supports `AlterPartitionReassignments` requests to upreplicate or dereplicate a topic partition. Redpanda currently doesn't support this.
 
-- An `AlterPartitionReassignments` request lists the IDs for each replica. Kafka validates the node ID for any new replica (that wasn't in the previous replica set) against the list of alive nodes. Redpanda validates all replicas against the list of alive nodes.
+- In a partition reassignment, users must provide the node ID for each replica. Kafka validates the node ID for any new replica (that wasn't in the previous replica set) against the list of alive nodes. Redpanda validates all replicas against the list of alive nodes.
 
 - Redpanda supports shard-level partition assignments. Therefore, when resolving a partition reassignment, Redpanda automatically determines the shard placements. If you want a topic-partition on a specific shard, you must use the Admin API.
 
