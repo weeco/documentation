@@ -48,6 +48,8 @@ Redpanda built the schema registry directly into the Redpanda binary. The schema
 
 Every broker allows mutating REST calls, so there is no need to configure leadership or failover strategies. Schema are stored in a compacted topic, and the registry uses optimistic concurrency control at the topic level to detect and avoid collisions.
 
+Schema registry publishes its records' metadata to an internal topic, `_schemas`, as its backend store. By default, `_schemas` is protected from deletion and configuration changes by Kafka clients (see the [kafka_nodelete_topics](../../reference/cluster-properties#kafka_nodelete_topics) cluster property).
+
 ## Use schema registry
 
 The following examples cover the basic functionality of the Redpanda schema registry based on an example Avro schema called `sensor_sample`. This schema contains fields that represent a measurement from a sensor for the value of the `sensor` topic, as defined below.
