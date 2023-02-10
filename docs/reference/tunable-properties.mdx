@@ -108,6 +108,18 @@ Interval for cloud storage housekeeping tasks.
 
 ---
 
+### cloud_storage_idle_timeout_ms
+
+Timeout used to detect idle state of the cloud storage API. If no API requests are made for at least this timeout's duration, the cloud storage is considered idle.
+
+**Units**: milliseconds
+
+**Default**: 10000 (10 sec)
+
+**Restart required**: no
+
+---
+
 ### cloud_storage_initial_backoff_ms
 
 Initial backoff time for exponential backoff algorithm.
@@ -224,6 +236,18 @@ Interval at which the archival service runs reconciliation.
 
 ---
 
+### cloud_storage_recovery_temporary_retention_bytes_default
+
+The number of bytes of size-based retention for topics that are created during automated recovery of topics from cloud storage.
+
+**Units**: bytes
+
+**Default**: 1073741824 (1 GiB)
+
+**Restart required**: no
+
+---
+
 ### cloud_storage_segment_max_upload_interval_sec
 
 Duration that a segment can be kept in local storage without uploading it to remote storage. If `null`, defaults to infinite duration.
@@ -233,6 +257,30 @@ Duration that a segment can be kept in local storage without uploading it to rem
 **Default**: null (infinite duration)
 
 **Restart required**: yes
+
+---
+
+### cloud_storage_segment_size_target
+
+The desired segment size in cloud storage. If `null`, the property is disabled, and the segment size in cloud storage defaults to `segment.bytes`.
+
+**Units**: bytes
+
+**Default**: null
+
+**Restart required**: no
+
+---
+
+### cloud_storage_segment_size_min
+
+The minimum segment size in cloud storage. If `null`, the property is disabled, and the minimum segment size defaults to [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)/2.
+
+**Units**: bytes
+
+**Default**: null
+
+**Restart required**: no
 
 ---
 
@@ -407,6 +455,20 @@ Maximum capacity of accumulated requests for the cluster controller's node manag
 **Restart required**: no
 
 **Related properties**: [rps_limit_node_management_operations](#rps_limit_node_management_operations) 
+
+---
+
+### controller_log_accummulation_rps_capacity_topic_operations
+
+Maximum capacity of accumulated requests for the cluster controller's topic management operations. If `null`, no maximum capacity is applied.
+
+**Type**: unsigned integer
+
+**Units**: number of requests
+
+**Default**: null
+
+**Restart required**: no
 
 ---
 
@@ -1811,6 +1873,18 @@ Target bytes to replay from disk on startup after a clean shutdown. Controls the
 **Default**: 10737418240 (10 GiB)
 
 **Range**: [128 MiB, 1 TiB]
+
+**Restart required**: no
+
+---
+
+### tx_log_stats_interval_s
+
+Period for which to log transmit (tx) statistics per partition.  Requires the tx logger's log-level to be at least `debug`.
+
+**Units**: seconds
+
+**Default**: 10
 
 **Restart required**: no
 
