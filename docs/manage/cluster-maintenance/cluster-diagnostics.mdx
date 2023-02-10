@@ -298,6 +298,10 @@ LATENCY     P50    P90    P99    P999   MAX
 
 </details>
 
+:::note
+If self-test returns write results that are unexpectedly and significantly lower than read results, it may be because the Redpanda `rpk` client hardcodes the `DSync` option to `true`. When `DSync` is enabled, files are opened with the `O_DSYNC` flag set, and this represents the actual setting that Redpanda uses when it writes to disk.   
+:::
+
 To stop a running self-test, run the `self-test stop` command.
 
 ```
