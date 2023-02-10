@@ -534,19 +534,22 @@ Principal mapping rules for mTLS authentication on the Kafka API. If `null`, the
 
 ### kafka_nodelete_topics
 
-A list of topics that are not deleted by the Kafka API. Set by default to a list of Redpanda internal topics.
+A list of topics that are protected from deletion and configuration changes by Kafka clients. Set by default to a list of Redpanda internal topics.
 
-**Default**: {"__audit", "__consumer_offsets", "__redpanda_e2e_probe", "__schemas"}
+**Default**: `['__audit', '__consumer_offsets', '__redpanda_e2e_probe', '__schemas']`
 
 **Restart required**: no
+
+**Related topics**:
+- [Consumer offsets](../../develop/consume-data/consumer-offsets)
 
 ---
 
 ### kafka_noproduce_topics
 
-A list of topics that have no messages produced to them by the Kafka API. Set by default to a list of Redpanda internal topics.
+A list of topics that are protected from being produced to by Kafka clients. Set by default to a list of Redpanda internal topics.
 
-**Default**: {"__audit"}
+**Default**: `['__audit']`
 
 **Restart required**: no
 
