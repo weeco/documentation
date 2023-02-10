@@ -83,7 +83,7 @@ To reassign partitions with the Kafka API:
   }
   ```
 
-4. Execute partition reassignments with the `kafka-reassign-partitions.sh` script. This example uses `example.json` as the name of your JSON file:
+4. Execute partition reassignments with the `kafka-reassign-partitions.sh` script. This example uses `example.json` as the name of the JSON file:
 
   ```bash
   kafka-reassign-partitions.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095 --reassignment-json-file example.json --execute
@@ -104,11 +104,7 @@ To reassign partitions with the Kafka API:
   Reassignment of partition foo-2 is complete.
   ```
 
-  :::note
-  For details on why `--preserve-throttles` is necessary, see the section "Differences between Redpanda and Kafka".
-  :::
-
-  Alternatively, run `rpk` again to show verify your reassigned replica sets:
+  Alternatively, run `rpk` again to show your reassigned replica sets:
 
   ```bash
   rpk topic describe foo -p
@@ -120,7 +116,7 @@ To reassign partitions with the Kafka API:
 
 ### AlterPartitionReassignments in Redpanda
 
-- Kafka comes with a shell script to issue `AlterPartitionReassignments` requests: `kafka-reassign-partitions.sh`. This script attempts to use some throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Redpanda users should include the flag `--preserve-throttles` to avoid errors.
+- Kafka comes with a shell script to issue `AlterPartitionReassignments` requests: `kafka-reassign-partitions.sh`. This script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flag `--preserve-throttles` to avoid errors.
 
 - Kafka supports `AlterPartitionReassignments` requests to upreplicate or dereplicate a topic partition. Redpanda currently doesn't support this.
 
