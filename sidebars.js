@@ -339,6 +339,18 @@ module.exports = {
                     label: "Rack Awareness",
                     id: "manage/kubernetes/kubernetes-rack-awareness",
                   },
+                  {
+                    type: "category",
+                    label: "Troubleshooting",
+                    link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Diagnostics Bundle",
+                        id: "manage/kubernetes/troubleshooting/diagnostics-bundle",
+                      }
+                    ],
+                  },
                 ],
               },
               {
