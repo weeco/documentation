@@ -7,26 +7,24 @@ title: Cluster Balancing
     <meta name="description" content="For balanced clusters, Redpanda provide leadership balancing and partition balancing. It also supports manual partition balancing with rpk and with the Kafka API and the Admin API."/>
 </head>
 
-When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the node with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when nodes are added or decommissioned. 
+When a topic is created, Redpanda evenly distributes its partitions by sequentially allocating them to the broker with the least number of partitions. By default, Redpanda provides leadership balancing and partition rebalancing when brokers are added or decommissioned. 
 
-With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor node and rack availability and disk usage. This enables self-healing clusters that dynamically balance partitions. It also continuously maintains adherence to rack-aware replica placement policy and self heals after rack (or availability zone) failure or replacement. See [Configure Continuous Data Balancing](../continuous-data-balancing).
+With an Enterprise license, you can additionally enable *Continuous Data Balancing* to continuously monitor broker and rack availability and disk usage. This enables self-healing clusters that dynamically balance partitions. It also continuously maintains adherence to rack-aware replica placement policy and self heals after rack (or availability zone) failure or replacement. See [Configure Continuous Data Balancing](../continuous-data-balancing).
 
-Cluster balancing protects you from unbalanced systems that saturate resources on one or more nodes. This can affect throughput and latency. Furthermore, a cluster with replicas on a down node risks availability loss if more nodes fail, and a cluster that keeps losing nodes without healing eventually risks data loss.
+Cluster balancing protects you from unbalanced systems that saturate resources on one or more brokers. This can affect throughput and latency. Furthermore, a cluster with replicas on a down broker risks availability loss if more brokers fail, and a cluster that keeps losing brokers without healing eventually risks data loss.
 
 ## Leadership balancing
 
-Automatic leadership balancing improves cluster performance by transferring leadership for a node's partitions to other replicas. Automatic leadership balancing changes where data is read to and written to first. It doesn't move any data.
-
-Leadership balancing is enabled by default with the `enable_leader_balancer` property.
+Automatic leadership balancing improves cluster performance by transferring leadership for a broker's partitions to other replicas. Leadership balancing is enabled by default with the `enable_leader_balancer` property. Automatic leadership balancing changes where data is read to and written to first. It doesn't move any data. For more information, see [Partition leadership elections](../../../get-started/architecture/#partition-leadership-elections).
 
 ## Redpanda partition balancing
 
-Partition balancing moves data from hot-loaded nodes to least-loaded nodes to ensure steady-state performance. It ensures predictable and even performance across all nodes in a cluster. Partition balancing is invoked periodically, determined by the `partition_autobalancing_tick_interval_ms` property. Default is 30 seconds.
+Partition balancing moves data from hot-loaded brokers to least-loaded brokers to ensure steady-state performance. It ensures predictable and even performance across all brokers in a cluster. Partition balancing is invoked periodically, determined by the `partition_autobalancing_tick_interval_ms` property. Default is 30 seconds.
 
-By default, Redpanda rebalances partition distribution when nodes are added or decommissioned. Continuous Data Balancing additionally rebalances partitions when nodes become unavailable or when disk space usage exceeds a threshold. 
+By default, Redpanda rebalances partition distribution when brokers are added or decommissioned. Continuous Data Balancing additionally rebalances partitions when brokers become unavailable or when disk space usage exceeds a threshold. 
 
-* Monitoring unavailable nodes lets Redpanda self-heal clusters by moving partitions from a failed node to a healthy node.
-* Monitoring low disk space lets Redpanda distribute partitions across nodes with enough disk space. If free disk space reaches a critically low level, Redpanda blocks clients from producing. For information about the disk space threshold and alert, see [Handle full disks](../disk-utilization/#handle-full-disks).
+* Monitoring unavailable brokers lets Redpanda self-heal clusters by moving partitions from a failed broker to a healthy broker.
+* Monitoring low disk space lets Redpanda distribute partitions across brokers with enough disk space. If free disk space reaches a critically low level, Redpanda blocks clients from producing. For information about the disk space threshold and alert, see [Handle full disks](../disk-utilization/#handle-full-disks).
 
 ### Partition balancing settings
 
@@ -34,11 +32,11 @@ Select your partition balancing setting with the `partition_autobalancing_mode` 
 
 | Setting      | Description |
 | ----------- | ----------- |
-| `node_add`      | Partition balancing happens when nodes are added.  <br /><br />This is the default setting.|
-| `continuous`   | In this mode, Redpanda continuously monitors the cluster for node failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. It also monitors rack availability after failures, and for a given partition, it tries to move excess replicas from racks that have more than one replica to racks where there are none. See [Configure Continuous Data Balancing](../continuous-data-balancing).<br /><br />This option requires an Enterprise license.     |
-| `off`     | All partition balancing from Redpanda is turned off. <br /><br />This option is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |
+| `node_add`      | Partition balancing happens when brokers are added.  <br /><br />This is the default setting.|
+| `continuous`   | In this mode, Redpanda continuously monitors the cluster for broker failures and high disk usage. It uses this information to automatically redistribute partitions across the cluster to maintain optimal performance and availability. It also monitors rack availability after failures, and for a given partition, it tries to move excess replicas from racks that have more than one replica to racks where there are none. See [Configure Continuous Data Balancing](../continuous-data-balancing).<br /><br />This option requires an Enterprise license.     |
+| `off`     | All partition balancing from Redpanda is turned off. <br /><br />This mode is not recommended for production clusters. Only set to `off` if you need to move partitions manually.   |
 
-## Partition balancing with the Kafka API
+## Partition balancing with Kafka API
 
 As an alternative to Redpanda partition balancing, you can change partition assignments explicitly with the Kafka API or with any 3rd-party tool in the Kafka ecosystem that controls partition movement using the Kafka API. 
 
@@ -55,7 +53,7 @@ To reassign partitions with the Kafka API:
   2          3       1      [0 1 3]   0                 672
   ```
 
-1. Put all partition reassignments in a JSON file. For example, to replace node 0 with another node in the replica sets of partitions 1 and 2:
+3. Put all partition reassignments in a JSON file. For example, to replace broker 0 with another broker in the replica sets of partitions 1 and 2:
    
   ```json
   {
@@ -95,7 +93,7 @@ To reassign partitions with the Kafka API:
   Successfully started partition reassignments for foo-1,foo-2
   ```
 
-5. Verify that the reassignment is complete with the flags `--verify --preserve-throttles`: 
+1. Verify that the reassignment is complete with the flag `--preserve-throttles`: 
 
   ```bash
   kafka-reassign-partitions.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095 --reassignment-json-file example.json --verify --preserve-throttles
@@ -118,13 +116,13 @@ To reassign partitions with the Kafka API:
 
 - Kafka comes with a shell script to issue partition reassignments: `kafka-reassign-partitions.sh`. This script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flag `--preserve-throttles` to avoid errors.
 
-- Kafka supports uprelication or dereplication via partition reassignments. Redpanda currently doesn't support this.
+- Kafka supports uprelication or dereplication through partition reassignments. Redpanda currently doesn't support this.
 
-- In a partition reassignment, users must provide the node ID for each replica. Kafka validates the node ID for any new replica (that wasn't in the previous replica set) against the list of alive nodes. Redpanda validates all replicas against the list of alive nodes.
+- In a partition reassignment, users must provide the broker ID for each replica. Kafka validates the broker ID for any new replica (that wasn't in the previous replica set) against the list of alive brokers. Redpanda validates all replicas against the list of alive brokers.
 
 - Redpanda supports shard-level partition assignments. Therefore, when resolving a partition reassignment, Redpanda automatically determines the shard placements. If you want a topic-partition on a specific shard, you must use the Admin API.
 
-- When there are two identical partition reassignment requests, Redpanda rejects one of them with the error `no_reassignment_in_progress`.
+- When there are two identical partition reassignment requests, Redpanda rejects one with the error `no_reassignment_in_progress`.
 
 ### Assign partitions with Admin API
 
