@@ -114,7 +114,7 @@ To reassign partitions with the Kafka API:
   2          2       1      [1 2 3]   0                 0
   ```  
 
-### AlterPartitionReassignments in Redpanda
+### Differences in partition balancing between Redpanda and Kafka
 
 - Kafka comes with a shell script to issue `AlterPartitionReassignments` requests: `kafka-reassign-partitions.sh`. This script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flag `--preserve-throttles` to avoid errors.
 
