@@ -32,10 +32,9 @@ Before it starts, `self-test start` asks for your confirmation to run its potent
 
 ```
 $ rpk cluster self-test start
-? Invoking the redpanda self tests may put excessive pressure on your system. It attempts to benchmark disk and network hardware to find their max throughputs. Its advised to not start the test if there are already large workloads running on the system. (Y/n)
+? Redpanda self-test will run benchmarks of disk and network hardware that will consume significant system resources. Do not start self-test if large workloads are already running on the system. (Y/n)
 Redpanda self-test has started, test identifier: "031be460-246b-46af-98f2-5fc16f03aed3", To check the status run:
    rpk cluster self-test status    
-
 ```
 
 </details>

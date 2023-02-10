@@ -4,25 +4,27 @@ title: rpk cluster self-test start
 
 <head>
   <meta name="title" content="rpk cluster self-test start | Redpanda Docs" />
-  <meta name="description" content="rpk cluster self-test start" />
+  <meta name="description" content="Reference for the 'rpk cluster self-test start' command. Starts one or more benchmark tests on one or more nodes of the cluster." />
 </head>
 
 Starts one or more benchmark tests on one or more nodes of the cluster. 
 
-The benchmark tests that can be run:
+Available tests to run:
 
 - **Disk tests**
-  - Throughput test (512 KB request messages, sequential read/write)
-    - Higher request size and deeper I/O queue depth sacrifices IOPS/latency numbers in order to read/write more bytes in a shorter amount of time.
-  - Latency test (4 KB request messages, sequential read/write)
-    - Smaller request size and lower levels of parallelism to achieve higher IOPS and lower latency results.
+  - Throughput test: 512 KB messages, sequential read/write
+    - Uses a larger request message sizes and deeper I/O queue depth to write/read more bytes in a shorter amount of time, at the cost of IOPS/latency.
+  - Latency test: 4 KB messages, sequential read/write
+    - Uses smaller request message sizes and lower levels of parallelism to achieve higher IOPS and lower latency.
 
 - **Network tests**
-  - Throughput test (8192 bit messages)
-    * Unique pairs of Redpanda nodes act as a client and a server.
-    * Benchmark test pushes as much data over the wire within the duration of test parameters.
+  - Throughput test: 8192-bit messages
+    - Unique pairs of Redpanda nodes each act as a client and a server.
+    - The test pushes as much data over the wire, within the test parameters.
 
-This command will immediately return once invoked with success. The benchmark tests are run asynchronously. It is up to the user to periodically check back for the result set using the [rpk cluster self-test status](../../rpk-cluster/rpk-cluster-self-test-status) command.
+This command immediately returns on success, and the tests run asynchronously. The
+user polls for results with the [rpk cluster self-test status](../../rpk-cluster/rpk-cluster-self-test-status)
+command.
 
 ### Usage
 
@@ -162,6 +164,15 @@ rpk cluster self-test start [flags]
     </tr>   
   </tbody>
 </table>
+
+### Example output
+
+```
+$ rpk cluster self-test start
+? Redpanda self-test will run benchmarks of disk and network hardware that will consume significant system resources. Do not start self-test if large workloads are already running on the system. (Y/n)
+Redpanda self-test has started, test identifier: "031be460-246b-46af-98f2-5fc16f03aed3", To check the status run:
+   rpk cluster self-test status    
+```
 
 ### Related topics
 

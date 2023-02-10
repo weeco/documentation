@@ -4,16 +4,19 @@ title: rpk cluster self-test status
 
 <head>
   <meta name="title" content="rpk cluster self-test status | Redpanda Docs" />
-  <meta name="description" content="rpk cluster self-test status" />
+  <meta name="description" content="Reference for the 'rpk cluster self-test status' command. Queries the status of the currently running or last completed self-test run." />
 </head>
 
-Returns status of currently running self-test or the last completed test.
+Queries the status of the currently running or last completed self-test run. Returns the status of the currently running or last completed self-test run.
 
-Use this command after invoking [rpk cluster self-test start](../../rpk-cluster/rpk-cluster-self-test-start) to determine the status of the jobs launched. 
+Use this command after invoking [rpk cluster self-test start](../../rpk-cluster/rpk-cluster-self-test-start) to determine the status of
+the jobs launched. Possible results are:
 
-If one or more jobs are still running, then the command returns the node IDs of Redpanda nodes that are still running self-tests.
+- One or more jobs still running
+  - Returns the IDs of Redpanda nodes still running self-tests.
 
-If no jobs are running, then the command returns the last completed test results for all nodes. 
+- No jobs running
+  - Returns cached results for all nodes of the last completed test.
 
 ### Usage
 
