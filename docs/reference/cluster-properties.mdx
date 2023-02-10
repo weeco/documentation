@@ -330,7 +330,7 @@ When the disk usage of a node exceeds this threshold, it triggers Redpanda to mo
 
 ### kafka_admin_topic_api_rate
 
-Target quota rate for partition mutations per [default_window_sec](../tunable-properties#default_window_sec). It's an optional property; if `null`, the property is disabled.
+Target quota rate for partition mutations per [default_window_sec](../tunable-properties#default_window_sec). If `null`, the property is disabled, and no quota rate is applied.
 
 **Units**: partition mutations per default_window_second
 
@@ -860,7 +860,7 @@ Target quota byte rate.
 
 ### target_fetch_quota_byte_rate
 
-Target fetch-size quota byte rate. It's an optional property; if `null`, the property is disabled.
+Target fetch-size quota byte rate. If `null`, the property is disabled, and no quota byte rate is applied.
 
 **Units**: bytes per second
 
