@@ -471,3 +471,11 @@ h5 {
 [class*=iconExternalLink] {
   display: none;
 }
+
+.markdown h1 {
+  font-size: 2.4em;
+}
+
+.markdown h1:first-child {
+  margin-bottom: 0.7rem;
+}

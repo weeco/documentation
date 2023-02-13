@@ -2,7 +2,19 @@
 
 .features {
   display: flex;
-  align-items: center;
+  align-items: left;
+  padding: 0 0;
+  width: 100%;
+  flex-direction: column;
+}
+
+.features h2 {
+  margin: 0;
+}
+
+.highlights {
+  display: flex;
+  align-items: left;
   padding: 2rem 0;
   width: 100%;
   flex-direction: column;

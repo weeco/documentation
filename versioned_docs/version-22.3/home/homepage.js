@@ -43,7 +43,7 @@ const FeatureList = [
     image: require('../../../static/img/console-icon.png').default,
     description: (
       <>
-        Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
+        Administer clusters and explore data streams with the Redpanda Console dashboard.
       </>
     ),
     url: '/docs/get-started/quick-start/quick-start-docker',
@@ -139,17 +139,21 @@ const FooterMenuList = [
 
 export default function HomepageFeatures() {
   return (
+    <>
     <section className={styles.features}>
-      <Grid gap="2rem" minWidth="300px" title='Most Visited'>
+      <Grid gap="2rem" minWidth="300px">
         {FeatureList.map((props, idx) => (
           <Feature key={idx} {...props} />
         ))}
       </Grid>
+    </section>
+    <section className={styles.highlights}>
       <Grid gap="3.85rem" minWidth="175px" title='Highlights'>
         {FooterMenuList.map((props, idx) => (
           <FooterMenu key={idx} {...props} />
         ))}
       </Grid>
     </section >
+    </>
   );
 }

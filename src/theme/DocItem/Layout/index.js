@@ -195,6 +195,11 @@ export default function DocItemLayout({ children }) {
   const { editUrl } = metadata;
   const [show, setShow] = useState(false);
   const [positiveFeedback, setPositiveFeedback] = useState(true);
+  let isDocsHome = false
+  if(typeof window !== 'undefined') {
+    const docsHomeUrlPattern = /\/docs\/[A-Za-z0-9.\/]*home/
+    isDocsHome = docsHomeUrlPattern.test(window.location.href);
+  }
   // Hide the feedback thumbs in the Toc when the user reaches the bottom of the page.
   useEffect(() => {
     document.addEventListener('scroll', function(e){
@@ -217,8 +222,8 @@ export default function DocItemLayout({ children }) {
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
-            <DocBreadcrumbs />
-            <DocVersionBadge />
+            {!isDocsHome && <DocBreadcrumbs />}
+            {!isDocsHome && <DocVersionBadge />}
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>
             <DocItemFooter />

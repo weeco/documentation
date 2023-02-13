@@ -7,9 +7,7 @@ a.featureLink:hover h2,
 a.featureLink:focus h2 {
   text-decoration: underline;
 }
-a.featureLink:hover .featureBox {
-  border-color: var(--ifm-color-emphasis-600);
-}
+
 
 /* Component styles */
 .featureBox {
@@ -26,6 +24,19 @@ a.featureLink:hover .featureBox {
   padding: 1rem;
   align-content: flex-start;
   transition: 100ms ease all;
+  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.featureBox p {
+  margin-bottom: 1rem;
+}
+
+.featureBox:hover {
+  box-shadow: 0px 3px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.featureBox:active {
+  box-shadow: 0px 0px 0px 0 rgba(0, 0, 0, 0.2);
 }
 
 .featureImage {
