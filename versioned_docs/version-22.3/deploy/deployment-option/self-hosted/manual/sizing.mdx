@@ -90,7 +90,7 @@ Ensure that the fio job runs against the chosen block device. By default, fio op
 ```bash
 $ sudo apt -y update; sudo apt -y install fio
 $ cd /var/lib/redpanda/data
-$ sudo cat < fio-seq-write.job << EOF
+$ sudo cat > fio-seq-write.job << EOF
 [global]
 name=fio-seq-write
 filename=fio-seq-write
