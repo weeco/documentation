@@ -1000,11 +1000,17 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 
 Local retention size target for partitions of topics with cloud storage write enabled. If `null`, the property is disabled.
 
+:::note
+Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set, and the  limit that is reached earlier is applied.
+:::
+
 **Units**: bytes
 
 **Default**: null
 
 **Restart required**: no
+
+**Related properties**: [retention_local_target_ms_default](#retention_local_target_ms_default)
 
 ---
 
@@ -1012,11 +1018,17 @@ Local retention size target for partitions of topics with cloud storage write en
 
 Local retention time target for partitions of topics with cloud storage write enabled.
 
+:::note
+Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set, and the  limit that is reached earlier is applied.
+:::
+
 **Units**: milliseconds
 
 **Default**: 86400000 (24 hours)
 
 **Restart required**: no
+
+**Related properties**: [retention_local_target_bytes_default](#retention_local_target_bytes_default)
 
 ---
 
