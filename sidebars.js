@@ -123,29 +123,58 @@ module.exports = {
                       id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
                     },
                     {
-                      type: "doc",
-                      label: "Tutorial: Get Started with Kubernetes",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/get-started-dev",
+                      type: "category",
+                      label: "Production Deployment Workflow",
+                      link: {type: "doc", id: "deploy/deployment-option/self-hosted/kubernetes/production-workflow"},
+                      items: [
+                        {
+                          type: "doc",
+                          label: "Kubernetes Cluster Requirements",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
+                        },
+                        {
+                          type: "doc",
+                          label: "Best Practices",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices",
+                        },
+                        {
+                          type: "doc",
+                          label: "Tune Worker Nodes",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers",
+                        },
+                        {
+                          type: "doc",
+                          label: "Deploy Redpanda",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy",
+                        },
+                      ]
                     },
                     {
-                      type: "doc",
-                      label: "Kubernetes Cluster Requirements",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
-                    },
-                    {
-                      type: "doc",
-                      label: "Best Practices",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices",
-                    },
-                    {
-                      type: "doc",
-                      label: "Tune Worker Nodes",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers",
-                    },
-                    {
-                      type: "doc",
-                      label: "Deploy Redpanda",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy",
+                      type: "category",
+                      label: "Guides",
+                      link: {type: "doc", id: "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"},
+                      items: [
+                        {
+                          type: "doc",
+                          label: "AKS",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/aks-guide",
+                        },
+                        {
+                          type: "doc",
+                          label: "Amazon EKS",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/eks-guide",
+                        },
+                        {
+                          type: "doc",
+                          label: "GKE",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/gke-guide",
+                        },
+                        {
+                          type: "doc",
+                          label: "Local (kind and Minikube)",
+                          id: "deploy/deployment-option/self-hosted/kubernetes/local-guide",
+                        },
+                      ]
                     },
                   ]
                 },
@@ -310,6 +339,18 @@ module.exports = {
                     label: "Rack Awareness",
                     id: "manage/kubernetes/kubernetes-rack-awareness",
                   },
+                  {
+                    type: "category",
+                    label: "Troubleshooting",
+                    link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Diagnostics Bundle",
+                        id: "manage/kubernetes/troubleshooting/diagnostics-bundle",
+                      }
+                    ],
+                  },
                 ],
               },
               {
@@ -334,6 +375,11 @@ module.exports = {
                     id: "manage/cluster-maintenance/rolling-upgrade",
                   },
                   "manage/cluster-maintenance/disk-utilization",
+                  {
+                    type: "doc",
+                    label: "Manage Throughput",
+                    id: "manage/cluster-maintenance/manage-throughput",
+                  },
                   {
                     type: "doc",
                     label: "Configure Availability",
@@ -464,6 +510,23 @@ module.exports = {
         "reference/node-properties",
         "reference/node-configuration-sample",
         "reference/api-reference",
+        {
+          type: "category",
+          label: "Monitoring Metrics",
+          link: { type: "doc", id: "reference/monitor-metrics" },
+          items: [
+            {
+              type: "doc",
+              label: "Public Metrics Reference",
+              id: "reference/public-metrics-reference",
+            },
+            {
+              type: "doc",
+              label: "Internal Metrics Reference",
+              id: "reference/internal-metrics-reference",
+            }, 
+          ]
+        },
         {
           type: "category",
           label: "rpk Commands",
@@ -751,7 +814,6 @@ module.exports = {
                   },
                   items: [
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune",
-                    "reference/rpk/rpk-redpanda/rpk-redpanda-tune-help",
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune-list",
                   ],
                 },
@@ -824,7 +886,6 @@ module.exports = {
             "reference/redpanda-operator/crd",
           ],
         },
-        "reference/internal-metrics",
         {
           type: "link",
           label: "Release Notes",
