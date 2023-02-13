@@ -9,6 +9,19 @@ title: Redpanda Cloud Overview
     brokers or customer data."/>
 </head>
 
+## Architecture
+
+Redpanda Cloud offers fully managed and dedicated Redpanda clusters as a service,
+which you can deploy in your cloud account or in the Redpanda Cloud, either in AWS
+or GCP. Redpanda Cloud continuously monitors and maintains your Redpanda clusters
+along with the underlying Redpanda Cloud infrastructure to meet strict performance,
+availability, reliability, and security requirements. These clusters are also
+deployed with an integrated and dedicated Redpanda Console and, optionally, with
+a fully managed Kafka Connect and Connectors cluster as well.
+
+Redpanda Cloud supports Dedicated clusters and Bring Your Own Cloud (BYOC) clusters,
+which are clusters running in your cloud account.
+
 Redpanda Cloud employs a control plane and data plane architecture that ensures
 no human has direct access to Redpanda brokers or customer data.
 
@@ -53,3 +66,46 @@ no human has direct access to Redpanda brokers or customer data.
   that exist in and between the Redpanda Cloud control plane and data plane.
 
 ![Redpanda Cloud Security Architecture](../../../../static/img/control-plane.png)
+
+## Ways to provision clusters
+
+Redpanda offers two ways to provision clusters in the cloud:
+* Dedicated Cloud
+* Bring Your Own Cloud (BYOC)
+
+Both methods offer the following features:
+* Single-zone or multi-zone availability
+    * A single-zone cluster is deployed in one availability zone. If that
+      availability zone fails, the cluster becomes unavailable.
+    * A multi-zone cluster is deployed across three availability zones, which
+      provides higher resiliency in the event of a failure in one of the zones.
+* Private networking using VPC peering
+* Ability to export metrics to a 3rd-party monitoring system
+* [Managed connectors](../managed-connectors)
+* Unlimited retention with Tiered Storage
+
+### Dedicated cloud
+
+With the Dedicated Cloud, you host your data in Redpanda’s Virtual Private Cloud
+(VPC), and Redpanda handles provisioning, operations, and maintenance. Redpanda
+also performs automatic backups to S3 (for AWS) or GCS (for GCP).
+
+Dedicated clusters are single-tenant deployments launched from the Redpanda
+control plane. The Redpanda cluster is created in Redpanda’s VPC, and the
+endpoints are exposed so you can produce or consume events.
+
+### BYOC
+
+When you choose BYOC, you deploy Redpanda in your own VPC, so that all data is
+contained in your own environment. There is no outbound connection from your VPC
+to the Redpanda VPC in the control or data path, which provides an additional
+layer of security and isolation.
+
+Redpanda handles provisioning, monitoring, and upgrades. You can choose AWS or
+GCP as your cloud provider.
+
+Setting up a BYOC cluster is initiated from the Redpanda control plane. This is
+a two-step process:
+1. You bootstrap a Virtual Machine (VM) in your VPC. This VM spins up the agent
+   and the required infrastructure.
+2. The agent communicates with the control plane to pull the control commands.
