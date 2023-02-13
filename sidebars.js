@@ -228,12 +228,11 @@ module.exports = {
                 {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
-                  id: "deploy/deployment-option/cloud/dedicated-byoc",
+                  id: "deploy/deployment-option/cloud/cloud-overview",
                 },
                 {
                   type: "category",
-                  label: "Redpanda Dedicated",
-
+                  label: "Provision a Dedicated Cluster",
                   items: [
                     {
                       type: "doc",
@@ -248,19 +247,26 @@ module.exports = {
                   ],
                 },
                 {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on AWS",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
-                },
-                {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on GCP",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                  type: "category",
+                  label: "Provision a BYOC Cluster",
+                  items: [
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on AWS",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws" },
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on GCP",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                    },
+                  ]
                 },
                 {
                   type: "doc",
                   label: "Create a Topic",
                   id: "deploy/deployment-option/cloud/create-topic",
+                  }
                 },
                 {
                   type: "category",
@@ -273,7 +279,7 @@ module.exports = {
                       id: "deploy/deployment-option/cloud/security/security-overview",
                     },
                    ]
-                }, 
+                },
                 {
                   type: "category",
                   label: "Managed Connectors",
