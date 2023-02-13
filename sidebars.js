@@ -349,6 +349,11 @@ module.exports = {
                     label: "Cluster Properties",
                     id: "manage/cluster-maintenance/cluster-property-configuration",
                   },  
+                  {
+                    type: "doc",
+                    label: "Cluster Diagnostics",
+                    id: "manage/cluster-maintenance/cluster-diagnostics",
+                  }, 
                 ]
               },
               
@@ -594,6 +599,20 @@ module.exports = {
                     "reference/rpk/rpk-cluster/rpk-cluster-partitions",
                     "reference/rpk/rpk-cluster/rpk-cluster-partitions-balancer-status",
                     "reference/rpk/rpk-cluster/rpk-cluster-partitions-movement-cancel",
+                  ],
+                },
+                {
+                  type: "category",
+                  label: "rpk cluster self-test",
+                  link: {
+                    type: "doc",
+                    id: "reference/rpk/rpk-cluster/rpk-cluster-self-test",
+                  },
+                  items: [
+                    "reference/rpk/rpk-cluster/rpk-cluster-self-test",
+                    "reference/rpk/rpk-cluster/rpk-cluster-self-test-start",
+                    "reference/rpk/rpk-cluster/rpk-cluster-self-test-status",
+                    "reference/rpk/rpk-cluster/rpk-cluster-self-test-stop",
                   ],
                 },
               ],
