@@ -103,7 +103,7 @@ so that the cluster can recover from a single-broker failure.
         - --overprovisioned
         # enable logs for debugging.
         - --default-log-level=debug
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       container_name: redpanda-0
       volumes:
         - redpanda-0:/var/lib/redpanda/data
@@ -116,7 +116,7 @@ so that the cluster can recover from a single-broker failure.
         - 19644:9644
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/vectorized/console:vVAR::CONSOLE_VERSION_2_1
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
       networks:
         - redpanda_network
       entrypoint: /bin/sh
@@ -221,7 +221,7 @@ so that the cluster can recover from a single-broker failure.
         - --overprovisioned
         # enable logs for debugging.
         - --default-log-level=debug
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       container_name: redpanda-0
       volumes:
         - redpanda-0:/var/lib/redpanda/data
@@ -256,7 +256,7 @@ so that the cluster can recover from a single-broker failure.
         - --overprovisioned
         - --default-log-level=debug
         - --seeds redpanda-0:33145
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       container_name: redpanda-1
       volumes:
         - redpanda-1:/var/lib/redpanda/data
@@ -293,7 +293,7 @@ so that the cluster can recover from a single-broker failure.
         - --overprovisioned
         - --default-log-level=debug
         - --seeds redpanda-0:33145
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       container_name: redpanda-2
       volumes:
         - redpanda-2:/var/lib/redpanda/data
@@ -308,7 +308,7 @@ so that the cluster can recover from a single-broker failure.
         - redpanda-0
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/vectorized/console:vVAR::CONSOLE_VERSION_2_1
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
       networks:
         - redpanda_network
       entrypoint: /bin/sh
@@ -553,6 +553,6 @@ Explore the rpk commands that you used in this quickstart:
 
 ### Docker images
 
-Find the [Docker images for Redpanda](https://hub.docker.com/r/vectorized/redpanda) on Docker Hub.
+Find the [Docker images for Redpanda](https://hub.docker.com/u/redpandadata/redpanda) on Docker Hub.
 
-Find the [Docker images for Redpanda Console](https://hub.docker.com/r/vectorized/console/tags) on Docker Hub.
+Find the [Docker images for Redpanda Console](https://hub.docker.com/u/redpandadata/console/tags) on Docker Hub.

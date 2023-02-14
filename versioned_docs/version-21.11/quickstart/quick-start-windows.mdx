@@ -21,7 +21,7 @@ Don’t forget that in order for Docker for Windows to work, you have to [enable
 
 ## Executing directly from Docker repository
 
-The [Docker image for Redpanda](https://hub.docker.com/r/vectorized/redpanda) is hosted in Docker Hub.
+The [Docker image for Redpanda](https://hub.docker.com/u/redpandadata/redpanda) is hosted in Docker Hub.
 
 
 ### Setting a 1-node cluster
@@ -33,7 +33,7 @@ docker run -d --pull=always --name=redpanda-1 --rm ^
 -p 8082:8082 ^
 -p 9092:9092 ^
 -p 9644:9644 ^
-docker.redpanda.com/vectorized/redpanda:latest ^
+docker.redpanda.com/redpandadata/redpanda:latest ^
 redpanda start ^
 --overprovisioned ^
 --smp 1  ^
@@ -74,7 +74,7 @@ docker run -d ^
 -p 9092:9092 ^
 -p 9644:9644 ^
 -v "redpanda1:/var/lib/redpanda/data" ^
-docker.redpanda.com/vectorized/redpanda redpanda start ^
+docker.redpanda.com/redpandadata/redpanda redpanda start ^
 --smp 1  ^
 --memory 1G  ^
 --reserve-memory 0M ^
@@ -96,7 +96,7 @@ docker run -d ^
 -p 8083:8083 ^
 -p 9093:9093 ^
 -v "redpanda2:/var/lib/redpanda/data" ^
-docker.redpanda.com/vectorized/redpanda redpanda start ^
+docker.redpanda.com/redpandadata/redpanda redpanda start ^
 --smp 1  ^
 --memory 1G  ^
 --reserve-memory 0M ^
@@ -119,7 +119,7 @@ docker run -d ^
 -p 8084:8084 ^
 -p 9094:9094 ^
 -v "redpanda3:/var/lib/redpanda/data" ^
-docker.redpanda.com/vectorized/redpanda redpanda start ^
+docker.redpanda.com/redpandadata/redpanda redpanda start ^
 --smp 1  ^
 --memory 1G  ^
 --reserve-memory 0M ^
@@ -146,7 +146,7 @@ version: '3.7'
 services:
   redpanda:
     # NOTE: Please use the latest version here!
-    image: docker.redpanda.com/vectorized/redpanda:v21.11.15
+    image: docker.redpanda.com/redpandadata/redpanda:v21.11.15
     container_name: redpanda-1
     command:
     - redpanda

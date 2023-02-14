@@ -264,7 +264,7 @@ Check the status of the cluster:
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 cluster info
 ```
@@ -274,7 +274,7 @@ Next, create a topic in the cluster. This command creates five chat rooms in the
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic create chat-rooms -p 5
 ```
@@ -284,7 +284,7 @@ View the list of topics:
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic list
 ```
@@ -294,7 +294,7 @@ Produce to the topic:
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
+--image docker.redpanda.com/redpandadata/redpanda \
 -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 
@@ -307,7 +307,7 @@ Consume (read) from the topic:
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
+--image docker.redpanda.com/redpandadata/redpanda \
 -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 

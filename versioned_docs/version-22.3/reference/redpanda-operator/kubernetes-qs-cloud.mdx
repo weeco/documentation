@@ -308,7 +308,7 @@ Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Red
   ```bash
   kubectl -n panda-chat run -ti --rm \
   --restart=Never \
-  --image docker.redpanda.com/vectorized/redpanda:$VERSION \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
   -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
   cluster info
   ```
@@ -318,7 +318,7 @@ Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Red
   ```bash
   kubectl -n panda-chat run -ti --rm \
   --restart=Never \
-  --image docker.redpanda.com/vectorized/redpanda:$VERSION \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
   -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
   topic create chat-rooms -p 5
   ```
@@ -328,7 +328,7 @@ Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Red
   ```bash
   kubectl -n panda-chat run -ti --rm \
   --restart=Never \
-  --image docker.redpanda.com/vectorized/redpanda:$VERSION \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
   -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
   topic list
   ```
@@ -338,7 +338,7 @@ Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Red
   ```bash
   kubectl -n panda-chat run -ti --rm \
   --restart=Never \
-  --image docker.redpanda.com/vectorized/redpanda \
+  --image docker.redpanda.com/redpandadata/redpanda \
   -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
   ```
 
@@ -352,7 +352,7 @@ Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Red
   ```bash
   kubectl -n panda-chat run -ti --rm \
   --restart=Never \
-  --image docker.redpanda.com/vectorized/redpanda \
+  --image docker.redpanda.com/redpandadata/redpanda \
   -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
   ```
 

@@ -43,7 +43,7 @@ volumes:
   redpanda: null
 services:
   redpanda:
-    image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+    image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
     command:
       - redpanda start
       - --smp 1
@@ -64,7 +64,7 @@ services:
       - redpanda_network
 
   console:
-    image: docker.redpanda.com/vectorized/console:vVAR::CONSOLE_VERSION_2_1
+    image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
@@ -105,7 +105,7 @@ services:
       - redpanda
 
   connect:
-    image: docker.redpanda.com/vectorized/connectors:1.0.0-dev-dff1c57
+    image: docker.redpanda.com/redpandadata/connectors:1.0.0-dev-dff1c57
     hostname: connect
     container_name: connect
     networks:
@@ -156,7 +156,7 @@ To request a trial license, to extend your trial period, or to purchase an Enter
     redpanda: null
   services:
     redpanda:
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       command:
         - redpanda start
         - --smp 1
@@ -187,7 +187,7 @@ To request a trial license, to extend your trial period, or to purchase an Enter
         - /etc/redpanda/redpanda.license
         # rpk connects to the admin API of one broker to set the license key for the whole cluster.
         - --api-urls redpanda:9644
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
       # mount the local directory that contains your license key to the container.
       # give Redpanda read and write access to the license.
       volumes:
@@ -199,7 +199,7 @@ To request a trial license, to extend your trial period, or to purchase an Enter
 
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/vectorized/console:vVAR::CONSOLE_VERSION_2_1
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
       # mount the local directory that contains your license key to the container.
       # give Redpanda Console read access to the license.
       volumes:
