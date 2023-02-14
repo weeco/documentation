@@ -840,6 +840,42 @@ Timeout to wait for new members to join a consumer group.
 
 ---
 
+### group_offset_retention_check_ms
+
+Period at which Redpanda checks for expired consumer group offsets.
+
+**Units**: milliseconds
+
+**Default**: 600000 (10 min)
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_sec](#group_offset_retention_sec)
+- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
+
+---
+
+### group_offset_retention_sec
+
+The retention duration of consumer group offsets. Redpanda identifies offsets that are expired, based on this retention duration, and removes them to reclaim storage. For a consumer group, the retention timeout starts from when the group becomes empty by losing all its consumers; for a standalone consumer, the retention timeout starts from the time of the last commit. Once elapsed, an offset is considered to be expired and is discarded. 
+
+Redpanda periodically checks for expired offsets at the rate set by [group_offset_retention_check_ms](#group_offset_retention_check_ms). 
+
+If `null`, the automatic offset retention feature is disabled.
+
+**Units**: seconds
+
+**Default**: 604800 (7 days)
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
+- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
+
+---
+
 ### group_topic_partitions
 
 Number of partitions in the internal group membership topic.
@@ -1009,6 +1045,30 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 **Range**: [512, 512 KiB]. Must be 4096-byte aligned.
 
 **Restart required**: yes
+
+---
+
+### legacy_group_offset_retention_enabled
+
+With group offset retention enabled by default starting in Redpanda version 23.1, this flag enables group offset retention for deployments of Redpanda upgraded from earlier versions. 
+
+For Redpanda versions **23.1 and later**, this flag has no effect.
+
+For Redpanda versions **earlier than 23.1**: 
+- In upgraded clusters, to enable group offset retention, this flag must be `true` and [group_offset_retention_check_ms](#group_offset_retention_check_ms) must be non-null.
+- When legacy group offset retention is enabled:
+  - Only offsets that were committed or updated following the upgrade to 23.1 or later will be automatically collected. Offsets that were committed prior to upgrading to 23.1 or later will never be automatically deleted, and instead need to be manually removed using the Offset Delete API.
+  - The age of an offset is calculated based on when it was committed rather than when this flag was enabled. 
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: no
+
+**Related properties**: 
+- [group_offset_retention_sec](#group_offset_retention_sec)
+- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
 
 ---
 
