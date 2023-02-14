@@ -26,11 +26,12 @@ auth:
     enabled: true
     users:
       - name: admin
-        password: changeme
+        password: 'changeme'
 ```
 
-:::note
-In this YAML file, `auth.sasl.users` is a list of superusers.
+:::note notes
+- In this YAML document, `users` is a list of superusers.
+- Put passwords in single quotes to avoid conflicts with special characters. Enclosing characters in single quotes preserves the literal value of each character.
 :::
 
 During install or upgrade, enable SASL configuration:

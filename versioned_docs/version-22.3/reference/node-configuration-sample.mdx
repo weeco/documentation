@@ -4,16 +4,16 @@ title: Node Configuration Template
 
 <head>
     <meta name="title" content="Node configuration template | Redpanda Docs"/>
-    <meta name="description" content="Node configuration template with properties description."/>
+    <meta name="description" content="Redpanda node configuration YAML template with properties description."/>
 </head>
 
 ## Sample configuration
 
 The following `redpanda.yaml` configuration file includes a complete list of all node properties and their descriptions. 
-For a summary of all available node properties refer to [node configuration properties reference](../node-properties).
+For a summary of all available node properties, see [node configuration properties reference](../node-properties).
 
 :::caution
-This is not a valid Redpanda configuration file, but it shows the parameters that you can configure in the `redpanda.yaml` file.
+This is not a valid Redpanda configuration file, but it shows the properties you can configure in the `redpanda.yaml` file. Ensure that all values entered are properly enclosed in quotes and escaped as necessary. For example, put passwords with special characters in single quotes.
 :::
 
 ```yaml
@@ -334,7 +334,7 @@ rpk:
     # The SASL config, if enabled in the brokers.
     sasl:
       user: user
-      password: pass
+      password: 'pass'
       type: SCRAM-SHA-256
 
   # The Admin API configuration
