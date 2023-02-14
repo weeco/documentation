@@ -77,19 +77,6 @@
   width: 100%;
 }
 
-.container code {
-  max-width: 100%;
-}
-
-code > span > span {
-    white-space: pre-wrap;
-}
-
-.container code > span {
-  display: block;
-}
-
-
 html[data-theme='dark'] {
   --ifm-toc-border-color: var(--v-black);
 }
@@ -149,6 +136,13 @@ div .admonition-content > ul > li > a {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+  }  
+}
+
+/* Prevent right-nav TOC from appearing below footer */
+@media screen and (max-width: 1008px)  {
+  [class*='stickyToc']{
+    display: none;
   }
 }
 
@@ -279,7 +273,19 @@ code {
 }
 .container code {
   background: var(--v-gray3);
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 50vmax;
 }
+
+code > span > span {
+  white-space: pre-wrap;
+}
+
+.container code > span {
+display: block;
+}
+
 .container code span:not(.comment) {
   
 }
