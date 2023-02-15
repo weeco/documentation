@@ -4,7 +4,7 @@ title: Deploy for Production
 
 <head>
     <meta name="title" content="Deploy for Production | Redpanda Docs"/>
-    <meta name="description" content="Steps to deploy Redpanda in production."/>
+    <meta name="description" content="Steps to deploy a Redpanda production cluster"/>
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -139,8 +139,12 @@ sudo rpk redpanda config set redpanda.empty_seed_starts_cluster false && \
 sudo systemctl start redpanda-tuner redpanda
 ```
 
-- The `--self` flag tells Redpanda to which interface address to bind. Usually this is its private IP.
-- The `--ips` flag lists all the seed nodes in the cluster (seed nodes correspond to the `seed_servers` property in `redpanda.yaml`).
+- The `--self` flag tells Redpanda the interface address to bind to. Usually this is its private IP.
+- The `--ips` flag lists all the seed nodes in the cluster, including the one being started. Seed nodes correspond to the `seed_servers` property in `redpanda.yaml`. 
+
+  :::note
+  The `--ips` flag must be set *identically* (with nodes listed in identical order) on each node.
+  :::
 
 When a Redpanda cluster starts, it instantiates a controller Raft group with all the seed nodes that are specified in the `--ips` flag. After all seed nodes complete their startup procedure and become accessible, the cluster is then available. After that, non-seed nodes start up and are added to the cluster.
 
