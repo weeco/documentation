@@ -471,3 +471,7 @@ h5 {
 [class*=iconExternalLink] {
   display: none;
 }
+
+body {
+  color:black;
+}
