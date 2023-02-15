@@ -131,6 +131,17 @@ div .admonition-content > ul > li > a {
   margin-top: 0;
 }
 
+/* Don't wrap right-nav TOC in main-doc container when screen width > 996px */ 
+[class*=docMainContainer] .container .row {
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 996px)  {
+  [class*=docMainContainer] .container .row {
+    flex-wrap: wrap;
+  }
+}
+
 @media screen and (max-width: 966px)  {
   table{
   display: block;
@@ -139,12 +150,6 @@ div .admonition-content > ul > li > a {
   }  
 }
 
-/* Prevent right-nav TOC from appearing below footer */
-@media screen and (max-width: 1008px)  {
-  [class*='stickyToc']{
-    display: none;
-  }
-}
 
 table tr td {
   text-align: left !important;
