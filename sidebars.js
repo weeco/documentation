@@ -253,7 +253,7 @@ module.exports = {
                     {
                       type: "doc",
                       label: "Create a BYOC Cluster on AWS",
-                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws" },
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
                     },
                     {
                       type: "doc",
@@ -266,7 +266,6 @@ module.exports = {
                   type: "doc",
                   label: "Create a Topic",
                   id: "deploy/deployment-option/cloud/create-topic",
-                  }
                 },
                 {
                   type: "category",
