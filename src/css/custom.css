@@ -452,7 +452,7 @@ span[class*="dropdownMenu_"] {
 }
 
 .menu__link {
-  color: black;
+  color: #000;
 }
 
 .menu__link--active {
