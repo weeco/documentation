@@ -614,20 +614,6 @@ Maximum duration to wait in metadata request for cluster health to be refreshed.
 
 ---
 
-### node_isolation_heartbeat_timeout
-
-If the duration since the last received response to a node's heartbeat request is greater than or equal to this timeout, then the node is considered to be isolated. Redpanda prevents isolated nodes from handling Kafka API requests. 
-
-**Units**: milliseconds
-
-**Default**: 3000
-
-**Range**: [100, 10000]
-
-**Restart required**: no
-
----
-
 ### node_management_operation_timeout_ms
 
 Timeout for executing node management operations.
@@ -840,42 +826,6 @@ Timeout to wait for new members to join a consumer group.
 
 ---
 
-### group_offset_retention_check_ms
-
-Period at which Redpanda checks for expired consumer group offsets.
-
-**Units**: milliseconds
-
-**Default**: 600000 (10 min)
-
-**Restart required**: no
-
-**Related properties**: 
-- [group_offset_retention_sec](#group_offset_retention_sec)
-- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
-
----
-
-### group_offset_retention_sec
-
-The retention duration of consumer group offsets. Redpanda identifies offsets that are expired, based on this retention duration, and removes them to reclaim storage. For a consumer group, the retention timeout starts from when the group becomes empty by losing all its consumers; for a standalone consumer, the retention timeout starts from the time of the last commit. Once elapsed, an offset is considered to be expired and is discarded. 
-
-Redpanda periodically checks for expired offsets at the rate set by [group_offset_retention_check_ms](#group_offset_retention_check_ms). 
-
-If `null`, the automatic offset retention feature is disabled.
-
-**Units**: seconds
-
-**Default**: 604800 (7 days)
-
-**Restart required**: no
-
-**Related properties**: 
-- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
-- [legacy_group_offset_retention_enabled](#legacy_group_offset_retention_enabled)
-
----
-
 ### group_topic_partitions
 
 Number of partitions in the internal group membership topic.
@@ -1048,33 +998,9 @@ Maximum size of the user-space receive buffer. If `null`, this limit is not appl
 
 ---
 
-### legacy_group_offset_retention_enabled
-
-With group offset retention enabled by default starting in Redpanda version 23.1, this flag enables group offset retention for deployments of Redpanda upgraded from earlier versions. 
-
-For Redpanda versions **23.1 and later**, this flag has no effect.
-
-For Redpanda versions **earlier than 23.1**: 
-- In upgraded clusters, to enable group offset retention, this flag must be `true` and [group_offset_retention_check_ms](#group_offset_retention_check_ms) must be non-null.
-- When legacy group offset retention is enabled:
-  - Only offsets that were committed or updated following the upgrade to 23.1 or later will be automatically collected. Offsets that were committed prior to upgrading to 23.1 or later will never be automatically deleted, and instead need to be manually removed using the Offset Delete API.
-  - The age of an offset is calculated based on when it was committed rather than when this flag was enabled. 
-
-**Type**: boolean
-
-**Default**: false
-
-**Restart required**: no
-
-**Related properties**: 
-- [group_offset_retention_sec](#group_offset_retention_sec)
-- [group_offset_retention_check_ms](#group_offset_retention_check_ms)
-
----
-
 ### max_kafka_throttle_delay_ms
 
-The maximum delay inserted in the data path of Kafka API requests to throttle them down. Configuring this to be less than the Kafka client timeout can ensure that the delay that's inserted won't be long enough to cause a client timeout by itself. 
+Fail-safe maximum throttle delay on Kafka requests.
 
 **Units**: milliseconds 
 
@@ -1507,42 +1433,6 @@ Maximum size of a segment of the key-value store.
 **Default**: 16777216 (16 MiB)
 
 **Restart required**: yes
-
----
-
-### log_segment_ms_min
-
-The lower bound for the topic property `segment.ms` and the cluster property `log_segment_ms`, where lower values are clamped to this.
-
-**Units**: milliseconds
-
-**Default**: 60000 (60 sec)
-
-**Range**: [60000 (60 sec), ...]
-
-**Restart required**: no
-
-**Related properties**: 
-- [log_segment_ms_max](#log_segment_ms_max)
-- [log_segment_ms](../cluster-properties#log_segment_ms)
-
----
-
-### log_segment_ms_max
-
-The upper bound for the topic property `segment.ms` and the cluster property `log_segment_ms`, where higher values are clamped to this.
-
-**Units**: milliseconds
-
-**Default**: 31536000000 (365 days)
-
-**Range**: [60000 (60 sec), ...]
-
-**Restart required**: no
-
-**Related properties**: 
-- [log_segment_ms_min](#log_segment_ms_min)
-- [log_segment_ms](../cluster-properties#log_segment_ms)
 
 ---
 
@@ -2011,7 +1901,7 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 ## Wasm properties
 
 :::caution
-[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
+[Redpanda Data Transforms](../labs/data-transform.mdx), built on top of Wasm, is a lab feature and is not supported for production deployments.
 :::
 
 ### coproc_max_batch_size
@@ -2068,8 +1958,8 @@ Interval for which all coprocessor offsets are flushed to disk.
 
 ## Related topics
 
-- [Cluster Configurable Properties](../cluster-properties)
-- [Node Configuration Properties](../node-properties)
+- [Cluster Configurable Properties](./cluster-properties.mdx)
+- [Node Configuration Properties](./node-properties.mdx)
 ## Suggested reading
 - [Benchmark of Redpanda and Apache Kafka](https://redpanda.com/blog/fast-and-safe/)
 - [Fast distributed transactions with Redpanda](https://redpanda.com/blog/fast-transactions/)

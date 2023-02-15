@@ -120,31 +120,6 @@ Keep in mind that very large segments prevent compaction, and very small segment
 
 For details about how to modify cluster configuration properties, see [Cluster configuration](../cluster-property-configuration). 
 
-### Log rolling
-
-Writing data for a topic usually spans multiple log segments. An **active segment** of a topic is a log segment that is being written to. As data of a topic is written and an active segment becomes full (reaches `log_segment_size`), it's closed and changed to read-only mode, and a new segment is created, set to read-write mode, and becomes the active segment. **Log rolling** is the rotation between segments to create a new active segment.
-
-Log rolling can also be triggered by configurable timeouts. This is useful when topic retention limits need to be applied within a known fixed duration. A log rolling timeout starts from the first write to an active segment. When a timeout elapses before the segment is full, the segment is rolled. The timeouts are configured with cluster-level and topic-level properties:
-
-* [log_segment_ms](../../../reference/cluster-properties#log_segment_ms) (or `log.roll.ms`) is a cluster property that configures the default segment rolling timeout for all topics of a cluster.
-
-  To set `log_segment_ms` for all topics of a cluster for a duration in milliseconds:
-
-    ```bash
-    rpk cluster config set log_segment_ms <segment_ms_duration>
-    ```
-
-* `segment.ms` is a topic-level property that configures the default segment rolling timeout for one topic. It's not set by default. If set, it overrides `log_segment_ms`.
-
-  To set `segment.ms` for a topic: 
-
-    ```bash
-    rpk topic alter-config <topic> --set segment.ms=<segment_ms_duration>
-    ```
-
-* [log_segment_ms_min](../../../reference/tunable-properties#log_segment_ms_min) and [log_segment_ms_max](../../../reference/tunable-properties#log_segment_ms_max) are cluster-level properties that configure the lower and upper limits, respectively, of log rolling timeouts.
-
-
 ## Handle full disks
 
 If you exceed your low disk space threshold, Redpanda blocks clients from producing. In that state, Redpanda returns errors to external writers, but it still allows internal write traffic, such as replication and rebalancing. 

@@ -13,7 +13,7 @@ Node maintenance mode enables you to take a Redpanda node offline temporarily wh
 A node cannot be decommissioned while it is in maintenance mode. Take the node out of maintenance mode first by running `rpk cluster maintenance disable <node-id>`.
 :::
 
-When a node is placed in maintenance mode, if the replication factor is greater than one, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode. 
+When a node is placed in maintenance mode, if the replication factor is greater than one, it reassigns partition leadership to other nodes in the cluster. The node is not eligible for partition leadership again until it is taken out of maintenance mode.
 
 :::note notes
 - Maintenance mode only transfers leadership. It does not move any partitions to other nodes in the cluster. 
