@@ -10,10 +10,10 @@ title: Deploy for Production
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-To start deploying for production, follow the guide for your deployment type:
+To start deploying for production, choose the guide for your deployment type:
 
 - [**Default deployment**](#default-deployment) - use default supported deployment tools.
-- [**Custom deployment**](#custom-deployment) - use custom deployment tools.
+- [**Custom deployment**](#custom-deployment) - use custom unsupported deployment tools.
 
 ---
 
@@ -199,7 +199,7 @@ rpk topic create panda
 
 ## Custom deployment
 
-Redpanda supports several deployment tools for setting up a cluster:
+This section provides information for creating your own automation for deploying Redpanda clusters without using any of the tools that Redpanda supports for setting up a cluster:
 
 - Ansible Playbook
 - Helm Chart
@@ -208,10 +208,6 @@ Redpanda supports several deployment tools for setting up a cluster:
 :::tip
 Redpanda strongly recommends using one of these supported deployment tools. See [Automate Deploying for Production](../../production/production-deployment-automation).
 :::
-
-This section provides information for anyone creating their own 
-automation for deploying Redpanda clusters; that is, anyone not using one
-of these supported tools.
 
 ### Configure bootstrapping
 
