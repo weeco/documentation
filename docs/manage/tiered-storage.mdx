@@ -242,7 +242,7 @@ After topic configuration, if Tiered Storage was disabled and must be enabled, o
 
 #### Compacted topics in Tiered Storage
 
-To save space, Redpanda compacts segments after they have been uploaded to cloud storage. Redpanda initially uploads all (non-compacted) segments. It then re-uploads the segments with compaction applied.
+To save space, Redpanda compacts segments after they have been uploaded to cloud storage. Redpanda initially uploads all (non-compacted) segments. It then reuploads the segments with compaction applied.
 
 ## Remote write
 
@@ -372,6 +372,34 @@ Redpanda uses the following properties to configure transport. Edit them with th
 | `cloud_storage_segment_max_upload_interval_sec` | The number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. |
 | `cloud_storage_trust_file` | The public certificate used to validate the TLS connection to cloud storage. If this is empty, Redpanda uses your operating system's CA cert pool. |
 
+## Cloud storage housekeeping
+
+To improve performance and scalability, Redpanda performs cloud storage housekeeping when the system is idle. This housekeeping includes adjacent segment merging, which analyzes the data layout of the partition in the cloud. If it finds a run of small segments, it can merge and reupload the segment.
+
+To determine when the system is idle for housekeeping, Redpanda constantly calculates cloud storage utilization using the moving average with a sliding window algorithm. The width of the sliding window is defined by the `cloud_storage_idle_timeout_ms` property, which has a default of 10 seconds. If the utilization (requests per second) drops below the threshold, then cloud storage is considered idle, and cloud storage housekeeping begins. The threshold is defined by the `cloud_storage_idle_threshold_rps` property, which has a default of one request per second. Cloud storage is considered idle if, during the last 10 seconds, there were 10 or less cloud storage API requests.
+
+If the cloud storage API becomes active after housekeeping begins, then housekeeping is paused until it becomes idle again. If cloud storage is not idle for `cloud_storage_housekeeping_interval_ms milliseconds`, then housekeeping is forced to run until it completes. This guarantees that all housekeeping jobs are run once for every `cloud_storage_housekeeping_interval_ms`. 
+
+### Adjacent segment merging
+
+By default, and as part of housekeeping, Redpanda runs adjacent segment merging on all segments in the cloud that are smaller than the threshold. Two properties control the behavior of `cloud_storage_enable_segment_merging`:
+
+- `cloud_storage_segment_size_target`: This is the desired segment size in cloud storage. The default segment size is the local segment size for the topic, which is controlled by the `log_segment_size` configuration property and the `segment.bytes` topic configuration property. You can set the `cloud_storage_segment_size_target` property to a value larger than this default segment size, but because that triggers a lot of segment reuploads, it's not recommended. 
+  
+- `cloud_storage_segment_size_min`: This is the smallest segment size that Redpanda keeps in the cloud. The default size is 50% of `log_segment_size`.
+
+If the adjacent segment merging job finds a run of small segments, it can perform one of the following operations:
+
+- Merge and reupload a segment with a size up to `cloud_storage_segment_size_target`.
+- Merge and reupload a segment with a size less than `cloud_storage_segment_size_min` if there are no other options (the run of small segments is followed by the large segment).
+- Wait until new segments are added if the run is at the end of the partition.
+
+Suppose the `cloud_storage_segment_max_upload_interval_ms` property is set and the partition contains a large number of small segments. For example, if `cloud_storage_segment_max_upload_interval_ms` is set to 10 minutes and the produce rate is 1 MiB per minute, then Redpanda uploads a new 10 MiB segment every 10 minutes. If adjacent segment merging is enabled and `cloud_storage_segment_size_target` is set to 500 MiB, then every 50 segments are reuploaded as one large 500 MiB segment. This doubles the amount of data that Redpanda uploads to cloud storage, but it also reduces the memory footprint of the partition, which results in better scalability. This is because 98% less memory is needed to keep information about the uploaded segment.
+
+:::note 
+Adjacent segment merging doesn't work for compacted topics, because compacted segments are reuploaded after they're compacted. The results are the same.
+:::
+
 ## Tiered Storage configuration properties
 
 The following list contains cluster-level configuration properties for Tiered Storage. Edit them with the `rpk cluster config edit` command. Configure or verify the following properties before you use Tiered Storage:
@@ -407,6 +435,11 @@ You may want to configure the following properties:
 | `cloud_storage_max_connection_idle_time_ms` | The maximum idle time for persistent HTTP connections. Differs depending on the cloud provider. Default is 5000 ms, which is sufficient for most providers. |
 | `cloud_storage_segment_max_upload_interval_sec` | Sets the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. |
 | `cloud_storage_cache_check_interval` | The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they consume a lot of resources. Default is 30000 ms. |
+| `cloud_storage_idle_timeout_ms` | The width of the sliding window for the moving average algorithm that calculates cloud storage utilization. Default is 10 seconds. |
+| `cloud_storage_idle_threshold_rps` | The utilization threshold for cloud housekeeping. Cloud storage is considered idle if, during the last 10 seconds, there were 10 or less cloud storage API requests. Default is 1 request per second.  |
+| `cloud_storage_enable_segment_merging`  | Enables adjacent segment merging on all segments in the cloud that are smaller than the threshold. Two properties control this behavior: `cloud_storage_segment_size_target` and `cloud_storage_segment_size_min`. Default is enabled. |
+| `cloud_storage_segment_size_target` | The desired segment size in cloud storage. The default segment size is controlled by `log_segment_size` and the `segment.bytes` topic configuration property. This property can be set to a value larger than this default segment size, but because that triggers a lot of segment reuploads, it's not recommended. |
+| `cloud_storage_segment_size_min` | The smallest segment size in the cloud that Redpanda keeps. Default is 50% of log segment size. |
 
 Under normal circumstances, you should not need to configure the following properties:
 
@@ -426,4 +459,4 @@ Under normal circumstances, you should not need to configure the following prope
 
 ## Suggested reading
 
-- [How we built Shadow Indexing, the subsystem powering Tiered Storage](https://redpanda.com/blog/tiered-storage-architecture-shadow-indexing-deep-dive/)
+- [How we built shadow indexing, the subsystem powering Tiered Storage](https://redpanda.com/blog/tiered-storage-architecture-shadow-indexing-deep-dive/)
