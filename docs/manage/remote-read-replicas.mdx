@@ -49,7 +49,7 @@ Before you can create a Remote Read Replica, you must create a topic on the orig
 
 To set up a Remote Read Replica topic on a separate remote cluster:
 
-1. Create a remote cluster for the Remote Read Replica topic in the same region as the bucket used for the origin cluster. 
+1. Create a remote cluster for the Remote Read Replica topic. 
    - If that's a multi-region bucket, you can create the read replica cluster in any region that has that bucket. 
    - If that's a single-region bucket, the remote cluster must be in the same region as the bucket.
 2. Run `rpk cluster config edit`, and then specify the following cluster configuration properties:
