@@ -117,7 +117,7 @@ module.exports = async () => {
                     // You can assign the latest release data to any variable.
                     REDPANDA_VERSION_22_3: latestRedpandaReleaseVersion || '22.3.11',
                     REDPANDA_SHA_22_3: latestRedpandaReleaseCommitHash || '9eefb907c',
-                    CONSOLE_VERSION_2_1: latestConsoleReleaseVersion || '2.1.1',
+                    CONSOLE_LATEST_VERSION: latestConsoleReleaseVersion || '2.1.1',
                     // You can define any custom variables here.
                     // Variable names must include only the following characters:
                     // A-Z, 0-9, and underscores (_)

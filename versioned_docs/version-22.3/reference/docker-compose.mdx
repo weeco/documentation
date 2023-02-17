@@ -64,7 +64,7 @@ services:
       - redpanda_network
 
   console:
-    image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
+    image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_LATEST_VERSION
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
@@ -199,7 +199,7 @@ To request a trial license, to extend your trial period, or to purchase an Enter
 
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_LATEST_VERSION
       # mount the local directory that contains your license key to the container.
       # give Redpanda Console read access to the license.
       volumes:

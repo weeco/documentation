@@ -110,8 +110,6 @@ kafka:
     caFilepath:
     certFilepath:
     keyFilepath:
-    # Can also be set using the --kafka.tls.passphrase flag
-    passphrase: 
     insecureSkipTlsVerify: false
   schemaRegistry:
     enabled: false
@@ -185,7 +183,6 @@ kafka:
         username:
         privateKey: 
         privateKeyFilepath:
-        passphrase: 
   messagePack:
     enabled: false
     topicNames: ["/.*/"] # List of topic name regexes, defaults to /.*/
@@ -238,7 +235,6 @@ console:
         username:
         privateKey: 
         privateKeyFilepath:
-        passphrase:
 
 redpanda:
   # Redpanda Admin API configuration that enables additional Redpanda-specific features.
@@ -332,6 +328,11 @@ login:
     # use Okta groups in your RBAC role bindings.
     directory:
       apiToken: redacted
+  plain:
+    enabled: false
+    credentials:
+      - username: "jane"
+        password: "some-secret-password"
 
 # The enterprise block contains configurations for features that
 # can only be used with a valid Enterprise license.
@@ -365,6 +366,10 @@ server:
   setBasePathFromXForwardedPrefix: true
   # Whether or not Redpanda Console should strip the prefix internally.
   stripPrefix: true
+  # AllowedOrigins is a list of origins that can send requests from a browser to the Console
+  # API. By default, a same-site policy is enforced to prevent CSRF-attacks.
+  # Only in very specific deployment models you may need to change the secure default.
+  allowedOrigins: []
 
 logger:
   level: info # Valid values are debug, info, warn, error, and fatal

@@ -451,6 +451,11 @@ module.exports = {
                         "type": "doc",
                         "label": "Generic OIDC",
                         "id": "manage/security/console/generic-oidc"
+                      },
+                      {
+                        "type": "doc",
+                        "label": "Plain",
+                        "id": "manage/security/console/plain"
                       }
                     ]
                   },
@@ -485,6 +490,11 @@ module.exports = {
                   "manage/console/protobuf",
                   "manage/console/topic-documentation",
                   "manage/console/http-path-rewrites",
+                  {
+                    type: "doc",
+                    label: "Edit Topic Configuration",
+                    id: "manage/console/edit-topic-configuration",
+                  }
                 ]
               },
               {
