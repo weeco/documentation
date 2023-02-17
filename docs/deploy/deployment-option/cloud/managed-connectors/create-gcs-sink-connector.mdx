@@ -1,0 +1,80 @@
+---
+title: Create a Google Cloud Storage Sink Connector
+---
+
+<head>
+    <meta name="title" content="Create a Google Cloud Storage (GCS) Sink Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create a Google Cloud Storage (GCS) Sink Connector."/>
+</head>
+
+The Google Cloud Storage (GCS) Sink connector stores Kafka messsages in a Google
+Cloud Storage (GCS) bucket.
+
+## Prerequisites
+
+You must enable the following object permissions in the bucket:
+
+* `storage.objects.create`
+* `storage.objects.delete` (needed for overwriting)
+
+For production deployments, you must use Java 17 or later.
+
+**Any others?**
+
+## Configure GCS sink connector
+
+To configure the GCS sink connector:
+
+1. From the navigation menu of Redpanda Cloud, select your cluster to access the
+   Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **GcsSinkConnector** and click **Next**.
+4. Click **Next** to bypass the wizard and navigate to the JSON configuration
+   window.
+5. Use the following configuration:
+   ```js
+   {
+    "gcs.credentials.json": "{\"type\":\"service_account\",\"project_id\":\"...\",\"private_key_id\":\"...\",\"private_key\":\"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n\",\"client_email\":\"...@....iam.gserviceaccount.com\",\"client_id\":\"...\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\":\"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"}",
+    "gcs.bucket.name": "...",
+    "file.name.prefix": "prefix/",
+    "topics.regex": "topic.*",
+    "name": "gcs-connector",
+    "connector.class": "com.redpanda.kafka.connect.gcs.GcsSinkConnector",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter"
+   }
+   ```
+
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `gcs.credentials.json` | GCP credentials as a JSON object. |
+   | `gcs.bucket.name` | Name of an existing bucket for storing the records.  |
+   | `topics` | A comma-separated list of topics to replicate. |
+   | `topics.regex` | A Java regular expression of topics to replicate. |
+   | `key.converter` | Key converter class, `org.apache.kafka.connect.converters.ByteArrayConverter` for no conversion. |
+   | `value.converter` | Value converter class, `org.apache.kafka.connect.converters.ByteArrayConverter` for no conversion. |
+
+   Optional properties:
+
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `gcs.bucket.check` | The option to enable and/or disable bucket connectivity validation when a task starts. The default is `true`. |
+   | `file.name.prefix` | The prefix to be added to the name of each file.  |
+   | `file.name.template` | File name, with support for `{{topic}}`, `{{partition}}`, `{{start_offset}}` placeholders. |
+   | `tasks.max` | Maximum number of tasks to use. The default is `1`. Each task replicates an exclusive set of partitions assigned to it. |
+   | `file.compression.type` | Compression type for output files: `gzip`, `snappy`, `zstd` or `none` (default). |
+   | `format.output.type` | The type of data format used to write data to the output files: `csv` (default), `json`, `jsonl` or `parquet`. |
+   | `format.output.fields` | The comma separated set of the fields that are to be output: `key`, `value` (default), `offset`, `timestamp` or `headers`. |
+   | `file.max.records` | The maximum number of records to put in a single file. The default is `0`, which means unlimited. |
+   | `file.flush.interval.ms` | The time interval to periodically flush files to GCS, in ms. The default is 60 sec. A value of `0` means disabled. |
+
+### AvroConverter
+
+If messages are avro-encoded, then you must use `io.confluent.connect.avro.AvroConverter`
+to deserialize them. You must also specify the schema registry URL:
+
+```js
+{
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schema.registry.url": "http://schema.registry.url"
+}

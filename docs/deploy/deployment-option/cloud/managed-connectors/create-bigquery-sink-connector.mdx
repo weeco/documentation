@@ -1,0 +1,79 @@
+---
+title: Create a BigQuery Sink Connector
+---
+
+<head>
+    <meta name="title" content="Create an BigQuery Sink Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create an BigQuery Sink Connector."/>
+</head>
+
+You can use the Kafka Connect BigQuery Sink connector to export data from Apache® Kafka
+topics to Google BigQuery.
+
+## Prerequisites
+
+Before you can create a BigQuery sink connector in the Redpanda Cloud, you must... **please provide**
+
+## Configure BigQuery sink connector
+
+To configure the BigQuery sink connector:
+
+1. From the navigation menu of Redpanda Cloud, select your cluster to access the
+   Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **BigQuerySinkConnector** and click **Next**.
+4. Click **Next** to bypass the wizard and navigate to the JSON configuration window.
+5. You must choose a BigQuery project to write to, a dataset from that project
+   to write to, and provide the location of a JSON key file that can be used to
+   access a BigQuery service account that can write to the project/dataset pair.
+
+   Use the following configuration:
+   ```js
+   {
+   "name": "bigquery-connector",
+   "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+   "topics": "...",
+   "sanitizeTopics": "true",
+   "keySource": "JSON",
+   "keyfile": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"...\",\n  \"private_key_id\": \"...\",\n  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\...\\n-----END PRIVATE KEY-----\\n\",\n  \"client_email\": \"...@....iam.gserviceaccount.com\",\n  \"client_id\": \"...\",\n  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n  \"token_uri\": \"https://oauth2.googleapis.com/token\",\n  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"\n}",
+   "project": "...",
+   "defaultDataset": "...",
+   "autoCreateTables": "true",
+   "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+   }
+   ```
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `sanitizeTopics` | Specifies whether to automatically sanitize topic names before using them as table names; if not enabled, topic names are used directly as table names. |
+   | `keySource` | Determines whether the `keyfile` config is the path to the credentials JSON file (`FILE`) or the raw JSON of the key itself (`JSON`).  |
+   | `keyfile` | The file containing a JSON key with BigQuery service account credentials, or the credentials in JSON, depending on the `keyfile` value. |
+   | `project` | The BigQuery project to write to. |
+   | `defaultDataset` | The default dataset to be used. |
+   | `autoCreateTables` | Automatically create BigQuery tables if they don't already exist. |
+
+### Map the topic name to the table name
+
+By default the table name is the name of the topic. You may need to use different
+table names (**When or why would users need to do this?**):
+
+1. If your topic name contains non-alphanumeric characters (such as . (dot)), set
+   `sanitizeTopics` so that these characters are replaced with an `_` (underscore).
+2. Specify `topic2TableMap` to remap topic names. For example:
+   ```js
+   {
+     "topic2TableMap": "topic1:table1,topic2:table2"
+   }
+   ```
+3. Use regexp transformation to map topic names to table names. The
+   following example shows how to drop a prefix from the name:
+
+  ```js
+  {
+  "transforms": "dropPrefix",
+  "transforms.dropPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+  "transforms.dropPrefix.regex": "dbserver\\.public\\.(.*)",
+  "transforms.dropPrefix.replacement": "$1"
+  }
+ ```
+
+ **Are there instructions for testing the connection? Troubleshooting?**

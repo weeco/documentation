@@ -58,8 +58,8 @@ module.exports = {
       type: "category",
       label: "Develop",
       link: { type: "doc", id: "develop/index" },
-      
-      
+
+
       items: [
         {
           type: "doc",
@@ -265,12 +265,22 @@ module.exports = {
                 {
                   type: "category",
                   label: "Managed Connectors",
-                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },  
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },
                   items: [
                     {
                       type: "doc",
                       label: "Create an S3 Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a BigQuery Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-bigquery-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a Google Cloud Storage (GCS) Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-sink-connector",
                     },
                   ],
                 },
@@ -389,21 +399,21 @@ module.exports = {
                     type: "doc",
                     label: "Cluster Properties",
                     id: "manage/cluster-maintenance/cluster-property-configuration",
-                  },  
+                  },
                   {
                     type: "doc",
                     label: "Cluster Diagnostics",
                     id: "manage/cluster-maintenance/cluster-diagnostics",
-                  }, 
+                  },
                 ]
               },
-              
+
               {
                 type: "category",
                 label: "Security",
                 link: { type: "doc", id: "manage/security/index" },
-                
-                
+
+
                 items: [
                   {
                     "type": "doc",
@@ -460,8 +470,8 @@ module.exports = {
               {
                 type: "category",
                 label: "Tiered Storage",
-                
-                
+
+
                 link: {
                   type: "doc",
                   id: "manage/tiered-storage",
@@ -507,8 +517,8 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "reference/index" },
-      
-      
+
+
       items: [
         "reference/cluster-properties",
         "reference/tunable-properties",
@@ -529,7 +539,7 @@ module.exports = {
               type: "doc",
               label: "Internal Metrics Reference",
               id: "reference/internal-metrics-reference",
-            }, 
+            },
           ]
         },
         {
@@ -940,8 +950,8 @@ module.exports = {
       type: "category",
       label: "Labs",
       link: { type: "doc", id: "labs/index" },
-      
-      
+
+
       items: ["labs/install-preview", "labs/data-transform"],
     },
   ],
