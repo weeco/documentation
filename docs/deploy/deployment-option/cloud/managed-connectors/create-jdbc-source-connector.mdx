@@ -1,0 +1,63 @@
+---
+title: Create a JDBC Source Connector
+---
+
+<head>
+    <meta name="title" content="Create a JDBC Source Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create a JDBC Source Connector."/>
+</head>
+
+You can use the JDBC Source connector to transfer data from a relational database into
+Apache Kafka topics.
+
+## Prerequisites
+
+Before creating a JDBC Source connector, you must have read access to the
+database tables specified in your connector configuration.
+
+## Configure a JDBC Source connectors
+
+To configure a JDBC Source connector:
+
+1. From the navigation menu of Redpanda Cloud, select your namespace, and then your
+   cluster to access the Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **JdbcSourceConnector** and click **Next**.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
+5. Use the following configuration:
+   ```js
+   {
+     "name": "jdbc-source-connector",
+     "connection.url": "jdbc:mysql://prod-database.cbnq1kw2hujd.eu-west-1.rds.amazonaws.com:3306/mydatabase",
+     "connection.user": "dbuser",
+     "connection.password": "dbpassword",
+     "connector.class": "com.redpanda.kafka.connect.jdbc.JdbcSourceConnector",
+     "incrementing.column.name": "event_id",
+     "mode": "incrementing",
+     "poll.interval.ms": "5000",
+     "table.whitelist": "public.events",
+     "tasks.max": "1",
+     "topic.prefix": "from_database.",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+   }
+   ```
+
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `connection.url` | Database JDBC connection URL. For example, for PostgreSQL:<br/><br/> `jdbc:postgresql://HOST:PORT/DB_NAME?sslmode=SSL_MODE, MySQL: jdbc:mysql://HOST:PORT/DB_NAME?ssl-mode=SSL_MODE` |
+   | `connection.user` | Database username |
+   | `connection.password`	| Database password |
+   | `db.timezone` | Name of the JDBC timezone that should be used in the connector when querying with time-based criteria.<br/><br/> Valid Values: valid time zone identifier (for example, `Europe/Helsinki`, `UTC+2`, `Z`, `CET`). Default is `UTC`. |
+   | `dialect.name` | Name of the database dialect that should be used for this connector. By default this is empty, and the connector automatically determines the dialect based on the JDBC connection URL. Valid Values: <ul><li>`Db2DatabaseDialect`</li><li>`MySqlDatabaseDialect`</li><li>`SybaseDatabaseDialect`</li><li>`GenericDatabaseDialect`</li><li>`OracleDatabaseDialect`</li><li>`SqlServerDatabaseDialect`</li><li>`PostgreSqlDatabaseDialect`</li><li>`SqliteDatabaseDialect`</li> <li>`DerbyDatabaseDialect`</li><li>`SapHanaDatabaseDialect`</li><li>`VerticaDatabaseDialect`</li></ul> |
+   | `mode` | The mode for updating a table each time it is polled. Options include: <ul><li>`bulk`, which performs a bulk load of the entire table each time it is polled</li><li>`incrementing`, which uses a strictly incrementing column on each table to detect only new rows (note that this will not detect modifications or deletions of existing rows)</li><li>`timestamp`, which uses a timestamp (or timestamp-like) column to detect new and modified rows. This is based on the assumption that the column is updated with each write, and that values are monotonically incrementing, but not necessarily unique)</li><li>`timestamp+incrementing` (use two columns, a timestamp column that detects new and modified rows and a strictly incrementing column which provides a globally-unique ID for updates so each row can be assigned a unique stream offset.</li></ul> |
+   | `incrementing.column.name` |	The name of the strictly incrementing column to use to detect new rows. Any empty value indicates the column should be autodetected by looking for an auto-incrementing column. This column can not be nullable. Default is `""`. |
+   | `incrementing.initial` |	The initial value of incremental column when selecting records. The records the incremental column with value greater than the configured value are included in the result. Default is `-1`. |
+   | `timestamp.initial.ms` |	The initial value of timestamp when selecting records. The records having timestamp greater than the value are included in the result. Default is `0`. |
+   | `poll.interval.ms` |	Frequency in ms to poll for new data in each table. Default is `5000`. |
+   | `topic.prefix` |	Prefix to prepend to table names to generate the name of the Kafka topic to publish data to, or in the case of a custom query, the full name of the topic to publish to. |
+   | `timestamp.delay.interval.ms` |	How long to wait after a row with certain timestamp appears before it is included the result. You may choose to add a delay to allow transactions with an earlier timestamp to complete. |
+   | `table.whitelist` |	List of tables to include in copy. If specified, `table.blacklist` may not be set. Default is `""`. |
+   | `table.blacklist` |	List of tables to exclude from copy. If specified, `table.whitelist` may not be set. Default is `""`. |
+   | `query` |	If specified, the query to perform to select new or updated rows. Use this setting if you want to join tables, select subsets of columns in a table, or filter data. |
+   | `batch.max.rows` |	Maximum number of rows to include in a single batch when polling for new data. Use this setting to limit the amount of data buffered internally in the connector. Default is `100`. |

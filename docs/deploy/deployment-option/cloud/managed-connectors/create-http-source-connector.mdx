@@ -1,0 +1,148 @@
+---
+title: Create an HTTP Source Connector
+---
+
+<head>
+    <meta name="title" content="Create an HTTP Source Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create an HTTP Source Connector."/>
+</head>
+
+You can use the Kafka Connect HTTP connector to
+[change data capture](https://github.com/castorm/kafka-connect-http/blob/master/docs/Change_Data_Capture.md)
+from JSON/HTTP APIs into Kafka.
+
+This connector enables you to:
+
+* Efficiently replicate a dataset exposed through a JSON/HTTP API.
+* Capture changes only, and not full snapshots.
+* Change data using a configuration with no custom coding.
+* Extend the connector later if the need arises.
+
+## Prerequisites
+
+Before you can create an HTTP Source connector, you must
+have a namespace and cluster provisioned in Redpanda Cloud.
+
+## Configure an HTTP Source connector
+
+To configure HTTP Source connector:
+
+1. From the navigation menu of Redpanda Cloud, select your namespace, and then your
+   cluster to access the Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **HttpSourceConnector** and click **Next**.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
+5. Use the following configuration:
+   ```js
+   {
+     "name": "http-source-connector-name",
+     "connector.class": "com.github.castorm.kafka.connect.http.HttpSourceConnector",
+     "http.auth.user": "user",
+     "http.auth.password": "password",
+     "http.auth.type": "Basic",
+     "http.client.read.timeout.millis": "10",
+     "http.offset.initial": "key=TICKT-0001, timestamp=2020-01-01T00:00:01Z",
+     "http.request.headers": "Accept: application/json",
+     "http.request.params": "updated=${offset.timestamp}",
+     "http.request.url": "<HTTP SERVER ADDRESS>",
+     "http.response.list.pointer": "/issues",
+     "http.response.record.offset.pointer": "key=/key, timestamp=/fields/updated",
+     "http.timer.catchup.interval.millis": "100",
+     "http.timer.interval.millis": "1000",
+     "kafka.topic": "<TOPIC NAME>",
+     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+   }
+   ```
+
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `http.auth.type` | Allow for the selection of the authentication type using configuration property. Available values: `None` (default), `Basic`. |
+   | `http.auth.user` | HTTP Basic authentication username. |
+   | `http.auth.password` | HTTP Basic authentication password. |
+   | `http.client.read.timeout.millis` | Timeout for reading a response, in ms. Default is 2000. |
+   | `kafka.topic` | Name of the topic where the record is sent. |
+   | `http.offset.initial` | Initial offset, which is a comma separated list of pairs. For example: `property1=value1`, `property2=value2`. Use this property to define where the connector should start reading data from. For example: `"http.offset.initial": "userid=15", "http.request.params": "id=${offset.userid}"` will make the connector read data from userid=15. Default is `""`. |
+   | `http.request.url` | **Required property**. HTTP URL to use in the request. |
+   | `http.request.headers` | Comma-separated list of HTTP header pairs (`header`, `header2`: `header3`, `header4`) to use in the request. |
+   | `http.request.params` | HTTP query parameters to use in the request, `&` separated list of `=`separated pairs. For example, `name=value & name2=value2`. |
+   | `http.request.method` | HTTP method to use in the request. Default is `GET`. |
+   | `http.request.body` | HTTP body to use in the request. Default is `""`. |
+   | `http.response.list.pointer` | JsonPointer to the property in the response body containing an array of records. For example, `/items`. Default is `/`. |
+   | `http.response.record.offset.pointer` | Comma separated list of key=/value pairs where the key is the name of the property in the offset, and the value is the JsonPointer to the value being used as the offset for future requests. This is the mechanism that enables a sharing state in between HttpRequests. HttpRequestFactory implementations receive this offset. Special properties: `key` is used as record’s identifier, for de-duplication, and topic partition routing; `timestamp` is used as the  record’s timestamp, for de-duplication, and ordering. |
+   | `http.timer.catchup.interval.millis` | Interval between requests when catching up, in ms. Default is `30000`. |
+   | `http.timer.interval.millis` | Interval between requests, in ms. Default is `60000`. |
+
+## Integrate with Jira
+
+Use the following sample HTTP source connector configuration to pull Jira
+issues into a Redpanda topic:
+
+```js
+{
+    "name": "sample-search-issues.jira.http.source",
+    "connector.class": "com.github.castorm.kafka.connect.http.HttpSourceConnector",
+    "http.auth.user": "<ATLASSIAN USERNAME>",
+    "http.auth.password": "<ATLASSIAN API KEY>",
+    "http.auth.type": "Basic",
+    "http.offset.initial": "timestamp=2020-05-08T07:55:44Z",
+    "http.request.method" : "GET",
+    "http.request.headers": "Accept: application/json",
+    "http.request.params": "jql=project = \"<PROJECT>\" AND updated>=\"${offset.timestamp?datetime.iso?string['yyyy/MM/dd HH:mm']}\" ORDER BY updated ASC",
+    "http.request.url": "https://<NAME>.atlassian.net/rest/api/3/search",
+    "http.response.list.pointer": "/issues",
+    "http.response.record.offset.pointer": "key=/id, timestamp=/fields/updated",
+    "http.timer.catchup.interval.millis": "1000",
+    "http.timer.interval.millis": "10000",
+    "kafka.topic": "jira-issues",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+}
+```
+
+* Replace `<PROJECT>` with your project ID in request params.
+  For example:
+  ```bash
+  jql=project = \"TEST\": "http.request.params": "jql=project = \"<PROJECT>\" AND updated>=\"${offset.timestamp?datetime.iso?string['yyyy/MM/dd HH:mm']}\" ORDER BY updated ASC"
+  ```
+  The updated query parameter is built using [FreeMarker](https://freemarker.apache.org/docs/index.html).
+* Provide your Jira auth credentials in `http.auth.user` (email format), `http.auth.password` and `"http.request.url"`.
+* The Jira query parameters are defined by `http.request.params`.
+
+## Test locally using Docker Compose
+
+You can test the HTTP Source connector locally using [`docker-compose.yaml`]( https://github.com/redpanda-data/connectors/tree/main/examples/http-source-connector).
+
+:::note
+
+Docker Compose also runs Wiremock, a mock HTTP server, so the connector can also send requests to it.
+
+:::
+
+1. Run `docker-compose up` to verify [Wiremock mappings](http://localhost:8080/__admin/mappings) and
+   the [Wiremock ping service](http://localhost:8080/ping).
+2. Open Redpanda Console.
+3. [Create a topic](../create-topic), for example, `test-topic`.
+4. Create an HTTP Source connector using the following sample configuration:
+   ```js
+   {
+     "name": "http-source-connector",
+     "connector.class": "com.github.castorm.kafka.connect.http.HttpSourceConnector",
+     "http.auth.password": "password",
+     "http.auth.type": "Basic",
+     "http.auth.user": "user",
+     "http.client.read.timeout.millis": "0",
+     "http.offset.initial": "key=TICKT-0001, timestamp=2020-01-01T00:00:01Z",
+     "http.request.headers": "Accept: application/json",
+     "http.request.params": "updated=${offset.timestamp}",
+     "http.request.url": "http://wiremock:8080/rest/api",
+     "http.response.list.pointer": "/issues",
+     "http.response.record.offset.pointer": "key=/key, timestamp=/fields/updated",
+     "http.timer.catchup.interval.millis": "100",
+     "http.timer.interval.millis": "1000",
+     "kafka.topic": "test-topic",
+     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+  }
+  ```

@@ -12,12 +12,19 @@ Cloud Storage (GCS) bucket.
 
 ## Prerequisites
 
-You must enable the following object permissions in the bucket:
+* Before you can create a GCS Sink connector in the Redpanda Cloud, You must have:
 
-* `storage.objects.create`
-* `storage.objects.delete` (needed for overwriting)
+  * A cluster provisioned in Redpanda Cloud.
+  * Login credentials to GCS.
 
-For production deployments, you must use Java 17 or later.
+* You must enable the following object permissions in the bucket:
+
+  * `storage.objects.create`
+  * `storage.objects.delete` (needed for overwriting)
+
+**^^ These properties are not described in our docs, and are not included in the properties tables below. We should provide the descriptions somewhwere.**
+
+* For production deployments, you must use [Java 17 or later](https://www.oracle.com/java/technologies/downloads/).
 
 **Any others?**
 
@@ -25,23 +32,23 @@ For production deployments, you must use Java 17 or later.
 
 To configure the GCS sink connector:
 
-1. From the navigation menu of Redpanda Cloud, select your cluster to access the
-   Redpanda Console.
+1. From the navigation menu of Redpanda Cloud, select your select your namespace,
+   and then your cluster to access the Redpanda Console.
 2. Click **Connectors > Create Connector**.
 3. Under **Connector Type**, select **GcsSinkConnector** and click **Next**.
-4. Click **Next** to bypass the wizard and navigate to the JSON configuration
-   window.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
 5. Use the following configuration:
    ```js
    {
-    "gcs.credentials.json": "{\"type\":\"service_account\",\"project_id\":\"...\",\"private_key_id\":\"...\",\"private_key\":\"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n\",\"client_email\":\"...@....iam.gserviceaccount.com\",\"client_id\":\"...\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\":\"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"}",
-    "gcs.bucket.name": "...",
-    "file.name.prefix": "prefix/",
-    "topics.regex": "topic.*",
-    "name": "gcs-connector",
-    "connector.class": "com.redpanda.kafka.connect.gcs.GcsSinkConnector",
-    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter": "org.apache.kafka.connect.storage.StringConverter"
+     "gcs.credentials.json": "{\"type\":\"service_account\",\"project_id\":\"...\",\"private_key_id\":\"...\",\"private_key\":\"-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n\",\"client_email\":\"...@....iam.gserviceaccount.com\",\"client_id\":\"...\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://oauth2.googleapis.com/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_x509_cert_url\":\"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"}",
+     "gcs.bucket.name": "...",
+     "file.name.prefix": "prefix/",
+     "topics.regex": "topic.*",
+     "name": "gcs-connector",
+     "connector.class": "com.redpanda.kafka.connect.gcs.GcsSinkConnector",
+     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+     "value.converter": "org.apache.kafka.connect.storage.StringConverter"
    }
    ```
 

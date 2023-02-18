@@ -282,6 +282,16 @@ module.exports = {
                       label: "Create a Google Cloud Storage (GCS) Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-sink-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "Create an HTTP Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a JDBC Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
+                    },
                   ],
                 },
               ]

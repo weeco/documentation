@@ -12,17 +12,21 @@ topics to Google BigQuery.
 
 ## Prerequisites
 
-Before you can create a BigQuery sink connector in the Redpanda Cloud, you must... **please provide**
+Before you can create a BigQuery sink connector in the Redpanda Cloud, you must have:
+
+  * A namespace and cluster provisioned in Redpanda Cloud
+  * Login credentials to BigQuery
 
 ## Configure BigQuery sink connector
 
 To configure the BigQuery sink connector:
 
-1. From the navigation menu of Redpanda Cloud, select your cluster to access the
-   Redpanda Console.
+1. From the navigation menu of Redpanda Cloud, select your namespace, and then your
+   cluster to access the Redpanda Console.
 2. Click **Connectors > Create Connector**.
 3. Under **Connector Type**, select **BigQuerySinkConnector** and click **Next**.
-4. Click **Next** to bypass the wizard and navigate to the JSON configuration window.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
 5. You must choose a BigQuery project to write to, a dataset from that project
    to write to, and provide the location of a JSON key file that can be used to
    access a BigQuery service account that can write to the project/dataset pair.
@@ -30,16 +34,16 @@ To configure the BigQuery sink connector:
    Use the following configuration:
    ```js
    {
-   "name": "bigquery-connector",
-   "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
-   "topics": "...",
-   "sanitizeTopics": "true",
-   "keySource": "JSON",
-   "keyfile": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"...\",\n  \"private_key_id\": \"...\",\n  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\...\\n-----END PRIVATE KEY-----\\n\",\n  \"client_email\": \"...@....iam.gserviceaccount.com\",\n  \"client_id\": \"...\",\n  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n  \"token_uri\": \"https://oauth2.googleapis.com/token\",\n  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"\n}",
-   "project": "...",
-   "defaultDataset": "...",
-   "autoCreateTables": "true",
-   "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+     "name": "bigquery-connector",
+     "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+     "topics": "...",
+     "sanitizeTopics": "true",
+     "keySource": "JSON",
+     "keyfile": "{\n  \"type\": \"service_account\",\n  \"project_id\": \"...\",\n  \"private_key_id\": \"...\",\n  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\...\\n-----END PRIVATE KEY-----\\n\",\n  \"client_email\": \"...@....iam.gserviceaccount.com\",\n  \"client_id\": \"...\",\n  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n  \"token_uri\": \"https://oauth2.googleapis.com/token\",\n  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/....iam.gserviceaccount.com\"\n}",
+     "project": "...",
+     "defaultDataset": "...",
+     "autoCreateTables": "true",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter"
    }
    ```
    | Property      | Description |
@@ -69,10 +73,10 @@ table names (**When or why would users need to do this?**):
 
   ```js
   {
-  "transforms": "dropPrefix",
-  "transforms.dropPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
-  "transforms.dropPrefix.regex": "dbserver\\.public\\.(.*)",
-  "transforms.dropPrefix.replacement": "$1"
+    "transforms": "dropPrefix",
+    "transforms.dropPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.dropPrefix.regex": "dbserver\\.public\\.(.*)",
+    "transforms.dropPrefix.replacement": "$1"
   }
  ```
 
