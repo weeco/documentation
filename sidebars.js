@@ -340,6 +340,11 @@ module.exports = {
                     id: "manage/kubernetes/kubernetes-rack-awareness",
                   },
                   {
+                    type: "doc",
+                    label: "Manage Pod Resources",
+                    id: "manage/kubernetes/manage-resources",
+                  },
+                  {
                     type: "category",
                     label: "Troubleshooting",
                     link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },

@@ -150,3 +150,45 @@ To protect your Redpanda cluster, enable and configure the following security fe
 
 - [Authentication through SASL](../../../../../manage/kubernetes/security/sasl-kubernetes)
 - [Network encryption through TLS](../../../../../manage/kubernetes/security/kubernetes-tls)
+
+## Set resource requests and limits for memory and CPU
+
+In a production cluster, the resources you allocate to Redpanda should be proportionate to your machine type. Redpanda recommends that you determine and set these values before deploying the cluster, but you can also update the values on a running cluster.
+
+:::info
+In a running Redpanda cluster, you cannot decrease the number of CPU cores. You can only increase the number of CPU cores.
+:::
+
+Redpanda recommends that you allocate the following memory and CPU resources:
+
+- At least 4 CPU cores.
+
+- At least 2GiB (2Gi) of memory per core for Redpanda.
+
+- Memory `min` and `max` configurations set to the same values.
+  
+  Setting the `min` and `max` configurations to the same values makes sure that Kubernetes assigns a `Guaranteed` Quality of Service (QoS) class to your Pods. Kubernetes uses QoS classes to decide which Pods to evict from a node that runs out of resources. When a node runs out of resources, Kubernetes evicts Pods with a `Guaranteed` QoS last. For more details about QoS, see the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#create-a-pod-that-gets-assigned-a-qos-class-of-guaranteed).
+
+For example:
+
+```yaml
+resources:
+  cpu:
+    cores: 4
+  memory:
+    container:
+      min: 8Gi
+      max: 8Gi
+```
+
+:::tip
+If you omit the `resources.memory.container.min` configuration, it is set to the same value as the `resources.memory.container.max` configuration.
+:::
+
+To determine how many resources are available on your worker nodes, run:
+
+```bash
+kubectl describe nodes
+```
+
+For instructions on setting Pod resources, see [Manage Pod Resources in Kubernetes](../../../../../manage/kubernetes/manage-resources).
