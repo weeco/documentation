@@ -104,117 +104,70 @@ module.exports = {
       items: [
         {
           type: "category",
-          label: " Choose a Deployment Option",
-          link: { type: "doc", id: "deploy/deployment-option/index" },
+          label: "Self-Hosted",
+          link: { type: "doc", id: "deploy/self-hosted/index" },
           items: [
             {
               type: "category",
-              label: "Self-Hosted",
-              link: { type: "doc", id: "deploy/deployment-option/self-hosted/index" },
+              label: "Kubernetes",
+              link: { type: "doc", id: "deploy/self-hosted/kubernetes/index" },
               items: [
                 {
+                  type: "doc",
+                  label: "Redpanda in Kubernetes Overview",
+                  id: "deploy/self-hosted/kubernetes/kubernetes-production-deployment",
+                },
+                {
                   type: "category",
-                  label: "Kubernetes",
-                  link: { type: "doc", id: "deploy/deployment-option/self-hosted/kubernetes/index" },
+                  label: "Production Deployment Workflow",
+                  link: {type: "doc", id: "deploy/self-hosted/kubernetes/production-workflow"},
                   items: [
                     {
                       type: "doc",
-                      label: "Redpanda in Kubernetes Overview",
-                      id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment",
+                      label: "Kubernetes Cluster Requirements",
+                      id: "deploy/self-hosted/kubernetes/kubernetes-cluster-requirements",
                     },
                     {
-                      type: "category",
-                      label: "Production Deployment Workflow",
-                      link: {type: "doc", id: "deploy/deployment-option/self-hosted/kubernetes/production-workflow"},
-                      items: [
-                        {
-                          type: "doc",
-                          label: "Kubernetes Cluster Requirements",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements",
-                        },
-                        {
-                          type: "doc",
-                          label: "Best Practices",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices",
-                        },
-                        {
-                          type: "doc",
-                          label: "Tune Worker Nodes",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers",
-                        },
-                        {
-                          type: "doc",
-                          label: "Deploy Redpanda",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy",
-                        },
-                      ]
+                      type: "doc",
+                      label: "Best Practices",
+                      id: "deploy/self-hosted/kubernetes/kubernetes-best-practices",
                     },
                     {
-                      type: "category",
-                      label: "Guides",
-                      link: {type: "doc", id: "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"},
-                      items: [
-                        {
-                          type: "doc",
-                          label: "AKS",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/aks-guide",
-                        },
-                        {
-                          type: "doc",
-                          label: "Amazon EKS",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/eks-guide",
-                        },
-                        {
-                          type: "doc",
-                          label: "GKE",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/gke-guide",
-                        },
-                        {
-                          type: "doc",
-                          label: "Local (kind and Minikube)",
-                          id: "deploy/deployment-option/self-hosted/kubernetes/local-guide",
-                        },
-                      ]
+                      type: "doc",
+                      label: "Tune Worker Nodes",
+                      id: "deploy/self-hosted/kubernetes/kubernetes-tune-workers",
+                    },
+                    {
+                      type: "doc",
+                      label: "Deploy Redpanda",
+                      id: "deploy/self-hosted/kubernetes/kubernetes-deploy",
                     },
                   ]
                 },
                 {
                   type: "category",
-                  label: "Manual",
-                  link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/index" },
-                  items: [
-                    {
-                    type: "category",
-                  label: "Production Deployment",
-                  link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/production/index" },
+                  label: "Guides",
+                  link: {type: "doc", id: "deploy/self-hosted/kubernetes/get-started-dev"},
                   items: [
                     {
                       type: "doc",
-                      label: "Deploy for Production",
-                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment",
+                      label: "AKS",
+                      id: "deploy/self-hosted/kubernetes/aks-guide",
                     },
                     {
                       type: "doc",
-                      label: "Automate Deployment for Production",
-                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment-automation",
-                    },
-                  ]
-                },
-                    "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    {
-                      type: "doc",
-                      label: "High Availability",
-                      id: "deploy/deployment-option/self-hosted/manual/high-availability",
+                      label: "Amazon EKS",
+                      id: "deploy/self-hosted/kubernetes/eks-guide",
                     },
                     {
                       type: "doc",
-                      label: "Sizing Use Cases",
-                      id: "deploy/deployment-option/self-hosted/manual/sizing-use-cases",
+                      label: "GKE",
+                      id: "deploy/self-hosted/kubernetes/gke-guide",
                     },
                     {
                       type: "doc",
-                      label: "Sizing Guidelines",
-                      id: "deploy/deployment-option/self-hosted/manual/sizing",
+                      label: "Local (kind and Minikube)",
+                      id: "deploy/self-hosted/kubernetes/local-guide",
                     },
                   ]
                 },
@@ -222,61 +175,98 @@ module.exports = {
             },
             {
               type: "category",
-              label: "Cloud",
-              link: { type: "doc", id: "deploy/deployment-option/cloud/index" },
+              label: "Manual",
+              link: { type: "doc", id: "deploy/self-hosted/manual/index" },
               items: [
                 {
                   type: "doc",
-                  label: "Redpanda Cloud Overview",
-                  id: "deploy/deployment-option/cloud/dedicated-byoc",
-                },
-                {
-                  type: "category",
-                  label: "Redpanda Dedicated",
-
-                  items: [
-                    {
-                      type: "doc",
-                      label: "Create Clusters",
-                      id: "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws",
-                    },
-                    {
-                      type: "doc",
-                      label: "VPC Peering",
-                      id: "deploy/deployment-option/cloud/vpc-peering",
-                    },
-                  ],
+                  label: "Deploy for Production",
+                  id: "deploy/self-hosted/manual/production-deployment",
                 },
                 {
                   type: "doc",
-                  label: "Create a BYOC Cluster on AWS",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
+                  label: "Automate Deployment for Production",
+                  id: "deploy/self-hosted/manual/production-deployment-automation",
                 },
                 {
                   type: "doc",
-                  label: "Create a BYOC Cluster on GCP",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                  label: "Node Property Configuration",
+                  id: "deploy/self-hosted/manual/node-property-configuration",
                 },
                 {
                   type: "doc",
-                  label: "Create a Topic",
-                  id: "deploy/deployment-option/cloud/create-topic",
+                  label: "High Availability",
+                  id: "deploy/self-hosted/manual/high-availability",
                 },
                 {
-                  type: "category",
-                  label: "Managed Connectors",
-                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },  
-                  items: [
-                    {
-                      type: "doc",
-                      label: "Create an S3 Sink Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector",
-                    },
-                  ],
+                  type: "doc",
+                  label: "Sizing Use Cases",
+                  id: "deploy/self-hosted/manual/sizing-use-cases",
+                },
+                {
+                  type: "doc",
+                  label: "Sizing Guidelines",
+                  id: "deploy/self-hosted/manual/sizing",
                 },
               ]
             },
-          ],
+          ]
+        },
+        {
+          type: "category",
+          label: "Cloud",
+          link: { type: "doc", id: "deploy/cloud/index" },
+          items: [
+            {
+              type: "doc",
+              label: "Redpanda Cloud Overview",
+              id: "deploy/cloud/dedicated-byoc",
+            },
+            {
+              type: "category",
+              label: "Redpanda Dedicated",
+
+              items: [
+                {
+                  type: "doc",
+                  label: "Create Clusters",
+                  id: "deploy/cloud/create-dedicated-cloud-cluster-aws",
+                },
+                {
+                  type: "doc",
+                  label: "VPC Peering",
+                  id: "deploy/cloud/vpc-peering",
+                },
+              ],
+            },
+            {
+              type: "doc",
+              label: "Create a BYOC Cluster on AWS",
+              id: "deploy/cloud/create-byoc-cluster-aws",
+            },
+            {
+              type: "doc",
+              label: "Create a BYOC Cluster on GCP",
+              id: "deploy/cloud/create-byoc-cluster-gcp",
+            },
+            {
+              type: "doc",
+              label: "Create a Topic",
+              id: "deploy/cloud/create-topic",
+            },
+            {
+              type: "category",
+              label: "Managed Connectors",
+              link: { type: "doc", id: "deploy/cloud/managed-connectors/index" },  
+              items: [
+                {
+                  type: "doc",
+                  label: "Create an S3 Sink Connector",
+                  id: "deploy/cloud/managed-connectors/create-s3-sink-connector",
+                },
+              ],
+            },
+          ]
         },
       ],
     },
