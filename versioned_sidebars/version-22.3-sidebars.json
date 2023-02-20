@@ -376,6 +376,11 @@
               "type": "doc",
               "label": "Manage Pod Resources",
               "id": "manage/kubernetes/manage-resources"
+            },
+            {
+              "type": "doc",
+              "label": "Troubleshoot",
+              "id": "manage/kubernetes/troubleshooting/troubleshoot"
             }
           ]
         },

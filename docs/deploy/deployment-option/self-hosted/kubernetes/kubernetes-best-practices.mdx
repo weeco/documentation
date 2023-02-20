@@ -24,7 +24,7 @@ the `helm` command might look something like the following:
 ```bash
 helm upgrade --install redpanda redpanda/redpanda \
     --namespace redpanda --create-namespace \
-    --values custom-storage-class.yaml
+    --values custom-storage-class.yaml --reuse-values
 ```
 
 The `custom-storage-class.yaml` filename gives you a hint about how the Helm chart has been customized.
@@ -35,7 +35,7 @@ You can pass more than one `--values` option in the same command. For example, i
 helm upgrade --install redpanda redpanda/redpanda \
     --namespace redpanda --create-namespace \
     --values custom-storage-class.yaml
-    --values enable-tls.yaml
+    --values enable-tls.yaml --reuse-values
 ```
 
 ## Deploy at least three Pod replicas

@@ -82,7 +82,7 @@ To use a Secret to store superuser credentials, do the following:
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values enable-sasl.yaml
+    --values enable-sasl.yaml --reuse-values
   ```
 
   </TabItem>
@@ -136,7 +136,7 @@ auth:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-  --values enable-sasl.yaml
+  --values sasl-enable.yaml --reuse-values
 ```
 
 </TabItem>

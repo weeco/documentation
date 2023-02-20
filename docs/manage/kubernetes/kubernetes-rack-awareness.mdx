@@ -90,7 +90,7 @@ rbac:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
---values rack-awareness.yaml
+--values rack-awareness.yaml --reuse-values
 ```
 
 </TabItem>
@@ -133,7 +133,7 @@ rbac:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
---values rack-awareness.yaml
+--values rack-awareness.yaml --reuse-values
 ```
 
 </TabItem>

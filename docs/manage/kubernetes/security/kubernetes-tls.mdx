@@ -44,7 +44,7 @@ A self-signed certificate is signed with its own private key, instead of request
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values self-signed-tls.yaml
+    --values self-signed-tls.yaml --reuse-values
   ```
 
   </TabItem>

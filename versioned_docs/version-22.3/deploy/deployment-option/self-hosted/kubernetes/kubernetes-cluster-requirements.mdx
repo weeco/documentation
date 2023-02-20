@@ -41,7 +41,7 @@ You must provision one worker node for each Redpanda broker that you plan to dep
 - External clients access Redpanda brokers using the address of a worker node. See [External networking](#external-networking).
 
 :::note
-The Helm chart configures `podAntiAffinity` rules to make sure that each Redpanda broker runs on its own Kubernetes node.
+The Helm chart configures `podAntiAffinity` rules to make sure that each Redpanda broker runs on its own worker node.
 :::
 
 ## Storage volumes
