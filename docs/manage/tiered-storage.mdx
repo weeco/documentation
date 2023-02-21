@@ -409,9 +409,9 @@ The following list contains cluster-level configuration properties for Tiered St
 | `cloud_storage_enabled` | Global flag that enables Tiered Storage. <br/>Set to true to enable Tiered Storage. Default is false.  |
 | `cloud_storage_region` | Cloud storage region. <br/>Required for AWS and GCS. |
 | `cloud_storage_bucket` | AWS or GCS bucket name. <br/>Required for AWS and GCS. |
-| `cloud_storage_credentials_source` | AWS or GCS instance metadata. <br/>Required for AWS and GCS with IAM roles. |
-| `cloud_storage_access_key` | AWS or GCS access key. <br/>Required for AWS and GCS with access keys. |
-| `cloud_storage_secret_key` | AWS or GCS secret key. <br/>Required for AWS and GCS with access keys.  |
+| `cloud_storage_credentials_source` | AWS or GCS instance metadata. <br/>Required for AWS and GCS authentication with IAM roles. |
+| `cloud_storage_access_key` | AWS or GCS access key. <br/>Required for AWS and GCS authentication with access keys. |
+| `cloud_storage_secret_key` | AWS or GCS secret key. <br/>Required for AWS and GCS authentication with access keys.  |
 | `cloud_storage_api_endpoint` | AWS or GCS API endpoint. <br/>- For AWS, this can be left blank. It’s generated automatically using the region and bucket. <br/>- For GCS, use `storage.googleapis.com`. |
 | `cloud_storage_azure_container` | Azure container name. <br/>Required for ABS. |
 | `cloud_storage_azure_storage_account` | Azure account name. <br/>Required for ABS. |
