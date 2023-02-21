@@ -4,10 +4,10 @@ title: Kafka Compatibility
 
 <head>
     <meta name="title" content="Kafka Compatibility | Redpanda Docs"/>
-    <meta name="description" content="Redpanda is compatible with Apache Kafka version 0.11 through 3.1. Exceptions are described  below."/>
+    <meta name="description" content="Kafka clients, version 0.11 or later, are compatible with Redpanda. Validations and exceptions are listed in this compatibility guide."/>
 </head>
 
-Redpanda is compatible with Apache Kafka version 0.11 through 3.1. Exceptions are described  below.
+Redpanda is compatible with Apache Kafka version 0.11 through 3.1. Exceptions are described below.
 
 ## Kafka client compatibility
 
@@ -33,7 +33,6 @@ The following clients have been validated with Redpanda.
 
 Redpanda does not support the following Apache Kafka capabilities:
 
-* Explicit partition assignments and altering partition assignments (with Kafka API)
 * Managing SASL users with Kafka APIs: DescribeUserSCRAMCredentialsRequest and AlterUserSCRAMCredentialsRequest APIs
 * HTTP Proxy (pandaproxy): Unlike other REST proxy implementations in the Kafka ecosystem, Redpanda HTTP Proxy does not support topic and ACLs CRUD through the HTTP Proxy. HTTP Proxy is designed for clients producing and consuming data that do not perform administrative functions.
 * Client quotas for bandwidth and request rate
