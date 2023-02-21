@@ -22,7 +22,7 @@ export default function DocsVersionDropdownNavbarItem({
   const {search, hash} = useLocation();
   const activeDocContext = useActiveDocContext(docsPluginId);
   const versions = useVersions(docsPluginId);
-  versions.sort((a, b) => a.label < b.label ? 1 : -1); // order versions according to labels in numerical order
+  versions.sort((a, b) => a.label > b.label ? 1 : -1); // order versions according to labels in numerical order
   const {savePreferredVersionName} = useDocsPreferredVersion(docsPluginId);
   const versionLinks = versions.map((version) => {
     // We try to link to the same doc, in another version

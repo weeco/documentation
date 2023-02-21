@@ -97,10 +97,10 @@ module.exports = async () => {
             lastVersion: 'current',
             versions: {
               current:{
-                label: "22.3",
+                label: "Current",
               },
-              "23.1": {
-                label: '23.1 Beta',
+              "24": {
+                label: 'Beta 🚧',
                 banner: 'unreleased',
                 path: '/beta'
               },

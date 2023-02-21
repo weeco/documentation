@@ -1,0 +1,25 @@
+{
+  "docsSidebar": [
+    {
+      "type": "doc",
+      "label": "Docs Home",
+      "id": "home/index"
+    },
+    {
+      "type": "category",
+      "label": "The Beta Program",
+      "items": [
+        {
+          "type": "doc",
+          "label": "What a beta program is",
+          "id": "the-program/what-is-beta"
+        },
+        {
+          "type": "doc",
+          "label": "Organize docs for beta",
+          "id": "the-program/how-to-do-betas"
+        }
+      ]
+    }
+  ]
+}
