@@ -13,7 +13,7 @@ const FeatureList = [
         Try out Redpanda.
       </>
     ),
-    url: '/docs/get-started/quick-start/quick-start-docker',
+    url: '/docs/get-started/quick-start',
     learnText: true,
   },
   {
@@ -46,7 +46,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/get-started/quick-start/quick-start-docker',
+    url: '/docs/get-started/quick-start',
     learnText: true,
   },
   {
@@ -84,7 +84,7 @@ const FooterMenuList = [
       { text: 'Introduction to Redpanda', url: "/docs/get-started/intro-to-events/" },
       { text: 'How Redpanda Works', url: "/docs/get-started/architecture/" },
       { text: 'Redpanda Licensing', url: "/docs/get-started/licenses/" },
-      { text: 'Redpanda Quickstart', url: "/docs/get-started/quick-start/quick-start-docker/" },
+      { text: 'Redpanda Quickstart', url: "/docs/get-started/quick-start/" },
       { text: 'Introduction to rpk', url: "/docs/get-started/rpk-install/" },
     ],
   },

@@ -40,7 +40,7 @@ module.exports = {
         {
           type: "doc",
           label: "Redpanda Quickstart",
-          id: "get-started/quick-start/quick-start-docker",
+          id: "get-started/quick-start",
         },
         {
           type: "doc",
@@ -225,6 +225,11 @@ module.exports = {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
                   id: "deploy/deployment-option/cloud/dedicated-byoc",
+                },
+                {
+                  type: "doc",
+                  label: "Quickstart",
+                  id: "get-started/quick-start",
                 },
                 {
                   type: "category",
