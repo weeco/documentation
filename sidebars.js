@@ -484,6 +484,7 @@ module.exports = {
                   },
                 ],
               },
+              "manage/remote-read-replicas",
               "manage/schema-registry",
               {
                 type: "category",
@@ -513,7 +514,6 @@ module.exports = {
                 label: "Rack Awareness",
                 id: "manage/rack-awareness",
               },
-              "manage/remote-read-replicas",
               "manage/monitoring",
               "manage/io-optimization",
             ],
