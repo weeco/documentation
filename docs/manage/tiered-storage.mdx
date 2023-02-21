@@ -11,12 +11,12 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 :::info
-This feature requires an [Enterprise license](../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+This feature requires an [Enterprise license](../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-trial).
 :::
 
 Tiered Storage helps to lower storage costs by offloading log segments to cloud storage. You can specify the amount of storage you want to retain in local storage. You don't need to specify which log segments you want to move, because Redpanda moves them automatically based on cluster-level configuration properties. Tiered Storage indexes where data is offloaded, so it can retrieve the data when you need it.
 
-Redpanda natively supports Tiered Storage with Amazon S3, Google Cloud Storage (GCS), and Microsoft Azure Blob Storage (ABS). 
+Redpanda natively supports Tiered Storage with Amazon S3, Google Cloud Storage (GCS), and Microsoft Azure Blob Storage (ABS). Migrating topics from one cloud provider to another is not supported. 
 
 :::caution
 Do not use Tiered Storage with [data transforms](../../labs/data-transform), which is a lab feature in technical preview. Lab features are not supported for production usage.
@@ -129,8 +129,8 @@ To configure access to Azure Blob Storage with shared keys:
 
 
 - For additional properties, see [Tiered Storage configuration properties](../tiered-storage#tiered-storage-configuration-properties).
-  
-- For more information about shared key authentication, see the [Azure documentation](https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key).
+- For information about how to grant access from an internet IP range (if you need to open additional routes/ports between your broker nodes and Azure Blob Storage; for example, in a hybrid cloud deployment), see the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-network-security?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json&tabs=azure-portal#grant-access-from-an-internet-ip-range). 
+- For more information about shared key authentication, see the [Microsoft documentation](https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key). 
 
 
   </TabItem>
