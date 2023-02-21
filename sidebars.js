@@ -201,11 +201,7 @@ module.exports = {
                   ]
                 },
                     "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    {
-                      type: "doc",
-                      label: "High Availability",
-                      id: "deploy/deployment-option/self-hosted/manual/high-availability",
-                    },
+                    "deploy/deployment-option/self-hosted/manual/high-availability",  
                     {
                       type: "doc",
                       label: "Sizing Use Cases",
