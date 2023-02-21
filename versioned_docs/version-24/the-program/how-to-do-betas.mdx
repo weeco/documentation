@@ -24,7 +24,7 @@ It is problematic to run betas with Docusaurus's guide because it assumes that y
 
 ## A possible solution
 
-One possible solution to this problem is to treat the betas as diffs rather than fully fledged versions. Remember from [What is beta](../the-program/what-is-beta), betas are user-centric tests, so we must help them get to the finish line. 
+One possible solution to this problem is to treat the betas as diffs rather than fully fledged versions. Remember from [What is beta](../what-is-beta), betas are user-centric tests, so we must help them get to the finish line. 
 
 With this approach, we can create standalone beta pages, that can contain:
 
@@ -37,4 +37,6 @@ The file tree will look very simple.
 
 ![File tree](./file-tree.png)
 
-With this approach, its very obvious to the user whats in beta. This will also make the merging process very simple, because the release manager will only have to copy-paste the content into the new version. 
+With this approach, its very obvious to the user whats in beta. This will also make the merging process simple, because the release manager just have to copy-paste the content into the new version and check with git what are the changes. 
+
+Once the beta ends, the new content gets rolled out into `/docs` and get removed from `versioned_docs/version-24`.
