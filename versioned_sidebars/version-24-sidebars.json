@@ -20,6 +20,11 @@
           "id": "the-program/how-to-do-betas"
         }
       ]
+    },
+    {
+      "type": "category",
+      "label": "Example",
+      "items": ["example/exam"]
     }
   ]
 }
