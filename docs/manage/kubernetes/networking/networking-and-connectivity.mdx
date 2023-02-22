@@ -26,7 +26,7 @@ Listener |Purpose |
 
 Redpanda is a stateful application. Each Redpanda broker needs to store its state (topic partitions) in its own storage volume. As a result, Redpanda is deployed in a StatefulSet to manage the Pods in which the Redpanda brokers are running. StatefulSets ensure that the state associated with a particular Pod replica is always the same, no matter how often the Pod is recreated.
 
-Each Pod is given a unique ordinal number in its name such as `redpanda-0`. A Pod with a particular ordinal number is always associated with a PersistentVolumeClaim with the same number. When a Pod in the StatefulSet is deleted and recreated, it is given the same ordinal number and so it mounts the same storage volume as the deleted Pod that it replaced.
+In a StatefulSet, each Pod is given a unique ordinal number in its name such as `redpanda-0`. A Pod with a particular ordinal number is always associated with a PersistentVolumeClaim with the same number. When a Pod in the StatefulSet is deleted and recreated, it is given the same ordinal number and so it mounts the same storage volume as the deleted Pod that it replaced.
 
 ## Internal networking
 

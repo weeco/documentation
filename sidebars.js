@@ -298,6 +298,23 @@ module.exports = {
                   },
                   {
                     type: "category",
+                    label: "Tiered Storage",
+                    
+                    
+                    link: {
+                      type: "doc",
+                      id: "manage/kubernetes/tiered-storage",
+                    },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Data Archiving",
+                        id: "manage/kubernetes/data-archiving",
+                      },
+                    ],
+                  },
+                  {
+                    type: "category",
                     label: "Networking and Connectivity",
                     link: { type: "doc", id: "manage/kubernetes/networking/networking-and-connectivity" },
                     items: [
@@ -339,6 +356,11 @@ module.exports = {
                     type: "doc",
                     label: "Rack Awareness",
                     id: "manage/kubernetes/kubernetes-rack-awareness",
+                  },
+                  {
+                    type: "doc",
+                    label: "Remote Read Replicas",
+                    id: "manage/kubernetes/remote-read-replicas"
                   },
                   {
                     type: "doc",
@@ -475,14 +497,39 @@ module.exports = {
                 
                 link: {
                   type: "doc",
-                  id: "manage/tiered-storage",
+                  id: "manage/tiered-storage-index",
                 },
                 items: [
                   {
                     type: "doc",
-                    label: "Data Archiving",
-                    id: "manage/data-archiving",
+                    label: "Linux",
+                    id: "manage/tiered-storage",
                   },
+                  {
+                    type: "doc",
+                    label: "Kubernetes",
+                    id: "manage/kubernetes/tiered-storage",
+                  },
+                  {
+                    type: "category",
+                    label: "Data Archiving",
+                    link: {
+                      type: "doc",
+                      id: "manage/data-archiving-index",
+                    },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Linux",
+                        id: "manage/data-archiving",
+                      },
+                      {
+                        type: "doc",
+                        label: "Kubernetes",
+                        id: "manage/kubernetes/data-archiving",
+                      }
+                    ]
+                  }
                 ],
               },
               "manage/remote-read-replicas",
@@ -514,6 +561,28 @@ module.exports = {
                 type: "doc",
                 label: "Rack Awareness",
                 id: "manage/rack-awareness",
+              },
+              {
+                type: "category",
+                label: "Remote Read Replicas",
+                
+                
+                link: {
+                  type: "doc",
+                  id: "manage/remote-read-replicas-index",
+                },
+                items: [
+                  {
+                    type: "doc",
+                    label: "Linux",
+                    id: "manage/remote-read-replicas",
+                  },
+                  {
+                    type: "doc",
+                    label: "Kubernetes",
+                    id: "manage/kubernetes/remote-read-replicas",
+                  }
+                ],
               },
               "manage/monitoring",
               "manage/io-optimization",

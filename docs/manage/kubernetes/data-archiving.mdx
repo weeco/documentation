@@ -1,0 +1,38 @@
+---
+title: Configure Data Archiving in Kubernetes
+tags:
+  - Kubernetes
+  - Helm configuration
+linkRoot: ../../../
+---
+
+<head>
+    <meta name="title" content="Configure Data Archiving in Kubernetes | Redpanda Docs"/>
+    <meta name="description" content="Set up data archiving to back up topics to cloud storage."/>
+</head>
+
+import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
+
+import AboutDataArchiving from '../../manage/shared/tiered-storage/data-archiving/_intro.mdx';
+import Configure from '../../manage/shared/tiered-storage/data-archiving/_configure.mdx';
+import Stop from '../../manage/shared/tiered-storage/data-archiving/_stop.mdx';
+
+<AboutDataArchiving frontmatter={frontMatter}/>
+
+## Prerequisites
+
+<EnterpriseLicenseNote frontmatter={frontMatter}/>
+
+To check if you already have a license key applied to your cluster:
+
+```bash
+kubectl exec redpanda-0 -c redpanda -n redpanda -- rpk cluster license info
+```
+
+## Configure data archiving
+
+<Configure/>
+
+## Stop data archiving
+   
+<Stop/>

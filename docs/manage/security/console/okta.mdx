@@ -1,5 +1,6 @@
 ---
 title: Okta SSO Setup
+linkRoot: ../../../../
 ---
 
 <head>
@@ -7,9 +8,9 @@ title: Okta SSO Setup
     <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
 </head>
 
-:::info
-This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
-:::
+import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
+
+<EnterpriseLicenseNote frontmatter={frontMatter}/>
 
 Integrating Redpanda Console with Okta allows your users to use their Okta identities to sign in to Redpanda Console.
 This guide is based on the assumption that you already have an Okta account and permissions to create applications within your organization.

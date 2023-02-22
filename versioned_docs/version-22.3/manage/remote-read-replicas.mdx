@@ -1,25 +1,26 @@
 ---
-title: Remote Read Replicas
+title: Configure Remote Read Replicas in Linux
+linkRoot: ../../
+deployment: manual
 ---
 
 <head>
     <meta name="title" content="Remote Read Replicas | Redpanda Docs"/>
-    <meta name="description" content="A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster."/>
+    <meta name="description" content="Create read-only topics (Remote Read Replica topics) that mirror topics on a different cluster."/>
 </head>
 
-:::info
-This feature requires an [Enterprise license](../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-trial).
-:::
+import ReduceLag from './shared/remote-read-replicas/_reduce-lag.mdx';
+import AboutRemoteReadReplicas from './shared/remote-read-replicas/_intro.mdx';
 
-A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster. Remote Read Replicas work with both [Tiered Storage](../tiered-storage/) and [archival storage](../data-archiving).
+<AboutRemoteReadReplicas frontmatter={frontMatter}/>
 
-When a topic has cloud storage enabled, you can create topics in a separate remote cluster that are populated from remote storage. A read-only topic on a remote cluster can serve any consumer, without increasing the load on the origin cluster. Sample use cases for Remote Read Replicas include data analytics, offline model training, and development clusters.
-
-You can create Remote Read Replica topics in a Redpanda cluster that directly accesses data stored in remote storage. Because these read-only topics access data directly from cloud object storage instead of the topics' origin cluster, there's no impact to the performance of the cluster. Furthermore, topic data can be consumed within a region of your choice, regardless of the region where it was produced. 
+You can create [Remote Read Replica](../remote-read-replicas-index) topics in a Redpanda cluster that directly accesses data stored in cloud object storage. Because these read-only topics access data directly from cloud object storage instead of the topics' origin cluster, there's no impact to the performance of the cluster. Furthermore, topic data can be consumed within a region of your choice, regardless of the region where it was produced. 
 
 :::tip
 To create a Remote Read Replica topic in another region, consider using a [multi-region bucket](https://aws.amazon.com/s3/features/multi-region-access-points/) to simplify deployment and optimize performance. 
 :::
+
+## Create a topic with archival storage or Tiered Storage
 
 When cloud storage is enabled on a topic, Redpanda copies closed log segments to the configured object store. Log segments are closed when the value of [`log_segment_size`](../../reference/tunable-properties#log_segment_size) has been reached, so a topic’s object store lags behind the local copy. To reduce this lag in the data availability for the Remote Read Replica:
 
@@ -75,7 +76,9 @@ To set up a Remote Read Replica topic on a separate remote cluster:
    ```
    :::
 
----
+## Reduce lag in data availability
+
+<ReduceLag frontmatter={frontMatter}/>
 
 ## Suggested reading
 
