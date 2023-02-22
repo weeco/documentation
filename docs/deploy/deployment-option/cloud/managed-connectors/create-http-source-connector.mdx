@@ -64,7 +64,7 @@ To configure HTTP Source connector:
    | `http.client.read.timeout.millis` | Timeout for reading a response, in ms. Default is 2000. |
    | `kafka.topic` | Name of the topic where the record is sent. |
    | `http.offset.initial` | Initial offset, which is a comma separated list of pairs. For example: `property1=value1`, `property2=value2`. Use this property to define where the connector should start reading data from. For example: `"http.offset.initial": "userid=15", "http.request.params": "id=${offset.userid}"` will make the connector read data from userid=15. Default is `""`. |
-   | `http.request.url` | **Required property**. HTTP URL to use in the request. |
+   | `http.request.url` | **Required**. HTTP URL to use in the request. |
    | `http.request.headers` | Comma-separated list of HTTP header pairs (`header`, `header2`: `header3`, `header4`) to use in the request. |
    | `http.request.params` | HTTP query parameters to use in the request, `&` separated list of `=`separated pairs. For example, `name=value & name2=value2`. |
    | `http.request.method` | HTTP method to use in the request. Default is `GET`. |

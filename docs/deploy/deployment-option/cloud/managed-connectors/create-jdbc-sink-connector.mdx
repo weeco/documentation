@@ -1,0 +1,161 @@
+---
+title: Create a JDBC Sink Connector
+---
+
+<head>
+    <meta name="title" content="Create a JDBC Sink Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create a JDBC Sink Connector."/>
+</head>
+
+The JDBC Sink connector enables you to transfer data from Kafka topics into a
+relational database. This connector subscribes to specified Kafka topics (`topics`
+or `topics.regex` configuration. For details refer to the
+[Kafka Connect documentation](https://kafka.apache.org/documentation/#connect_configuring))
+and puts incoming records into corresponding tables in the database.
+
+##  Requirements
+
+When using JDBC sink connectors, you must adhere to the following requirements:
+
+- If using record keys, they must be primitives or structs with primitive fields.
+- Record values must be structs with primitive fields.
+- The JDBC Sink connector requires knowledge of key and value schemas, so you
+  should use a converter with schema support (for example, the JSON converter
+  with schema enabled.
+- You can use a whitelist for record value fields by setting `fields.whitelist`.
+  If set, note that only the specified fields from a record's value are used.
+  Primary key fields are processed separately.
+
+## Configure a JDBC Sink connector
+
+To configure a JDBC Source connector:
+
+1. From the navigation menu of Redpanda Cloud, select your namespace, and then your
+   cluster to access the Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **JdbcSinkConnector** and click **Next**.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
+5. Use the following configuration:
+   ```js
+   {
+     "auto.create": "true",
+     "auto.evolve": "true",
+     "connection.password": "dbpassword",
+     "connection.url": "jdbc:mysql://prod-database.cbnq1kw2hujd.eu-west-1.rds.amazonaws.com:3306/mydatabase",
+     "connection.user": "dbuser",
+     "connector.class": "com.redpanda.kafka.connect.jdbc.JdbcSinkConnector",
+     "insert.mode": "upsert",
+     "name": "jdbc-sink-connector",
+     "pk.fields": "sensor_id",
+     "pk.mode": "record_value",
+     "tasks.max": "1",
+     "topics": "sensor",
+     "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+   }
+   ```
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `topics` | **Required**. Comma-separated list of topics to read from. Either `topics` or `topics.regex` is required. |
+   | `topics.regex` | **Required**. Regular expression of topics to read from. Either `topics` or `topics.regex` is required. |
+   | `connection.url` | Database JDBC connection URL. For example, PostgreSQL: `jdbc:postgresql://HOST:PORT/DB_NAME?sslmode=SSL_MODE`, MySQL: `jdbc:mysql://HOST:PORT/DB_NAME?ssl-mode=SSL_MODE` |
+   | `connection.user` | Database username |
+   | `connection.password`	| Database password |
+   | `db.timezone` | Name of the JDBC timezone that should be used in the connector when querying with time-based criteria.<br/><br/> Valid Values: valid time zone identifier (for example, `Europe/Helsinki`, `UTC+2`, `Z`, `CET`). Default is `UTC`. |
+   | `dialect.name` | Name of the database dialect that should be used for this connector. By default this is empty, and the connector automatically determines the dialect based on the JDBC connection URL. Valid Values: <ul><li>`Db2DatabaseDialect`</li><li>`MySqlDatabaseDialect`</li><li>`SybaseDatabaseDialect`</li><li>`GenericDatabaseDialect`</li><li>`OracleDatabaseDialect`</li><li>`SqlServerDatabaseDialect`</li><li>`PostgreSqlDatabaseDialect`</li><li>`SqliteDatabaseDialect`</li> <li>`DerbyDatabaseDialect`</li><li>`SapHanaDatabaseDialect`</li><li>`VerticaDatabaseDialect`</li></ul> |
+   | `sql.quote.identifiers` | Specifies whether to delimit (in most databases, use double quotes ``""``) identifiers (for example, table names and column names) in SQL statements. Default is `true`. |
+   | `auto.create` |	Specifies whether to automatically create the destination table based on the record schema if it is found to be missing by issuing CREATE. Default is `false`. |
+   | `auto.evolve` |	Specifies whether to automatically add columns in the table schema when found to be missing relative to the record schema by issuing ALTER. Default is `false`. |
+   | `insert.mode` |	The insertion mode to use. Supported modes are: <ul><li>`insert` (standard SQL INSERT) **Default**</li><li>`multi` (multi-row inserts)</li><li>`upsert` (use the appropriate upsert semantics for the target database if it is supported by the connector)</li><li>`update` (use the appropriate update semantics for the target database if it is supported by the connector)</li></ul> |
+   | `batch.size` |	Specifies how many records to attempt to batch together for insertion into the destination table, when possible. Default is `3000`. |
+   | `pk.mode` |	The primary key mode (also refer to `pk.fields` for interplay). Supported modes are: <ul><li>`none` **Default** (no keys utilized)</li><li>`kafka` (Kafka coordinates: topic, partition, and offset are used as the PK)</li><li>`record_key` (field(s) from the record key are used, which may be a primitive or a struct)</li><li>`record_value` (field(s) from the record value are used, which must be a struct).</li></ul> |
+   | `pk.fields` |	List of comma-separated primary key field names. The runtime interpretation of this config depends on the `pk.mode`: <ul><li>`none` (ignored as no fields are used as primary key in this mode)</li><li>`kafka` (must be a trio representing the Kafka coordinates: topic, partition, and offset)</li><li>`record_key` (if empty, all fields from the key struct will be used, otherwise used to extract the desired fields. For primitive key only a single field name must be configured)</li><li>`record_value` (if empty, all fields from the value struct will be used, otherwise used to extract the desired fields).</li></ul> Default is `""`. |
+   | `table.name.format` |	A format string for the destination table name, which may contain `'${topic}'` as a placeholder for the originating topic name. For example, `kafka_${topic}` for the topic `orders` maps to the table name `kafka_orders`. Default is `${topic}`. |
+   | `table.name.normalize` |	Specifies whether or not to normalize destination table names for topics. When set to `true`, the alphanumeric characters (`a-z A-Z 0-9`) and `_` remain as is. Others (like `.`) are replaced with `_`. Default is `false`. |
+   | `fields.whitelist` |	List of comma-separated record value field names. If empty, all fields from the record value are utilized, otherwise used to filter to the desired fields. Default is `""`. |
+
+## JDBC drivers
+
+The following JDBC drivers are available:
+
+* MySQL
+  * Driver: `mysql:mysql-connector-java:8.0.32`
+  * [Connector/J 8.0 supports MySQL 5.7 and 8.0](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-versions.html).
+
+* PostgreSQL
+  - Driver: `org.postgresql:postgresql:42.5.2`
+  - The version of the driver should be compatible with PostgreSQL® 8.2 and
+    higher using the version 3.0 of the PostgreSQL® protocol. For details, refer
+    to the [PostgreSQL documentation](https://jdbc.postgresql.org/documentation/).
+
+* SQLite
+  - Driver: `org.xerial:sqlite-jdbc:3.40.0.0`
+
+* SQL Server
+  - Driver: `com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17`
+  - Compatible Microsoft SQL versions:
+    - Azure SQL Database
+    - Azure Synapse Analytics
+    - Azure SQL Managed Instance
+    - SQL Server 2014
+    - SQL Server 2016
+    - SQL Server 2017
+    - SQL Server 2019
+  For details, refer to the [Microsoft JDBC Driver for SQL Server support matrix](https://learn.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server-support-matrix?view=sql-server-ver16).
+
+## Data mapping
+
+Use the following data mappings for JDBC Sink connectors.
+
+### JSON schema
+
+Use the following properties in JDBC Sink connector configuration:
+
+```bash
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+  ```
+
+Topics should contain data in JSON format, with a defined JSON schema. For example:
+
+```js
+{
+  "schema": {
+    "type": "struct",
+    "fields": [
+      {
+        "type": "int64",
+        "optional": false,
+        "field": "sensor_id"
+      },
+      {
+        "type": "string",
+        "optional": false,
+        "field": "metric"
+      },
+      {
+        "type": "int32",
+        "optional": false,
+        "field": "value"
+      }
+    ]
+  },
+  "payload": {
+    "sensor_id": 1,
+    "metric": "Temperature",
+    "value": 40
+  }
+}
+```
+
+### Schema Registry
+
+As an alternative to the JSON schema, you can use Schema Registry. Use the
+following properties in the JDBC Sink connector configuration:
+
+```bash
+"value.converter": "io.confluent.connect.avro.AvroConverter",
+"value.converter.schema.registry.url": "https://schema-registry-....redpanda.com:30081",
+"value.converter.basic.auth.credentials.source": "USER_INFO",
+"value.converter.basic.auth.user.info": "$USERNAME:$PASSWORD"
+```
+        

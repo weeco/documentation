@@ -8,14 +8,20 @@ title: Create a JDBC Source Connector
 </head>
 
 You can use the JDBC Source connector to transfer data from a relational database into
-Apache Kafka topics.
+Apache Kafka topics. This connector works with multiple data sources (tables,
+views; a custom query) in the database. For each data source, there is a
+corresponding Kafka topic.
+
+The connector connects to the database and periodically queries its data sources. The poll interval is configured by poll.interval.ms and is 5 seconds by default.
+
+Each row from the database response is transformed into a record and published into the corresponding Kafka topic.
 
 ## Prerequisites
 
 Before creating a JDBC Source connector, you must have read access to the
 database tables specified in your connector configuration.
 
-## Configure a JDBC Source connectors
+## Configure a JDBC Source connector
 
 To configure a JDBC Source connector:
 
@@ -61,3 +67,41 @@ To configure a JDBC Source connector:
    | `table.blacklist` |	List of tables to exclude from copy. If specified, `table.whitelist` may not be set. Default is `""`. |
    | `query` |	If specified, the query to perform to select new or updated rows. Use this setting if you want to join tables, select subsets of columns in a table, or filter data. |
    | `batch.max.rows` |	Maximum number of rows to include in a single batch when polling for new data. Use this setting to limit the amount of data buffered internally in the connector. Default is `100`. |
+
+## JDBC drivers
+
+The following JDBC drivers are available:
+
+* MySQL
+  * Driver: `mysql:mysql-connector-java:8.0.32`
+  * [Connector/J 8.0 supports MySQL 5.7 and 8.0](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-versions.html).
+
+* PostgreSQL
+  - Driver: `org.postgresql:postgresql:42.5.2`
+  - The version of the driver should be compatible with PostgreSQL® 8.2 and
+    higher using the version 3.0 of the PostgreSQL® protocol. For details, refer
+    to the [PostgreSQL documentation](https://jdbc.postgresql.org/documentation/).
+
+* SQLite
+  - Driver: `org.xerial:sqlite-jdbc:3.40.0.0`
+
+* SQL Server
+  - Driver: `com.microsoft.sqlserver:mssql-jdbc:11.2.3.jre17`
+  - Compatible Microsoft SQL versions:
+    - Azure SQL Database
+    - Azure Synapse Analytics
+    - Azure SQL Managed Instance
+    - SQL Server 2014
+    - SQL Server 2016
+    - SQL Server 2017
+    - SQL Server 2019
+  For details, refer to the [Microsoft JDBC Driver for SQL Server support matrix](https://learn.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server-support-matrix?view=sql-server-ver16).
+
+## Limit fetch size
+
+To prevent out-of-memory errors, some JDBC drivers provide a parameter that is
+set in the connection URL and defines the default number of rows to fetch and
+keep in memory.
+
+- For For PostgreSQL it is `defaultRowFetchSize`.
+- For MySQL it is `defaultFetchSize` (with `useCursorFetch=true`).

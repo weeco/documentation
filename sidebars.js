@@ -292,6 +292,11 @@ module.exports = {
                       label: "Create a JDBC Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "Create a JDBC Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector",
+                    },
                   ],
                 },
               ]
