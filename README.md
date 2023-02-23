@@ -1,10 +1,35 @@
+[![Slack](https://img.shields.io/badge/slack-purple)](https://redpanda.com/slack)
+[![Twitter](https://img.shields.io/twitter/follow/redpandadata.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=redpandadata)
+
+<p>
+<a href="https://docs.redpanda.com">
+<object type="image/svg+xml">
+  <img src="static\img\redpanda-docs-logo.svg"/>
+</object>
+</p></a>
+
+
+This repository hosts the source code and content for the Repanda documentation website. 
+
+The source code for the Redpanda product is hosted in the [Redpanda product repository](https://github.com/redpanda-data/redpanda). 
+
 # Website
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This website is served at https://docs.redpanda.com
 
 ## Local Development
 
-```console
+This website is using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+
+If you want to run the website locally, install the packages:
+
+```bash
+npm install
+```
+
+Then you'll be able to start: 
+
+```bash
 npm run start
 ```
 
@@ -12,12 +37,18 @@ This command starts a local development server and opens up a browser window. Mo
 
 ## Build
 
-```console
-yarn build
+To have a production ready build run:
+
+```bash
+npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-## Style Guide
+## Hosting
 
-Before you add or edit content, consult the Redpanda Style Guide (available on the [wiki](https://vectorizedio.atlassian.net/wiki/spaces/DOC/pages/92635182/Redpanda+Style+Guide) or in [Google Docs](https://drive.google.com/drive/folders/1dZqaWhAqe5-jHcOd0y6WRflMUxEPNK4Q?ths=true)) for product documentation guidelines.  
+This website is hosted at [Netlify](https://www.netlify.com/).
+
+# Style Guide
+
+Before you add or edit content, consult the Redpanda [Style Guide](./meta_docs/style_guide.mdx) for product documentation guidelines.
