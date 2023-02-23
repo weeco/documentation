@@ -139,11 +139,13 @@ redpanda:
 
 #### NodePort Service
 
-External access is made available by a NodePort service that opens the following ports by default:
+External access is made available by a NodePort service that opens the following ports by default for the listeners:
 
-| Node port | Pod port | Purpose |
+| Node port | Pod port | Listener |
 |---|---|---|
-| 30081 | 8081 | Schema registry |
-| 30082 | 8083 | HTTP proxy |
+| 30081 | 8081 | Schema Registry |
+| 30082 | 8083 | HTTP Proxy |
 | 31092 | 9094 | Kafka API |
 | 31644 | 9644 | Admin API |
+
+To learn more, see [Networking and Connectivity in Kubernetes](../../../../../manage/kubernetes/networking/networking-and-connectivity).
