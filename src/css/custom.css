@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Inter, sans-serif;
-  --v-font-mono: Inter,'Courier Prime', Courier, monospace;
+  --v-font: Patron,Inter, sans-serif;
+  --v-font-mono: Patron,Inter,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Inter,Patron, sans-serif;
+  --ifm-heading-font-family: Patron,Inter, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -61,7 +61,7 @@
 }
 
 * {
-  font-family: Patron,sans-serif;
+  font-family: Patron,Inter,sans-serif;
   box-sizing: border-box;
 }
 
@@ -157,7 +157,7 @@ table tr td {
 }
 
 .table-of-contents__link, .menu__link {
-  font-weight: 100 !important;
+  font-weight: 300 !important;
   font-size: 14px;
   letter-spacing: .025rem;
 }
@@ -228,7 +228,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 @font-face {
   font-family: 'Patron';
-  font-weight: 150;
+  font-weight: 200;
   font-style: normal;
   src: local('example'),
     url('../fonts/Patron-Light.otf') format('truetype');
