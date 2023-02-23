@@ -151,6 +151,10 @@ module.exports = async () => {
                 spec: 'static/api/pandaproxy-rest.json',
                 route: '/docs/api/pandaproxy-rest',
               },
+              {
+                spec: 'static/api/admin-api.json',
+                route: '/docs/api/admin-api',
+              },
             ],
             // Theme Options for modifying how redoc renders them
             theme: {
