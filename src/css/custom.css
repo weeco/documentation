@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Patron,Inter, sans-serif;
-  --v-font-mono: Patron,Inter,'Courier Prime', Courier, monospace;
+  --v-font: Inter, sans-serif;
+  --v-font-mono: Inter,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -228,7 +228,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 @font-face {
   font-family: 'Patron';
-  font-weight: 200;
+  font-weight: 100;
   font-style: normal;
   src: local('example'),
     url('../fonts/Patron-Light.otf') format('truetype');
