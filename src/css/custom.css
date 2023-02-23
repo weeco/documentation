@@ -482,3 +482,25 @@ h5 {
 [class*=iconExternalLink] {
   display: none;
 }
+
+a {
+  color : var(--v-red);
+  text-decoration: var(--ifm-link-decoration) !important;
+}
+
+a:hover {
+  color : var(--ifm-color-primary-darkest);
+}
+
+a:link { 
+  text-decoration: none!important; 
+}
+
+a:visited { 
+  text-decoration: none!important; 
+}
+
+a:hover { text-decoration: none!important; }
+
+a:active { text-decoration: none !important;  }
+
