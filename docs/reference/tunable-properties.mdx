@@ -676,6 +676,20 @@ Maximum duration to wait in metadata request for cluster health to be refreshed.
 
 ---
 
+### node_isolation_heartbeat_timeout
+
+If the duration since the last received response to a node's heartbeat request is greater than or equal to this timeout, then the node is considered to be isolated. Redpanda prevents isolated nodes from handling Kafka API requests. 
+
+**Units**: milliseconds
+
+**Default**: 3000
+
+**Range**: [100, 10000]
+
+**Restart required**: no
+
+---
+
 ### node_management_operation_timeout_ms
 
 Timeout for executing node management operations.
@@ -1555,6 +1569,42 @@ Maximum size of a segment of the key-value store.
 **Default**: 16777216 (16 MiB)
 
 **Restart required**: yes
+
+---
+
+### log_segment_ms_min
+
+The lower bound for the topic property `segment.ms` and the cluster property `log_segment_ms`, where lower values are clamped to this.
+
+**Units**: milliseconds
+
+**Default**: 60000 (60 sec)
+
+**Range**: [60000 (60 sec), ...]
+
+**Restart required**: no
+
+**Related properties**: 
+- [log_segment_ms_max](#log_segment_ms_max)
+- [log_segment_ms](../cluster-properties#log_segment_ms)
+
+---
+
+### log_segment_ms_max
+
+The upper bound for the topic property `segment.ms` and the cluster property `log_segment_ms`, where higher values are clamped to this.
+
+**Units**: milliseconds
+
+**Default**: 31536000000 (365 days)
+
+**Range**: [60000 (60 sec), ...]
+
+**Restart required**: no
+
+**Related properties**: 
+- [log_segment_ms_min](#log_segment_ms_min)
+- [log_segment_ms](../cluster-properties#log_segment_ms)
 
 ---
 
