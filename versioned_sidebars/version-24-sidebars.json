@@ -24,7 +24,7 @@
     {
       "type": "category",
       "label": "Example",
-      "items": ["example/exam"]
+      "items": ["example/transactions"]
     }
   ]
 }
