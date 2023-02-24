@@ -3,6 +3,13 @@ title: Enable Rack Awareness in Kubernetes
 tags:
   - Kubernetes
   - Helm configuration
+linkRoot: ../../../
+deployment: Kubernetes
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/rack-awareness'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/kubernetes-rack-awareness
 ---
 
 <head>
@@ -14,6 +21,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import AboutRackAwareness from '../../manage/shared/_rack-awareness.mdx';
 import ValuesYaml from './shared/_values-yaml.mdx'
+
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter}
+/>
 
 <AboutRackAwareness/>
 

@@ -3,8 +3,13 @@ title: Tiered Storage in Kubernetes
 tags:
   - Kubernetes
   - Helm configuration
-deployment: kubernetes
+deployment: Kubernetes
 linkRoot: ../../../
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/tiered-storage'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/tiered-storage
 ---
 
 <head>
@@ -33,6 +38,10 @@ import RetriesAndBackoff from '../../manage/shared/tiered-storage/_retries-and-b
 import Transport from '../../manage/shared/tiered-storage/_transport.mdx';
 import ConfigurationProperties from '../../manage/shared/tiered-storage/_configuration-properties.mdx';
 
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter} 
+/>
 
 <AboutTieredStorage frontmatter={frontMatter}/>
 
