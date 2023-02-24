@@ -1,0 +1,126 @@
+---
+title: Topic Configuration Properties
+toc_min_heading_level: 2
+toc_max_heading_level: 2
+---
+
+<head>
+  <meta
+    name="title"
+    content="Topic configuration properties | Redpanda Docs"
+  />
+  <meta name="description" content="Configure a property per topic with topic-level properties. A topic-level property overrides the value of a corresponding node or cluster property, if available." />
+</head>
+
+Configure a property per topic with topic-level properties. Each topic property overrides the value of a corresponding node or cluster property, if available.
+
+## Example commands
+
+To set topic properties when creating a topic, use the [rpk topic create -c](../rpk/rpk-topic/rpk-topic-create) command and option.
+
+For example, to create a topic with the `cleanup.policy` property set to `compact`:
+
+```
+rpk topic create -c cleanup.policy=compact <topic>
+```
+
+To set or modify topic properties of a created topic, use the [rpk topic alter-config](../rpk/rpk-topic/rpk-topic-alter-config) command. 
+
+For example, to modify a topic's `retention.ms` property: 
+
+```bash
+rpk topic alter-config <topic> --set retention.ms=<retention_time>
+```
+
+## Properties
+
+### compression.type
+
+The type of compression algorithm to use for batches of a topic. 
+
+**Kafka property name**: `log.compression.type`
+
+**Values**:
+- `none` (default)
+- `gzip`
+- `lz4`
+- `snappy`
+- `ztsd`
+
+---
+
+### cleanup.policy
+
+`cleanup.policy` configures the policy for cleaning up log segments of a topic. 
+
+The policies that can be applied:
+
+- **delete**. Deletes segments whose retention limits have been exceeded.
+- **compact**. Enables log compaction to keep the last value per key.
+
+You can use one or both policies. If both `[compact,delete]` are set, the log is compacted, and it also follows retention limits.
+
+**Values**:
+- `[delete]` (default)
+- `[compact]`
+- `[compact,delete]`
+
+**Kafka property name**: `log.cleanup.policy`
+
+---
+
+### compaction.strategy
+
+**Kafka property name**: `compaction.strategy`
+
+**Values**:
+- `offset`
+- `timestamp`
+- `header`
+
+
+### message.timestamp.type
+
+**Kafka property name**: `log.message.timestamp.type`
+
+### segment.bytes
+
+### retention.bytes
+
+
+:::tip
+This topic-level property `retention.bytes` differs from the cluster-level property `retention_bytes`:
+
+- `retention.bytes` is a Kafka topic property, and it sets the maximum size of a topic. 
+
+- `retention_bytes` is a Redpanda-specific cluster property, and it sets the maximum size of a partition.
+
+For details, see 
+:::
+
+### retention.ms
+
+### max.message.bytes
+
+### redpanda.remote.recovery
+
+### redpanda.remote.write
+
+### redpanda.remote.read
+
+### redpanda.remote.readreplica
+
+### retention.local.target.bytes
+
+### retention.local.target.ms
+
+### replication.factor
+
+### redpanda.remote.delete
+
+### segment.ms
+
+
+## Related topics
+
+- [Example Node configuration file](../node-configuration-sample)

@@ -513,6 +513,7 @@ module.exports = {
         "reference/cluster-properties",
         "reference/tunable-properties",
         "reference/node-properties",
+        "reference/topic-properties",
         "reference/node-configuration-sample",
         "reference/api-reference",
         {
