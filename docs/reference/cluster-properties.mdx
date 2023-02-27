@@ -950,7 +950,7 @@ Delete segments that are older than this age.
 
 ### log_cleanup_policy
 
-Bit flags setting the default topic cleanup policy: compact and/or delete.
+Bit flags setting the default topic cleanup policy: compact and/or delete. It is overridden per topic by the topic property [`cleanup.policy`](../topic-properties#cleanuppolicy).
 
 **Default**: `delete`
 
@@ -976,6 +976,8 @@ How often to trigger background compaction.
 
 Default topic compression type (gzip, snappy, lz4, zstd, producer, or none).
 
+`log_compression_type` is overridden per topic by the topic property [`compression.type`](../topic-properties#compressiontype).
+
 **Default**: `producer`
 
 **Valid values**: `gzip`, `snappy`, `lz4`, `zstd`, `producer`, `none`
@@ -986,7 +988,9 @@ Default topic compression type (gzip, snappy, lz4, zstd, producer, or none).
 
 ### log_message_timestamp_type
 
-Default timestamp type for topic messages (CreateTime or LogAppendTime).
+Default timestamp type for topic messages (CreateTime or LogAppendTime). 
+
+`log_message_timestamp_type` is overridden per topic by the topic property [`message.timestamp.type`](../topic-properties#messagetimestamptype).
 
 **Default**: `CreateTime`
 

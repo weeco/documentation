@@ -31,9 +31,9 @@ Set retention properties at the topic level or the cluster level. If a value isn
 
 | Retention property | Cluster level | Topic level <br /> (overrides cluster configuration) |
 | ---               | ---                                                |  ---                                 |
-| Time-based        | [delete_retention_ms](../../../reference/cluster-properties#delete_retention_ms) | `retention.ms` <br /> No default     |
-| Size-based        | [retention_bytes](../../../reference/cluster-properties#retention_bytes) | `retention.bytes`  <br /> No default |
-| Segment size      | [log_segment_size](../../../reference/tunable-properties#log_segment_size) | N/A                                  |
+| Time-based        | [delete_retention_ms](../../../reference/cluster-properties#delete_retention_ms) | [retention.ms](../../../reference/topic-properties#retentionms)    |
+| Size-based        | [retention_bytes](../../../reference/cluster-properties#retention_bytes) | [retention.bytes](../../../reference/topic-properties#retentionbytes) |
+| Segment size      | [log_segment_size](../../../reference/tunable-properties#log_segment_size) | [segment.bytes](../../../reference/topic-properties#segmentbytes)                                |
 
 Based on these properties, Redpanda runs a log cleanup process in the background. If you start to run out of disk space, adjust your retention properties to reduce the amount of disk space used. 
 
@@ -102,7 +102,7 @@ rpk cluster config set log_segment_size <segment-size>
 
 If you know which topics will receive more data, it's best to specify the size for each topic. 
 
-To configure log segment size on a topic, `segment.bytes`: 
+To configure log segment size on a topic, [`segment.bytes`](../../../reference/topic-properties#segmentbytes): 
 
 ```bash
 rpk topic alter-config <topic> --set segment.bytes=<segment-size>

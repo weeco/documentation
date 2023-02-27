@@ -215,7 +215,7 @@ Redpanda supports retention limits and compaction for topics using Tiered Storag
 
 Starting in Redpanda version 22.3, cloud storage is the default storage tier for all streaming data, and retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in the cloud until it reaches the configured time or size limit. 
 
-Data expires from cloud storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10GiB, then every partition in the topic has a limit of 10GiB storage in the cloud. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
+Data expires from cloud storage following [`retention.ms`](../../reference/topic-properties#retentionms)  or [`retention.bytes`](../../reference/topic-properties#retentionbytes) . For example, if `retention.bytes` is set to 10GiB, then every partition in the topic has a limit of 10GiB storage in the cloud. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
 
 For more information, see [Configure message retention](../../manage/cluster-maintenance/disk-utilization/#configure-message-retention).
 
@@ -280,7 +280,7 @@ You can configure Redpanda to start a remote write periodically. This is useful 
 
 Setting idle timeout to a very short interval can create a lot of small files, which can affect throughput. If you decide to set a value for idle timeout, start with 600 seconds, which prevents the creation of so many small files that throughput is affected when you recover the files.
 
-Use the `cloud_storage_segment_max_upload_interval_sec` property to set the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. Edit the property value using the `rpk cluster config edit` command. By default, the property is empty.
+Use the `cloud_storage_segment_max_upload_interval_sec` property to set the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to cloud storage, but the segment is not uploaded until it reaches the [`segment.bytes`](../../reference/topic-properties#segmentbytes) size. Edit the property value using the `rpk cluster config edit` command. By default, the property is empty.
 
 ### Reconciliation 
 
@@ -369,7 +369,7 @@ Redpanda uses the following properties to configure transport. Edit them with th
 | `cloud_storage_segment_upload_timeout_ms` | Timeout for segment upload. Redpanda retries the upload after the timeout. Default is 30000 ms. |
 | `cloud_storage_manifest_upload_timeout_ms` | Timeout for manifest upload. Redpanda retries the upload after the timeout. Default is 10000 ms. |
 | `cloud_storage_max_connection_idle_time_ms` | The maximum idle time for persistent HTTP connections. This differs depending on the cloud provider. Default is 5000 ms, which is sufficient for most providers. |
-| `cloud_storage_segment_max_upload_interval_sec` | The number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. |
+| `cloud_storage_segment_max_upload_interval_sec` | The number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the [`segment.bytes`](../../reference/topic-properties#segmentbytes) size. By default, the property is empty. |
 | `cloud_storage_trust_file` | The public certificate used to validate the TLS connection to cloud storage. If this is empty, Redpanda uses your operating system's CA cert pool. |
 
 ## Tiered Storage configuration properties
@@ -405,7 +405,7 @@ You may want to configure the following properties:
 | `cloud_storage_segment_upload_timeout_ms` | Timeout for segment upload. Redpanda retries the upload after the timeout. Default is 30000 ms. |
 | `cloud_storage_manifest_upload_timeout_ms` | Timeout for manifest upload. Redpanda retries the upload after the timeout. Default is 10000 ms. |
 | `cloud_storage_max_connection_idle_time_ms` | The maximum idle time for persistent HTTP connections. Differs depending on the cloud provider. Default is 5000 ms, which is sufficient for most providers. |
-| `cloud_storage_segment_max_upload_interval_sec` | Sets the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the `segment.bytes` size. By default, the property is empty. |
+| `cloud_storage_segment_max_upload_interval_sec` | Sets the number of seconds for idle timeout. If this property is empty, Redpanda uploads metadata to the cloud storage, but the segment is not uploaded until it reaches the [`segment.bytes`](../../reference/topic-properties#segmentbytes) size. By default, the property is empty. |
 | `cloud_storage_cache_check_interval` | The time, in milliseconds, between cache checks. The size of the cache can grow quickly, so it’s important to have a small interval between checks, but if the checks are too frequent, they consume a lot of resources. Default is 30000 ms. |
 
 Under normal circumstances, you should not need to configure the following properties:
