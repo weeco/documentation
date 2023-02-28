@@ -4,8 +4,11 @@ title: Configure Authentication
 
 <head>
     <meta name="title" content="Configure Authentication | Redpanda Docs"/>
-    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, basic authentication, and mTLS with principal mapping."/>
+    <meta name="description" content="Redpanda supports multiple forms of authentication including SASL/SCRAM, mTLS with principal mapping, and basic authentication."/>
 </head>
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 
 Different components of Redpanda support different authentication methods. You can configure multiple listeners with `redpanda.yaml`, and with each listener, you can configure the `authentication_method` and optionally TLS or mTLS. The guidelines put in place by your organization determine the type of authentication that you use.
@@ -14,6 +17,10 @@ See also:
 
 - [Configuring Listeners](../../security/listener-configuration)
 - [Writing Custom Deployment Automation](../../../deploy/deployment-option/self-hosted/manual/production/production-deployment-automation)
+
+:::caution note
+Passwords are in single quotes to avoid conflicts with special characters. Ensure that all values entered are properly enclosed in quotes and escaped as necessary. 
+:::
 
 ## Enable authentication
 
@@ -45,7 +52,7 @@ When you configure authentication, you include one or more superusers in the Red
 Specify the name of the superuser. This can be a new user or an existing user. For example, if you use the superuser named `admin`, then Redpanda allows the `admin` user to do anything, but Redpanda does not create the `admin` user. To create this superuser, run:
 
 ```bash
-rpk acl user create <superuser_username> -p <superuser_password>
+rpk acl user create <superuser_username> -p '<superuser_password>'
 ```
 
 Now the `admin` user has full access to the cluster and can grant permissions to other users.
@@ -58,7 +65,7 @@ To create users and set passwords, run:
 
 ```bash
 rpk acl user create admin \
--p <password> \
+-p '<password>' \
 --api-urls localhost:9644
 ```
 
@@ -68,23 +75,22 @@ For information about using `rpk` to manage ACL users, see [rpk acl](../../../re
 As a security best practice, don't use the superuser to interact with the cluster, and don't delete the superuser (in case you need to grant permissions to new users later). In addition, when you create the superuser, you specify a password, which adds a level of security. If you delete the user, someone else could re-create the user with a different password.
 :::
 
-## Enable SASL authentication
+## SASL/SCRAM
+
+Simple Authentication Security Layer (SASL) is an authentication framework that lets the user choose the authentication mechanism. Redpanda supports the Salted Challenge Response Authentication Mechanism (SCRAM) authentication method.
 
 :::note
 SASL authentication is only available for the Kafka API.
 :::
 
-Simple Authentication Security Layer (SASL) is a framework that lets you choose the authentication mechanism. The mechanism determines which authentication flow the client uses for that user/password. Redpanda supports the following authentication mechanisms:
+SASL provides authentication, but not encryption. You can, however, configure TLS to only handle encryption, and use SASL for authentication. This is useful if you require flexibility in your authorization mechanisms.
 
-- SCRAM (Salted Challenge Response Authentication Mechanism): SCRAM provides strong encryption for user names and passwords by default and does not require an external data store for user information. Redpanda supports  `SCRAM-SHA-256` and `SCRAM-SHA-512`.
+SCRAM provides strong encryption for user names and passwords by default and does not require an external data store for user information. Redpanda supports the following SASL mechanisms: 
 
-- GSSAPI (Kerberos): Redpanda currently supports Kerberos for Bare Metal on-premise customers. 
+* `SCRAM-SHA-256`
+* `SCRAM-SHA-512`
 
-:::info
-Kerberos authentication requires an [Enterprise license](../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-trial).
-:::
-
-When you run an rpk command with SASL/SCRAM, you must include the mechanism with the following flag:
+When you run a command with SASL authentication, you must include the mechanism with the following flag: 
 
 ```yaml
 --sasl-mechanism <mechanism>
@@ -94,14 +100,14 @@ For example, to use the `SCRAM-SHA-256` mechanism, run:
 
 ```bash
 rpk topic create littlefoot \
---user <panda> \
---password <pandaPassword> \
+--user <username> \
+--password <password> \
 --sasl-mechanism SCRAM-SHA-256
 ```
 
 ### Configure SASL authentication
 
-To configure SASL authentication for the Kafka API, set the `authentication_method` property of the listener to `sasl`. 
+To configure SASL authentication for the Kafka API, set `authentication_method` of the listener to `sasl`. 
 
 In `redpanda.yaml`, enter: 
 
@@ -273,8 +279,8 @@ schema_registry_client:
   brokers:
     - address: 127.0.0.1
       port: 9092
-  scram_username: panda
-  scram_password: pandaPassword
+  scram_username: <username>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 // highlight-end
 ```
@@ -293,8 +299,8 @@ schema_registry_client:
     truststore_file: ca.crt
     enabled: true
 // highlight-end
-  scram_username: panda
-  scram_password: pandaPassword
+  scram_username: <username>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -312,8 +318,8 @@ pandaproxy_client:
     cert_file: server.crt
     truststore_file: ca.crt
     enabled: true
-  scram_username: panda
-  scram_password: pandaPassword
+  scram_username: <username>
+  scram_password: <password>
   sasl_mechanism: SCRAM-SHA-256
 ```
 
@@ -383,7 +389,7 @@ schema_registry:
 Then to use basic authentication:
 
 ```
-rpk acl user create foo --password bar # Creates SASL user "foo" for the Kafka API
+rpk acl user create foo --password 'bar' # Creates SASL user "foo" for the Kafka API
 curl -u "foo:bar" "http://localhost:8082/topics" # A request to the HTTP Proxy with user foo. Don't forget the colon!
 curl -u "foo:bar" "http://localhost:8081/subjects" # A request to the Schema Registry with user foo. Don't forget the colon!
 ```

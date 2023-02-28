@@ -4,7 +4,7 @@ title: Redpanda Console Configuration
 
 <head>
     <meta name="title" content="Console configuration template | Redpanda Docs"/>
-    <meta name="description" content="Console configuration template with property descriptions."/>
+    <meta name="description" content="Redpanda Console configuration YAML template with property descriptions."/>
 </head>
 
 When you install Redpanda Console, a `redpanda-console-config.yaml` file is installed on each instance in `/etc/redpanda/redpanda-console-config.yaml`. This file contains configuration properties for Redpanda Console.
@@ -47,8 +47,9 @@ The following `config.yaml` configuration file contains a complete list of all C
 Provide the filepath to your configuration file by setting either the flag
 `-config.filepath` or the environment variable `CONFIG_FILEPATH`.
 
-:::note
-This configuration file contains both Redpanda Enterprise and Redpanda Community configurations. If you don't provide a Redpanda Enterprise license, Console ignores configurations for Redpanda Enterprise features.
+:::caution notes
+- Ensure that all values entered are properly enclosed in quotes and escaped as necessary. For example, put passwords with special characters in single quotes.
+- This configuration file contains both Redpanda Enterprise and Redpanda Community configurations. If you don't provide a enterprise license, Console ignores configurations for enterprise features.
 :::
 
 ```yaml
@@ -110,6 +111,8 @@ kafka:
     caFilepath:
     certFilepath:
     keyFilepath:
+    # Can also be set using the --kafka.tls.passphrase flag
+    passphrase: 
     insecureSkipTlsVerify: false
   schemaRegistry:
     enabled: false
@@ -183,6 +186,7 @@ kafka:
         username:
         privateKey: 
         privateKeyFilepath:
+        passphrase: 
   messagePack:
     enabled: false
     topicNames: ["/.*/"] # List of topic name regexes, defaults to /.*/
@@ -235,6 +239,7 @@ console:
         username:
         privateKey: 
         privateKeyFilepath:
+        passphrase:
 
 redpanda:
   # Redpanda Admin API configuration that enables additional Redpanda-specific features.

@@ -94,12 +94,10 @@ module.exports = async () => {
               '**/*.test.{js,jsx,ts,tsx}',
               '**/__tests__/**',
             ],
-            lastVersion: '22.3',
+            lastVersion: 'current',
             versions: {
               current: {
-                label: '23.1 Beta',
-                banner: 'unreleased',
-                path: '/beta'
+                label: '23.1',
               },
             },
             beforeDefaultRemarkPlugins: [
