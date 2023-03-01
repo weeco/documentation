@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Patron, Inter, sans-serif;
-  --v-font-mono: Patron, Inter,'Courier Prime', Courier, monospace;
+  --v-font: Inter, sans-serif;
+  --v-font-mono: Inter,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -453,6 +453,7 @@ span[class*="dropdownMenu_"] {
 
 .menu__link {
   color: #000;
+  font-family: Patron,Inter, sans-serif;
 }
 
 .menu__link--active {
