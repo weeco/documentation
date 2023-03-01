@@ -41,7 +41,7 @@ To generate a diagnostics bundle, execute the `rpk debug bundle` command inside 
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values serviceaccount.yaml
+    --values serviceaccount.yaml --reuse-values
   ```
 
   </TabItem>

@@ -185,10 +185,10 @@ rpk acl [command] [flags]
 ```
  
 For example, to create a user:
-
+ 
 ```bash
 rpk acl user create Jack \
---password <password> \
+--password '<password>' \
 --api-urls localhost:9644
 ```
  
@@ -346,7 +346,7 @@ Before a created SASL account can be used, you must also create ACLs to grant th
 To create a SASL/SCRAM user, run:
  
 ```bash
-rpk acl user create [USER] -p [PASSWORD] [globalACLFlags] [globalUserFlags] [localFlags]
+rpk acl user create [user] -p [password] [globalACLFlags] [globalUserFlags] [localFlags]
 ```
  
 Here are the local flags:

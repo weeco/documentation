@@ -496,7 +496,13 @@ Disable registering metrics exposed on the public metrics endpoint.
 
 ### enable_metrics_reporter
 
-Enable cluster metrics reporter.
+Enable the cluster metrics reporter. If `true`, the metrics reporter collects and exports to Redpanda Data a set of customer usage metrics at the interval set by [metrics_reporter_report_interval](../tunable-properties#metrics_reporter_report_interval).
+
+:::note
+The cluster metrics of the metrics reporter are different from [monitoring metrics](../../manage/monitoring). 
+- The metrics reporter exports customer usage metrics for consumption by Redpanda Data.
+- Monitoring metrics are exported for consumption by Redpanda users to monitor their system's health.
+:::
 
 **Type**: boolean
 

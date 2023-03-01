@@ -77,19 +77,6 @@
   width: 100%;
 }
 
-.container code {
-  max-width: 100%;
-}
-
-code > span > span {
-    white-space: pre-wrap;
-}
-
-.container code > span {
-  display: block;
-}
-
-
 html[data-theme='dark'] {
   --ifm-toc-border-color: var(--v-black);
 }
@@ -144,13 +131,25 @@ div .admonition-content > ul > li > a {
   margin-top: 0;
 }
 
+/* Don't wrap right-nav TOC in main-doc container when screen width > 996px */ 
+[class*=docMainContainer] .container .row {
+  flex-wrap: nowrap;
+}
+
+@media screen and (max-width: 996px)  {
+  [class*=docMainContainer] .container .row {
+    flex-wrap: wrap;
+  }
+}
+
 @media screen and (max-width: 966px)  {
   table{
   display: block;
   overflow-x: auto;
   white-space: nowrap;
-  }
+  }  
 }
+
 
 table tr td {
   text-align: left !important;
@@ -279,7 +278,19 @@ code {
 }
 .container code {
   background: var(--v-gray3);
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 50vmax;
 }
+
+code > span > span {
+  white-space: pre-wrap;
+}
+
+.container code > span {
+display: block;
+}
+
 .container code span:not(.comment) {
   
 }
@@ -476,3 +487,25 @@ h5 {
 body {
   color:black;
 }
+
+a {
+  color : var(--v-red);
+  text-decoration: var(--ifm-link-decoration) !important;
+}
+
+a:hover {
+  color : var(--ifm-color-primary-darkest);
+}
+
+a:link { 
+  text-decoration: none!important; 
+}
+
+a:visited { 
+  text-decoration: none!important; 
+}
+
+a:hover { text-decoration: none!important; }
+
+a:active { text-decoration: none !important;  }
+

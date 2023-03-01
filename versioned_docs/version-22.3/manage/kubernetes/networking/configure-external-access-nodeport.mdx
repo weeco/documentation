@@ -57,7 +57,7 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-domain.yaml
+    --values custom-domain.yaml --reuse-values
   ```
 
   </TabItem>
@@ -73,7 +73,7 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
   </TabItem>
   </Tabs>
 
-  :::tip
+  :::note
   <ValuesYaml path="external"/>
   :::
 
@@ -82,7 +82,7 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
   ```
 
 1. Find the IP address of each worker node.
@@ -141,7 +141,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain.yaml
+        --values custom-subdomain.yaml --reuse-values
       ```
 
       </TabItem>
@@ -158,7 +158,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
-      :::tip
+      :::info
       <ValuesYaml path="external"/>
       :::
 
@@ -181,7 +181,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain-ordinal.yaml
+        --values custom-subdomain-ordinal.yaml --reuse-values
       ```
 
       </TabItem>
@@ -198,7 +198,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
-      :::tip
+      :::info
       <ValuesYaml path="external"/>
       :::
 
@@ -207,7 +207,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
   ```
 
 1. Find the IP address of each worker node.
@@ -245,7 +245,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
   ```
 
 1. Find the IP address of each worker node.
@@ -271,7 +271,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values external-access-ip-addresses.yaml
+    --values external-access-ip-addresses.yaml --reuse-values
   ```
 
   </TabItem>
@@ -288,7 +288,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
   </TabItem>
   </Tabs>
 
-  :::tip
+  :::note
   <ValuesYaml path="external"/>
   :::
 

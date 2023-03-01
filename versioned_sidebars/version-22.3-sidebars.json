@@ -31,7 +31,7 @@
         {
           "type": "doc",
           "label": "Redpanda Quickstart",
-          "id": "get-started/quick-start/quick-start-docker"
+          "id": "get-started/quick-start"
         },
         {
           "type": "doc",
@@ -250,6 +250,11 @@
                   "id": "deploy/deployment-option/cloud/dedicated-byoc"
                 },
                 {
+                  "type": "doc",
+                  "label": "Quickstart",
+                  "id": "get-started/quick-start"
+                },
+                {
                   "type": "category",
                   "label": "Redpanda Dedicated",
                   "items": [
@@ -324,6 +329,21 @@
             },
             {
               "type": "category",
+              "label": "Tiered Storage",
+              "link": {
+                "type": "doc",
+                "id": "manage/kubernetes/tiered-storage"
+              },
+              "items": [
+                {
+                  "type": "doc",
+                  "label": "Data Archiving",
+                  "id": "manage/kubernetes/data-archiving"
+                }
+              ]
+            },
+            {
+              "type": "category",
               "label": "Networking and Connectivity",
               "link": {
                 "type": "doc",
@@ -371,6 +391,21 @@
               "type": "doc",
               "label": "Rack Awareness",
               "id": "manage/kubernetes/kubernetes-rack-awareness"
+            },
+            {
+              "type": "doc",
+              "label": "Remote Read Replicas",
+              "id": "manage/kubernetes/remote-read-replicas"
+            },
+            {
+              "type": "doc",
+              "label": "Manage Pod Resources",
+              "id": "manage/kubernetes/manage-resources"
+            },
+            {
+              "type": "doc",
+              "label": "Troubleshoot",
+              "id": "manage/kubernetes/troubleshooting/troubleshoot"
             }
           ]
         },
@@ -489,6 +524,11 @@
             }
           ]
         },
+        {
+          "type": "doc",
+          "label": "Remote Read Replicas",
+          "id": "manage/remote-read-replicas"
+        },
         "manage/schema-registry",
         {
           "type": "category",
@@ -516,7 +556,6 @@
           "label": "Rack Awareness",
           "id": "manage/rack-awareness"
         },
-        "manage/remote-read-replicas",
         "manage/monitoring",
         "manage/io-optimization"
       ]

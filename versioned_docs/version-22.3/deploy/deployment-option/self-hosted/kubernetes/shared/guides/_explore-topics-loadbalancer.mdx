@@ -1,3 +1,12 @@
+Redpanda Console is a developer-friendly web UI for managing and debugging your Redpanda cluster and your applications.
+
+The community edition of Redpanda Console does not provide authentication, and connects to the Redpanda cluster with superuser rights. Due to this limitation, you should not expose Redpanda Console outside the Kubernetes cluster without a Enterprise Edition.
+
+kubectl -n redpanda port-forward svc/redpanda-console 8080:8080
+
+Then browse to http://localhost:8080
+
+
 1. Find the external IP address of the Redpanda Console's LoadBalancer Service:
 
   ```bash

@@ -1,36 +1,34 @@
 ---
-title: Data Archiving
+title: Data Archiving in Linux
+linkRoot: ../../
+deployment: Linux
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/data-archiving'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/data-archiving
 ---
 
 <head>
-    <meta name="title" content="Data archiving | Redpanda Docs"/>
-    <meta name="description" content="Set up data archiving on Redpanda."/>
+    <meta name="title" content="Data Archiving in Linux | Redpanda Docs"/>
+    <meta name="description" content="Set up data archiving to back up topics to cloud storage."/>
 </head>
 
-:::info
-This feature requires an [Enterprise license](../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-trial).
-:::
+import AboutDataArchiving from './shared/tiered-storage/data-archiving/_intro.mdx';
+import Configure from './shared/tiered-storage/data-archiving/_configure.mdx';
+import Stop from './shared/tiered-storage/data-archiving/_stop.mdx';
 
-Data archiving is one use case for Tiered Storage. With data archiving, you can enable remote write so you can back up topics to cloud storage. In the event of a data center failure, data corruption, or cluster migration, you can recover your archived data from the cloud back to your cluster. 
+import ContextLink from '@site/src/components/ContextButton.js'
 
-To read data from cloud storage, you need to enable remote read. When remote read is disabled, data can only be read from local storage. 
+<ContextLink frontmatter={frontMatter}
+/>
 
-:::note
-Redpanda natively supports data archiving to Amazon S3, Google Cloud Storage, and Azure Blob Storage. 
-:::
+<AboutDataArchiving frontmatter={frontMatter}/>
 
 ## Configure data archiving
 
-Data archiving requires a Tiered Storage configuration. See [Tiered Storage](../tiered-storage) for detailed information about these steps:
-
-1. Enable remote write at the [cluster level](../tiered-storage/#enable-tiered-storage-for-a-cluster) or [topic level](../tiered-storage/#enable-tiered-storage-for-a-topic). Optionally, enable remote read. 
-
-2. [Set retention limits](../tiered-storage/#set-retention-limits). 
-   
-To recover a topic from cloud storage, use [remote recovery](../tiered-storage/#remote-recovery).
+<Configure/>
 
 ## Stop data archiving
    
-To cancel archiving jobs, disable remote write. 
-
-To delete archival data, adjust `retention.ms` or `retention.bytes`.
+<Stop/>

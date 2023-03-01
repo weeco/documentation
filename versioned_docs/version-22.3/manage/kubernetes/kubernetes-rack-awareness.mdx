@@ -3,6 +3,13 @@ title: Enable Rack Awareness in Kubernetes
 tags:
   - Kubernetes
   - Helm configuration
+linkRoot: ../../../
+deployment: Kubernetes
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/rack-awareness'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/kubernetes-rack-awareness
 ---
 
 <head>
@@ -14,6 +21,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import AboutRackAwareness from '../../manage/shared/_rack-awareness.mdx';
 import ValuesYaml from './shared/_values-yaml.mdx'
+
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter}
+/>
 
 <AboutRackAwareness/>
 
@@ -90,7 +102,7 @@ rbac:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
---values rack-awareness.yaml
+--values rack-awareness.yaml --reuse-values
 ```
 
 </TabItem>
@@ -106,7 +118,7 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 </TabItem>
 </Tabs>
 
-:::tip
+:::note
 <ValuesYaml path="rackAwareness"/>
 :::
 
@@ -133,7 +145,7 @@ rbac:
 
 ```bash
 helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
---values rack-awareness.yaml
+--values rack-awareness.yaml --reuse-values
 ```
 
 </TabItem>
@@ -150,7 +162,7 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 </TabItem>
 </Tabs>
 
-:::tip
+:::note
 <ValuesYaml path="rackAwareness"/>
 :::
 
