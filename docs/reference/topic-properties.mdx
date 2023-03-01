@@ -12,7 +12,7 @@ toc_max_heading_level: 2
   />
 </head>
 
-Topic-level properties configure a Kafka or Redpanda property per topic. Each topic-level property overrides the value of a corresponding node (broker) or cluster property. If no topic-level property is set, the corresponding node or cluster property takes effect by default.
+A topic-level property sets a Kafka or Redpanda configuration per topic. Each topic-level property overrides the value of a corresponding node (broker) or cluster property. If no topic-level property is set, the corresponding node or cluster property takes effect by default.
 
 ## Example commands
 
@@ -153,7 +153,7 @@ If `retention.ms` is set to a positive value, it overrides the cluster property 
 
 ### max.message.bytes
 
-`max.message.bytes` configures the maximum size of a message or batched message of a topic. Applies after compression, if compression is enabled.
+`max.message.bytes` configures the maximum size of a message or batch of a topic. If a compression type is enabled, it sets the maximum size of the compressed message or batch.
 
 If `max.message.bytes` is set to a positive value, it overrides the cluster property [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes) for the topic.
 
@@ -166,19 +166,36 @@ If `max.message.bytes` is set to a positive value, it overrides the cluster prop
 
 ### redpanda.remote.recovery
 
-When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redpanda.remote.recovery` is the flag that enables the recovery or reproduction of a topic from cloud storage. The recovered data is saved in local storage, and the amount of recovered data is in accordance with the local storage retention limits of the topic.
+When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redpanda.remote.recovery` is the flag that enables the recovery or reproduction of a topic from cloud storage. The recovered data is saved in local storage, and the maximum amount of recovered data is determined by the local storage retention limits of the topic.
+
+`redpanda.remote.recovery` must be configured at topic creation. It cannot be configured, and does not apply, for existing topics.
+
+**Default**: false
+
+**Related topics**:
+- [Tiered Storage](../../manage/tiered-storage)
 
 ---
 
 ### redpanda.remote.write
 
-`redpanda.remote.write` is a flag for enabling Redpanda to upload data for a topic from local storage to cloud storage. When set together with [redpanda.remote.read](#redpandaremoteread), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+`redpanda.remote.write` is the flag for enabling Redpanda to upload data for a topic from local storage to cloud storage. When set `true` together with [redpanda.remote.read](#redpandaremoteread), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+
+**Default**: false
+
+**Related topics**:
+- [Remote Read Replicas](../../manage/remote-read-replicas)
 
 ---
 
 ### redpanda.remote.read
 
-`redpanda.remote.read` is a flag for enabling Redpanda to fetch data for a topic from cloud storage to local storage. When set together with [redpanda.remote.write](#redpandaremotewrite), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+`redpanda.remote.read` is the flag for enabling Redpanda to fetch data for a topic from cloud storage to local storage. When set `true` together with [redpanda.remote.write](#redpandaremotewrite), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+
+**Default**: false
+
+**Related topics**:
+- [Remote Read Replicas](../../manage/remote-read-replicas)
 
 ---
 
@@ -186,11 +203,21 @@ When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redp
 
 For the [Remote Read Replica](../../manage/remote-read-replicas) feature, `redpanda.remote.readreplica` configures the name of the cloud storage bucket for a Remote Read Replica topic.
 
+**Default**: null
+
+**Related topics**:
+- [Remote Read Replicas](../../manage/remote-read-replicas)
+
 ---
 
 ### retention.local.target.bytes
 
 When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `retention.local.target.bytes` configures that maximum size that a topic partition in local storage can grow when the cleanup policy is `delete`.
+
+**Default**: null
+
+**Related topics**:
+- [Tiered Storage](../../manage/tiered-storage)
 
 ---
 
@@ -198,27 +225,43 @@ When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `rete
 
 When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `retention.local.target.ms` configures the maximum duration to keep a log in local storage before deleting old segments when the cleanup policy is `delete`.
 
+**Default**: null
+
+**Related topics**:
+- [Tiered Storage](../../manage/tiered-storage)
+
 ---
 
 ### replication.factor
 
-`replication.factor` configures the number of copies of a topic saved in different nodes (brokers).
+`replication.factor` configures the number of copies of a topic saved in different nodes (brokers) of a cluster.
+
+If `replication.factor` is set to a positive value, it overrides the cluster property [default_topic_replications](../cluster-properties#default_topic_replications) for the topic.
+
+**Default**: null
 
 ---
 
 ### redpanda.remote.delete
 
-When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redpanda.remote.delete` is a flag that enables the deletion of data for a topic from remote storage when it's deleted from local storage.
+When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redpanda.remote.delete` is the flag that enables deletion of data from remote storage when it's deleted from local storage for a topic.
 
 :::note
 `redpanda.remote.delete` doesn't apply to Remote Read Replica topics: a Remote Read Replica topic isn't deleted from cloud storage when this flag is `true`.
 :::
 
+**Default**: 
+- `false` for topics created prior to Redpanda 22.3.
+- `true` for topics created in Redpanda 22.3 and later, including new topics on upgraded clusters. 
+
+**Related topics**:
+- [Tiered Storage](../../manage/tiered-storage)
+
 ---
 
 ### segment.ms
 
-`segment.ms` configures the default log rolling timeout for a topic. Periodically, an active log segment is closed and a new segment is created to store newly written data.
+`segment.ms` configures the duration that a log segment is active&mdash;being written to and not deletable&mdash;for a topic. It's the periodic timeout at which a log closes the active segment of a topic and transitions, or rolls, to a new active segment. The closed, inactive segment is subsequently eligible to be deleted according to retention limits.
 
 If set to a positive duration, `segment.ms` overrides the cluster property [log_segment_ms](../cluster-properties#log_segment_ms).
 
