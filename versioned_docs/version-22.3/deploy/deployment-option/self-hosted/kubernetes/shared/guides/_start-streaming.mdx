@@ -1,9 +1,9 @@
-Each Redpanda broker comes with rpk, which is a CLI tool for connecting to and interacting with Redpanda brokers. You can use rpk inside one of the Redpanda broker's Docker containers to create a topic, produce messages to it, and consume messages from it.
+ In this step, you authenticate to Redpanda with the `redpanda-twitch-account` user to create a topic called `twitch_chat`. This topic is the only one that the `redpanda-twitch-account` user has permission to access. Then, you produce messages to the topic, and consume messages from it.
 
 1. Create an alias to simplify the `rpk` commands:
 
   ```bash
-  alias container-rpk="kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093"
+  alias container-rpk="kubectl -n redpanda exec -ti redpanda-0 -c redpanda -- rpk --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093 --tls-truststore /etc/tls/certs/default/ca.crt --tls-enabled --user=redpanda-twitch-account --password=changethispassword --sasl-mechanism SCRAM-SHA-256"
   ```
 
 1. Create a topic called `twitch_chat`:

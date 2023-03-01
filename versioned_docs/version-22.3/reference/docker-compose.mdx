@@ -64,7 +64,7 @@ services:
       - redpanda_network
 
   console:
-    image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
+    image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_LATEST_VERSION
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:
@@ -139,7 +139,7 @@ services:
 
 This `docker-compose.yml` file configures a Redpanda broker and Redpanda Console with a license key for Redpanda Enterprise Edition. The license key is uploaded to the Redpanda broker through a separate container called `redpandarpk`. This container executes the `rpk cluster license set` command to load the license key from the given filepath.
 
-To request a trial license, to extend your trial period, or to purchase an Enterprise Edition license, contact [Redpanda Sales](https://redpanda.com/try-redpanda?section=enterprise-cloud). 
+To request a trial license, to extend your trial period, or to purchase an Enterprise Edition license, contact [Redpanda Sales](https://redpanda.com/try-redpanda?section=enterprise-trial). 
 
 1. Save your license key to a file called `redpanda.license` in a directory called `license`, or update the `redpandarpk.volumes` host path in the `docker-compose.yml` file to another directory that contains your license key.
 
@@ -199,7 +199,7 @@ To request a trial license, to extend your trial period, or to purchase an Enter
 
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_VERSION_2_1
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_LATEST_VERSION
       # mount the local directory that contains your license key to the container.
       # give Redpanda Console read access to the license.
       volumes:

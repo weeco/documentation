@@ -4,6 +4,7 @@ tags:
   - Kubernetes
   - Helm configuration
   - Security
+description: Use TLS to authenticate Redpanda brokers and encrypt communication between clients and brokers.
 ---
 
 <head>
@@ -44,7 +45,7 @@ A self-signed certificate is signed with its own private key, instead of request
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values self-signed-tls.yaml
+    --values self-signed-tls.yaml --reuse-values
   ```
 
   </TabItem>
@@ -58,7 +59,7 @@ A self-signed certificate is signed with its own private key, instead of request
   </TabItem>
   </Tabs>
 
-  :::tip
+  :::note
   <ValuesYaml path="tls"/>
   :::
 

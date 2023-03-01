@@ -40,7 +40,7 @@ module.exports = {
         {
           type: "doc",
           label: "Redpanda Quickstart",
-          id: "get-started/quick-start/quick-start-docker",
+          id: "get-started/quick-start",
         },
         {
           type: "doc",
@@ -201,11 +201,7 @@ module.exports = {
                   ]
                 },
                     "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    {
-                      type: "doc",
-                      label: "High Availability",
-                      id: "deploy/deployment-option/self-hosted/manual/high-availability",
-                    },
+                    "deploy/deployment-option/self-hosted/manual/high-availability",  
                     {
                       type: "doc",
                       label: "Sizing Use Cases",
@@ -229,6 +225,11 @@ module.exports = {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
                   id: "deploy/deployment-option/cloud/dedicated-byoc",
+                },
+                {
+                  type: "doc",
+                  label: "Quickstart",
+                  id: "get-started/quick-start",
                 },
                 {
                   type: "category",
@@ -297,6 +298,23 @@ module.exports = {
                   },
                   {
                     type: "category",
+                    label: "Tiered Storage",
+                    
+                    
+                    link: {
+                      type: "doc",
+                      id: "manage/kubernetes/tiered-storage",
+                    },
+                    items: [
+                      {
+                        type: "doc",
+                        label: "Data Archiving",
+                        id: "manage/kubernetes/data-archiving",
+                      },
+                    ],
+                  },
+                  {
+                    type: "category",
                     label: "Networking and Connectivity",
                     link: { type: "doc", id: "manage/kubernetes/networking/networking-and-connectivity" },
                     items: [
@@ -338,6 +356,16 @@ module.exports = {
                     type: "doc",
                     label: "Rack Awareness",
                     id: "manage/kubernetes/kubernetes-rack-awareness",
+                  },
+                  {
+                    type: "doc",
+                    label: "Remote Read Replicas",
+                    id: "manage/kubernetes/remote-read-replicas"
+                  },
+                  {
+                    type: "doc",
+                    label: "Manage Pod Resources",
+                    id: "manage/kubernetes/manage-resources",
                   },
                   {
                     type: "category",
@@ -451,6 +479,11 @@ module.exports = {
                         "type": "doc",
                         "label": "Generic OIDC",
                         "id": "manage/security/console/generic-oidc"
+                      },
+                      {
+                        "type": "doc",
+                        "label": "Plain",
+                        "id": "manage/security/console/plain"
                       }
                     ]
                   },
@@ -460,8 +493,6 @@ module.exports = {
               {
                 type: "category",
                 label: "Tiered Storage",
-                
-                
                 link: {
                   type: "doc",
                   id: "manage/tiered-storage",
@@ -471,8 +502,13 @@ module.exports = {
                     type: "doc",
                     label: "Data Archiving",
                     id: "manage/data-archiving",
-                  },
-                ],
+                  }
+                ]
+              },
+              {
+                type: "doc",
+                label: "Remote Read Replicas",
+                id: "manage/remote-read-replicas",
               },
               "manage/schema-registry",
               {
@@ -485,6 +521,11 @@ module.exports = {
                   "manage/console/protobuf",
                   "manage/console/topic-documentation",
                   "manage/console/http-path-rewrites",
+                  {
+                    type: "doc",
+                    label: "Edit Topic Configuration",
+                    id: "manage/console/edit-topic-configuration",
+                  }
                 ]
               },
               {
@@ -498,7 +539,6 @@ module.exports = {
                 label: "Rack Awareness",
                 id: "manage/rack-awareness",
               },
-              "manage/remote-read-replicas",
               "manage/monitoring",
               "manage/io-optimization",
             ],

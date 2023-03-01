@@ -1,5 +1,6 @@
 ---
 title: Authentication
+linkRoot: ../../../../
 ---
 
 <head>
@@ -7,15 +8,20 @@ title: Authentication
     <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
 </head>
 
+import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
+
 :::info
-This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-trial).
+<EnterpriseLicenseNote frontmatter={frontMatter}/>
 :::
 
-Redpanda Console supports authentication via OAuth 2.0 or OIDC for external identity providers, such as:
+Redpanda Console supports authentication through OAuth 2.0 and OIDC for external identity providers
+as well as a plain login (username and password) for development environments or demo purposes.
+The following options are supported:
 - [Google](../google)
 - [GitHub](../github)
 - [Okta](../okta)
 - [Generic OIDC](../generic-oidc)
+- [Plain](../plain) (username and password)
 
 You can use one or more login providers at the same time. To enable SSO authentication 
 you must create an OAuth application for your organization first. Visit the respective

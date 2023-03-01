@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Inter,Patron, sans-serif;
+  --ifm-heading-font-family: Patron,Inter, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -61,7 +61,7 @@
 }
 
 * {
-  font-family: Patron,sans-serif;
+  font-family: Patron,Inter,sans-serif;
   box-sizing: border-box;
 }
 
@@ -156,7 +156,7 @@ table tr td {
 }
 
 .table-of-contents__link, .menu__link {
-  font-weight: 100 !important;
+  font-weight: 300 !important;
   font-size: 14px;
   letter-spacing: .025rem;
 }
@@ -227,7 +227,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 @font-face {
   font-family: 'Patron';
-  font-weight: 150;
+  font-weight: 100;
   font-style: normal;
   src: local('example'),
     url('../fonts/Patron-Light.otf') format('truetype');
@@ -463,7 +463,8 @@ span[class*="dropdownMenu_"] {
 }
 
 .menu__link {
-  color: black;
+  color: #000;
+  font-family: Patron,Inter, sans-serif;
 }
 
 .menu__link--active {
@@ -482,3 +483,29 @@ h5 {
 [class*=iconExternalLink] {
   display: none;
 }
+
+body {
+  color:black;
+}
+
+a {
+  color : var(--v-red);
+  text-decoration: var(--ifm-link-decoration) !important;
+}
+
+a:hover {
+  color : var(--ifm-color-primary-darkest);
+}
+
+a:link { 
+  text-decoration: none!important; 
+}
+
+a:visited { 
+  text-decoration: none!important; 
+}
+
+a:hover { text-decoration: none!important; }
+
+a:active { text-decoration: none !important;  }
+

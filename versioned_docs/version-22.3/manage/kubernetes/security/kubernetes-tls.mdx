@@ -4,6 +4,7 @@ tags:
   - Kubernetes
   - Helm configuration
   - Security
+description: Use TLS to authenticate Redpanda brokers and encrypt communication between clients and brokers.
 ---
 
 <head>
@@ -23,8 +24,6 @@ To secure the communication between Redpanda brokers and clients, configure TLS 
 To configure TLS you can [use a self-signed certificate](#use-a-self-signed-certificate) for all listeners.
 
 ## Prerequisites
-
-You need the following:
 
 Install [cert-manager](https://cert-manager.io/docs/installation/helm/).
 
@@ -46,7 +45,7 @@ A self-signed certificate is signed with its own private key, instead of request
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values self-signed-tls.yaml
+    --values self-signed-tls.yaml --reuse-values
   ```
 
   </TabItem>
@@ -60,7 +59,7 @@ A self-signed certificate is signed with its own private key, instead of request
   </TabItem>
   </Tabs>
 
-  :::tip
+  :::note
   <ValuesYaml path="tls"/>
   :::
 

@@ -9,21 +9,33 @@ title: Manage
 
 - [Kubernetes](../manage/kubernetes)
 
-  - [Rack Awareness](../manage/kubernetes/kubernetes-rack-awareness)
+  - [Storage](../manage/kubernetes/configure-storage)
 
-      Rack awareness allows you to distribute replicas of the same partition across different racks to minimize data loss in the event of a rack failure. A rack is a failure zone that has one or more Redpanda brokers assigned to it.
+    Store Redpanda data in PersistentVolumes, hostPath volumes, or emptyDir volumes.
+
+  - [Tiered Storage](../manage/kubernetes/tiered-storage)
+      
+      Tiered Storage lets you save storage costs by offloading log segments to cloud storage.
+
+  - [Networking and Connectivity](../manage/kubernetes/networking/networking-and-connectivity)
+
+      Learn how internal and external connectivity works when Redpanda is running in Kubernetes.
 
   - [Security](../manage/kubernetes/security)
 
-    - [Configure TLS on Kubernetes](../manage/kubernetes/security/kubernetes-tls)
+      Configure encryption, authentication, and authorization for production environments.
 
-        Redpanda supports Transport Layer Security (TLS) encryption in Kubernetes. For certificate management, the Redpanda Helm chart uses cert-manager with either a self-signed Issuer or your own custom Issuer.
+  - [Rack Awareness](../manage/kubernetes/kubernetes-rack-awareness)
 
-    - [Configure SASL on Kubernetes](../manage/kubernetes/security/sasl-kubernetes)
+      Distribute replicas of the same partition across different racks to minimize data loss in the event of a rack failure.
 
-        Simple Authentication and Security Layer (SASL) is a method for adding authentication support to connection-based protocols. When using the Redpanda Helm chart, SASL provides authentication between the server and client. To encrypt communication, use TLS encryption. You must use TLS encryption to have secure authentication using SASL.
+  - [Remote Read Replicas](../manage/kubernetes/remote-read-replicas)
 
-  - [Configure Storage](../manage/kubernetes/configure-storage)
+      A Remote Read Replica topic is a read-only topic that mirrors a topic on a different cluster.
+      
+  - [Troubleshooting](../manage/kubernetes/troubleshooting/troubleshoot)
+
+      Find advice on how to diagnose and troubleshoot problems with Redpanda in Kubernetes.
 
 - [Cluster Maintenance](../manage/cluster-maintenance)
   - [Cluster Balancing](../manage/cluster-maintenance/cluster-balancing)
