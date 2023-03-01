@@ -82,5 +82,5 @@ div .topPanelVersionContainer div {
 }
 
 a:hover{
-  color: black!important;
+  color: var(--ifm-color-primary-darkest)!important;
 }
