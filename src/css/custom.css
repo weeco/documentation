@@ -484,10 +484,6 @@ h5 {
   display: none;
 }
 
-body {
-  color:black;
-}
-
 a {
   color : var(--v-red);
   text-decoration: var(--ifm-link-decoration) !important;
