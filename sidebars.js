@@ -297,6 +297,11 @@ module.exports = {
                       label: "Create a JDBC Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "Create a MirrorMaker 2 Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mm2-connector",
+                    },
                   ],
                 },
               ]

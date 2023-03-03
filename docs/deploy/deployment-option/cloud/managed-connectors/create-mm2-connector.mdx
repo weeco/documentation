@@ -1,0 +1,106 @@
+---
+title: Create a MirrorMaker 2 Connector
+---
+
+<head>
+    <meta name="title" content="Create a MirrorMaker 2 Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the MirrorMaker 2 Connector to create an HTTP Source Connector."/>
+</head>
+
+You can use the Mirror Maker 2 connector to replicate messages from Kafka source
+clusters to a target cluster.
+
+The MirrorMaker 2 managed connector consists of 3 connector plugins:
+
+- `MirrorSourceConnector` replicates a set of topics from a single source cluster
+  into the primary cluster.
+- `MirrorCheckpointConnector` emits consumer offset checkpoints and syncs the offsets.
+- `MirrorHeartbeatConnector` emits heartbeats
+
+`MirrorSourceConnector` and `MirrorCheckpointConnector` run at the target cluster,
+moving the data from source to target. `MirrorHeartbeatConnector` should run on
+both source and target clusters.
+
+## Prerequisites
+
+To run MirrorMaker 2, create a service user on the source and target cluster with
+appropriate ACLs.
+
+### Minimum ACLs for the source cluster
+
+For the `MirrorSourceConnector`:
+
+- Topic READ, DESCRIBE CONF
+- Cluster DESCRIBE - to allow ACLs sync
+- Topic `mm2-offset-syncs.target.internal`: CREATE, WRITE (if `offset-syncs.topic.location=source`, which is the default)
+
+For the `MirrorCheckpointConnector`:
+
+- Group DESCRIBE
+- Topic `mm2-offset-syncs.target.internal`: READ (if `offset-syncs.topic.location=source`, which is the default)
+
+### Minimum ACLs for the target cluster
+
+For `MirrorSourceConnector`:
+
+- Topic CREATE, WRITE
+- Cluster DESCRIBE, ALTER (to allow ACLs sync)
+
+For `MirrorCheckpointConnector`:
+
+- Topic READ, CREATE
+- Group READ
+
+## Configure MirrorSourceConnector
+
+To configure `MirrorSourceConnector`:
+
+1. From the navigation menu of Redpanda Cloud, select your namespace, and then your
+   cluster to access the Redpanda Console.
+2. Click **Connectors > Create Connector**.
+3. Under **Connector Type**, select **MirrorourceConnector** and click **Next**.
+4. Use the wizard to configure the connector (recommended), or click **Next** to bypass the
+   wizard and navigate to the JSON configuration window (advanced).
+5. Use the following configuration:
+   ```js
+   {
+     "name": "mm2-source-connector",
+    "connector.class": "org.apache.kafka.connect.mirror.MirrorSourceConnector",
+    "topics": ".*",
+    "replication.factor": "3",
+    "source.cluster.alias": "source",
+    "replication.policy.class": "org.apache.kafka.connect.mirror.IdentityReplicationPolicy",
+    "source.cluster.bootstrap.servers": "...",
+    "source.cluster.sasl.mechanism": "PLAIN",
+    "source.cluster.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username='...' password='...';",
+    "source.cluster.security.protocol": "SASL_SSL",
+    "source.cluster.ssl.truststore.type": "PEM",
+    "source.cluster.ssl.truststore.certificates": "-----BEGIN CERTIFICATE-----\nMIIDJDCCAgygAwIBAgIQOe4To0vCv7tyt0CA/NGfiTANBgkqhkiG9w0BAQsFADAs\n...\n-----END CERTIFICATE-----\n",
+    "source.cluster.ssl.keystore.type": "PEM",
+    "source.cluster.ssl.keystore.key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDQlxXIQM1Hpkkr\n...\n-----END PRIVATE KEY-----\n",
+    "source.cluster.ssl.keystore.certificate.chain": "-----BEGIN CERTIFICATE-----\nMIIDGDCCAgCgAwIBAgIQcisMcm5ldzFC4zZfZHXKgjANBgkqhkiG9w0BAQsFADAs\n...\n-----END CERTIFICATE-----\n",
+    "target.cluster.bootstrap.servers": "rp-{redpanda-id}.redpanda.svc.cluster.local:9092",
+
+    "target.cluster.sasl.jaas.config": "org.apache.kafka.common.security.scram.ScramLoginModule required username='...'   password='...';",
+    "target.cluster.sasl.mechanism": "SCRAM-SHA-256",
+    "target.cluster.security.protocol": "SASL_PLAINTEXT",
+    "key.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+    "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter"
+   }
+   ```
+
+   | Property      | Description |
+   | ----------- | ----------- |
+   | `topics` | Regexes of topics to replicate, comma separated (`.*` is all topics) |
+   | `replication.factor` | Replication factor for newly-created remote topics. Default is `2`. |
+   | `source.cluster.alias` | Alias of the source cluster. |
+   | `replication.policy.class` | Determines topic name format in target cluster. Use `org.apache.kafka.connect.mirror.IdentityReplicationPolicy` to keep source topic names. The default, `org.apache.kafka.connect.mirror.DefaultReplicationPolicy` prefixes topic names with source cluster alias and `'.'` |
+   | `source.cluster.bootstrap.servers` | Comma-separated bootstrap servers for the source cluster. |
+   | `source.cluster.sasl.mechanism` | SASL mechanism to use for source cluster client connections. |
+   | `source.cluster.sasl.jaas.config` | JAAS login context parameters for SASL connections in the format used by [JAAS configuration files](https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/tutorials/LoginConfigFile.html). |
+   | `source.cluster.security.protocol` | Protocol used to communicate with source cluster brokers, `PLAINTEXT`, `SSL`, `SASL_PLAINTEXT` or `SASL_SSL`. |
+   | `target.cluster.bootstrap.servers` | Comma-separated list of bootstrap servers for target cluster. Local Redpanda broker list can be obtained from Redpanda Console *Brokers* tab. |
+   | `key.converter` | Key converter class; `org.apache.kafka.connect.converters.ByteArrayConverter` for no conversion. |
+   | `value.converter` | Value converter class; `org.apache.kafka.connect.converters.ByteArrayConverter` for no conversion. |
+
+   
