@@ -146,7 +146,7 @@ div .admonition-content > ul > li > a {
   table{
   display: block;
   overflow-x: auto;
-  white-space: nowrap;
+  white-space: pre-wrap;
   }  
 }
 
@@ -279,7 +279,7 @@ code {
 .container code {
   background: var(--v-gray3);
   overflow-x: auto;
-  white-space: nowrap;
+  white-space: pre-wrap;
   max-width: 50vmax;
 }
 
