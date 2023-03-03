@@ -13,9 +13,25 @@ With an Enterprise license, you can additionally enable *Continuous Data Balanci
 
 Cluster balancing protects you from unbalanced systems that saturate resources on one or more brokers. This can affect throughput and latency. Furthermore, a cluster with replicas on a down broker risks availability loss if more brokers fail, and a cluster that keeps losing brokers without healing eventually risks data loss.
 
-## Leadership balancing
+## Partition leadership balancing
 
-Automatic leadership balancing improves cluster performance by transferring leadership for a broker's partitions to other replicas. Leadership balancing is enabled by default with the `enable_leader_balancer` property. Automatic leadership balancing changes where data is read to and written to first. It doesn't move any data. For more information, see [Partition leadership elections](../../../get-started/architecture/#partition-leadership-elections).
+Automatic partition leadership balancing improves cluster performance by transferring the leadership of a broker's partitions to other replicas. Leadership balancing is enabled by default with the `enable_leader_balancer` property. Automatic leadership balancing changes where data is read from and written to first. It doesn't move any data. For more information, see [Partition leadership elections](../../../get-started/architecture/#partition-leadership-elections).
+
+To manually change leadership, use the Admin API:
+
+```bash
+curl -X POST http://<broker_address>:9644/v1/partitions/kafka/<topic>/<partition>/transfer_leadership?target=<destination-broker-id>
+```
+
+For example, to change leadership to broker 2 for partition 0 on topic `foo`:
+
+```bash
+curl -X POST "http://localhost:9644/v1/partitions/kafka/foo/0/transfer_leadership?target=2"
+```
+
+:::note
+In Kubernetes, run the `transfer_leadership` request on the Pod that is running the current partition leader.
+:::
 
 ## Redpanda partition balancing
 
@@ -114,15 +130,14 @@ To reassign partitions with the Kafka API:
 
 To cancel an in-progress partition reassignment with the Kafka API, use the flags `--cancel --preserve-throttles`:
   
-  ```bash
-  kafka-reassign-partitions.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095 --reassignment-json-file example.json --cancel --preserve-throttles
-  Successfully cancelled partition reassignments for: foo-1,foo-2
-  ```
-
+```bash
+kafka-reassign-partitions.sh --bootstrap-server localhost:9092,localhost:9093,localhost:9094,localhost:9095 --reassignment-json-file example.json --cancel --preserve-throttles
+Successfully cancelled partition reassignments for: foo-1,foo-2
+```
 
 ### Differences in partition balancing between Redpanda and Kafka
 
-- Kafka's `kafka-reassign-partitions.sh` script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flags `--verify --preserve-throttles` to avoid errors.
+- Kafka's `kafka-reassign-partitions.sh` script attempts to use throttle configurations that Redpanda does not support, such as `replica.alter.log.dirs.io.max.bytes.per.second`. Include the flag `--preserve-throttles` to avoid errors when verifying or canceling a partition reassignment.
 
 - Kafka supports increasing and decreasing the topic replication factor through partition reassignments. Redpanda currently doesn't support this.
 
