@@ -311,6 +311,19 @@ html[data-theme='dark'] .container code span.comment {
   color: var(--v-gray1) !important;
 }
 
+.token.plain.cursor {
+  animation-name:blink;
+  animation-duration:1.1s;
+  animation-iteration-count:infinite;
+  animation-timing-function:ease;
+  font-weight: 100;
+}
+
+@keyframes blink {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+}
+
 /* Header */
 .navbar__brand img, aside img {
   margin-left: 0.5rem;
