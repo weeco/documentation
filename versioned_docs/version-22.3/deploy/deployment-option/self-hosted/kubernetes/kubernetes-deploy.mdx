@@ -23,17 +23,16 @@ Make sure that your Kubernetes cluster meets the [requirements](../kubernetes-cl
 
 In this step, you deploy Redpanda and Redpanda Console. Redpanda Console is a developer-friendly web UI for managing and debugging your Redpanda cluster and your applications. Redpanda Console is included as a subchart in the Redpanda Helm chart.
 
-1. Add the chart repository to your Helm installation:
+1. Add the Redpanda Helm chart repository and install cert-manager using Helm:
 
   ```bash
-  helm repo add redpanda https://charts.redpanda.com/
-  ```
-
-1. Update the repository index:
-
-  ```bash
+  helm repo add redpanda https://charts.redpanda.com
+  helm repo add jetstack https://charts.jetstack.io
   helm repo update
+  helm install cert-manager jetstack/cert-manager  --set installCRDs=true --namespace cert-manager  --create-namespace
   ```
+
+  The Redpanda Helm chart uses cert-manager to manage TLS certificates. TLS is enabled by default.
 
 1. Install the Redpanda Helm chart:
 

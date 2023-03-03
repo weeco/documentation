@@ -24,9 +24,11 @@ A diagnostics bundle is a ZIP file with data that can help debug and diagnose is
 
 Most files in the diagnostics bundle are JSON files. To make it easier to read these files, this guide uses jq. To install jq, see the [jq downloads page](https://stedolan.github.io/jq/download/).
 
+These examples use the default values in Helm chart. If you've customized the Helm chart, you may need to provide custom values and/or flags.
+
 ## Generate a diagnostics bundle
 
-To generate a diagnostics bundle, execute the `rpk debug bundle` command inside the container of a Redpanda broker.
+To generate a diagnostics bundle, execute the [`rpk debug bundle`](../../../../reference/rpk/rpk-debug/rpk-debug-bundle) command inside the container of a Redpanda broker.
 
 1. Create a ClusterRole to allow Redpanda to collect information from the Kubernetes API:
 
@@ -67,19 +69,40 @@ To generate a diagnostics bundle, execute the `rpk debug bundle` command inside 
 
   :::
 
-1. Execute the `rpk debug bundle` command inside a Pod container that's running a Redpanda broker.
+1. Execute the [`rpk debug bundle`](../../../../reference/rpk/rpk-debug/rpk-debug-bundle) command inside a Pod container that's running a Redpanda broker.
 
-  In this example, the command is executed on a Pod called `redpanda-0` in the `redpanda` namespace. You can provide your own namespace in the `--namespace` flag.
+  In this example, the command is executed on a Pod called `redpanda-0` in the `redpanda` namespace. You can provide your own namespace in the `--namespace` and `-n` flags.
+
+  <Tabs groupId="tls" queryString>
+  <TabItem value="enabled" label="TLS Enabled">
 
   ```bash
-  kubectl exec -it -n redpanda redpanda-0 -c redpanda -- rpk debug bundle --namespace redpanda
+  kubectl exec -it -n redpanda redpanda-0 -c redpanda -- rpk debug bundle \
+    --admin-api-tls-truststore=<path-to-root-ca> \
+    --api-urls=http://redpanda-0.redpanda.redpanda.svc.cluster.local.:9644 \
+    --admin-api-tls-enabled
   ```
+
+  </TabItem>
+  <TabItem value="disabled" label="TLS Disabled">
+
+  ```bash
+  kubectl exec -it -n redpanda redpanda-0 -c redpanda -- rpk debug bundle \
+    --namespace redpanda \
+    --api-urls=http://redpanda-0.redpanda.redpanda.svc.cluster.local.:9644
+  ```
+
+  </TabItem>
+  </Tabs>
 
   If you have an upload URL from the Redpanda support team, 
   provide it in the `--upload-url` flag to upload your diagnostics bundle to Redpanda.
 
   ```bash
-  kubectl exec -it -n redpanda redpanda-0 -c redpanda -- rpk debug bundle --upload-url <url>
+  kubectl exec -it -n redpanda redpanda-0 -c redpanda -- rpk debug bundle \
+    --upload-url <url> \
+    --namespace redpanda \
+    --api-urls=http://redpanda-0.redpanda.redpanda.svc.cluster.local.:9644
   ```
 
   <details>
