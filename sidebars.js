@@ -293,6 +293,11 @@ module.exports = {
                 items: [
                   {
                     type: "doc",
+                    label: "Customize the Helm Chart",
+                    id: "manage/kubernetes/configure-helm-chart",
+                  },
+                  {
+                    type: "doc",
                     label: "Cluster Properties",
                     id: "manage/kubernetes/cluster-property-configuration",
                   },  
