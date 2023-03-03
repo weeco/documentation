@@ -1,20 +1,34 @@
 ---
-title: Configure Cluster Properties
+title: Configure Cluster Properties in Linux
+linkRoot: ../../../
+deployment: Linux
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/cluster-maintenance/cluster-property-configuration'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/cluster-property-configuration
 ---
 
 <head>
-    <meta name="title" content="Configure cluster properties | Redpanda Docs" data-rh="true"/>
+    <meta name="title" content="Configure Cluster Properties in Linux | Redpanda Docs" data-rh="true"/>
     <meta name="description" content="Configure cluster properties using rpk commands" data-rh="true"/>
 </head>
 
-When you install Redpanda software, it automatically generates a cluster configuration with default settings assigned to each cluster property. 
-You might want to change some of the default settings, particularly if you plan to use features such as rack awareness or tiered storage, which are disabled by default.
+import ContextLink from '@site/src/components/ContextButton.js'
 
-[Tunable properties](../../../reference/tunable-properties), such as internal buffer sizes, have default settings that you typically do not need to modify during normal operations. You should only change these properties after collecting sufficient data to warrant a change. 
+<ContextLink frontmatter={frontMatter}
+/>
+
+When you install Redpanda software, it automatically generates a cluster configuration with default settings assigned to each cluster property. 
+You might want to change some of the default settings, particularly if you plan to use features such as rack awareness or Tiered Storage, which are disabled by default.
 
 To view all cluster properties, along with their descriptions and default settings, refer to [Cluster configuration properties](../../../reference/cluster-properties) and [Tunable properties](../../../reference/tunable-properties).
 
-## Editing cluster properties
+:::note
+[Tunable properties](../../../reference/tunable-properties), such as internal buffer sizes, have default settings that you typically do not need to modify during normal operations. You should only change these properties after collecting sufficient data to warrant a change. 
+:::
+
+## Edit cluster properties
 
 To change any property settings, edit the configuration from the command line using your default text editor. As you make changes, the Redpanda Admin API verifies that the new value is valid. For example, if you change `fetch_max_bytes` from the default of `57671680` to `5o` (using the letter “o” by mistake), the system displays the following message:
 
@@ -42,11 +56,11 @@ To assign new values to cluster properties:
 4. Save the file and quit the editor.
 5. At the prompt, type `rpk cluster config status` to see whether the cluster requires a restart. If a restart is necessary, you will see a message like this:
 
-```bash
-$ rpk cluster config status
-NODE  CONFIG-VERSION  NEEDS-RESTART  INVALID  UNKNOWN
-1     4               true           []       []
-```
+  ```bash
+  $ rpk cluster config status
+  NODE  CONFIG-VERSION  NEEDS-RESTART  INVALID  UNKNOWN
+  1     4               true           []       []
+  ```
 
 6. If necessary, restart the cluster.
 
@@ -63,7 +77,7 @@ Successfully updated configuration. New configuration version is 2.
 You can also change property values using the `rpk cluster config set` command, but this method does not display the current setting or the description.
 :::
 
-## Viewing the current value of a property
+## View the current value of a property
 
 To see the current value of a property, run `rpk cluster config get <property_name>`. For example:
 
@@ -72,7 +86,7 @@ $ rpk cluster config get log_compression_type
 producer
 ```
 
-## Copying configurations to other clusters
+## Copy configurations to other clusters
 
 Use the `export` option to save the current cluster configuration to a file. You can then copy this file to other clusters so they can use the same configuration.
 
@@ -84,7 +98,7 @@ Use the `export` option to save the current cluster configuration to a file. You
 Redpanda does not support importing cluster-specific identification (such as `cluster_id`) with this command.
 :::
 
-## Removing cluster properties from a redpanda.yaml file
+## Remove cluster properties from a redpanda.yaml file
 
 If you have a `redpanda.yaml` file that contains both cluster and node properties, the cluster properties are ignored.
 You can remove cluster properties from the `redpanda.yaml` file by running the following command:
@@ -94,8 +108,6 @@ rpk cluster config lint
 ```
 
 This avoids the issue of referring to a previous version or custom configuration.
-
----
 
 ## Suggested reading
 

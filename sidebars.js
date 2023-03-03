@@ -293,6 +293,11 @@ module.exports = {
                 items: [
                   {
                     type: "doc",
+                    label: "Cluster Properties",
+                    id: "manage/kubernetes/cluster-property-configuration",
+                  },  
+                  {
+                    type: "doc",
                     label: "Storage",
                     id: "manage/kubernetes/configure-storage",
                   },
@@ -366,6 +371,11 @@ module.exports = {
                     type: "doc",
                     label: "Manage Pod Resources",
                     id: "manage/kubernetes/manage-resources",
+                  },
+                  {
+                    type: "doc",
+                    label: "Rolling Upgrades",
+                    id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
                     type: "category",

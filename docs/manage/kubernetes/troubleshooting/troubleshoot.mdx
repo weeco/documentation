@@ -144,7 +144,7 @@ This error appears when a cluster has TLS enabled, and you try to access the adm
 Retrying POST for error: Post "http://127.0.0.1:9644/v1/security/users": net/http: HTTP/1.x transport connection broken: malformed HTTP response "\x15\x03\x03\x00\x02\x02"
 ```
 
-If you're using rpk, make sure to include the `--tls-enabled`, `--admin-api-tls-truststore`, and `--api-urls` flags.
+If you're using rpk, make sure to include the TLS flags.
 
 For all available flags, see the [rpk command reference](../../../../reference/rpk).
 
@@ -162,7 +162,7 @@ Make sure to do one of the following:
 - Use the `--reuse-values` flag.
 
   :::info
-  Do not use the the `--reuse-values` flag to upgrade from one version of the Helm chart to another. This flag stops Helm from using any new values in the upgraded chart.
+  Do not use the `--reuse-values` flag to upgrade from one version of the Helm chart to another. This flag stops Helm from using any new values in the upgraded chart.
   :::
 
 ## UPGRADE FAILED: cannot patch "redpanda-console" with kind Deployment
