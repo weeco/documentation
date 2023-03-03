@@ -166,6 +166,10 @@ You configure Kerberos authentication using a keytab, which contains credentials
 
 4. Ensure that each node has a keytab containing the SPN for that node. This must be located at an identical file path on each Redpanda node. Default is `/var/lib/redpanda/redpanda.keytab`.
 
+:::note
+For Kerberos (GSSAPI) authentication, Redpanda requires that SASL/SCRAM be enabled for connectivity by rpk, Redpanda Console, and other Redpanda products. Operating with Kerberos only is not a supported configuration.
+:::
+
 #### Enable Kerberos
 
 1. If the keytab is not in the default location, then set its location:
