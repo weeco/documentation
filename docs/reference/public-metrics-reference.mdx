@@ -515,6 +515,104 @@ Redpanda application uptime in seconds.
 
 -------------------------------------------------------------------------------
 
+### Cloud metrics
+
+#### redpanda_cloud_client_backoff
+
+Total number of requests that backed off.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+    
+---
+
+#### redpanda_cloud_client_download_backoff
+
+Total number of download requests that backed off.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+
+---
+
+#### redpanda_cloud_client_downloads
+
+Total number of requests that downloaded an object from cloud storage.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+
+---
+
+#### redpanda_cloud_client_not_found
+
+Total number of requests for which the object was not found.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+
+---
+
+#### redpanda_cloud_client_upload_backoff
+
+Total number of upload requests that backed off.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+
+---
+
+#### redpanda_cloud_client_uploads
+
+Total number of requests that uploaded an object to cloud storage.
+
+**Type**: counter
+
+**Labels**:
+- S3
+    - `redpanda_endpoint`
+    - `redpanda_region`
+- Azure Blob Storage (ABS)
+    - `redpanda_endpoint`
+    - `redpanda_storage_account`
+
+-------------------------------------------------------------------------------
+
 ## Related topics
 
 - [Learn how to monitor Redpanda](../../manage/monitoring)
