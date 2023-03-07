@@ -15,9 +15,23 @@ toc_max_heading_level: 3
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-A topic-level property sets a Redpanda or Kafka configuration for a particular topic. 
+A topic-level property sets a Redpanda or Kafka configuration for a particular topic.
 
-Each topic-level property overrides the value of a corresponding node (broker) or cluster property. If a topic-level property isn't set, the corresponding node or cluster property takes effect by default.
+## Topic property overrides cluster property
+
+Many topic-level properties override the value of a corresponding cluster property. If a topic-level property isn't set, the corresponding cluster property takes effect by default.
+
+| Topic property                                    | Overridden Cluster property                                                      |
+| :------------------------------------------------ | :------------------------------------------------------------------------------- |
+| [`cleanup.policy`](#cleanuppolicy)                | [`log_cleanup_policy`](../cluster-properties#log_cleanup_policy)                 |
+| [`retention.bytes`](#retentionbytes)              | [`retention_bytes`](../cluster-properties#retention_bytes)                       |
+| [`retention.ms`](#retentionms)                    | [`delete_retention_ms`](../cluster-properties#delete_retention_ms)               |
+| [`segment.ms`](#segmentms)                        | [`log_segment_ms`](../cluster-properties#log_segment_ms)                         |
+| [`segment.bytes`](#segmentbytes)                  | [`log_segment_size`](../tunable-properties#log_segment_size)                     |
+| [`compression.type`](#compressiontype)            | [`log_compression_type`](../cluster-properties#log_compression_type)             |
+| [`message.timestamp.type`](#messagetimestamptype) | [`log_message_timestamp_type`](../cluster-properties#log_message_timestamp_type) |
+| [`max.message.bytes`](#maxmessagebytes)           | [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes)           |
+| [`replication.factor`](#replicationfactor)        | [`default_topic_replications`](../cluster-properties#default_topic_replications)   |
 
 ## Examples
 
@@ -54,14 +68,14 @@ For example, to create a topic with all necessary properties for Tiered Storage:
 <TabItem value="local" label="Local" default>
 
 ```bash
-rpk topic create -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true <topic-name> 
+rpk topic create -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true <topic-name>
 ```
 
 </TabItem>
 <TabItem value="k8s" label="Kubernetes">
 
 ```bash
-kubectl exec <pod-name> -- rpk topic create -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true <topic-name> 
+kubectl exec <pod-name> -- rpk topic create -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true <topic-name>
 ```
 
 </TabItem>
@@ -97,6 +111,7 @@ This section describes all supported topic-level properties.
 ### Disk space properties
 
 Configure properties to manage the disk space used by a topic:
+
 - Clean up log segments by deletion and/or compaction ([`cleanup.policy`](#cleanuppolicy)).
 - Retain logs up to a maximum size per partition before cleanup ([`retention.bytes`](#retentionbytes)).
 - Retain logs for a maximum duration before cleanup ([`retention.ms`](#retentionms)).
@@ -114,7 +129,7 @@ Configure properties to manage the disk space used by a topic:
 
 You can set one or both policies. If both are set (`[compact,delete]`), the last values per key are kept while the remaining data is deleted according to retention limits.
 
-When `cleanup.policy` is set, it overrides the cluster property [log_cleanup_policy](../cluster-properties#log_cleanup_policy) for the topic.
+When `cleanup.policy` is set, it overrides the cluster property [`log_cleanup_policy`](../cluster-properties#log_cleanup_policy) for the topic.
 
 **Default**: `[delete]`
 
@@ -125,6 +140,7 @@ When `cleanup.policy` is set, it overrides the cluster property [log_cleanup_pol
 - `[compact,delete]`
 
 **Related topics**:
+
 - [Segment size for compacted segments](../../manage/cluster-maintenance/disk-utilization#segment-size-for-compacted-segments)
 
 ---
@@ -140,6 +156,7 @@ When both size-based and time-based retention limits are set (for example, `rete
 **Default**: null
 
 **Related topics**:
+
 - [Configure message retention](../../manage/cluster-maintenance/disk-utilization#configure-message-retention)
 
 ---
@@ -148,13 +165,14 @@ When both size-based and time-based retention limits are set (for example, `rete
 
 `retention.ms` is a time-based retention limit that configures the maximum duration that a log's segment file for a topic is retained before it becomes eligible to be cleaned up. To consume all data, a consumer of the topic must read from a segment before its `retention.ms` elapses, otherwise the segment may be compacted and/or deleted. If a non-positive value, no per-topic limit is applied.
 
-If `retention.ms` is set to a positive value, it overrides the cluster property [`delete_retention_ms`](../cluster-properties#delete_retention_ms) for the topic. 
+If `retention.ms` is set to a positive value, it overrides the cluster property [`delete_retention_ms`](../cluster-properties#delete_retention_ms) for the topic.
 
 When both size-based and time-based retention limits are set (for example, `retention.bytes` and `retention.ms`, respectively), the earliest occurring limit applies.
 
 **Default**: null
 
 **Related topics**:
+
 - [Configure message retention](../../manage/cluster-maintenance/disk-utilization#configure-message-retention)
 
 ---
@@ -163,11 +181,11 @@ When both size-based and time-based retention limits are set (for example, `rete
 
 `segment.ms` configures the duration that a log segment is active&mdash;being written to by producers and not deletable&mdash;for a topic. It's the periodic timeout at which a log closes the active segment of a topic and transitions, or rolls, to a new active segment. The closed, inactive segment is then eligible to be cleaned up according to retention properties.
 
-If set to a positive duration, `segment.ms` overrides the cluster property [log_segment_ms](../cluster-properties#log_segment_ms).
+If set to a positive duration, `segment.ms` overrides the cluster property [`log_segment_ms`](../cluster-properties#log_segment_ms).
 
 **Default**: null
 
-**Related topics**: 
+**Related topics**:
 [Log rolling](../../manage/cluster-maintenance/disk-utilization#log-rolling)
 
 ---
@@ -181,6 +199,7 @@ When `segment.bytes` is set to a positive value, it overrides the cluster proper
 **Default**: null
 
 **Related topics**:
+
 - [Configure segment size](../../manage/cluster-maintenance/disk-utilization#configure-segment-size)
 - [Configure message retention](../../manage/cluster-maintenance/disk-utilization#configure-message-retention)
 - [Remote Read Replicas](../../manage/remote-read-replicas)
@@ -190,9 +209,10 @@ When `segment.bytes` is set to a positive value, it overrides the cluster proper
 ### Message properties
 
 Configure properties for the messages of a topic:
+
 - Compress a message or batch to reduce storage space and increase throughput ([`compression.type`](#compressiontype)).
-- Set the source of a message's timestamp ([message.timestamp.type](#messagetimestamptype)).
-- Set the maximum size of a message ([max.message.bytes](#maxmessagebytes)).
+- Set the source of a message's timestamp ([`message.timestamp.type`](#messagetimestamptype)).
+- Set the maximum size of a message ([`max.message.bytes`](#maxmessagebytes)).
 
 #### compression.type
 
@@ -213,6 +233,7 @@ When `compression.type` is set, it overrides the cluster property [`log_compress
 - `ztsd`
 
 **Related topics**:
+
 - [Message batching](../../develop/produce-data/configure-producers#message-batching)
 - [Common producer configuration options](../../develop/produce-data/configure-producers#commonly-used-producer-configuration-options)
 
@@ -222,11 +243,12 @@ When `compression.type` is set, it overrides the cluster property [`log_compress
 
 `message.timestamp.type` configures the source of a message's timestamp to be either the message's creation time or its log append time.
 
-When `message.timestamp.type` is set, it overrides the cluster property [log_message_timestamp_type](../cluster-properties#log_message_timestamp_type) for the topic.
+When `message.timestamp.type` is set, it overrides the cluster property [`log_message_timestamp_type`](../cluster-properties#log_message_timestamp_type) for the topic.
 
-**Default**: `'CreateTime'` 
+**Default**: `'CreateTime'`
 
 **Values**:
+
 - `'CreateTime'`
 - `'LogAppendTime'`
 
@@ -241,6 +263,7 @@ If `max.message.bytes` is set to a positive value, it overrides the cluster prop
 **Default**: null
 
 **Related topics**:
+
 - [Message batching](../../develop/produce-data/configure-producers#message-batching)
 
 ---
@@ -248,7 +271,8 @@ If `max.message.bytes` is set to a positive value, it overrides the cluster prop
 ### Tiered Storage properties
 
 Configure properties to manage topics for [Tiered Storage](../../manage/tiered-storage):
-- Upload and fetch data to and from object storage for a topic ([`redpanda.remote.write`](#redpandaremotewrite) and [`redpanda.remote.read`](#redpandaremoteread)). 
+
+- Upload and fetch data to and from object storage for a topic ([`redpanda.remote.write`](#redpandaremotewrite) and [`redpanda.remote.read`](#redpandaremoteread)).
 - Configure size-based and time-based retention properties for local storage of a topic ([`retention.local.target.bytes`](#retentionlocaltargetbytes) and [`retention.local.target.ms`](#retentionlocaltargetms)).
 - Recover or reproduce data for a topic from object storage ([`redpanda.remote.recovery`](#redpandaremoterecovery)).
 - Delete data from object storage for a topic when it's deleted from local storage ([`redpanda.remote.delete`](#redpandaremotedelete)).
@@ -260,6 +284,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 **Default**: false
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -271,6 +296,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 **Default**: false
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -282,6 +308,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 **Default**: null
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -293,6 +320,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 **Default**: null
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -308,6 +336,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 **Default**: false
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -320,11 +349,13 @@ When the [Tiered Storage](../../manage/tiered-storage) feature is enabled, `redp
 `redpanda.remote.delete` doesn't apply to Remote Read Replica topics: a Remote Read Replica topic isn't deleted from object storage when this flag is `true`.
 :::
 
-**Default**: 
+**Default**:
+
 - `false` for topics created prior to Redpanda 22.3.
-- `true` for topics created in Redpanda 22.3 and later, including new topics on upgraded clusters. 
+- `true` for topics created in Redpanda 22.3 and later, including new topics on upgraded clusters.
 
 **Related topics**:
+
 - [Tiered Storage](../../manage/tiered-storage)
 
 ---
@@ -344,6 +375,7 @@ Setting `redpanda.remote.readreplica` together with either `redpanda.remote.read
 **Default**: null
 
 **Related topics**:
+
 - [Remote Read Replicas](../../manage/remote-read-replicas)
 
 ---
