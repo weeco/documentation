@@ -16,18 +16,33 @@ function maybeStringifyChildren(children) {
   return Array.isArray(children) ? children.join('') : children;
 }
 
+function handleSingleSpans(spanElement) {
+  if (!spanElement || !spanElement.textContent) {
+    return;
+  }
+  const html = spanElement.innerHTML;
+  const regex = /(&lt;[^&]*&gt;)/g;
+  const matches = html.match(regex) || [];
+  let index = 0;
+  let wrappedHtml = "";
+  for (const match of matches) {
+    const start = html.indexOf(match, index);
+    const end = start + match.length;
+    if(html.substring(index, start).match(/<span/g)) break
+    wrappedHtml += html.substring(index, start) + `<span contenteditable="true" class="editable cursor" onclick="this.classList.remove('cursor')">${match}</span>`;
+    index = end;
+  }
+  wrappedHtml += html.substring(index);
+  spanElement.innerHTML = wrappedHtml;
+}
+
 function mergeMatchingSiblings() {
   // All code blocks follow this pattern:
   // code span.token-line > span.token
-  const parentSpans = document.querySelectorAll('code span.token-line');
+  const parentSpans = document.querySelectorAll('code > span.token-line');
 
   parentSpans.forEach(parentSpan => {
     const childSpans = parentSpan.querySelectorAll('* > span.token');
-
-    // Single spans are special cases that we don't need to make editable
-    // Docusaurus tries to parse code blocks and put related tokens together into separate <span> elements.
-    // If a token line includes a single span, it's usually because the code block is a paragraph of text. 
-    if (childSpans.length === 1) return;
 
     let mergedContent = '';
     let openAngleBrackets = 0;
@@ -40,42 +55,33 @@ function mergeMatchingSiblings() {
     for (let i = 0; i < childSpans.length; i++) {
       const span = childSpans[i];
 
+      // stop if a single span matches the placeholder pattern.
+      // this case is handled in handleSingleSpans
+      if (span.textContent.match(/<[^>]*>/)){
+        handleSingleSpans(span)
+        return
+      }
+
       openAngleBrackets += (span.textContent.match(/</g) || []).length;
       closeAngleBrackets += (span.textContent.match(/>/g) || []).length;
 
-      span.textContent.match(/</g) && spansToDelete.push(span);
-      spansToDelete.length && spansToDelete[0].textContent.match(/</g) && spansToDelete.push(span);
+      span.textContent.match(/[\s'"]?</g) && spansToDelete.push(span);
+      spansToDelete.length && spansToDelete[0].textContent.match(/[\s'"]?</g) && spansToDelete.push(span);
 
       mergedContent += span.textContent;
 
       // For all placeholder text found in each code block line, 
       // create a new editable <span> elements to put them in 
       // and delete any span elements that the new editable one replaces.
-      if (openAngleBrackets === closeAngleBrackets && mergedContent.match(/<[^>]*>/)) {
+      if (openAngleBrackets === 1 && openAngleBrackets === closeAngleBrackets && mergedContent.match(/<[^>]*>/)) {
         const newSpan = document.createElement('span');
         const regexMatch = mergedContent.match(/[\s'"]?<[^>]*>[\s'"]?/)[0];
         newSpan.textContent = regexMatch;
         mergedContent = mergedContent.replace(regexMatch, '');
-        newSpan.classList.add('token', 'plain');
-        newSpan.style.fontWeight = 'bold'
-        newSpan.style.color = '#f15d61'
+        newSpan.classList.add('editable', 'cursor');
         newSpan.setAttribute('contenteditable', true);
+        newSpan.onclick = (e) => e.target.classList.remove('cursor')
         span.parentNode.insertBefore(newSpan, span);
-        // Add a cursor to show that the text is editable
-        const cursor = document.createElement('span');
-        cursor.textContent = '|'
-        cursor.classList.add('token', 'plain', 'cursor');
-        newSpan.append(cursor);
-        // Delete the cursor on click so that it doesn't get copied
-        span.parentNode.addEventListener('click', function(event) {
-          const cursorElement = event.target.querySelector('.cursor');
-          if (cursorElement) {
-            cursorElement.remove();
-          }
-        })
-        cursor.addEventListener('click', function(event) {
-          event.target.remove();
-        })
         for (let j = 0; j < spansToDelete.length; j++) {
           spansToDelete[j].remove();
         }
@@ -96,10 +102,9 @@ export default function CodeBlock({children: rawChildren, ...props}) {
   useEffect(() => {
     // Put placeholders in code blocks (<[^>*]>) in editable <span> elements.
     try {
-      // Handle cases where Docusaurus splits code lines into multiple <span> elements.
       mergeMatchingSiblings();
     } catch (error) {
-      console.error('An error occurred while merging matching siblings:', error);
+      console.error('An error occurred while making placeholders editable:', error);
     }
   },[])
   const isBrowser = useIsBrowser();

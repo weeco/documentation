@@ -1,7 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import clsx from 'clsx';
 // @ts-expect-error: TODO, we need to make theme-classic have type: module
-import copy from 'copy-text-to-clipboard';
 import {translate} from '@docusaurus/Translate';
 import styles from './styles.module.css';
 
@@ -13,12 +12,6 @@ function traverseToPreFromSvg(svgElement) {
   while (parentElement !== null) {
     const preElement = parentElement.previousElementSibling || parentElement.nextElementSibling;
     if (preElement && preElement.tagName === "PRE") {
-      // We found the <pre> element!
-      // Delete the cursor on click so that it doesn't get copied
-      const cursorElement = preElement.querySelector('.cursor');
-      if (cursorElement) {
-        cursorElement.remove();
-      }
       return preElement;
     }
     parentElement = parentElement.parentNode;
