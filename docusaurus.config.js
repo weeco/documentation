@@ -152,7 +152,7 @@ module.exports = async () => {
                 route: '/docs/api/pandaproxy-rest',
               },
               {
-                spec: 'static/api/admin-api.json',
+                spec: 'static/api/admin-api.yaml',
                 route: '/docs/api/admin-api',
               },
             ],
