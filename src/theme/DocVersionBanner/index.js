@@ -32,17 +32,16 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
     </Translate>
   );
 }
-function UnmaintainedVersionLabel({siteTitle, versionMetadata}) {
+function UnmaintainedVersionLabel({versionMetadata}) {
   return (
     <Translate
       id="theme.docs.versions.unmaintainedVersionLabel"
       description="The label used to tell the user that he's browsing an unmaintained doc version"
       values={{
-        siteTitle,
         versionLabel: <b>{versionMetadata.label}</b>,
       }}>
       {
-        'This is documentation for {siteTitle} {versionLabel}, which is no longer actively maintained.'
+        'This is documentation for Redpanda v{versionLabel}.'
       }
     </Translate>
   );
