@@ -46,7 +46,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/get-started/quick-start',
+    url: '/docs/manage/console/',
     learnText: true,
   },
   {
