@@ -4,7 +4,7 @@ info:
   title: Redpanda Admin API
   version: 1.0.0
   description: |
-    Administration API for Redpanda clusters.
+    Use Redpanda Admin APIs to administer and manage Redpanda clusters. 
 
 host: localhost:9644
 basePath: "/v1"
@@ -46,6 +46,7 @@ paths:
         required: true
         type: string
       - name: level
+        description: Log level to set.
         in: query
         required: true
         type: string
@@ -255,7 +256,7 @@ paths:
             type: array
       operationId: get_brokers
       summary: List all brokers
-      description: List information about all brokers (nodes) in the cluster.
+      description: List information about all brokers in the cluster.
   "/brokers/{id}":
     get:
       produces:
@@ -273,7 +274,7 @@ paths:
             "$ref": "#/definitions/broker"
       operationId: get_broker
       summary: List a broker
-      description: List information about the specified broker (node) in the cluster.
+      description: List information about the specified broker in the cluster.
   "/brokers/{id}/cancel_partition_moves":
     post:
       produces:
@@ -319,8 +320,8 @@ paths:
         '200':
           description: No response was specified
       operationId: decommission
-      summary: Decommission a broker
-      description: Decommission the broker with the specified `id`.
+      summary: Decommission broker
+      description: Decommission the specified broker.
   "/brokers/{id}/maintenance":
     delete:
       produces:
@@ -336,7 +337,7 @@ paths:
           description: No response was specified
       operationId: stop_broker_maintenance
       summary: Exit broker maintenance mode
-      description: Request the broker with the specified `id` to exit maintenance mode.
+      description: Request the specified broker to exit maintenance mode.
     put:
       produces:
       - application/json
@@ -351,7 +352,7 @@ paths:
           description: No response was specified
       operationId: start_broker_maintenance
       summary: Enter broker maintenance mode
-      description: Request the broker with the specified `id` to enter maintenance mode.
+      description: Request the specified broker to enter maintenance mode.
   "/brokers/{id}/recommission":
     put:
       produces:
@@ -366,8 +367,8 @@ paths:
         '200':
           description: No response was specified
       operationId: recommission
-      summary: Recommission a broker
-      description: Recommission the broker with the specified `id`.
+      summary: Recommission broker
+      description: Recommission the specified broker.
   "/cluster_view":
     get:
       produces:
@@ -379,6 +380,7 @@ paths:
             "$ref": "#/definitions/cluster_view"
       operationId: get_cluster_view
       summary: Get cluster view
+      description: Get a summary view of a cluster and its brokers.
   "/maintenance":
     delete:
       produces:
@@ -387,7 +389,8 @@ paths:
         '200':
           description: No response was specified
       operationId: stop_local_maintenance
-      summary: Force stop local maintenance
+      summary: Stop maintenance
+      description: Stop local maintenance.
     get:
       produces:
       - application/json
@@ -397,7 +400,8 @@ paths:
           schema:
             "$ref": "#/definitions/maintenance_status"
       operationId: get_local_maintenance
-      summary: Get local maintenance status
+      summary: Get maintenance status
+      description: Get status of maintenance.
     put:
       produces:
       - application/json
@@ -405,7 +409,8 @@ paths:
         '200':
           description: No response was specified
       operationId: start_local_maintenance
-      summary: Force start local maintenance
+      summary: Start maintenance
+      description: Start local maintenance.
   "/partitions":
     get:
       produces:
@@ -418,7 +423,8 @@ paths:
               "$ref": "#/definitions/partition_summary"
             type: array
       operationId: get_partitions
-      summary: Get a list of partitions
+      summary: List partitions
+      description: Get a list of all partitions in the cluster.
   "/partitions/local_summary":
     get:
       produces:
@@ -429,7 +435,8 @@ paths:
           schema:
             "$ref": "#/definitions/partitions_local_summary"
       operationId: get_partitions_local_summary
-      summary: Summarize the status of partitions with a replica on this node
+      summary: Get local partitions
+      description: Get a summary of the partition(s) replicated on the requesting node.
   "/partitions/rebalance":
     post:
       produces:
@@ -438,7 +445,8 @@ paths:
         '200':
           description: No response was specified
       operationId: trigger_partitions_rebalance
-      summary: Execute on demand partition rebalance
+      summary: Rebalance partitions
+      description: Trigger an on-demand rebalancing of partitions in the cluster.
   "/partitions/reconfigurations":
     get:
       produces:
@@ -448,6 +456,7 @@ paths:
           description: No response was specified
       operationId: get_partition_reconfigurations
       summary: List ongoing partition reconfigurations
+      description: List ongoing partition reconfigurations.
   "/partitions/{namespace}/{topic}/{partition}":
     get:
       produces:
@@ -474,6 +483,7 @@ paths:
             type: array
       operationId: get_partition
       summary: Get detailed partition information
+      description: Get detailed information for a partition.
   "/partitions/{namespace}/{topic}/{partition}/cancel_reconfiguration":
     post:
       produces:
@@ -495,7 +505,8 @@ paths:
         '200':
           description: No response was specified
       operationId: cancel_partition_reconfiguration
-      summary: Cancel ongoing partition reconfiguration
+      summary: Cancel partition reconfiguration
+      description: Cancel an in-progress reconfiguration of a partition.
   "/partitions/{namespace}/{topic}/{partition}/mark_transaction_expired":
     post:
       produces:
@@ -525,7 +536,8 @@ paths:
         '200':
           description: No response was specified
       operationId: mark_transaction_expired
-      summary: Mark transaction expired for partition
+      summary: Mark transaction expired
+      description: Mark transaction expired for the specified partition.
   "/partitions/{namespace}/{topic}/{partition}/replicas":
     post:
       produces:
@@ -547,7 +559,8 @@ paths:
         '200':
           description: No response was specified
       operationId: set_partition_replicas
-      summary: Update a partitions replicas
+      summary: Update partition replicas
+      description: Set the replica(s) of a partition.
   "/partitions/{namespace}/{topic}/{partition}/transactions":
     get:
       produces:
@@ -571,7 +584,8 @@ paths:
           schema:
             "$ref": "#/definitions/transactions"
       operationId: get_transactions
-      summary: Get all transactions for partition
+      summary: Get partition transactions 
+      description: Get all transactions for a partition.
   "/partitions/{namespace}/{topic}/{partition}/transfer_leadership":
     post:
       produces:
@@ -597,9 +611,12 @@ paths:
         '200':
           description: No response was specified
       operationId: kafka_transfer_leadership
-      summary: Transfer raft group leadership by topic-partition
+      summary: Transfer leadership
+      description: Transfer Raft group leadership of a topic to a specified partition.
   "/partitions/{namespace}/{topic}/{partition}/unclean_abort_reconfiguration":
     post:
+      tags:
+      - Unstable APIs
       produces:
       - application/json
       parameters:
@@ -619,62 +636,66 @@ paths:
         '200':
           description: No response was specified
       operationId: unclean_abort_partition_reconfiguration
-      summary: Forcibly abort ongoing partition reconfiguration
-  "/failure-probes":
-    get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/failure_injector_status"
-      operationId: get_failure_probes
-      summary: Get a list of available failure probes
-  "/failure-probes/{module}/{point}":
-    delete:
-      produces:
-      - application/json
-      parameters:
-      - name: module
-        in: path
-        required: true
-        type: string
-      - name: point
-        in: path
-        required: true
-        type: string
-      responses:
-        '200':
-          description: No response was specified
-      operationId: delete_failure_probe
-      summary: Delete all failure injectors at given point
-  "/failure-probes/{module}/{point}/{type}":
-    post:
-      produces:
-      - application/json
-      parameters:
-      - name: module
-        in: path
-        required: true
-        type: string
-      - name: point
-        in: path
-        required: true
-        type: string
-      - enum:
-        - exception
-        - delay
-        - terminate
-        name: type
-        in: path
-        required: true
-        type: string
-      responses:
-        '200':
-          description: No response was specified
-      operationId: set_failure_probe
-      summary: Enable failure injection of given type
+      summary: Abort partition reconfiguration
+      description: Forcibly abort an in-progress reconfiguration of a partition.
+  # "/failure-probes":
+  #   get:
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #         schema:
+  #           "$ref": "#/definitions/failure_injector_status"
+  #     operationId: get_failure_probes
+  #     summary: List failure probes
+  #     description: Get a list of available failure probes.
+  # "/failure-probes/{module}/{point}":
+  #   delete:
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: module
+  #       in: path
+  #       required: true
+  #       type: string
+  #     - name: point
+  #       in: path
+  #       required: true
+  #       type: string
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #     operationId: delete_failure_probe
+  #     summary: Delete failure probe
+  #     description: Delete all failure probes at given point.
+  # "/failure-probes/{module}/{point}/{type}":
+  #   post:
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: module
+  #       in: path
+  #       required: true
+  #       type: string
+  #     - name: point
+  #       in: path
+  #       required: true
+  #       type: string
+  #     - enum:
+  #       - exception
+  #       - delay
+  #       - terminate
+  #       name: type
+  #       in: path
+  #       required: true
+  #       type: string
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #     operationId: set_failure_probe
+  #     summary: Set failure probe
+  #     description: Enable failure injection of specified type.
   "/transaction/{transactional_id}/delete_partition":
     post:
       produces:
@@ -705,6 +726,7 @@ paths:
           description: No response was specified
       operationId: delete_partition
       summary: Delete partition from transaction
+      description: Delete a partition from a transaction.
   "/transactions":
     get:
       produces:
@@ -717,7 +739,8 @@ paths:
               "$ref": "#/definitions/transaction_summary"
             type: array
       operationId: get_all_transactions
-      summary: Get a list of transactions
+      summary: List all transactions
+      description: Get a list of all transactions.
   "/cluster/cancel_reconfigurations":
     post:
       produces:
@@ -729,6 +752,7 @@ paths:
             "$ref": "#/definitions/cancel_all_partitions_reconfigurations"
       operationId: cancel_all_partitions_reconfigurations
       summary: Cancel all partition reconfigurations
+      description: Cancel all partition reconfigurations.
   "/cluster/health_overview":
     get:
       produces:
@@ -740,6 +764,7 @@ paths:
             "$ref": "#/definitions/cluster_health_overview"
       operationId: get_cluster_health_overview
       summary: Get cluster health overview
+      description: Get cluster health overview.
   "/cluster/partition_balancer/status":
     get:
       produces:
@@ -750,7 +775,8 @@ paths:
           schema:
             "$ref": "#/definitions/get_partition_balancer_status"
       operationId: get_partition_balancer_status
-      summary: Get partition autobalancer status
+      summary: Get partition balancer status
+      description: Get the status of the partition auto-balancer.
   "/cluster/uuid":
     get:
       produces:
@@ -761,69 +787,69 @@ paths:
           schema:
             "$ref": "#/definitions/get_cluster_uuid"
       operationId: get_cluster_uuid
-      summary: Get the UUID of the cluster this node belongs to. Not to be confused
-        with the configurable cluster identifier used in metrics
-  "/debug/controller_status":
-    get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/controller_status"
-      operationId: get_controller_status
-      summary: Get last_applied_offset and commited_index for controller log
-  "/debug/is_node_isolated":
-    get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            type: boolean
-      operationId: is_node_isolated
-      summary: Get is node isolated
-  "/debug/partition_leaders_table":
-    get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/leader_info"
-            type: array
-      operationId: get_leaders_info
-      summary: Get information about leaders from partition_leaders_table for node
-  "/debug/peer_status/{id}":
-    get:
-      produces:
-      - application/json
-      parameters:
-      - format: int64
-        name: id
-        in: path
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/peer_status"
-      operationId: get_peer_status
-      summary: Get peer status
-  "/debug/reset_leaders":
-    post:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-      operationId: reset_leaders_info
-      summary: Reset information about leaders for node
+      summary: Get cluster UUID
+      description: Get the UUID of the cluster this node belongs to. (Note, this UUID is different than the configurable cluster identifier used in metrics.)
+  # "/debug/controller_status":
+  #   get:
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #         schema:
+  #           "$ref": "#/definitions/controller_status"
+  #     operationId: get_controller_status
+  #     summary: Get last_applied_offset and commited_index for controller log
+  # "/debug/is_node_isolated":
+  #   get:
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #         schema:
+  #           type: boolean
+  #     operationId: is_node_isolated
+  #     summary: Get is node isolated
+  # "/debug/partition_leaders_table":
+  #   get:
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #         schema:
+  #           items:
+  #             "$ref": "#/definitions/leader_info"
+  #           type: array
+  #     operationId: get_leaders_info
+  #     summary: Get information about leaders from partition_leaders_table for node
+  # "/debug/peer_status/{id}":
+  #   get:
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - format: int64
+  #       name: id
+  #       in: path
+  #       required: true
+  #       type: integer
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #         schema:
+  #           "$ref": "#/definitions/peer_status"
+  #     operationId: get_peer_status
+  #     summary: Get peer status
+  # "/debug/reset_leaders":
+  #   post:
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: No response was specified
+  #     operationId: reset_leaders_info
+  #     summary: Reset information about leaders for node
   "/debug/self_test/start":
     post:
       produces:
@@ -832,7 +858,8 @@ paths:
         '200':
           description: No response was specified
       operationId: self_test_start
-      summary: Start self test
+      summary: Start cluster self-test
+      description: Start running the Redpanda cluster self-test.
   "/debug/self_test/status":
     get:
       produces:
@@ -841,7 +868,8 @@ paths:
         '200':
           description: No response was specified
       operationId: self_test_status
-      summary: Query self test
+      summary: Get cluster self-test status
+      description: Get the status of the Redpanda cluster self-test.
   "/debug/self_test/stop":
     post:
       produces:
@@ -850,7 +878,8 @@ paths:
         '200':
           description: No response was specified
       operationId: self_test_stop
-      summary: stop self test
+      summary: Stop cluster self-test
+      description: Stop running the Redpanda cluster self-test.
   "/cloud_storage/automated_recovery":
     get:
       produces:
@@ -859,7 +888,8 @@ paths:
         '200':
           description: No response was specified
       operationId: query_automated_recovery
-      summary: Query status of automated topic recovery
+      summary: Get automated topic recovery status
+      description: Query the status of automated topic recovery.
     post:
       produces:
       - application/json
@@ -872,7 +902,8 @@ paths:
         '200':
           description: Topic scan was initiated successfully
       operationId: initiate_topic_scan_and_recovery
-      summary: Initiate topic scan on bucket and start topic recovery
+      summary: Start topic scan and recovery
+      description: Initiate a topic scan and start topic recovery.
   "/cloud_storage/sync_local_state/{topic}/{partition}":
     post:
       produces:
@@ -890,27 +921,29 @@ paths:
         '200':
           description: Partition metadata is up to date
       operationId: sync_local_state
-      summary: Sync content of the bucket with local partition metadata
-  "/redpanda-services/restart":
-    put:
-      summary: Restart a redpanda service.
-      operationId: redpanda_services_restart
-      parameters:
-      - name: service
-        in: query
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: Restart success
-        '400':
-          description: Service name is required
-        '404':
-          description: Service not found
-        '500':
-          description: Internal Server error
+      summary: Sync local state
+      description: Synchronize the content of the bucket with local partition metadata.
+  # "/redpanda-services/restart":
+  #   put:
+  #     summary: Restart Redpanda service
+  #     description: Restart a Redpanda service.
+  #     operationId: redpanda_services_restart
+  #     parameters:
+  #     - name: service
+  #       in: query
+  #       required: true
+  #       type: string
+  #     produces:
+  #     - application/json
+  #     responses:
+  #       '200':
+  #         description: Restart success
+  #       '400':
+  #         description: Service name is required
+  #       '404':
+  #         description: Service not found
+  #       '500':
+  #         description: Internal Server error
 definitions:
   cluster_config_property_metadata:
     description: A single configuration property's metadata
@@ -1669,6 +1702,7 @@ definitions:
   cancel_all_partitions_reconfigurations:
     description: TBD
 # tags:
+#  - name: Unstable APIs
 # - name: config
 #   description: Redpanda cluster configuration.
 # - name: raft
@@ -1698,6 +1732,9 @@ definitions:
 # - name: redpanda services restart
 #   description: TBD
 # x-tagGroups:
+# - name: Unstable APIs
+#   tags:
+#   - unstable
 # - name: Cluster configuration
 #   tags:
 #   - config
