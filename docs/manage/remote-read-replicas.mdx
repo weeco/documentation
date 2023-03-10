@@ -78,11 +78,7 @@ To set up a Remote Read Replica topic on a separate remote cluster:
     For `<topic_name>`, use the same name as the original topic. For `<bucket_name>`, use the bucket specified in the `cloud_storage_bucket` property for the origin cluster.
 
     :::note
-    Using `redpanda.remote.readreplica` with `redpanda.remote.read` or `redpanda.remote.write` results in an error. This could happen if you configure a topic with Remote Read Replica binding; for example:
-
-    ```bash
-    rpk topic create topic1 -p 32 -r 3 -c redpanda.remote.read=true -c redpanda.remote.write=false -c redpanda.remote.readreplica=bucket
-    ```
+    Do not use `redpanda.remote.read` or `redpanda.remote.write` with `redpanda.remote.readreplica`. Redpanda ignores the values for remote read and remote write properties on read replica topics. 
     :::
 
 ## Reduce lag in data availability

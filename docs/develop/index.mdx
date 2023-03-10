@@ -9,35 +9,28 @@ title: Develop
 
 - [Supported Kafka Clients](../develop/kafka-clients)
 
-    Redpanda is Kafka API-compatible, which means that despite Redpanda being a new streaming data platform, you can leverage the countless client libraries that have been created for Kafka.
+    Redpanda is compatible with Apache Kafka version 0.11 through 3.1. See exceptions to Kafka compatibilities. 
 
 - [Use Redpanda with Kafka Client Libraries](../develop/code-examples)
 
+    Follow an intermediate-level guide to create a topic, produce data, and consume data with different client libraries, including Go, Node.js, and Python.
+
 - [Use Redpanda with NodeJS](../develop/guide-nodejs)
 
-    Redpanda is Kafka API-compatible, which means that despite Redpanda being a new streaming data platform, you can leverage the countless client libraries that have been created for Kafka.
+    See how to use Redpanda with kafkajs.
 
 - [Use Redpanda with the HTTP Proxy API](../develop/http-proxy)
 
-    Redpanda HTTP Proxy (`pandaproxy`) allows access to your data through a REST API. For example, you can list topics or brokers, get events, produce events, subscribe to events from topics using consumer groups, and commit offsets for a consumer. 
+    Redpanda HTTP Proxy (`pandaproxy`) allows access to your data through a REST API. 
 
 - [Produce Data](../develop/produce-data)
-  - [Configure Producers](../develop/produce-data/configure-producers)
 
-      Along with brokers, topics, and consumers, producers are one of the essential
-      components of a Redpanda deployment. Within streaming applications, producers
-      are responsible for sending data to brokers, where the data is stored in topics made
-      up of partitions.
-
-  - [Idempotent Producers](../develop/produce-data/idempotent-producers)
-
-      When a producer writes messages to a topic, each message should be recorded only once in the order in which it was sent. However, network issues such as a connection failure can result in a timeout, which prevents a write request from succeeding. Idempotent producers prevent this problem by assigning a unique ID to every write request.
+    Producers send data to brokers. Idempotent producers assign a unique ID to every write request.
 
 - [Consume Data](../develop/consume-data/)
-  - [Consumer Offsets](../develop/consume-data/consumer-offsets)
-    
-    Redpanda supports `__consumer_offsets`, which is a private topic on a Redpanda node. The `__consumer_offsets` topic stores committed offsets from each Kafka consumer that is attached to Redpanda. 
+      
+    Redpanda uses an internal topic, `__consumer_offsets`, to store committed offsets from each Kafka consumer that is attached to Redpanda. 
 
 - [Transactions](../develop/transactions)
 
-    Redpanda supports Apache Kafka®-compatible transaction semantics and APIs. For example, you can fetch messages starting from the last consumed offset and transactionally process them one by one, updating the last consumed offset and producing events at the same time.
+    Transactions guarantee both exactly-once semantics (EOS) and atomicity. For example, you can fetch messages starting from the last consumed offset and transactionally process them one by one, updating the last consumed offset and producing events at the same time.

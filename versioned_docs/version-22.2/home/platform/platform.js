@@ -32,7 +32,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '../../quickstart/console-installation',
+    url: '/docs/22.2/console/',
   },
   {
     title: 'rpk Command Reference',

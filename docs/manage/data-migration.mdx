@@ -162,7 +162,11 @@ To stop the MirrorMaker 2 process, use `top` to find its process ID, and then ru
 
 Apache Kafka® limits you to 1MB max message size. Redpanda doesn't impose such limits. 
 
-However, when replicating those larger message sizes with MirrorMaker 2 on the target cluster, you can get blocked with an error `org.apache.kafka.common.errors.RecordTooLargeException: The message is xxxx bytes when serialized which is larger than 1048576, which is the value of the max.request.size configuration`. 
+However, when replicating those larger message sizes with MirrorMaker 2 on the target cluster, you can get blocked with an error 
+
+```
+org.apache.kafka.common.errors.RecordTooLargeException: The message is xxxx bytes when serialized which is larger than 1048576, which is the value of the max.request.size configuration
+```
 
 To address this issue, make sure that your `mm2.properties` configuration file on the target cluster allows bigger messages sizes. For example, for 30MB messages, you'd have the following line in the configuration file:
 
