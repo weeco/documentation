@@ -15,6 +15,7 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 
+
 function encode(data) {
   return Object.keys(data)
     .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
@@ -170,6 +171,15 @@ const FeedbackForm = (props) => {
   );
 };
 
+function displaySidebar(){
+  var x = document.getElementById("contentSidebar");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
 /**
  * Decide if the toc should be rendered, on mobile or desktop viewports
  */
@@ -189,12 +199,18 @@ function useDocTOC() {
     desktop,
   };
 }
-export default function DocItemLayout({ children }) {
+export default function DocItemLayout({ children,
+  secondaryMenu }) {
   const docTOC = useDocTOC();
   const { metadata } = useDoc();
   const { editUrl } = metadata;
   const [show, setShow] = useState(false);
   const [positiveFeedback, setPositiveFeedback] = useState(true);
+  let isDocsHome = false
+  if(typeof window !== 'undefined') {
+    const docsHomeUrlPattern = /\/docs\/[A-Za-z0-9.\/]*home/
+    isDocsHome = docsHomeUrlPattern.test(window.location.href);
+  }
   // Hide the feedback thumbs in the Toc when the user reaches the bottom of the page.
   useEffect(() => {
     document.addEventListener('scroll', function(e){
@@ -217,7 +233,7 @@ export default function DocItemLayout({ children }) {
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
-            <DocBreadcrumbs />
+            {!isDocsHome && <DocBreadcrumbs />}
             <DocVersionBadge />
             {docTOC.mobile}
             <DocItemContent>{children}</DocItemContent>

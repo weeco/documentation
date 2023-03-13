@@ -62,7 +62,7 @@ const FeatureList = [
   },
   {
     title: 'Redpanda on Kubernetes',
-    image: require('../../static/img/self-balance.png').default,
+    image: require('../../static/img/redpanda-kubernetes.png').default,
     description: (
       <>
         Get started with Redpanda on the Kubernetes platform.

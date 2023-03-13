@@ -54,3 +54,8 @@ a.featureLink:hover .featureBox {
 .featureLearnText {
   color: var(--ifm-link-color) !important;
 }
+
+@media screen and (min-width: 997px)  {.featureDescription{
+  min-height: 70px;
+}
+}

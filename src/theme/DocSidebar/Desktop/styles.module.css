@@ -84,3 +84,11 @@ div .topPanelVersionContainer div {
 a:hover{
   color: var(--ifm-color-primary-darkest)!important;
 }
+
+[data-theme='dark'] .label {
+  color: white;
+}
+
+[data-theme='light'] .label {
+  color: black;
+}

@@ -128,14 +128,14 @@
  
    return (
      <footer
-       className={clsx('footer', {
+       className={clsx('padding-top--md', {
          'footer--dark': footer.style === 'dark',
-       })}>
-       <div className="container container-fluid">
+       }) + ' '+ styles.boxShadowFooter}>
+       <div className={"container container-fluid" +' '+styles.footerSpacing}>
          {links &&
            links.length > 0 &&
            (isMultiColumnFooterLinks(links) ? (
-               <div className="row footer__links" style={{textAlign: 'center'}}>
+               <div className={styles.footerBox}>
                  <div className="footer__col logo__col" >
                  {logo && (logo.src || logo.srcDark) && (
                  <div className="margin-bottom--sm">
@@ -155,7 +155,7 @@
                  )
                  }
                </div>
-               <div  className="col "> 
+               <div className="col" style={{textAlign: 'center'}}> 
                  {copyright ? (
                    <div className="footer__copyright" // Developer provided the HTML, so assume it's safe.
                        // eslint-disable-next-line react/no-danger
