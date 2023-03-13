@@ -289,20 +289,27 @@ Enable rack-aware replica assignment.
 
 ### partition_autobalancing_mode
 
-Mode of [partition balancing](../../manage/cluster-maintenance/cluster-balancing#partition-balancing) for a cluster.
+Mode of [partition balancing](../../manage/cluster-maintenance/cluster-balancing) for a cluster.
 
 Available modes:
 - `node_add`: partition balancing happens when a node is added.
-- `continuous`: partition balancing happens automatically to maintain optimal performance and availability, based on continuous monitoring for node failures and high disk usage. This option requires an [Enterprise license](../../get-started/licenses).  
+- `continuous`: partition balancing happens automatically to maintain optimal performance and availability, based on continuous monitoring for node failures and high disk usage. This option requires an [Enterprise license](../../get-started/licenses), and it is customized by [partition_autobalancing_node_availability_timeout_sec](#partition_autobalancing_node_availability_timeout_sec) and [partition_autobalancing_max_disk_usage_percent](#partition_autobalancing_max_disk_usage_percent) properties.
 - `off`: partition balancing is disabled. This option is not recommended for production clusters.
 
 **Default**: `node_add`
 
 **Restart required**: no
 
+**Related topics**:
+- [Configure Continuous Data Balancing](../../manage/cluster-maintenance/continuous-data-balancing)
+
 ---
 
 ### partition_autobalancing_node_availability_timeout_sec
+
+:::note
+This property applies only when [partition_autobalancing_mode](#partition_autobalancing_mode) is set to `continuous`.
+:::
 
 When a node is unavailable for at least this timeout duration, it triggers Redpanda to move partitions off of the node.
 
@@ -312,9 +319,16 @@ When a node is unavailable for at least this timeout duration, it triggers Redpa
 
 **Restart required**: no
 
+**Related topics**:
+- [Configure Continuous Data Balancing](../../manage/cluster-maintenance/continuous-data-balancing)
+
 ---
 
 ### partition_autobalancing_max_disk_usage_percent
+
+:::note
+This property applies only when [partition_autobalancing_mode](#partition_autobalancing_mode) is set to `continuous`.
+:::
 
 When the disk usage of a node exceeds this threshold, it triggers Redpanda to move partitions off of the node.
 
@@ -323,6 +337,9 @@ When the disk usage of a node exceeds this threshold, it triggers Redpanda to mo
 **Default**: 80
 
 **Range**: [5, 100]
+
+**Related topics**:
+- [Configure Continuous Data Balancing](../../manage/cluster-maintenance/continuous-data-balancing)
 
 -------------------------------------------------------------------------------
 
