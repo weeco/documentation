@@ -956,7 +956,7 @@ Number of partitions in the internal group membership topic.
 
 Maximum size of a batch processed by the server. If the batch is compressed, this limit applies to the compressed batch size.
 
-`kafka_batch_max_bytes` is overridden per topic by the topic property [`max.message.bytes`](../topic-properties#maxmessagebytes).
+The topic property [`max.message.bytes`](../topic-properties#maxmessagebytes) overrides `kafka_batch_max_bytes`.
 
 **Type**: unsigned integer
 
@@ -1614,7 +1614,7 @@ The upper bound for the topic property `segment.ms` and the cluster property `lo
 
 Default size of a log segment.
 
-`log_segment_size` is overridden per topic by the topic property [`segment.bytes`](../topic-properties#segmentbytes).
+The topic property [`segment.bytes`](../topic-properties#segmentbytes) overrides `log_segment_size`.
 
 **Type**: unsigned 64-bit integer
 

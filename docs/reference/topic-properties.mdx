@@ -8,7 +8,7 @@ toc_max_heading_level: 3
   <meta name="title" content="Topic configuration properties | Redpanda Docs" />
   <meta
     name="description"
-    content="Configure topic-level properties for Redpanda that apply per topic and override corresponding node or cluster properties."
+    content="Configure topic-level properties for Redpanda that override corresponding node or cluster properties."
   />
 </head>
 
@@ -110,7 +110,7 @@ This section describes all supported topic-level properties.
 
 ### Disk space properties
 
-Configure properties to manage the disk space used by a topic:
+The following properties manage the disk space used by a topic:
 
 - Clean up log segments by deletion and/or compaction ([`cleanup.policy`](#cleanuppolicy)).
 - Retain logs up to a maximum size per partition before cleanup ([`retention.bytes`](#retentionbytes)).
@@ -122,12 +122,7 @@ Configure properties to manage the disk space used by a topic:
 
 #### cleanup.policy
 
-A list of the cleanup policies to apply for log segments of a topic. The available cleanup policies:
-
-- **delete**. Deletes data according to size-based and/or time-based retention limits.
-- **compact**. Deletes data according to a key-based retention policy, discarding all but the latest value per key.
-
-You can set one or both policies. If both are set (`[compact,delete]`), the last values per key are kept while the remaining data is deleted according to retention limits.
+The cleanup policy to apply for log segments of a topic.
 
 When `cleanup.policy` is set, it overrides the cluster property [`log_cleanup_policy`](../cluster-properties#log_cleanup_policy) for the topic.
 
@@ -135,9 +130,9 @@ When `cleanup.policy` is set, it overrides the cluster property [`log_cleanup_po
 
 **Values**:
 
-- `[delete]`
-- `[compact]`
-- `[compact,delete]`
+- `[delete]` - Deletes data according to size-based or time-based retention limits, or both.
+- `[compact]` - Deletes data according to a key-based retention policy, discarding all but the latest value for each key.
+- `[compact,delete]` - The latest values are kept for each key, while the remaining data is deleted according to retention limits.
 
 **Related topics**:
 
@@ -151,7 +146,7 @@ A size-based retention limit that configures the maximum size that a topic parti
 
 If `retention.bytes` is set to a positive value, it overrides the cluster property [`retention_bytes`](../cluster-properties#retention_bytes) for the topic, and the total retained size for the topic is `retention.bytes` multiplied by the number of partitions for the topic.
 
-When both size-based and time-based retention limits are set (for example, `retention.bytes` and `retention.ms`, respectively), cleanup occurs when either limit is reached.
+When both size-based (`retention.bytes`) and time-based (`retention.ms`) retention limits are set, cleanup occurs when either limit is reached.
 
 **Default**: null
 
@@ -167,7 +162,7 @@ A time-based retention limit that configures the maximum duration that a log's s
 
 If `retention.ms` is set to a positive value, it overrides the cluster property [`delete_retention_ms`](../cluster-properties#delete_retention_ms) for the topic.
 
-When both size-based and time-based retention limits are set (for example, `retention.bytes` and `retention.ms`, respectively), the earliest occurring limit applies.
+When both size-based (`retention.bytes`) and time-based (`retention.ms`) retention limits are set, the earliest occurring limit applies.
 
 **Default**: null
 
@@ -218,7 +213,7 @@ Configure properties for the messages of a topic:
 
 The type of compression algorithm to apply for all messages of a topic. When a compression type is set for a topic, producers compress and send messages, nodes (brokers) store and send compressed messages, and consumers receive and uncompress messages.
 
-While messages aren't compressed by default (`compression.type = none`), enabling compression to reduce message size improves throughput and decreases storage for messages with repetitive values and data structures, with the trade-off of added CPU utilization and network latency to perform the compression. Enabling producer batching usually increases compression efficiency, as the messages of a batch likely have repeated data within them to compress.
+Enabling compression reduces message size, which improves throughput and decreases storage for messages with repetitive values and data structures. The trade-off is increased CPU utilization and network latency to perform the compression. You can also enable producer batching to increase compression efficiency, since the messages in a batch likely have repeated data that can be compressed.
 
 When `compression.type` is set, it overrides the cluster property [`log_compression_type`](../cluster-properties#log_compression_type) for the topic.
 
@@ -256,7 +251,7 @@ When `message.timestamp.type` is set, it overrides the cluster property [`log_me
 
 #### max.message.bytes
 
-The maximum size of a message or batch of a topic. If a compression type is enabled, it sets the maximum size of the compressed message or batch.
+The maximum size of a message or batch of a topic. If a compression type is enabled, `max.message.bytes` sets the maximum size of the compressed message or batch.
 
 If `max.message.bytes` is set to a positive value, it overrides the cluster property [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes) for the topic.
 
@@ -279,7 +274,7 @@ Configure properties to manage topics for [Tiered Storage](../../manage/tiered-s
 
 #### redpanda.remote.write
 
-A flag for enabling Redpanda to upload data for a topic from local storage to object storage. When set `true` together with [redpanda.remote.read](#redpandaremoteread), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+A flag for enabling Redpanda to upload data for a topic from local storage to object storage. When set to `true` together with [redpanda.remote.read](#redpandaremoteread), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
 
 **Default**: false
 
@@ -291,7 +286,7 @@ A flag for enabling Redpanda to upload data for a topic from local storage to ob
 
 #### redpanda.remote.read
 
-A flag for enabling Redpanda to fetch data for a topic from object storage to local storage. When set `true` together with [redpanda.remote.write](#redpandaremotewrite), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
+A flag for enabling Redpanda to fetch data for a topic from object storage to local storage. When set to `true` together with [redpanda.remote.write](#redpandaremotewrite), it enables the [Tiered Storage](../../manage/tiered-storage) feature.
 
 **Default**: false
 
@@ -330,7 +325,7 @@ A time-based retention limit that configures the maximum duration that a log's s
 A flag that enables the recovery or reproduction of a topic from object storage for Tiered Storage. The recovered data is saved in local storage, and the maximum amount of recovered data is determined by the local storage retention limits of the topic.
 
 :::tip
-`redpanda.remote.recovery` must be configured at topic creation. It cannot be configured, and does not apply, for existing topics.
+You can only configure `redpanda.remote.recovery` when you create a topic. You cannot apply this setting to existing topics.
 :::
 
 **Default**: false
@@ -351,7 +346,7 @@ A flag that enables deletion of data from object storage for Tiered Storage when
 
 **Default**:
 
-- `false` for topics created prior to Redpanda 22.3.
+- `false` for topics created using Redpanda 22.2 or earlier.
 - `true` for topics created in Redpanda 22.3 and later, including new topics on upgraded clusters.
 
 **Related topics**:
