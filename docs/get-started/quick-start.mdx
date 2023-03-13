@@ -154,7 +154,7 @@ so that the cluster can recover from a single-broker failure.
         - --mode dev-container
         # enable logs for debugging.
         - --default-log-level=debug
-      image: docker.redpanda.com/vectorized/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_23_1
       container_name: redpanda-0
       volumes:
         - redpanda-0:/var/lib/redpanda/data
@@ -260,7 +260,7 @@ so that the cluster can recover from a single-broker failure.
         - --mode dev-container
         # enable logs for debugging.
         - --default-log-level=debug
-      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_23_1
       container_name: redpanda-0
       volumes:
         - redpanda-0:/var/lib/redpanda/data
@@ -287,7 +287,7 @@ so that the cluster can recover from a single-broker failure.
         - --mode dev-container
         - --default-log-level=debug
         - --seeds redpanda-0:33145
-      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_23_1
       container_name: redpanda-1
       volumes:
         - redpanda-1:/var/lib/redpanda/data
@@ -316,7 +316,7 @@ so that the cluster can recover from a single-broker failure.
         - --mode dev-container
         - --default-log-level=debug
         - --seeds redpanda-0:33145
-      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_22_3
+      image: docker.redpanda.com/redpandadata/redpanda:vVAR::REDPANDA_VERSION_23_1
       container_name: redpanda-2
       volumes:
         - redpanda-2:/var/lib/redpanda/data

@@ -9,9 +9,9 @@ const github = new OctokitWithRetries({
   baseUrl: 'https://api.github.com',
 })
 
-module.exports = (async () => {
+module.exports = async () => {
   var latestConsoleReleaseVersion;
-  github.rest.repos.getLatestRelease({
+  await github.rest.repos.getLatestRelease({
       owner,
       repo,
   }).then((release => {
@@ -26,4 +26,4 @@ module.exports = (async () => {
     );  
   }))
   return latestConsoleReleaseVersion
-})();
+};

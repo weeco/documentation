@@ -7,8 +7,8 @@ const getLatestConsoleReleaseVersion = require('./src/remark/GetLatestConsoleVer
 
 module.exports = async () => {
   // Await the latest release version from GitHub
-  const {latestRedpandaReleaseVersion,latestRedpandaReleaseCommitHash} = await getLatestRedpandaReleaseVersion || undefined
-  const latestConsoleReleaseVersion = await getLatestConsoleReleaseVersion || undefined
+  const {latestRedpandaReleaseVersion,latestRedpandaReleaseCommitHash} = await getLatestRedpandaReleaseVersion()
+  const latestConsoleReleaseVersion = await getLatestConsoleReleaseVersion()
   const config = {
     title: 'Redpanda Docs',
     tagline: 'A modern streaming platform for mission critical workloads',
@@ -113,8 +113,10 @@ module.exports = async () => {
                     // The fallback version to the right of the pipes (||)
                     // is used in cases where the version cannot be fetched from GitHub.
                     // You can assign the latest release data to any variable.
-                    REDPANDA_VERSION_22_3: latestRedpandaReleaseVersion || '22.3.11',
-                    REDPANDA_SHA_22_3: latestRedpandaReleaseCommitHash || '9eefb907c',
+                    REDPANDA_VERSION_23_1: latestRedpandaReleaseVersion || '23.1.1',
+                    REDPANDA_SHA_23_1: latestRedpandaReleaseCommitHash || '92761c3',
+                    REDPANDA_VERSION_22_3: '22.3.11',
+                    REDPANDA_SHA_22_3: '9eefb907c',
                     // Always use the latest version of Redpanda Console
                     CONSOLE_LATEST_VERSION: latestConsoleReleaseVersion || '2.2.0',
                     // You can define any custom variables here.
