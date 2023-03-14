@@ -304,6 +304,9 @@ risk during upgrades. Check the cluster's health after upgrading each node. Roll
 back an upgrade to an earlier feature release is only supported until the last node
 has been updated, so it's important to identify any issues before that point.
 
+If upgrading multiple [feature release versions of Redpanda](../../../../../../manage/kubernetes/rolling-upgrade#find-a-new-version) in succession, make sure to verify that each version upgrades to completion before proceeding to the next version. You can verify by reading the `/v1/features` Admin API endpoint and checking that `cluster_version` has increased. 
+
+  - With Redpanda 23.1 and later, the `/v1/features` endpoint also includes a `node_latest_version` attribute, and installers can verify that the cluster has activated any new functionality from a previous upgrade by checking for `cluster_version` == `node_latest_version`.
 ---
 
 ## Next steps
