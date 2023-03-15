@@ -1,5 +1,5 @@
 ---
-title: Rolling Upgrades in Kubernetes
+title: Upgrade in Kubernetes
 linkRoot: ../../../
 deployment: Kubernetes
 contextLinks:
@@ -10,7 +10,7 @@ contextLinks:
 ---
 
 <head>
-    <meta name="title" content="Rolling Upgrades in Kubernetes | Redpanda Docs"/>
+    <meta name="title" content="Upgrade in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="To benefit from Redpanda's new features and enhancements, use rolling upgrades to upgrade to the latest version. New features are available after all brokers (Pods) in the cluster are upgraded and restarted."/>
 </head>
 
@@ -22,17 +22,17 @@ import ContextLink from '@site/src/components/ContextButton.js'
 <ContextLink frontmatter={frontMatter}
 />
 
-To benefit from Redpanda's new features and enhancements, use rolling upgrades to upgrade to the latest version. New features are available after all brokers (Pods) in the cluster are upgraded and restarted.
+To benefit from Redpanda's new features and enhancements, upgrade to the latest version. Redpanda recommends that you perform a rolling upgrade on production clusters, which requires all brokers to be placed into maintenance mode and restarted separately, one after the other. 
 
-Rolling upgrades require all brokers to be placed into [maintenance mode](../../node-management) and restarted separately, one after the other. Placing brokers into maintenance mode ensures a smooth upgrade of your cluster while reducing the risk of interruption or degradation in service. When a broker is placed into maintenance mode, it reassigns its partition leadership to other brokers for all topics that have a replication factor greater than one. Reassigning partition leadership involves _draining_ leadership from the broker and _transferring_ that leadership to another broker.
+Redpanda version numbers follow the convention AB.C.D, where AB is the two digit year, C is the feature release, and D is the patch release. For example, version 22.3.1 indicates the first patch release on the third feature release of the year 2022. 
 
-## Impact of broker restarts
-
-<ImpactOfRestarts/>
+:::important
+- New features are enabled after all brokers (nodes) in the cluster are upgraded. You can stop the upgrade process and roll back to the original version as long as you have not upgraded every broker and restarted the cluster.
+- Redpanda only supports upgrading one sequential feature release at a time. For example, you can upgrade from the 22.2 feature release to 22.3. You cannot skip feature releases. 
+- Redpanda only supports downgrading between sequential patch releases. For example, you can downgrade from the 22.2.2 patch release to 22.2.1, but you cannot downgrade to 22.1.7.
+:::
 
 ## Prerequisites
-
-You need the following:
 
 - A running Redpanda cluster.
 - [jq](https://stedolan.github.io/jq/download/) for listing available versions.
@@ -41,13 +41,6 @@ You need the following:
 ## Find a new version
 
 Before you perform a rolling upgrade, you must find out which Redpanda version you are currently running, whether you can upgrade straight to the new version, and what's changed since your original version.
-
-Redpanda version numbers follow the convention AB.C.D, where AB is the two digit year, C is the feature release, and D is the patch release. For example, version 22.3.1 indicates the first patch release on the third feature release of the year 2022.
-
-:::info
-- Redpanda supports upgrading only one sequential feature release at a time. For example, you can upgrade from the 22.2 feature release to 22.3. You cannot skip feature releases. 
-- Redpanda supports downgrading only between sequential patch releases. For example, you can downgrade from the 22.2.2 patch release to 22.2.1, but you cannot downgrade to 22.1.7.
-:::
 
 1. Find your current version:
 
@@ -142,12 +135,20 @@ Redpanda version numbers follow the convention AB.C.D, where AB is the two digit
 
 1. Check the [release notes](https://github.com/redpanda-data/redpanda/releases) to find information about what has changed between Redpanda versions.
 
+## Impact of broker restarts
+
+<ImpactOfRestarts/>
+
 ## Perform a rolling upgrade
+
+A rolling upgrade involves putting a broker into [maintenance mode](../../node-management), upgrading the broker, taking the broker out of maintenance mode, and then repeating the process on the next broker in the cluster. Placing brokers into maintenance mode ensures a smooth upgrade of your cluster while reducing the risk of interruption or degradation in service. 
+
+When a broker is placed into maintenance mode, it reassigns its partition leadership to other brokers for all topics that have a replication factor greater than one. Reassigning partition leadership involves _draining_ leadership from the broker and _transferring_ that leadership to another broker. If you have topics with `replication.factor=1`, and if you have sufficient disk space, Redpanda recommends temporarily increasing the replication factor. This can help limit outages for these topics during the rolling upgrade. Do this before the upgrade to make sure there's time for the data to replicate to other brokers. For more information, see [Change topic replication factor](../../data-migration/#change-topic-replication-factor). 
 
 To perform a rolling upgrade:
 
 1. [Deploy an upgraded StatefulSet](#deploy-an-upgraded-statefulset) with your desired Redpanda version.
-1. [Upgrade and restart each broker](#upgrade-the-brokers) separately, one after the other.
+2. [Upgrade and restart each broker](#upgrade-the-brokers) separately, one after the other.
 
 :::info
 Redpanda Data does not recommend using the `kubectl rollout restart statefulset` command to perform rolling upgrades. Although the chart's `preStop` lifecycle hook puts the broker into maintenance mode before a Pod is deleted, the `terminationGracePeriod` may not be long enough to allow maintenance mode to finish. If maintenance mode does not finish before the Pod is deleted, you may lose data. The default `terminationGracePeriod` is 30 seconds and cannot be configured in the chart. After the `terminationGracePeriod`, the container is forcefully stopped using a `SIGKILL` command.

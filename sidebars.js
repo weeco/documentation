@@ -379,7 +379,7 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Rolling Upgrades",
+                    label: "Upgrade",
                     id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
@@ -414,7 +414,7 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Rolling Upgrades",
+                    label: "Upgrade",
                     id: "manage/cluster-maintenance/rolling-upgrade",
                   },
                   "manage/cluster-maintenance/disk-utilization",
