@@ -7,6 +7,7 @@ const repo = 'redpanda';
 const github = new OctokitWithRetries({
   userAgent: 'Redpanda Docs',
   baseUrl: 'https://api.github.com',
+  auth: process.env.GITHUB_TOKEN
 })
 
 module.exports = async () => {

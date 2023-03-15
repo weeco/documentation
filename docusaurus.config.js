@@ -4,11 +4,13 @@ const variableInjector = require('./src/remark/variable-replacer');
 const getLatestRedpandaReleaseVersion = require('./src/remark/GetLatestRedpandaVersion');
 const getLatestConsoleReleaseVersion = require('./src/remark/GetLatestConsoleVersion');
 
+const isProd = process.env.GITHUB_TOKEN;
 
 module.exports = async () => {
   // Await the latest release version from GitHub
-  const {latestRedpandaReleaseVersion,latestRedpandaReleaseCommitHash} = await getLatestRedpandaReleaseVersion()
-  const latestConsoleReleaseVersion = await getLatestConsoleReleaseVersion()
+  const {latestRedpandaReleaseVersion,latestRedpandaReleaseCommitHash} = isProd ? await getLatestRedpandaReleaseVersion() : {undefined,undefined}
+  const latestConsoleReleaseVersion = isProd ? await getLatestConsoleReleaseVersion() : undefined
+
   const config = {
     title: 'Redpanda Docs',
     tagline: 'A modern streaming platform for mission critical workloads',
@@ -118,7 +120,7 @@ module.exports = async () => {
                     REDPANDA_VERSION_22_3: '22.3.11',
                     REDPANDA_SHA_22_3: '9eefb907c',
                     // Always use the latest version of Redpanda Console
-                    CONSOLE_LATEST_VERSION: latestConsoleReleaseVersion || '2.2.0',
+                    CONSOLE_LATEST_VERSION: latestConsoleReleaseVersion || '2.2.2',
                     // You can define any custom variables here.
                     // Variable names must include only the following characters:
                     // A-Z, 0-9, and underscores (_)
