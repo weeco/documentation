@@ -111,7 +111,6 @@ const FooterMenuList = [
       size: 'wider',
     },
     items: [
-      { text: 'Choose a Deployment Option', url: "/docs/deploy/deployment-option/" },
       { text: 'Cloud Deployment', url: "/docs/deploy/deployment-option/cloud/" },
       { text: 'Self-Hosted Deployment', url: "/docs/deploy/deployment-option/self-hosted/" },
       { text: 'Sizing Guidelines', url: "/docs/deploy/deployment-option/self-hosted/manual/sizing/" },

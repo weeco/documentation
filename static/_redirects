@@ -41,6 +41,8 @@
 /docs/deployment/arbitrary-configuration  /docs/reference/redpanda-operator/arbitrary-configuration  301!
 /docs/deployment/kubernetes-external-connect  /docs/reference/redpanda-operator/kubernetes-external-connect  301!
 /docs/deployment/kubernetes-connectivity  /docs/reference/redpanda-operator/kubernetes-connectivity  301!
+/docs/deploy/deployment-option/index  /docs/deploy/index  301!
+/docs/deploy/deployment-option/  /docs/deploy/index  301!
 
 # Cluster Administration
 /docs/platform/deploy-self-hosted/configuration   /docs/platform/cluster-administration/configuration  301!

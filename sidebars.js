@@ -102,11 +102,7 @@ module.exports = {
       label: "Deploy",
       link: { type: "doc", id: "deploy/index" },
       items: [
-        {
-          type: "category",
-          label: " Choose a Deployment Option",
-          link: { type: "doc", id: "deploy/deployment-option/index" },
-          items: [
+
             {
               type: "category",
               label: "Self-Hosted",
@@ -278,8 +274,7 @@ module.exports = {
               ]
             },
           ],
-        },
-      ],
+
     },
     {
       type: "category",
