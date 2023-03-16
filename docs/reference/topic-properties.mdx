@@ -17,11 +17,9 @@ import TabItem from "@theme/TabItem";
 
 A topic-level property sets a Redpanda or Kafka configuration for a particular topic. 
 
-## Property overrides
+Many [cluster properties](../../manage/cluster-maintenance/cluster-property-configuration) have corresponding topic-level properties. The value of a cluster property applies for all topics of a cluster. To customize the value for a topic, you can set a topic-level property that overrides the value of the corresponding cluster property.
 
-Many topic-level properties override the value of a corresponding [cluster property](../../manage/cluster-maintenance/cluster-property-configuration). If a topic-level property isn't set, the corresponding cluster property takes effect by default.
-
-| Topic property                                    | Overridden Cluster property                                                      |
+| Topic property                                    | Corresponding Cluster property                                                      |
 | :------------------------------------------------ | :------------------------------------------------------------------------------- |
 | [`cleanup.policy`](#cleanuppolicy)                | [`log_cleanup_policy`](../cluster-properties#log_cleanup_policy)                 |
 | [`retention.bytes`](#retentionbytes)              | [`retention_bytes`](../cluster-properties#retention_bytes)                       |
@@ -35,7 +33,7 @@ Many topic-level properties override the value of a corresponding [cluster prope
 
 ## Examples
 
-To configure topic-level properties, follow these examples.
+The following examples show how to configure topic-level properties. Set a topic-level property for a topic to override the value of corresponding cluster property.
 
 ### Create topic with topic properties
 
@@ -83,7 +81,7 @@ kubectl exec <pod-name> -- rpk topic create -c redpanda.remote.recovery=true -c 
 
 ### Modify topic properties
 
-To set or modify topic properties of an existing topic, use the [rpk topic alter-config](../rpk/rpk-topic/rpk-topic-alter-config) command.
+To modify topic properties of an existing topic, use the [rpk topic alter-config](../rpk/rpk-topic/rpk-topic-alter-config) command.
 
 For example, to modify a topic's `retention.ms` property:
 
@@ -174,7 +172,7 @@ When both size-based (`retention.bytes`) and time-based (`retention.ms`) retenti
 
 #### segment.ms
 
-The duration that a log segment is active&mdash;being written to by producers and not deletable&mdash;for a topic. It's the periodic timeout at which a log closes the active segment of a topic and transitions, or rolls, to a new active segment. The closed, inactive segment is then eligible to be cleaned up according to retention properties.
+The maximum duration that a log segment of a topic is active (open for writes and not deletable). A periodic event, with `segment.ms` as its period, forcibly closes the active segment and transitions, or rolls, to a new active segment. The closed (inactive) segment is then eligible to be cleaned up according to cleanup and retention properties.
 
 If set to a positive duration, `segment.ms` overrides the cluster property [`log_segment_ms`](../cluster-properties#log_segment_ms).
 
@@ -298,7 +296,7 @@ A flag for enabling Redpanda to fetch data for a topic from object storage to lo
 
 #### retention.local.target.bytes
 
-A size-based retention limit that configures the maximum size that a topic partition in local storage of Tiered Storage can grow before becoming eligible for cleanup. It is equivalent to [retention.bytes](#retentionbytes) without Tiered Storage.
+A size-based retention limit for Tiered Storage that configures the maximum size that a topic partition in local storage can grow before becoming eligible for cleanup. It is equivalent to [retention.bytes](#retentionbytes) without Tiered Storage.
 
 **Default**: null
 
@@ -310,7 +308,7 @@ A size-based retention limit that configures the maximum size that a topic parti
 
 #### retention.local.target.ms
 
-A time-based retention limit that configures the maximum duration that a log's segment file for a topic in local storage of Tiered Storage is retained before it becomes eligible to be cleaned up. It is equivalent to [retention.ms](#retentionms) without Tiered Storage.
+A time-based retention limit for Tiered Storage that sets the maximum duration that a log's segment file for a topic is retained in local storage before it's eligible for cleanup. This property is equivalent to [retention.ms](#retentionms) without Tiered Storage.
 
 **Default**: null
 
