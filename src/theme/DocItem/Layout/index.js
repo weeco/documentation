@@ -109,7 +109,7 @@ const FeedbackForm = (props) => {
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
-                    <input type="hidden" name="form-name" value="feedbackForm"/>
+                      <input type="hidden" name="form-name" value="feedbackForm"/>
 
                       <p className={styles.hide}>
                         <label className={styles.hide}>
