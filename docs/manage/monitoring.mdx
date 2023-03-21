@@ -168,6 +168,12 @@ For the total CPU busy (non-idle) time, monitor [redpanda_cpu_busy_seconds_total
 rate(redpanda_cpu_busy_seconds_total[5m])
 ```
 
+#### Redpanda process utilization
+
+CPU utilization at the host-level can typically appear high (for example, 99-100% utilization) when I/O events like message arrival occur, while the actual Redpanda process utilization is low. This high host-level CPU utilization happens because Redpanda uses Seastar and poll-mode drivers (PMD) to bypass the kernel to interact with network packets directly, and by using PMD, Redpanda threads poll constantly as new packets arrive.
+
+For a measure of actual Redpanda process utilization, monitor the internal metric [`vectorized_reactor_utilization`](../../reference/internal-metrics-reference#vectorized_reactor_utilization). 
+
 #### Memory allocated
 
 To monitor the percentage of memory allocated, use a formula with [redpanda_memory_allocated_memory](../../reference/public-metrics-reference#redpanda_memory_allocated_memory) and [redpanda_memory_free_memory](../../reference/public-metrics-reference#redpanda_memory_free_memory):
