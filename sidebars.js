@@ -963,7 +963,7 @@ module.exports = {
         {
           type: "category",
           label: "Redpanda Console",
-
+          link: { type: "doc", id: "reference/console/index" },  
           items: [
             {
               type: "doc",
