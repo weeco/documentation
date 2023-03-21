@@ -1,0 +1,155 @@
+---
+title: Configure Topics
+---
+
+<head>
+    <meta name="title" content="Configure Topics | Redpanda Docs"/>
+    <meta name="description" content="Learn how to configure topics with Redpanda."/>
+</head>
+
+Topics provide a way to organize events in a data streaming platform. When you create a topic, the default topic settings from the cluster configuration file are applied, unless you specify a different setting on the command line.
+
+The following table shows the topic property settings listed in the cluster configuration file along with their default values, and the equivalent topic property names:
+ 
+ | Cluster property             | Default                   | Topic property            |
+ | :--------------------------- | :------------------------ | :------------------------ |
+ | `log_cleanup_policy`         | delete                    | `cleanup.policy`          |
+ | `retention_bytes`            | null (no limit)           | `retention.bytes`         |
+ | `delete_retention_ms`        | 604800000 ms (1 week)     | `retention.ms`            |
+ | `log_segment_ms`             | null (no limit)           | `segment.ms`              |
+ | `log_segment_size`           | 134217728 bytes (128 MiB) | `segment.bytes`           |
+ | `log_compression_type`       | producer                  | `compression.type`        |
+ | `log_message_timestamp_type` | CreateTime                | `message.timestamp.type`  |
+ | `kafka_batch_max_bytes`      | 1048576 bytes (1 MiB)     | `max.message.bytes`       |
+
+These default settings are best suited to a one-node cluster in a development environment. To modify the default values in the configuration file, see [Configure Cluster Properties](../../manage/cluster-maintenance/cluster-property-configuration) for instructions. Even if you set default values that work for most topics, you may still want to change some properties for a specific topic.
+
+## Creating a topic
+
+Creating a topic can be as simple as specifying a name for your topic on the command line. For example, to create a topic named `xyz`:
+
+`rpk topic create xyz`
+
+This command creates a topic named `xyz` with one partition and one replica, since these are the default values set in the cluster configuration file.
+
+But suppose you want to create a topic with different values for these settings. The guidelines in this section show you how to choose the number of partitions and replicas for your use case.
+
+### Choosing the number of partitions
+
+A partition acts as a log file where topic data is written. Dividing topics into partitions allows producers to write messages in parallel, and consumers to read messages in parallel. The higher the number of partitions, the greater the throughput.
+
+:::tip
+As a general rule, select a number of partitions that corresponds to the maximum number of consumers in a consumer group that will consume the data.
+:::
+
+For example, suppose you plan to create a consumer group with 10 consumers. To create a topic “xyz” with 10 partitions:
+
+`rpk topic create xyz -p 10`
+
+### Choosing the replication factor
+
+Replicas are copies that are distributed across different nodes, so if one node goes down, you still have other nodes with a copy of the data. The default replication factor in the cluster configuration is set to 1.
+
+By choosing a replication factor greater than 1, you ensure that each partition has a copy of its data on at least one other node. One replica acts as the leader, and the other replicas are followers.
+
+To specify a replication factor of 3 for topic “xyz”:
+
+`rpk topic create xyz -r 3`
+
+:::note
+The replication factor must be an odd number. Redpanda Data recommends a replication factor of 3 for most use cases.
+:::
+
+## Updating topic configurations
+
+After you create a topic, you can update the topic property settings for all new data written to that topic. For example, you can add partitions, change the replication factor, or change a configuration setting like the cleanup policy.
+
+### Adding partitions
+
+You can add partitions to a topic after you create it. For example, suppose you added nodes to your cluster, and you want to take advantage of the additional processing power. To increase the number of partitions for existing topics, run:
+
+`rpk topic add-partitions [TOPICS...] --num [#]`
+
+Note that `--num <#>` is the number of partitions to _add_, not the total number of partitions.
+
+### Changing the replication factor
+
+Suppose you configure a topic with the default replication factor of 1 (which is specified in the cluster properties configuration file). Now you want to change the replication factor to 3, so you can have two backups of topic data in case a broker goes down. To set the replication factor to 3 for all new data written to a topic, run:
+
+`rpk topic alter-config [TOPICS...] --set replication.factor=3`
+
+:::note
+The replication factor should not exceed the number of Redpanda brokers.
+:::
+
+### Changing the cleanup policy
+
+The cleanup policy determines how to clean up the partition log files when they reach a certain size - by deleting data based on age or log size, by compacting the data and only keeping the latest values for each key, or by using a combination of deletion and compaction.
+
+Suppose you configure a topic using the default cleanup policy `delete`, and you want to change the policy to `compact`. Run the `rpk topic alter-config` command as shown:
+
+`rpk topic alter-config [TOPICS…] —-set cleanup.policy=compact`
+
+## Listing topic configuration settings
+
+You can display all the configuration settings for a topic by running:
+
+`rpk topic describe <topic-name> -c`
+
+The `-c` flag limits the command output to just the topic configurations. This command is useful for checking the default configuration settings before you make any changes, and for verifying changes after you make them.
+
+The following command output is displayed after running `rpk topic describe test-topic`, where `test-topic` was created with default settings:
+
+```
+rpk topic describe test_topic
+SUMMARY
+=======
+NAME        test_topic
+PARTITIONS  1
+REPLICAS    1
+
+CONFIGS
+=======
+KEY                           VALUE                          SOURCE
+cleanup.policy                delete                         DYNAMIC_TOPIC_CONFIG
+compression.type              producer                       DEFAULT_CONFIG
+max.message.bytes             1048576                        DEFAULT_CONFIG
+message.timestamp.type        CreateTime                     DEFAULT_CONFIG
+redpanda.datapolicy           function_name:  script_name:   DEFAULT_CONFIG
+redpanda.remote.delete        true                           DEFAULT_CONFIG
+redpanda.remote.read          false                          DEFAULT_CONFIG
+redpanda.remote.write         false                          DEFAULT_CONFIG
+retention.bytes               -1                             DEFAULT_CONFIG
+retention.local.target.bytes  -1                             DEFAULT_CONFIG
+retention.local.target.ms     86400000                       DEFAULT_CONFIG
+retention.ms                  604800000                      DEFAULT_CONFIG
+segment.bytes                 1073741824                     DEFAULT_CONFIG
+```
+
+Now suppose you add two partitions, and increase the number of replicas to 3. The new command output confirms the changes in the `SUMMARY` section:
+
+```
+SUMMARY
+=======
+NAME        test_topic
+PARTITIONS  3
+REPLICAS    3
+```
+
+## Deleting a topic
+
+After you’re done with a topic, you can delete it by running:
+
+`rpk topic delete <topic-name>`
+
+When a topic is deleted, its underlying data is deleted, too.
+
+To delete multiple topics at a time, provide a space-separated list. For example:
+
+`rpk topic delete topic1 topic2`
+
+You can also use the `-r` flag to specify one or more regular expressions, and any topic names that match the pattern you specify will be deleted. The following command deletes any topics whose names start with “f” and any whose names end with “r”:
+
+`rpk topic  delete -r '^f.*' '.*r$'`
+
+Note that the first regular expression starts with the `^` symbol, and the last ends with the `$` symbol. This requirement helps prevent accidental deletions.
