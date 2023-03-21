@@ -101,6 +101,11 @@ module.exports = async () => {
               current: {
                 label: '23.1',
               },
+              "23.2": {
+                label: '23.2 Beta',
+                banner: 'unreleased',
+                path: "/beta"
+              },
             },
             beforeDefaultRemarkPlugins: [
                 [variableInjector, {
