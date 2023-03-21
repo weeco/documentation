@@ -10,69 +10,125 @@ title: Use Redpanda with NodeJS
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-If you haven't already, install Node by [following the appropriate steps for
-your OS](https://nodejs.org/en/download/package-manager/).
+Create a basic chat room application with Redpanda and Kafka clients developed with [kafkajs](https://kafka.js.org/). This guide describes how to:
 
-Redpanda is Kafka API-compatible, which means
-that you can leverage the countless client
-libraries created for Kafka (if you find something that is not supported,
-reach out to our team on our <a href="https://redpanda.com/slack">Slack</a>).
-In this example you will use [kafkajs](https://kafka.js.org/).
+- Bring up a Redpanda cluster to store and stream chat room messages.
+- Code a client application in Typescript using kafkajs that produces and consumes chat room messages.
+- Build and run multiple clients to exchange chat messages streamed through Redpanda.
 
-```bash
-# Create and enter the project folder
-mkdir redpanda-node
-cd redpanda-node
-# Generate package.json (use the default values)
-npm init
-# Install required dependencies
-npm i -D typescript
-npm i -D @types/node
-npm i kafkajs
-npm i uuid
-npm i -D @types/uuid
-# Generate tsconfig.json
-tsc --init
-```
+## Prerequisites
 
-## Set up a Redpanda environment
+### Install Node
+
+[Install Node.js for your platform](https://nodejs.org/en/download/package-manager/).
+
+### Set up Redpanda environment
 
 Follow the [Redpanda Quickstart](../../get-started/quick-start) to spin up a development
-environment in Docker.
+environment in Docker with either one or three brokers.
 
 :::caution
 If you're running Redpanda on your laptop, or in a shared development
-environment, then avoid Redpanda's optimized production settings. Running
-`sudo rpk redpanda tune all` or manually configuring Redpanda for production
+environment, then avoid Redpanda's optimized production settings. Avoid running
+`sudo rpk redpanda tune all` or manually configuring Redpanda for production, as they
 might affect your experience with other applications running on your machine.
 :::
 
+### Set up example environment
+
+1. Create and set your working directory to the project folder, `redpanda-node`:
+
+   ```bash
+   mkdir redpanda-node
+   cd redpanda-node
+   ```
+
+2. Generate `package.json`:
+
+   ```bash
+   npm init
+   ```
+
+   For each subsequent prompt, accept the default value.
+
+3. Install the required dependencies: 
+
+   ```bash
+   npm i -D typescript
+   npm i -D @types/node
+   npm i kafkajs
+   npm i uuid
+   npm i -D @types/uuid
+   ```
+
+4. Generate a `tsconfig.json` file:
+
+   ```bash
+   tsc --init
+   ```
+
+5. In `redpanda-node/`, create a `src/` directory for source files:
+
+    ```bash
+    mkdir src
+    ```
+
 ## Create a topic
 
-The easiest way to create topics is using
-[rpk](../../reference/rpk):
+Create a topic named `chat-room` for both Redpanda and the client.
+
+### Create in Redpanda
+
+With your Redpanda Docker container, use [rpk](../../reference/rpk) to create a `chat-room` topic:
 
 ```bash
-$ rpk topic create chat-room
-TOPIC      STATUS
-chat-room  OK
+docker exec -it redpanda-0 rpk topic create chat-room
 ```
 
-The preceding command created a topic named `chat-room`, with the default number of
-partitions and replicas. You can list all created topics with:
+  <details>
+  <summary>
+  Expected output
+  </summary>
+
+  ```
+  TOPIC      STATUS
+  chat-room  OK
+  ```
+
+  </details>
+
+Verify that `chat-room` was created successfully by listing all created topics:
+
 ```bash
-$ rpk topic list
-NAME       PARTITIONS  REPLICAS
-chat-room  1           1
+docker exec -it redpanda-0 rpk topic list
 ```
 
-You can create topics programmatically too:
+  <details>
+  <summary>
+  Expected output
+  </summary>
+
+  ```
+  NAME       PARTITIONS  REPLICAS
+  chat-room  1           1
+  ```
+
+  </details>
+
+
+### Create in client
+
+To create a topic for the client, in `redpanda-node/` create a source file `src/admin.ts` with the following content. 
+
+:::note
+These sample files assume you're running the Redpanda quickstart, where the external port for broker `redpanda-0` is set to port 19092. Make sure to edit the broker's port if you're running something different.
+:::
 
 ```javascript title="src/admin.ts"
 import {Kafka} from "kafkajs"
 
 const redpanda = new Kafka({
-  brokers: ["localhost:9092"]
+  brokers: ["localhost:19092"]
 })
 const admin = redpanda.admin()
 
@@ -89,16 +145,21 @@ export function createTopic(topic: string, partitions?: number, replicas?: numbe
 }
 ```
 
-After you have a cluster up and running, and a topic to store your data, you can 
-build a producer and consumer:
+## Create a producer
 
-## Producer code
+A client needs a producer to publish `chat-room` topic messages.
+
+To create a producer for the client, in `redpanda-node/` create a source file `src/producer.ts` with the following content. 
+
+:::note
+These sample files assume you're running the Redpanda quickstart, where the external port for broker `redpanda-0` is set to port 19092. Make sure to edit the broker's port if you're running something different.
+:::
 
 ```javascript title="src/producer.ts"
 import {Kafka} from "kafkajs"
 
 const redpanda = new Kafka({
-  brokers: ["localhost:9092"]
+  brokers: ["localhost:19092"]
 })
 const producer = redpanda.producer()
 
@@ -123,14 +184,18 @@ You now have a working producer that sends strings entered by the user to the
 but keep in mind that the producer only sends buffers, so you can encode the
 messages however you like.
 
-## Consumer code
+## Create a consumer
+
+A client needs a consumer to receive `chat-room` topic messages.
+
+To create a consumer for the client, in `redpanda-node/` create a source file `src/consumer.ts` with the following content. 
 
 ```javascript title="src/consumer.ts"
 import {Kafka} from "kafkajs"
 import {v4 as uuidv4} from "uuid"
 
 const redpanda = new Kafka({
-  brokers: ["localhost:9092"]
+  brokers: ["localhost:19092"]
 })
 const consumer = redpanda.consumer({groupId: uuidv4()})
 
@@ -152,12 +217,20 @@ export function disconnect() {
 }
 ```
 
-You now have a consumer that will read all messages from the `chat-room`
-topic and print them to the console. You can start as many consumer groups as
-you like, but bear in mind that each group will read a message only once, which is
+You now have a consumer that reads all messages from the `chat-room`
+topic and prints them to the console. You can start as many consumer groups as
+you like, but remember that each group reads a message only once, which is
 why the example is using a generated UUID for the group ID.
 
-The following example brings all the preceding examples together: 
+:::note
+Because `eachMessage()` automatically commits on a heartbeat interval, there is no `commit()` method or auto-commit configuration in the code.
+:::
+
+## Create a client application
+
+The client needs an application that creates the topic, producer, and consumer and implements the chat logic.
+
+To create a client application, in `redpanda-node/` create a source file `src/index.ts` with the following content.
 
 ```javascript title="src/index.ts"
 import * as readline from "node:readline"
@@ -198,15 +271,50 @@ process.on("exit", () => {
 })
 ``` 
 
-## Running
+## Build and run application
 
-```bash
-tsc src/index.js && node src/index.js
-```
+Build the client chat application, run it from multiple client terminals, and chat between the clients.
 
-Run this at least twice so that you can chat between two terminals, but you can
-run as many as you like.
+1. From `redpanda-node/`, build the client application:
 
-## Wrapping up
+  ```bash
+  tsc src/index.ts
+  ```
 
-Now you have the basic building blocks for working with Redpanda using Node.js.
+1. Open at least two terminals, and for each terminal:
+
+    1. Run the client application:
+
+      ```
+      node src/index.js
+      ```
+
+    1. When prompted to `Enter user name:`, enter a unique name for the chat room.  
+
+1. Use the chat application: enter a message in a terminal, and verify that the message is received in the other terminal(s).
+
+  <details>
+  <summary>Example output from Alice's terminal</summary>
+  
+  ```
+  Enter user name: 
+  Alice
+  Connected, press Ctrl+C to exit
+  Alice: Hi, I'm Alice
+  Bob: Hi Alice, I'm Bob, nice to meet you
+  ```
+
+  </details>
+
+    <details>
+  <summary>Example output from Bob's terminal</summary>
+  
+  ```
+  Enter user name: 
+  Bob
+  Connected, press Ctrl+C to exit
+  Alice: Hi, I'm Alice
+  Bob: Hi Alice, I'm Bob, nice to meet you
+  ```
+  
+  </details>
