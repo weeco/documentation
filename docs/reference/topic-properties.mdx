@@ -29,12 +29,14 @@ Many topic-level properties have corresponding [cluster properties](../../manage
 | [`compression.type`](#compressiontype)            | [`log_compression_type`](../cluster-properties#log_compression_type)             |
 | [`message.timestamp.type`](#messagetimestamptype) | [`log_message_timestamp_type`](../cluster-properties#log_message_timestamp_type) |
 | [`max.message.bytes`](#maxmessagebytes)           | [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes)           |
+| [`replication.factor`](#replicationfactor)        | [`default_topic_replications`](../cluster-properties#default_topic_replications)   |
 
-
-:::note
+:::notes
 The `SOURCE` output of the [`rpk topic describe <topic>`](../rpk/rpk-topic/rpk-topic-describe) command describes how the property was set for the topic:
 - `DEFAULT_CONFIG` was set by a Redpanda default.
 - `DYNAMIC_TOPIC_CONFIG` was set by the user specifically for the topic and overrides inherited default configurations, such as a default or a cluster-level property.
+
+While [`rpk topic describe`](../rpk/rpk-topic/rpk-topic-describe) doesn't report `replication.factor` as a configuration, `replication.factor` can indeed be set via the [`rpk topic alter-config`](../rpk/rpk-topic/rpk-topic-alter-config) command.
 :::
 
 ## Examples
