@@ -17,7 +17,7 @@ import TabItem from "@theme/TabItem";
 
 A topic-level property sets a Redpanda or Kafka configuration for a particular topic. 
 
-Many [cluster properties](../../manage/cluster-maintenance/cluster-property-configuration) have corresponding topic-level properties. The value of a cluster property applies for all topics of a cluster. To customize the value for a topic, you can set a topic-level property that overrides the value of the corresponding cluster property.
+Many topic-level properties have corresponding [cluster properties](../../manage/cluster-maintenance/cluster-property-configuration) that set a default value for all topics of a cluster. To customize the value for a topic, you can set a topic-level property that overrides the value of the corresponding cluster property.
 
 | Topic property                                    | Corresponding Cluster property                                                      |
 | :------------------------------------------------ | :------------------------------------------------------------------------------- |
@@ -29,7 +29,13 @@ Many [cluster properties](../../manage/cluster-maintenance/cluster-property-conf
 | [`compression.type`](#compressiontype)            | [`log_compression_type`](../cluster-properties#log_compression_type)             |
 | [`message.timestamp.type`](#messagetimestamptype) | [`log_message_timestamp_type`](../cluster-properties#log_message_timestamp_type) |
 | [`max.message.bytes`](#maxmessagebytes)           | [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes)           |
-| [`replication.factor`](#replicationfactor)        | [`default_topic_replications`](../cluster-properties#default_topic_replications)   |
+
+
+:::note
+The `SOURCE` output of the [`rpk topic describe <topic>`](../rpk/rpk-topic/rpk-topic-describe) command describes how the property was set for the topic:
+- `DEFAULT_CONFIG` was set by a Redpanda default.
+- `DYNAMIC_TOPIC_CONFIG` was set by the user specifically for the topic and overrides inherited default configurations, such as a default or a cluster-level property.
+:::
 
 ## Examples
 
@@ -108,13 +114,13 @@ This section describes all supported topic-level properties.
 
 ### Disk space properties
 
-The following properties manage the disk space used by a topic:
+Configure properties to manage the disk space used by a topic:
 
 - Clean up log segments by deletion and/or compaction ([`cleanup.policy`](#cleanuppolicy)).
 - Retain logs up to a maximum size per partition before cleanup ([`retention.bytes`](#retentionbytes)).
 - Retain logs for a maximum duration before cleanup ([`retention.ms`](#retentionms)).
-- Periodically roll logs to inactivate segments ([`segment.ms`](#segmentms)).
-- Retain log segments up to a maximum size ([`segment.bytes`](#segmentbytes)).
+- Periodically close an active log segment ([`segment.ms`](#segmentms)).
+- Limit the maximum size of an active log segment ([`segment.bytes`](#segmentbytes)).
 
 ---
 
@@ -174,7 +180,7 @@ When both size-based (`retention.bytes`) and time-based (`retention.ms`) retenti
 
 The maximum duration that a log segment of a topic is active (open for writes and not deletable). A periodic event, with `segment.ms` as its period, forcibly closes the active segment and transitions, or rolls, to a new active segment. The closed (inactive) segment is then eligible to be cleaned up according to cleanup and retention properties.
 
-If set to a positive duration, `segment.ms` overrides the cluster property [`log_segment_ms`](../cluster-properties#log_segment_ms).
+If set to a positive duration, `segment.ms` overrides the cluster property [`log_segment_ms`](../cluster-properties#log_segment_ms) and its lower and upper bounds set by [`log_segment_ms_min`](../cluster-properties#log_segment_ms_min) and [`log_segment_ms_max`](../cluster-properties#log_segment_ms_max), respectively.
 
 **Default**: null
 
@@ -185,7 +191,7 @@ If set to a positive duration, `segment.ms` overrides the cluster property [`log
 
 #### segment.bytes
 
-The maximum size of a log segment for a topic. When the size of an active segment exceeds `segment.bytes`, the segment is closed and a new active segment is created. The closed, inactive segment is then eligible to be cleaned up according to retention properties.
+The maximum size of an active log segment for a topic. When the size of an active segment exceeds `segment.bytes`, the segment is closed and a new active segment is created. The closed, inactive segment is then eligible to be cleaned up according to retention properties.
 
 When `segment.bytes` is set to a positive value, it overrides the cluster property [`log_segment_size`](../tunable-properties#log_segment_size) for the topic.
 
@@ -373,15 +379,19 @@ Setting `redpanda.remote.readreplica` together with either `redpanda.remote.read
 
 ---
 
-### Replication properties
+### Redpanda topic properties
 
-Configure properties to manage replication of a topic.
+Configure Redpanda-specific topic properties.
 
 #### replication.factor
 
 The number of replicas of a topic to save in different nodes (brokers) of a cluster.
 
 If `replication.factor` is set to a positive value, it overrides the cluster property [default_topic_replications](../cluster-properties#default_topic_replications) for the topic.
+
+:::note
+While the [`rpk topic describe`](../rpk/rpk-topic/rpk-topic-describe) command doesn't report `replication.factor` as a configuration, `replication.factor` can indeed be set via the [`rpk topic alter-config`](../rpk/rpk-topic/rpk-topic-alter-config) command.
+:::
 
 **Default**: null
 
