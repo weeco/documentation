@@ -618,4 +618,7 @@
 /docs/getting-started/                                                                /docs/get-started/ 301!
 /docs                                                                                 /docs/home 301!
 /docs/getting-started/quick-start-kubernetes/                                         /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev/ 301!
-/docs/security/acls/*                                                                 /docs/security/index  301!  
+/docs/security/acls/*                                                                 /docs/security/index  301!
+/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/                            /docs/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/ 301!
+/docs/reference/reference/rpk/rpk-cluster/                                            /docs/reference/rpk/rpk-cluster/ 301!
+/docs/deployment/performance-storage-tuning/                                          /docs/deploy/deployment-option/self-hosted/manual/ 301!
