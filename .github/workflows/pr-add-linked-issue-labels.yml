@@ -1,0 +1,68 @@
+# Adds the labels of a linked issue to a pull request.
+#
+# Limitations:
+# - Adds the labels from only one linked issue (the first element returned by query_linked_issue_number)
+# - Doesn't remove labels after an issue is unlinked
+
+name: Add labels of linked issue to PR
+on:
+  pull_request:
+    # [created, edited]: An issue is linked through either the issue description or the GH GUI
+    # [assigned, unassigned]: For fast triggering during development/debugging, should remove before merging
+    types: [created, edited, assigned, unassigned]
+
+env:
+  ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
+
+jobs:
+  copy_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR number
+        id: get_pr_number
+        run: echo "::set-output name=issue_number::$(jq -r '.pull_request.number' $GITHUB_EVENT_PATH)"
+      - name: Query linked issue number
+        id: query_linked_issue_number
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            query ($owner:String!, $repo:String!) { 
+              repository(owner: $owner, name: $repo) {
+                issueOrPullRequest(number: ${{ steps.get_pr_number.outputs.issue_number }} ) {
+                  ... on PullRequest {
+                    closingIssuesReferences(first: 100) {
+                      nodes {
+                        number
+                        labels(first:100) {
+                          nodes {
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          owner: ${{ github.event.repository.owner.login }}
+          repo: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get linked issue number
+        id: get_linked_issue_number
+        run: echo '${{ steps.query_linked_issue_number.outputs.data }}' | jq -r '.repository.issueOrPullRequest.closingIssuesReferences.nodes[] | .number'
+      - name: Get issue labels
+        id: get_issue_labels
+        run: echo "::set-output name=issue_label::$(echo '${{ steps.query_linked_issue_number.outputs.data }}' | jq  '[.repository.issueOrPullRequest.closingIssuesReferences.nodes[0].labels.nodes[].name] | join(",")'| sed s/\,/\"\,\"/g )"
+      - name: Assign labels to PR
+        uses: actions/github-script@v6
+        if: ${{ steps.get_issue_labels.outputs.issue_label }}
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.get_pr_number.outputs.issue_number }},
+              labels: [ ${{ steps.get_issue_labels.outputs.issue_label }} ]
+            });
+           
