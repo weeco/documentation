@@ -46,7 +46,7 @@ Flag to auto-enable new feature flags after upgrades.
 
 --------------------------------------------------------------------------------
 
-## Cloud storage properties
+## Object storage properties
 
 ### cloud_storage_cache_check_interval
 
@@ -98,7 +98,7 @@ Default remote write configuration value for new topics.
 
 ### cloud_storage_housekeeping_interval_ms
 
-Interval for cloud storage housekeeping tasks.
+Interval for object storage housekeeping tasks.
 
 **Units**: milliseconds
 
@@ -110,7 +110,7 @@ Interval for cloud storage housekeeping tasks.
 
 ### cloud_storage_idle_timeout_ms
 
-Timeout used to detect idle state of the cloud storage API. If no API requests are made for at least this timeout's duration, the cloud storage is considered idle.
+Timeout used to detect idle state of the object storage API. If no API requests are made for at least this timeout's duration, the object storage is considered idle.
 
 **Units**: milliseconds
 
@@ -186,7 +186,7 @@ Maximum concurrent readers of remote data per shard (CPU core).  If `null`, the 
 
 ### cloud_storage_max_segments_pending_deletion_per_partition
 
-The maximum limit per partition for the number of segments pending deletion from the cloud. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments are orphaned in the cloud and must be removed manually.
+The maximum limit per partition for the number of segments pending deletion from object storage. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments are orphaned in object storage and must be removed manually.
 
 **Type**: unsigned integer
 
@@ -238,7 +238,7 @@ Interval at which the archival service runs reconciliation.
 
 ### cloud_storage_recovery_temporary_retention_bytes_default
 
-The number of bytes of size-based retention for topics that are created during automated recovery of topics from cloud storage.
+The number of bytes of size-based retention for topics that are created during automated recovery of topics from object storage.
 
 **Units**: bytes
 
@@ -250,7 +250,7 @@ The number of bytes of size-based retention for topics that are created during a
 
 ### cloud_storage_segment_max_upload_interval_sec
 
-Duration that a segment can be kept in local storage without uploading it to remote storage. If `null`, defaults to infinite duration.
+Duration that a segment can be kept in local storage without uploading it to object storage. If `null`, defaults to infinite duration.
 
 **Units**: seconds
 
@@ -262,7 +262,7 @@ Duration that a segment can be kept in local storage without uploading it to rem
 
 ### cloud_storage_segment_size_target
 
-The desired segment size in cloud storage. If `null`, the property is disabled, and the segment size in cloud storage defaults to `segment.bytes`.
+The desired segment size in object storage. If `null`, the property is disabled, and the segment size in object storage defaults to `segment.bytes`.
 
 **Units**: bytes
 
@@ -274,7 +274,7 @@ The desired segment size in cloud storage. If `null`, the property is disabled, 
 
 ### cloud_storage_segment_size_min
 
-The minimum segment size in cloud storage. If `null`, the property is disabled, and the minimum segment size defaults to [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)/2.
+The minimum segment size in object storage. If `null`, the property is disabled, and the minimum segment size defaults to [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)/2.
 
 **Units**: bytes
 

@@ -372,7 +372,7 @@ For additional properties, see [Tiered Storage configuration properties](#tiered
 
 ### Caching 
 
-When the Kafka client fetches an offset range that isn’t available locally in the Redpanda data directory, Redpanda downloads remote segments from cloud storage. These downloaded segments are stored in the cloud storage cache.
+When the Kafka client fetches an offset range that isn’t available locally in the Redpanda data directory, Redpanda downloads remote segments from cloud storage. These downloaded segments are stored in the object storage cache.
 
 By default the cache directory is stored in an emptyDir volume in the `<redpanda_data_directory>/cloud_storage_cache` directory. You can configure the Helm chart to store the cache directory in any other volume. For example, you might want to store the cache directory in a dedicated volume with cheaper storage. 
 

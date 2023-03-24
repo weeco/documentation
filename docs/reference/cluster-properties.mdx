@@ -42,7 +42,7 @@ List of superuser usernames.
 
 -------------------------------------------------------------------------------
 
-## Cloud storage properties
+## Object storage properties
 
 
 ### cloud_storage_azure_storage_account
@@ -1021,7 +1021,7 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 
 ### retention_local_target_bytes_default
 
-Local retention size target for partitions of topics with cloud storage write enabled. If `null`, the property is disabled.
+Local retention size target for partitions of topics with object storage write enabled. If `null`, the property is disabled.
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
@@ -1039,7 +1039,7 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 ### retention_local_target_ms_default
 
-Local retention time target for partitions of topics with cloud storage write enabled.
+Local retention time target for partitions of topics with object storage write enabled.
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.

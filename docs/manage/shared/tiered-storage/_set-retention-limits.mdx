@@ -2,9 +2,9 @@ import Link from '@docusaurus/Link';
 
 Redpanda supports retention limits and compaction for topics using Tiered Storage. Set retention limits to purge topic data after it reaches a specified age or size.
 
-Starting in Redpanda version 22.3, cloud storage is the default storage tier for all streaming data, and retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in the cloud until it reaches the configured time or size limit. 
+Starting in Redpanda version 22.3, object storage is the default storage tier for all streaming data, and retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in object storage until it reaches the configured time or size limit. 
 
-Data expires from cloud storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10GiB, then every partition in the topic has a limit of 10GiB storage in the cloud. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
+Data expires from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10GiB, then every partition in the topic has a limit of 10GiB storage in object storage. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
 
 For more information, see <Link to={props.frontmatter.linkRoot + 'manage/cluster-maintenance/disk-utilization/#configure-message-retention'}>Configure message retention</Link>.
 
@@ -31,4 +31,4 @@ After topic configuration, if Tiered Storage was disabled and must be enabled, o
 
 #### Compacted topics in Tiered Storage
 
-To save space, Redpanda compacts segments after they have been uploaded to cloud storage. Redpanda initially uploads all (non-compacted) segments. It then reuploads the segments with compaction applied.
+To save space, Redpanda compacts segments after they have been uploaded to object storage. Redpanda initially uploads all (non-compacted) segments. It then reuploads the segments with compaction applied.

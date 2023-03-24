@@ -11,7 +11,7 @@ contextLinks:
 
 <head>
     <meta name="title" content="Tiered Storage in Linux | Redpanda Docs"/>
-    <meta name="description" content="Configure your Redpanda cluster to offload log segments to cloud storage and save storage costs."/>
+    <meta name="description" content="Configure your Redpanda cluster to offload log segments to object storage and save storage costs."/>
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -51,7 +51,7 @@ import ContextLink from '@site/src/components/ContextButton.js'
 
 <SetUp/>
 
-### Configure cloud storage
+### Configure object storage
 
 <Tabs>
     <TabItem value="S3" label="Amazon S3" default>
@@ -186,7 +186,7 @@ To configure access to Azure Blob Storage with shared keys:
 
 ### Caching 
 
-When the Kafka client fetches an offset range that isn’t available locally in the Redpanda data directory, Redpanda downloads remote segments from cloud storage. These downloaded segments are stored in the cloud storage cache directory. The cache directory is created in the Redpanda `data` directory by default, but it can be placed anywhere in the system. For example, you might want to put the cache directory to a dedicated drive with cheaper storage. 
+When the Kafka client fetches an offset range that isn’t available locally in the Redpanda data directory, Redpanda downloads remote segments from object storage. These downloaded segments are stored in the object storage cache directory. The cache directory is created in the Redpanda `data` directory by default, but it can be placed anywhere in the system. For example, you might want to put the cache directory to a dedicated drive with cheaper storage. 
 
 If you don’t specify a cache location in the `redpanda.yaml` file, the cache directory is created in `<redpanda_data_directory>/cloud_storage_cache`. 
 
@@ -213,7 +213,7 @@ Use the following cluster-level properties to set the maximum cache size and cac
 
 <Transport frontmatter={frontMatter}/>
 
-## Cloud storage housekeeping
+## Object storage housekeeping
 
 <CloudStorageHousekeeping frontmatter={frontMatter}/>
 
