@@ -1,0 +1,95 @@
+---
+title: Keycloak SSO Setup
+---
+
+<head>
+    <meta name="title" content="Keycloak SSO Authentication in Redpanda Console | Redpanda Docs"/>
+    <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
+</head>
+
+:::info
+This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+:::
+
+Integrating Redpanda Console with Keycloak allows your users to use their Keycloak identities to sign-in to Console.
+This guide assumes you already have a Keycloak admin account to setup the OAuth application.
+
+## Create an OpenID connect application
+
+TODO: Describe how to create the application in Keycloak.
+
+:::note
+The following configurations are based on the assumption that you want to host Redpanda Console so that it would be accessible using
+`https://console.yourcompany.com`.
+:::
+
+- **Application name:** Any descriptive name for your specific Console deployment (for example Console Analytics Prod)
+- **Application type:** Web application
+- **Authorized redirect URI:** `https://console.yourcompany.com/login/callbacks/keycloak`
+
+```yaml
+login:
+  enabled: true
+
+  # jwtSecret is the secret key you must use to sign and encrypt the JSON
+  # web token used to store user sessions. This secret key is
+  # critical for the security of Redpanda Console's authentication and
+  # authorization system. Use a long, complex key with a combination of
+  # numbers, letters, and special characters. While you must use a minimum of
+  # 10 characters, Redpanda recommends using more than 32
+  # characters. For additional security, use a different secret key for
+  # each environment. jwtSecret can be securely generated with the following
+  # command: LC_ALL=C tr -dc '[:alnum:]' < /dev/random | head -c32
+  #
+  # If you update this secret key, any users who are
+  # already logged into Redpanda Console will be logged out and will have
+  # to log in again.
+  jwtSecret: ""
+
+  keycloak:
+    enabled: true
+    url: https://keycloak.internal.company.com
+    realm: master
+
+    clientId: ""
+    clientSecret: ""
+
+    # The directory config is only required if you want to 
+    # use Keycloak groups in your role bindings. 
+    # Described further in the next section.
+    # directory:
+    #   adminUser: ""
+    #   adminPassword: ""
+```
+
+## RBAC Keycloak groups sync
+
+If you want to bind roles to Keycloak groups you need to specifcy admin user credentials. These credentials
+are used to resolve group memberships when communicating with Keycloak's API.
+
+```yaml
+login:
+  keycloak:
+    directory:
+      adminUser: ""
+      adminPassword: ""
+```
+
+## Define role-bindings
+
+When you set up the Keycloak login configuration, you can bind Keycloak users or groups to roles. Following is a sample
+role binding:
+
+```yaml
+roleBindings:
+  - metadata:
+      name: Developers
+    subjects:
+      - kind: group
+        provider: Keycloak
+        name: 55e999ff-7923-4750-b2e1-7387768958a0 # Group ID
+      - kind: user
+        provider: Keycloak
+        name: martin # Keycloak login / username
+    roleName: editor
+```

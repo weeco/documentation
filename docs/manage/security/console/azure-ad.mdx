@@ -1,0 +1,132 @@
+---
+title: Azure AD SSO Setup
+---
+
+<head>
+    <meta name="title" content="Azure AD SSO Authentication in Redpanda Console | Redpanda Docs"/>
+    <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
+</head>
+
+:::info
+This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+:::
+
+Integrating Redpanda Console with Azure AD allows your users to use their Azure AD identities to sign-in to Console.
+This guide assumes you already have an Azure AD account and permissions to create Applications within your directory.
+
+## Create an OpenID connect application
+
+TODO: Write text, possibly refer to: https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings
+
+:::note
+Below configurations assume that you want to host Redpanda Console so that it would be accessible via
+`https://console.yourcompany.com`.
+:::
+
+- **Name:** Any descriptive name for your specific Console deployment (for example Console Analytics Prod)
+- **Supported account types** Select an option that matches your needs. If you are unsure, click "Help me choose...".
+- **Redirect URIs** Web / `https://console.yourcompany.com/login/callbacks/azure-ad`
+
+```yaml
+login:
+  enabled: true
+
+  # jwtSecret is the secret key you must use to sign and encrypt the JSON
+  # web token used to store user sessions. This secret key is
+  # critical for the security of Redpanda Console's authentication and
+  # authorization system. Use a long, complex key with a combination of
+  # numbers, letters, and special characters. While you must use a minimum of
+  # 10 characters, Redpanda recommends using more than 32
+  # characters. For additional security, use a different secret key for
+  # each environment. jwtSecret can be securely generated with the following
+  # command: LC_ALL=C tr -dc '[:alnum:]' < /dev/random | head -c32
+  #
+  # If you update this secret key, any users who are
+  # already logged into Redpanda Console will be logged out and will have
+  # to log in again.
+  jwtSecret: ""
+
+  azureAd:
+    enabled: true
+    # ProviderURL must be specified in the following format:
+    # https://login.microsoftonline.com/{tenantId}/v2.0 .
+    # To get this URL, browse to the registered app in your 
+    # Azure Portal, click the "Endpoints" tab. A drawer 
+    # should open with several links. The link below 
+    # "OpenID Connect metadata document" contains the 
+    # provider URL, however you must trim the suffix 
+    # "/.well-known/openid-configuration" so that it 
+    # matches the expected format as shown above.
+    providerUrl: ""
+
+    clientId: ""
+    clientSecret: ""
+
+    #  userIdentifyingClaimKey is a relevant property if you want 
+    #  to use a different claim key to identify users in the 
+    #  role binding. By default, we will use the 'oid' claim key,
+    #  which resolves to the unique user ID within the identity 
+    #  provider. This means that you must provide the oid 
+    #  identifier in the roleBindings as 'name' as well. 
+    #  Other common options are:
+    #  - upn (unique principal name - you need to add the upn 
+    #    claim as a claim for id tokens in your Azure AD application)
+    #  - email (under certain conditions there's no value for 
+    #    the email propagated)
+    userIdentifyingClaimKey: "oid"
+
+    # The directory config is only required if you want to use 
+    # Azure AD groups in your role bindings. Described further
+    # in the next section.
+    # directory:
+    #   tenantId: ""
+```
+
+## RBAC Azure AD groups sync
+
+If you want to bind roles to Azure groups from your organization you have to provide the `tenantId` in the
+directory configuration and add API permissions to your client application. To retrieve the `tenantId` go to
+your registered application in the Azure Active Directory portal. The "Directory (tenant) ID" is listed
+along other configurations in the essentials section.
+
+```yaml
+login:
+  azureAd:
+    directory:
+      tenantId: ""
+```
+
+If you specify the `tenantId` Console will talk to the Microsoft Graph API to retrieve the memberships
+for the specified groups. Therefore the client needs the apropriate permissions. In your AzureAD application
+head to "API permissions" and add permissions for "Group.Read.All", "User.Read.All" and "Directory.Read.All".
+Then also grant admin consent for the default directory by clicking the "Grant admin constent for Default Directory"
+button.
+
+## Define role-bindings
+
+When you set up the GitHub login configuration, you can bind GitHub users or groups to roles. Following is a sample
+role binding:
+
+```yaml
+roleBindings:
+  - metadata:
+      name: Developers
+    subjects:
+      - kind: group
+        provider: AzureAD
+        # Name for group always refers to the group's oid.
+        name: ef0dd5b8-93c3-4a4f-9d90-cba243973d32
+      - kind: user
+        provider: AzureAD
+        # Name refers to the user's OID.
+        # This is dependent on your userIdentifyingClaimKey
+        # configuration. If you use `email` as claim key
+        # you should use the email address instead here.
+        name: c86fdb3f-b0f4-4b0b-9be3-ddf56f48b62f
+    roleName: editor
+```
+
+:::note
+The resolved group memberships will also include transitive members. Thus, you can
+create nested groups and refer these in your role bindings.
+:::
