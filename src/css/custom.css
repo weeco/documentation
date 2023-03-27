@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Calibri, sans-serif;
-  --v-font-mono: Calibri,'Courier Prime', Courier, monospace;
+  --v-font: Calibri Regular, sans-serif;
+  --v-font-mono: Calibri Regular,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -35,7 +35,8 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Calibri, sans-serif;
+  --ifm-heading-font-family: Calibri Regular, sans-serif;
+  --ifm-heading-color: black;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -61,13 +62,18 @@
 
   /*Mobile Sidebar*/
   --ifm-navbar-sidebar-width : 100vw;
+
+  --tw-text-opacity : 1;
 }
 
 * {
-  font-family: Calibri,Inter,sans-serif;
-  font-size: 17px;
+  font-family: Calibri Regular,Inter,sans-serif;
+  font-size: 1.2rem;
+  line-height: 2.1rem;
+  color: rgb(102 112 133/var(--tw-text-opacity));
   box-sizing: border-box;
 }
+
 
 *, :after, :before {
   box-sizing: border-box;
