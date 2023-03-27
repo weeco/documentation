@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Patron,Inter, sans-serif;
+  --ifm-heading-font-family: Arial, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -64,7 +64,8 @@
 }
 
 * {
-  font-family: Patron,Inter,sans-serif;
+  font-family: Arial,Inter,sans-serif;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
