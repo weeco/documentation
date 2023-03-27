@@ -19,8 +19,8 @@
   --v-gray4: #F8F8F8;
   --v-green: #64C97B;
   --v-background: #FFFFFF;
-  --v-font: Arial, sans-serif;
-  --v-font-mono: Arial,'Courier Prime', Courier, monospace;
+  --v-font: Verdana, sans-serif;
+  --v-font-mono: Verdana,'Courier Prime', Courier, monospace;
 
   /* Color Variables */
   --ifm-color-black: #2F2C2C;
@@ -35,7 +35,7 @@
   
   /* Font */
   --ifm-code-font-size: 95%;
-  --ifm-heading-font-family: Arial, sans-serif;
+  --ifm-heading-font-family: Verdana, sans-serif;
 
   /* Global */
   --ifm-background-color: var(--v-background);
@@ -64,8 +64,8 @@
 }
 
 * {
-  font-family: Arial,Inter,sans-serif;
-  font-size: 16px;
+  font-family: Verdana,Inter,sans-serif;
+  font-size: 15px;
   box-sizing: border-box;
 }
 
