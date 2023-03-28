@@ -177,11 +177,12 @@
 /docs/platform/deployment/sizing-use-cases                                            /docs/deploy/deployment-option/self-hosted/manual/sizing-use-cases 301!
 /docs/platform/deployment/sizing                                                      /docs/deploy/deployment-option/self-hosted/manual/sizing 301!
 /docs/platform/development/code-examples                                              /docs/develop/code-examples 301!
-/docs/platform/development/configure-producers                                        /docs/develop/produce-data/configure-producers 301!
+/docs/platform/development/configure-producers                                        /docs/develop/produce-data 301!
+/docs/develop/produce-data/configure-producers                                       /docs/develop/produce-data 301!
 /docs/platform/development/consumer-offsets                                           /docs/develop/consume-data/consumer-offsets 301!
 /docs/platform/development/guide-nodejs                                               /docs/develop/guide-nodejs 301!
 /docs/platform/development/http-proxy                                                 /docs/develop/http-proxy 301!
-/docs/platform/development/idempotent-producers                                       /docs/develop/produce-data/idempotent-producers 301!
+/docs/platform/development/idempotent-producers                                       /docs/develop/produce-data 301!
 /docs/platform/development/index                                                      /docs/develop/index 301!
 /docs/platform/development                                                           /docs/develop/index 301!
 /docs/platform/development/kafka-clients                                              /docs/develop/kafka-clients 301!

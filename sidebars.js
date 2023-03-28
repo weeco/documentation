@@ -76,8 +76,23 @@ module.exports = {
           items: [
             {
               type: "doc",
-              label: "Configure Producers",
-              id: "develop/produce-data/configure-producers",
+              label: "Idempotent Producers",
+              id: "develop/produce-data/idempotent-producers",
+            },
+            {
+              type: "doc",
+              label: "Message Reliability",
+              id: "develop/produce-data/message-reliability",
+            },
+            {
+              type: "doc",
+              label: "Batching and Compression",
+              id: "develop/produce-data/batching-compression",
+            },
+            {
+              type: "doc",
+              label: "Transactions",
+              id: "develop/transactions",
             },
             {
               type: "doc",

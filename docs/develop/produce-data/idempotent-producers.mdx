@@ -1,25 +1,29 @@
 ---
-title: Idempotent producers
+title: Idempotent Producers
 ---
 
 <head>
     <meta name="title" content="Idempotent producers | Redpanda Docs"/>
-    <meta name="description" content="Implementing idempotent producers."/>
+    <meta name="description" content="Learn about exactly-once message delivery and how to achieve it by enabling idempotent producers."/>
 </head>
 
-When a producer writes messages to a topic, each message should be recorded only once in the order in which it was sent. However, network issues such as a connection failure can result in a timeout, which prevents a write request from succeeding. In such cases, the client retries the write request until one of these events occurs:
+Learn about exactly-once message delivery and how to achieve it by enabling idempotent producers.
+
+## About idempotent producers
+
+When a producer sends messages to a topic, each message should be recorded only once in the order in which it was sent. However, network issues such as a connection failure can result in a timeout, which prevents a send request from succeeding. In such cases, the client retries the request until one of these events occurs:
 
 * The client receives an acknowledgment from the broker that the write was successful.
 * The retry limit is reached.
 * The message delivery timeout limit is reached.
 
-Since there is no way to tell if the initial write request succeeded before the disruption, a retry can result in a duplicate message. A retry can also cause subsequent messages to be written out of order.
+Since there is no way to tell if the initial send request succeeded before the disruption, a retry can result in a duplicate message. A retry can also cause subsequent messages to be written out of order.
 
-Idempotent producers prevent this problem by assigning a unique ID to every write request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each write request was sent. If a retry results in a duplicate message, Redpanda detects and rejects the duplicate message and maintains the original order of the messages.
+Idempotent producers prevent this problem by assigning a unique ID to every send request. The request ID consists of the producer ID and a sequence number. The sequence number identifies the order in which each send request was sent. If a retry results in a duplicate message, Redpanda detects and rejects the duplicate message and maintains the original order of the messages.
 
-If new write requests continue while a previous request is being retried, the new requests are stored in the client’s memory in the order in which they were sent. The client must also retry these requests once the previous request is successful.
+If new send requests continue while a previous request is being retried, the new requests are stored in the client’s memory in the order in which they were sent. The client must also retry these requests once the previous request is successful.
 
-## Enabling idempotence for producers
+## Configuring idempotent producers
 
 To make producers idempotent, the `enable.idempotence` property must be set to `true` in your producer configuration, as well as in the Redpanda cluster configuration, where it is set to `true` by default.
 
@@ -29,7 +33,7 @@ Idempotence is guaranteed within a session. A session starts once a producer is 
 
 :::note
 
-Idempotent producers retry unsuccessful write requests automatically. If you manually retry a write request, the client will assign a new ID to that request, which may lead to duplicate messages.
+Idempotent producers retry unsuccessful send requests automatically. If you manually retry a send request, the client will assign a new ID to that request, which may lead to duplicate messages.
 
 :::
 

@@ -10,7 +10,7 @@ title: Producer Configuration Properties
   />
 </head>
 
-A reference list of Kafka (v3.4) producer configuration properties.
+A list of Kafka (v3.4) producer configuration properties that are useful when developing with Redpanda.
 
 ## Properties
 
@@ -24,7 +24,7 @@ The number of acknowledgements that a producer expects to get from a leader brok
 - `acks=all` or `acks=-1`: acknowledgements from all in-sync replicas, as configured for the cluster or topic by `min.insync.replicas`
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Message Reliability](../message-reliability)
 
 ---
 
@@ -33,7 +33,7 @@ The number of acknowledgements that a producer expects to get from a leader brok
 The maximum size in bytes of a batched message in a single send request.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Batching and Compression](../batching-compression)
 
 ---
 
@@ -48,7 +48,7 @@ A list of addresses of brokers that can provide the metadata a client needs to b
 The maximum amount of memory in bytes a producer has to store messages to send.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Batching and Compression](../batching-compression)
 
 ---
 
@@ -91,7 +91,7 @@ The maximum duration in milliseconds from when a send request returns to when a 
 A flag to enable a producer to publish a message multiple times and for the broker to receive it just once.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Idempotent Producers](../idempotent-producers)
 
 ---
 
@@ -112,7 +112,7 @@ The serializer class for the keys of messages.
 The duration in milliseconds a producer waits to coalesce messages before sending a batched message.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Batching and Compression](../batching-compression)
 
 ---
 
@@ -127,7 +127,7 @@ The maximum duration in milliseconds that a producer can block. For a send call,
 The maximum number of in-flight unacknowledged requests a producer can make on a connection before blocking.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Message Reliability](../message-reliability)
 
 ---
 
@@ -149,24 +149,12 @@ The maximum duration in milliseconds to keep cached metadata for an idle topic.
 
 ---
 
-### metric.reporters
-
-### metrics.num.samples
-
-### metrics.recording.level
-
-### metrics.sample.window.ms
-
-### partitioner.adaptive.partitioning.enable
-
-### partitioner.availability.timeout.ms
-
 ### partitioner.class
 
 A partitioner class that assigns sent messages to partitions.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Producer concepts](../../produce-data#partitions-and-replicas)
 
 ---
 
@@ -205,13 +193,16 @@ The maximum duration in milliseconds to wait for a response to a request.
 The number of times a producer retries sending a message before failing.
 
 **Related topics**:
-- [Configure producers](../configure-producers)
+- [Message Reliability](../message-reliability)
 
 ---
 
 ### retry.backoff.ms
 
 The minimum duration in milliseconds to wait between retry attempts.
+
+**Related topics**:
+- [Message Reliability](../message-reliability)
 
 ---
 
