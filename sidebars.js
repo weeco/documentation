@@ -74,11 +74,15 @@ module.exports = {
           label: "Produce Data",
           link: { type: "doc", id: "develop/produce-data/index" },
           items: [
-            "develop/produce-data/configure-producers",
             {
               type: "doc",
-              label: "Idempotent Producers",
-              id: "develop/produce-data/idempotent-producers",
+              label: "Configure Producers",
+              id: "develop/produce-data/configure-producers",
+            },
+            {
+              type: "doc",
+              label: "Producer Configuration Properties",
+              id: "develop/produce-data/producer-properties",
             },
           ]
         },

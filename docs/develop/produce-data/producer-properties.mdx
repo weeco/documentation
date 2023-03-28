@@ -1,0 +1,254 @@
+---
+title: Producer Configuration Properties
+---
+
+<head>
+  <meta name="title" content="Configure Producers | Redpanda Docs" />
+  <meta
+    name="description"
+    content="A reference list of Kafka producer configuration properties."
+  />
+</head>
+
+A reference list of Kafka (v3.4) producer configuration properties.
+
+## Properties
+
+### acks
+
+The number of acknowledgements that a producer expects to get from a leader broker and its follower replicas in order for a send request to succeed.
+
+**Valid values**:
+- `acks=0`: no acknowledgements
+- `acks=1`: one acknowledgement from the leader
+- `acks=all` or `acks=-1`: acknowledgements from all in-sync replicas, as configured for the cluster or topic by `min.insync.replicas`
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### batch.size
+
+The maximum size in bytes of a batched message in a single send request.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### bootstrap.servers
+
+A list of addresses of brokers that can provide the metadata a client needs to bootstrap itself and start producing topics.
+
+---
+
+### buffer.memory
+
+The maximum amount of memory in bytes a producer has to store messages to send.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### client.dns.lookup
+
+A kind specifying how to resolve DNS aliases.
+
+---
+
+### client.id
+
+A unique application-specified ID for the producer client.
+
+---
+
+### compression.type
+
+The compression type used for all messages published by the producer.
+
+By default, a Redpanda cluster is configured to use a producer's `compression.type`; refer to the cluster property [`log_compression_type`](../../../reference/cluster-properties#log_compression_type).  
+
+**Valid values**: `gzip`, `snappy`, `lz4`, `zstd`, `none`
+
+---
+
+### connections.max.idle.ms
+
+The maximum duration in milliseconds that a connection can idle before being closed.
+
+---
+
+### delivery.timeout.ms
+
+The maximum duration in milliseconds from when a send request returns to when a success or failure for the request is reported.
+
+---
+
+### enable.idempotence
+
+A flag to enable a producer to publish a message multiple times and for the broker to receive it just once.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### interceptor.classes
+
+A list of classes that intercept messages before they are sent to brokers. Can mutate messages and can be used for monitoring.
+
+---
+
+### key.serializer
+
+The serializer class for the keys of messages.
+
+---
+
+### linger.ms
+
+The duration in milliseconds a producer waits to coalesce messages before sending a batched message.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### max.block.ms
+
+The maximum duration in milliseconds that a producer can block. For a send call, `max.block.ms` includes the time to request metadata (if metadata is unavailable) and to wait for buffer memory to become available (if `buffer.memory` has been exceeded).
+
+---
+
+### max.in.flight.requests.per.connection
+
+The maximum number of in-flight unacknowledged requests a producer can make on a connection before blocking.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### max.request.size
+
+The maximum size in bytes of a producer request. Should be at least the size of the largest message to publish.
+
+---
+
+### metadata.max.age.ms
+
+The maximum duration in milliseconds to keep cached metadata, after which a new metadata request is made and the cached metadata is refreshed.
+
+---
+
+### metadata.max.idle.ms
+
+The maximum duration in milliseconds to keep cached metadata for an idle topic.
+
+---
+
+### metric.reporters
+
+### metrics.num.samples
+
+### metrics.recording.level
+
+### metrics.sample.window.ms
+
+### partitioner.adaptive.partitioning.enable
+
+### partitioner.availability.timeout.ms
+
+### partitioner.class
+
+A partitioner class that assigns sent messages to partitions.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### partitioner.ignore.keys
+
+A flag to enable the partitioner to ignore the keys of messages when assigning messages to partitions.
+
+---
+
+### receive.buffer.bytes
+
+The maximum size in bytes of the socket receive buffer.
+
+---
+
+### reconnect.backoff.max.ms
+
+The maximum duration in milliseconds to wait to reconnect to a broker.
+
+---
+
+### reconnect.backoff.ms
+
+The default duration in milliseconds to wait to reconnect to a broker. Increases exponentially with each reconnection failure, up to `reconnect.backoff.max.ms`.
+
+---
+
+### request.timeout.ms
+
+The maximum duration in milliseconds to wait for a response to a request.
+
+---
+
+### retries
+
+The number of times a producer retries sending a message before failing.
+
+**Related topics**:
+- [Configure producers](../configure-producers)
+
+---
+
+### retry.backoff.ms
+
+The minimum duration in milliseconds to wait between retry attempts.
+
+---
+
+### security.providers
+
+A list of security provider creator classes.
+
+---
+
+### send.buffer.bytes
+
+The maximum size in bytes of the socket send buffer.
+
+---
+
+### socket.connection.setup.timeout.max.ms
+
+The maximum duration in milliseconds that a producer waits for a socket connection to be established.
+
+### socket.connection.setup.timeout.ms
+
+The default duration in milliseconds that a producer waits for a socket connection to be established. The duration increases with each consecutive failed connection attempt, up to the maximum `socket.connection.setup.timeout.max.ms`.
+
+---
+
+### transaction.timeout.ms
+
+The maximum duration in milliseconds that a transaction coordinator waits for a producer to give a status update before aborting the transaction.
+
+---
+
+### transactional.id
+
+An ID that uniquely identifies the producer and its transactions with brokers. Registered with brokers before the producer starts its first transaction. Setting `transactional.id` implies setting `enable.idempotence` to `true`.
+
+---
+
+### value.serializer
+
+The serializer class for the values of messages.
