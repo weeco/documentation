@@ -28,7 +28,9 @@ These default settings are best suited to a one-node cluster in a development en
 
 Creating a topic can be as simple as specifying a name for your topic on the command line. For example, to create a topic named `xyz`:
 
-`rpk topic create xyz`
+```
+rpk topic create xyz
+```
 
 This command creates a topic named `xyz` with one partition and one replica, since these are the default values set in the cluster configuration file.
 
@@ -44,17 +46,21 @@ As a general rule, select a number of partitions that corresponds to the maximum
 
 For example, suppose you plan to create a consumer group with 10 consumers. To create a topic “xyz” with 10 partitions:
 
-`rpk topic create xyz -p 10`
+```
+rpk topic create xyz -p 10
+```
 
 ### Choosing the replication factor
 
-Replicas are copies that are distributed across different nodes, so if one node goes down, you still have other nodes with a copy of the data. The default replication factor in the cluster configuration is set to 1.
+Replicas are copies of partitions that are distributed across different nodes, so if one node goes down, other nodes still have a copy of the data. The default replication factor in the cluster configuration is set to 1.
 
 By choosing a replication factor greater than 1, you ensure that each partition has a copy of its data on at least one other node. One replica acts as the leader, and the other replicas are followers.
 
 To specify a replication factor of 3 for topic “xyz”:
 
-`rpk topic create xyz -r 3`
+```
+rpk topic create xyz -r 3
+```
 
 :::note
 The replication factor must be an odd number. Redpanda Data recommends a replication factor of 3 for most use cases.
@@ -68,7 +74,9 @@ After you create a topic, you can update the topic property settings for all new
 
 You can add partitions to a topic after you create it. For example, suppose you added nodes to your cluster, and you want to take advantage of the additional processing power. To increase the number of partitions for existing topics, run:
 
-`rpk topic add-partitions [TOPICS...] --num [#]`
+```
+rpk topic add-partitions [TOPICS...] --num [#]
+```
 
 Note that `--num <#>` is the number of partitions to _add_, not the total number of partitions.
 
@@ -76,10 +84,12 @@ Note that `--num <#>` is the number of partitions to _add_, not the total number
 
 Suppose you configure a topic with the default replication factor of 1 (which is specified in the cluster properties configuration file). Now you want to change the replication factor to 3, so you can have two backups of topic data in case a broker goes down. To set the replication factor to 3 for all new data written to a topic, run:
 
-`rpk topic alter-config [TOPICS...] --set replication.factor=3`
+```
+rpk topic alter-config [TOPICS...] --set replication.factor=3
+```
 
 :::note
-The replication factor should not exceed the number of Redpanda brokers.
+The replication factor can't exceed the number of Redpanda brokers. If you try to set a replication factor greater than the number of brokers, the request is rejected.
 :::
 
 ### Changing the cleanup policy
@@ -88,13 +98,17 @@ The cleanup policy determines how to clean up the partition log files when they 
 
 Suppose you configure a topic using the default cleanup policy `delete`, and you want to change the policy to `compact`. Run the `rpk topic alter-config` command as shown:
 
-`rpk topic alter-config [TOPICS…] —-set cleanup.policy=compact`
+```
+rpk topic alter-config [TOPICS…] —-set cleanup.policy=compact
+```
 
 ## Listing topic configuration settings
 
 You can display all the configuration settings for a topic by running:
 
-`rpk topic describe <topic-name> -c`
+```
+rpk topic describe <topic-name> -c
+```
 
 The `-c` flag limits the command output to just the topic configurations. This command is useful for checking the default configuration settings before you make any changes, and for verifying changes after you make them.
 
@@ -140,16 +154,22 @@ REPLICAS    3
 
 After you’re done with a topic, you can delete it by running:
 
-`rpk topic delete <topic-name>`
+```
+rpk topic delete <topic-name>
+```
 
 When a topic is deleted, its underlying data is deleted, too.
 
 To delete multiple topics at a time, provide a space-separated list. For example:
 
-`rpk topic delete topic1 topic2`
+```
+rpk topic delete topic1 topic2
+```
 
-You can also use the `-r` flag to specify one or more regular expressions, and any topic names that match the pattern you specify will be deleted. The following command deletes any topics whose names start with “f” and any whose names end with “r”:
+You can also use the `-r` flag to specify one or more regular expressions; then, any topic names that match the pattern you specify will be deleted. The following command deletes any topics whose names start with “f” and any whose names end with “r”:
 
-`rpk topic  delete -r '^f.*' '.*r$'`
+```
+rpk topic  delete -r '^f.*' '.*r$'
+```
 
 Note that the first regular expression starts with the `^` symbol, and the last ends with the `$` symbol. This requirement helps prevent accidental deletions.
