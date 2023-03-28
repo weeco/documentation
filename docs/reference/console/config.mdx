@@ -189,6 +189,25 @@ kafka:
   messagePack:
     enabled: false
     topicNames: ["/.*/"] # List of topic name regexes, defaults to /.*/
+  # The startup configuration sets the parameters for when Console attempts 
+  # to establish a connection to Kafka. If the connection cannot be established 
+  # within the specified retry attempts, Console will exit with a return 
+  # code of 1. 
+  startup:
+    # maxRetries is the maximum number of attempts that Console will make 
+    # to connect to the Kafka API before failing and exiting. 
+    # Use 0 for unlimited retries.
+    maxRetries: 5
+    # retryInterval is the base interval between each connection attempt.
+    # This interval may be adjusted based on the number of retry attempts 
+    # and the configured backoffMultiplier.
+    retryInterval: 1s
+    # maxRetryInterval is the maximum amount of time to wait between 
+    # two connection attempts.
+    maxRetryInterval: 60s
+    # backoffMultiplier is the multiplier that will be applied to 
+    # the retryInterval for each failed attempt.
+    backoffMultiplier: 2
 
 connect:
   enabled: false
