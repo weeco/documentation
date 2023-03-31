@@ -374,7 +374,12 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Upgrade",
+                    label: "Decommission Brokers",
+                    id: "manage/kubernetes/decommission-brokers",
+                  },
+                  {
+                    type: "doc",
+                    label: "Upgrade Redpanda",
                     id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
@@ -406,6 +411,11 @@ module.exports = {
                     type: "doc",
                     label: "Continuous Data Balancing",
                     id: "manage/cluster-maintenance/continuous-data-balancing",
+                  },
+                  {
+                    type: "doc",
+                    label: "Decommission Brokers",
+                    id: "manage/cluster-maintenance/decommission-brokers",
                   },
                   {
                     type: "doc",
