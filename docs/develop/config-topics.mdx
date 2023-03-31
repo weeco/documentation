@@ -92,7 +92,7 @@ rpk topic alter-config [TOPICS...] --set replication.factor=3
 The replication factor can't exceed the number of Redpanda brokers. If you try to set a replication factor greater than the number of brokers, the request is rejected.
 :::
 
-### Changing the cleanup policy
+### Change the cleanup policy
 
 The cleanup policy determines how to clean up the partition log files when they reach a certain size - by deleting data based on age or log size, by compacting the data and only keeping the latest values for each key, or by using a combination of deletion and compaction.
 
