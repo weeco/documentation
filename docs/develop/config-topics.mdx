@@ -102,6 +102,14 @@ Suppose you configure a topic using the default cleanup policy `delete`, and you
 rpk topic alter-config [TOPICS…] —-set cleanup.policy=compact
 ```
 
+### Removing a configuration setting
+
+You can remove a configuration that overrides the default setting, and the setting will use the default value again. For example, suppose you altered the cleanup policy to use `compact` instead of the default, `delete`. Now you want to return the policy setting to the default. To remove the configuration setting `cleanup.policy=compact`, run `rpk topic alter-config` with the `--delete` flag as shown:
+
+```
+rpk topic alter-config [TOPICS...] --delete cleanup.policy
+```
+
 ## Listing topic configuration settings
 
 You can display all the configuration settings for a topic by running:
