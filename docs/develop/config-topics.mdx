@@ -36,7 +36,7 @@ This command creates a topic named `xyz` with one partition and one replica, sin
 
 But suppose you want to create a topic with different values for these settings. The guidelines in this section show you how to choose the number of partitions and replicas for your use case.
 
-### Choosing the number of partitions
+### Choose the number of partitions
 
 A partition acts as a log file where topic data is written. Dividing topics into partitions allows producers to write messages in parallel, and consumers to read messages in parallel. The higher the number of partitions, the greater the throughput.
 
