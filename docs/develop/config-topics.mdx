@@ -44,7 +44,7 @@ A partition acts as a log file where topic data is written. Dividing topics into
 As a general rule, select a number of partitions that corresponds to the maximum number of consumers in a consumer group that will consume the data.
 :::
 
-For example, suppose you plan to create a consumer group with 10 consumers. To create a topic “xyz” with 10 partitions:
+For example, suppose you plan to create a consumer group with 10 consumers. To create topic `xyz` with 10 partitions:
 
 ```
 rpk topic create xyz -p 10
