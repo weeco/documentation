@@ -1,5 +1,12 @@
 ---
-title: Configure Kafka TLS Encryption
+title: Configure Encryption
+linkRoot: ../../../
+deployment: Linux
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/security/encryption'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/security/kubernetes-tls
 ---
 
 <head>
@@ -7,9 +14,12 @@ title: Configure Kafka TLS Encryption
     <meta name="description" content="Enable encryption with TLS or mTLS."/>
 </head>
 
-By default, Redpanda data is sent unencrypted. A security best practice is to enable encryption with TLS or mTLS. 
+import ContextLink from '@site/src/components/ContextButton.js'
 
-- Transport Layer Security (TLS), previously SSL, provides encryption for client-server communication. This prevents third parties from accessing data transferred between the client and server.  
+<ContextLink frontmatter={frontMatter}
+/>
+
+By default, Redpanda data is sent unencrypted. A security best practice is to enable encryption with TLS or mTLS. 
 
 - mTLS, or 2-way TLS, is a protocol that authenticates both the server and the client. In addition to the server certificate required in TLS, mTLS requires the client to give a certificate. This involves more overhead to implement, but it can be useful for environments that require additional security and only have a small number of verified clients.
 

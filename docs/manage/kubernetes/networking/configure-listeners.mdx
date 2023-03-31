@@ -4,6 +4,13 @@ tags:
   - Kubernetes
   - Helm configuration
 description: Customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether.
+linkRoot: ../../../../
+deployment: Kubernetes
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/networking/configure-listeners'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/security/listener-configuration
 ---
 
 <head>
@@ -14,7 +21,10 @@ description: Customize the advertised ports for each listener on all Redpanda br
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import ValuesYaml from '../shared/_values-yaml.mdx'
+import ContextLink from '@site/src/components/ContextButton.js'
 
+<ContextLink frontmatter={frontMatter}
+/>
 
 You can customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether.
 

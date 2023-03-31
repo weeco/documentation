@@ -1,11 +1,23 @@
 ---
 title: Configure Listeners
+linkRoot: ../../../
+deployment: Linux
+contextLinks:
+  - name: 'Linux'
+    to: 'manage/networking/configure-listeners'
+  - name: 'Kubernetes'
+    to: manage/kubernetes/security/listener-configuration
 ---
 
 <head>
     <meta name="title" content="Configure listeners | Redpanda Docs"/>
     <meta name="description" content="Steps to configure listeners."/>
 </head>
+
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter}
+/>
 
 Apache Kafka® client libraries must be able to connect to every Redpanda broker
 instance. If the client and broker are on different subnets, advertise the location of the broker in the Redpanda configuration file so other brokers in

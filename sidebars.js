@@ -383,6 +383,11 @@ module.exports = {
                     id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
+                    type: "doc",
+                    label: "Monitor",
+                    id: "manage/kubernetes/monitor",
+                  },
+                  {
                     type: "category",
                     label: "Troubleshooting",
                     link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },
