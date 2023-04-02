@@ -69,6 +69,7 @@ module.exports = {
         "develop/code-examples",
         "develop/guide-nodejs",
         "develop/http-proxy",
+        "develop/config-topics",
         {
           type: "category",
           label: "Produce Data",
