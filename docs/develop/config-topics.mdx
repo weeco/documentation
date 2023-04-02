@@ -22,7 +22,7 @@ The following table shows the topic property settings listed in the cluster conf
  | `log_message_timestamp_type` | CreateTime                | `message.timestamp.type`  |
  | `kafka_batch_max_bytes`      | 1048576 bytes (1 MiB)     | `max.message.bytes`       |
 
-These default settings are best suited to a one-node cluster in a development environment. To learn how to modify the default values in the configuration file, see [Configure Cluster Properties](../../manage/cluster-maintenance/cluster-property-configuration). Even if you set default values that work for most topics, you may still want to change some properties for a specific topic.
+These default settings are best suited to a one-broker cluster in a development environment. To learn how to modify the default values in the configuration file, see [Configure Cluster Properties](../../manage/cluster-maintenance/cluster-property-configuration). Even if you set default values that work for most topics, you may still want to change some properties for a specific topic.
 
 ## Create a topic
 
@@ -41,7 +41,7 @@ But suppose you want to create a topic with different values for these settings.
 A partition acts as a log file where topic data is written. Dividing topics into partitions allows producers to write messages in parallel and consumers to read messages in parallel. The higher the number of partitions, the greater the throughput.
 
 :::tip
-As a general rule, select a number of partitions that corresponds to the maximum number of consumers in a consumer group that will consume the data.
+As a general rule, select a number of partitions that corresponds to the maximum number of consumers in any consumer group that will consume the data.
 :::
 
 For example, suppose you plan to create a consumer group with 10 consumers. To create topic `xyz` with 10 partitions:
@@ -52,9 +52,9 @@ rpk topic create xyz -p 10
 
 ### Choose the replication factor
 
-Replicas are copies of partitions that are distributed across different nodes, so if one node goes down, other nodes still have a copy of the data. The default replication factor in the cluster configuration is set to 1.
+Replicas are copies of partitions that are distributed across different brokers, so if one broker goes down, other brokers still have a copy of the data. The default replication factor in the cluster configuration is set to 1.
 
-By choosing a replication factor greater than 1, you ensure that each partition has a copy of its data on at least one other node. One replica acts as the leader, and the other replicas are followers.
+By choosing a replication factor greater than 1, you ensure that each partition has a copy of its data on at least one other broker. One replica acts as the leader, and the other replicas are followers.
 
 To specify a replication factor of 3 for topic “xyz”:
 
@@ -68,11 +68,11 @@ The replication factor must be an odd number. Redpanda Data recommends a replica
 
 ## Update topic configurations
 
-After you create a topic, you can update the topic property settings for all new data written to that topic. For example, you can add partitions, change the replication factor, or change a configuration setting like the cleanup policy.
+After you create a topic, you can update the topic property settings for all new data written to it. For example, you can add partitions, change the replication factor, or change a configuration setting like the cleanup policy.
 
 ### Add partitions
 
-You can add partitions to a topic after you create it. For example, suppose you added nodes to your cluster, and you want to take advantage of the additional processing power. To increase the number of partitions for existing topics, run:
+You can assign a certain number of partitions when you create a topic, and add partitions later. For example, suppose you add brokers to your cluster, and you want to take advantage of the additional processing power. To increase the number of partitions for existing topics, run:
 
 ```
 rpk topic add-partitions [TOPICS...] --num [#]
@@ -94,7 +94,11 @@ The replication factor can't exceed the number of Redpanda brokers. If you try t
 
 ### Change the cleanup policy
 
-The cleanup policy determines how to clean up the partition log files when they reach a certain size - by deleting data based on age or log size, by compacting the data and only keeping the latest values for each key, or by using a combination of deletion and compaction.
+The cleanup policy determines how to clean up the partition log files when they reach a certain size:
+
+* `delete` deletes data based on age or log size.
+* `compact` compacts the data by only keeping the latest values for each KEY.
+* `compact,delete` combines both methods.
 
 Suppose you configure a topic using the default cleanup policy `delete`, and you want to change the policy to `compact`. Run the `rpk topic alter-config` command as shown:
 
@@ -112,7 +116,7 @@ rpk topic alter-config [TOPICS...] --delete cleanup.policy
 
 ## List topic configuration settings
 
-You can display all the configuration settings for a topic by running:
+To display all the configuration settings for a topic, run:
 
 ```
 rpk topic describe <topic-name> -c
@@ -120,7 +124,7 @@ rpk topic describe <topic-name> -c
 
 The `-c` flag limits the command output to just the topic configurations. This command is useful for checking the default configuration settings before you make any changes, and for verifying changes after you make them.
 
-The following command output is displayed after running `rpk topic describe test-topic`, where `test-topic` was created with default settings:
+The following command output displays after running `rpk topic describe test-topic`, where `test-topic` was created with default settings:
 
 ```
 rpk topic describe test_topic
@@ -160,7 +164,7 @@ REPLICAS    3
 
 ## Delete a topic
 
-After you’re done with a topic, you can delete it by running:
+To delete a topic, run:
 
 ```
 rpk topic delete <topic-name>
@@ -168,13 +172,13 @@ rpk topic delete <topic-name>
 
 When a topic is deleted, its underlying data is deleted, too.
 
-To delete multiple topics at a time, provide a space-separated list. For example:
+To delete multiple topics at a time, provide a space-separated list. For example, to delete two topics named `topic1` and `topic2`, run:
 
 ```
 rpk topic delete topic1 topic2
 ```
 
-You can also use the `-r` flag to specify one or more regular expressions; then, any topic names that match the pattern you specify will be deleted. The following command deletes any topics whose names start with “f” and any whose names end with “r”:
+You can also use the `-r` flag to specify one or more regular expressions; then, any topic names that match the pattern you specify are deleted. For example, to delete topics with names that start with “f” and end with “r”, run:
 
 ```
 rpk topic  delete -r '^f.*' '.*r$'
