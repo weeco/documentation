@@ -581,6 +581,8 @@ module.exports = {
         "reference/node-properties",
         "reference/node-configuration-sample",
         "reference/api-reference",
+        "reference/redpanda-helm-spec",
+        "reference/console-helm-spec",
         {
           type: "category",
           label: "Monitoring Metrics",
