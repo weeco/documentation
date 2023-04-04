@@ -336,6 +336,11 @@ module.exports = {
                       },
                       {
                         type: "doc",
+                        label: "Use Custom Services",
+                        id: "manage/kubernetes/networking/custom-services",
+                      },
+                      {
+                        type: "doc",
                         label: "Configure Listeners",
                         id: "manage/kubernetes/networking/configure-listeners",
                       }
