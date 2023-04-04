@@ -4,7 +4,7 @@ Redpanda supports retention limits and compaction for topics using Tiered Storag
 
 Starting in Redpanda version 22.3, object storage is the default storage tier for all streaming data, and retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in object storage until it reaches the configured time or size limit. 
 
-Data expires from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10GiB, then every partition in the topic has a limit of 10GiB storage in object storage. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
+Data expires from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10 GiB, then every partition in the topic has a limit of 10 GiB storage in object storage. When `retention.bytes` is exceeded by data in S3, the data in S3 is trimmed. If neither `retention.ms` nor `retention.bytes` are specified, then cluster level defaults are used.
 
 For more information, see <Link to={props.frontmatter.linkRoot + 'manage/cluster-maintenance/disk-utilization/#configure-message-retention'}>Configure message retention</Link>.
 
