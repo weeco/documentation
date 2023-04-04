@@ -110,11 +110,29 @@ To enable hardware optimization, set Redpanda to run in production mode:
 sudo rpk redpanda mode production
 ```
 
-To tune the hardware, on each node, run:
+To tune the hardware, run the autotuner on each node:
 
 ```bash
 sudo rpk redpanda tune all
 ```
+
+:::tip
+To run `rpk redpanda tune all` on a Redpanda broker automatically after broker or host restarts, configure the service `redpanda-tuner`, which runs `rpk redpanda tune all`, to run at boot-up:
+
+- For RHEL, after installing the rpm package, run `systemctl` to both start and enable the `redpanda-tuner` service:
+
+  ```bash
+  sudo systemctl start redpanda-tuner
+  sudo systemctl enable redpanda-tuner
+  ```
+
+- For Ubuntu, after installing the apt package, run `systemctl` to start the `redpanda-tuner` service (which is already enabled):
+
+  ```bash
+  sudo systemctl start redpanda-tuner
+  ```
+
+:::
 
 For more details, see the [autotuner reference](../../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune).
 
