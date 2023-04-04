@@ -1,0 +1,32 @@
+---
+title: Consumer Polling and Fetching
+---
+
+<head>
+    <meta name="title" content="Consumer Polling and Fetching | Redpanda Docs"/>
+    <meta name="description" content="Learn about consumers polling and fetching messages from Redpanda brokers."/>
+</head>
+
+Learn about polling and fetch requests for receiving data from Redpanda brokers.
+
+## About polling and fetching
+
+Kafka is pull-based messaging system, where a consumer client (consumer) must make a request to a broker to receive a mesage. The Kafka Consumer API has a _poll_ method that a consumer calls, and the poll method sends a _fetch_ request to a broker to retrieve messages. A consumer usually polls in a continuous loop, at a period that is configurable by a consumer property.
+
+The fetch request that a consumer makes to a broker is the same fetch request that a broker makes to another broker for data replication. The requester of a fetch request is identified by a _request ID_. The request ID from a consumer is always `-1`, while the request ID from a broker is a non-negative, unique broker ID.
+
+A consumer can customize the flow of data consumed from polling and fetching by waiting and batching multiple messages into a single fetch response. Each fetch request can wait to accumulate a batch of messages to return. A fetch request doesn't return until the minimum size of batched messages is satisfied; a consumer waits until either the minimum size is reached or a wait timeout has elapsed.  
+
+## Configure polling and fetching
+
+To configure the performance of polling and fetching, set these consumer properties: 
+- `fetch.min.bytes` sets the minimum amount of data in bytes returned in a fetch response.
+- `fetch.max.bytes` sets the maximum amount of data in bytes returned in a fetch response. 
+- `max.poll.records` sets the maximum number of messages (records) returned in a single poll.
+- `max.poll.interval.ms` sets the maximum duration that a consumer can go without polling before the broker considers the consumer to be dead.
+- `fetch.max.wait.ms` sets the maximum duration a fetch request waits for the total amount of data in accumulated messages to be at least `fetch.min.bytes`. 
+
+Set `max.poll.interval.ms` to be the above the bounds of a healthy polling rate, so if a consumer fails to poll within `max.poll.interval.ms`, the consumer can be assumed to be validly dead.  
+
+Setting `fetch.max.bytes` and `fetch.min.bytes` to maximize performance depends on the memory and processing available to a consumer and the shape of data traffic (periodic, bursty). Increasing `fetch.max.bytes` to accumulate more data within a single response can increase throughput, but increasing it above a use-casey dependent threshold can cause a consumer to fall behind in processing each large response. Increasing `fetch.min.bytes` to accumulate more data also can increase throughput, but with the trade-off of added latency to wait for enough messages to accumulate. Overall, the flow of consumed messages 
+

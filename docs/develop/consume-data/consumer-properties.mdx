@@ -1,0 +1,227 @@
+---
+title: Consumer Configuration Properties
+---
+
+<head>
+  <meta name="title" content="Consumer Configuration Properties | Redpanda Docs" />
+  <meta
+    name="description"
+    content="A reference list of Kafka consumer configuration properties."
+  />
+</head>
+
+A list of Kafka (v3.4) consumer configuration properties that are useful when developing with Redpanda.
+
+## Consumer properties
+
+### allow.auto.create.topics
+
+A flag to allow a broker to automatically create a topic that doesn't exist and that a consumer is consuming.
+
+--- 
+
+### auto.commit.interval.ms
+
+The period at which a consumer's offset is automatically committed. Used when automatic offset committal is enabled by [`enable.auto.commit`](#enableautocommit).
+
+**Related topics**:
+- [Consumer Offsets](../consumer-offsets)
+
+--- 
+
+### auto.offset.reset
+
+Determines how to set the consumer offset for a partition when no position has been committed yet, usually when a consumer joins a new group:
+
+- `earliest`: set the consumer offset to the earliest (smallest) offset of the partition
+- `latest`: set the consumer offset to the latest (largest) offset of the partition
+- `none`: don't set the consumer offset
+
+--- 
+
+### bootstrap.servers
+
+A list of addresses of brokers that can provide the metadata a consumer needs to start consuming topics from the cluster.
+
+--- 
+
+### check.crcs
+
+--- 
+
+### client.dns.lookup
+
+--- 
+
+### client.id
+
+The ID of the client application.
+
+--- 
+
+### client.rack
+
+--- 
+
+### connections.max.idle.ms
+
+The maximum duration in milliseconds that a connection can idle before it is closed.
+
+--- 
+
+### default.api.timeout.ms
+
+The default timeout duration for all client APIs.
+ 
+--- 
+
+### enable.auto.commit
+
+A flag to enable automatic committal of a consumer's offset after consuming messages. Messages are committed at the period set by [`auto.commit.interval.ms`](#autocommitintervalms).
+
+**Related topics**:
+- [Consumer Offsets](../consumer-offsets)
+
+--- 
+
+### exclude.internal.topics
+
+--- 
+
+### fetch.max.bytes
+
+The maximum number of bytes returned by a fetch request.
+
+--- 
+
+### fetch.max.wait.ms
+
+The maximum duration in milliseconds to wait for data for a fetch request.
+
+--- 
+
+### fetch.min.bytes
+
+The minimum number of bytes returned by a fetch request.
+
+--- 
+
+### group.id
+
+The ID of the consumer group a consumer belongs to.
+
+--- 
+
+### group.instance.id
+
+--- 
+
+### heartbeat.interval.ms
+
+The period a consumer sends heartbeat messages to assert its liveliness.
+
+--- 
+
+### interceptor.classes
+
+--- 
+
+### isolation.level
+
+--- 
+
+### key.deserializer
+
+The class used to deserialize the key of a consumed message.
+
+--- 
+
+### max.partition.fetch.bytes
+
+The maximum number of bytes returned from one partition in a fetch request. 
+
+--- 
+
+### max.poll.interval.ms
+
+The maximum duration a consumer can go without polling for new messages before it is considered unresponsive and removed from a consumer group. 
+
+--- 
+
+### max.poll.records
+
+The maximum number of records (messages) returned in a poll request.
+
+--- 
+
+### metadata.max.age.ms
+
+The maximum duration in milliseconds to cache topic metadata. When elapsed, a new metadata request is made to a broker, and the cache is refreshed with the new metadata.
+
+--- 
+
+### metric.reporters
+
+--- 
+
+### metrics.num.samples
+
+--- 
+
+### metrics.log.level
+
+--- 
+
+### metrics.sample.window.ms
+
+--- 
+
+### partition.assignment.strategy
+
+--- 
+
+### receive.buffer.bytes
+
+--- 
+
+### reconnect.backoff.max.ms
+
+--- 
+
+### reconnect.backoff.ms
+
+--- 
+
+### request.timeout.ms
+
+The maximum duration that a consumer client will wait for a response from a broker.
+
+--- 
+
+### retry.backoff.ms
+
+--- 
+
+### security.providers
+
+--- 
+
+### send.buffer.bytes
+
+--- 
+
+### session.timeout.ms
+
+--- 
+
+### socket.connection.setup.timeout.max.ms
+
+--- 
+
+### socket.connection.setup.timeout.ms
+
+--- 
+
+### value.deserializer
+
+The class used to deserialize the value of a consumed message.

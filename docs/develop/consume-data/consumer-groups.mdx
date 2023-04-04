@@ -1,0 +1,25 @@
+---
+title: Consumer Groups
+---
+
+<head>
+    <meta name="title" content="Consumer Offsets | Redpanda Docs"/>
+    <meta name="description" content="Learn about consumer groups, how they enable different consumers to consume from partitions of a topic in parallel, and how to configure them when consuming from Redpanda."/>
+</head>
+
+Learn about consumer groups, how they enable different consumers to consume from partitions of a topic in parallel, and how to configure them when consuming from Redpanda.
+
+## About consumer groups
+
+While one consumer can consume from all partitions of a topic, having multiple consumers consuming the partitions in parallel can improve throughput and fault tolerance. 
+
+A _consumer group_ is a group of one or more consumers, running on a single client application, that consume partitions of a topic in parallel. Each consumer group is identified by a _group ID_, and each consumer application can use one consumer group (and thus one group ID).  Different consumer groups, or applications, can consume from the same topic.
+
+A broker, the _group coordinator_, manages the membership of consumers with a consumer group. To join a group, a consumer is configured with a group ID and sends a request to the group coordinator. The first consumer to join a group becomes the _group leader_. A consumer must assert its liveliness periodically to a group coordinator, either by sending heartbeats or polling for messages, to be considered as an _active member_. A consumer that fails to assert its liveliness periodically is considered to be an _inactive member_. The group coordinator tracks the status of its active and inactive members, and whenever the number of active members changes, the coordinator triggers the group leader to do a _rebalancing_ of partition assignments between the active members. 
+
+For a group leader, a _partition assignor_ assigns partitions to consumers by implementing a partition assignment strategy. The available built-in partition assignment strategies divide the partitions more or less evenly between the consumers. You can optionally implement a custom partition assignor. The built-in strategies include:
+- The range strategy operates on each topic by first sorting the partitions and then dividing them into ranges of partitions that are each assigned to a consumer.
+- The round-robin strategy assigns all partitions of all topics in a round-robin fashion between consumers. 
+
+Because a partition can be consumed by at most one member of a group at a time, a group with more members than partitions of a topic has one active member consuming each partition, and the rest of the members are inactive. Thus it is ideal to have as many partitions as members of a consumer group.
+

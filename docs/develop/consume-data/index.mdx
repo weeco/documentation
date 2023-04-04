@@ -4,10 +4,42 @@ title: Consume Data
 
 <head>
     <meta name="title" content="Consume Data | Redpanda Docs"/>
-    <meta name="description" content="Consume Data from Redpanda."/>
+    <meta name="description" content="Learn about Kafka consumers and how to configure them when developing with Redpanda."/>
 </head>
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-- [Consumer Offsets](../consume-data/consumer-offsets)
-  
-  Redpanda uses an internal topic, `__consumer_offsets`, to store committed offsets from each Kafka consumer that is attached to Redpanda. 
+Learn about Kafka consumers and how to configure them when developing with Redpanda.
+
+## About Kafka consumers
+
+A Kafka _consumer_ is a client application that subscribes to messages (also known as events or records) from one or more Kafka topics. A consumer receives messages from Redpanda brokers, with the messages originally published by Kafka producers. Consumers communicate with Redpanda through the Kafka Consumer API.
+
+### Logs and offsets
+
+A message is appended and stored by a Redpanda broker in a log. A logged message's _offset_ is its numerical position in the log relative to the start of the log, where the first message has offset _0_ and the _N_th message has offset _N-1_. A message's offset uniquely identifies it within a partition. 
+
+### Partitions
+
+Messages of a single topic are stored in one to many partitions. A consumer can consume from zero or more partitions, and a partition can be consumed by at most one consumer. With partitions replicated across different brokers, a consumer receives messages from either the _leader_ broker of a partition or, in Kafka 2.4 and later, any follower in clusters that support follower fetching.
+
+## Producer configuration guides
+
+To learn more about a consumer feature and how to configure it, follow these guides:
+
+- [Consumer Offsets](consumer-offsets)
+
+  Learn about consumer offsets, the position of each consumer's last read message, and how Redpanda brokers support them.
+
+- [Consumer Groups](consumer-groups)
+
+  Learn about Kafka consumer offsets and how Redpanda brokers support them.
+
+- [Consumer Polling and Fetching](poll-fetch)
+
+- [Transactions](../transactions)
+
+## Consumer properties reference
+
+For a reference list of consumer properties, refer to [Consumer Configuration Properties](../consume-data/consumer-properties).

@@ -4,23 +4,43 @@ title: Consumer Offsets
 
 <head>
     <meta name="title" content="Consumer Offsets | Redpanda Docs"/>
-    <meta name="description" content="Introduction to consumer offsets."/>
+    <meta name="description" content="Learn about consumer offsets, the position of each consumer's last read message, and how Redpanda brokers support them."/>
 </head>
 
-Redpanda supports `__consumer_offsets`, which is a private topic on a Redpanda node. The `__consumer_offsets` topic stores committed offsets from each Kafka consumer that is attached to Redpanda. 
+Learn about consumer offsets&mdash;the position of each consumer's last read message&mdash;and how Redpanda brokers support them.
 
-Redpanda exposes the `__consumer_offsets` key to enable the many tools in the Kafka ecosystem that rely on this value for their operation, providing greater ecosystem interoperability with environments and applications.
+## About consumer offsets
 
-Kafka consumer tracks the maximum offset it has consumed in each partition and has the capability to commit offsets so that it can resume from those offsets in the event of a restart. Kafka provides the option to store all the offsets for a given consumer group in a designated broker (for that group) called the "group coordinator". In other words, any consumer instance in that consumer group should send its offset commits and fetches to that group coordinator (broker).
+A consumer reads messages from a partition sequentially, and the offset of the last message read from a partition by a consumer is the _consumer offset_. A consumer registers its consumer offset with a broker by making a _commit request_ to the broker. A consumer's commit request can be synchronous or asynchronous, and it can be done manually by an application or automatically at a configurable interval. The consumer offset that a new consumer starts with can be configured to be the earliest or latest available offset of a partition (or throw an exception if no offset is available).
 
-:::note
-A consumer group is a set of consumers that cooperate to consume data from some topics. The partitions of all the topics are divided among the consumers in the group. As new group members arrive and old members leave, the partitions are re-assigned so that each member receives a proportional share of the partitions.
-:::
+A Redpanda broker saves the committed consumer offsets in an internal, compacted topic named `__consumer_offsets` that tracks the consumer offsets of each partition per group. In the event of a group rebalancing or a consumer crash or restart, a consumer knows the next unread message to read for a partition by getting its consumer offset from `__consumer_offsets`.
 
-When the group coordinator receives an OffsetCommitRequest, it appends the request to a special [compacted](https://kafka.apache.org/documentation/#compaction) Kafka topic named `__consumer_offsets`. 
-The broker sends a successful offset commit response to the consumer only after all the replicas of the offsets topic receive the offsets. 
-In case the offsets fail to replicate within a configurable timeout, the offset commit will fail and the consumer may retry the commit after backing off. 
+The broker sends a successful offset commit response to the consumer only after all the replicas of the `__consumer_offsets` topic receive the offsets. In case the offsets fail to replicate within a configurable timeout, the offset commit will fail and the consumer may retry the commit after backing off. 
+
 The brokers periodically compact the offsets topic because it only needs to maintain the most recent offset commit per partition. 
 The coordinator also caches the offsets in an in-memory table to serve offset fetches quickly.
 
-When stored in a partition, a sequential number is assigned to each event for order. This number is the _offset_. The offset allows consumer event processing to start or continue from where it left off. So, if you have a consumer application outage that prevents your application from receiving events, you can use the consumer offset to select and send only the events that occurred when the application was down. By default, the offset starts at 0, but you can manually specify a specific start value.
+### Consumer lag
+
+When the rate of message production is faster than the rate of message consumption, the latest offset in a partition can grow larger than the current (largest) offset processed by a consumer. The _consumer lag_ is the difference between a partition's latest offset and a consumer's current offset. An increasing consumer lag can be an indicator of a consumer slowing down for a problematic reason, including low system resources and high network latency.
+
+
+## Configuring consumer offsets
+
+You can configure a consumer to manage offset committal either automatically or manually. You can also implement a consumer to commit offsets either synchronously or asynchronously.
+
+### Automatic offset management
+
+To enable automatic offset management, a consumer sets the [`enable.auto.commit`](../consumer-properties#enableautocommit) consumer property to `true`. With it enabled, a consumer automatically commits offsets with a broker at a period configured by the `auto.commit.interval.ms` consumer property.
+
+When a group is initialized and there is not yet any committed offsets for its members, the [`auto.offset.reset`](../consumer-properties#autooffsetreset) consumer property defines how to either automatically set (reset) the initial offset to the earliest or latest offset of the partition, or to a manually specified offset.   
+
+### Manual offset management
+
+To commit consumer offsets manually, a consumer sets the [`enable.auto.commit`](../consumer-properties#enableautocommit) consumer property to `false`, then it calls a commit method of the Kafka Consumer API to commit one or more offsets.
+
+The available commit methods allow for committing all offsets that were retrieved by the last call to poll or to commit the offsets specified in a method parameter (a map of offsets). 
+
+The commit methods also enable synchronous or asynchronous committal:
+- A synchronous commit blocks until the commit succeeds or fails.
+- An asynchronous commit doesn't block, and errors are passed to a callback handler.

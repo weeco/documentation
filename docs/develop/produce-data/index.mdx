@@ -9,7 +9,7 @@ title: Produce Data
 
 Learn about Kafka producers and how to configure them when developing with Redpanda.
 
-## Producer concepts
+## About Kafka producers
 
 A Kafka _producer_ is a client application that publishes _messages_ (also known as events or records) for one or more Kafka topics. A Redpanda cluster's brokers receive and store messages written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published messages are consumed from Redpanda by Kafka consumers that subscribe to the topics.
 
@@ -45,10 +45,9 @@ The send request may block when being intercepted, serialized, partition-assigne
 
 A broker can respond to a send with a success or an error. The returned error can be resolvable or unresolvable with a retry. If resolvable with a retry, and the producer is configured to retry, the producer can resend the message.
 
-
 ## Producer configuration guides
 
-Follow these guides to learn more about a producer feature and how to configure it for your use case:
+To learn more about a producer feature and how to configure it, follow these guides:
 
 - [Idempotent Producers](../produce-data/idempotent-producers)
 

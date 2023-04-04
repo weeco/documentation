@@ -111,6 +111,16 @@ module.exports = {
               label: "Consumer Offsets",
               id: "develop/consume-data/consumer-offsets",
             },
+            {
+              type: "doc",
+              label: "Consumer Groups",
+              id: "develop/consume-data/consumer-groups",
+            },
+            {
+              type: "doc",
+              label: "Consumer Configuration Properties",
+              id: "develop/consume-data/consumer-properties",
+            },
           ]
         },
         "develop/transactions",
