@@ -108,6 +108,11 @@ module.exports = {
           items: [
             {
               type: "doc",
+              label: "Consumer Polling and Fetching",
+              id: "develop/consume-data/poll-fetch",
+            },
+            {
+              type: "doc",
               label: "Consumer Offsets",
               id: "develop/consume-data/consumer-offsets",
             },
@@ -118,12 +123,16 @@ module.exports = {
             },
             {
               type: "doc",
+              label: "Transactions",
+              id: "develop/transactions",
+            },
+            {
+              type: "doc",
               label: "Consumer Configuration Properties",
               id: "develop/consume-data/consumer-properties",
             },
           ]
         },
-        "develop/transactions",
       ],
     },
     {

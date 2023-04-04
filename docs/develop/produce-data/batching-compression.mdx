@@ -4,39 +4,26 @@ title: Batching and Compression
 
 <head>
     <meta name="title" content="Batching and Compression | Redpanda Docs"/>
-    <meta name="description" content="Learn how to increase throughput by coalescing messages into a single batched message and by applying data compression on messages."/>
+    <meta name="description" content="Learn how to increase throughput by accumulating messages into a single batched message and by applying data compression on messages."/>
 </head>
 
-Learn how to increase throughput by coalescing messages into a single batched message and by applying data compression on messages.
+Learn how to increase throughput by accumulating messages into a single batch and by applying data compression.
 
 ## About batching and compression
 
-Sending small messages over a network can underutilize the available network bandwidth. To improve network efficiency and throughput, a producer can coalesce multiple messages into a single batch to send over the network. To optimize the balance of throughput and latency, both the maximum size of a batch and the maximum time to wait for messages to coalesce into a batch can be configured.
+Sending small messages over a network can underutilize the available network bandwidth. To improve network efficiency and throughput, a producer can coalesce multiple messages into a single batch to send over the network. To optimize the balance of throughput and latency, both the maximum size of a batch and the maximum time to wait for messages to accumulate into a batch can be configured.
 
-A producer can also apply data compression to its messages to further improve bandwidth efficiency. A compression algorithm can be run on the keys or values (or both) of messages. Messages containing repeated or redundant data have better compression ratios. A batched message containing multiple similar messages are good candidates for data compression.
+A producer can also apply data compression to its messages to further improve bandwidth efficiency. A compression algorithm can be run on the keys or values (or both) of messages. Messages containing repeated or redundant data have better compression ratios. A batched message containing multiple similar messages are good candidates for data compression. Compression can be done by a producer or a broker or both.
 
 ## Configure batching and compression
 
-When a producer prepares to send messages to a broker, it first fills up a
-buffer. When this buffer is full, the producer compresses (if instructed to do
-so) and sends out this batch of messages to the broker. The number of batches
-that can be sent in a single request to the broker is limited by the
-`max.request.size` parameter. The number of requests that can simultaneously be
-in this "sending" state is controlled by the
-`max.in.flight.requests.per.connection` value, which defaults to 5 in most
-client libraries.
+When a producer prepares to send messages to a broker, it first fills up a buffer. When this buffer is full, the producer compresses (if instructed to do so) and sends out this batch of messages to the broker. The number of batches that can be sent in a single request to the broker is limited by the `max.request.size` parameter. The number of requests that can simultaneously be in this "sending" state is controlled by the `max.in.flight.requests.per.connection` value, which defaults to `5` in most client libraries.
 
 Tune the batching configuration using these properties.
 
 ### buffer.memory
 
-The `buffer.memory` property sets the maximum amount of memory available
-to the producer for buffering. In a case where messages are sent faster than
-they can be delivered to the broker, the producer application may run out of
-memory, which will cause it to either block subsequent send calls or even throw
-an exception. The `max.block.ms` parameter controls the amount of time the
-producer will block before throwing an exception if it cannot immediately send
-messages to the broker.
+The `buffer.memory` property sets the maximum amount of memory available to the producer for buffering. In a case where messages are sent faster than they can be delivered to the broker, the producer application may run out of memory, which will cause it to either block subsequent send calls or even throw an exception. The `max.block.ms` parameter controls the amount of time the producer will block before throwing an exception if it cannot immediately send messages to the broker.
 
 ### batch.size
 
@@ -46,18 +33,9 @@ The `batch.size` property sets the maximum size in bytes of a batched message in
 With `batch.size` setting the maximum size of a batched message in a single request, and `max.request.size` setting the maximum size of a single request, a valid configuration of the two properties must have `max.request.size >= batch.size`.
 :::
 
-When the producer is gathering messages to assign to a batch, at some point it
-will hit this byte-size limit, which triggers it to send the batch to the broker.
-However, the producer does not necessarily wait (for as much time as set using
-`linger.ms`) until the batch is full. Sometimes, it can even send single-message
-batches. This means that setting the batch size too large is not necessarily
-undesirable, as it won't cause throttling when sending messages; rather, it will
-only cause increased memory usage.
+When the producer is gathering messages to assign to a batch, at some point it will hit this byte-size limit, which triggers it to send the batch to the broker. However, the producer does not necessarily wait (for as much time as set using `linger.ms`) until the batch is full. Sometimes, it can even send single-message batches. This means that setting the batch size too large is not necessarily undesirable, as it won't cause throttling when sending messages; rather, it will only cause increased memory usage.
 
-Conversely, setting the batch size too small can cause the producer to send
-batches of messages faster, which can cause network overhead, meaning a reduced
-throughput. The default value is usually 16384, but you can set this as low as 0,
-which turns off batching entirely.
+Conversely, setting the batch size too small can cause the producer to send batches of messages faster, which can cause network overhead, meaning a reduced throughput. The default value is usually 16384, but you can set this as low as 0, which turns off batching entirely.
 
 ### linger.ms
 

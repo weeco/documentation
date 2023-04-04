@@ -7,11 +7,46 @@ title: Produce Data
     <meta name="description" content="Learn about Kafka producers and how to configure them when developing with Redpanda."/>
 </head>
 
-Learn about Kafka producers and how to configure them when developing with Redpanda.
+Learn about Kafka producers, their features, and how to configure them when developing with Redpanda.
 
 ## About Kafka producers
 
 A Kafka _producer_ is a client application that publishes _messages_ (also known as events or records) for one or more Kafka topics. A Redpanda cluster's brokers receive and store messages written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published messages are consumed from Redpanda by Kafka consumers that subscribe to the topics.
+
+### Producing messages
+
+To publish a message for a topic to Redpanda, a client:
+- Creates a producer with configured producer properties.
+- Creates a message for a topic.
+- Sends the message. 
+
+:::note
+For code examples of a producer sending a message, refer to the examples in [Create producer](../code-examples#create-producer).
+:::
+
+Of the producer properties configured, the important properties include:
+- The address(es) of the Redpanda broker(s) that the client can contact and get the metadata to initialize itself (bootstrap) with the cluster.
+- The serializers for the keys and values of the messages.  
+
+:::note
+For a reference list of producer properties, refer to [Producer Configuration Properties](../produce-data/producer-properties).
+:::
+
+A message goes through several steps in a producer's send call:
+- Processed by interceptors (if enabled by producer configuration)
+- Serialized
+- Assigned to a partition
+- Compressed (if enabled by producer configuration)
+- Added to a batch (if enabled by producer configuration)
+
+The keys and values of messages are converted to byte arrays by a producer's configured serializers. You can influence the time and space efficiency of your streaming setup by choosing one of the built-in serializers or writing a custom one. The performance consequences of using serializers is not typically significant. 
+
+- For example, if you opt for the JSON serializer, you will have more data to transport with each message because every record will contain its schema in a verbose format, which impacts your compression speeds and network throughput. Alternatively, going with AVRO or Protobuf allows you to only define the schema in one place, while also enabling features like schema evolution.
+
+The send request may block when being intercepted, serialized, partition-assigned, or compressed. If being batched, a send request won't send a message over the network until the batch is full, the time to wait to coalesce messages has elapsed, another message to the same broker is about to be sent and it has space for this message, or the producer is being flushed.
+
+A broker can respond to a send with a success or an error. The returned error can be resolvable or unresolvable with a retry. If resolvable with a retry, and the producer is configured to retry, the producer can resend the message.
+
 
 ### Partitions and replicas
 
@@ -28,26 +63,10 @@ A partition stores messages in the order they were published, and a consumer rea
 
 Because a partition is usually replicated across different brokers, a producer sends messages to only one broker of the partition, the _leader_. The leader receives messages from the producer, and the other replicas, the _followers_, receive copies of the messages from the leader. A replica that has successfully received all published messages is an _in-sync replica_. A leader is always an in-sync replica, and a follower that hasn't received all published messages is an out-of-sync replica. A leader knows whether a follower is in-sync or out-of-sync.
 
-### Send request
 
-A producer's send request processes a message through several steps before it returns:
-- Processed by interceptors (if enabled by producer configuration)
-- Serialized
-- Assigned to a partition
-- Compressed (if enabled by producer configuration)
-- Added to a batch (if enabled by producer configuration)
+## Configure producers
 
-The keys and values of messages are converted to byte arrays by a producer's configured serializers. You can influence the time and space efficiency of your streaming setup by choosing one of the built-in serializers or writing a custom one. The performance consequences of using serializers is not typically significant. 
-
-- For example, if you opt for the JSON serializer, you will have more data to transport with each message because every record will contain its schema in a verbose format, which impacts your compression speeds and network throughput. Alternatively, going with AVRO or Protobuf allows you to only define the schema in one place, while also enabling features like schema evolution.
-
-The send request may block when being intercepted, serialized, partition-assigned, or compressed. If being batched, a send request won't send a message over the network until the batch is full, the time to wait to coalesce messages has elapsed, another message to the same broker is about to be sent and it has space for this message, or the producer is being flushed.
-
-A broker can respond to a send with a success or an error. The returned error can be resolvable or unresolvable with a retry. If resolvable with a retry, and the producer is configured to retry, the producer can resend the message.
-
-## Producer configuration guides
-
-To learn more about a producer feature and how to configure it, follow these guides:
+Learn about producer features and how to configure them in the following topics:
 
 - [Idempotent Producers](../produce-data/idempotent-producers)
 
@@ -55,17 +74,17 @@ To learn more about a producer feature and how to configure it, follow these gui
 
 - [Message Reliablity](../produce-data/message-reliability)
 
-    Learn about message reliability and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and resend unacknowledged messages.
+    Learn about message delivery reliability and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged messages.
 
 - [Batching and Compression](../produce-data/batching-compression)
 
-    Learn how to increase throughput by coalescing messages into a single batched message and by applying data compression on messages. 
+    Learn about message batching and data compression and how to apply them to increase your throughput. 
 
 - [Transactions](../transactions)
 
     Learn about publishing and consuming messages atomically and with exactly-once semantics by using transactions. 
 
-## Producer optimizations
+## Optimize producers
 
 Configure your producer to optimize for system speed or safety.
 

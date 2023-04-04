@@ -10,35 +10,58 @@ title: Consume Data
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Learn about Kafka consumers and how to configure them when developing with Redpanda.
+Learn about Kafka consumers, their features, and how to configure them when developing with Redpanda.
 
 ## About Kafka consumers
 
 A Kafka _consumer_ is a client application that subscribes to messages (also known as events or records) from one or more Kafka topics. A consumer receives messages from Redpanda brokers, with the messages originally published by Kafka producers. Consumers communicate with Redpanda through the Kafka Consumer API.
 
+### Consuming messages
+
+To consume a message for a topic from Redpanda, a client:
+- Creates a consumer with configured consumer properties. 
+- Subscribes to one or more topics.
+- Polls for available messages, usually in a polling loop.
+
+:::note
+For code examples of a consumer consuming messages, refer to the examples in [Create consumer](../code-examples#create-consumer).
+:::
+
+Of the consumer properties configured, the important properties include:
+- The address(es) of the Redpanda broker(s) that the client can contact and get the metadata to initialize itself (bootstrap) with the cluster.
+- The deserializers for the keys and values of the messages.  
+
+:::note
+For a reference list of consumer properties, refer to [Consumer Configuration Properties](../consume-data/consumer-properties).
+:::
+
 ### Logs and offsets
 
-A message is appended and stored by a Redpanda broker in a log. A logged message's _offset_ is its numerical position in the log relative to the start of the log, where the first message has offset _0_ and the _N_th message has offset _N-1_. A message's offset uniquely identifies it within a partition. 
+A message is appended and stored by a Redpanda broker in a log per partition. A logged message's _offset_ is its numerical position in the log relative to the start of the log, where the first message has offset _0_ and the *Nth* message has offset *N-1*. A message's offset uniquely identifies it within a partition. 
 
 ### Partitions
 
 Messages of a single topic are stored in one to many partitions. A consumer can consume from zero or more partitions, and a partition can be consumed by at most one consumer. With partitions replicated across different brokers, a consumer receives messages from either the _leader_ broker of a partition or, in Kafka 2.4 and later, any follower in clusters that support follower fetching.
 
-## Producer configuration guides
+## Configure consumers
 
-To learn more about a consumer feature and how to configure it, follow these guides:
-
-- [Consumer Offsets](consumer-offsets)
-
-  Learn about consumer offsets, the position of each consumer's last read message, and how Redpanda brokers support them.
-
-- [Consumer Groups](consumer-groups)
-
-  Learn about Kafka consumer offsets and how Redpanda brokers support them.
+Learn about consumer features and how to configure them in the following topics:
 
 - [Consumer Polling and Fetching](poll-fetch)
 
+  Learn about the poll method of the Kafka Consumer API, the fetch requests that it makes, and how to configure the flow of fetched messages for your consumer.
+
+- [Consumer Offsets](consumer-offsets)
+
+  Learn about consumer offsets&mdash;the position of each consumer's last read message&mdash;and how Redpanda brokers support them.
+
+- [Consumer Groups](consumer-groups)
+
+  Learn about consumer groups, how they enable different consumers to consume from partitions of a topic in parallel, and how to configure them when consuming from Redpanda.
+
 - [Transactions](../transactions)
+
+  Learn about publishing and consuming messages atomically and with exactly-once semantics by using transactions. 
 
 ## Consumer properties reference
 

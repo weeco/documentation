@@ -16,7 +16,7 @@ A list of Kafka (v3.4) consumer configuration properties that are useful when de
 
 ### allow.auto.create.topics
 
-A flag to allow a broker to automatically create a topic that doesn't exist and that a consumer is consuming.
+A flag to enable a broker to automatically create a topic when a consumer subscribes to a non-existent topic.
 
 --- 
 
@@ -33,9 +33,12 @@ The period at which a consumer's offset is automatically committed. Used when au
 
 Determines how to set the consumer offset for a partition when no position has been committed yet, usually when a consumer joins a new group:
 
-- `earliest`: set the consumer offset to the earliest (smallest) offset of the partition
-- `latest`: set the consumer offset to the latest (largest) offset of the partition
-- `none`: don't set the consumer offset
+- `earliest`: automatically set the consumer offset to the earliest (smallest) offset in the partition
+- `latest`: automatically set the consumer offset to the latest (largest) offset in the partition
+- `none`: don't set the consumer offset, thus allowing the client to set it manually
+
+**Related topics**:
+- [Consumer Offsets](../consumer-offsets)
 
 --- 
 
@@ -47,9 +50,18 @@ A list of addresses of brokers that can provide the metadata a consumer needs to
 
 ### check.crcs
 
+A flag to enable the consumer to validate the CRC checksums of received messages.
+
 --- 
 
 ### client.dns.lookup
+
+Determines how to resolve DNS aliases to IP addresses of brokers.
+
+**Valid values**:
+- `default`: use the first IP address of a broker returned from a DNS response. If the broker is down, doesn't try other available IP addresses. 
+- `use_all_dns_ips`: try all IP addresses of a broker returned from a DNS response. If a broker is down, retry the next IP address available for the hostname. 
+- `resolve_canonical_bootstrap_servers_only`: same as `use_all_dns_ips`, except the list of hostnames to resolve is the canonical, fully-qualified domain names of the servers listed in [`bootstrap.servers`](#bootstrapservers).
 
 --- 
 
@@ -60,6 +72,8 @@ The ID of the client application.
 --- 
 
 ### client.rack
+
+The ID of the rack where the client is located.
 
 --- 
 
@@ -86,11 +100,13 @@ A flag to enable automatic committal of a consumer's offset after consuming mess
 
 ### exclude.internal.topics
 
+A flag to enable excluding internal topics from consumer operations.
+
 --- 
 
 ### fetch.max.bytes
 
-The maximum number of bytes returned by a fetch request.
+The maximum amount of bytes of message data returned in a fetch response.
 
 --- 
 
@@ -102,17 +118,19 @@ The maximum duration in milliseconds to wait for data for a fetch request.
 
 ### fetch.min.bytes
 
-The minimum number of bytes returned by a fetch request.
+The minimum amount of bytes of message data returned in a fetch response.
 
 --- 
 
 ### group.id
 
-The ID of the consumer group a consumer belongs to.
+The unique ID of the consumer group a consumer belongs to.
 
 --- 
 
 ### group.instance.id
+
+The unique ID of a consumer instance within a group.
 
 --- 
 
@@ -124,9 +142,17 @@ The period a consumer sends heartbeat messages to assert its liveliness.
 
 ### interceptor.classes
 
+A list of classes that intercept messages before they are received from brokers. Can mutate messages and can be used for monitoring.
+
 --- 
 
 ### isolation.level
+
+A level that determines the messages of transactions that are readable by a consumer.
+
+**Valid values**:
+- `read_uncommitted`: a consumer reads all messages of transactions, including uncommitted messages of ongoing transactions.
+- `read_committed`: a consumer reads only committed messages of completed transactions.
 
 --- 
 
@@ -178,17 +204,25 @@ The maximum duration in milliseconds to cache topic metadata. When elapsed, a ne
 
 ### partition.assignment.strategy
 
+The classes to use for partition assignment to consumers.
+
 --- 
 
 ### receive.buffer.bytes
+
+The maximum size in bytes of the socket receive buffer.
 
 --- 
 
 ### reconnect.backoff.max.ms
 
+The maximum duration in milliseconds to wait to reconnect to a broker.
+
 --- 
 
 ### reconnect.backoff.ms
+
+The default duration in milliseconds to wait to reconnect to a broker. Increases exponentially with each reconnection failure, up to `reconnect.backoff.max.ms`.
 
 --- 
 
@@ -200,6 +234,8 @@ The maximum duration that a consumer client will wait for a response from a brok
 
 ### retry.backoff.ms
 
+The duration to wait before retrying a failed request to a broker.
+
 --- 
 
 ### security.providers
@@ -208,17 +244,25 @@ The maximum duration that a consumer client will wait for a response from a brok
 
 ### send.buffer.bytes
 
+The maximum size in bytes of the socket send buffer.
+
 --- 
 
 ### session.timeout.ms
+
+The duration in milliseconds that a group coordinator waits for a heartbeat from the consumer, after which if no heartbeat is received the group coordinator considers the consumer to be dead, removes it from the group, and triggers a group rebalance.
 
 --- 
 
 ### socket.connection.setup.timeout.max.ms
 
+The maximum duration a client waits for a socket connection to be established.
+
 --- 
 
 ### socket.connection.setup.timeout.ms
+
+The baseline duration a client waits for a socket connection to be established. This timeout increases exponentially with each successive failed connection, up to the maximum `socket.connection.setup.timeout.max.ms`.
 
 --- 
 
