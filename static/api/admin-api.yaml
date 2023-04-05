@@ -1,41 +1,33 @@
----
-swagger: '2.0'
+openapi: 3.0.1
 info:
   title: Redpanda Admin API
-  version: 1.0.0
   description: |
-    Use Redpanda Admin APIs to administer and manage Redpanda clusters. 
-
-host: localhost:9644
-basePath: "/v1"
-schemes:
-- http
-consumes:
-- application/json
-produces:
-- application/json
+    Use Redpanda Admin APIs to administer and manage Redpanda clusters.
+    
+  version: 1.0.0
+servers:
+- url: http://localhost:9644/v1
 paths:
-  "/config":
+  /config:
     get:
       summary: List cluster configurations
       description: List the cluster configuration properties of a cluster.
       operationId: get_config
-      produces:
-      - application/json
       responses:
-        '200':
+        200:
           description: Configuration
-  "/node_config":
+          content: {}
+  /node_config:
     get:
       summary: List node configurations
-      description: List the node configuration properties of the nodes (brokers) in a cluster.
+      description: List the node configuration properties of the nodes (brokers) in
+        a cluster.
       operationId: get_node_config
-      produces:
-      - application/json
       responses:
-        '200':
+        200:
           description: Configuration
-  "/config/log_level/{name}":
+          content: {}
+  /config/log_level/{name}:
     put:
       summary: Set log level
       description: Set the level of logger messages.
@@ -44,136 +36,129 @@ paths:
       - name: name
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: level
-        description: Log level to set.
         in: query
+        description: Log level to set.
         required: true
-        type: string
-        enum:
-        - error
-        - warn
-        - info
-        - debug
-        - trace
+        schema:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+          - trace
       - name: expires
         in: query
-        required: false
-        type: number
+        schema:
+          type: number
       responses:
-        '200':
+        200:
           description: Log level
-  "/cluster_config":
+          content: {}
+  /cluster_config:
     get:
-      produces:
-      - application/json
-      parameters:
-      - in: query
-        description: If false, only properties which have been changed from the default
-          are included.
-        name: include_defaults
-        required: false
-        type: string
-      responses:
-        '200':
-          description: No response was specified
-      operationId: get_cluster_config
       summary: List cluster configuration
       description: List the cluster configuration properties of a cluster.
-    put:
-      produces:
-      - application/json
+      operationId: get_cluster_config
       parameters:
-      - in: query
-        description: If nonzero, skip validation of properties, and permit setting
-          unknown properties
-        name: force
-        required: false
-        type: string
-      - in: query
-        description: 
-          If nonzero, do not apply any changes (but still do validation
-          and return 400 on errors)
-        name: dry_run
-        required: false
-        type: string
+      - name: include_defaults
+        in: query
+        description: If false, only properties which have been changed from the default
+          are included.
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: patch_cluster_config
+          content: {}
+    put:
       summary: Update cluster configuration
       description: Modify cluster configuration properties of a cluster.
-  "/cluster_config/schema":
-    get:
-      produces:
-      - application/json
+      operationId: patch_cluster_config
+      parameters:
+      - name: force
+        in: query
+        description: If nonzero, skip validation of properties, and permit setting
+          unknown properties
+        schema:
+          type: string
+      - name: dry_run
+        in: query
+        description: If nonzero, do not apply any changes (but still do validation
+          and return 400 on errors)
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            type: object
-      operationId: get_cluster_config_schema
+          content: {}
+  /cluster_config/schema:
+    get:
       summary: Get cluster configuration schema
       description: Get the schema describing all cluster configuration properties.
-  "/cluster_config/status":
-    get:
-      produces:
-      - application/json
+      operationId: get_cluster_config_schema
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/cluster_config_status"
-            type: array
-      operationId: get_cluster_config_status
+          content:
+            application/json:
+              schema:
+                type: object
+  /cluster_config/status:
+    get:
       summary: Get cluster configuration status
       description: Get the configuration status of all nodes in a cluster.
-  "/raft/{group_id}/transfer_leadership":
+      operationId: get_cluster_config_status
+      responses:
+        200:
+          description: No response was specified
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cluster_config_status'
+  /raft/{group_id}/transfer_leadership:
     post:
       summary: Transfer Raft group leadership
-      description: Transfer leadership of the Raft group (`{group_id}`) to the node with `target` ID.
+      description: Transfer leadership of the Raft group (`{group_id}`) to the node
+        with `target` ID.
       operationId: raft_transfer_leadership
       parameters:
       - name: group_id
         in: path
         required: true
-        type: integer
+        schema:
+          type: integer
       - name: target
         in: query
-        required: false
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: Raft leadership transfer
-  "/security/users":
-    post:
-      summary: Create a user
-      description: Create a user.
-      operationId: create_user
-      responses:
-        '200':
-          description: Create user
+          content: {}
+  /security/users:
     get:
       summary: List users
       description: List users.
       operationId: list_users
       responses:
-        '200':
+        200:
           description: List users
-  "/security/users/{user}":
-    delete:
-      summary: Delete a user
-      description: Deleate a user.
-      operationId: delete_user
-      parameters:
-      - name: user
-        in: path
-        required: true
-        type: string
+          content: {}
+    post:
+      summary: Create a user
+      description: Create a user.
+      operationId: create_user
       responses:
-        '200':
-          description: Delete user
+        200:
+          description: Create user
+          content: {}
+  /security/users/{user}:
     put:
       summary: Update a user
       description: Update a user.
@@ -182,1600 +167,1458 @@ paths:
       - name: user
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: Update user
-  "/status/ready":
+          content: {}
+    delete:
+      summary: Delete a user
+      description: Deleate a user.
+      operationId: delete_user
+      parameters:
+      - name: user
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Delete user
+          content: {}
+  /status/ready:
     get:
       summary: Get cluster's ready status
       description: Check the health of the Redpanda cluster.
       operationId: ready
-      produces:
-      - application/json
       responses:
-        '200':
+        200:
           description: Redpanda is up and running
-  "/features":
+          content: {}
+  /features:
     get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/features_response"
-      operationId: get_features
       summary: List available features
-      description: List the available Redpanda features. Available features are based on the loaded Redpanda license and activated features configuration. 
-  "/features/license":
-    get:
-      produces:
-      - application/json
+      description: List the available Redpanda features. Available features are based
+        on the loaded Redpanda license and activated features configuration.
+      operationId: get_features
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/license_response"
-      operationId: get_license
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/features_response'
+  /features/license:
+    get:
       summary: Get license information
       description: Get currently loaded license information
-    put:
-      produces:
-      - application/json
+      operationId: get_license
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: put_license
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/license_response'
+    put:
       summary: Upload a new license to redpanda
-  "/features/{feature_name}":
-    put:
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        name: feature_name
-        required: true
-        type: string
+      operationId: put_license
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: put_feature
+          content: {}
+  /features/{feature_name}:
+    put:
       summary: Activate feature
       description: Activate or deactivate a feature.
-  "/brokers":
-    get:
-      produces:
-      - application/json
+      operationId: put_feature
+      parameters:
+      - name: feature_name
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/broker"
-            type: array
-      operationId: get_brokers
+          content: {}
+  /brokers:
+    get:
       summary: List all brokers
       description: List information about all brokers in the cluster.
-  "/brokers/{id}":
-    get:
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        format: int64
-        name: id
-        required: true
-        type: integer
+      operationId: get_brokers
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/broker"
-      operationId: get_broker
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/broker'
+  /brokers/{id}:
+    get:
       summary: List a broker
       description: List information about the specified broker in the cluster.
-  "/brokers/{id}/cancel_partition_moves":
+      operationId: get_broker
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: No response was specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/broker'
+  /brokers/{id}/cancel_partition_moves:
     post:
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        format: int64
-        name: id
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-      operationId: cancel_partition_moves
       summary: Cancel partition movement to/from a broker
-      description: Cancel all movement of partition replicas to or from the specified node.
-  "/brokers/{id}/decommission":
+      description: Cancel all movement of partition replicas to or from the specified
+        node.
+      operationId: cancel_partition_moves
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /brokers/{id}/decommission:
     get:
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        format: int64
-        name: id
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-      operationId: get_decommission
       summary: Get broker decommission status
-      description: Get the status on the decommissioning of the broker with the specified `id`. 
-    put:
-      produces:
-      - application/json
+      description: Get the status on the decommissioning of the broker with the specified
+        `id`.
+      operationId: get_decommission
       parameters:
-      - in: path
-        format: int64
-        name: id
+      - name: id
+        in: path
         required: true
-        type: integer
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: decommission
+          content: {}
+    put:
       summary: Decommission broker
       description: Decommission the specified broker.
-  "/brokers/{id}/maintenance":
-    delete:
-      produces:
-      - application/json
+      operationId: decommission
       parameters:
-      - in: path
-        format: int64
-        name: id
+      - name: id
+        in: path
         required: true
-        type: integer
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: stop_broker_maintenance
-      summary: Exit broker maintenance mode
-      description: Request the specified broker to exit maintenance mode.
+          content: {}
+  /brokers/{id}/maintenance:
     put:
-      produces:
-      - application/json
-      parameters:
-      - in: path
-        format: int64
-        name: id
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-      operationId: start_broker_maintenance
       summary: Enter broker maintenance mode
       description: Request the specified broker to enter maintenance mode.
-  "/brokers/{id}/recommission":
-    put:
-      produces:
-      - application/json
+      operationId: start_broker_maintenance
       parameters:
-      - in: path
-        format: int64
-        name: id
+      - name: id
+        in: path
         required: true
-        type: integer
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: recommission
+          content: {}
+    delete:
+      summary: Exit broker maintenance mode
+      description: Request the specified broker to exit maintenance mode.
+      operationId: stop_broker_maintenance
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /brokers/{id}/recommission:
+    put:
       summary: Recommission broker
       description: Recommission the specified broker.
-  "/cluster_view":
-    get:
-      produces:
-      - application/json
+      operationId: recommission
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/cluster_view"
-      operationId: get_cluster_view
+          content: {}
+  /cluster_view:
+    get:
       summary: Get cluster view
       description: Get a summary view of a cluster and its brokers.
-  "/maintenance":
-    delete:
-      produces:
-      - application/json
+      operationId: get_cluster_view
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: stop_local_maintenance
-      summary: Stop maintenance
-      description: Stop local maintenance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cluster_view'
+  /maintenance:
     get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/maintenance_status"
-      operationId: get_local_maintenance
       summary: Get maintenance status
       description: Get status of maintenance.
-    put:
-      produces:
-      - application/json
+      operationId: get_local_maintenance
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: start_local_maintenance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/maintenance_status'
+    put:
       summary: Start maintenance
       description: Start local maintenance.
-  "/partitions":
-    get:
-      produces:
-      - application/json
+      operationId: start_local_maintenance
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/partition_summary"
-            type: array
-      operationId: get_partitions
+          content: {}
+    delete:
+      summary: Stop maintenance
+      description: Stop local maintenance.
+      operationId: stop_local_maintenance
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /partitions:
+    get:
       summary: List partitions
       description: Get a list of all partitions in the cluster.
-  "/partitions/local_summary":
+      operationId: get_partitions
+      responses:
+        200:
+          description: No response was specified
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/partition_summary'
+  /partitions/local_summary:
     get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/partitions_local_summary"
-      operationId: get_partitions_local_summary
       summary: Get local partitions
-      description: Get a summary of the partition(s) replicated on the requesting node.
-  "/partitions/rebalance":
-    post:
-      produces:
-      - application/json
+      description: Get a summary of the partition(s) replicated on the requesting
+        node.
+      operationId: get_partitions_local_summary
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: trigger_partitions_rebalance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/partitions_local_summary'
+  /partitions/rebalance:
+    post:
       summary: Rebalance partitions
       description: Trigger an on-demand rebalancing of partitions in the cluster.
-  "/partitions/reconfigurations":
-    get:
-      produces:
-      - application/json
+      operationId: trigger_partitions_rebalance
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: get_partition_reconfigurations
+          content: {}
+  /partitions/reconfigurations:
+    get:
       summary: List ongoing partition reconfigurations
       description: List ongoing partition reconfigurations.
-  "/partitions/{namespace}/{topic}/{partition}":
-    get:
-      produces:
-      - application/json
-      parameters:
-      - name: namespace
-        in: path
-        required: true
-        type: string
-      - name: topic
-        in: path
-        required: true
-        type: string
-      - name: partition
-        in: path
-        required: true
-        type: integer
+      operationId: get_partition_reconfigurations
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/partition"
-            type: array
-      operationId: get_partition
+          content: {}
+  /partitions/{namespace}/{topic}/{partition}:
+    get:
       summary: Get detailed partition information
       description: Get detailed information for a partition.
-  "/partitions/{namespace}/{topic}/{partition}/cancel_reconfiguration":
-    post:
-      produces:
-      - application/json
+      operationId: get_partition
       parameters:
       - name: namespace
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: topic
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition
         in: path
         required: true
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: cancel_partition_reconfiguration
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/partition'
+  /partitions/{namespace}/{topic}/{partition}/cancel_reconfiguration:
+    post:
       summary: Cancel partition reconfiguration
       description: Cancel an in-progress reconfiguration of a partition.
-  "/partitions/{namespace}/{topic}/{partition}/mark_transaction_expired":
-    post:
-      produces:
-      - application/json
+      operationId: cancel_partition_reconfiguration
       parameters:
       - name: namespace
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: topic
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition
         in: path
         required: true
-        type: integer
+        schema:
+          type: integer
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /partitions/{namespace}/{topic}/{partition}/mark_transaction_expired:
+    post:
+      summary: Mark transaction expired
+      description: Mark transaction expired for the specified partition.
+      operationId: mark_transaction_expired
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: topic
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partition
+        in: path
+        required: true
+        schema:
+          type: integer
       - name: id
         in: query
         required: true
-        type: integer
+        schema:
+          type: integer
       - name: epoch
         in: query
         required: true
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: mark_transaction_expired
-      summary: Mark transaction expired
-      description: Mark transaction expired for the specified partition.
-  "/partitions/{namespace}/{topic}/{partition}/replicas":
+          content: {}
+  /partitions/{namespace}/{topic}/{partition}/replicas:
     post:
-      produces:
-      - application/json
-      parameters:
-      - name: namespace
-        in: path
-        required: true
-        type: string
-      - name: topic
-        in: path
-        required: true
-        type: string
-      - name: partition
-        in: path
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-      operationId: set_partition_replicas
       summary: Update partition replicas
       description: Set the replica(s) of a partition.
-  "/partitions/{namespace}/{topic}/{partition}/transactions":
+      operationId: set_partition_replicas
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: topic
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partition
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /partitions/{namespace}/{topic}/{partition}/transactions:
     get:
-      produces:
-      - application/json
-      parameters:
-      - name: namespace
-        in: path
-        required: true
-        type: string
-      - name: topic
-        in: path
-        required: true
-        type: string
-      - name: partition
-        in: path
-        required: true
-        type: integer
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/transactions"
-      operationId: get_transactions
-      summary: Get partition transactions 
+      summary: Get partition transactions
       description: Get all transactions for a partition.
-  "/partitions/{namespace}/{topic}/{partition}/transfer_leadership":
-    post:
-      produces:
-      - application/json
+      operationId: get_transactions
       parameters:
       - name: namespace
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: topic
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition
         in: path
         required: true
-        type: integer
-      - name: target
-        in: query
-        required: false
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: kafka_transfer_leadership
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactions'
+  /partitions/{namespace}/{topic}/{partition}/transfer_leadership:
+    post:
       summary: Transfer leadership
       description: Transfer Raft group leadership of a topic to a specified partition.
-  "/partitions/{namespace}/{topic}/{partition}/unclean_abort_reconfiguration":
+      operationId: kafka_transfer_leadership
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: topic
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partition
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: target
+        in: query
+        schema:
+          type: integer
+      responses:
+        200:
+          description: No response was specified
+          content: {}
+  /partitions/{namespace}/{topic}/{partition}/unclean_abort_reconfiguration:
     post:
       tags:
       - Unstable APIs
-      produces:
-      - application/json
+      summary: Abort partition reconfiguration
+      description: Forcibly abort an in-progress reconfiguration of a partition.
+      operationId: unclean_abort_partition_reconfiguration
       parameters:
       - name: namespace
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: topic
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition
         in: path
         required: true
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: unclean_abort_partition_reconfiguration
-      summary: Abort partition reconfiguration
-      description: Forcibly abort an in-progress reconfiguration of a partition.
-  # "/failure-probes":
-  #   get:
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #         schema:
-  #           "$ref": "#/definitions/failure_injector_status"
-  #     operationId: get_failure_probes
-  #     summary: List failure probes
-  #     description: Get a list of available failure probes.
-  # "/failure-probes/{module}/{point}":
-  #   delete:
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: module
-  #       in: path
-  #       required: true
-  #       type: string
-  #     - name: point
-  #       in: path
-  #       required: true
-  #       type: string
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #     operationId: delete_failure_probe
-  #     summary: Delete failure probe
-  #     description: Delete all failure probes at given point.
-  # "/failure-probes/{module}/{point}/{type}":
-  #   post:
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: module
-  #       in: path
-  #       required: true
-  #       type: string
-  #     - name: point
-  #       in: path
-  #       required: true
-  #       type: string
-  #     - enum:
-  #       - exception
-  #       - delay
-  #       - terminate
-  #       name: type
-  #       in: path
-  #       required: true
-  #       type: string
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #     operationId: set_failure_probe
-  #     summary: Set failure probe
-  #     description: Enable failure injection of specified type.
-  "/transaction/{transactional_id}/delete_partition":
+          content: {}
+  /transaction/{transactional_id}/delete_partition:
     post:
-      produces:
-      - application/json
+      summary: Delete partition from transaction
+      description: Delete a partition from a transaction.
+      operationId: delete_partition
       parameters:
       - name: transactional_id
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: namespace
         in: query
         required: true
-        type: string
+        schema:
+          type: string
       - name: topic
         in: query
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition_id
         in: query
         required: true
-        type: integer
+        schema:
+          type: integer
       - name: etag
         in: query
         required: true
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: delete_partition
-      summary: Delete partition from transaction
-      description: Delete a partition from a transaction.
-  "/transactions":
+          content: {}
+  /transactions:
     get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            items:
-              "$ref": "#/definitions/transaction_summary"
-            type: array
-      operationId: get_all_transactions
       summary: List all transactions
       description: Get a list of all transactions.
-  "/cluster/cancel_reconfigurations":
-    post:
-      produces:
-      - application/json
+      operationId: get_all_transactions
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/cancel_all_partitions_reconfigurations"
-      operationId: cancel_all_partitions_reconfigurations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/transaction_summary'
+  /cluster/cancel_reconfigurations:
+    post:
       summary: Cancel all partition reconfigurations
       description: Cancel all partition reconfigurations.
-  "/cluster/health_overview":
-    get:
-      produces:
-      - application/json
+      operationId: cancel_all_partitions_reconfigurations
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/cluster_health_overview"
-      operationId: get_cluster_health_overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cancel_all_partitions_reconfigurations'
+  /cluster/health_overview:
+    get:
       summary: Get cluster health overview
       description: Get cluster health overview.
-  "/cluster/partition_balancer/status":
-    get:
-      produces:
-      - application/json
+      operationId: get_cluster_health_overview
       responses:
-        '200':
+        200:
           description: No response was specified
-          schema:
-            "$ref": "#/definitions/get_partition_balancer_status"
-      operationId: get_partition_balancer_status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cluster_health_overview'
+  /cluster/partition_balancer/status:
+    get:
       summary: Get partition balancer status
       description: Get the status of the partition auto-balancer.
-  "/cluster/uuid":
+      operationId: get_partition_balancer_status
+      responses:
+        200:
+          description: No response was specified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_partition_balancer_status'
+  /cluster/uuid:
     get:
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            "$ref": "#/definitions/get_cluster_uuid"
-      operationId: get_cluster_uuid
       summary: Get cluster UUID
-      description: Get the UUID of the cluster this node belongs to. (Note, this UUID is different than the configurable cluster identifier used in metrics.)
-  # "/debug/controller_status":
-  #   get:
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #         schema:
-  #           "$ref": "#/definitions/controller_status"
-  #     operationId: get_controller_status
-  #     summary: Get last_applied_offset and commited_index for controller log
-  # "/debug/is_node_isolated":
-  #   get:
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #         schema:
-  #           type: boolean
-  #     operationId: is_node_isolated
-  #     summary: Get is node isolated
-  # "/debug/partition_leaders_table":
-  #   get:
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #         schema:
-  #           items:
-  #             "$ref": "#/definitions/leader_info"
-  #           type: array
-  #     operationId: get_leaders_info
-  #     summary: Get information about leaders from partition_leaders_table for node
-  # "/debug/peer_status/{id}":
-  #   get:
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - format: int64
-  #       name: id
-  #       in: path
-  #       required: true
-  #       type: integer
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #         schema:
-  #           "$ref": "#/definitions/peer_status"
-  #     operationId: get_peer_status
-  #     summary: Get peer status
-  # "/debug/reset_leaders":
-  #   post:
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: No response was specified
-  #     operationId: reset_leaders_info
-  #     summary: Reset information about leaders for node
-  "/debug/self_test/start":
-    post:
-      produces:
-      - application/json
+      description: Get the UUID of the cluster this node belongs to. (Note, this UUID
+        is different than the configurable cluster identifier used in metrics.)
+      operationId: get_cluster_uuid
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: self_test_start
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_cluster_uuid'
+  /debug/self_test/start:
+    post:
       summary: Start cluster self-test
       description: Start running the Redpanda cluster self-test.
-  "/debug/self_test/status":
-    get:
-      produces:
-      - application/json
+      operationId: self_test_start
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: self_test_status
+          content: {}
+  /debug/self_test/status:
+    get:
       summary: Get cluster self-test status
       description: Get the status of the Redpanda cluster self-test.
-  "/debug/self_test/stop":
-    post:
-      produces:
-      - application/json
+      operationId: self_test_status
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: self_test_stop
+          content: {}
+  /debug/self_test/stop:
+    post:
       summary: Stop cluster self-test
       description: Stop running the Redpanda cluster self-test.
-  "/cloud_storage/automated_recovery":
-    get:
-      produces:
-      - application/json
+      operationId: self_test_stop
       responses:
-        '200':
+        200:
           description: No response was specified
-      operationId: query_automated_recovery
+          content: {}
+  /cloud_storage/automated_recovery:
+    get:
       summary: Get automated topic recovery status
       description: Query the status of automated topic recovery.
-    post:
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: body
-        required: false
-        schema: {}
+      operationId: query_automated_recovery
       responses:
-        '200':
-          description: Topic scan was initiated successfully
-      operationId: initiate_topic_scan_and_recovery
+        200:
+          description: No response was specified
+          content: {}
+    post:
       summary: Start topic scan and recovery
       description: Initiate a topic scan and start topic recovery.
-  "/cloud_storage/sync_local_state/{topic}/{partition}":
+      operationId: initiate_topic_scan_and_recovery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
+      responses:
+        200:
+          description: Topic scan was initiated successfully
+          content: {}
+      x-codegen-request-body-name: body
+  /cloud_storage/sync_local_state/{topic}/{partition}:
     post:
-      produces:
-      - application/json
+      summary: Sync local state
+      description: Synchronize the content of the bucket with local partition metadata.
+      operationId: sync_local_state
       parameters:
       - name: topic
         in: path
         required: true
-        type: string
+        schema:
+          type: string
       - name: partition
         in: path
         required: true
-        type: integer
+        schema:
+          type: integer
       responses:
-        '200':
+        200:
           description: Partition metadata is up to date
-      operationId: sync_local_state
-      summary: Sync local state
-      description: Synchronize the content of the bucket with local partition metadata.
-  # "/redpanda-services/restart":
-  #   put:
-  #     summary: Restart Redpanda service
-  #     description: Restart a Redpanda service.
-  #     operationId: redpanda_services_restart
-  #     parameters:
-  #     - name: service
-  #       in: query
-  #       required: true
-  #       type: string
-  #     produces:
-  #     - application/json
-  #     responses:
-  #       '200':
-  #         description: Restart success
-  #       '400':
-  #         description: Service name is required
-  #       '404':
-  #         description: Service not found
-  #       '500':
-  #         description: Internal Server error
-definitions:
-  cluster_config_property_metadata:
-    description: A single configuration property's metadata
-    properties:
-      description:
-        description: Human readable description of property's purpose
-        type: string
-      enum_values:
-        description: Possible values of the property (in string-ized form)
-        items:
+          content: {}
+components:
+  schemas:
+    cluster_config_property_metadata:
+      type: object
+      properties:
+        description:
           type: string
-        type: array
-      example:
-        description: Example of correct syntax for this property
-        type: string
-      is_secret:
-        description: Whether this property is a secret (i.e. should not be logged)
-        type: boolean
-      items:
-        "$ref": "#/definitions/cluster_config_property_metadata_items"
-        description: Type of items in an array
-      needs_restart:
-        description: Whether changes to this property will require a restart of redpanda
-          nodes
-        type: boolean
-      nullable:
-        description: Whether this setting may be set to null
-        type: boolean
-      type:
-        description: Expected syntax of the property value
-        type: string
-      units:
-        description: If applicable, the units of the property (e.g. ms, bytes)
-        type: string
-      visibility:
-        description: One of user|tunable|deprecated
-        type: string
-  cluster_config_property_metadata_items:
-    description: The type within 'items' for array properties
-    properties:
-      type:
-        description: A scalar type name, like 'string'
-        type: string
-  cluster_config_status:
-    description: Per-node configuration status
-    properties:
-      config_version:
-        description: Configuration version number, for cross referencing with PUT
-          results
-        format: int64
-        type: integer
-      invalid:
-        description: List of properties with invalid values
-        items:
+          description: Human readable description of property's purpose
+        enum_values:
+          type: array
+          description: Possible values of the property (in string-ized form)
+          items:
+            type: string
+        example:
           type: string
-        type: array
-      node_id:
-        description: node id
-        format: int64
-        type: integer
-      restart:
-        description: Restart required to apply pending configuration
-        type: boolean
-      unknown:
-        description: List of properties unknown to this node
+          description: Example of correct syntax for this property
+        is_secret:
+          type: boolean
+          description: Whether this property is a secret (i.e. should not be logged)
         items:
+          $ref: '#/components/schemas/cluster_config_property_metadata_items'
+        needs_restart:
+          type: boolean
+          description: Whether changes to this property will require a restart of
+            redpanda nodes
+        nullable:
+          type: boolean
+          description: Whether this setting may be set to null
+        type:
           type: string
-        type: array
-  cluster_config_write_result:
-    description: Result of writing changes to cluster configuration
-    properties:
-      config_version:
-        description: Configuration version number, for cross referencing with node
-          config status
-        format: int64
-        type: integer
-  feature_state:
-    description: State of one feature (active, available etc)
-    properties:
-      name:
-        type: string
-      state:
-        enum:
-        - active
-        - preparing
-        - available
-        - unavailable
-        - disabled
-        type: string
-      was_active:
-        description: Whether the feature has ever been active, i.e. data depending
-          on this feature may have been written to disk
-        type: boolean
-  features_response:
-    description: Describe available features in this redpanda cluster
-    properties:
-      cluster_version:
-        description: Logical version of cluster
-        format: int64
-        type: integer
-      features:
-        description: list of feature_state for each feature
-        items:
-          "$ref": "#/definitions/feature_state"
-        type: array
-      original_cluster_version:
-        description: Logical version at time of cluster creation
-        format: int64
-        type: integer
-  license_contents:
-    description: Parameters belonging to a valid, signed redpanda license
-    properties:
-      expires:
-        description: Expiration date of the license in Unix epoch seconds
-        format: int64
-        type: integer
-      format_version:
-        description: license schema version evolution number
-        format: int32
-        type: integer
-      org:
-        description: client the license was generated for
-        type: string
-      sha256:
-        description: Checksum (sha256) of the raw license data
-        type: string
-      type:
-        description: type of license, currently only free_trial or enterprise
-        type: string
-  license_response:
-    description: Describe properties of currently loaded license file
-    properties:
-      license:
-        "$ref": "#/definitions/license_contents"
-        description: Contents of a valid, signed license if loaded
-      loaded:
-        description: true if a non-expired license is loaded
-        type: boolean
-  broker:
-    description: Broker information
-    properties:
-      disk_space:
-        description: Array of disk space information per directory path. If disk space
-          information is not available the array may be empty
-        items:
-          "$ref": "#/definitions/disk_space_info"
-        type: array
-      is_alive:
-        description: is node seen as alive by the cluster
-        type: boolean
-      maintenance_status:
-        "$ref": "#/definitions/maintenance_status"
-        description: Node maintenance status
-      membership_status:
-        description: Broker membership status
-        type: string
-      node_id:
-        description: node id
-        format: int64
-        type: integer
-      num_cores:
-        description: cores
-        format: int64
-        type: integer
-      rack:
-        description: rack id
-        type: string
-      version:
-        description: Redpanda version
-        type: string
-  broker_shard:
-    description: Replica placement
-    properties:
-      core:
-        description: id of a core on a given node
-        format: int32
-        type: integer
-      node_id:
-        description: id of a node
-        format: int32
-        type: integer
-  cluster_view:
-    description: Cluster view
-    properties:
-      brokers:
-        items:
-          "$ref": "#/definitions/broker"
-        type: array
-      version:
-        description: cluster view version
-        format: int64
-        type: integer
-  decommission_status:
-    description: Node decommissioning status
-    properties:
-      finished:
-        description: indicate if decommissioning is finished
-        type: boolean
-      partitions:
-        description: Array of partition reconfiguration statues
-        items:
-          "$ref": "#/definitions/partition_reconfiguration_status"
-        type: array
-      replicas_left:
-        description: number of replicas left on a node
-        format: int64
-        type: integer
-  disk_space_info:
-    properties:
-      free:
-        description: free space bytes
-        format: int64
-        type: integer
-      path:
-        description: data directory path
-        type: string
-      total:
-        description: total space bytes
-        format: int64
-        type: integer
-  maintenance_status:
-    description: Drain status
-    properties:
-      draining:
-        description: in maintenance state
-        type: boolean
-      eligible:
-        description: eligible partition count
-        format: int64
-        type: integer
-      errors:
-        description: drain errors
-        type: boolean
-      failed:
-        description: failed transfer partition count
-        format: int64
-        type: integer
-      finished:
-        description: drain finished
-        type: boolean
-      partitions:
-        description: partition count
-        format: int64
-        type: integer
-      transferring:
-        description: transferring partition count
-        format: int64
-        type: integer
-  partition_reconfiguration_status:
-    description: Partition reconfiguration status
-    properties:
-      bytes_left_to_move:
-        description: bytes left to move to new replica
-        format: int64
-        type: integer
-      bytes_moved:
-        description: bytes moved to target broker
-        format: int64
-        type: integer
-      moving_to:
-        "$ref": "#/definitions/broker_shard"
-        description: information where the partition is being moved
-      ns:
-        description: namespace
-        type: string
-      partition:
-        description: partition
-        format: int32
-        type: integer
-      partition_size:
-        description: current size of partition
-        format: int64
-        type: integer
-      topic:
-        description: topic
-        type: string
-  assignment:
-    description: Replica assignment
-    properties:
-      core:
-        description: core
-        format: int64
-        type: integer
-      node_id:
-        description: node id
-        format: int64
-        type: integer
-  partition:
-    description: Partition details
-    properties:
-      leader_id:
-        description: leader node id
-        format: int64
-        type: integer
-      ns:
-        description: namespace
-        type: string
-      partition_id:
-        description: partition
-        format: int64
-        type: integer
-      raft_group_id:
-        description: partition raft group id
-        format: int64
-        type: integer
-      replicas:
-        description: Replica assignments
-        items:
-          "$ref": "#/definitions/assignment"
-        type: array
-      status:
-        description: status
-        type: string
-      topic:
-        description: topic
-        type: string
-  partition_result:
-    description: Partition result
-    properties:
-      ns:
-        description: Namespace
-        type: string
-      partition:
-        description: Partition id
-        format: int64
-        type: integer
-      result:
-        description: Status of operation
-        type: string
-      topic:
-        description: Topic
-        type: string
-  partition_summary:
-    description: Partition summary
-    properties:
-      core:
-        description: core
-        format: int64
-        type: integer
-      leader:
-        description: Latest known leader (or -1 if unknown)
-        format: int64
-        type: integer
-      materialized:
-        description: materialized
-        type: boolean
-      ns:
-        description: namespace
-        type: string
-      partition_id:
-        description: partition
-        format: int64
-        type: integer
-      topic:
-        description: topic
-        type: string
-  partitions_local_summary:
-    description: Summarize status of partitions with a replica on this node
-    properties:
-      count:
-        description: Number of partitions with a replica on this node
-        format: int64
-        type: integer
-      leaderless:
-        description: Number of partitions with a replica on this node that report
-          no known raft leader
-        format: int64
-        type: integer
-      under_replicated:
-        description: Number of partitions with leadership on this node, reporting
-          one or more under-replicated followers
-        format: int64
-        type: integer
-  producer_identity:
-    description: Producer identity
-    properties:
-      epoch:
-        description: Producer epoch
-        format: int64
-        type: integer
-      id:
-        description: Producer id
-        format: int64
-        type: integer
-  reconfiguration:
-    description: Partition reconfiguration details
-    properties:
-      ns:
-        description: Namespace
-        type: string
-      partition:
-        description: Partition id
-        format: int64
-        type: integer
-      previous_replicas:
-        description: Previous replica set
-        items:
-          "$ref": "#/definitions/assignment"
-        type: array
-      status:
-        description: Reconfiguration status
-        type: string
-      topic:
-        description: Topic
-        type: string
-  transaction:
-    description: Transaction details
-    properties:
-      lso_bound:
-        description: First offset
-        format: int64
-        type: integer
-      producer_id:
-        "$ref": "#/definitions/producer_identity"
-        description: Producer id
-      staleness_ms:
-        description: How long transaction does not make progress
-        format: int64
-        type: integer
-      status:
-        description: Transaction status
-        type: string
-      timeout_ms:
-        description: Transaction timeout
-        format: int64
-        type: integer
-  transactions:
-    description: Transactions for current partition
-    properties:
-      active_transactions:
-        description: Active transactions
-        items:
-          "$ref": "#/definitions/transaction"
-        type: array
-      expired_transactions:
-        description: Expired transactions
-        items:
-          "$ref": "#/definitions/transaction"
-        type: array
-  failure_injector_status:
-    description: Status of failure injector with list of available probes
-    properties:
-      enabled:
-        type: boolean
-      probes:
-        items:
-          "$ref": "#/definitions/failure_probes"
-        type: array
-  failure_probes:
-    description: Group of failure probes related with single resource
-    properties:
-      module:
-        description: failure probes module name
-        type: string
-      points:
-        description: list of failure points
-        items:
+          description: Expected syntax of the property value
+        units:
           type: string
-        type: array
-  group:
-    description: Group info
-    properties:
-      etag:
-        description: Raft term
-        format: int64
-        type: integer
-      group_id:
-        description: Group id
-        type: string
-  partition_transaction:
-    description: Partition info
-    properties:
-      etag:
-        description: Raft term
-        format: int64
-        type: integer
-      ns:
-        description: namespace
-        type: string
-      partition_id:
-        description: partition
-        format: int64
-        type: integer
-      topic:
-        description: topic
-        type: string
-  transaction_summary:
-    description: Transaction summary
-    properties:
-      etag:
-        description: Term of a transaction coordinated started a transaction
-        format: int64
-        type: integer
-      groups:
-        description: Consumer groups for transaction
-        items:
-          "$ref": "#/definitions/group"
-        type: array
-      partitions:
-        description: Partitions for transaction
-        items:
-          "$ref": "#/definitions/partition_transaction"
-        type: array
-      pid:
-        "$ref": "#/definitions/producer_identity"
-        description: pid
-      staleness_ms:
-        description: How long transaction does not make progress
-        format: int64
-        type: integer
-      status:
-        description: Current status for transaction
-        type: string
-      timeout_ms:
-        description: Transaction timeout
-        format: int64
-        type: integer
-      transactional_id:
-        description: Id of an application executing a transaction
-        type: string
-      tx_seq:
-        description: tx_seq identifies a transactions within a session
-        format: int64
-        type: integer
-  cluster_health_overview:
-    description: Returns simple overview of cluster status
-    properties:
-      all_nodes:
-        description: ids of all nodes registered in the cluster
-        items:
-          format: int32
+          description: If applicable, the units of the property (e.g. ms, bytes)
+        visibility:
+          type: string
+          description: One of user|tunable|deprecated
+      description: A single configuration property's metadata
+    cluster_config_property_metadata_items:
+      type: object
+      properties:
+        type:
+          type: string
+          description: A scalar type name, like 'string'
+      description: The type within 'items' for array properties
+    cluster_config_status:
+      type: object
+      properties:
+        config_version:
           type: integer
-        type: array
-      controller_id:
-        description: node that is currently a leader or `-1` if leader is not elected
-        format: int32
-        type: integer
-      is_healthy:
-        description: basic cluster health indicator
-        type: boolean
-      leaderless_partitions:
-        description: list of partitions for which no leader is elected
-        items:
+          description: Configuration version number, for cross referencing with PUT
+            results
+          format: int64
+        invalid:
+          type: array
+          description: List of properties with invalid values
+          items:
+            type: string
+        node_id:
+          type: integer
+          description: node id
+          format: int64
+        restart:
+          type: boolean
+          description: Restart required to apply pending configuration
+        unknown:
+          type: array
+          description: List of properties unknown to this node
+          items:
+            type: string
+      description: Per-node configuration status
+    cluster_config_write_result:
+      type: object
+      properties:
+        config_version:
+          type: integer
+          description: Configuration version number, for cross referencing with node
+            config status
+          format: int64
+      description: Result of writing changes to cluster configuration
+    feature_state:
+      type: object
+      properties:
+        name:
           type: string
-        type: array
-      nodes_down:
-        description: ids of all nodes being recognized as down
-        items:
-          format: int32
-          type: integer
-        type: array
-      under_replicated_partitions:
-        description: list of partitions where one or more replicas has not replicated
-          all data
-        items:
+        state:
           type: string
-        type: array
-  partition_balancer_status:
-    description: Returns status of the partition autobalancer
-    properties:
-      current_reassignments_count:
-        description: current number of partition reassignments in progress
-        format: int32
-        type: integer
-      seconds_since_last_tick:
-        description: last time the partition balancer ran
-        format: int32
-        type: integer
-      status:
-        description: off/ready/in_progress/stalled
-        type: string
-      violations:
-        "$ref": "#/definitions/partition_balancer_violations"
-  partition_balancer_violations:
-    properties:
-      over_disk_limit_nodes:
-        items:
-          format: int32
+          enum:
+          - active
+          - preparing
+          - available
+          - unavailable
+          - disabled
+        was_active:
+          type: boolean
+          description: Whether the feature has ever been active, i.e. data depending
+            on this feature may have been written to disk
+      description: State of one feature (active, available etc)
+    features_response:
+      type: object
+      properties:
+        cluster_version:
           type: integer
-        type: array
-      unavailable_nodes:
-        items:
-          format: int32
+          description: Logical version of cluster
+          format: int64
+        features:
+          type: array
+          description: list of feature_state for each feature
+          items:
+            $ref: '#/components/schemas/feature_state'
+        original_cluster_version:
           type: integer
-        type: array
-  uuid:
-    properties:
-      cluster_uuid:
-        type: string
-  controller_status:
-    description: Controller status
-    properties:
-      commited_index:
-        description: Commited index for controller consensus
-        format: int64
-        type: integer
-      last_applied_offset:
-        description: Last applied offset for controller stm
-        format: int64
-        type: integer
-  leader_info:
-    description: Leader info
-    properties:
-      last_stable_leader_term:
-        description: last stable leader term
-        format: int64
-        type: integer
-      leader:
-        description: current leader
-        format: int64
-        type: integer
-      ns:
-        description: namespace
-        type: string
-      partition_id:
-        description: partition
-        format: int64
-        type: integer
-      partition_revision:
-        description: partition revision
-        format: int64
-        type: integer
-      previous_leader:
-        description: previous leader
-        format: int64
-        type: integer
-      topic:
-        description: topic
-        type: string
-      update_term:
-        description: update term
-        format: int64
-        type: integer
-  peer_status:
-    description: Peer status
-    properties:
-      since_last_status:
-        description: Milliseconds since last update from peer
-        format: int64
-        type: integer
-  self_test_node_report:
-    description: Current state of self test on a given broker
-    properties:
-      node_id:
-        description: node_id of the broker reporting
-        format: int64
-        type: integer
-      results:
-        description: Recordings of test runs from a single node
-        items:
-          "$ref": "#/definitions/self_test_result"
-        type: array
-      status:
-        description: One of either idle / running / unreachable
-        type: string
-  self_test_result:
-    description: Result set from a single self_test run
-    properties:
-      info:
-        description: Additional test labels, metadata and/or information
-        type: string
-      bps:
-        description: Bytes operated on per second
-        format: int64
-        type: integer
-      duration:
-        description: Length of time the test took to complete
-        format: int64
-        type: integer
-      error:
-        description: Stringified exception if any occurred during test execution
-        type: string
-      max_latency:
-        description: Maximum recorded latency measurement
-        format: int64
-        type: integer
-      name:
-        description: Name of the test run
-        type: string
-      p50:
-        description: 50th percentile latencies
-        format: int64
-        type: integer
-      p90:
-        description: 90th percentile latencies
-        format: int64
-        type: integer
-      p99:
-        description: 99th percentile latencies
-        format: int64
-        type: integer
-      p999:
-        description: 999th percentile latencies
-        format: int64
-        type: integer
-      rps:
-        description: Number of requests per second
-        format: int64
-        type: integer
-      test_id:
-        description: Global test uuid identifier
-        type: string
-      test_type:
-        description: Type of self test, one of either disk/network
-        type: string
-      timeouts:
-        description: Number of io timeouts observed during run
-        format: int64
-        type: integer
-      warning:
-        description: Warning that arose during test execution
-        type: string
-  init_recovery_result:
-    description: Result of initiation of recovery process in background
-    properties:
-      status:
-        description: current status of recovery process
-        type: string
-  recovery_request_params:
-    properties:
-      retention_bytes:
-        format: int32
-        type: integer
-      retention_ms:
-        format: int32
-        type: integer
-      topic_names_pattern:
-        type: string
-  topic_download_counts:
-    properties:
-      failed_downloads:
-        format: int32
-        type: integer
-      pending_downloads:
-        format: int32
-        type: integer
-      successful_downloads:
-        format: int32
-        type: integer
-      topic_namespace:
-        type: string
-  topic_recovery_status:
-    properties:
-      request:
-        "$ref": "#/definitions/recovery_request_params"
-      state:
-        type: string
-      topic_download_counts:
-        items:
-          "$ref": "#/definitions/topic_download_counts"
-        type: array
-  get_cluster_uuid:
-    description: TBD
-  get_partition_balancer_status:
-    description: TBD
-  cancel_all_partitions_reconfigurations:
-    description: TBD
-# tags:
-#  - name: Unstable APIs
-# - name: config
-#   description: Redpanda cluster configuration.
-# - name: raft
-#   description: Raft leadership transfer.
-# - name: users
-#   description: Manage users.
-# - name: status
-#   description: TBD
-# - name: features
-#   description: TBD
-# - name: broker
-#   description: TBD
-# - name: partitions
-#   description: TBD
-# - name: hbadger
-#   description: TBD
-# - name: transactions
-#   description: TBD
-# - name: cluster
-#   description: TBD
-# - name: health
-#   description: Redpanda cluster health.
-# - name: debug
-#   description: TBD
-# - name: shadow indexing
-#   description: TBD
-# - name: redpanda services restart
-#   description: TBD
-# x-tagGroups:
-# - name: Unstable APIs
-#   tags:
-#   - unstable
-# - name: Cluster configuration
-#   tags:
-#   - config
-#   - cluster config
-# - name: Cluster Config
-#   tags:
-#   - cluster config
-# - name: Raft
-#   tags:
-#   - raft
-# - name: User management
-#   tags:
-#   - users
-# - name: Status
-#   tags:
-#   - status
-# - name: Features
-#   tags:
-#   - features
-# - name: Broker
-#   tags:
-#   - broker
-# - name: Partitions
-#   tags:
-#   - partitions
-# - name: Hbadger
-#   tags:
-#   - hbadger
-# - name: Transactions
-#   tags:
-#   - transactions
-# - name: Cluster
-#   tags:
-#   - cluster
-# - name: Cluster Maintenance
-#   tags:
-#   - health
-#   - debug
-# - name: Shadow Indexing
-#   tags:
-#   - shadow indexing
-# - name: Restart services
-#   tags:
-#   - redpanda services restart
+          description: Logical version at time of cluster creation
+          format: int64
+      description: Describe available features in this redpanda cluster
+    license_contents:
+      type: object
+      properties:
+        expires:
+          type: integer
+          description: Expiration date of the license in Unix epoch seconds
+          format: int64
+        format_version:
+          type: integer
+          description: license schema version evolution number
+          format: int32
+        org:
+          type: string
+          description: client the license was generated for
+        sha256:
+          type: string
+          description: Checksum (sha256) of the raw license data
+        type:
+          type: string
+          description: type of license, currently only free_trial or enterprise
+      description: Parameters belonging to a valid, signed redpanda license
+    license_response:
+      type: object
+      properties:
+        license:
+          $ref: '#/components/schemas/license_contents'
+        loaded:
+          type: boolean
+          description: true if a non-expired license is loaded
+      description: Describe properties of currently loaded license file
+    broker:
+      type: object
+      properties:
+        disk_space:
+          type: array
+          description: Array of disk space information per directory path. If disk
+            space information is not available the array may be empty
+          items:
+            $ref: '#/components/schemas/disk_space_info'
+        is_alive:
+          type: boolean
+          description: is node seen as alive by the cluster
+        maintenance_status:
+          $ref: '#/components/schemas/maintenance_status'
+        membership_status:
+          type: string
+          description: Broker membership status
+        node_id:
+          type: integer
+          description: node id
+          format: int64
+        num_cores:
+          type: integer
+          description: cores
+          format: int64
+        rack:
+          type: string
+          description: rack id
+        version:
+          type: string
+          description: Redpanda version
+      description: Broker information
+    broker_shard:
+      type: object
+      properties:
+        core:
+          type: integer
+          description: id of a core on a given node
+          format: int32
+        node_id:
+          type: integer
+          description: id of a node
+          format: int32
+      description: Replica placement
+    cluster_view:
+      type: object
+      properties:
+        brokers:
+          type: array
+          items:
+            $ref: '#/components/schemas/broker'
+        version:
+          type: integer
+          description: cluster view version
+          format: int64
+      description: Cluster view
+    decommission_status:
+      type: object
+      properties:
+        finished:
+          type: boolean
+          description: indicate if decommissioning is finished
+        partitions:
+          type: array
+          description: Array of partition reconfiguration statues
+          items:
+            $ref: '#/components/schemas/partition_reconfiguration_status'
+        replicas_left:
+          type: integer
+          description: number of replicas left on a node
+          format: int64
+      description: Node decommissioning status
+    disk_space_info:
+      type: object
+      properties:
+        free:
+          type: integer
+          description: free space bytes
+          format: int64
+        path:
+          type: string
+          description: data directory path
+        total:
+          type: integer
+          description: total space bytes
+          format: int64
+    maintenance_status:
+      type: object
+      properties:
+        draining:
+          type: boolean
+          description: in maintenance state
+        eligible:
+          type: integer
+          description: eligible partition count
+          format: int64
+        errors:
+          type: boolean
+          description: drain errors
+        failed:
+          type: integer
+          description: failed transfer partition count
+          format: int64
+        finished:
+          type: boolean
+          description: drain finished
+        partitions:
+          type: integer
+          description: partition count
+          format: int64
+        transferring:
+          type: integer
+          description: transferring partition count
+          format: int64
+      description: Drain status
+    partition_reconfiguration_status:
+      type: object
+      properties:
+        bytes_left_to_move:
+          type: integer
+          description: bytes left to move to new replica
+          format: int64
+        bytes_moved:
+          type: integer
+          description: bytes moved to target broker
+          format: int64
+        moving_to:
+          $ref: '#/components/schemas/broker_shard'
+        ns:
+          type: string
+          description: namespace
+        partition:
+          type: integer
+          description: partition
+          format: int32
+        partition_size:
+          type: integer
+          description: current size of partition
+          format: int64
+        topic:
+          type: string
+          description: topic
+      description: Partition reconfiguration status
+    assignment:
+      type: object
+      properties:
+        core:
+          type: integer
+          description: core
+          format: int64
+        node_id:
+          type: integer
+          description: node id
+          format: int64
+      description: Replica assignment
+    partition:
+      type: object
+      properties:
+        leader_id:
+          type: integer
+          description: leader node id
+          format: int64
+        ns:
+          type: string
+          description: namespace
+        partition_id:
+          type: integer
+          description: partition
+          format: int64
+        raft_group_id:
+          type: integer
+          description: partition raft group id
+          format: int64
+        replicas:
+          type: array
+          description: Replica assignments
+          items:
+            $ref: '#/components/schemas/assignment'
+        status:
+          type: string
+          description: status
+        topic:
+          type: string
+          description: topic
+      description: Partition details
+    partition_result:
+      type: object
+      properties:
+        ns:
+          type: string
+          description: Namespace
+        partition:
+          type: integer
+          description: Partition id
+          format: int64
+        result:
+          type: string
+          description: Status of operation
+        topic:
+          type: string
+          description: Topic
+      description: Partition result
+    partition_summary:
+      type: object
+      properties:
+        core:
+          type: integer
+          description: core
+          format: int64
+        leader:
+          type: integer
+          description: Latest known leader (or -1 if unknown)
+          format: int64
+        materialized:
+          type: boolean
+          description: materialized
+        ns:
+          type: string
+          description: namespace
+        partition_id:
+          type: integer
+          description: partition
+          format: int64
+        topic:
+          type: string
+          description: topic
+      description: Partition summary
+    partitions_local_summary:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of partitions with a replica on this node
+          format: int64
+        leaderless:
+          type: integer
+          description: Number of partitions with a replica on this node that report
+            no known raft leader
+          format: int64
+        under_replicated:
+          type: integer
+          description: Number of partitions with leadership on this node, reporting
+            one or more under-replicated followers
+          format: int64
+      description: Summarize status of partitions with a replica on this node
+    producer_identity:
+      type: object
+      properties:
+        epoch:
+          type: integer
+          description: Producer epoch
+          format: int64
+        id:
+          type: integer
+          description: Producer id
+          format: int64
+      description: Producer identity
+    reconfiguration:
+      type: object
+      properties:
+        ns:
+          type: string
+          description: Namespace
+        partition:
+          type: integer
+          description: Partition id
+          format: int64
+        previous_replicas:
+          type: array
+          description: Previous replica set
+          items:
+            $ref: '#/components/schemas/assignment'
+        status:
+          type: string
+          description: Reconfiguration status
+        topic:
+          type: string
+          description: Topic
+      description: Partition reconfiguration details
+    transaction:
+      type: object
+      properties:
+        lso_bound:
+          type: integer
+          description: First offset
+          format: int64
+        producer_id:
+          $ref: '#/components/schemas/producer_identity'
+        staleness_ms:
+          type: integer
+          description: How long transaction does not make progress
+          format: int64
+        status:
+          type: string
+          description: Transaction status
+        timeout_ms:
+          type: integer
+          description: Transaction timeout
+          format: int64
+      description: Transaction details
+    transactions:
+      type: object
+      properties:
+        active_transactions:
+          type: array
+          description: Active transactions
+          items:
+            $ref: '#/components/schemas/transaction'
+        expired_transactions:
+          type: array
+          description: Expired transactions
+          items:
+            $ref: '#/components/schemas/transaction'
+      description: Transactions for current partition
+    failure_injector_status:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        probes:
+          type: array
+          items:
+            $ref: '#/components/schemas/failure_probes'
+      description: Status of failure injector with list of available probes
+    failure_probes:
+      type: object
+      properties:
+        module:
+          type: string
+          description: failure probes module name
+        points:
+          type: array
+          description: list of failure points
+          items:
+            type: string
+      description: Group of failure probes related with single resource
+    group:
+      type: object
+      properties:
+        etag:
+          type: integer
+          description: Raft term
+          format: int64
+        group_id:
+          type: string
+          description: Group id
+      description: Group info
+    partition_transaction:
+      type: object
+      properties:
+        etag:
+          type: integer
+          description: Raft term
+          format: int64
+        ns:
+          type: string
+          description: namespace
+        partition_id:
+          type: integer
+          description: partition
+          format: int64
+        topic:
+          type: string
+          description: topic
+      description: Partition info
+    transaction_summary:
+      type: object
+      properties:
+        etag:
+          type: integer
+          description: Term of a transaction coordinated started a transaction
+          format: int64
+        groups:
+          type: array
+          description: Consumer groups for transaction
+          items:
+            $ref: '#/components/schemas/group'
+        partitions:
+          type: array
+          description: Partitions for transaction
+          items:
+            $ref: '#/components/schemas/partition_transaction'
+        pid:
+          $ref: '#/components/schemas/producer_identity'
+        staleness_ms:
+          type: integer
+          description: How long transaction does not make progress
+          format: int64
+        status:
+          type: string
+          description: Current status for transaction
+        timeout_ms:
+          type: integer
+          description: Transaction timeout
+          format: int64
+        transactional_id:
+          type: string
+          description: Id of an application executing a transaction
+        tx_seq:
+          type: integer
+          description: tx_seq identifies a transactions within a session
+          format: int64
+      description: Transaction summary
+    cluster_health_overview:
+      type: object
+      properties:
+        all_nodes:
+          type: array
+          description: ids of all nodes registered in the cluster
+          items:
+            type: integer
+            format: int32
+        controller_id:
+          type: integer
+          description: node that is currently a leader or `-1` if leader is not elected
+          format: int32
+        is_healthy:
+          type: boolean
+          description: basic cluster health indicator
+        leaderless_partitions:
+          type: array
+          description: list of partitions for which no leader is elected
+          items:
+            type: string
+        nodes_down:
+          type: array
+          description: ids of all nodes being recognized as down
+          items:
+            type: integer
+            format: int32
+        under_replicated_partitions:
+          type: array
+          description: list of partitions where one or more replicas has not replicated
+            all data
+          items:
+            type: string
+      description: Returns simple overview of cluster status
+    partition_balancer_status:
+      type: object
+      properties:
+        current_reassignments_count:
+          type: integer
+          description: current number of partition reassignments in progress
+          format: int32
+        seconds_since_last_tick:
+          type: integer
+          description: last time the partition balancer ran
+          format: int32
+        status:
+          type: string
+          description: off/ready/in_progress/stalled
+        violations:
+          $ref: '#/components/schemas/partition_balancer_violations'
+      description: Returns status of the partition autobalancer
+    partition_balancer_violations:
+      type: object
+      properties:
+        over_disk_limit_nodes:
+          type: array
+          items:
+            type: integer
+            format: int32
+        unavailable_nodes:
+          type: array
+          items:
+            type: integer
+            format: int32
+    uuid:
+      type: object
+      properties:
+        cluster_uuid:
+          type: string
+    controller_status:
+      type: object
+      properties:
+        commited_index:
+          type: integer
+          description: Commited index for controller consensus
+          format: int64
+        last_applied_offset:
+          type: integer
+          description: Last applied offset for controller stm
+          format: int64
+      description: Controller status
+    leader_info:
+      type: object
+      properties:
+        last_stable_leader_term:
+          type: integer
+          description: last stable leader term
+          format: int64
+        leader:
+          type: integer
+          description: current leader
+          format: int64
+        ns:
+          type: string
+          description: namespace
+        partition_id:
+          type: integer
+          description: partition
+          format: int64
+        partition_revision:
+          type: integer
+          description: partition revision
+          format: int64
+        previous_leader:
+          type: integer
+          description: previous leader
+          format: int64
+        topic:
+          type: string
+          description: topic
+        update_term:
+          type: integer
+          description: update term
+          format: int64
+      description: Leader info
+    peer_status:
+      type: object
+      properties:
+        since_last_status:
+          type: integer
+          description: Milliseconds since last update from peer
+          format: int64
+      description: Peer status
+    self_test_node_report:
+      type: object
+      properties:
+        node_id:
+          type: integer
+          description: node_id of the broker reporting
+          format: int64
+        results:
+          type: array
+          description: Recordings of test runs from a single node
+          items:
+            $ref: '#/components/schemas/self_test_result'
+        status:
+          type: string
+          description: One of either idle / running / unreachable
+      description: Current state of self test on a given broker
+    self_test_result:
+      type: object
+      properties:
+        info:
+          type: string
+          description: Additional test labels, metadata and/or information
+        bps:
+          type: integer
+          description: Bytes operated on per second
+          format: int64
+        duration:
+          type: integer
+          description: Length of time the test took to complete
+          format: int64
+        error:
+          type: string
+          description: Stringified exception if any occurred during test execution
+        max_latency:
+          type: integer
+          description: Maximum recorded latency measurement
+          format: int64
+        name:
+          type: string
+          description: Name of the test run
+        p50:
+          type: integer
+          description: 50th percentile latencies
+          format: int64
+        p90:
+          type: integer
+          description: 90th percentile latencies
+          format: int64
+        p99:
+          type: integer
+          description: 99th percentile latencies
+          format: int64
+        p999:
+          type: integer
+          description: 999th percentile latencies
+          format: int64
+        rps:
+          type: integer
+          description: Number of requests per second
+          format: int64
+        test_id:
+          type: string
+          description: Global test uuid identifier
+        test_type:
+          type: string
+          description: Type of self test, one of either disk/network
+        timeouts:
+          type: integer
+          description: Number of io timeouts observed during run
+          format: int64
+        warning:
+          type: string
+          description: Warning that arose during test execution
+      description: Result set from a single self_test run
+    init_recovery_result:
+      type: object
+      properties:
+        status:
+          type: string
+          description: current status of recovery process
+      description: Result of initiation of recovery process in background
+    recovery_request_params:
+      type: object
+      properties:
+        retention_bytes:
+          type: integer
+          format: int32
+        retention_ms:
+          type: integer
+          format: int32
+        topic_names_pattern:
+          type: string
+    topic_download_counts:
+      type: object
+      properties:
+        failed_downloads:
+          type: integer
+          format: int32
+        pending_downloads:
+          type: integer
+          format: int32
+        successful_downloads:
+          type: integer
+          format: int32
+        topic_namespace:
+          type: string
+    topic_recovery_status:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/recovery_request_params'
+        state:
+          type: string
+        topic_download_counts:
+          type: array
+          items:
+            $ref: '#/components/schemas/topic_download_counts'
+    get_cluster_uuid:
+      type: object
+      description: TBD
+    get_partition_balancer_status:
+      type: object
+      description: TBD
+    cancel_all_partitions_reconfigurations:
+      type: object
+      description: TBD
