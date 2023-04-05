@@ -8,12 +8,20 @@ toc_max_heading_level: 3
   <meta name="title" content="Topic configuration properties | Redpanda Docs" />
   <meta
     name="description"
-    content="Configure topic-level properties for Redpanda that override corresponding node or cluster properties."
+    content="A reference of topic-level Kafka properties for Redpanda that override corresponding node or cluster properties."
   />
 </head>
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+
+A reference of topic-level Apache Kafka properties for Redpanda that override corresponding node or cluster properties.
+
+:::note
+The documented names, valid values, and default values of Kafka topic-level properties are from Kafka v3.4. Differences are documented with each property.
+:::
+
+## About topic-level properties
 
 A topic-level property sets a Redpanda or Kafka configuration for a particular topic. 
 
@@ -31,7 +39,7 @@ Many topic-level properties have corresponding [cluster properties](../../manage
 | [`max.message.bytes`](#maxmessagebytes)           | [`kafka_batch_max_bytes`](../tunable-properties#kafka_batch_max_bytes)           |
 | [`replication.factor`](#replicationfactor)        | [`default_topic_replications`](../cluster-properties#default_topic_replications)   |
 
-:::notes
+:::note
 The `SOURCE` output of the [`rpk topic describe <topic>`](../rpk/rpk-topic/rpk-topic-describe) command describes how the property was set for the topic:
 - `DEFAULT_CONFIG` was set by a Redpanda default.
 - `DYNAMIC_TOPIC_CONFIG` was set by the user specifically for the topic and overrides inherited default configurations, such as a default or a cluster-level property.
@@ -223,6 +231,10 @@ Enabling compression reduces message size, which improves throughput and decreas
 
 When `compression.type` is set, it overrides the cluster property [`log_compression_type`](../cluster-properties#log_compression_type) for the topic.
 
+:::note
+The valid values of `compression.type` are taken from `log_compression_type` and differ from Kafka's compression types.
+:::
+
 **Default**: `none`
 
 **Values**:
@@ -232,6 +244,7 @@ When `compression.type` is set, it overrides the cluster property [`log_compress
 - `lz4`
 - `snappy`
 - `ztsd`
+- `producer`
 
 **Related topics**:
 

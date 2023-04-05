@@ -115,7 +115,7 @@ To configure log segment size on a topic:
 rpk topic alter-config <topic> --set segment.bytes=<segment_size>
 ```
 
-### Segment size for compacted segments
+### Segment size for compacted topics
  
 Compaction, or key-based retention, saves space by retaining at least the most recent value for a message key within a topic partition's log and discarding older values. Compaction runs periodically in the background in a best effort fashion, and it doesn't guarantee that there are no duplicate values per key.
 
