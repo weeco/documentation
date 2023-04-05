@@ -70,9 +70,7 @@ before any followers manage to replicate the message.
 
 The producer waits for the leader to receive acknowledgements from in-sync replicas. This increases durability at the expense of lower throughput and increased latency.
 
-Sometimes referred to as `acks = -1`, `acks=all` configures a leader to consider
-message reception as complete when the message has been replicated to the minimum number of in-sync replicas (`min.insync.replicas`) configured for the broker or topic. For Kafka, replication involves calling `fsync`, so as soon as `fsync` is complete, the message is considered acknowledged and
-is made visible to readers.
+Sometimes referred to as `acks = -1`, `acks=all` configures a leader to wait for a [quorum of replicas](../../../get-started/architecture/#raft-consensus-algorithm) to successfully copy a message before acknowledging its reception. Replication involves calling `fsync`, so as soon as `fsync` is complete, the message is considered acknowledged.
 
 :::info
 With `acks=all`, a Redpanda broker guarantees that an acknowledged message has been flushed to disk with `fsync()`. This is a stronger data resiliency guarantee than a Kafka broker, which doesn't guarantee flushing to disk on acknowledgement.

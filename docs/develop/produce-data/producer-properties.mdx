@@ -21,7 +21,7 @@ The number of acknowledgements that a producer expects to get from a leader brok
 **Valid values**:
 - `acks=0`: no acknowledgements
 - `acks=1`: one acknowledgement from the leader
-- `acks=all` or `acks=-1`: acknowledgements from all in-sync replicas, as configured for the cluster or topic by `min.insync.replicas`
+- `acks=all` or `acks=-1`: acknowledgements from a quorum (majority) of replicas
 
 **Related topics**:
 - [Message Reliability](../message-reliability)
