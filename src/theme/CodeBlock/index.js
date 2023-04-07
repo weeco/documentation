@@ -29,7 +29,7 @@ function handleSingleSpans(spanElement) {
     const start = html.indexOf(match, index);
     const end = start + match.length;
     if(html.substring(index, start).match(/<span/g)) break
-    wrappedHtml += html.substring(index, start) + `<span contenteditable="true" class="editable cursor" onclick="this.classList.remove('cursor')">${match}</span>`;
+    wrappedHtml += html.substring(index, start) + `<span contenteditable="true" class="editable cursor" data-type=${match.trim()} onclick="this.classList.remove('cursor')">${match}</span>`;
     index = end;
   }
   wrappedHtml += html.substring(index);
@@ -75,11 +75,12 @@ function mergeMatchingSiblings() {
       // and delete any span elements that the new editable one replaces.
       if (openAngleBrackets === 1 && openAngleBrackets === closeAngleBrackets && mergedContent.match(/<[^>]*>/)) {
         const newSpan = document.createElement('span');
-        const regexMatch = mergedContent.match(/[\s'"]?<[^>]*>[\s'"]?/)[0];
+        var regexMatch = mergedContent.match(/[\s'"]?<[^>]*>[\s'"]?/)[0];
         newSpan.textContent = regexMatch;
         mergedContent = mergedContent.replace(regexMatch, '');
         newSpan.classList.add('editable', 'cursor');
         newSpan.setAttribute('contenteditable', true);
+        newSpan.setAttribute('data-type', regexMatch.trim())
         newSpan.onclick = (e) => e.target.classList.remove('cursor')
         span.parentNode.insertBefore(newSpan, span);
         for (let j = 0; j < spansToDelete.length; j++) {
@@ -94,6 +95,22 @@ function mergeMatchingSiblings() {
   })
 }
 
+function updateMatchingPlaceholdersOnInput () {
+  const editablePlaceholders = document.querySelectorAll('[contenteditable="true"]');
+  editablePlaceholders.forEach((placeholder) => {
+    placeholder.addEventListener('input', function(event) {
+      const dataType = event.target.dataset.type;
+      const newText = event.target.textContent;
+      document.querySelectorAll(`[data-type="${dataType}"][contenteditable="true"]`).forEach(span => {
+        if (span !== event.target) {
+          span.textContent = newText;
+          span.classList.remove('cursor')
+        }
+      });
+    });
+  });
+}
+
 export default function CodeBlock({children: rawChildren, ...props}) {
   // The Prism theme on SSR is always the default theme but the site theme can
   // be in a different mode. React hydration doesn't update DOM styles that come
@@ -103,6 +120,7 @@ export default function CodeBlock({children: rawChildren, ...props}) {
     // Put placeholders in code blocks (<[^>*]>) in editable <span> elements.
     try {
       mergeMatchingSiblings();
+      updateMatchingPlaceholdersOnInput()
     } catch (error) {
       console.error('An error occurred while making placeholders editable:', error);
     }
