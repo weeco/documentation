@@ -43,9 +43,22 @@ module.exports = {
           id: "get-started/quick-start",
         },
         {
-          type: "doc",
+          type: "category",
           label: "Introduction to rpk",
-          id: "get-started/rpk-install",
+          link: { type: "doc", id: "get-started/intro-to-rpk" },
+
+          items: [
+            {
+              type: "doc",
+              label: "Broker and Admin API Addresses",
+              id: "get-started/broker-admin",
+            },
+            {
+              type: "doc",
+              label: "Install rpk",
+              id: "get-started/rpk-install",
+            },
+          ],
         },
         {
           type: "doc",
