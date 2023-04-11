@@ -129,7 +129,8 @@ helm install cert-manager jetstack/cert-manager  --set installCRDs=true --namesp
   helm install redpanda redpanda/redpanda \
     --namespace redpanda \
     --create-namespace \
-    --set external.domain=${DOMAIN}
+    --set external.domain=${DOMAIN} \
+    --set statefulset.initContainers.setDataDirOwnership.enabled=true
   ```
 
   The installation displays some tips for getting started.

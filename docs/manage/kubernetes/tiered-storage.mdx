@@ -40,6 +40,7 @@ import Transport from '../../manage/shared/tiered-storage/_transport.mdx';
 import CloudStorageHousekeeping from '../../manage/shared/tiered-storage/_cloud-storage-housekeeping.mdx';
 import AdjacentSegmentMerging from '../../manage/shared/tiered-storage/_adjacent-segment-merging.mdx';
 import ConfigurationProperties from '../../manage/shared/tiered-storage/_configuration-properties.mdx';
+import InitContainer from './shared/_initContainer.mdx'
 import KResetPropertyInfo from '../../manage/shared/tiered-storage/_k-reset-property-info.mdx'
 
 import ContextLink from '@site/src/components/ContextButton.js'
@@ -394,10 +395,10 @@ To specify a different volume for the cache directory, use one of the following:
 <Tabs groupId="volumes" queryString>
 <TabItem value="persistentvolume" label="PersistentVolume">
 
-You can configure the Helm chart to use a PersistentVolume for the cache directory with either a static provisioner or a dynamic provisioner.
-
 A PersistentVolume is storage in the cluster that has been provisioned by an administrator or dynamically provisioned using StorageClasses.
 For details about PersistentVolumes, see the [Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+
+You can configure the Helm chart to use a PersistentVolume for the cache directory with either a static provisioner or a dynamic provisioner.
 
 <Tabs groupId="provisioners" queryString>
 <TabItem value="dynamic" label="Dynamic provisioners">
@@ -556,12 +557,16 @@ When you use a static provisioner, an existing PersistentVolume in the cluster i
 </TabItem>
 <TabItem value="hostpath" label="hostPath">
 
-To use a hostPath volume for the cache directory,
-set the `storage.tieredStorageHostPath` configuration to the absolute path of a file on the local worker node,
-and set `storage.tieredStoragePersistentVolume.enabled` to `false`.
-
 A hostPath volume mounts a file or directory from the host node's file system into your Pod.
 For details about hostPath volumes, see the [Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath).
+
+To use a hostPath volume for the cache directory:
+
+1. Set the `storage.tieredStorageHostPath` configuration to the absolute path of a file on the local worker node.
+1. Set `storage.tieredStoragePersistentVolume.enabled` to `false`.
+1. Set `statefulset.initContainers.setDataDirOwnership.enabled` to `true`.
+
+<InitContainer/>
 
 <Tabs groupId="helm-config">
 <TabItem value="values" label="--values">
