@@ -276,8 +276,6 @@ module.exports = {
                       type: "doc",
                       label: "Redpanda Cloud Security Overview",
                       id: "deploy/deployment-option/cloud/security/security-overview",
-                    },
-                   ]
                 },
                 {
                   type: "category",
@@ -924,6 +922,4 @@ module.exports = {
 
 
       items: ["labs/install-preview", "labs/data-transform"],
-    },
-  ],
-};
+    };
