@@ -51,7 +51,7 @@ jobs:
       - name: Check if changes were made
         id: check_changes
         run: |
-          cd redpanda-docs-antora
+          cd redpanda-docs
           changes=$(git status --porcelain)
           if [ -z "$changes" ]; then
             echo "has_changes=false" >> $GITHUB_ENV
