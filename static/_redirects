@@ -117,7 +117,7 @@
 /docs/cloud/create-byoc-cluster-gcp                                                   /docs/deploy/deployment-option/cloud/create-byoc-cluster-gcp 301!
 /docs/cloud/create-dedicated-cloud-cluster-aws    									  /docs/deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws 301!
 /docs/cloud/create-topic                          									  /docs/deploy/deployment-option/cloud/create-topic 301!
-/docs/cloud/dedicated-byoc                        									  /docs/deploy/deployment-option/cloud/dedicated-byoc 301!
+/docs/cloud/dedicated-byoc                        									  /docs/deploy/deployment-option/cloud/cloud-architecture 301!
 /docs/cloud/vpc-peering                           									  /docs/deploy/deployment-option/cloud/vpc-peering 301!
 /docs/cloud/managed-connectors/create-s3-sink-connector   							  /docs/deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector 301!
 /docs/cloud/managed-connectors/index                      							  /docs/deploy/deployment-option/cloud/managed-connectors/index 301!
@@ -621,3 +621,7 @@
 /reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/                            /docs/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/ 301!
 /docs/reference/reference/rpk/rpk-cluster/                                            /docs/reference/rpk/rpk-cluster/ 301!
 /docs/deployment/performance-storage-tuning/                                          /docs/deploy/deployment-option/self-hosted/manual/ 301!
+
+#New cloud pages
+
+/docs/deploy/deployment-option/cloud/dedicated-byoc                                   /docs/deploy/deployment-option/cloud/cloud-architecture 301!

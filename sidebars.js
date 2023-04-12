@@ -234,12 +234,7 @@
                 {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
-                  id: "deploy/deployment-option/cloud/cloud-overview",
-                },
-                {
-                  type: "doc",
-                  label: "Redpanda Cloud Overview",
-                  id: "deploy/deployment-option/cloud/dedicated-byoc",
+                  id: "deploy/deployment-option/cloud/cloud-architecture",
                 },
                 {
                   type: "doc",
@@ -248,38 +243,45 @@
                 },
                 {
                   type: "category",
-                  label: "Provision a Dedicated Cluster",
-
+                  label: "Provision a Cloud Cluster",
                   items: [
                     {
-                      type: "doc",
-                      label: "Create Clusters",
-                      id: "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws",
+                      type: "category",
+                      label: "Provision a Dedicated Cluster",
+    
+                      items: [
+                        {
+                          type: "doc",
+                          label: "Create Clusters",
+                          id: "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws",
+                        },
+                        {
+                          type: "doc",
+                          label: "VPC Peering",
+                          id: "deploy/deployment-option/cloud/vpc-peering",
+                        },
+                      ],
                     },
                     {
-                      type: "doc",
-                      label: "VPC Peering",
-                      id: "deploy/deployment-option/cloud/vpc-peering",
+                      type: "category",
+                      label: "Provision a BYOC Cluster",
+    
+                      items: [
+                        {
+                          type: "doc",
+                          label: "Create a BYOC Cluster on AWS",
+                          id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
+                        },
+                        {
+                          type: "doc",
+                          label: "Create a BYOC Cluster on GCP",
+                          id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                        },
+                      ],
                     },
-                  ],
+                  ]
                 },
-                {
-                  type: "category",
-                  label: "Provision a BYOC Cluster",
-
-                  items: [
-                    {
-                      type: "doc",
-                      label: "Create a BYOC Cluster on AWS",
-                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
-                    },
-                    {
-                      type: "doc",
-                      label: "Create a BYOC Cluster on GCP",
-                      id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
-                    },
-                  ],
-                },
+                
                 {
                   type: "doc",
                   label: "Create a Topic",
