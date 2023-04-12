@@ -1,0 +1,62 @@
+---
+title: Redpanda Cloud Security Overview
+---
+
+<head>
+    <meta name="title" content="Redpanda Cloud Security Overview | Redpanda Docs"/>
+    <meta name="description" content="Redpanda Cloud provides authentication, authorization, encryption, and secrets security protection."/>
+</head>
+
+## Authentication
+
+Redpanda Cloud provides manual authentication options, authentication
+services, and SASL/SCRAM authentication.
+
+### Authenticate manually
+
+Redpanda Cloud supports federated authentication, commonly known as single sign-
+on (SSO), using OAuth2 or OpenIDConnect (OIDC)-compatible identity providers. For
+OIDC and OAuth2 token exchanges, Redpanda Cloud uses
+[OAuth2’s authorization code](https://www.rfc-editor.org/rfc/rfc6749#section-4.1)
+flow and [Proof Key for Code Exchange (PKCE)](https://www.rfc-editor.org/rfc/rfc7636).
+Additionally, access tokens never leave your network or any user’s browser, and
+are always encrypted at rest using AES-256 GCM.
+
+When not using federated authentication, Redpanda Cloud authenticates users
+directly using their email and password. Passwords are hashed, salted, and
+encrypted at rest using the bcrypt password-hashing function.
+
+### Authenticate using services
+
+Redpanda Cloud data planes run their own dedicated data plane agent, which
+authenticates and connects against the control plane over a single TLS 1.2
+encrypted TCP connection. The authentication token is unique per Redpanda Cloud
+cluster. For details about secret management practices, refer to Secrets.
+
+AWS and GCP IAM roles are always used to generate dynamic and short-lived
+credentials for the following to interact with cloud provider APIs:
+
+* Data plane agent
+* Redpanda’s Shadow Indexing process
+* Redpanda Console
+* Connectors
+
+These roles have constrained permissions to ensure that each service can only
+access or manage its own data plane-scoped resources following the principle of
+least privilege.
+
+## Authorization
+
+All Redpanda Cloud clusters use IAM roles to retrieve dynamic credentials and
+access S3 or GCS to push and pull Redpanda segments. The IAM role and policies
+are fully managed by the data plane agent.
+
+### AWS IAM policy
+
+### GCP IAM policy
+
+### Redpanda Console
+
+Redpanda Console implements Role-Based Access Controls (RBAC) that enable you to
+granularly control access to Kafka entities. See Redpanda Console Security for
+details.

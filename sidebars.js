@@ -9,7 +9,7 @@
  Create as many sidebars as you want.
  */
 
-module.exports = {
+ module.exports = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docsSidebar: [
     {
@@ -234,6 +234,11 @@ module.exports = {
                 {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
+                  id: "deploy/deployment-option/cloud/cloud-overview",
+                },
+                {
+                  type: "doc",
+                  label: "Redpanda Cloud Overview",
                   id: "deploy/deployment-option/cloud/dedicated-byoc",
                 },
                 {
@@ -243,7 +248,7 @@ module.exports = {
                 },
                 {
                   type: "category",
-                  label: "Redpanda Dedicated",
+                  label: "Provision a Dedicated Cluster",
 
                   items: [
                     {
@@ -259,19 +264,34 @@ module.exports = {
                   ],
                 },
                 {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on AWS",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
-                },
-                {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on GCP",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                  type: "category",
+                  label: "Provision a BYOC Cluster",
+
+                  items: [
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on AWS",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on GCP",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                    },
+                  ],
                 },
                 {
                   type: "doc",
                   label: "Create a Topic",
                   id: "deploy/deployment-option/cloud/create-topic",
+                },
+                {
+                  type: "category",
+                  label: "Security",
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/security/index" },  
+                  items: [
+                    "deploy/deployment-option/cloud/security/security-overview"
+                  ]
                 },
                 {
                   type: "category",
