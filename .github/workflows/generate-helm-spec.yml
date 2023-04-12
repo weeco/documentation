@@ -73,4 +73,4 @@ jobs:
           git push origin dev
         working-directory: ${{ github.workspace }}
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.ACTIONS_BOT_TOKEN }}
