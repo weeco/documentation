@@ -23,6 +23,7 @@ jobs:
           repository: redpanda-data/helm-charts
           ref: main
           path: helm-charts
+          token: ${{ secrets.ACTIONS_BOT_TOKEN }}
 
       - name: Generate Helm docs
         run: |
@@ -35,6 +36,7 @@ jobs:
           repository: redpanda-data/documentation
           ref: dev
           path: redpanda-docs
+          token: ${{ secrets.ACTIONS_BOT_TOKEN }}
 
       - name: Copy Helm docs output to redpanda-docs
         run: |
