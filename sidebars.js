@@ -446,6 +446,11 @@ module.exports = {
                     label: "Upgrade",
                     id: "manage/cluster-maintenance/rolling-upgrade",
                   },
+                  {
+                    type: "doc",
+                    label: "Maintenance Mode",
+                    id: "manage/node-management",
+                  },
                   "manage/cluster-maintenance/disk-utilization",
                   {
                     type: "doc",
@@ -571,11 +576,6 @@ module.exports = {
                     id: "manage/console/edit-topic-configuration",
                   }
                 ]
-              },
-              {
-                type: "doc",
-                label: "Node Maintenance Mode",
-                id: "manage/node-management",
               },
               "manage/data-migration",
               {
