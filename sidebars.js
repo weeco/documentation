@@ -294,8 +294,8 @@
                   items: [
                     {
                       type: "doc",
-                      label: "Cloud Security Compliance",
-                      id: "deploy/deployment-option/cloud/security/cloud-security-compliance",
+                      label: "Cloud Security Architecture",
+                      id: "deploy/deployment-option/cloud/security/cloud-security-architecture",
                     },
                   ],
                 },

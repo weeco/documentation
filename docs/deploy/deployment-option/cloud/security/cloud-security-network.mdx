@@ -1,0 +1,36 @@
+---
+title: Cloud Network Architecture, Ports, and Flows
+---
+
+<head>
+    <meta name="title" content="Redpanda Cloud Network Architecture, Ports, and Flows  | Redpanda Docs"/>
+    <meta name="description" content="Redpanda Cloud ."/>
+</head>
+
+Redpanda Cloud deploys two different types of networks: one for private and another
+for public Redpanda clusters. By default, networks are always laid out across
+multiple availability zones (AZ) to enable the creation of one or many single
+and multi-AZ Redpanda clusters within them.
+
+## Public Redpanda clusters
+
+Public Redpanda clusters are designed with the following:
+
+- There is no network segmentation
+- Redpanda brokers are collocated in the same subnets as the data plane agent.
+- Redpanda TCP listeners are protected by SASL/SCRAM (SCRAM-SHA-256, SCRAM-SHA-512)
+  authentication and encrypted in transit using TLS 1.2.
+
+![Redpanda Cloud Security Architecture](../../../../static/img/cloud-public-network.png
+
+## Private Redpanda clusters
+
+Private Redpanda clusters are designed with the following:
+
+- Proper network segmentation
+- All Redpanda services are only accessible from within the same VPC or through
+  VPC peerings.
+- The data plane agent is placed in public subnets and segmented away by
+  firewall rules from Redpanda services.
+
+![Redpanda Cloud Security Architecture](../../../../static/img/cloud-private-network.png
