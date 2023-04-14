@@ -71,8 +71,8 @@
       type: "category",
       label: "Develop",
       link: { type: "doc", id: "develop/index" },
-      
-      
+
+
       items: [
         {
           type: "doc",
@@ -211,7 +211,7 @@
                   ]
                 },
                     "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    "deploy/deployment-option/self-hosted/manual/high-availability",  
+                    "deploy/deployment-option/self-hosted/manual/high-availability",
                     {
                       type: "doc",
                       label: "Sizing Use Cases",
@@ -234,7 +234,7 @@
                 {
                   type: "doc",
                   label: "Redpanda Cloud Overview",
-                  id: "deploy/deployment-option/cloud/cloud-architecture",
+                  id: "deploy/deployment-option/cloud/cloud-overview",
                 },
                 {
                   type: "doc",
@@ -248,16 +248,16 @@
                     {
                       type: "category",
                       label: "Provision a Dedicated Cluster",
-    
+
                       items: [
                         {
                           type: "doc",
-                          label: "Create Clusters",
+                          label: "Create a Dedicated Cloud Cluster on AWS",
                           id: "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws",
                         },
                         {
                           type: "doc",
-                          label: "VPC Peering",
+                          label: "Add VPC Peering",
                           id: "deploy/deployment-option/cloud/vpc-peering",
                         },
                       ],
@@ -265,7 +265,7 @@
                     {
                       type: "category",
                       label: "Provision a BYOC Cluster",
-    
+
                       items: [
                         {
                           type: "doc",
@@ -281,7 +281,7 @@
                     },
                   ]
                 },
-                
+
                 {
                   type: "doc",
                   label: "Create a Topic",
@@ -290,15 +290,19 @@
                 {
                   type: "category",
                   label: "Security",
-                  link: { type: "doc", id: "deploy/deployment-option/cloud/security/index" },  
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/security/index" },
                   items: [
-                    "deploy/deployment-option/cloud/security/security-overview"
-                  ]
+                    {
+                      type: "doc",
+                      label: "Cloud Security Compliance",
+                      id: "deploy/deployment-option/cloud/security/cloud-security-compliance",
+                    },
+                  ],
                 },
                 {
                   type: "category",
                   label: "Managed Connectors",
-                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },  
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },
                   items: [
                     {
                       type: "doc",
@@ -331,7 +335,7 @@
                     type: "doc",
                     label: "Cluster Properties",
                     id: "manage/kubernetes/cluster-property-configuration",
-                  },  
+                  },
                   {
                     type: "doc",
                     label: "Storage",
@@ -340,8 +344,8 @@
                   {
                     type: "category",
                     label: "Tiered Storage",
-                    
-                    
+
+
                     link: {
                       type: "doc",
                       id: "manage/kubernetes/tiered-storage",
@@ -483,21 +487,21 @@
                     type: "doc",
                     label: "Cluster Properties",
                     id: "manage/cluster-maintenance/cluster-property-configuration",
-                  },  
+                  },
                   {
                     type: "doc",
                     label: "Cluster Diagnostics",
                     id: "manage/cluster-maintenance/cluster-diagnostics",
-                  }, 
+                  },
                 ]
               },
-              
+
               {
                 type: "category",
                 label: "Security",
                 link: { type: "doc", id: "manage/security/index" },
-                
-                
+
+
                 items: [
                   {
                     "type": "doc",
@@ -613,8 +617,8 @@
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "reference/index" },
-      
-      
+
+
       items: [
         "reference/cluster-properties",
         "reference/tunable-properties",
@@ -637,7 +641,7 @@
               type: "doc",
               label: "Internal Metrics Reference",
               id: "reference/internal-metrics-reference",
-            }, 
+            },
           ]
         },
         {
@@ -1021,7 +1025,7 @@
         {
           type: "category",
           label: "Redpanda Console",
-          link: { type: "doc", id: "reference/console/index" },  
+          link: { type: "doc", id: "reference/console/index" },
           items: [
             {
               type: "doc",
@@ -1048,8 +1052,8 @@
       type: "category",
       label: "Labs",
       link: { type: "doc", id: "labs/index" },
-      
-      
+
+
       items: ["labs/install-preview", "labs/data-transform"],
     },
   ],

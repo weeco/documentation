@@ -20,8 +20,12 @@ a fully managed Kafka Connect and Connectors cluster as well.
 Redpanda Cloud supports Dedicated clusters and Bring Your Own Cloud (BYOC) clusters,
 which are clusters running in your cloud account.
 
-Redpanda Cloud employs a control plane and data plane architecture that ensures
-no human has direct access to Redpanda brokers or customer data.
+## Cloud Architecture
+
+Redpanda Cloud employs a control plane and data plane architecture. The control
+plane configures and maintains Redpanda cloud clusters, which are self-contained
+and independent of the control plane, and remain available even if the network
+connection to the data plane is lost.
 
 * Control plane
   The control plane is a separate entity that resides above and enforces rules
@@ -68,8 +72,8 @@ no human has direct access to Redpanda brokers or customer data.
 ## Ways to provision clusters
 
 Redpanda offers two ways to provision clusters in the cloud:
-* Dedicated Cloud
-* Bring Your Own Cloud (BYOC)
+* [Dedicated Cloud](../create-dedicated-cloud-cluster-aws)
+* Bring Your Own Cloud (BYOC) ([AWS](../create-byoc-cluster-aws) or [GCP](../create-byoc-cluster-gcp))
 
 Both methods offer the following features:
 * Single-zone or multi-zone availability
