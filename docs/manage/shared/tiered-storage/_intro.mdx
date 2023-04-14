@@ -7,7 +7,7 @@ import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
 
 Tiered Storage helps to lower storage costs by offloading log segments to object storage. You can specify the amount of storage you want to retain in local storage. You don't need to specify which log segments you want to move, because Redpanda moves them automatically based on cluster-level configuration properties. Tiered Storage indexes where data is offloaded, so it can retrieve the data when you need it.
 
-Redpanda natively supports Tiered Storage with Amazon S3, Google Cloud Storage (GCS), and Microsoft Azure Blob Storage (ABS). Migrating topics from one object storage provider to another is not supported. 
+Redpanda natively supports Tiered Storage with Amazon Simple Storage Service (S3), Google Cloud Storage (GCS, which uses the Google Cloud Platform S3 API), and Microsoft Azure Blob Storage (ABS). Migrating topics from one object storage provider to another is not supported. 
 
 The following image illustrates the Tiered Storage architecture: remote write uploads data from Redpanda to object storage, and remote read fetches data from object storage to Redpanda.
 
