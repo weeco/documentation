@@ -9,11 +9,11 @@ title: Develop
 
 - [Supported Kafka Clients](../develop/kafka-clients)
 
-    Redpanda is compatible with Apache Kafka version 0.11 through 3.1. See exceptions to Kafka compatibilities. 
+    Redpanda is compatible with Apache Kafka version 0.11 through 3.1. 
 
 - [Use Redpanda with Kafka Client Libraries](../develop/code-examples)
 
-    Follow an intermediate-level guide to create a topic, produce data, and consume data with different client libraries, including Go, Node.js, and Python.
+    Follow an intermediate-level guide to create a topic, produce data, and consume data with Go, Node.js, and Python.
 
 - [Use Redpanda with NodeJS](../develop/guide-nodejs)
 
@@ -21,11 +21,15 @@ title: Develop
 
 - [Use Redpanda with the HTTP Proxy API](../develop/http-proxy)
 
-    Redpanda HTTP Proxy (`pandaproxy`) allows access to your data through a REST API. 
+    Redpanda HTTP Proxy (`pandaproxy`) lets you access your data through a REST API. 
+
+- [Configure Topics](../develop/config-topics)
+
+    Learn how to create topics and update topic configurations.
 
 - [Produce Data](../develop/produce-data)
 
-    Producers send data to brokers. Idempotent producers assign a unique ID to every write request.
+    Learn how to configure producers and idempotent producers.
 
 - [Consume Data](../develop/consume-data/)
       
@@ -33,4 +37,4 @@ title: Develop
 
 - [Transactions](../develop/transactions)
 
-    Transactions guarantee both exactly-once semantics (EOS) and atomicity. For example, you can fetch messages starting from the last consumed offset and transactionally process them one by one, updating the last consumed offset and producing events at the same time.
+    Learn how to use transactions; for example, you can fetch messages starting from the last consumed offset and transactionally process them one by one, updating the last consumed offset and producing events at the same time.

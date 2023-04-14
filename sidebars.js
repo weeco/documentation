@@ -243,30 +243,37 @@ module.exports = {
                 },
                 {
                   type: "category",
-                  label: "Redpanda Dedicated",
-
+                  label: "Dedicated Cloud",
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/dedicated/index" },
                   items: [
                     {
                       type: "doc",
-                      label: "Create Clusters",
+                      label: "Create a Dedicated Cluster on AWS",
                       id: "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws",
                     },
                     {
                       type: "doc",
-                      label: "VPC Peering",
+                      label: "Add a VPC Peering Connection",
                       id: "deploy/deployment-option/cloud/vpc-peering",
                     },
                   ],
                 },
                 {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on AWS",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
-                },
-                {
-                  type: "doc",
-                  label: "Create a BYOC Cluster on GCP",
-                  id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                  type: "category",
+                  label: "BYOC Cloud",
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/byoc/index" },
+                  items: [
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on AWS",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-aws",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a BYOC Cluster on GCP",
+                      id: "deploy/deployment-option/cloud/create-byoc-cluster-gcp",
+                    },
+                  ]
                 },
                 {
                   type: "doc",
@@ -967,6 +974,7 @@ module.exports = {
             {
               type: "category",
               label: "Install",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-install/index" },
               items: [
                 "reference/redpanda-operator/kubernetes-qs-local-access",
                 "reference/redpanda-operator/kubernetes-qs-minikube",
@@ -976,6 +984,7 @@ module.exports = {
             {
               type: "category",
               label: "Deploy",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-deploy/index" },
               items: [
                 "reference/redpanda-operator/kubernetes-connectivity",
                 "reference/redpanda-operator/kubernetes-external-connect",
@@ -986,6 +995,7 @@ module.exports = {
             {
               type: "category",
               label: "Security",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-security/index" },
               items: [
                 "reference/redpanda-operator/security-kubernetes",
                 "reference/redpanda-operator/tls-kubernetes",
@@ -1011,13 +1021,14 @@ module.exports = {
               label: "Redpanda Console Configuration",
               id: "reference/console/config",
             },
+
+            "reference/console/programmable-push-filters",
+            "reference/console/record-deserialization",
             {
               type: "doc",
               label: "Redpanda Console Role-Binding Configuration",
               id: "reference/console/role-bindings",
             },
-            "reference/console/record-deserialization",
-            "reference/console/programmable-push-filters",
           ],
         },
         {
