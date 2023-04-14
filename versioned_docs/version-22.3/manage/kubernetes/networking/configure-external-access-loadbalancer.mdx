@@ -171,7 +171,7 @@ If your load balancer instances have a default DNS name, you can configure each 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the DNS names for each of your load balancers.

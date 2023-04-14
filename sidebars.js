@@ -407,6 +407,11 @@ module.exports = {
                     id: "manage/kubernetes/monitor",
                   },
                   {
+                    type: "doc",
+                    label: "Resilience Testing",
+                    id: "manage/kubernetes/resilience-testing",
+                  },
+                  {
                     type: "category",
                     label: "Troubleshooting",
                     link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },
