@@ -260,7 +260,7 @@ module.exports = {
                 },
                 {
                   type: "category",
-                  label: "BYOC Cloud",
+                  label: "BYOC",
                   link: { type: "doc", id: "deploy/deployment-option/cloud/byoc/index" },
                   items: [
                     {
