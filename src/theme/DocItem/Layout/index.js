@@ -23,17 +23,10 @@ function encode(data) {
 }
 
 const FeedbackForm = (props) => {
-  const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   let [formData, setFormData] = useState({})
 
   const handleChange = (e) => {
-    if (e.target.id=='other') setOther(true)
-    else {
-      setOther(false)
-      const textarea = document.getElementById("otherText")
-      textarea.value = ''
-    }
     handleFormData(e)
   }
 
@@ -141,10 +134,10 @@ const FeedbackForm = (props) => {
                     </div>
                     <input type="text" name="email" id="email" onChange={handleFormData} placeholder="email@example.com" className={styles.moreQuestions}/><br />
                     <div>
-                      <div className={`${other ? `${styles.boxSizing} + " " + ${styles.padding}` : `${styles.hide}`}`}>
+                      <div className={`${`${styles.boxSizing} + " " + ${styles.padding}` }`}>
                         {whatWeDo}
                       </div>
-                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please share details or suggestions for this topic." onChange={handleFormData}></textarea>
+                      <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please share details or suggestions for this topic." onChange={handleFormData}></textarea>
                     </div>
                 </div>
                 <div className={styles.modalFooter}>
