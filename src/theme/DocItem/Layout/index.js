@@ -26,10 +26,6 @@ const FeedbackForm = (props) => {
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   let [formData, setFormData] = useState({})
 
-  const handleChange = (e) => {
-    handleFormData(e)
-  }
-
  const handleFormData = (e) => {
   setFormData({ ...formData, [e.target.name]: e.target.value })
  }
@@ -54,9 +50,9 @@ const FeedbackForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const defaultRadio = {feedback:solvedRadio};
-    if(Object.keys(formData).length==0){
-      formData=defaultRadio;
+    const defaultRadio = solvedRadio;
+    if(!formData.feedback){
+      formData.feedback=defaultRadio;
     }
     const currentUrl = window.location.href
     const beta = window.location.href.includes('preview')
@@ -117,15 +113,15 @@ const FeedbackForm = (props) => {
                       <input className={styles.hide} name="navigator"/>
 
                       <label>
-                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange} defaultChecked/>
+                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleFormData} defaultChecked/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
                       </label><br />
                       <label>
-                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleChange}/>
+                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleFormData}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
                       <label>
-                        <input type="radio" name="feedback" id="other" value="other" onChange={handleChange} />
+                        <input type="radio" name="feedback" id="other" value="other" onChange={handleFormData} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
