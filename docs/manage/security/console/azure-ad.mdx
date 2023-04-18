@@ -11,15 +11,23 @@ title: Azure AD SSO Setup
 This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
-Integrating Redpanda Console with Azure AD allows your users to use their Azure AD identities to sign-in to Console.
+Integrating Redpanda Console with Azure AD allows your users to use their Azure AD identities to sign in to Redpanda Console.
 This guide assumes you already have an Azure AD account and permissions to create Applications within your directory.
 
 ## Create an OpenID connect application
 
-TODO: Write text, possibly refer to: https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings
+Begin by registering your app in the Azure Portal. Provide the following information:
+
+* Display name
+* Supported account types that can access the API (choose single tenant, multi-tenant, or personal accounts)
+* Redirect URI (select `Web` as the platform)
+
+After the app is registered, the overview page opens. This page contains the client ID and client secret, which you paste into the `redpanda-console-config.yaml file`.
+
+For more information, see the Microsoft documentation for [configuring an OpenID connect provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
 
 :::note
-Below configurations assume that you want to host Redpanda Console so that it would be accessible via
+The configurations below assume that you want to host Redpanda Console so it is accessible at
 `https://console.yourcompany.com`.
 :::
 
@@ -35,14 +43,14 @@ login:
   # web token used to store user sessions. This secret key is
   # critical for the security of Redpanda Console's authentication and
   # authorization system. Use a long, complex key with a combination of
-  # numbers, letters, and special characters. While you must use a minimum of
-  # 10 characters, Redpanda recommends using more than 32
+  # numbers, letters, and special characters. The minimum number of
+  # characters is 10, but Redpanda recommends using more than 32
   # characters. For additional security, use a different secret key for
-  # each environment. jwtSecret can be securely generated with the following
+  # each environment. To securely generate a jwtSecret key, run the following
   # command: LC_ALL=C tr -dc '[:alnum:]' < /dev/random | head -c32
   #
   # If you update this secret key, any users who are
-  # already logged into Redpanda Console will be logged out and will have
+  # already logged in to Redpanda Console will be logged out and will have
   # to log in again.
   jwtSecret: ""
 
@@ -51,12 +59,12 @@ login:
     # ProviderURL must be specified in the following format:
     # https://login.microsoftonline.com/{tenantId}/v2.0 .
     # To get this URL, browse to the registered app in your 
-    # Azure Portal, click the "Endpoints" tab. A drawer 
-    # should open with several links. The link below 
+    # Azure Portal and click the "Endpoints" tab. A drawer 
+    # opens with several links. The link below 
     # "OpenID Connect metadata document" contains the 
-    # provider URL, however you must trim the suffix 
+    # provider URL; however, you must trim the suffix 
     # "/.well-known/openid-configuration" so that it 
-    # matches the expected format as shown above.
+    # matches the expected format.
     providerUrl: ""
 
     clientId: ""
