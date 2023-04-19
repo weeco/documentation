@@ -463,6 +463,9 @@ Maximum connections per second for one core. If `null` (the default), the number
 
 **Restart required**: yes
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connection_rate_limit_overrides
@@ -474,6 +477,9 @@ Overrides the maximum connections per second for one core for the specified IP a
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -487,6 +493,9 @@ Maximum number of Kafka client connections per broker. If `null`, the property i
 
 **Restart required**: no
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connections_max_overrides
@@ -496,6 +505,9 @@ A list of IP addresses for which Kafka client connection limits are overridden a
 **Default**: {} (empty list)
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -508,6 +520,9 @@ Maximum number of Kafka client connections per IP address, per broker. If `null`
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -611,6 +626,9 @@ If `0`, the balancer is disabled and all throughput quotas are immutable.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_min_shard_throughput_ratio
@@ -630,6 +648,9 @@ If set to `0.0`, the minimum is disabled. If set to `1.0`, then the balancer won
 **Range**: [0.0, 1.0]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -652,6 +673,9 @@ If set to `0`, no minimum is enforced.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_window_ms
@@ -665,6 +689,9 @@ Time window used to average the current throughput measurement for the quota bal
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -707,6 +734,9 @@ If `null`, the property is disabled, and traffic is not limited.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_throughput_limit_node_out_bps
@@ -722,6 +752,9 @@ If `null`, the property is disabled, and traffic is not limited.
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
