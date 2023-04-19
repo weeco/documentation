@@ -293,9 +293,21 @@
                   link: { type: "doc", id: "deploy/deployment-option/cloud/security/index" },
                   items: [
                     {
-                      type: "doc",
+                      type: "category",
                       label: "Cloud Security Architecture",
-                      id: "deploy/deployment-option/cloud/security/cloud-security-architecture",
+
+                      items: [
+                        {
+                          type: "doc",
+                          label: "Cloud Network Design, Ports, and Flows",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-network",
+                        },
+                        {
+                          type: "doc",
+                          label: "Cloud Availability",
+                          id: "deploy/deployment-option/cloud/security/cloud-availability",
+                        },
+                      ],
                     },
                   ],
                 },
