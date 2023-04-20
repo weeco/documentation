@@ -41,7 +41,7 @@ Redpanda Console requires a client secret to validate the connection request fro
 
 3. Click **New client secret**.
 
-4. In the "Add a client secret" pane, enter a description that identifies the app associated with the client secret.
+4. In the **Add a client secret** pane, enter a description that identifies the app associated with the client secret.
 
 5. Choose a time period that determines when the client secret will expire; for example, 180 days.
 
@@ -110,7 +110,7 @@ login:
     #    the email propagated)
     userIdentifyingClaimKey: "oid"
 
-    # The directory config is only required if you want to use 
+    # The directory configuration is only required if you want to use 
     # Azure AD groups in your role bindings, as described 
     # in the next section.
     # directory:
@@ -120,7 +120,7 @@ login:
 ## RBAC Azure AD groups sync
 
 You can bind roles to Azure groups from your organization by providing the `tenantId` in the directory configuration and adding API permissions to your client application. To retrieve the `tenantId`, go to
-your registered application in the Azure Active Directory portal. The "Directory (tenant) ID" is listed
+your registered application in the Azure Active Directory portal. The **Directory (tenant) ID** is listed
 along with other configurations in the **Essentials** section.
 
 ```yaml
@@ -132,13 +132,13 @@ login:
 
 If you specify the `tenantId`, Redpanda Console will send a request to the Microsoft Graph API to retrieve the memberships
 for the specified groups. In order for the Microsoft Graph API to grant the request, the client must have the appropriate permissions. In your AzureAD application,
-go to "API permissions" and add the following permissions:
+go to **API permissions** and add the following permissions:
 
-* "Group.Read.All"
-* "User.Read.All"
-* "Directory.Read.All"
+* **Group.Read.All**
+* **User.Read.All**
+* **Directory.Read.All**
 
-Next, grant admin consent for the default directory by clicking "Grant admin constent for Default Directory".
+Next, grant admin consent for the default directory by clicking **Grant admin consent for Default Directory**.
 
 ## Define role-bindings
 
