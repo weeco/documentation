@@ -71,13 +71,17 @@ The decommissioning process is designed to tolerate controller leadership transf
 1. Monitor the decommissioning status:
 
   ```bash
-  rpk admin brokers decommission-status <broker-id> \
+  rpk redpanda admin brokers decommission-status <broker-id> \
     --api-urls <broker-url>:<admin-api-port>
   ```
 
   The output uses cached cluster health data that is refreshed every 10 seconds.
 
 When the completion column for all rows is 100%, the broker is decommissioned.
+
+:::info
+If you add a new broker, make sure to give it a unique ID. Do not reuse the ID of the decommissioned broker.
+:::
 
 ## Troubleshooting
 
