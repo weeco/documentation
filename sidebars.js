@@ -295,7 +295,7 @@
                     {
                       type: "category",
                       label: "Cloud Security Architecture",
-
+                      link: { type: "doc", id: "deploy/deployment-option/cloud/security/cloud-security-architecture" },
                       items: [
                         {
                           type: "doc",
