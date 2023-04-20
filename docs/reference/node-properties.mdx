@@ -154,6 +154,20 @@ Transport Layer Security (TLS) configuration for the Kafka API endpoint.
 
 ---
 
+### large_allocation_warning_threshold
+
+Enables log warning messages for memory allocations greater than the given threshold size, in bytes.
+
+If set to `null`, the property is disabled, so no log messages are enabled.
+
+If enabled, the log warnings are rate limited: the first warning will be for any allocation greater than or equal to the configured threshold, then for every subsequent warning the threshold is increased by 1.618x the current threshold.
+
+**Units**: bytes per memory allocation
+
+**Default**: null
+
+---
+
 ### node_id
 
 A number that uniquely identifies the node within the cluster. If `null` (the default value), Redpanda automatically assigns an ID. If set, it must be non-negative value.
