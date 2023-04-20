@@ -9,6 +9,7 @@ description: Expose your Redpanda cluster to clients outside of your Kubernetes 
 <head>
     <meta name="title" content="Configure External Access through a NodePort Service | Redpanda Docs"/>
     <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster by using a NodePort Service."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/configure-external-access-nodeport/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -29,7 +30,7 @@ Advertising IP addresses of worker nodes is not supported for clusters with TLS 
 
 By default, Redpanda clusters are exposed through a NodePort Service. When the `external.type` field is set to `NodePort`, the Helm chart creates a NodePort Service that routes external traffic to the listener ports on the Redpanda brokers.
 
-![A client connects to a Pod through the NodePort Service](./nodeport.png)
+![A client connects to a Pod through the NodePort Service](/img/nodeport.png)
 
 ## Prerequisites
 
@@ -98,7 +99,7 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.
@@ -247,7 +248,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.
@@ -351,7 +352,7 @@ While adding entries to the `/etc/hosts` file may work for development purposes,
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-redpanda-configuration,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.

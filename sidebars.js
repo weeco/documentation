@@ -257,7 +257,7 @@
                         },
                         {
                           type: "doc",
-                          label: "Add VPC Peering",
+                          label: "Add a VPC Peering Connection",
                           id: "deploy/deployment-option/cloud/vpc-peering",
                         },
                       ],
@@ -445,6 +445,11 @@
                     id: "manage/kubernetes/monitor",
                   },
                   {
+                    type: "doc",
+                    label: "Resilience Testing",
+                    id: "manage/kubernetes/resilience-testing",
+                  },
+                  {
                     type: "category",
                     label: "Troubleshooting",
                     link: { type: "doc", id: "manage/kubernetes/troubleshooting/troubleshoot" },
@@ -483,6 +488,11 @@
                     type: "doc",
                     label: "Upgrade",
                     id: "manage/cluster-maintenance/rolling-upgrade",
+                  },
+                  {
+                    type: "doc",
+                    label: "Maintenance Mode",
+                    id: "manage/node-management",
                   },
                   "manage/cluster-maintenance/disk-utilization",
                   {
@@ -609,11 +619,6 @@
                     id: "manage/console/edit-topic-configuration",
                   }
                 ]
-              },
-              {
-                type: "doc",
-                label: "Node Maintenance Mode",
-                id: "manage/node-management",
               },
               "manage/data-migration",
               {
@@ -1000,6 +1005,7 @@
             {
               type: "category",
               label: "Install",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-install/index" },
               items: [
                 "reference/redpanda-operator/kubernetes-qs-local-access",
                 "reference/redpanda-operator/kubernetes-qs-minikube",
@@ -1009,6 +1015,7 @@
             {
               type: "category",
               label: "Deploy",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-deploy/index" },
               items: [
                 "reference/redpanda-operator/kubernetes-connectivity",
                 "reference/redpanda-operator/kubernetes-external-connect",
@@ -1019,6 +1026,7 @@
             {
               type: "category",
               label: "Security",
+              link: { type: "doc", id: "reference/redpanda-operator/operator-security/index" },
               items: [
                 "reference/redpanda-operator/security-kubernetes",
                 "reference/redpanda-operator/tls-kubernetes",
@@ -1044,13 +1052,14 @@
               label: "Redpanda Console Configuration",
               id: "reference/console/config",
             },
+
+            "reference/console/programmable-push-filters",
+            "reference/console/record-deserialization",
             {
               type: "doc",
               label: "Redpanda Console Role-Binding Configuration",
               id: "reference/console/role-bindings",
             },
-            "reference/console/record-deserialization",
-            "reference/console/programmable-push-filters",
           ],
         },
         {

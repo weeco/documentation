@@ -9,6 +9,7 @@ description: Expose your Redpanda cluster to clients outside of your Kubernetes 
 <head>
     <meta name="title" content="Configure External Access through LoadBalancer Services | Redpanda Docs"/>
     <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster by using LoadBalancer Services."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/configure-external-access-loadbalancer/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -32,7 +33,7 @@ When the `external.type` field is set to `LoadBalancer`, the Helm chart creates 
 
 The Helm chart adds the `spec.selector.statefulset.kubernetes.io/pod-name` setting to each LoadBalancer Service so that each targets only one Redpanda broker. Each Pod in a StatefulSet is automatically given the `statefulset.kubernetes.io/pod-name` label, which contains the name of the Pod. By setting the `spec.selector.statefulset.kubernetes.io/pod-name` field of the LoadBalancer Service to the name of a Pod, it makes the LoadBalancer Service target only the individual Redpanda broker and not the whole cluster.
 
-![A client connects to a Pod through a load balancer](./loadbalancer.png)
+![A client connects to a Pod through a load balancer](/img/loadbalancer.png)
 
 ## Prerequisites
 

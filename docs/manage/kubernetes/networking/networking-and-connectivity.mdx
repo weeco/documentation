@@ -9,6 +9,7 @@ description: Learn how internal and external connectivity works when Redpanda is
 <head>
     <meta name="title" content="Networking and Connectivity in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="Learn how internal and external connectivity works when Redpanda is running in Kubernetes."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/networking-and-connectivity/" />
 </head>
 
 Clients must be able to connect directly to each Pod that runs a Redpanda broker. For example, to write to or read from a given partition, clients connect directly to the leader broker that hosts that partition.
@@ -35,7 +36,7 @@ To allow both Redpanda brokers in the same Redpanda cluster and clients within t
 
 When a headless Service is associated with a StatefulSet, each Pod gets its own A/AAAA record that resolves directly to the individual Pod’s IP address. For example, the IP address of the `redpanda-0` Pod is resolvable at the following address:
 
-![Fully qualified domain name for a Pod called redpanda-0 in the redpanda namespace](./headless-clusterip-dns.png)
+![Fully qualified domain name for a Pod called redpanda-0 in the redpanda namespace](/img/headless-clusterip-dns.png)
 
 1. Pod name
 2. Service name
@@ -61,7 +62,7 @@ To make the Redpanda brokers externally accessible, the Pods must be exposed thr
 - NodePort (fastest and cheapest)
 - LoadBalancer
 
-![A client connects to a Pod directly through the NodePort Service or indirectly through the load balancer](./nodeport-loadbalancer.png)
+![A client connects to a Pod directly through the NodePort Service or indirectly through the load balancer](/img/nodeport-loadbalancer.png)
 
 :::info
 To make each Redpanda broker addressable through a Service, each Redpanda broker should run on its own worker node. This way, clients or load balancers can use the address of the worker nodes to connect to specific Redpanda brokers.
