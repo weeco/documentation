@@ -11,27 +11,54 @@ title: Azure AD SSO Setup
 This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
-Integrating Redpanda Console with Azure AD allows your users to use their Azure AD identities to sign in to Redpanda Console.
-This guide assumes you already have an Azure AD account and permissions to create Applications within your directory.
+By integrating Redpanda Console with Azure AD, your users can sign in to Redpanda Console using their Azure AD login credentials.
+
+These instructions assume you already have an Azure AD account and permissions to create Applications within your directory.
 
 ## Create an OpenID connect application
 
-Begin by registering your app in the Azure Portal. Provide the following information:
+In the Azure Portal, register your app and generate a client secret.
+
+### Register your app
+
+To register your application, log in to the Azure Portal and provide the following information:
 
 * **Display name** - Choose a descriptive name for your specific Redpanda Console deployment (for example Console Analytics Prod)
 * **Supported account types** - Select the types of accounts that can access the API (choose single tenant, multi-tenant, or personal accounts). If you are unsure, click "Help me choose...".
 * **Redirect URIs** Select Web as the platform and enter `https://console.<yourcompany>.com/login/callbacks/azure-ad` in the text box. Replace `<your-company>.com` with your company's domain name.
 
-For more information, see the Microsoft documentation for [configuring an OpenID connect provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
+After the app is registered, a summary page opens. This page displays a list of **Essentials**, which you will need when you edit the `redpanda-console-config.yaml file`.
 
-After the app is registered, the overview page opens. This page contains the client ID and client secret, which you paste into the `redpanda-console-config.yaml file`.
+For detailed instructions, see the Microsoft documentation for [configuring an OpenID connect provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
+
+### Generate the client secret
+
+Redpanda Console requires a client secret to validate the connection request from the redirect URI. To generate a client secret:
+
+1. In the **Essentials** section of the summary page, click **Add a certificate or secret** next to **Client credentials**.
+
+2. On the **Certificates & secrets** page, select the **Client secrets** tab.
+
+3. Click **New client secret**.
+
+4. In the "Add a client secret" pane, enter a description that identifies the app associated with the client secret.
+
+5. Choose a time period that determines when the client secret will expire; for example, 180 days.
+
+When the client secret is generated successfully, it appears under the **Client secrets** tab with its description, expiration date, value, and secret ID.
+
+:::important
+Copy the client secret value into the `redpanda-console-config.yaml` file before you leave the **Certificates and secrets** page. After you navigate away from the page, only the first few characters of the client secret value are displayed and you won't be able to copy the value into the configuration file.
+:::
+
+## Edit the console configuration file
+
+Edit the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`, and incorporate the details from your app registration.
 
 :::note
 The following configurations assume that you want to host Redpanda Console so it is accessible at
 `https://console.<your-company>.com`.
 :::
-
-Edit the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`, and make the following changes:
 
 ```yaml
 login:
@@ -70,9 +97,9 @@ login:
     clientId: ""
     clientSecret: ""
 
-    #  userIdentifyingClaimKey is a relevant property if you want 
+    #  userIdentifyingClaimKey is only needed when you want 
     #  to use a different claim key to identify users in the 
-    #  role binding. By default, we will use the 'oid' claim key,
+    #  role binding. By default, Redpanda uses the 'oid' claim key,
     #  which resolves to the unique user ID within the identity 
     #  provider. This means that you must provide the oid 
     #  identifier in the roleBindings as 'name' as well. 
@@ -84,7 +111,7 @@ login:
     userIdentifyingClaimKey: "oid"
 
     # The directory config is only required if you want to use 
-    # Azure AD groups in your role bindings. Described further
+    # Azure AD groups in your role bindings, as described 
     # in the next section.
     # directory:
     #   tenantId: ""
@@ -94,7 +121,7 @@ login:
 
 You can bind roles to Azure groups from your organization by providing the `tenantId` in the directory configuration and adding API permissions to your client application. To retrieve the `tenantId`, go to
 your registered application in the Azure Active Directory portal. The "Directory (tenant) ID" is listed
-along with uother configurations in the **Essentials** section.
+along with other configurations in the **Essentials** section.
 
 ```yaml
 login:
@@ -103,8 +130,8 @@ login:
       tenantId: ""
 ```
 
-If you specify the `tenantId`, Redpanda Console will talk to the Microsoft Graph API to retrieve the memberships
-for the specified groups. Therefore, the client needs the appropriate permissions. In your AzureAD application,
+If you specify the `tenantId`, Redpanda Console will send a request to the Microsoft Graph API to retrieve the memberships
+for the specified groups. In order for the Microsoft Graph API to grant the request, the client must have the appropriate permissions. In your AzureAD application,
 go to "API permissions" and add the following permissions:
 
 * "Group.Read.All"
@@ -138,5 +165,5 @@ roleBindings:
 ```
 
 :::note
-The resolved group memberships will also include transitive members. This allows you to create nested groups and refer to them in your role bindings.
+The resolved group memberships can also include transitive members. This allows you to create nested groups and refer to them in your role bindings.
 :::
