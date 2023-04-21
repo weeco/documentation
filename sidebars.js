@@ -299,13 +299,18 @@
                       items: [
                         {
                           type: "doc",
-                          label: "Cloud Network Design, Ports, and Flows",
-                          id: "deploy/deployment-option/cloud/security/cloud-security-network",
+                          label: "Network Design, Ports, and Flows",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-security-network",
                         },
                         {
                           type: "doc",
-                          label: "Cloud Availability",
-                          id: "deploy/deployment-option/cloud/security/cloud-availability",
+                          label: "Availability",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-availability",
+                        },
+                        {
+                          type: "doc",
+                          label: "Safety and Reliability",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-safety-reliability",
                         },
                       ],
                     },
