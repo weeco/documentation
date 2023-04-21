@@ -1,0 +1,18 @@
+---
+title: Safety and Reliability
+---
+
+<head>
+    <meta name="title" content="Redpanda Cloud Safety and Reliability  | Redpanda Docs"/>
+    <meta name="description" content="Learn how Redpanda Cloud tests for data inconsistency, liveness, and availability during adverse events."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/security/cloud-safety-reliability/" />
+</head>
+
+Redpanda continuously performs chaos testing on Redpanda releases to check for
+data inconsistency, liveness, and availability issues during adverse events, such
+as losing brokers, network partition or packet drops, or approaching the limits
+of the system in terms of disk, CPU, network, or memory utilization.
+
+Redpanda has also undergone [Jepsen validation and testing](https://jepsen.io/analyses/redpanda-21.10.1).
+Refer to this [blog](https://redpanda.com/blog/redpanda-official-jepsen-report-and-analysis)
+for a detailed analysis of the findings.

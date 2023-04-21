@@ -4,7 +4,7 @@ title: Cloud Network Design, Ports, and Flows
 
 <head>
     <meta name="title" content="Redpanda Cloud Network Design, Ports, and Flows  | Redpanda Docs"/>
-    <meta name="description" content="Learn about Redpanda cloud network design, including ports, and flows."/>
+    <meta name="description" content="Learn about Redpanda Cloud network design, including ports, and flows."/>
 </head>
 
 Redpanda Cloud deploys two different types of networks: one for private and another
@@ -21,7 +21,7 @@ Public Redpanda clusters are designed based on the following behaviors:
 - Redpanda TCP listeners are protected by SASL/SCRAM (SCRAM-SHA-256, SCRAM-SHA-512)
   authentication and encrypted in transit using TLS 1.2.
 
-![Redpanda Cloud Security Architecture](../../../../../static/img/cloud-public-networks.png)
+![Redpanda Cloud Security Architecture](../../../../../../static/img/cloud-public-networks.png)
 
 ## Private Redpanda clusters
 
@@ -33,7 +33,7 @@ Private Redpanda clusters are designed based on the following behaviors:
 - The data plane agent is placed in public subnets and segmented away by
   firewall rules from Redpanda services.
 
-![Redpanda Cloud Security Architecture](../../../../../static/img/cloud-private-network.png)
+![Redpanda Cloud Security Architecture](../../../../../../static/img/cloud-private-network.png)
 
 ## Network ports
 
@@ -43,7 +43,7 @@ Network ports are available for North-South, East-West, and South-North as follo
 
 The following table lists the network ports available to external clients within
 each data plane. For private-only Redpanda clusters, access to these ports is
-only possible through Redpanda cloud network connections such as [VPC Peering](../../vpc-peering),
+only possible through Redpanda Cloud network connections such as [VPC Peering](../vpc-peering),
 Transit Gateway Attachments, or Private Links.
 
 | Service                                | Port                      |
@@ -79,16 +79,16 @@ The following network port is used for outgoing network connections.
 
 ## AWS Network services
 
-Redpanda cloud supports the following AWS network services.
+Redpanda Cloud supports the following AWS network services.
 
 - Time synchronization
 
-  Redpanda cloud in AWS uses Amazon’s Time Sync Service, a fleet of redundant
+  Redpanda Cloud in AWS uses Amazon’s Time Sync Service, a fleet of redundant
   satellite-connected and atomic reference clocks in AWS regions.
 
 - Domain Name System (DNS)
 
-  Redpanda cloud creates a new DNS zone per Redpanda cluster in the control plane
+  Redpanda Cloud creates a new DNS zone per Redpanda cluster in the control plane
   and delegates its management exclusively to each cluster’s data plane. In turn,
   the data plane creates a hosted zone in Route53, managing DNS records for
   Redpanda services, as needed. All the interactions with Route53 are constrained
@@ -102,14 +102,14 @@ Redpanda cloud supports the following AWS network services.
   [AWS Shield Standard](https://aws.amazon.com/shield/features/#AWS_Shield_Standard),
   with no latency impact.
 
-- [VPC Peering](../../vpc-peering)
+- [VPC Peering](../vpc-peering)
 
-  Redpanda cloud supports configuring VPC peering against Redpanda cloud networks,
+  Redpanda Cloud supports configuring VPC peering against Redpanda Cloud networks,
   making them available to one or many private Redpanda clusters, and also allows
   users to connect to those clusters without traversing the public internet.
 
   You can on establish VPC Peering connections between two VPCs with non-overlapping
-  network addresses. When creating a Redpanda cloud network intended for peering,
+  network addresses. When creating a Redpanda Cloud network intended for peering,
   enssure that the specified network address range does not overlap with the network
   address range of the destination VPC.
 
