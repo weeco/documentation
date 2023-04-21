@@ -81,6 +81,7 @@ module.exports = {
         },
         "develop/code-examples",
         "develop/guide-nodejs",
+        "develop/benchmark",
         "develop/http-proxy",
         "develop/config-topics",
         {
