@@ -52,6 +52,12 @@ function mergeMatchingSiblings() {
     // and replace them with a single editable <span>
     let spansToDelete = [];
 
+    // Don't enable editable code for XML
+    // TODO: selectively enable editable code for markup samples (XML, HTML, ...)
+    if(parentSpan.closest('.theme-code-block')?.classList.contains('language-xml')){
+      return
+    }
+
     for (let i = 0; i < childSpans.length; i++) {
       const span = childSpans[i];
 
