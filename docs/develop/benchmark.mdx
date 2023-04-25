@@ -4,11 +4,11 @@ title: Benchmark Redpanda
 
 <head>
     <meta name="title" content="Benchmark Redpanda | Redpanda Docs"/>
-    <meta name="description" content="Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark."/>
+    <meta name="description" content="Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark. Run the same tests and workloads that Redpanda used to demonstrate at least 10x faster tail latencies than Apache Kafka on similar hardware."/>
     <link rel="canonical" href="https://docs.redpanda.com/docs/develop/benchmark/" />
 </head>
 
-Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark.
+Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark. Run the same tests and workloads that [Redpanda used to demonstrate at least 10x faster tail latencies than Apache Kafka on similar hardware](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark). 
 
 ## About OpenMessaging Benchmark
 
@@ -53,7 +53,7 @@ Running OMB with Redpanda requires setting up your local environment to provisio
     - [Terraform](https://developer.hashicorp.com/terraform/downloads) with [terraform-inventory plugin](https://github.com/adammck/terraform-inventory)
     - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.11 or higher)
     - Python 3 and pip
-    - (*Recommended*) A window manager like [tmux](https://github.com/tmux/tmux/wiki) or [screen](https://linux.die.net/man/1/screen) that supports detachable screen sessions.   
+    - A window manager like [tmux](https://github.com/tmux/tmux/wiki) or [screen](https://linux.die.net/man/1/screen) that supports detachable screen sessions.   
 
     :::tip
     Redpanda Data recommends running the benchmark executable with a window manager that supports detachable screen sessions, like tmux or screen, so the benchmark can continue to run in the background even after you disconnect. 
@@ -183,24 +183,18 @@ Running OMB with Redpanda requires setting up your local environment to provisio
     ansible-playbook deploy.yaml --private-key=<private-key-path>
     ```
 
-    ```tip
+    :::note
     Beginning with ansible 2.14, references to `args: warn` within ansible tasks cause a fatal error and halt the execution of the playbook. These errors have been resolved in the Redpanda fork of OMB, but you may find instances of this in the components installed by `ansible-galaxy`, particularly in the `cloudalchemy.grafana` task in `dashboard.yml`. To resolve this issue, removing the `warn` line in from the yml file.
-    ```
+    :::
 
 ## Run benchmark
 
 Connect to the benchmark's client and run the benchmark with a custom workload. 
 
-1. Get the IP address of the benchmark client to connect to from Terraform:
+1. Connect with SSH to the benchmark client, with its IP address retrieved from the `client_ssh_host` output of Terraform.
 
     ```bash
-    terraform output --raw client_ssh_host
-    ```
-
-1. Connect with SSH to the benchmark client with the `client_ssh_host` IP address:
-
-    ```bash
-    ssh -i ~/.ssh/redpanda_aws <client-ssh-host-IP-addr>)
+    ssh -i ~/.ssh/redpanda_aws ubuntu@$(terraform output --raw client_ssh_host)
     ```
 
 1. On the client, navigate to the `/opt/benchmark` directory.
@@ -209,7 +203,7 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     cd /opt/benchmark
     ```          
 
-1. Create a workload configuration file.
+1. Create a workload configuration file. For example, create a `.yaml` file with one topic, 144 partitions, 500 MBps producer rate, four producers, and and four consumers:
 
     ```text
     cat > workloads/1-topic-144-partitions-500mb-4p-4c.yaml << EOF
@@ -234,7 +228,44 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     EOF
     ```
 
-1. Run the benchmark with your workload.
+    Alternatively, you can use an existing workload file from the Redpanda repo, in `openmessaging-benchmark/driver-redpanda/deploy/workloads/`. 
+
+   <details>
+   <summary>Workloads from Redpanda vs. Kafka comparison</summary>
+
+   The workloads from the [Redpanda vs. Kafka benchmark comparison](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark) can be gotten from the chart in the comparison:
+
+   ![](https://images.ctfassets.net/paqvtpyf8rwu/2lpkGM01nrl0s87xSBISno/6c25504b1f6e7c8015ef193433bd077e/kafka_vs_redpanda_performance_8.png)
+   
+   </details>
+
+1. Create or reuse a client configuration file. This file configures the Redpanda producer and consumer clients, as well as topics. 
+
+   The rest of the guide uses the `openmessaging-benchmark/driver-redpanda/redpanda-ack-all-group-linger-1ms.yaml` configuration file.
+
+   <details>
+   <summary>Client configuration from Redpanda vs. Kafka comparison</summary>
+
+   The client configuration from the [Redpanda vs. Kafka benchmark comparison](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark) can be gotten from the code listing in the comparison:
+
+    ```yaml
+    topicConfig: |
+        min.insync.replicas=2
+        flush.messages=1
+        flush.ms=0
+    producerConfig: |
+        acks=all
+        linger.ms=1
+        batch.size=131072
+    consumerConfig: |
+        auto.offset.reset=earliest
+        enable.auto.commit=false
+        auto.commit.interval.ms=0
+        max.partition.fetch.bytes=131072
+    ```
+   </details>
+
+1. Run the benchmark with your workload and client configuration.
 
     ```bash
     sudo bin/benchmark -d \
@@ -242,9 +273,9 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     workloads/1-topic-144-partitions-500mb-4p-4c.yaml
     ```
 
-:::tip
-When the benchmark is running, you should observe the logs for errors and warnings that might indicate a workload is not being completed as expected. For example, you might have observed an issue when the workload couldn't keep up and the producer started throwing `WARN` level messages on JDK 11 due to `HdrHistogram/HdrHistogram#180`. While this issue has been fixed in Redpanda's fork of OMB, make sure to pay attention for similar errors in the logs.
-:::
+    :::note
+    When the benchmark is running, you should observe the logs for errors and warnings that might indicate a workload is not being completed as expected. For example, you might have observed an issue when the workload couldn't keep up and the producer started throwing `WARN` level messages on JDK 11 due to `HdrHistogram/HdrHistogram#180`. While this issue has been fixed in Redpanda's fork of OMB, make sure to pay attention for similar errors in the logs.
+    :::
 
 ## View benchmark results
 
@@ -287,10 +318,10 @@ Redpanda provides a Python script, `generate_charts.py`, to generate charts of b
 
 When done running the benchmark, tear down the Redpanda cluster.
 
-    ```bash
-    terraform destroy -auto-approve
-    ```
+```bash
+terraform destroy -auto-approve
+```
 
 ## Suggested reading
 
-- [Redpanda vs. Apache Kafka: A performance comparison (2022 update)](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark)
+- [Redpanda vs. Apache Kafka: A performance comparison (2022 update)](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark).
