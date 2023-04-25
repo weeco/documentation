@@ -21,7 +21,7 @@ import NextSteps from "./shared/guides/_next-steps.mdx"
 import SuggestedReading from "./shared/guides/_suggested-reading.mdx"
 
 
-Deploy a secure Redpanda cluster and Redpanda Console in Amazon Elastic Kubernetes Service (EKS) using the Helm chart. 
+Deploy a secure Redpanda cluster and Redpanda Console in Amazon Elastic Kubernetes Service (EKS) using the Helm chart.
 Then, use rpk both as an internal client and an external client to interact with your Redpanda cluster from the command line.
 
 The Redpanda cluster has the following security features:
@@ -48,7 +48,7 @@ You need an IAM user with at least the following policies:
   Policies
   </summary>
 
-  Replace `<account_id>` with your own [account ID](https://console.aws.amazon.com/iamv2/home).
+  Replace `<account-id>` with your own [account ID](https://console.aws.amazon.com/iamv2/home).
 
   ```json title="AmazonEC2FullAccess"
   {
@@ -125,7 +125,7 @@ You need an IAM user with at least the following policies:
                   "ssm:GetParameters"
               ],
               "Resource": [
-                  "arn:aws:ssm:*:<account_id>:parameter/aws/*",
+                  "arn:aws:ssm:*:<account-id>:parameter/aws/*",
                   "arn:aws:ssm:*::parameter/aws/*"
               ],
               "Effect": "Allow"
@@ -144,7 +144,7 @@ You need an IAM user with at least the following policies:
               ],
               "Resource": "*",
               "Effect": "Allow"
-          }        
+          }
       ]
   }
   ```
@@ -184,13 +184,13 @@ You need an IAM user with at least the following policies:
                   "iam:ListPolicyVersions"
               ],
               "Resource": [
-                  "arn:aws:iam::<account_id>:instance-profile/eksctl-*",
-                  "arn:aws:iam::<account_id>:role/eksctl-*",
-                  "arn:aws:iam::<account_id>:policy/eksctl-*",
-                  "arn:aws:iam::<account_id>:oidc-provider/*",
-                  "arn:aws:iam::<account_id>:role/aws-service-role/eks-nodegroup.amazonaws.com/AWSServiceRoleForAmazonEKSNodegroup",
-                  "arn:aws:iam::<account_id>:role/eksctl-managed-*",
-                  "arn:aws:iam::<account_id>:role/AmazonEKS_EBS_CSI_DriverRole"
+                  "arn:aws:iam::<account-id>:instance-profile/eksctl-*",
+                  "arn:aws:iam::<account-id>:role/eksctl-*",
+                  "arn:aws:iam::<account-id>:policy/eksctl-*",
+                  "arn:aws:iam::<account-id>:oidc-provider/*",
+                  "arn:aws:iam::<account-id>:role/aws-service-role/eks-nodegroup.amazonaws.com/AWSServiceRoleForAmazonEKSNodegroup",
+                  "arn:aws:iam::<account-id>:role/eksctl-managed-*",
+                  "arn:aws:iam::<account-id>:role/AmazonEKS_EBS_CSI_DriverRole"
               ]
           },
           {
@@ -199,7 +199,7 @@ You need an IAM user with at least the following policies:
                   "iam:GetRole"
               ],
               "Resource": [
-                  "arn:aws:iam::<account_id>:role/*"
+                  "arn:aws:iam::<account-id>:role/*"
               ]
           },
           {
@@ -279,10 +279,10 @@ Each Redpanda broker must run on its own worker node. As a result, the Helm char
 
 You also configure your EKS cluster to allow external access to the node ports on which the Redpanda deployment will be exposed. You'll use these node ports in later steps to configure external access to your Redpanda cluster.
 
-1. Create an EKS cluster in your default region:
+1. Create an EKS cluster in your default region and give it a unique name:
 
   ```bash
-  eksctl create cluster --name redpanda \
+  eksctl create cluster --name <cluster-name> \
       --external-dns-access \
       --nodegroup-name standard-workers \
       --node-type m5.xlarge \
@@ -294,7 +294,7 @@ You also configure your EKS cluster to allow external access to the node ports o
   If your account is configured for OIDC, add the `--with-oidc` flag to the `create cluster` command:
 
   ```bash
-  eksctl create cluster --with-oidc --name redpanda \
+  eksctl create cluster --with-oidc --name <cluster-name> \
       --external-dns-access \
       --nodegroup-name standard-workers \
       --node-type m5.xlarge \
@@ -305,7 +305,7 @@ You also configure your EKS cluster to allow external access to the node ports o
 
   :::tip
   To see all options that you can specify when creating a cluster, use the following command:
-  
+
   ```bash
   eksctl create cluster --help
   ```
@@ -323,10 +323,10 @@ You also configure your EKS cluster to allow external access to the node ports o
 
   If the `kubectl` command cannot connect to your cluster, update your local `kubeconfig` file to point to your EKS cluster.
 
-  Replace the `<region>` placeholder with your default region, which is located in the `~/.aws/credentials` file.
+  Your default region is located in the `~/.aws/credentials` file.
 
   ```bash
-  aws eks update-kubeconfig --region <region> --name redpanda
+  aws eks update-kubeconfig --region <region> --name <cluster-name>
   ```
 
 1. Create the IAM role needed for the Amazon Elastic Block Store (EBS) Cluster Storage Interface (CSI):
@@ -337,11 +337,11 @@ You also configure your EKS cluster to allow external access to the node ports o
       --name ebs-csi-controller-sa \
       `# Do not change the namespace. It is required by EKS.` \
       --namespace kube-system \
-      --cluster redpanda \
+      --cluster <cluster-name> \
       --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
       --approve \
       --role-only \
-      --role-name AmazonEKS_EBS_CSI_DriverRole
+      --role-name AmazonEKS_EBS_CSI_DriverRole-<cluster-name>
   ```
 
 1. Get your AWS account ID:
@@ -355,18 +355,54 @@ You also configure your EKS cluster to allow external access to the node ports o
   ```bash
   eksctl create addon \
       --name aws-ebs-csi-driver \
-      --cluster redpanda \
-      --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
+      --cluster <cluster-name> \
+      --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole-<cluster-name> \
       --force
   ```
 
-1. Add inbound firewall rules to your EC2 instances so that external traffic can reach the following node ports on all Kubernetes worker nodes in the cluster:
+1. Get the ID of the security group associated with the nodes in your EKS cluster:
 
-    - 31644
-    - 31092
-    - 30082
-    - 30081
-  
+  ```bash
+  AWS_SECURITY_GROUP_ID=`aws eks describe-cluster --name <cluster-name> | jq -r '.cluster.resourcesVpcConfig.clusterSecurityGroupId'`
+  ```
+
+1. Add inbound firewall rules to your EC2 instances so that external traffic can reach the node ports exposed on all Kubernetes worker nodes in the cluster:
+
+  ```bash
+  aws ec2 authorize-security-group-ingress \
+    --group-id ${AWS_SECURITY_GROUP_ID} \
+    --ip-permissions "[ \
+                        { \
+                          \"IpProtocol\": \"tcp\", \
+                          \"FromPort\": 30081, \
+                          \"ToPort\": 30081, \
+                          \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}] \
+                        }, \
+                        { \
+                          \"IpProtocol\": \"tcp\", \
+                          \"FromPort\": 30082, \
+                          \"ToPort\": 30082, \
+                          \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}] \
+                        }, \
+                        { \
+                          \"IpProtocol\": \"tcp\", \
+                          \"FromPort\": 31644, \
+                          \"ToPort\": 31644, \
+                          \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}] \
+                        }, \
+                        { \
+                          \"IpProtocol\": \"tcp\", \
+                          \"FromPort\": 31092, \
+                          \"ToPort\": 31092, \
+                          \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}] \
+                        } \
+                      ]"
+  ```
+
+  :::caution
+  If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instances on those node ports. In production, you should authorize only a specific IP address or range of addresses to access your instances.
+  :::
+
   For help creating firewall rules, see the [Amazon EC2 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/authorizing-access-to-an-instance.html).
 
 ## Deploy Redpanda and Redpanda Console

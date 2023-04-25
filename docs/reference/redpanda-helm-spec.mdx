@@ -6,7 +6,7 @@ tags:
 description: Find the default values and descriptions of settings in the Redpanda Helm chart.
 ---
 
-![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.7](https://img.shields.io/badge/AppVersion-v23.1.7-informational?style=flat-square)
+![Version: 4.0.6](https://img.shields.io/badge/Version-4.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.7](https://img.shields.io/badge/AppVersion-v23.1.7-informational?style=flat-square)
 
 This page describes the official Redpanda Helm Chart. In particular, this page describes the contents of the chart’s [`values.yaml` file](https://github.com/redpanda-data/helm-charts/blob/main/charts/redpanda/values.yaml). Each of the settings is listed and described on this page, along with any default values.
 
@@ -521,6 +521,12 @@ The name of the service account to use. If not set and `serviceAccount.create` i
 
 **Default:** `""`
 
+### [statefulset.additionalRedpandaCmdFlags](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=statefulset.additionalRedpandaCmdFlags)
+
+Additional flags to pass to redpanda,
+
+**Default:** `[]`
+
 ### [statefulset.annotations](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=statefulset.annotations)
 
 Additional annotations to apply to the Pods of this StatefulSet.
@@ -713,7 +719,7 @@ Absolute path on the host to store Redpanda's data. If unspecified, then an `emp
 
 ### [storage.persistentVolume](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=storage.persistentVolume)
 
-If `persistentVolume.enabled` is true, a PersistentVolumeClaim is created and used to store Redpanda's data. Otherwise `storage.hostPath` is used.
+If `persistentVolume.enabled` is true, a PersistentVolumeClaim is created and used to store Redpanda's data. Otherwise, `storage.hostPath` is used.
 
 **Default:**
 
