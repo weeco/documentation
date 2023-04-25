@@ -63,12 +63,13 @@ Running OMB with Redpanda requires setting up your local environment to provisio
 
     ```bash
     git clone https://github.com/redpanda-data/openmessaging-benchmark 
-    cd openmessaging-benchmark
     ```
+
+    The repository contains a directory for the Redpanda driver, `openmessaging-benchmark/driver-redpanda`. Subsequent steps read and configure files in that directory.
 
 1. Customize your `openmessaging-benchmark/driver-redpanda/pom.xml` file with your Kafka client version if necessary (currently 3.3.1):
 
-    ```xml title="pom.xml"
+    ```xml title="pom.xml" {className='not-editable'}
     ...
     <dependency>
         <groupId>org.apache.kafka</groupId>
@@ -78,10 +79,18 @@ Running OMB with Redpanda requires setting up your local environment to provisio
     ...
     ```
 
-1. From `openmessaging-benchmark/`, build the benchmark client.
+1. From the repository root directory, build the benchmark client.
 
     ```bash
+    cd openmessaging-benchmark
     mvn clean install -Dlicense.skip=true
+    ```
+
+1. From the Redpanda driver directory, install the Ansible roles required for deploying Redpanda.
+
+    ```bash
+    cd driver-redpanda/deploy
+    ansible-galaxy install -r driver-redpanda/deploy/requirements.yaml
     ```
 
 1. Configure AWS credentials and SSH keys.
@@ -140,7 +149,7 @@ Running OMB with Redpanda requires setting up your local environment to provisio
 
        </details>
 
-    1. Initialize the Terraform deployment of Redpanda on AWS.
+    1. From the Redpanda driver deployment directory, initialize the Terraform deployment of Redpanda on AWS.
 
         ```bash
         cd driver-redpanda/deploy
@@ -148,7 +157,9 @@ Running OMB with Redpanda requires setting up your local environment to provisio
         terraform apply -auto-approve
         ```
 
-        On successful initialization, a confirmation message lists the resources that have been installed.
+        :::note
+        The `terraform apply` command prompts you for an owner name (`var.owner`) that is used to tag all the cloud resources that will be created. Once the installation is complete, you will see a confirmation message listing the resources that have been installed.
+        :::
 
 1. Run the Ansible playbook to install and start the Redpanda cluster.
 
@@ -172,6 +183,9 @@ Running OMB with Redpanda requires setting up your local environment to provisio
     ansible-playbook deploy.yaml --private-key=<private-key-path>
     ```
 
+    ```tip
+    Beginning with ansible 2.14, references to `args: warn` within ansible tasks cause a fatal error and halt the execution of the playbook. These errors have been resolved in the Redpanda fork of OMB, but you may find instances of this in the components installed by `ansible-galaxy`, particularly in the `cloudalchemy.grafana` task in `dashboard.yml`. To resolve this issue, removing the `warn` line in from the yml file.
+    ```
 
 ## Run benchmark
 
@@ -228,6 +242,54 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     workloads/1-topic-144-partitions-500mb-4p-4c.yaml
     ```
 
+:::tip
+When the benchmark is running, you should observe the logs for errors and warnings that might indicate a workload is not being completed as expected. For example, you might have observed an issue when the workload couldn't keep up and the producer started throwing `WARN` level messages on JDK 11 due to `HdrHistogram/HdrHistogram#180`. While this issue has been fixed in Redpanda's fork of OMB, make sure to pay attention for similar errors in the logs.
+:::
+
+## View benchmark results
+
+After a run completes, the benchmark generates results as `*.json` files in `/opt/benchmark`.
+
+Redpanda provides a Python script, `generate_charts.py`, to generate charts of benchmark results. To run the script:
+
+1. Copy the results from the client to your local machine.
+
+    ```bash
+    exit; # back to your local machine
+    mkdir ~/results
+    scp -i ~/.ssh/redpanda_aws ubuntu@$(terraform output --raw client_ssh_host):/opt/benchmark/*.json ~/results/
+    ```
+
+1. From the root directory of the repository, install the prerequisite packages for the Python script.
+
+    ```bash
+    cd ../../bin # openmessaging-benchmark/bin
+    python3 -m pip -r install requirements.txt
+    ```
+
+1. To list all options, run the script with the `-h` flag.
+
+    ```bash
+    ./generate_charts.py -h
+    ```
+
+1. To generate charts from your `~/results/` directory, first create an `~/output` directory, then run the script with `--results` and `--output` options set accordingly.
+
+    ```bash
+    mkdir ~/output
+    ./generate_charts.py --results ~/results --output ~/output
+    ```
+
+1. In `~/output`, verify the generated charts are in an HTML page with charts for throughput, publish latency, end-to-end latency, publish rate, and consume rate.
+
+
+## Tear down benchmark
+
+When done running the benchmark, tear down the Redpanda cluster.
+
+    ```bash
+    terraform destroy -auto-approve
+    ```
 
 ## Suggested reading
 
