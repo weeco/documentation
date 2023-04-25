@@ -20,6 +20,11 @@ function createEditablePlaceholders () {
 
   for (let i = 0; i < codeElements.length; i++) {
     const codeElement = codeElements[i];
+    // Don't enable editable code for XML
+    // TODO: selectively enable editable code for markup samples (XML, HTML, ...)
+    if(codeElement.closest('.theme-code-block')?.classList.contains('language-xml')){
+      continue
+    }
     addEditableSpan(/&lt;.[^&A-Z]*&gt;/g, codeElement);
   }
 }
