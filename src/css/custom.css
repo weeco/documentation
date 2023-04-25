@@ -161,6 +161,11 @@ table tr td {
   font-weight: 300 !important;
   font-size: 14px;
   letter-spacing: .025rem;
+  word-wrap: break-word;
+}
+
+.toc-parent {
+  max-height: 50vh !important;
 }
 
 .navbar {
@@ -315,11 +320,23 @@ html[data-theme='dark'] .container code span.comment {
   color: #f15d61;
 }
 
-.editable.cursor::after {
+span.cursor::after,
+span.cursor > span::after {
   content: "|";
   display: inline-block;
   animation: cursor-blink 1.2s infinite;
   font-weight: 100;
+  color: var(--link-font-color);
+}
+
+@keyframes cursor-blink {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes cursor-blink {

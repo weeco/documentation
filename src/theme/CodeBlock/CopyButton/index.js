@@ -28,7 +28,7 @@ export default function CopyButton({code, className}) {
     const svgElement = e.target
     const preElement = traverseToPreFromSvg(svgElement);
     const preText = preElement.innerText;
-    const preTextWithoutSingleEmptyLines = preText.replace(/(\r\n|\r|\n)+/g, '\n');
+    const preTextWithoutSingleEmptyLines = preText.replace(/(\r\n|\r|\n)+/g, '\n').trim();
     navigator.clipboard.writeText(preTextWithoutSingleEmptyLines);
 
     setIsCopied(true);

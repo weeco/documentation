@@ -21,10 +21,10 @@ To enable Tiered Storage for specific topics, use the following topic-level prop
 
 | Property      | Description |
 | ----------- | ----------- |
-| `redpanda.remote.write` | Uploads data from Redpanda to cloud storage. Overrides the cluster-level <TunableClusterProperty name="cloud_storage_enable_remote_write" frontmatter={props.frontmatter}/> configuration for the topic. |
-| `redpanda.remote.read` | Fetches data from cloud storage to Redpanda. Overrides the cluster-level <TunableClusterProperty name="cloud_storage_enable_remote_read" frontmatter={props.frontmatter}/> configuration for the topic. |
-| `redpanda.remote.recovery` | Recovers or reproduces a topic from cloud storage. Use this flag during topic creation. It does not apply to existing topics.  |
-| `redpanda.remote.delete` | When set to `true`, deleting a topic also deletes its objects in remote storage. Both `redpanda.remote.write` and `redpanda.remote.read` must be enabled, and the topic must not be a Remote Read Replica topic.<br/><br/> When set to `false`, deleting a topic does not delete its objects in remote storage.  <br/><br/>Default is `true` for new topics.|
+| `redpanda.remote.write` | Uploads data from Redpanda to object storage. Overrides the cluster-level <TunableClusterProperty name="cloud_storage_enable_remote_write" frontmatter={props.frontmatter}/> configuration for the topic. |
+| `redpanda.remote.read` | Fetches data from object storage to Redpanda. Overrides the cluster-level <TunableClusterProperty name="cloud_storage_enable_remote_read" frontmatter={props.frontmatter}/> configuration for the topic. |
+| `redpanda.remote.recovery` | Recovers or reproduces a topic from object storage. Use this flag during topic creation. It does not apply to existing topics.  |
+| `redpanda.remote.delete` | When set to `true`, deleting a topic also deletes its objects in object storage. Both `redpanda.remote.write` and `redpanda.remote.read` must be enabled, and the topic must not be a Remote Read Replica topic.<br/><br/> When set to `false`, deleting a topic does not delete its objects in object storage.  <br/><br/>Default is `true` for new topics.|
 
 Topic configuration flags override any cluster-level configuration. For example, for new topics, if <TunableClusterProperty name="cloud_storage_enable_remote_write" frontmatter={props.frontmatter}/> is set to `true`, you can set `redpanda.remote.write` to `false` to turn it off for a particular topic. Or, if you have Tiered Storage turned off for the cluster, you can enable it for individual topics with the topic flags. When cluster-level properties are changed, the changes apply only to new topics, not existing topics.
 
@@ -53,7 +53,7 @@ The following table lists outcomes for combinations of cluster-level and topic-l
 | <code>false</code> | <code>true</code>  | Enabled  |
 
 The cluster-level <ClusterProperty name="cloud_storage_enabled" frontmatter={props.frontmatter}/> property must be set to `true` to enable Tiered Storage at either the cluster level or the topic level. To disable Tiered Storage at the cluster level and enable it on specific topics, this property must still be set to `true`.
-- If this property is set to `false`, nothing is added to cloud storage, regardless of whether or not the other Tiered Storage properties are enabled.
+- If this property is set to `false`, nothing is added to object storage, regardless of whether or not the other Tiered Storage properties are enabled.
 - If this property is set to `true` and the other Tiered Storage properties are disabled, then the Tiered Storage subsystem is initialized, but it is not used until you enable Tiered Storage for a topic or at the cluster level.
 
 To enable Tiered Storage on a topic, set the `redpanda.remote.write` and `redpanda.remote.read` flags on a new or existing topic.

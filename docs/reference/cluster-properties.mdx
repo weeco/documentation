@@ -5,11 +5,9 @@ toc_max_heading_level: 2
 ---
 
 <head>
-  <meta
-    name="title"
-    content="Cluster configuration properties | Redpanda Docs"
-  />
+  <meta name="title" content="Cluster configuration properties | Redpanda Docs"/>
   <meta name="description" content="Cluster configuration properties list." />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/cluster-properties/" />
 </head>
 
 import Aliases from '../shared/_aliases.mdx'
@@ -42,7 +40,7 @@ List of superuser usernames.
 
 -------------------------------------------------------------------------------
 
-## Cloud storage properties
+## Object storage properties
 
 
 ### cloud_storage_azure_storage_account
@@ -240,6 +238,8 @@ Cluster identifier.
 ---
 
 ### enable_auto_rebalance_on_node_add
+
+<Aliases name="badge-deprecated" />
 
 Enable automatic partition rebalancing when new nodes are added.
 
@@ -465,6 +465,9 @@ Maximum connections per second for one core. If `null` (the default), the number
 
 **Restart required**: yes
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connection_rate_limit_overrides
@@ -476,6 +479,9 @@ Overrides the maximum connections per second for one core for the specified IP a
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -489,6 +495,9 @@ Maximum number of Kafka client connections per broker. If `null`, the property i
 
 **Restart required**: no
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connections_max_overrides
@@ -498,6 +507,9 @@ A list of IP addresses for which Kafka client connection limits are overridden a
 **Default**: {} (empty list)
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -510,6 +522,9 @@ Maximum number of Kafka client connections per IP address, per broker. If `null`
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -613,6 +628,9 @@ If `0`, the balancer is disabled and all throughput quotas are immutable.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_min_shard_throughput_ratio
@@ -632,6 +650,9 @@ If set to `0.0`, the minimum is disabled. If set to `1.0`, then the balancer won
 **Range**: [0.0, 1.0]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -654,6 +675,9 @@ If set to `0`, no minimum is enforced.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_window_ms
@@ -667,6 +691,9 @@ Time window used to average the current throughput measurement for the quota bal
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -709,6 +736,9 @@ If `null`, the property is disabled, and traffic is not limited.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_throughput_limit_node_out_bps
@@ -724,6 +754,9 @@ If `null`, the property is disabled, and traffic is not limited.
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -1021,7 +1054,7 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 
 ### retention_local_target_bytes_default
 
-Local retention size target for partitions of topics with cloud storage write enabled. If `null`, the property is disabled.
+Local retention size target for partitions of topics with object storage write enabled. If `null`, the property is disabled.
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
@@ -1039,7 +1072,7 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 ### retention_local_target_ms_default
 
-Local retention time target for partitions of topics with cloud storage write enabled.
+Local retention time target for partitions of topics with object storage write enabled.
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.

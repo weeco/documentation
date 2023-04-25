@@ -5,6 +5,7 @@ title: Manage Throughput
 <head>
   <meta name="title" content="Manage Throughput | Redpanda Docs"/>
   <meta name="description" content="Manage the throughput of Redpanda cluster nodes with configurable properties."/>
+  <link rel="canonical" href="https://docs.redpanda.com/docs/manage/cluster-maintenance/manage-throughput/" />
 </head>
 
 import ManageThroughputIntro from "./shared/_intro-manage-throughput.mdx";
@@ -13,7 +14,7 @@ import ManageThroughputIntro from "./shared/_intro-manage-throughput.mdx";
 
 ## Node-wide throughput limits
 
-The network bandwidth and disk utilization of cluster nodes may be overloaded by clients that produce or consume throughput without limits. To prevent resource overloading caused by unconstrained throughput, Redpanda provides runtime-configurable properties that limit and balance throughput of Kafka API traffic.
+The network bandwidth and disk utilization of cluster nodes may be overloaded by clients that produce or consume throughput without limits. To prevent resource overloading caused by unconstrained throughput and to configure back pressure, Redpanda provides runtime-configurable properties that limit and balance throughput of Kafka API traffic.
 
 To manage the volume of traffic going through a node, Redpanda implements throughput quotas on the ingress and egress sides of every node. The throughput quota accounts for all Kafka API traffic going in or out of a node, with the value of quota representing the allowed rate of data passing through in one direction. When a connection is in breach of the quota, the throttler advises the client about the delay (throttle time) that would bring the rate back to the allowed level, and it implements that delay before handling Kafka API requests. To control the quotas, Redpanda provides configurable rate limits for total ingress and egress traffic through a node.
 
