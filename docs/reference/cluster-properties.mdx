@@ -363,16 +363,19 @@ Target quota rate for partition mutations per [default_window_sec](../tunable-pr
 
 A map specifying the produce-rate quota per client group. 
 
-The keys of the map:
+The configurable fields:
 - `group_name`: name of a client group
 - `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
-- `quota`: produce-rate quota, in bytes per second
+- `quota`: produce-rate quota of each client in bytes per second
 
 An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
 
 **Default**: {} (empty map)
 
 **Restart required**: no
+
+**Related topics**:
+- [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
 
 ---
 
@@ -380,16 +383,19 @@ An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota':
 
 A map specifying the fetch-rate quota per client group. 
 
-The keys of the map:
+The configurable fields:
 - `group_name`: name of a client group
 - `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
-- `quota`: fetch-rate quota, in bytes per second
+- `quota`: fetch-rate quota of each client in bytes per second
 
 An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
 
 **Default**: {} (empty map)
 
 **Restart required**: no
+
+**Related topics**:
+- [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
 
 ---
 
