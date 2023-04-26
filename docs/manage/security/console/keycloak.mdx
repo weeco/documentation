@@ -4,7 +4,7 @@ title: Keycloak SSO Setup
 
 <head>
     <meta name="title" content="Keycloak SSO Authentication in Redpanda Console | Redpanda Docs"/>
-    <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
+    <meta name="description" content="Configure authentication with external identity providers in Redpanda Console."/>
 </head>
 
 :::info
@@ -17,7 +17,11 @@ By integrating Redpanda Console with Keycloak, your users can sign in to Redpand
 
 Install Keycloak and create a super admin user account, which has the necessary permissions for setting up the OAuth application.
 
-Create at least one realm for managing and authenticating a specific group of users.
+(Optional) Create at least one realm for managing and authenticating a specific group of users.
+
+:::note
+You can use the master realm, or you can create a realm for managing and authenticating a specific group of users.
+:::
 
 ## Create an OpenID connect application
 
