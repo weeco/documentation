@@ -83,15 +83,17 @@ Redpanda Cloud supports the following AWS network services.
 
 - Time synchronization
 
-  Redpanda Cloud in AWS uses Amazon’s Time Sync Service, a fleet of redundant
-  satellite-connected and atomic reference clocks in AWS regions.
+  To ensure time synchronization, Redpanda Cloud in Amazon Web Services (AWS) uses
+  the [Amazon Time Sync Service](https://aws.amazon.com/about-aws/whats-new/2017/11/introducing-the-amazon-time-sync-service/),
+  a fleet of redundant satellite-connected and atomic reference clocks in AWS
+  regions.
 
 - Domain Name System (DNS)
 
   Redpanda Cloud creates a new DNS zone per Redpanda cluster in the control plane
   and delegates its management exclusively to each cluster’s data plane. In turn,
   the data plane creates a hosted zone in Route53, managing DNS records for
-  Redpanda services, as needed. All the interactions with Route53 are constrained
+  Redpanda services, as needed. All the interactions with Route53 are controlled
   by IAM policies targeted to the specific Route53 resources managed by each data
   plane, following the least privilege principle.
 
@@ -118,3 +120,34 @@ Redpanda Cloud supports the following AWS network services.
   your internal data stores to retrieve or push data.
 
 ## GCP Network services
+
+Redpanda Cloud supports the following Google Cloud Platform (GCP) network services.
+
+- Time synchronization
+
+  To ensure time synchronization, Redpanda Cloud in GCP uses [Google NTP Servers](https://cloud.google.com/compute/docs/instances/configure-ntp#linux-chrony),
+  a fleet of satellite-connected and atomic reference clocks.
+
+- Domain Name System (DNS)
+
+  Redpanda Cloud creates a new DNS zone per Redpanda cluster in the control plane
+  and delegates its management exclusively to each cluster’s data plane. In turn,
+  the data plane creates a managed zone in Cloud DNS, managing DNS records for
+  Redpanda services, as needed. All the interactions with Cloud DNS are
+  controlled by IAM policies targeted to the specific Cloud DNS resources managed
+  by each data plane, following the least privilege principle.
+
+- [VPC Peering](../../../vpc-peering)
+
+  Redpanda Cloud supports configuring VPC peering against Redpanda Cloud networks,
+  making them available to one or many private Redpanda clusters, and also allows
+  users to connect to those clusters without traversing the public internet.
+
+  You can on establish VPC Peering connections between two VPCs with non-overlapping
+  network addresses. When creating a Redpanda Cloud network intended for peering,
+  enssure that the specified network address range does not overlap with the network
+  address range of the destination VPC.
+
+  It is stronly recommended to reject all network traffic initiated from a Redpanda
+  cloud network and only accept traffic from Kafka Connectors that connect to
+  your internal data stores to retrieve or push data.

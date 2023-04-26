@@ -9,13 +9,16 @@ title: Availability
 
 Redpanda Cloud supports the deployment of Redpanda clusters in single or multiple
 Availability Zones (AZ), spanning at most three AZs. Nodes are evenly distributed
-across AZs and [default_topic_replications](../../../../../../reference/cluster-properties#default_topic_replications)
-is set to `3` by default.
-
-Data is also evenly distributed across AZs automatically. This behavior is also
+across AZs, and [default_topic_replications](../../../../../../reference/cluster-properties#default_topic_replications)
+is set to `3` by default. Data is also evenly distributed across AZs automatically. This behavior is also
 known as rack or AZ awareness.
 
 To prevent downtime during Redpanda Cloud cluster upgrades, the Redpanda Cloud
 cluster operator slowly upgrades a single Redpanda broker at a time, and always
 waits for the health of the cluster to return to its nominal state before
 continuing with the next broker upgrade, until all brokers are fully rolled out.
+
+Redpanda’s Support, Cloud, and Site Reliability Engineering (SRE) teams monitor
+Redpanda Cloud Clusters 24/7 to ensure they meet availability Service Level
+Agreement (SLA)s. If incidents occur, teams at Redpanda trigger an incident
+response process to quickly mitigate them.

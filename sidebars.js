@@ -312,6 +312,21 @@
                           label: "Safety and Reliability",
                           id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-safety-reliability",
                         },
+                        {
+                          type: "doc",
+                          label: "Authentication",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authentication",
+                        },
+                        {
+                          type: "doc",
+                          label: "Encryption",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-encryption",
+                        },
+                        {
+                          type: "doc",
+                          label: "Authorization",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authorization",
+                        },
                       ],
                     },
                   ],
