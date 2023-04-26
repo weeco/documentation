@@ -520,11 +520,8 @@
                     label: "Manage Throughput",
                     id: "manage/cluster-maintenance/manage-throughput",
                   },
-                  {
-                    type: "doc",
-                    label: "Configure Availability",
-                    id: "manage/cluster-maintenance/configure-availability",
-                  },
+              
+                  "manage/cluster-maintenance/configure-availability",
                   {
                     type: "doc",
                     label: "Cluster Properties",
