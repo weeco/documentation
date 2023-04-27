@@ -6,7 +6,7 @@ tags:
 description: Find the default values and descriptions of settings in the Redpanda Helm chart.
 ---
 
-![Version: 4.0.9](https://img.shields.io/badge/Version-4.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.7](https://img.shields.io/badge/AppVersion-v23.1.7-informational?style=flat-square)
+![Version: 4.0.10](https://img.shields.io/badge/Version-4.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.7](https://img.shields.io/badge/AppVersion-v23.1.7-informational?style=flat-square)
 
 This page describes the official Redpanda Helm Chart. In particular, this page describes the contents of the chart’s [`values.yaml` file](https://github.com/redpanda-data/helm-charts/blob/main/charts/redpanda/values.yaml). Each of the settings is listed and described on this page, along with any default values.
 
@@ -244,7 +244,7 @@ Listener settings.  Override global settings configured above for individual lis
 **Default:**
 
 ```
-{"admin":{"external":{"default":{"advertisedPorts":[31644]}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}},"http":{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}},"kafka":{"external":{"default":{"advertisedPorts":[31092],"port":9094}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}},"rpc":{"port":33145,"tls":{"cert":"default","requireClientAuth":false}},"schemaRegistry":{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}}
+{"admin":{"external":{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}},"http":{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}},"kafka":{"external":{"default":{"advertisedPorts":[31092],"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}},"rpc":{"port":33145,"tls":{"cert":"default","requireClientAuth":false}},"schemaRegistry":{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}}
 ```
 
 ### [listeners.admin](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin)
@@ -254,7 +254,7 @@ Admin API listener (only one).
 **Default:**
 
 ```
-{"external":{"default":{"advertisedPorts":[31644]}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}}
+{"external":{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.admin.external](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external)
@@ -264,20 +264,24 @@ Optional external access settings.
 **Default:**
 
 ```
-{"default":{"advertisedPorts":[31644]}}
+{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}}
 ```
 
 ### [listeners.admin.external.default](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external.default)
 
 Name of the external listener.
 
-**Default:** `{"advertisedPorts":[31644]}`
+**Default:**
 
-### [listeners.admin.external.default.advertisedPorts](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external.default.advertisedPorts)
+```
+{"advertisedPorts":[31644],"tls":{"cert":"external"}}
+```
+
+### [listeners.admin.external.default.tls](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external.default.tls)
 
 The port advertised to this listener's external clients. List one port if you want to use the same port for each broker (would be the case when using NodePort service). Otherwise, list the port you want to use for each broker in order of StatefulSet replicas. If undefined, `listeners.admin.port` is used.
 
-**Default:** `[31644]`
+**Default:** `{"cert":"external"}`
 
 ### [listeners.admin.port](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.port)
 
@@ -314,7 +318,7 @@ HTTP API listeners (aka PandaProxy).
 **Default:**
 
 ```
-{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}}
+{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.kafka](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.kafka)
@@ -324,7 +328,7 @@ Kafka API listeners.
 **Default:**
 
 ```
-{"external":{"default":{"advertisedPorts":[31092],"port":9094}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}}
+{"external":{"default":{"advertisedPorts":[31092],"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.kafka.external.default.advertisedPorts](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.kafka.external.default.advertisedPorts)
@@ -362,7 +366,7 @@ Schema registry listeners.
 **Default:**
 
 ```
-{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}
+{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [logging](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=logging)
@@ -868,7 +872,7 @@ TLS settings. For details, see the [TLS documentation](https://docs.redpanda.com
 **Default:**
 
 ```
-{"certs":{"default":{"caEnabled":true}},"enabled":true}
+{"certs":{"default":{"caEnabled":true},"external":{"caEnabled":true}},"enabled":true}
 ```
 
 ### [tls.certs](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tls.certs)
@@ -878,7 +882,7 @@ List all Certificates here, then you can reference a specific Certificate's name
 **Default:**
 
 ```
-{"default":{"caEnabled":true}}
+{"default":{"caEnabled":true},"external":{"caEnabled":true}}
 ```
 
 ### [tls.certs.default](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tls.certs.default)
@@ -888,6 +892,18 @@ This key is the Certificate name. To apply the Certificate to a specific listene
 **Default:** `{"caEnabled":true}`
 
 ### [tls.certs.default.caEnabled](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tls.certs.default.caEnabled)
+
+Set the `caEnabled` flag to `true` only for Certificates that are not authenticated using public authorities.
+
+**Default:** `true`
+
+### [tls.certs.external](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tls.certs.external)
+
+Example external tls configuration uncomment and set the right key to the listeners that require them also enable the tls setting for those listeners.
+
+**Default:** `{"caEnabled":true}`
+
+### [tls.certs.external.caEnabled](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tls.certs.external.caEnabled)
 
 Set the `caEnabled` flag to `true` only for Certificates that are not authenticated using public authorities.
 
