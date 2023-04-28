@@ -12,11 +12,20 @@ This feature requires an [Enterprise license](../../../../get-started/licenses).
 :::
 
 If you would like to integrate an OpenID Connect (OIDC) compatible identity provider that is not yet natively supported in Console,
-you can configure the generic OIDC provider. To do so, you first have to create an OAuth application in your identity provider
+you can configure the generic OIDC provider. To do so, create an OAuth application in your identity provider
 and then provide this application's credentials in the configuration:
 
 - **Application type:** Web application
-- **Authorized redirect URI:** `https://console.yourcompany.com/login/callbacks/oidc`
+- **Authorized redirect URI:** `https://console.<your-company>.com/login/callbacks/oidc`. Replace `<your-company>.com` with your company's domain name.
+
+:::note
+The redirect URI is based on the assumption that you host Redpanda Console so it is accessible from
+`https://console.<your-company>.com`.
+:::
+
+## Edit the console configuration file
+
+Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
 
 ```yaml
 login:

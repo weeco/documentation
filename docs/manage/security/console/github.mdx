@@ -22,14 +22,18 @@ organization you have admin access to. As you create the GitHub OAuth app, provi
 when you are asked for them:
 
 :::note
-Below configurations assume that you want to host Redpanda Console so that it would be accessible via
-`https://console.yourcompany.com`.
+The following configurations are based on the assumption that you want to host Redpanda Console so it is accessible from
+`https://console.<your-company>.com`.
 :::
 
-- **Application name:** Any descriptive name for your specific Console deployment (for example Console Analytics Prod)
-- **Homepage URL:** `https://console.yourcompany.com`
-- **Authorization callback URL:** `https://console.yourcompany.com/login/callbacks/github`
+- **Application name:** Choose a descriptive name for your specific Console deployment (for example Console Analytics Prod)
+- **Homepage URL:** `https://console.<your-company>.com`
+- **Authorization callback URL:** `https://console.<your-company>.com/login/callbacks/github`
 - **Enable device flow:** False / Not selected
+
+## Edit the console configuration file
+
+Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
 
 ```yaml
 login:

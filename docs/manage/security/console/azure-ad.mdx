@@ -25,7 +25,12 @@ To register your application, log in to the Azure Portal and provide the followi
 
 * **Display name** - Choose a descriptive name for your specific Redpanda Console deployment (for example Console Analytics Prod)
 * **Supported account types** - Select the types of accounts that can access the API (choose single tenant, multi-tenant, or personal accounts). If you are unsure, click "Help me choose...".
-* **Redirect URIs** Select Web as the platform and enter `https://console.<yourcompany>.com/login/callbacks/azure-ad` in the text box. Replace `<your-company>.com` with your company's domain name.
+* **Redirect URIs** Select Web as the platform and enter `https://console.<your-company>.com/login/callbacks/azure-ad` in the text box. Replace `<your-company>.com` with your company's domain name.
+
+:::note
+The redirect URI is based on the assumption that you host Redpanda Console so it is accessible from
+`https://console.<your-company>.com`.
+:::
 
 After the app is registered, a summary page opens. This page displays a list of **Essentials**, which you will need when you edit the `redpanda-console-config.yaml file`.
 
@@ -54,11 +59,6 @@ Copy the client secret value into the `redpanda-console-config.yaml` file before
 ## Edit the console configuration file
 
 Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
-
-:::note
-The following configurations are based on the assumption that you host Redpanda Console so it is accessible from
-`https://console.<your-company>.com`.
-:::
 
 ```yaml
 login:

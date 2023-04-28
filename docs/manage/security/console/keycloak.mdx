@@ -73,11 +73,6 @@ The console configuration file uses the client secret, which is basically a pass
 
 Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
 
-:::note
-The following configurations are based on the assumption that you host Redpanda Console so it is accessible from
-`https://console.<your-company>.com`.
-:::
-
 ```yaml
 login:
   enabled: true

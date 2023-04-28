@@ -22,24 +22,19 @@ when prompted:
 
 :::note
 The following configurations are based on the assumption that you want to host Redpanda Console so that it is accessible using
-`https://console.yourcompany.com`.
+`https://console.<your-company>.com`.
 :::
 
-- **Redirect URI:** `https://console.yourcompany.com/login/callbacks/okta`
-- **Logout Redirect URI:** `https://console.yourcompany.com`
+- **Redirect URI:** `https://console.<your-company>.com/login/callbacks/okta`
+- **Logout Redirect URI:** `https://console.<your-company>.com`
 - **Sign-in method:** OIDC - Open ID Connect / Application type: Web Application
-- **Assignments:** Select groups that shall be able to use Redpanda Console (authorization can be made more granular using Redpanda Console's RBAC system)
+- **Assignments:** Select groups that are authorized to use Redpanda Console (authorization can be made more granular using Redpanda Console's RBAC system)
 
 ## Edit the console configuration file
 
 Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
 
 When you create the Okta application, you should be able to retrieve the application's client ID and client secret and put them in your Redpanda Console configuration.
-
-:::note
-The following configurations are based on the assumption that you host Redpanda Console so it is accessible from
-`https://console.<your-company>.com`.
-:::
 
 ```yaml
 login:
