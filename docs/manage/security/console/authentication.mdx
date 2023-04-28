@@ -9,7 +9,7 @@ title: Authentication
   />
   <meta
     name="description"
-    content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."
+    content="Configure authentication with external identity providers in Redpanda Console."
   />
 </head>
 
@@ -17,7 +17,7 @@ title: Authentication
 This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
 :::
 
-Redpanda Console supports authentication via OAuth 2.0 or OIDC for external identity providers, such as:
+Redpanda Console supports authentication using OAuth 2.0 or OIDC for external identity providers, such as:
 
 - [AzureAD](../azure-ad)
 - [Google](../google)
@@ -27,9 +27,9 @@ Redpanda Console supports authentication via OAuth 2.0 or OIDC for external iden
 - [Generic OIDC](../generic-oidc)
 
 You can use one or more login providers at the same time. To enable SSO authentication,
-you must create an OAuth application for your organization first. Visit the respective
-documentation page for guidance to setup your desired identity provider in Console.
-Afterwards you can configure your identity provider in Redpanda Console by providing the
+you must create an OAuth application for your organization first. Refer to the respective
+documentation page for guidance to set up your desired identity provider in Redpanda Console.
+Afterwards, you can configure your identity provider in Redpanda Console by providing the
 clientId and clientSecret in the configuration block for your provider. The configuration
 to add Google login support looks like this:
 
@@ -48,14 +48,14 @@ login:
   # command: LC_ALL=C tr -dc '[:alnum:]' < /dev/random | head -c32
   #
   # If you update this secret key, any users who are
-  # already logged into Redpanda Console will be logged out and will have
+  # already logged in to Redpanda Console will be logged out and will have
   # to log in again.
   jwtSecret: ""
 
   google:
     enabled: true
     clientId: redacted.apps.googleusercontent.com
-    clientSecret: redacted # can be set via environment variable
+    clientSecret: redacted # can be set with an environment variable
     # The directory config is optional. You have to configure it if you want to use
     # Google groups in your RBAC role bindings.
     # directory:
@@ -65,7 +65,6 @@ login:
     #  targetPrincipal: admin@mycompany.com
 ```
 
-By default, users don't have any permissions in Redpanda Console. This also includes permission
-to login at all. Thus authentication and authorization must always be used together.
-Continue with the authorization configuration by reading the RBAC-based [authorization
+By default, users don't have any permissions in Redpanda Console, including permission
+to log in. After you set up authentication, continue with the authorization configuration by reading the RBAC-based [authorization
 concept](../authorization).
