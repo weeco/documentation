@@ -27,45 +27,48 @@ plane configures and maintains Redpanda Cloud clusters, which are self-contained
 and independent of the control plane, and remain available even if the network
 connection to the data plane is lost.
 
-* Control plane
-  The control plane is a separate entity that resides above and enforces rules
-  in the data plane. The control plane is where a good deal of your Redpanda
-  cluster management, operations, and maintenance takes place. While Redpanda
-  Cloud clusters are configured and maintained in the control plane, they are
-  self-contained and remain available even if your network connection to the
-  control plane is lost.
+### Control plane
 
-* Data plane
-  The data plane is where your data resides in Redpanda Cloud; it is
-  self-contained and managed by an agent that receives instructions from the
-  control plane. Redpanda Cloud clusters are interchangeably referred to as
-  data planes. All network connections into the data plane take place through
-  either a public endpoint or a Redpanda Cloud [VPC peering network connection](../vpc-peering).
+The control plane is a separate entity that resides above and enforces rules
+in the data plane. The control plane is where a good deal of your Redpanda
+cluster management, operations, and maintenance takes place. While Redpanda
+Cloud clusters are configured and maintained in the control plane, they are
+self-contained and remain available even if your network connection to the
+control plane is lost.
 
-* Agent
-  The Redpanda Cloud agent, also known as the data plane agent, provisions,
-  configures and maintains all the resources in the Redpanda Cloud cluster, from
-  the network all the way up to the Redpanda cluster and Connectors infrastructure.
-  Agent resources include cloud infrastructure, Kubernetes, and data plane software
-  artifacts.
+### Data plane
 
-  Agents can be bootstrapped in two different ways: automatically by a machine
-  or manually by a human. The human-driven agent bootstrap is designed for
-  the Redpanda Cloud BYOC deployment type. After the agent is up and running,
-  it connects to the control plane and starts dequeuing and running instructions
-  to provision, configure, and maintain Redpanda Cloud clusters.
+The data plane is where your data resides in Redpanda Cloud; it is
+self-contained and managed by an agent that receives instructions from the
+control plane. Redpanda Cloud clusters are interchangeably referred to as
+data planes. All network connections into the data plane take place through
+either a public endpoint or a Redpanda Cloud [VPC peering network connection](../vpc-peering).
 
-  The agent is in constant communication with the Redpanda Cloud control plane,
-  receiving and running commands and exchanging metadata. Agents are authenticated
-  and authorized through opaque and ephemeral tokens, and have dedicated command
-  queues in the control plane. In BYOC, you can provision, configure, and
-  maintain agents using rpk.
+### Agent
 
-  Redpanda Cloud agents also manage Redpanda Cloud VPC peering networks. However,
-  only one agent manages each network resource at a time.
+The Redpanda Cloud agent, also known as the data plane agent, provisions,
+configures, and maintains all the resources in the Redpanda Cloud cluster, from
+the network all the way up to the Redpanda cluster and Connectors infrastructure.
+Agent resources include cloud infrastructure, Kubernetes, and data plane software
+artifacts.
 
-  The following diagram identifies the resources, operations, and connections
-  that exist in and between the Redpanda Cloud control plane and data plane.
+Agents can be bootstrapped in two different ways: automatically by a machine
+or manually by a human. The human-driven agent bootstrap is designed for
+the Redpanda Cloud BYOC deployment type. After the agent is up and running,
+it connects to the control plane and starts dequeuing and running instructions
+to provision, configure, and maintain Redpanda Cloud clusters.
+
+The agent is in constant communication with the Redpanda Cloud control plane,
+receiving and running commands and exchanging metadata. Agents are authenticated
+and authorized through opaque and ephemeral tokens, and have dedicated command
+queues in the control plane. In BYOC, you can provision, configure, and
+maintain agents using rpk.
+
+Redpanda Cloud agents also manage Redpanda Cloud VPC peering networks. However,
+only one agent manages each network resource at a time.
+
+The following diagram identifies the resources, operations, and connections
+that exist in and between the Redpanda Cloud control plane and data plane.
 
 ![Redpanda Cloud Security Architecture](../../../../static/img/control-plane.png)
 
@@ -111,3 +114,7 @@ a two-step process:
 1. You bootstrap a Virtual Machine (VM) in your VPC. This VM spins up the agent
    and the required infrastructure.
 2. The agent communicates with the control plane to pull the control commands.
+
+When provisioning BYOC, at the time an agent is deployed, Redpanda assigns the
+necessary IAM policies required to run the agent. For details, refer to
+[IAM Policies](../security/cloud-security-architecture/cloud-authorization#aws-iam-policies).  

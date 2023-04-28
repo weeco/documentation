@@ -78,7 +78,7 @@ After the network is created, you can deploy the agent.
 * Run the `rpk cloud login` command in your deployment environment:
 
 ```shell
-rpk cloud login --save 
+rpk cloud login --save
   --client-id='...'
   --client-secret='...'
 ```
@@ -89,7 +89,10 @@ rpk cloud login --save
 * Run the `rpk cloud byoc gcp apply` command in your deployment environment:
 
 ```shell
-rpk cloud byoc gcp apply 
-  --redpanda-id='...' 
+rpk cloud byoc gcp apply
+  --redpanda-id='...'
   --project-id='...'
 ```
+
+As part of agent deployment, Redpanda assigns the permission required to run the
+agent. For details about these permissions, see [GCP IAM Policies](../security/cloud-security-architecture/cloud-authorization#gcp-iam-policies).

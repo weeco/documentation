@@ -21,10 +21,8 @@ to the [AWS SSD instance store volume](https://docs.aws.amazon.com/AWSEC2/latest
 or [GCP default encryption at rest](https://cloud.google.com/docs/security/encryption/default-encryption)
 product documentation.
 
-For Tiered Storage data in AWS, every Redpanda Cloud cluster uses a unique
-and periodically rotated Amazon S3 managed master key (SSE-S3). To encrypt data,
-SSE-S3 generates a unique data key per S3 object and stores it encrypted
-alongside the object. The block cipher used is AES-256.
+For Tiered Storage data, every Redpanda Cloud cluster uses a unique
+and periodically rotated managed master key (SSE-S3). The block cipher used is AES-256.
 
 ## Data in transit encryption
 

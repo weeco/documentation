@@ -8,7 +8,7 @@ title: Authentication
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/security/cloud-security-architecture/authentication/" />
 </head>
 
-Redpanda Cloud ensures the higest level of authentication for both users and services.
+Redpanda Cloud ensures the highest level of authentication for both users and services.
 
 ## User authentication
 
@@ -29,7 +29,7 @@ the TCP endpoint or listener.
 When connecting through Redpanda’s HTTP Proxy, authentication is done through an HTTP Basic Authentication header sent encrypted over TLS 1.2
 
 
-The following features use AWS and GCP IAM roles to generate
+The following features use AWS and GCP [IAM Policies](../cloud-authorization#iam-policies) to generate
 dynamic and short-lived credentials to interact with cloud provider APIs:
 
 - Data plane agent
@@ -37,6 +37,6 @@ dynamic and short-lived credentials to interact with cloud provider APIs:
 - Redpanda Console
 - Managed connectors
 
-AWS and GCP IAM roles have constrained permissions so that each service can only
+AWS and GCP IAM policies have constrained permissions so that each service can only
 access or manage its own data plane-scoped resources, following the principle of
 least privilege.

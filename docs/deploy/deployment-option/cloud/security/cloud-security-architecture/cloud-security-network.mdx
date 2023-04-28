@@ -21,6 +21,8 @@ Public Redpanda clusters are designed based on the following behaviors:
 - Redpanda TCP listeners are protected by SASL/SCRAM (SCRAM-SHA-256, SCRAM-SHA-512)
   authentication and encrypted in transit using TLS 1.2.
 
+The following diagram shows the public subnet used by public Redpanda clusters.
+
 ![Redpanda Cloud Security Architecture](../../../../../../static/img/cloud-public-networks.png)
 
 ## Private Redpanda clusters
@@ -32,6 +34,8 @@ Private Redpanda clusters are designed based on the following behaviors:
   VPC peerings.
 - The data plane agent is placed in public subnets and segmented away by
   firewall rules from Redpanda services.
+
+The following diagram shows the private subnet used by private Redpanda clusters.  
 
 ![Redpanda Cloud Security Architecture](../../../../../../static/img/cloud-private-network.png)
 
@@ -110,12 +114,12 @@ Redpanda Cloud supports the following AWS network services.
   making them available to one or many private Redpanda clusters, and also allows
   users to connect to those clusters without traversing the public internet.
 
-  You can on establish VPC Peering connections between two VPCs with non-overlapping
+  You can establish VPC Peering connections between two VPCs with non-overlapping
   network addresses. When creating a Redpanda Cloud network intended for peering,
-  enssure that the specified network address range does not overlap with the network
+  ensure that the specified network address range does not overlap with the network
   address range of the destination VPC.
 
-  It is stronly recommended to reject all network traffic initiated from a Redpanda
+  It is strongly recommended to reject all network traffic initiated from a Redpanda
   cloud network and only accept traffic from Kafka Connectors that connect to
   your internal data stores to retrieve or push data.
 
@@ -143,11 +147,11 @@ Redpanda Cloud supports the following Google Cloud Platform (GCP) network servic
   making them available to one or many private Redpanda clusters, and also allows
   users to connect to those clusters without traversing the public internet.
 
-  You can on establish VPC Peering connections between two VPCs with non-overlapping
+  You can establish VPC Peering connections between two VPCs with non-overlapping
   network addresses. When creating a Redpanda Cloud network intended for peering,
-  enssure that the specified network address range does not overlap with the network
+  ensure that the specified network address range does not overlap with the network
   address range of the destination VPC.
 
-  It is stronly recommended to reject all network traffic initiated from a Redpanda
+  It is strongly recommended to reject all network traffic initiated from a Redpanda
   cloud network and only accept traffic from Kafka Connectors that connect to
   your internal data stores to retrieve or push data.

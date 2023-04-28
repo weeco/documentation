@@ -327,6 +327,11 @@
                           label: "Authorization",
                           id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authorization",
                         },
+                        {
+                          type: "doc",
+                          label: "Secrets",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/secrets",
+                        },
                       ],
                     },
                   ],
@@ -520,7 +525,7 @@
                     label: "Manage Throughput",
                     id: "manage/cluster-maintenance/manage-throughput",
                   },
-              
+
                   "manage/cluster-maintenance/configure-availability",
                   {
                     type: "doc",
