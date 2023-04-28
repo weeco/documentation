@@ -30,8 +30,16 @@ The following configurations are based on the assumption that you want to host R
 - **Sign-in method:** OIDC - Open ID Connect / Application type: Web Application
 - **Assignments:** Select groups that shall be able to use Redpanda Console (authorization can be made more granular using Redpanda Console's RBAC system)
 
-When you create the Okta application you should be able to access the application's client credentials (client ID and client secret).
-Put the following credentials into your Redpanda Console configuration:
+## Edit the console configuration file
+
+Edit the console configuration file associated with your deployment method and incorporate the details from your client application. For example, Kubernetes deployments use the `values.yaml` file. Linux deployments use the `redpanda-console-config.yaml` file, which is in `/etc/redpanda`.
+
+When you create the Okta application, you should be able to retrieve the application's client ID and client secret and put them in your Redpanda Console configuration.
+
+:::note
+The following configurations are based on the assumption that you host Redpanda Console so it is accessible from
+`https://console.<your-company>.com`.
+:::
 
 ```yaml
 login:
@@ -54,21 +62,21 @@ login:
 
   okta:
     enabled: true
-    # URL to the OIDC endpoint, e.g. "https://yourcompany.com.okta.com"
+    # URL to the OIDC endpoint; for example, "https://<your-company>.com.okta.com"
     url: ""
     clientId: ""
-    # ClientSecret is sensitive. You can provide this config also via the
-    # the environment variable LOGIN_OKTA_CLIENTSECRET
+    # ClientSecret is sensitive. You can also provide this config by setting
+    # the environment variable LOGIN_OKTA_CLIENTSECRET.
     clientSecret: ""
     # The directory config is only required if you want to use Okta
-    # groups in your role bindings. Described further in the next section.
+    # groups in your role bindings. This is described further in the next section.
     # directory:
     #   apiToken: ""
 ```
 
 ## RBAC Okta groups sync
 
-If you want to bind roles to Okta groups, you must set up an API token in Okta so that Redpanda Console can retrieve groups
+To bind roles to Okta groups, you must set up an API token in Okta so that Redpanda Console can retrieve groups
 and their memberships using the Okta API. To create an API token, refer to the [Okta guide](https://developer.okta.com/docs/guides/create-an-api-token/main/).
 After completing the steps in the guide, insert the created API token into the configuration:
 
