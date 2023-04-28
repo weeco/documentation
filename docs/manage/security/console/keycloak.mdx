@@ -27,7 +27,9 @@ You can use the master realm, or you can create a realm for managing and authent
 
 1. Log in to the Keycloak Admin Console.
 
-2. Select the realm where you want to create a client (clients are applications and services that request user authentication).
+2. Select the realm where you want to create a client. 
+
+    Clients are applications and services that request user authentication.
 
 3. In the navigation pane, select **Clients**.
 
@@ -64,7 +66,7 @@ You can use the master realm, or you can create a realm for managing and authent
 11. Copy the **Client secret**, which is automatically generated.
 
 :::info
-The `redpanda-console-config.yaml` file uses the client secret to establish communication with Keycloak.
+The console configuration file uses the client secret, which is basically a password, to establish communication with Keycloak.
 :::
 
 ## Edit the console configuration file
@@ -84,21 +86,21 @@ login:
   # web token used to store user sessions. This secret key is
   # critical for the security of Redpanda Console's authentication and
   # authorization system. Use a long, complex key with a combination of
-  # numbers, letters, and special characters. While you must use a minimum of
-  # 10 characters, Redpanda recommends using more than 32
+  # numbers, letters, and special characters. The minimum number of
+  # characters is 10, but Redpanda recommends using more than 32
   # characters. For additional security, use a different secret key for
   # each environment. jwtSecret can be securely generated with the following
   # command: LC_ALL=C tr -dc '[:alnum:]' < /dev/random | head -c32
   #
   # If you update this secret key, any users who are
-  # already logged into Redpanda Console will be logged out and will have
+  # already logged in to Redpanda Console will be logged out and will have
   # to log in again.
   jwtSecret: ""
 
   keycloak:
     enabled: true
     url: https://keycloak.internal.company.com
-    realm: <realm-name> # Replace this placeholder with the actual realm name.
+    realm: <realm-name> # Replace <realm-name> with the actual realm name.
 
     clientId: ""
     clientSecret: ""
@@ -113,8 +115,7 @@ login:
 
 ## RBAC Keycloak groups sync
 
-To bind roles to Keycloak groups, you need to specify admin user credentials. These credentials
-are used to resolve group memberships when communicating with Keycloak's API.
+To bind roles to Keycloak groups, you must specify admin user credentials, which are used to resolve group memberships when communicating with Keycloak's API. These credentials must be the same ones that are used to log in to the Keycloak admin panel, and they must be associated with the realm where the group memberships will be resolved.
 
 ```yaml
 login:
