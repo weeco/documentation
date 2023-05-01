@@ -131,8 +131,7 @@ const FeedbackForm = (props) => {
     
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const genStaticData =() => {
     const defaultRadio = solvedRadio;
     if(!formData.feedback){
       formData.feedback=defaultRadio;
@@ -150,7 +149,11 @@ const FeedbackForm = (props) => {
     formData.beta = beta
     formData.date = new Date()
     formData.navigator = navigator.userAgent
-    
+  }
+
+  const handleSubmit = (e) => {
+    genStaticData();
+    e.preventDefault();
     if (feedbackSubmitted) return;
     
     fetch("/", {
