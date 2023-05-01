@@ -60,11 +60,6 @@ module.exports = {
             },
           ],
         },
-        {
-          type: "doc",
-          label: "Build a Sample Application",
-          id: "get-started/code-examples",
-        },
       ],
     },
     {
@@ -79,7 +74,11 @@ module.exports = {
           label: "Supported Kafka Clients",
           id: "develop/kafka-clients",
         },
-        "develop/code-examples",
+        {
+          type: "doc",
+          label: "Build a Sample Application",
+          id: "develop/code-examples",
+        },
         "develop/guide-nodejs",
         "develop/http-proxy",
         "develop/config-topics",
