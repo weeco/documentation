@@ -8,7 +8,7 @@ title: Benchmark Redpanda
     <link rel="canonical" href="https://docs.redpanda.com/docs/develop/benchmark/" />
 </head>
 
-Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark. Run the same tests and workloads that [Redpanda used to demonstrate at least 10x faster tail latencies than Apache Kafka on similar hardware](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark). 
+Learn how to measure the performance of a Redpanda cluster deployed on AWS EC2 instances with the Linux Foundation's OpenMessaging Benchmark. Run the same tests and workloads that Redpanda uses to demonstrate significantly better performance than Apache Kafka. 
 
 ## About OpenMessaging Benchmark
 
@@ -42,6 +42,12 @@ producerRate: 50000
 consumerBacklogSizeGB: 0
 testDurationMinutes: 15
 ```
+
+The `keyDistributor` property configures how keys are distributed and assigned to messages.
+- `NO_KEY` sets `null` for all keys.
+- `KEY_ROUND_ROBIN` cycles through a finite set of keys in round-robin fashion.
+- `RANDOM_NANO` returns random keys based on `System.nanoTime()`.
+
 </details>
 
 ## Set up benchmark
@@ -115,12 +121,6 @@ Running OMB with Redpanda requires setting up your local environment to provisio
 
     1. Customize the `openmessaging-benchmark/deploy/terraform.tfvars` Terraform configuration file for your environment.
 
-       Parameters most likely to change include:
-       - `region`
-       - `public_key_path`
-       - `ami`
-       - `instance_types`
-
        <details>
 
         <summary>Default Terraform configuration for Redpanda on AWS</summary>
@@ -184,7 +184,7 @@ Running OMB with Redpanda requires setting up your local environment to provisio
     ```
 
     :::note
-    Beginning with Ansible 2.14, references to `args: warn` within Ansible tasks cause a fatal error and halt the execution of the playbook. These errors have been resolved in the Redpanda fork of OMB, but you may find instances of this in the components installed by `ansible-galaxy`, particularly in the `cloudalchemy.grafana` task in `dashboard.yml`. To resolve this issue, removing the `warn` line in from the yml file.
+    Beginning with Ansible 2.14, references to `args: warn` within Ansible tasks cause a fatal error and halt the execution of the playbook. You may find instances of this in the components installed by `ansible-galaxy`, particularly in the `cloudalchemy.grafana` task in `dashboards.yml`. To resolve this issue, removing the `warn` line in from the yml file.
     :::
 
 ## Run benchmark
@@ -265,6 +265,10 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     ```
    </details>
 
+   :::tip
+    Configure `reset=false` and manually delete the generated topic after the benchmark completes. Otherwise, when `reset=true`, the benchmark can fail due to it erroneously trying to delete the `_schemas` topic.
+   :::
+
 1. Run the benchmark with your workload and client configuration.
 
     ```bash
@@ -272,10 +276,6 @@ Connect to the benchmark's client and run the benchmark with a custom workload.
     driver-redpanda/redpanda-ack-all-group-linger-1ms.yaml \ 
     workloads/1-topic-144-partitions-500mb-4p-4c.yaml
     ```
-
-    :::note
-    When the benchmark is running, you should observe the logs for errors and warnings that might indicate a workload is not being completed as expected. For example, you might have observed an issue when the workload couldn't keep up and the producer started throwing `WARN` level messages on JDK 11 due to `HdrHistogram/HdrHistogram#180`. While this issue has been fixed in Redpanda's fork of OMB, make sure to pay attention for similar errors in the logs.
-    :::
 
 ## View benchmark results
 
@@ -324,4 +324,4 @@ terraform destroy -auto-approve
 
 ## Suggested reading
 
-- [Redpanda vs. Apache Kafka: A performance comparison (2022 update)](https://redpanda.com/blog/redpanda-vs-kafka-performance-benchmark).
+- [Redpanda performance comparison blogs](https://redpanda.com/blog?search=%22performance%20comparison%22).
