@@ -10,7 +10,7 @@ To create a new topic using remote recovery:
 rpk topic create <topic_name> -c redpanda.remote.recovery=true
 ```
 
-To create a new topic using remote recovery and enable Tiered Storage on the new topic with the `redpanda.remote.write` and `redpanda.remote.read` flags:
+To create a new topic using remote recovery and enable Tiered Storage on the new topic with the `redpanda.remote.write` and `redpanda.remote.read` properties:
 
 ```bash
 rpk topic create <topic_name> -c redpanda.remote.recovery=true -c redpanda.remote.write=true -c redpanda.remote.read=true

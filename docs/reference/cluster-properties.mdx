@@ -129,7 +129,7 @@ AWS or GCS bucket that should be used to store data.
 
 ### cloud_storage_cache_size
 
-Max size of archival cache.
+Max size of object storage cache.
 
 **Units**: bytes
 
@@ -165,7 +165,7 @@ Disable TLS for all S3 or GCS connections.
 
 ### cloud_storage_enabled
 
-Enable archival storage. Must be enabled `true` in order to use [Tiered Storage](../../manage/tiered-storage) or Remote Read Replicas.
+Enable object storage. Must be set to `true` to use [Tiered Storage](../../manage/tiered-storage) or Remote Read Replicas.
 
 **Type**: boolean
 
@@ -1062,6 +1062,8 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 
 Local retention size target for partitions of topics with object storage write enabled. If `null`, the property is disabled.
 
+This property can be overridden on a per-topic basis by setting `retention.local.target.bytes` in each topic enabled for Tiered Storage. See [Configure message retention](../../manage/cluster-maintenance/disk-utilization/#configure-message-retention).
+
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
 :::
@@ -1072,13 +1074,16 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 **Restart required**: no
 
-**Related properties**: [retention_local_target_ms_default](#retention_local_target_ms_default)
+**Related properties**: 
+- [retention_local_target_ms_default](#retention_local_target_ms_default)
 
 ---
 
 ### retention_local_target_ms_default
 
 Local retention time target for partitions of topics with object storage write enabled.
+
+This property can be overridden on a per-topic basis by setting `retention.local.target.ms` in each topic enabled for Tiered Storage. See [Configure message retention](../../manage/cluster-maintenance/disk-utilization/#configure-message-retention).
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
@@ -1090,7 +1095,8 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 **Restart required**: no
 
-**Related properties**: [retention_local_target_bytes_default](#retention_local_target_bytes_default)
+**Related properties**: 
+- [retention_local_target_bytes_default](#retention_local_target_bytes_default)
 
 ---
 

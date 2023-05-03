@@ -6,7 +6,7 @@ The following list contains cluster-level configuration properties for Tiered St
 
 | Property      | Description |
 | ----------- | ----------- |
-| <ClusterProperty name="cloud_storage_enabled" frontmatter={props.frontmatter}/> | Global flag that enables Tiered Storage. <br/>Set to true to enable Tiered Storage. Default is false.  |
+| <ClusterProperty name="cloud_storage_enabled" frontmatter={props.frontmatter}/> | Global property that enables Tiered Storage. <br/>Set to true to enable Tiered Storage. Default is false.  |
 | <ClusterProperty name="cloud_storage_region" frontmatter={props.frontmatter}/> | Object storage region. <br/>Required for AWS and GCS. |
 | <ClusterProperty name="cloud_storage_bucket" frontmatter={props.frontmatter}/> | AWS or GCS bucket name. <br/>Required for AWS and GCS. |
 | <ClusterProperty name="cloud_storage_credentials_source" frontmatter={props.frontmatter}/> | AWS or GCS instance metadata. <br/>Required for AWS and GCS authentication with IAM roles. |
@@ -50,7 +50,7 @@ Under normal circumstances, you should not need to configure the following tunab
 | <TunableClusterProperty name="cloud_storage_upload_ctrl_d_coeff" frontmatter={props.frontmatter}/> | The derivative coefficient for the upload controller. Default is 0. |
 | <TunableClusterProperty name="cloud_storage_upload_ctrl_min_shares" frontmatter={props.frontmatter}/> | The minimum number of I/O and CPU shares that the remote write process can use. Default is 100. |
 | <TunableClusterProperty name="cloud_storage_upload_ctrl_max_shares" frontmatter={props.frontmatter}/> | The maximum number of I/O and CPU shares that the remote write process can use. Default is 1000. |
-| <TunableClusterProperty name="cloud_storage_disable_tls" frontmatter={props.frontmatter}/> | Disables TLS encryption. You can set this to true if TLS termination is done by the proxy, such as HAProxy. Default is false.  |
-| <TunableClusterProperty name="cloud_storage_api_endpoint_port" frontmatter={props.frontmatter}/> | Overrides the default API endpoint port. Default is 443. |
-| <TunableClusterProperty name="cloud_storage_trust_file" frontmatter={props.frontmatter}/> | The public certificate used to validate the TLS connection to object storage. If this is empty, Redpanda uses your operating system's CA cert pool. |
+| <ClusterProperty name="cloud_storage_disable_tls" frontmatter={props.frontmatter}/> | Disables TLS encryption. Set to true if TLS termination is done by the proxy, such as HAProxy. Default is false.  |
+| <ClusterProperty name="cloud_storage_api_endpoint_port" frontmatter={props.frontmatter}/> | Overrides the default API endpoint port. Default is 443. |
+| <ClusterProperty name="cloud_storage_trust_file" frontmatter={props.frontmatter}/> | The public certificate used to validate the TLS connection to object storage. If this is empty, Redpanda uses your operating system's CA cert pool. |
 | <TunableClusterProperty name="cloud_storage_reconciliation_interval_ms" frontmatter={props.frontmatter}/> | Deprecated. <br/><br/> The interval, in milliseconds, to reconcile partitions that need to be uploaded. A long reconciliation interval can result in a delayed reaction to topic creation, topic deletion, or leadership rebalancing events. A short reconciliation interval guarantees that new partitions are picked up quickly, but the process uses more resources. Default is 10000 ms. |

@@ -97,6 +97,25 @@ Default remote write configuration value for new topics.
 
 ---
 
+### cloud_storage_enable_segment_merging
+
+Flag to enable adjacent segment merging in cloud object storage. When this property is enabled, Redpanda merges adjacent segments in object storage that are smaller than the threshold, [`cloud_storage_segment_size_min`](#cloud_storage_segment_size_min). 
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
+
+---
+
 ### cloud_storage_housekeeping_interval_ms
 
 Interval for object storage housekeeping tasks.
@@ -109,15 +128,33 @@ Interval for object storage housekeeping tasks.
 
 ---
 
+### cloud_storage_idle_threshold_rps
+
+Request rate threshold for idle state detection of cloud object storage. If the average object storage API request rate is lower than this threshold, then the object storage is considered to be idle.
+
+**Units**: object storage API requests per second
+
+**Default**: 1.0
+
+**Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
+
+---
+
 ### cloud_storage_idle_timeout_ms
 
-Timeout used to detect idle state of the object storage API. If no API requests are made for at least this timeout's duration, the object storage is considered idle.
+Timeout used to detect idle state of the object storage API. If no object storage API requests are made for at least this timeout's duration, the object storage is considered idle.
 
 **Units**: milliseconds
 
 **Default**: 10000 (10 sec)
 
 **Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
 
 ---
 
@@ -271,6 +308,13 @@ The desired segment size in object storage. If `null`, the property is disabled,
 
 **Restart required**: no
 
+**Related properties**:
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
+
 ---
 
 ### cloud_storage_segment_size_min
@@ -282,6 +326,13 @@ The minimum segment size in object storage. If `null`, the property is disabled,
 **Default**: null
 
 **Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
 
 ---
 

@@ -67,7 +67,12 @@ kubectl exec redpanda-0 -c redpanda -n redpanda -- rpk cluster license info
 
 ### Configure object storage
 
-You must configure access to object storage on one of the following supported platforms.
+Redpanda natively supports Tiered Storage with Amazon Simple Storage Service (S3), Google Cloud Storage (GCS, which uses the Google Cloud Platform S3 API), and Microsoft Azure Blob Storage (ABS). 
+
+:::info
+- Migrating topics from one object storage provider to another is not supported. 
+- Migrating topics from one bucket or container to another is not supported.
+:::
 
 <Tabs groupId="cloud-platform" queryString>
 <TabItem value="s3" label="Amazon S3" default>
