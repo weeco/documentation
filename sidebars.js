@@ -404,7 +404,7 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Upgrade Redpanda",
+                    label: "Upgrade",
                     id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
