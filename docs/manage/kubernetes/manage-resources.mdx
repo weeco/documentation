@@ -25,12 +25,14 @@ In a running Redpanda cluster, you cannot decrease the number of CPU cores. You 
 To see the available resources on the worker nodes that you have provisioned:
 
 ```bash
-kubectl describe nodes 
+kubectl describe nodes
 ```
 
 ## Prerequisites
 
 If you're deploying to production, see the [production best practices](../../../deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices) for memory, CPU, and storage volumes.
+
+Make sure that your physical or virtual machines have enough resources to give to Redpanda. You assign resources to each Redpanda broker using the `values.yaml` settings. If you need to replace a worker node with one that has more resources, [decommission the brokers](../decommission-brokers) before you replace the worker nodes.
 
 ## Configure CPU resources
 
@@ -61,10 +63,8 @@ helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace
 </TabItem>
 </Tabs>
 
-:::note
-
-<ValuesYaml path="resources.cpu"/>
-
+:::info
+You cannot decrease the number of CPU cores in a running cluster.
 :::
 
 :::tip

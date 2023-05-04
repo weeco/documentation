@@ -399,6 +399,11 @@ module.exports = {
                   },
                   {
                     type: "doc",
+                    label: "Scale",
+                    id: "manage/kubernetes/scale",
+                  },
+                  {
+                    type: "doc",
                     label: "Decommission Brokers",
                     id: "manage/kubernetes/decommission-brokers",
                   },
