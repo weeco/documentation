@@ -3,7 +3,7 @@
 1. Create an alias to simplify the `rpk` commands:
 
   ```bash
-  alias rpk-topic="kubectl -n redpanda exec redpanda-0 -c redpanda -- rpk topic --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093 --tls-truststore /etc/tls/certs/default/ca.crt --tls-enabled --user=redpanda-twitch-account --password=changethispassword --sasl-mechanism SCRAM-SHA-256"
+  alias rpk-topic="kubectl -n redpanda exec -i -t redpanda-0 -c redpanda -- rpk topic --brokers redpanda-0.redpanda.redpanda.svc.cluster.local.:9093,redpanda-1.redpanda.redpanda.svc.cluster.local.:9093,redpanda-2.redpanda.redpanda.svc.cluster.local.:9093 --tls-truststore /etc/tls/certs/default/ca.crt --tls-enabled --user=redpanda-twitch-account --password=changethispassword --sasl-mechanism SCRAM-SHA-256"
   ```
 
 1. Create a topic called `twitch_chat`:
@@ -44,18 +44,20 @@
 
   CONFIGS
   =======
-  KEY                     VALUE                          SOURCE
-  cleanup.policy          delete                         DYNAMIC_TOPIC_CONFIG
-  compression.type        producer                       DEFAULT_CONFIG
-  message.timestamp.type  CreateTime                     DEFAULT_CONFIG
-  partition_count         1                              DYNAMIC_TOPIC_CONFIG
-  redpanda.datapolicy     function_name:  script_name:   DEFAULT_CONFIG
-  redpanda.remote.read    false                          DEFAULT_CONFIG
-  redpanda.remote.write   false                          DEFAULT_CONFIG
-  replication_factor      1                              DYNAMIC_TOPIC_CONFIG
-  retention.bytes         -1                             DEFAULT_CONFIG
-  retention.ms            604800000                      DEFAULT_CONFIG
-  segment.bytes           1073741824                     DEFAULT_CONFIG
+  KEY                           VALUE       SOURCE
+  cleanup.policy                delete      DYNAMIC_TOPIC_CONFIG
+  compression.type              producer    DEFAULT_CONFIG
+  max.message.bytes             1048576     DEFAULT_CONFIG
+  message.timestamp.type        CreateTime  DEFAULT_CONFIG
+  redpanda.remote.delete        true        DEFAULT_CONFIG
+  redpanda.remote.read          false       DEFAULT_CONFIG
+  redpanda.remote.write         false       DEFAULT_CONFIG
+  retention.bytes               -1          DEFAULT_CONFIG
+  retention.local.target.bytes  -1          DEFAULT_CONFIG
+  retention.local.target.ms     86400000    DEFAULT_CONFIG
+  retention.ms                  604800000   DEFAULT_CONFIG
+  segment.bytes                 134217728   DEFAULT_CONFIG
+  segment.ms                    1209600000  DEFAULT_CONFIG
   ```
 
   </details>

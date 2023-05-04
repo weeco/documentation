@@ -57,7 +57,6 @@ module.exports = async () => {
           {
           }
         ],
-        copyright: '<p style=" color: #808080">© 2022-2023 Redpanda Data Inc. All Rights Reserved.</p>'
       },
       prism: {
         theme: lightCodeTheme,
@@ -100,7 +99,7 @@ module.exports = async () => {
             versions: {
               current: {
                 label: '23.1',
-              },
+              }
             },
             beforeDefaultRemarkPlugins: [
                 [variableInjector, {

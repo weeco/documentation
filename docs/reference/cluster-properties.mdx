@@ -5,11 +5,9 @@ toc_max_heading_level: 2
 ---
 
 <head>
-  <meta
-    name="title"
-    content="Cluster configuration properties | Redpanda Docs"
-  />
+  <meta name="title" content="Cluster configuration properties | Redpanda Docs"/>
   <meta name="description" content="Cluster configuration properties list." />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/cluster-properties/" />
 </head>
 
 import Aliases from '../shared/_aliases.mdx'
@@ -42,7 +40,7 @@ List of superuser usernames.
 
 -------------------------------------------------------------------------------
 
-## Cloud storage properties
+## Object storage properties
 
 
 ### cloud_storage_azure_storage_account
@@ -131,7 +129,7 @@ AWS or GCS bucket that should be used to store data.
 
 ### cloud_storage_cache_size
 
-Max size of archival cache.
+Max size of object storage cache.
 
 **Units**: bytes
 
@@ -167,7 +165,7 @@ Disable TLS for all S3 or GCS connections.
 
 ### cloud_storage_enabled
 
-Enable archival storage. Must be enabled `true` in order to use [Tiered Storage](../../manage/tiered-storage) or Remote Read Replicas.
+Enable object storage. Must be set to `true` to use [Tiered Storage](../../manage/tiered-storage) or Remote Read Replicas.
 
 **Type**: boolean
 
@@ -240,6 +238,8 @@ Cluster identifier.
 ---
 
 ### enable_auto_rebalance_on_node_add
+
+<Aliases name="badge-deprecated" />
 
 Enable automatic partition rebalancing when new nodes are added.
 
@@ -363,16 +363,19 @@ Target quota rate for partition mutations per [default_window_sec](../tunable-pr
 
 A map specifying the produce-rate quota per client group. 
 
-The keys of the map:
+The configurable fields:
 - `group_name`: name of a client group
 - `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
-- `quota`: produce-rate quota, in bytes per second
+- `quota`: produce-rate quota of each client in bytes per second
 
 An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
 
 **Default**: {} (empty map)
 
 **Restart required**: no
+
+**Related topics**:
+- [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
 
 ---
 
@@ -380,16 +383,19 @@ An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota':
 
 A map specifying the fetch-rate quota per client group. 
 
-The keys of the map:
+The configurable fields:
 - `group_name`: name of a client group
 - `clients_prefix`: prefix to prepend to the name of each client belonging to the group specified by `group_name`
-- `quota`: fetch-rate quota, in bytes per second
+- `quota`: fetch-rate quota of each client in bytes per second
 
 An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota': 10240}])`
 
 **Default**: {} (empty map)
 
 **Restart required**: no
+
+**Related topics**:
+- [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
 
 ---
 
@@ -465,6 +471,9 @@ Maximum connections per second for one core. If `null` (the default), the number
 
 **Restart required**: yes
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connection_rate_limit_overrides
@@ -476,6 +485,9 @@ Overrides the maximum connections per second for one core for the specified IP a
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -489,6 +501,9 @@ Maximum number of Kafka client connections per broker. If `null`, the property i
 
 **Restart required**: no
 
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
+
 ---
 
 ### kafka_connections_max_overrides
@@ -498,6 +513,9 @@ A list of IP addresses for which Kafka client connection limits are overridden a
 **Default**: {} (empty list)
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -510,6 +528,9 @@ Maximum number of Kafka client connections per IP address, per broker. If `null`
 **Default**: null
 
 **Restart required**: no
+
+**Related topics**:
+- [Limit client connections](../../manage/cluster-maintenance/configure-availability#limit-client-connections)
 
 ---
 
@@ -613,6 +634,9 @@ If `0`, the balancer is disabled and all throughput quotas are immutable.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_min_shard_throughput_ratio
@@ -632,6 +656,9 @@ If set to `0.0`, the minimum is disabled. If set to `1.0`, then the balancer won
 **Range**: [0.0, 1.0]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -654,6 +681,9 @@ If set to `0`, no minimum is enforced.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_quota_balancer_window_ms
@@ -667,6 +697,9 @@ Time window used to average the current throughput measurement for the quota bal
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -709,6 +742,9 @@ If `null`, the property is disabled, and traffic is not limited.
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### kafka_throughput_limit_node_out_bps
@@ -724,6 +760,9 @@ If `null`, the property is disabled, and traffic is not limited.
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
 ---
 
@@ -1021,7 +1060,9 @@ Default timestamp type for topic messages (CreateTime or LogAppendTime).
 
 ### retention_local_target_bytes_default
 
-Local retention size target for partitions of topics with cloud storage write enabled. If `null`, the property is disabled.
+Local retention size target for partitions of topics with object storage write enabled. If `null`, the property is disabled.
+
+This property can be overridden on a per-topic basis by setting `retention.local.target.bytes` in each topic enabled for Tiered Storage. See [Configure message retention](../../manage/cluster-maintenance/disk-utilization/#configure-message-retention).
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
@@ -1033,13 +1074,16 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 **Restart required**: no
 
-**Related properties**: [retention_local_target_ms_default](#retention_local_target_ms_default)
+**Related properties**: 
+- [retention_local_target_ms_default](#retention_local_target_ms_default)
 
 ---
 
 ### retention_local_target_ms_default
 
-Local retention time target for partitions of topics with cloud storage write enabled.
+Local retention time target for partitions of topics with object storage write enabled.
+
+This property can be overridden on a per-topic basis by setting `retention.local.target.ms` in each topic enabled for Tiered Storage. See [Configure message retention](../../manage/cluster-maintenance/disk-utilization/#configure-message-retention).
 
 :::note
 Both `retention_local_target_bytes_default` and `retention_local_target_ms_default` can be set. The limit that is reached earlier is applied.
@@ -1051,7 +1095,8 @@ Both `retention_local_target_bytes_default` and `retention_local_target_ms_defau
 
 **Restart required**: no
 
-**Related properties**: [retention_local_target_bytes_default](#retention_local_target_bytes_default)
+**Related properties**: 
+- [retention_local_target_bytes_default](#retention_local_target_bytes_default)
 
 ---
 
@@ -1248,23 +1293,6 @@ Delay before scheduling the next check for timed out transactions.
 
 -------------------------------------------------------------------------------
 
-## Wasm properties
-
-:::caution
-[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
-:::
-
-### enable_coproc
-
-Enable coprocessing mode.
-
-**Type**: boolean
-
-**Default**: false
-
-**Restart required**: yes
-
----
 
 ## Suggested reading
 

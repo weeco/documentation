@@ -27,7 +27,7 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
         ),
       }}>
       {
-        'This is in-progress documentation for Redpanda {versionLabel}. {releaseAnnouncement}'
+        'This is in-progress documentation for Redpanda {versionLabel}.'
       }
     </Translate>
   );

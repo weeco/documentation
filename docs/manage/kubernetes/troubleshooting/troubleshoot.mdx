@@ -8,6 +8,7 @@ description: Find advice on how to diagnose and troubleshoot problems with Redpa
 <head>
     <meta name="title" content="Troubleshoot Redpanda in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="Find advice on how to diagnose and troubleshoot problems with Redpanda in Kubernetes."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/troubleshooting/troubleshoot/" />
 </head>
 
 import Versions from '../../../shared/_versions.mdx'
@@ -74,7 +75,7 @@ If you're running on EKS, the [Amazon EBS CSI driver](https://docs.aws.amazon.co
 
 To learn how to configure different storage volumes, see [Configure Storage](../../configure-storage).
 
-## dig not defined
+## Dig not defined
 
 This error means that you are using an unsupported version of [Helm](https://helm.sh/docs/intro/install/):
 
@@ -88,7 +89,7 @@ Make sure that you are using the minimum required version: <Versions name="helm"
 helm version
 ```
 
-## repository name (redpanda) already exists
+## Repository name already exists
 
 If you see this error, remove the `redpanda` chart repository, then try installing it again.
 
@@ -98,7 +99,7 @@ helm repo add redpanda https://charts.redpanda.com
 helm repo update
 ```
 
-## invalid large response size
+## Invalid large response size
 
 This error appears when your cluster is configured to use TLS, but you don't specify that you are connecting over TLS.
 
@@ -114,7 +115,7 @@ kubectl exec redpanda-0 -c redpanda -n redpanda -- rpk cluster info --brokers <s
 
 For all available flags, see the [rpk command reference](../../../../reference/rpk).
 
-## i/o timeout
+## I/O timeout
 
 This error appears when your worker nodes are unreachable through the given address.
 
@@ -124,7 +125,7 @@ Check the following:
 
 - Your DNS records point to addresses that resolve to your worker nodes.
 
-## is SASL missing?
+## Is SASL missing?
 
 This error appears when you try to interact with a cluster that has SASL enabled without passing a user's credentials.
 
@@ -136,7 +137,7 @@ If you're using rpk, make sure to specify the `--username`, `--password`, and `-
 
 For all available flags, see the [rpk command reference](../../../../reference/rpk).
 
-## malformed HTTP response "\x15\x03\x03\x00\x02\x02"
+## Malformed HTTP response
 
 This error appears when a cluster has TLS enabled, and you try to access the admin API without passing the required TLS parameters.
 
@@ -148,9 +149,19 @@ If you're using rpk, make sure to include the TLS flags.
 
 For all available flags, see the [rpk command reference](../../../../reference/rpk).
 
-## UPGRADE FAILED: cannot patch "redpanda" with kind StatefulSet
+## Fatal error during checker "Data directory is writable" execution
 
-This error appears when you run `helm upgrade` when using the `--values` flag but not including all of your overrides.
+This error appears when Redpanda does not have write access to your configured storage volume under `storage` in the Helm chart.
+
+```
+Error: fatal error during checker "Data directory is writable" execution: open /var/lib/redpanda/data/test_file: permission denied
+```
+
+To fix this error, set `statefulset.initContainers.setDataDirOwnership.enabled` to `true` so that the initContainer can set the correct permissions on the data directories.
+
+## Cannot patch "redpanda" with kind StatefulSet
+
+This error appears when you run `helm upgrade` with the `--values` flag but do not include all your previous overrides.
 
 ```
 Error: UPGRADE FAILED: cannot patch "redpanda" with kind StatefulSet: StatefulSet.apps "redpanda" is invalid: spec: Forbidden: updates to statefulset spec for fields other than 'replicas', 'template', 'updateStrategy', 'persistentVolumeClaimRetentionPolicy' and 'minReadySeconds' are forbidden
@@ -165,7 +176,7 @@ Make sure to do one of the following:
   Do not use the `--reuse-values` flag to upgrade from one version of the Helm chart to another. This flag stops Helm from using any new values in the upgraded chart.
   :::
 
-## UPGRADE FAILED: cannot patch "redpanda-console" with kind Deployment
+## Cannot patch "redpanda-console" with kind Deployment
 
 This error appears if you try to upgrade your deployment and you already have `console.enabled` set to `true`.
 

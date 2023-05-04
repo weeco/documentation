@@ -5,6 +5,7 @@ title: rpk debug bundle
 <head>
   <meta name="title" content="rpk debug bundle| Redpanda Docs" />
   <meta name="description" content="The rpk debug bundle command generates a diagnostics bundle for troubleshooting Redpanda deployments." />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/rpk-debug/rpk-debug-bundle/" />
 </head>
 
 import BundleContentsK8s from './shared/_bundle-contents-k8s.mdx'
@@ -15,6 +16,10 @@ import TabItem from '@theme/TabItem';
 
 The `rpk debug bundle` command collects environment data that can help debug and diagnose issues with a Redpanda cluster, a broker, or the machine it`s running on. It
 then bundles the collected data into a ZIP file, called a diagnostics bundle.
+
+:::info
+In Kubernetes, you must execute the `rpk debug bundle` command inside a container that's running a Redpanda broker.
+:::
 
 ## Usage
 

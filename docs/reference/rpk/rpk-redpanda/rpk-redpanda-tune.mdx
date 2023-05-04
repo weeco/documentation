@@ -7,6 +7,7 @@ toc_max_heading_level: 4
 <head>
   <meta name="title" content="rpk redpanda tune (autotuner) | Redpanda Docs" />
   <meta name="description" content="rpk redpanda tune (autotuner)" />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/" />
 </head>
 
 `rpk redpanda tune`, also referred to as the autotuner, identifies the hardware configuration on your machine and optimizes the Linux kernel to give you the best performance for running Redpanda.
@@ -25,8 +26,24 @@ While you follow the guides, consult this reference for details about the autotu
 rpk redpanda tune <list of elements to tune> [command] [flags]
 ```
 
-:::tip
-When running `rpk redpanda tune`, make sure that your current Linux user has root privileges. The autotuner requires privileged access to the Linux kernel settings.
+:::tip tips
+- When running `rpk redpanda tune`, make sure that your current Linux user has root privileges. The autotuner requires privileged access to the Linux kernel settings.
+
+- To run `rpk redpanda tune all` on a Redpanda broker automatically after broker or host restarts, configure the service `redpanda-tuner`, which runs `rpk redpanda tune all`, to run at boot-up:
+
+  - For RHEL, after installing the rpm package, run `systemctl` to both start and enable the `redpanda-tuner` service:
+
+    ```bash
+    sudo systemctl start redpanda-tuner
+    sudo systemctl enable redpanda-tuner
+    ```
+
+  - For Ubuntu, after installing the apt package, run `systemctl` to start the `redpanda-tuner` service (which is already enabled):
+
+    ```bash
+    sudo systemctl start redpanda-tuner
+    ```
+
 :::
 
 ### Flags

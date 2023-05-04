@@ -15,6 +15,89 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 
+function createEditablePlaceholders () {
+  const codeElements = document.querySelectorAll("pre > code");
+
+  for (let i = 0; i < codeElements.length; i++) {
+    const codeElement = codeElements[i];
+    addEditableSpan(/&lt;.[^&A-Z]*&gt;/g, codeElement);
+  }
+}
+
+if (!RegExp.escape) {
+  RegExp.escape = function(s) {
+    return s.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+  };
+}
+
+function addEditableSpan(regex, element) {
+  if (!element || !element.textContent) {
+    return;
+  }
+  const text = element.innerHTML;
+  const placeholders = text.match(regex) || [];
+  const processed = new Set();
+  let newHTML = text;
+  for (const placeholder of placeholders) {
+    const cleanedPlaceholder = placeholder.replace(/<[^>]*>/g, '').replace(/&lt;|&gt;/g, '');
+    if (processed.has(placeholder)) {
+      continue;
+    }
+    const regexString = RegExp.escape(placeholder);
+    const globalRegex = new RegExp(regexString, 'g');
+    newHTML = newHTML.replace(globalRegex, `<span contenteditable="true" data-type="${cleanedPlaceholder}">&lt;${cleanedPlaceholder}&gt;</span><span class="cursor"></span>`);
+    processed.add(placeholder);
+  }
+  element.innerHTML = newHTML;
+}
+
+function addClasses () {
+  const editablePlaceholders = document.querySelectorAll('[contenteditable="true"], [contenteditable="true"] span');
+
+  editablePlaceholders.forEach((placeholder) => {
+    placeholder.classList.add('editable');
+    placeholder.addEventListener('input', function(event) {
+      const dataType = event.target.dataset.type;
+      const newText = event.target.textContent;
+
+      document.querySelectorAll(`[data-type="${dataType}"][contenteditable="true"]`).forEach(span => {
+        if (span !== event.target) {
+          span.textContent = newText;
+        }
+      });
+    });
+  });
+}
+
+function addEvents() {
+  const editablePlaceholders = document.querySelectorAll('[contenteditable="true"], [contenteditable="true"] span');
+
+  editablePlaceholders.forEach((placeholder) => {
+    placeholder.addEventListener('input', function(event) {
+      const dataType = event.target.dataset.type;
+      const newText = event.target.textContent;
+
+      document.querySelectorAll(`[data-type="${dataType}"][contenteditable="true"]`).forEach(span => {
+        if (span !== event.target) {
+          span.textContent = newText;
+          if (span.contentEditable == 'true') {
+            span.nextElementSibling.classList.remove('cursor');
+          } else {
+            span.parentElement.nextElementSibling.classList.remove('cursor');
+          }
+        }
+      });
+    });
+    placeholder.addEventListener('click', function(event){
+      if (event.target.contentEditable == 'true') {
+        event.target.nextElementSibling.classList.remove('cursor');
+      } else {
+        event.target.parentElement.nextElementSibling.classList.remove('cursor');
+      }
+    })
+  });
+}
+
 
 function encode(data) {
   return Object.keys(data)
@@ -23,19 +106,8 @@ function encode(data) {
 }
 
 const FeedbackForm = (props) => {
-  const [other, setOther] = useState(false);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   let [formData, setFormData] = useState({})
-
-  const handleChange = (e) => {
-    if (e.target.id=='other') setOther(true)
-    else {
-      setOther(false)
-      const textarea = document.getElementById("otherText")
-      textarea.value = ''
-    }
-    handleFormData(e)
-  }
 
  const handleFormData = (e) => {
   setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -61,9 +133,9 @@ const FeedbackForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const defaultRadio = {feedback:solvedRadio};
-    if(Object.keys(formData).length==0){
-      formData=defaultRadio;
+    const defaultRadio = solvedRadio;
+    if(!formData.feedback){
+      formData.feedback=defaultRadio;
     }
     const currentUrl = window.location.href
     const beta = window.location.href.includes('preview')
@@ -109,7 +181,7 @@ const FeedbackForm = (props) => {
                 </div>
                 <div className={styles.modalBody}>
                     <div className={styles.radioButtons}>
-                    <input type="hidden" name="form-name" value="feedbackForm"/>
+                      <input type="hidden" name="form-name" value="feedbackForm"/>
 
                       <p className={styles.hide}>
                         <label className={styles.hide}>
@@ -124,15 +196,15 @@ const FeedbackForm = (props) => {
                       <input className={styles.hide} name="navigator"/>
 
                       <label>
-                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleChange} defaultChecked/>
+                        <input type="radio" name="feedback" id="solvedProblem" value={solvedRadio} onChange={handleFormData} defaultChecked/>
                         <span className={styles.labelMargin}>{solvedRadio}</span>
                       </label><br />
                       <label>
-                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleChange}/>
+                        <input type="radio" name="feedback" id="easyToUnderstand" value={easyRadio} onChange={handleFormData}/>
                         <span className={styles.labelMargin} >{easyRadio}</span>
                       </label> <br />
                       <label>
-                        <input type="radio" name="feedback" id="other" value="other" onChange={handleChange} />
+                        <input type="radio" name="feedback" id="other" value="other" onChange={handleFormData} />
                         <span className={styles.labelMargin}>{otherRadio}</span>
                       </label><br/>
                     </div>
@@ -141,10 +213,10 @@ const FeedbackForm = (props) => {
                     </div>
                     <input type="text" name="email" id="email" onChange={handleFormData} placeholder="email@example.com" className={styles.moreQuestions}/><br />
                     <div>
-                      <div className={`${other ? `${styles.boxSizing} + " " + ${styles.padding}` : `${styles.hide}`}`}>
+                      <div className={`${`${styles.boxSizing} + " " + ${styles.padding}` }`}>
                         {whatWeDo}
                       </div>
-                      <textarea className={`${other ? '' : `${styles.hide}`}`} id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please share details or suggestions for this topic." onChange={handleFormData}></textarea>
+                      <textarea id="otherText"  name="otherText"  rows="4"  cols="50"  placeholder="Please share details or suggestions for this topic." onChange={handleFormData}></textarea>
                     </div>
                 </div>
                 <div className={styles.modalFooter}>
@@ -226,6 +298,21 @@ export default function DocItemLayout({ children,
         feedback.style.display = 'block';
       }
     })
+    // Put placeholders in code blocks (<[^>*]>) in editable <span> elements.
+    const addPlaceholders = () => {
+      try {
+        createEditablePlaceholders();
+        addClasses()
+        addEvents()
+      } catch (error) {
+        console.error('An error occurred while making placeholders editable:', error);
+      }
+    }
+    if (document.readyState === 'complete') {
+      addPlaceholders()
+    } else {
+      window.addEventListener('load', addPlaceholders)
+    }
   },[])
   return (
     <div className="row">

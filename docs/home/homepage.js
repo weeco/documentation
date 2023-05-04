@@ -54,7 +54,7 @@ const FeatureList = [
     image: require('../../static/img/cloud-first.png').default,
     description: (
       <>
-        Save storage costs by offloading log segments to the cloud.
+        Save storage costs by offloading log segments to object storage.
       </>
     ),
     url: '/docs/manage/tiered-storage',
