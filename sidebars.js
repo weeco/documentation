@@ -409,7 +409,12 @@ module.exports = {
                   },
                   {
                     type: "doc",
-                    label: "Upgrade",
+                    label: "Delete a PersistentVolume",
+                    id: "manage/kubernetes/delete-persistentvolume",
+                  },
+                  {
+                    type: "doc",
+                    label: "Upgrade Redpanda",
                     id: "manage/kubernetes/rolling-upgrade",
                   },
                   {
