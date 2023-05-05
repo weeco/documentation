@@ -507,12 +507,12 @@ module.exports = {
                 items: [
                   {
                     "type": "doc",
-                    "label": "Authentication",
+                    "label": "Configure Authentication",
                     "id": "manage/security/authentication"
                   },
                   {
                     "type": "doc",
-                    "label": "Authorization",
+                    "label": "Configure Authorization",
                     "id": "manage/security/authorization"
                   },
                   "manage/security/encryption",
