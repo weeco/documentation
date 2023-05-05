@@ -74,6 +74,8 @@ function convert_markdown_to_asciidoc() {
 while IFS= read -r -d '' markdown_file; do
   output_file="$(echo "$markdown_file" | sed "s|$SOURCE_DIRECTORY|$OUTPUT_DIRECTORY|" | sed 's|\.mdx$|.adoc|' | sed 's|\(.*\)/\(.*\)|\1/pages/\2|')"
   convert_markdown_to_asciidoc "$markdown_file" "$output_file"
+  # Run the Node.js script to process the output file
+  node post-process-asciidoc.js "$output_file"
 done < <(find "$SOURCE_DIRECTORY" -name "*.mdx" -print0)
 
 echo "All Markdown files converted to AsciiDoc."
