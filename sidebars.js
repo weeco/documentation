@@ -189,23 +189,28 @@ module.exports = {
                 },
                 {
                   type: "category",
-                  label: "Manual",
+                  label: "Linux",
                   link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/index" },
                   items: [
                     {
                     type: "category",
-                  label: "Production Deployment",
+                  label: "Deployment Options",
                   link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/production/index" },
                   items: [
                     {
                       type: "doc",
-                      label: "Deploy for Production",
-                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment",
-                    },
+                      label: "Deploy for Development",
+                      id: "deploy/deployment-option/self-hosted/manual/production/dev-deployment",
+                    },                    
                     {
                       type: "doc",
                       label: "Automate Deployment for Production",
                       id: "deploy/deployment-option/self-hosted/manual/production/production-deployment-automation",
+                    },
+                    {
+                      type: "doc",
+                      label: "Deploy for Production",
+                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment",
                     },
                   ]
                 },
