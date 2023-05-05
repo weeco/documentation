@@ -1,23 +1,23 @@
 site:
   title: Redpanda Docs
-  start_page: redpanda:get-started:intro-to-events.adoc
+  start_page: ROOT:introduction:intro-to-events.adoc
   url: https://grand-lokum-795b84.netlify.app
 urls:
   html_extension_style: indexify
   redirect_facility: netlify
-  latest_version_segment: ''
+  latest_version_segment: 'current'
+  latest_prerelease_version_segment: 'prerelease'
+  latest_version_segment_strategy: redirect:to
 content:
   sources:
   - url: .
     branches: HEAD
-    start_paths: site-root, home
-  - url: https://github.com/JakeSCahill/redpanda-docs-antora
-    branches: [v*]
-  - url: https://github.com/JakeSCahill/redpanda-cloud-docs
-    branches: main
+    start_paths: site-search, home
+  - url: https://github.com/redpanda-data/documentation
+    branches: [v/*]
 ui:
   bundle:
-    url: https://github.com/JakeSCahill/redpanda-docs-ui/releases/latest/download/ui-bundle.zip
+    url: https://github.com/JakeSCahill/redpanda-docs-ui/releases/download/beta-ui/ui-bundle.zip
     snapshot: true
 asciidoc:
   attributes:
