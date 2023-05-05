@@ -419,6 +419,11 @@ module.exports = {
                   },
                   {
                     type: "doc",
+                    label: "Upgrade Kubernetes",
+                    id: "manage/kubernetes/upgrade-kubernetes",
+                  },
+                  {
+                    type: "doc",
                     label: "Monitor",
                     id: "manage/kubernetes/monitor",
                   },
