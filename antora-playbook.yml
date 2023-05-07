@@ -1,6 +1,6 @@
 site:
   title: Redpanda Docs
-  start_page: ROOT:introduction:intro-to-events.adoc
+  start_page: home:ROOT:index.adoc
   url: https://grand-lokum-795b84.netlify.app
 urls:
   html_extension_style: indexify
