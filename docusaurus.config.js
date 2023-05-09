@@ -3,6 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const variableInjector = require('./src/remark/variable-replacer');
 const getLatestRedpandaReleaseVersion = require('./src/remark/GetLatestRedpandaVersion');
 const getLatestConsoleReleaseVersion = require('./src/remark/GetLatestConsoleVersion');
+const redirectsPlugin = require('./src/remark/parseRedirects');
 
 const isProd = process.env.GITHUB_TOKEN;
 
@@ -163,6 +164,7 @@ module.exports = async () => {
         ],
       ],
       plugins: [
+        redirectsPlugin,
         function (context, options) {
           return {
             name: 'docusaurus-plugin',
