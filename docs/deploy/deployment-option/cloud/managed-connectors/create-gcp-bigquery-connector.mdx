@@ -87,6 +87,20 @@ on the **Create Connector** page:
    | `Delete enabled` | Enable delete functionality on the connector.
    | `Time partitioning type` | The time partitioning type to use when creating tables. |
 
+## Map data
+
+Use the appropriate key or value converter (input data format) for your data as follows:
+
+- `JSON` when your messages are JSON-encoded. Select `Message JSON contains schema`,
+  with the `schema` and `payload` fields. If your messages do not contain schema,
+  manually create tables in BigQuery.
+- `AVRO` when your messages contain AVRO-encoded messages, with schema stored in
+  the Schema Registry.
+
+By default, the table name is the name of the topic (non-alphanumeric characters replaced with an underscore character, `_`).
+
+Use `Topic to table map` to remap topic names. For example, `topic1:table1,topic2:table2`.
+
 ## Test the connection
 
 After the connector is created, go to your BigQuery worksheets and query your
