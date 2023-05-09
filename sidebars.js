@@ -294,6 +294,11 @@ module.exports = {
                       label: "Create a BigQuery Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-gcp-bigquery-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "Create a GCS Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-connector",
+                    },
                   ],
                 },
               ]

@@ -8,12 +8,12 @@ title: Create a GCP BigQuery Sink Connector
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector/" />
 </head>
 
-The GCP BigQuery sink connector enables you to stream any structured data from
+The GCP BigQuery Sink connector enables you to stream any structured data from
 Redpanda to BigQuery for advanced analytics.
 
 ## Prerequisites
 
-Before you can create a GCP BigQuery sink connector in the Redpanda Cloud, you
+Before you can create a GCP BigQuery Sink connector in the Redpanda Cloud, you
 must:
 
 1. Create a [Google Cloud](https://cloud.google.com/) account.
@@ -43,15 +43,15 @@ must:
 
 ## Limitations
 
-The BigQuery sink connector has the following limitations:
+The BigQuery Sink connector has the following limitations:
 
 - The connector doesn’t support schemas with recursion.
 - When the connector is configured with `Upsert enabled` or `Delete enabled`, it
   does not support Single Message Transformations (SMTs) that modify the topic name.
 
-## Create a GCP BigQuery sink connector
+## Create a GCP BigQuery Sink connector
 
-To create the GCP BigQuery sink connector:
+To create the GCP BigQuery Sink connector:
 
 1. In Redpanda Console, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
@@ -81,7 +81,8 @@ on the **Create Connector** page:
    | `Allow new BigQuery fields` | If true, new fields can be added to BigQuery tables during subsequent schema updates. |
    | `Allow BigQuery required field relaxation` | If true, fields in the BigQuery schema can be changed from `REQUIRED` to `NULLABLE`. |
    | `Upsert enabled` | Enables upsert functionality on the connector. |
-   | `Delete enabled` | Enable delete functionality on the connector. |
+   | `Delete enabled` | Enable delete functionality on the connector.
+   | `Time partitioning type` | The time partitioning type to use when creating tables. |
 
 ## Test the connection
 

@@ -8,10 +8,13 @@ title: Managed Connectors
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/" />
 </head>
 
-A connector subscribes to specified Kafka topics and collects messages.
-The connector periodically dumps the messages to a specified location, such
-as an S3 bucket or a GCS bucket. You can create a connector, managed by Redpanda,
-directly from the Redpanda Console.
+Connectors provide a way to integrate Redpanda data with select data systems, and
+provide a managed alternative to using the Kafka API. More specificially, a connector
+subscribes to specified Kafka topics and collects messages, then shares
+the messages to a specified location, such as an S3 bucket or a GCS bucket.
+
+You can create a connector, managed by Redpanda, directly from the Redpanda
+Console. Each connector form is consistent across all connectors.
 
 - [Amazon S3 Sink Connector](../managed-connectors/create-s3-sink-connector)
 
@@ -19,4 +22,8 @@ directly from the Redpanda Console.
 
 - [Google BigQuery Sink Connector](../managed-connectors/create-gcp-bigquery-connector)
 
-    The Google BigQuery Sink connector 
+    The Google BigQuery Sink connector enables you to pipe any structured data from Redpanda to BigQuery tables for analytics and decision-making.
+
+- [Google Cloud Storage Sink Connector](../managed-connectors/create-gcs-sink-connector)
+
+    The Google Cloud Storage (GCS) Sink connector stores Redpanda messages in a Google Cloud Storage bucket.
