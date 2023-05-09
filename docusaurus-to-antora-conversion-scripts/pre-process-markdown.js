@@ -54,10 +54,22 @@ function processTabs(match) {
   return result.join('\n');
 }
 
+function processDetails(match) {
+  const detailsRegex = /<details>(?:\r?\n)<summary>([\s\S]*?)<\/summary>(?:\r?\n)([\s\S]*?)(?:\r?\n)<\/details>/g;
+
+  return match.replace(detailsRegex, (match, title, content) => {
+    const asciidocTitle = `.${title.trim()}`;
+    const asciidocBlock = `[%collapsible%]\n====\n${content.trim()}\n====`;
+
+    return `<!--\n${asciidocTitle}\n${asciidocBlock}\n-->`;
+  });
+}
+
 async function convertFile(file) {
   const content = fs.readFileSync(file, 'utf-8');
 
   var newContent = content.replace(/<Tabs>([\s\S]*?)<\/Tabs>/g, processTabs);
+  newContent = newContent.replace(/<details>([\s\S]*?)<\/details>/g, processDetails);
 
   const htmlTableMatches = newContent.match(/\s?(<table>((.|\n)*?)<\/table>)/g);
   if (htmlTableMatches) {
