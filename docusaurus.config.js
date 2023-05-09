@@ -171,7 +171,14 @@ module.exports = async () => {
             injectHtmlTags({content}) {
               return {
                 headTags:['<meta name="google-site-verification" content="QcL-pD81oJatgKXQ3Wquvk_Ku3RRtUljxKoMaicySQA" />'],
-                preBodyTags: [`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB2CSV5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`],
+                preBodyTags: [`<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WB2CSV5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script type="text/javascript"> 
+                window._mfq = window._mfq || []; 
+                (function() { 
+                   var mf = document.createElement("script"); mf.type = "text/javascript"; mf.defer = true; 
+                   mf.src = "//cdn.mouseflow.com/projects/4260ac2a-9c53-42f1-a6cf-c2942fbfc263.js"; 
+                   document.getElementsByTagName("head")[0].appendChild(mf); 
+                })(); 
+             </script>`],
               };
             },
           }

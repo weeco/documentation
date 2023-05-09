@@ -15,6 +15,13 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 
+// Set mouseflow custom variable
+// (See https://help.mouseflow.com/en/articles/4312070-custom-variables)
+function setFeedbackType(type) {
+  window._mfq = window._mfq || [];
+  window._mfq.push(["setVariable", type, "true"]);
+}
+
 function createEditablePlaceholders () {
   const codeElements = document.querySelectorAll("pre > code");
 
@@ -338,7 +345,7 @@ export default function DocItemLayout({ children,
                   className={
                     styles.mailIcon + " " + styles.thumbsUpSeparator
                   }
-                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
+                  onClick={() => {setShow(true); setPositiveFeedback(true); setFeedbackType("positive-feedback");}}
                 >
                   <Icon>thumb_up</Icon>
                 </button>
@@ -347,7 +354,7 @@ export default function DocItemLayout({ children,
                   className={
                     styles.mailIcon + " " + styles.thumbsUpSeparator
                   }
-                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
+                  onClick={() => {setShow(true); setPositiveFeedback(false); setFeedbackType("negative-feedback");}}
                 >
                   <Icon>thumb_down</Icon>
                 </button>
