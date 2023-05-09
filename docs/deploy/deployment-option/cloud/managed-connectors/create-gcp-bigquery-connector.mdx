@@ -18,11 +18,16 @@ must:
 
 1. Create a [Google Cloud](https://cloud.google.com/) account.
 2. In the **GCP home** page:
-   - [Select an existing project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#get_an_existing_project)
+   1. [Select an existing project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#get_an_existing_project)
      or [create a new one](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project).
-   - [Create a new dataset](https://cloud.google.com/bigquery/docs/datasets) for the project (enter `user_actions` as the Dataset ID).
-   - After creating the dataset, [create a new table](https://cloud.google.com/bigquery/docs/tables) to hold the data you intend to stream from Redpanda Cloud topics.
+   2. [Create a new dataset](https://cloud.google.com/bigquery/docs/datasets) for the project.
+   3. (_Optional_) After creating the dataset, [create a new table](https://cloud.google.com/bigquery/docs/tables) to hold the data you intend to stream from Redpanda Cloud topics.
      Specify a structure for the table using schema values that align with your Redpanda Cloud topic data.
+     :::note
+     This step is mandatory only if the data in Redpanda does not have a schema.
+     If the data in Redpanda includes a schema, then the connector automatically
+     creates the tables in BigQuery.
+     :::
 
 3. Create a [custom role](https://cloud.google.com/iam/docs/creating-custom-roles).
 
@@ -43,11 +48,9 @@ must:
 
 ## Limitations
 
-The BigQuery Sink connector has the following limitations:
+The BigQuery Sink connector has the following limitation:
 
 - The connector doesn’t support schemas with recursion.
-- When the connector is configured with `Upsert enabled` or `Delete enabled`, it
-  does not support Single Message Transformations (SMTs) that modify the topic name.
 
 ## Create a GCP BigQuery Sink connector
 
