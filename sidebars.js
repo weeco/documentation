@@ -286,7 +286,7 @@ module.exports = {
                   items: [
                     {
                       type: "doc",
-                      label: "Create an S3 Sink Connector",
+                      label: "Create an AWS S3 Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector",
                     },
                     {
@@ -298,6 +298,16 @@ module.exports = {
                       type: "doc",
                       label: "Create a GCS Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a Snowflake Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Create a MongoDB Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
                     },
                   ],
                 },

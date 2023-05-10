@@ -55,10 +55,11 @@ To create the GCS Sink connector:
    | `Kafka message value format`   | Format of the value in the Kafka topic. Use `BYTES` for no conversion. |
    | `GCS file format`              | Format of the key coming from the Kafka topic: `CSV` (the default), `JSON`, `JSONL AVRO`, or `PARQUET`. The default is `CSV`. You can use the  `CSV` format output only with `org.apache.kafka.connect.converters.ByteArrayConverter` and `org.apache.kafka.connect.storage.StringConverter`. |
    | `Avro codec`                   | The Avro compression codec to be used for Avro output files. Available values: `null` (the default), `deflate`, `snappy`, and `bzip2`. |
-   | `Max Tasks`                    | Maximum number of tasks to use for this connector. The default `1`. Each task replicates exclusive set of partitions assigned to it. |
+   | `Max Tasks`                    | Maximum number of tasks to use for this connector. The default is `1`. Each task replicates exclusive set of partitions assigned to it. |
    | `Connector name`               | Globally-unique name to use for this connector. |
+4. Click **Next**. Review the connector properties specified, then click **Create**.
 
-### Advanced GCS configuration
+### Advanced GCS connector configuration
 
 In most instances, the preceding basic configuration properties are sufficient.
 However, if you require any additional property settings, then specify any of the following
@@ -83,7 +84,7 @@ on the **Create Connector** page:
 | `Retry back-off` | Retry backoff in milliseconds. In case of transient exceptions, useful for performing recovery. Maximum value is 86400000 (24 hours). |
 | `Error tolerance` | Error tolerance response during connector operation. Default value is `none` and signals that any error will result in an immediate connector task failure. Value of `all` changes the behavior to skip over problematic records. |
 
-## Map data 
+## Map data
 
 Use the appropriate key or value converter (input data format) for your data as follows:
 

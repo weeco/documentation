@@ -3,8 +3,8 @@ title: Create an S3 Sink Connector
 ---
 
 <head>
-    <meta name="title" content="Create an S3 Sink Connector | Redpanda Docs"/>
-    <meta name="description" content="Use the Redpanda Cloud UI to create an S3 Sink Connector."/>
+    <meta name="title" content="Create an AWS S3 Sink Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create an AWS S3 Sink Connector."/>
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector/" />
 </head>
 
@@ -12,7 +12,7 @@ The Amazon S3 Sink connector stores Apache Kafka messages in an AWS S3 bucket.
 
 ## Prerequisites
 
-Before you can create an S3 sink connector in the Redpanda Cloud, you must complete these tasks:
+Before you can create an AWS S3 sink connector in the Redpanda Cloud, you must complete these tasks:
 
 * In the AWS management console, create an S3 bucket associated with your AWS account ID.
 * In the IAM console, create an IAM policy to govern access to the bucket. For the minimum list of required permissions, see the sample IAM policy below.
@@ -20,7 +20,7 @@ Before you can create an S3 sink connector in the Redpanda Cloud, you must compl
 
 ### Sample IAM policy
 
-The S3 sink connector that accesses the S3 bucket must have certain permissions, which are specified in an IAM policy. When you create a policy in the IAM console, you can copy and paste this text into the policy document section. Remember to replace `bucket-name` with the actual name of your S3 bucket.
+The AWS S3 sink connector that accesses the S3 bucket must have certain permissions, which are specified in an IAM policy. When you create a policy in the IAM console, you can copy and paste this text into the policy document section. Remember to replace `bucket-name` with the actual name of your S3 bucket.
 
 ```
 {
@@ -41,9 +41,9 @@ The S3 sink connector that accesses the S3 bucket must have certain permissions,
 }
 ```
 
-## Create an S3 sink connector
+## Create an AWS S3 sink connector
 
-To create an S3 sink connector, first choose the connector type, then configure connector properties, and finally, review and apply the connector configuration. To test the connection, produce a message to the topic and verify that the S3 bucket contains the message.
+To create an AWS S3 sink connector, first choose the connector type, then configure connector properties, and finally, review and apply the connector configuration. To test the connection, produce a message to the topic and verify that the S3 bucket contains the message.
 
 ### Choose connector type
 
