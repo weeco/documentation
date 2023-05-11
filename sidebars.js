@@ -314,18 +314,30 @@
                         },
                         {
                           type: "doc",
-                          label: "Authentication",
-                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authentication",
-                        },
-                        {
-                          type: "doc",
                           label: "Encryption",
                           id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-encryption",
                         },
                         {
                           type: "doc",
+                          label: "Authentication",
+                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authentication",
+                        },
+                        {
+                          type: "category",
                           label: "Authorization",
-                          id: "deploy/deployment-option/cloud/security/cloud-security-architecture/cloud-authorization",
+                          link: { type: "doc", id: "deploy/deployment-option/cloud/security/cloud-security-architecture/authorization/index" },
+                          items: [
+                            {
+                              type: "doc",
+                              label: "Cloud Authorization",
+                              id: "deploy/deployment-option/cloud/security/cloud-security-architecture/authorization/cloud-authorization",
+                            },
+                            {
+                              type: "doc",
+                              label: "Cloud IAM Policies",
+                              id: "deploy/deployment-option/cloud/security/cloud-security-architecture/authorization/cloud-iam-policies",
+                            },
+                          ],
                         },
                         {
                           type: "doc",

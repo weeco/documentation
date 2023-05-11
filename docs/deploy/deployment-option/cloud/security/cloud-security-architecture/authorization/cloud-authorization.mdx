@@ -1,0 +1,35 @@
+---
+title: Authorization
+---
+
+<head>
+    <meta name="title" content="Redpanda Cloud Authorization  | Redpanda Docs"/>
+    <meta name="description" content="Learn how Redpanda Cloud uses IAM roles for authorization."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/security/cloud-security-architecture/authorization/" />
+</head>
+
+There are two types of authorization in Redpanda Cloud:
+
+- User authorizations
+
+  User authorizations are managed by ACLs, and grant users permission to
+  perform specific types of operations on specific resources (such as topics,
+  groups, clusters, or transactional IDs).
+
+  For a detailed description of ACL terminology, commands, and guidance on
+  how to manage users with ACLs, refer to [ACLs](../../../../../../manage/security/authorization#acls).
+
+- Agent authorizations
+
+  When deploying an [agent](../../../cloud-overview#agent) as part of BYOC cluster
+  provisioning, Redpanda Cloud automatically assigns IAM policies to that agent.
+  The IAM policy permissions granted to the agent provide it the authorization
+  required to enable Redpanda brokers to access AWS and GCP clusters.
+
+  :::important
+  There are no explicit user actions associated with IAM policies. Nor do IAM
+  policies apply or act as deployment permissions. Rather, IAM policy
+  permissions apply to Redpanda Cloud agents _only_, and serve to provide Redpanda
+  agent access to AWS and GCP clusters so that Redpanda brokers can communicate
+  with them.
+  :::

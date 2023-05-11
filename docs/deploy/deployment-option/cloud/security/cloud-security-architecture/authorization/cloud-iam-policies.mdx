@@ -1,0 +1,523 @@
+---
+title: IAM Policies
+---
+
+<head>
+    <meta name="title" content="Redpanda Cloud Authorization IAM Policies | Redpanda Docs"/>
+    <meta name="description" content="Learn how Redpanda Cloud uses IAM policies for authorization."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/security/cloud-security-architecture/authorization/" />
+</head>
+
+Redpanda automatically assigns IAM policies to [agents](../../../cloud-overview#agent)
+at the time they are deployed. The permissions granted to agents in the
+IAM policy grant that agent access to BYOC clusters in AWS and GCP. IAM policies
+_do not_ grant user access to a cluster, rather, they grant the deployed Redpanda
+agent access so that Redpanda brokers can communicate with the BYOC clusters.
+
+## AWS IAM policies
+
+IAM policies are assigned to deployed Redpanda agents for BYOC AWS
+clusters that use the following AWS services:
+
+  - [Amazon Elastic Compute Cloud (AWS EC2)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html)
+  - [Amazon Elastic Compute Cloud Auto Scaling (AWS EC2 Auto Scaling)](https://aws.amazon.com/ec2/autoscaling/)
+  - [Amazon Simple Storage Service (AWS S3)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html)
+  - [Amazon Route 53](https://aws.amazon.com/route53/)
+  - [Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+
+### Actions allowed with wildcard resources
+
+The following actions apply only to Redpanda agents with wildcard resources.
+
+```jsx title="RedpandaAgentActionsOnlyAllowedWithWildcardResources"
+statement {
+   sid    = "RedpandaAgentActionsOnlyAllowedWithWildcardResources"
+   effect = "Allow"
+   actions = [
+     "ec2:CreateTags",
+     "ec2:DescribeAccountAttributes",
+     "ec2:DescribeImages",
+     "ec2:DescribeInstances",
+     "ec2:DescribeInstanceTypes",
+     "ec2:CreateLaunchTemplate",
+     "ec2:CreateLaunchTemplateVersion",
+     "ec2:DescribeLaunchTemplateVersions",
+     "ec2:DescribeLaunchTemplates",
+     "iam:ListPolicies",
+     "iam:ListRoles",
+     "iam:GetOpenIDConnectProvider",
+     "iam:DeleteOpenIDConnectProvider",
+     "autoscaling:DescribeScalingActivities",
+     "autoscaling:DescribeAutoScalingGroups",
+     "autoscaling:DescribeTags",
+     "autoscaling:DescribeTerminationPolicyTypes",
+     "autoscaling:DescribeInstanceRefreshes",
+     "autoscaling:DescribeLaunchConfigurations",
+     "iam:CreateServiceLinkedRole",
+   ]
+   resources = [
+     "*",
+   ]
+ }
+```
+
+### Run in EC2 instances
+
+The following actions apply only to Redpanda agents running in AWS EC2 instances.
+
+```jsx title="RedpandaAgentEC2RunInstances"
+statement {
+   sid    = "RedpandaAgentEC2RunInstances"
+   effect = "Allow"
+   actions = [
+     "ec2:RunInstances",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:instance/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:network-interface/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:volume/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:security-group/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:subnet/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:launch-template/*",
+     "arn:aws:ec2:*::image/*",
+   ]
+ }
+```
+
+### Delete launch templates
+
+The following actions apply only to Redpanda agents deleting AWS launch templates.
+
+```jsx title="RedpandaAgentEC2RunInstances"
+statement {
+   sid    = "RedpandaAgentLaunchTemplateDeletion"
+   effect = "Allow"
+   actions = [
+     "ec2:DeleteLaunchTemplate",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:launch-template/*",
+   ]
+   condition {
+     test     = "StringEquals"
+     variable = "ec2:ResourceTag/redpanda-id"
+     values = [
+       var.redpanda_id,
+     ]
+   }
+ }
+```
+### Manage security groups
+
+The following actions apply only to Redpanda agents managing AWS security groups.
+
+```jsx title="RedpandaAgentSecurityGroups"
+statement {
+   sid    = "RedpandaAgentSecurityGroups"
+   effect = "Allow"
+   actions = [
+     "ec2:AuthorizeSecurityGroupEgress",
+     "ec2:AuthorizeSecurityGroupIngress",
+     "ec2:CreateSecurityGroup",
+     "ec2:DeleteSecurityGroup",
+     "ec2:RevokeSecurityGroupEgress",
+     "ec2:RevokeSecurityGroupIngress",
+     "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+     "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+     "ec2:ModifySecurityGroupRules",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:security-group/*",
+     "arn:aws:ec2:*:${local.aws_account_id}:vpc/${local.network_config.vpc_id}",
+   ]
+ }
+```
+
+### Manage EKS clusters
+
+The following actions apply only to Redpanda agents managing Amazon Elastic
+Kubernetes Service (Amazon EKS) clusters.
+
+```jsx title="RedpandaAgentEKSCluster"
+statement {
+   sid    = "RedpandaAgentEKSCluster"
+   effect = "Allow"
+   actions = [
+     "eks:*",
+   ]
+   resources = [
+     "arn:aws:eks:*:${local.aws_account_id}:cluster/redpanda-${var.redpanda_id}",
+   ]
+ }
+```
+
+### Manage instance profiles
+
+The following actions apply only to Redpanda agents managing AWS instance profiles.
+
+```jsx title="RedpandaAgentInstanceProfile"
+statement {
+   sid    = "RedpandaAgentInstanceProfile"
+   effect = "Allow"
+   actions = [
+     "iam:AddRoleToInstanceProfile",
+     "iam:RemoveRoleFromInstanceProfile",
+     "iam:CreateInstanceProfile",
+     "iam:DeleteInstanceProfile",
+     "iam:GetInstanceProfile",
+     "iam:TagInstanceProfile",
+   ]
+   resources = [
+     "arn:aws:iam::${local.aws_account_id}:instance-profile/redpanda-${var.redpanda_id}*",
+     "arn:aws:iam::${local.aws_account_id}:instance-profile/redpanda-agent-${var.redpanda_id}*",
+   ]
+ }
+```
+
+### Create EKS OIDC providers
+
+The following actions apply only to Redpanda agents creating and accessing AWS
+EKS OIDC providers.
+
+```jsx title="RedpandaAgentEKSOIDCProvider"
+statement {
+   sid    = "RedpandaAgentEKSOIDCProvider"
+   effect = "Allow"
+   actions = [
+     "iam:CreateOpenIDConnectProvider",
+     "iam:TagOpenIDConnectProvider",
+     "iam:UntagOpenIDConnectProvider",
+   ]
+   resources = [
+     "arn:aws:iam::${local.aws_account_id}:oidc-provider/oidc.eks.*.amazonaws.com",
+   ]
+ }
+```
+
+### Manage IAM policies
+
+The following actions apply only to Redpanda agents managing AWS IAM policies.
+
+```jsx title="RedpandaAgentIAMPolicies"
+statement {
+   sid    = "RedpandaAgentIAMPolicies"
+   effect = "Allow"
+   actions = [
+     "iam:CreatePolicy",
+     "iam:DeletePolicy",
+     "iam:GetPolicy",
+     "iam:GetPolicyVersion",
+     "iam:ListPolicyVersions",
+     "iam:TagPolicy"
+   ]
+   resources = [
+     "arn:aws:iam::${local.aws_account_id}:policy/aws_ebs_csi_driver-redpanda-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/cert_manager_policy-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/external_dns_policy-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/load_balancer_controller-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/redpanda-agent-${var.redpanda_id}*",
+     "arn:aws:iam::${local.aws_account_id}:policy/redpanda-${var.redpanda_id}-autoscaler",
+     "arn:aws:iam::${local.aws_account_id}:policy/redpanda-cloud-storage-manager-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/secrets_manager_policy-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/redpanda-connectors-secrets-manager-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:policy/redpanda-console-secrets-manager-${var.redpanda_id}",
+   ]
+ }
+```
+
+### Manage IAM roles
+
+The following actions apply only to Redpanda agents managing AWS IAM roles.
+
+```jsx title="RedpandaAgentIAMRoleManagement"
+statement {
+   sid    = "RedpandaAgentIAMRoleManagement"
+   effect = "Allow"
+   actions = [
+     "iam:CreateRole",
+     "iam:DeleteRole",
+     "iam:AttachRolePolicy",
+     "iam:DetachRolePolicy",
+     "iam:GetRole",
+     "iam:TagRole",
+     "iam:PassRole",
+     "iam:ListAttachedRolePolicies",
+     "iam:ListInstanceProfilesForRole",
+     "iam:ListRolePolicies",
+   ]
+   resources = [
+     "arn:aws:iam::${local.aws_account_id}:role/redpanda-cloud-storage-manager-${var.redpanda_id}",
+     "arn:aws:iam::${local.aws_account_id}:role/redpanda-agent-${var.redpanda_id}*",
+     "arn:aws:iam::${local.aws_account_id}:role/redpanda-${var.redpanda_id}*",
+     "arn:aws:iam::${local.aws_account_id}:role/redpanda-connectors-secrets-manager-${var.redpanda_id}*",
+     "arn:aws:iam::${local.aws_account_id}:role/redpanda-console-secrets-manager-${var.redpanda_id}*",
+   ]
+ }
+```
+
+### Manage S3 buckets
+
+The following actions apply only to Redpanda agents managing AWS Simple
+Storage Service (S3) buckets.
+
+```jsx title="RedpandaAgentS3ManagementBucket"
+statement {
+   sid    = "RedpandaAgentS3ManagementBucket"
+   effect = "Allow"
+   actions = [
+     "s3:*",
+   ]
+   resources = [
+     data.aws_s3_bucket.management.arn,
+     "${data.aws_s3_bucket.management.arn}/*",
+   ]
+ }
+ ```
+
+### Manage S3 cloud bucket storage
+
+The following actions apply only to Redpanda agents managing AWS S3 cloud bucket
+storage.
+
+```jsx title="RedpandaAgentS3ManagementBucket"
+ statement {
+   sid    = "RedpandaAgentS3CloudStorageBucket"
+   effect = "Allow"
+   actions = [
+     "s3:List*",
+     "s3:Get*",
+     "s3:CreateBucket",
+     "s3:DeleteBucket",
+   ]
+   resources = [
+     local.redpanda_cloud_storage_bucket_arn,
+     "${local.redpanda_cloud_storage_bucket_arn}/*",
+   ]
+ }
+}
+```
+
+### Manage virtual private cloud (VPC)
+
+The following actions apply only to Redpanda agents managing AWS VPCs.
+
+```jsx title="RedpandaAgentVPCManagement"
+statement {
+   sid    = "RedpandaAgentVPCManagement"
+   effect = "Allow"
+   actions = [
+     "ec2:DescribeVpcs",
+     "ec2:DescribeVpcAttribute",
+     "ec2:DescribeSecurityGroups",
+     "ec2:CreateInternetGateway",
+     "ec2:DeleteInternetGateway",
+     "ec2:AttachInternetGateway",
+     "ec2:DescribeInternetGateways",
+     "ec2:CreateNatGateway",
+     "ec2:DeleteNatGateway",
+     "ec2:DescribeNatGateways",
+     "ec2:CreateRoute",
+     "ec2:DeleteRoute",
+     "ec2:CreateRouteTable",
+     "ec2:DeleteRouteTable",
+     "ec2:DescribeRouteTables",
+     "ec2:AssociateRouteTable",
+     "ec2:CreateSubnet",
+     "ec2:DeleteSubnet",
+     "ec2:DescribeSubnets",
+     "ec2:CreateVpcEndpoint",
+     "ec2:ModifyVpcEndpoint",
+     "ec2:DeleteVpcEndpoints",
+     "ec2:DescribeVpcEndpoints",
+     "ec2:DescribeVpcEndpointServices",
+     "ec2:DescribeVpcPeeringConnections",
+     "ec2:ModifyVpcPeeringConnectionOptions",
+     "ec2:DescribeNetworkAcls",
+     "ec2:DescribeNetworkInterfaces",
+     "ec2:AttachNetworkInterface",
+     "ec2:DetachNetworkInterface",
+     "ec2:DescribeAvailabilityZones",
+   ]
+   resources = [
+     "*",
+   ]
+ }
+```
+
+### Delete network interface
+
+The following actions apply only to Redpanda agents deleting AWS network interfaces.
+
+```jsx title="RedpandaAgentNetworkInterfaceDelete"
+statement {
+   sid    = "RedpandaAgentNetworkInterfaceDelete"
+   effect = "Allow"
+   actions = [
+     "ec2:DeleteNetworkInterface",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:network-interface/*",
+   ]
+ }
+```
+
+### Create VPC peerings
+
+The following actions apply only to Redpanda agents creating AWS VPC peerings.
+
+```jsx title="RedpandaAgentVPCPeeringsCreate"
+statement {
+   sid    = "RedpandaAgentVPCPeeringsCreate"
+   effect = "Allow"
+   actions = [
+     "ec2:CreateVpcPeeringConnection",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:vpc/${local.network_config.vpc_id}",
+   ]
+ }
+```
+
+### Delete VPC peerings
+
+The following actions apply only to Redpanda agents deleting AWS VPC peerings.
+
+```jsx title="RedpandaAgentVPCPeeringsDelete"
+statement {
+   sid    = "RedpandaAgentVPCPeeringsDelete"
+   effect = "Allow"
+   actions = [
+     "ec2:DeleteVpcPeeringConnection",
+     "ec2:ModifyVpcPeeringConnectionOptions",
+   ]
+   resources = [
+     "arn:aws:ec2:*:${local.aws_account_id}:vpc-peering-connection/*",
+   ]
+   condition {
+     test     = "StringEquals"
+     variable = "ec2:ResourceTag/redpanda-id"
+     values = [
+       var.redpanda_id,
+     ]
+   }
+ }
+```
+
+### Manage DynamoDB Terraform backend
+
+The following actions apply only to Redpanda agents managing the AWS DynamoDB
+Terraform backend.
+
+```jsx title="RedpandaAgentTFBackend"
+statement {
+   sid    = "RedpandaAgentTFBackend"
+   effect = "Allow"
+   actions = [
+     "dynamodb:GetItem",
+     "dynamodb:PutItem",
+     "dynamodb:DeleteItem",
+   ]
+   resources = [
+     "arn:aws:dynamodb:*:${local.aws_account_id}:table/rp-${local.aws_account_id}*",
+   ]
+ }
+```
+
+### Manage Route 53
+
+The following actions apply only to Redpanda agents managing the AWS Route 53
+service.
+
+```jsx title="RedpandaAgentRoute53Management"
+statement {
+   sid    = "RedpandaAgentRoute53Management"
+   effect = "Allow"
+   actions = [
+     "route53:CreateHostedZone",
+     "route53:GetChange",
+     "route53:ChangeTagsForResource",
+     "route53:GetHostedZone",
+     "route53:ListTagsForResource",
+     "route53:ListResourceRecordSets",
+     "route53:ChangeResourceRecordSets",
+     "route53:GetDNSSEC",
+     "route53:DeleteHostedZone",
+   ]
+   resources = [
+     "*",
+   ]
+ }
+```
+
+### Manage Auto Sclaing
+
+The following actions apply only to Redpanda agents managing the AWS Auto Scaling.
+
+```jsx title="RedpandaAgentAutoscaling"
+statement {
+   sid    = "RedpandaAgentAutoscaling"
+   effect = "Allow"
+   actions = [
+     "autoscaling:*",
+   ]
+   resources = [
+     "arn:aws:autoscaling:*:${local.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/redpanda-${var.redpanda_id}*",
+     "arn:aws:autoscaling:*:${local.aws_account_id}:autoScalingGroup:*:autoScalingGroupName/redpanda-agent-${var.redpanda_id}*"
+   ]
+ }
+}
+```
+
+## GCP IAM policies
+
+The Redpanda agent role for GCP provides the following permissions to manage
+Redpanda cluster resources:
+
+- compute.firewalls.create
+- compute.firewalls.delete
+- compute.firewalls.get
+- compute.globalOperations.get
+- compute.instanceGroupManagers.get
+- compute.networks.updatePolicy
+- compute.projects.get
+- compute.zones.list
+- dns.managedZones.create
+- dns.managedZones.get
+- dns.managedZones.list
+- dns.managedZones.update
+- dns.managedZones.delete
+- dns.resourceRecordSets.create
+- dns.resourceRecordSets.delete
+- dns.resourceRecordSets.get
+- dns.resourceRecordSets.list
+- dns.resourceRecordSets.update
+- dns.changes.create
+- dns.changes.get
+- dns.changes.list
+- dns.projects.get
+- iam.roles.create
+- iam.roles.delete
+- iam.roles.get
+- iam.roles.list
+- iam.roles.undelete
+- iam.roles.update
+- iam.serviceAccountKeys.create
+- iam.serviceAccountKeys.get
+- iam.serviceAccounts.actAs
+- iam.serviceAccounts.create
+- iam.serviceAccounts.delete
+- iam.serviceAccounts.get
+- iam.serviceAccounts.getIamPolicy
+- iam.serviceAccounts.setIamPolicy
+- resourcemanager.projects.get
+- resourcemanager.projects.getIamPolicy
+- resourcemanager.projects.setIamPolicy
+- storage.buckets.get
+- storage.buckets.getIamPolicy
+- storage.buckets.setIamPolicy
+- storage.objects.create
+- storage.objects.delete
+- storage.objects.get
+- storage.objects.getIamPolicy
+- storage.objects.list
+- storage.objects.update  
