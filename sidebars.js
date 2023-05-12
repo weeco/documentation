@@ -309,6 +309,11 @@ module.exports = {
                       label: "Create a MongoDB Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "Create a PostgreSQL (Debezium) Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
+                    },
                   ],
                 },
               ]
