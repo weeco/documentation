@@ -29,7 +29,7 @@ clusters that use the following AWS services:
 
 The following actions apply only to Redpanda agents with wildcard resources.
 
-```jsx title="RedpandaAgentActionsOnlyAllowedWithWildcardResources"
+```jsx-nocopy title="RedpandaAgentActionsOnlyAllowedWithWildcardResources"
 statement {
    sid    = "RedpandaAgentActionsOnlyAllowedWithWildcardResources"
    effect = "Allow"
@@ -65,7 +65,7 @@ statement {
 
 The following actions apply only to Redpanda agents running in AWS EC2 instances.
 
-```jsx title="RedpandaAgentEC2RunInstances"
+```jsx-nocopy title="RedpandaAgentEC2RunInstances"
 statement {
    sid    = "RedpandaAgentEC2RunInstances"
    effect = "Allow"
@@ -88,7 +88,7 @@ statement {
 
 The following actions apply only to Redpanda agents deleting AWS launch templates.
 
-```jsx title="RedpandaAgentEC2RunInstances"
+```jsx-nocopy title="RedpandaAgentEC2RunInstances"
 statement {
    sid    = "RedpandaAgentLaunchTemplateDeletion"
    effect = "Allow"
@@ -111,7 +111,7 @@ statement {
 
 The following actions apply only to Redpanda agents managing AWS security groups.
 
-```jsx title="RedpandaAgentSecurityGroups"
+```jsx-nocopy title="RedpandaAgentSecurityGroups"
 statement {
    sid    = "RedpandaAgentSecurityGroups"
    effect = "Allow"
@@ -138,7 +138,7 @@ statement {
 The following actions apply only to Redpanda agents managing Amazon Elastic
 Kubernetes Service (Amazon EKS) clusters.
 
-```jsx title="RedpandaAgentEKSCluster"
+```jsx-nocopy title="RedpandaAgentEKSCluster"
 statement {
    sid    = "RedpandaAgentEKSCluster"
    effect = "Allow"
@@ -155,7 +155,7 @@ statement {
 
 The following actions apply only to Redpanda agents managing AWS instance profiles.
 
-```jsx title="RedpandaAgentInstanceProfile"
+```jsx-nocopy title="RedpandaAgentInstanceProfile"
 statement {
    sid    = "RedpandaAgentInstanceProfile"
    effect = "Allow"
@@ -179,7 +179,7 @@ statement {
 The following actions apply only to Redpanda agents creating and accessing AWS
 EKS OIDC providers.
 
-```jsx title="RedpandaAgentEKSOIDCProvider"
+```jsx-nocopy title="RedpandaAgentEKSOIDCProvider"
 statement {
    sid    = "RedpandaAgentEKSOIDCProvider"
    effect = "Allow"
@@ -198,7 +198,7 @@ statement {
 
 The following actions apply only to Redpanda agents managing AWS IAM policies.
 
-```jsx title="RedpandaAgentIAMPolicies"
+```jsx-nocopy title="RedpandaAgentIAMPolicies"
 statement {
    sid    = "RedpandaAgentIAMPolicies"
    effect = "Allow"
@@ -229,7 +229,7 @@ statement {
 
 The following actions apply only to Redpanda agents managing AWS IAM roles.
 
-```jsx title="RedpandaAgentIAMRoleManagement"
+```jsx-nocopy title="RedpandaAgentIAMRoleManagement"
 statement {
    sid    = "RedpandaAgentIAMRoleManagement"
    effect = "Allow"
@@ -260,7 +260,7 @@ statement {
 The following actions apply only to Redpanda agents managing AWS Simple
 Storage Service (S3) buckets.
 
-```jsx title="RedpandaAgentS3ManagementBucket"
+```jsx-nocopy title="RedpandaAgentS3ManagementBucket"
 statement {
    sid    = "RedpandaAgentS3ManagementBucket"
    effect = "Allow"
@@ -279,7 +279,7 @@ statement {
 The following actions apply only to Redpanda agents managing AWS S3 cloud bucket
 storage.
 
-```jsx title="RedpandaAgentS3ManagementBucket"
+```jsx-nocopy title="RedpandaAgentS3ManagementBucket"
  statement {
    sid    = "RedpandaAgentS3CloudStorageBucket"
    effect = "Allow"
@@ -301,7 +301,7 @@ storage.
 
 The following actions apply only to Redpanda agents managing AWS VPCs.
 
-```jsx title="RedpandaAgentVPCManagement"
+```jsx-nocopy title="RedpandaAgentVPCManagement"
 statement {
    sid    = "RedpandaAgentVPCManagement"
    effect = "Allow"
@@ -348,7 +348,7 @@ statement {
 
 The following actions apply only to Redpanda agents deleting AWS network interfaces.
 
-```jsx title="RedpandaAgentNetworkInterfaceDelete"
+```jsx-nocopy title="RedpandaAgentNetworkInterfaceDelete"
 statement {
    sid    = "RedpandaAgentNetworkInterfaceDelete"
    effect = "Allow"
@@ -365,7 +365,7 @@ statement {
 
 The following actions apply only to Redpanda agents creating AWS VPC peerings.
 
-```jsx title="RedpandaAgentVPCPeeringsCreate"
+```jsx-nocopy title="RedpandaAgentVPCPeeringsCreate"
 statement {
    sid    = "RedpandaAgentVPCPeeringsCreate"
    effect = "Allow"
@@ -382,7 +382,7 @@ statement {
 
 The following actions apply only to Redpanda agents deleting AWS VPC peerings.
 
-```jsx title="RedpandaAgentVPCPeeringsDelete"
+```jsx-nocopy title="RedpandaAgentVPCPeeringsDelete"
 statement {
    sid    = "RedpandaAgentVPCPeeringsDelete"
    effect = "Allow"
@@ -408,7 +408,7 @@ statement {
 The following actions apply only to Redpanda agents managing the AWS DynamoDB
 Terraform backend.
 
-```jsx title="RedpandaAgentTFBackend"
+```jsx-nocopy title="RedpandaAgentTFBackend"
 statement {
    sid    = "RedpandaAgentTFBackend"
    effect = "Allow"
@@ -428,7 +428,7 @@ statement {
 The following actions apply only to Redpanda agents managing the AWS Route 53
 service.
 
-```jsx title="RedpandaAgentRoute53Management"
+```jsx-nocopy title="RedpandaAgentRoute53Management"
 statement {
    sid    = "RedpandaAgentRoute53Management"
    effect = "Allow"
@@ -453,7 +453,7 @@ statement {
 
 The following actions apply only to Redpanda agents managing the AWS Auto Scaling.
 
-```jsx title="RedpandaAgentAutoscaling"
+```jsx-nocopy title="RedpandaAgentAutoscaling"
 statement {
    sid    = "RedpandaAgentAutoscaling"
    effect = "Allow"
@@ -520,4 +520,4 @@ Redpanda cluster resources:
 - storage.objects.get
 - storage.objects.getIamPolicy
 - storage.objects.list
-- storage.objects.update  
+- storage.objects.update
