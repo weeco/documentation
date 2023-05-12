@@ -16,8 +16,7 @@ You can deploy Redpanda for production with a default deployment, which uses rec
 
 :::note
 - See [Automate Deployment for Production](../../production/production-deployment-automation) to use Terraform and Ansible to deploy Redpanda. 
-- See [Redpanda Quickstart](../../../../../../get-started/quick-start) to try out Redpanda in a development
-environment in Docker. 
+- See [Redpanda Quickstart](../../../../../../get-started/quick-start) to try out Redpanda in Docker or [Deploy for Development](../../production/dev-deployment). 
 :::
 
 ## Prerequisites
@@ -130,7 +129,7 @@ sudo -E bash && sudo apt-get install redpanda-console -y
 
 By default, Redpanda is installed in development mode, which turns off hardware optimization.
 
-To enable hardware optimization, set Redpanda to run in production mode:
+To enable hardware optimization, set Redpanda to run in [production mode](../../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-mode/#production-mode):
 
 ```bash
 sudo rpk redpanda mode production
@@ -221,10 +220,10 @@ When a Redpanda cluster starts, it instantiates a controller Raft group with all
 
 ### Verify the installation
 
-To verify that the Redpanda cluster is up and running, check the logs:
+To verify that the Redpanda cluster is up and running, use `rpk` to get information about the cluster:
 
 ```bash
-journalctl -u redpanda
+rpk cluster info
 ```
 
 If topics were initially created in a test environment with a replication factor of `1`, use `rpk topic alter-config` to change the topic replication factor: 
@@ -347,7 +346,7 @@ Starting with Redpanda version 23.1, the `/v1/features` endpoint also includes a
 
 ## Next steps
 
-If clients will connect from a different subnet, see [Configuring Listeners](../../../../../../manage/security/listener-configuration).
+If clients connect from a different subnet, see [Configure Listeners](../../../../../../manage/security/listener-configuration).
 
 ## Suggested reading
 

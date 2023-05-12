@@ -60,11 +60,6 @@
             },
           ],
         },
-        {
-          type: "doc",
-          label: "Build a Sample Application",
-          id: "get-started/code-examples",
-        },
       ],
     },
     {
@@ -79,7 +74,11 @@
           label: "Supported Kafka Clients",
           id: "develop/kafka-clients",
         },
-        "develop/code-examples",
+        {
+          type: "doc",
+          label: "Build a Sample Application",
+          id: "develop/code-examples",
+        },
         "develop/guide-nodejs",
         "develop/http-proxy",
         "develop/config-topics",
@@ -190,23 +189,28 @@
                 },
                 {
                   type: "category",
-                  label: "Manual",
+                  label: "Linux",
                   link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/index" },
                   items: [
                     {
                     type: "category",
-                  label: "Production Deployment",
+                  label: "Deployment Options",
                   link: { type: "doc", id: "deploy/deployment-option/self-hosted/manual/production/index" },
                   items: [
                     {
                       type: "doc",
-                      label: "Deploy for Production",
-                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment",
-                    },
+                      label: "Deploy for Development",
+                      id: "deploy/deployment-option/self-hosted/manual/production/dev-deployment",
+                    },                    
                     {
                       type: "doc",
                       label: "Automate Deployment for Production",
                       id: "deploy/deployment-option/self-hosted/manual/production/production-deployment-automation",
+                    },
+                    {
+                      type: "doc",
+                      label: "Deploy for Production",
+                      id: "deploy/deployment-option/self-hosted/manual/production/production-deployment",
                     },
                   ]
                 },
@@ -468,13 +472,28 @@
                   },
                   {
                     type: "doc",
+                    label: "Scale",
+                    id: "manage/kubernetes/scale",
+                  },
+                  {
+                    type: "doc",
                     label: "Decommission Brokers",
                     id: "manage/kubernetes/decommission-brokers",
                   },
                   {
                     type: "doc",
+                    label: "Delete a PersistentVolume",
+                    id: "manage/kubernetes/delete-persistentvolume",
+                  },
+                  {
+                    type: "doc",
                     label: "Upgrade Redpanda",
                     id: "manage/kubernetes/rolling-upgrade",
+                  },
+                  {
+                    type: "doc",
+                    label: "Upgrade Kubernetes",
+                    id: "manage/kubernetes/upgrade-kubernetes",
                   },
                   {
                     type: "doc",
@@ -561,12 +580,12 @@
                 items: [
                   {
                     "type": "doc",
-                    "label": "Authentication",
+                    "label": "Configure Authentication",
                     "id": "manage/security/authentication"
                   },
                   {
                     "type": "doc",
-                    "label": "Authorization",
+                    "label": "Configure Authorization",
                     "id": "manage/security/authorization"
                   },
                   "manage/security/encryption",
@@ -836,6 +855,28 @@
                     "reference/rpk/rpk-cluster/rpk-cluster-self-test-stop",
                   ],
                 },
+                {
+                  type: "category",
+                  label: "rpk cluster storage",
+                  link: {
+                    type: "doc",
+                    id: "reference/rpk/rpk-cluster/rpk-cluster-storage",
+                  },
+                  items: [
+                    {
+                      type: "category",
+                      label: "rpk cluster storage recovery",
+                      link: {
+                        type: "doc",
+                        id: "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery",
+                      },
+                      items: [
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-start",
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-status",
+                      ],
+                    },
+                  ],
+                },
               ],
             }, //acl cluster
             {
@@ -849,6 +890,7 @@
                 "reference/rpk/rpk-container/rpk-container",
                 "reference/rpk/rpk-container/rpk-container-purge",
                 "reference/rpk/rpk-container/rpk-container-start",
+                "reference/rpk/rpk-container/rpk-container-status",
                 "reference/rpk/rpk-container/rpk-container-stop",
               ],
             },
@@ -890,6 +932,7 @@
                 "reference/rpk/rpk-group/rpk-group-delete",
                 "reference/rpk/rpk-group/rpk-group-describe",
                 "reference/rpk/rpk-group/rpk-group-list",
+                "reference/rpk/rpk-group/rpk-group-offset-delete",
                 "reference/rpk/rpk-group/rpk-group-seek",
               ],
             },
@@ -935,8 +978,17 @@
                         id: "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers",
                       },
                       items: [
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers",
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission",
+                        {
+                          type: "category",
+                          label: "rpk redpanda admin brokers decommission",
+                          link: {
+                            type: "doc",
+                            id: "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission",
+                          },
+                          items: [
+                            "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission-status",
+                          ],
+                        },
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-list",
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-recommission",
                       ],

@@ -6,7 +6,7 @@ tags:
 description: Find the default values and descriptions of settings in the Redpanda Console Helm chart.
 ---
 
-![Version: 0.5.8](https://img.shields.io/badge/Version-0.5.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.0](https://img.shields.io/badge/AppVersion-v2.2.0-informational?style=flat-square)
+![Version: 0.6.2](https://img.shields.io/badge/Version-0.6.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.2.3](https://img.shields.io/badge/AppVersion-v2.2.3-informational?style=flat-square)
 
 This page describes the official Redpanda Console Helm Chart. In particular, this page describes the contents of the chart’s [`values.yaml` file](https://github.com/redpanda-data/helm-charts/blob/main/charts/console/values.yaml). Each of the settings is listed and described on this page, along with any default values.
 
@@ -98,7 +98,7 @@ Redpanda Console Docker image settings.
 **Default:**
 
 ```
-{"pullPolicy":"IfNotPresent","registry":"docker.redpanda.com","repository":"vectorized/console","tag":""}
+{"pullPolicy":"IfNotPresent","registry":"docker.redpanda.com","repository":"redpandadata/console","tag":""}
 ```
 
 ### [image.pullPolicy](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=image.pullPolicy)
@@ -111,7 +111,7 @@ The imagePullPolicy.
 
 Docker repository from which to pull the Redpanda Docker image.
 
-**Default:** `"vectorized/console"`
+**Default:** `"redpandadata/console"`
 
 ### [image.tag](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=image.tag)
 
@@ -187,6 +187,12 @@ Override `console.name` template.
 
 **Default:** `99`
 
+### [priorityClassName](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=priorityClassName)
+
+PriorityClassName given to Pods. For details, see the [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass).
+
+**Default:** `""`
+
 ### [readinessProbe.failureThreshold](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=readinessProbe.failureThreshold)
 
 **Default:** `3`
@@ -224,7 +230,7 @@ Create a new Kubernetes Secret for all sensitive configuration inputs. Each prov
 **Default:**
 
 ```
-{"create":true,"enterprise":{},"kafka":{},"login":{"github":{},"google":{},"oidc":{},"okta":{}},"redpanda":{"adminApi":{}}}
+{"create":true,"enterprise":{},"kafka":{},"login":{"github":{},"google":{},"jwtSecret":"","oidc":{},"okta":{}},"redpanda":{"adminApi":{}}}
 ```
 
 ### [secret.kafka](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=secret.kafka)
@@ -282,3 +288,7 @@ The name of the service account to use. If not set and `serviceAccount.create` i
 ### [tolerations](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=tolerations)
 
 **Default:** `[]`
+
+### [topologySpreadConstraints](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=topologySpreadConstraints)
+
+**Default:** `{}`

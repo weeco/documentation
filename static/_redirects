@@ -106,6 +106,7 @@
 
 #Tech Preview
 /docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!
+/docs/platform/install-upgrade/install-preview /docs/labs 301!
 
 #Data Management
 /docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!
@@ -540,6 +541,7 @@
 /docs/quickstart/kubernetes-qs-cloud   /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev/  301!
 /docs/quickstart/kubernetes-qs-local-access  /docs/reference/redpanda-operator/kubernetes-qs-local-access  301!
 /docs/quickstart/kubernetes-qs-minikube  /docs/reference/redpanda-operator/kubernetes-qs-minikube  301!
+/docs/get-started/code-examples   /docs/develop/code-examples  301!
 
 
 # Development

@@ -1,5 +1,6 @@
 ---
 title: rpk plugin install
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
@@ -16,19 +17,19 @@ can be overridden by specifying the `--dir` flag.
 
 If `--dir` is not present, `rpk` will create `$HOME/.local/bin` if it does not exist.
 
-### Usage
+## Usage
 
 ```bash
 rpk plugin install [PLUGIN] [flags]
 ```
 
-### Aliases
+## Aliases
 
-```
+```bash
 install, download
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
@@ -40,7 +41,15 @@ install, download
         <strong> Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>--dir</td>
+      <td>string</td>
+      <td>
+        Destination directory to save the installed plugin (default:
+        `"$HOME/.local/bin"`).
       </td>
     </tr>
     <tr>
