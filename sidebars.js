@@ -787,6 +787,28 @@ module.exports = {
                     "reference/rpk/rpk-cluster/rpk-cluster-self-test-stop",
                   ],
                 },
+                {
+                  type: "category",
+                  label: "rpk cluster storage",
+                  link: {
+                    type: "doc",
+                    id: "reference/rpk/rpk-cluster/rpk-cluster-storage",
+                  },
+                  items: [
+                    {
+                      type: "category",
+                      label: "rpk cluster storage recovery",
+                      link: {
+                        type: "doc",
+                        id: "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery",
+                      },
+                      items: [
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-start",
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-status",
+                      ],
+                    },
+                  ],
+                },
               ],
             }, //acl cluster
             {
@@ -800,6 +822,7 @@ module.exports = {
                 "reference/rpk/rpk-container/rpk-container",
                 "reference/rpk/rpk-container/rpk-container-purge",
                 "reference/rpk/rpk-container/rpk-container-start",
+                "reference/rpk/rpk-container/rpk-container-status",
                 "reference/rpk/rpk-container/rpk-container-stop",
               ],
             },
@@ -841,6 +864,7 @@ module.exports = {
                 "reference/rpk/rpk-group/rpk-group-delete",
                 "reference/rpk/rpk-group/rpk-group-describe",
                 "reference/rpk/rpk-group/rpk-group-list",
+                "reference/rpk/rpk-group/rpk-group-offset-delete",
                 "reference/rpk/rpk-group/rpk-group-seek",
               ],
             },
@@ -886,8 +910,17 @@ module.exports = {
                         id: "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers",
                       },
                       items: [
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers",
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission",
+                        {
+                          type: "category",
+                          label: "rpk redpanda admin brokers decommission",
+                          link: {
+                            type: "doc",
+                            id: "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission",
+                          },
+                          items: [
+                            "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission-status",
+                          ],
+                        },
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-list",
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-recommission",
                       ],
