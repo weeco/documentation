@@ -1,0 +1,3 @@
+= Schema Registry API
+:page-api-spec-url: pandaproxy-schema-registry.json
+:page-layout: swagger

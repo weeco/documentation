@@ -1,0 +1,2 @@
+= HTTP Proxy API
+:page-api-spec-url: pandaproxy-rest.json

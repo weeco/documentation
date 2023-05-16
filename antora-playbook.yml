@@ -12,7 +12,7 @@ content:
   sources:
   - url: .
     branches: HEAD
-    start_paths: site-search, home
+    start_paths: site-search, home, api
   - url: https://github.com/redpanda-data/documentation
     branches: [v/*]
 ui:
