@@ -4,48 +4,48 @@ title: Batching and Compression
 
 <head>
     <meta name="title" content="Batching and Compression | Redpanda Docs"/>
-    <meta name="description" content="Learn how to increase throughput by accumulating messages into a single batched message and by applying data compression on messages."/>
+    <meta name="description" content="Learn how to increase throughput by accumulating records into a single batched record and by applying data compression on records."/>
 </head>
 
-Learn how to increase throughput by accumulating messages into a single batch and by applying data compression.
+Learn how to increase throughput by accumulating records into a single batch and by applying data compression.
 
 ## About batching and compression
 
-Sending small messages over a network can underutilize the available network bandwidth. To improve network efficiency and throughput, a producer can coalesce multiple messages into a single batch to send over the network. To optimize the balance of throughput and latency, both the maximum size of a batch and the maximum time to wait for messages to accumulate into a batch can be configured.
+Sending small records over a network can underutilize the available network bandwidth. To improve network efficiency and throughput, a producer can coalesce multiple records into a single batch to send over the network. To optimize the balance of throughput and latency, both the maximum size of a batch and the maximum time to wait for records to accumulate into a batch can be configured.
 
-A producer can also apply data compression to its messages to further improve bandwidth efficiency. A compression algorithm can be run on the keys or values (or both) of messages. Messages containing repeated or redundant data have better compression ratios. A batched message containing multiple similar messages are good candidates for data compression. Compression can be done by a producer or a broker or both.
+A producer can also apply data compression to its batches to further improve bandwidth efficiency. A compression algorithm can be run on the keys or values (or both) of record batches. Batches containing repeated or redundant data have better compression ratios. A batched record containing multiple similar records are good candidates for data compression. Compression can be done by a producer or a broker or both: while a broker by default relies on producer-side compression, its compression type can be configured so batches are (re)compressed by the broker.
 
 ## Configure batching and compression
 
-When a producer prepares to send messages to a broker, it first fills up a buffer. When this buffer is full, the producer compresses (if instructed to do so) and sends out this batch of messages to the broker. The number of batches that can be sent in a single request to the broker is limited by the `max.request.size` parameter. The number of requests that can simultaneously be in this "sending" state is controlled by the `max.in.flight.requests.per.connection` value, which defaults to `5` in most client libraries.
+When a producer prepares to send records to a broker, it first fills up a buffer. When this buffer is full, the producer compresses (if instructed to do so) and sends out this batch of records to the broker. The number of batches that can be sent in a single request to the broker is limited by the `max.request.size` parameter. The number of requests that can simultaneously be in this "sending" state is controlled by the `max.in.flight.requests.per.connection` value, which defaults to `5` in most client libraries.
 
 Tune the batching configuration using these properties.
 
 ### buffer.memory
 
-The `buffer.memory` property sets the maximum amount of memory available to the producer for buffering. In a case where messages are sent faster than they can be delivered to the broker, the producer application may run out of memory, which will cause it to either block subsequent send calls or even throw an exception. The `max.block.ms` parameter controls the amount of time the producer will block before throwing an exception if it cannot immediately send messages to the broker.
+The `buffer.memory` property sets the maximum amount of memory available to the producer for buffering. In a case where records are sent faster than they can be delivered to the broker, the producer application may run out of memory, which will cause it to either block subsequent send calls or even throw an exception. The `max.block.ms` parameter controls the amount of time the producer will block before throwing an exception if it cannot immediately send records to the broker.
 
 ### batch.size
 
-The `batch.size` property sets the maximum size in bytes of a batched message in one request. The producer will automatically put messages being sent to the same partition into one batch.
+The `batch.size` property sets the maximum size in bytes of a batched record in one request. The producer will automatically put records being sent to the same partition into one batch.
 
 :::note
-With `batch.size` setting the maximum size of a batched message in a single request, and `max.request.size` setting the maximum size of a single request, a valid configuration of the two properties must have `max.request.size >= batch.size`.
+With `batch.size` setting the maximum size of a batched record in a single request, and `max.request.size` setting the maximum size of a single request, a valid configuration of the two properties must have `max.request.size >= batch.size`.
 :::
 
-When the producer is gathering messages to assign to a batch, at some point it will hit this byte-size limit, which triggers it to send the batch to the broker. However, the producer does not necessarily wait (for as much time as set using `linger.ms`) until the batch is full. Sometimes, it can even send single-message batches. This means that setting the batch size too large is not necessarily undesirable, as it won't cause throttling when sending messages; rather, it will only cause increased memory usage.
+When the producer is gathering records to assign to a batch, at some point it will hit this byte-size limit, which triggers it to send the batch to the broker. However, the producer does not necessarily wait (for as much time as set using `linger.ms`) until the batch is full. Sometimes, it can even send single-record batches. This means that setting the batch size too large is not necessarily undesirable, as it won't cause throttling when sending records; rather, it will only cause increased memory usage.
 
-Conversely, setting the batch size too small can cause the producer to send batches of messages faster, which can cause network overhead, meaning a reduced throughput. The default value is usually 16384, but you can set this as low as 0, which turns off batching entirely.
+Conversely, setting the batch size too small can cause the producer to send batches of records faster, which can cause network overhead, meaning a reduced throughput. The default value is usually 16384, but you can set this as low as 0, which turns off batching entirely.
 
 ### linger.ms
 
-The `linger.ms` property sets the maximum duration that the producer waits to coalesce messages before sending out a batch of messages, if the batch has not already reached `batch.size`. 
+The `linger.ms` property sets the maximum duration that the producer waits to coalesce records before sending out a batch of records, if the batch has not already reached `batch.size`. 
 
-By default, `linger.ms` is `0`, so messages are sent immediately when they're ready. While zero `linger.ms` effectively disables batching, the actual duration between creating a send request and sending it is non-zero, so it's possible for batching to occur when `linger.ms` is `0`.
+By default, `linger.ms` is `0`, so records are sent immediately when they're ready. While zero `linger.ms` effectively disables batching, the actual duration between creating a send request and sending it is non-zero, so it's possible for batching to occur when `linger.ms` is `0`.
 
 Setting `linger.ms` greater than `0` incurs latency by delaying a send, but it improves throughput by replacing multiple network request with a single network request that contains the same data with less network packet overhead.
 
 ### compression.type
 
-The `compression.type` property sets the data compression algorithm the producer applies to messages before sending them. The default is none, which means the batch of messages will not be compressed at all. Compression occurs on full batches, so you can improve batching throughput by setting this parameter to use one of the available compression algorithms (along with increasing batch size). The available options are: zstd, lz4, gzip, and snappy.
+The `compression.type` property sets the data compression algorithm the producer applies to records before sending them. The default is none, which means the batch of records will not be compressed at all. Compression occurs on full batches, so you can improve batching throughput by setting this parameter to use one of the available compression algorithms (along with increasing batch size). The available options are: zstd, lz4, gzip, and snappy.
 

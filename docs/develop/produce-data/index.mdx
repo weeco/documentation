@@ -12,57 +12,57 @@ Learn about Kafka producers, their features, and how to configure them when deve
 
 ## About Kafka producers
 
-A Kafka _producer_ is a client application that publishes _messages_ (also known as events or records) for one or more Kafka topics. A Redpanda cluster's brokers receive and store messages written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published messages are consumed from Redpanda by Kafka consumers that subscribe to the topics.
+A Kafka _producer_ is a client application that publishes _records_ (also known as events or messages) for one or more Kafka topics. A Redpanda cluster's brokers receive and store records written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published records are consumed from Redpanda by Kafka consumers that subscribe to the topics.
 
-### Producing messages
+### Producing records
 
-To publish a message for a topic to Redpanda, a client:
+To publish a record for a topic to Redpanda, a client:
 - Creates a producer with configured producer properties.
-- Creates a message for a topic.
-- Sends the message. 
+- Creates a record for a topic.
+- Sends the record. 
 
 :::note
-For code examples of a producer sending a message, refer to the examples in [Create producer](../code-examples#create-producer).
+For code examples of a producer sending a record, refer to the examples in [Create producer](../code-examples#create-producer).
 :::
 
 Of the producer properties configured, the important properties include:
 - The address(es) of the Redpanda broker(s) that the client can contact and get the metadata to initialize itself (bootstrap) with the cluster.
-- The serializers for the keys and values of the messages.  
+- The serializers for the keys and values of the records.  
 
 :::note
 For a reference list of producer properties, refer to [Producer Configuration Properties](../produce-data/producer-properties).
 :::
 
-A message goes through several steps in a producer's send call:
+A record goes through several steps in a producer's send call:
 - Processed by interceptors (if enabled by producer configuration)
 - Serialized
 - Assigned to a partition
 - Compressed (if enabled by producer configuration)
 - Added to a batch (if enabled by producer configuration)
 
-The keys and values of messages are converted to byte arrays by a producer's configured serializers. You can influence the time and space efficiency of your streaming setup by choosing one of the built-in serializers or writing a custom one. The performance consequences of using serializers is not typically significant. 
+The keys and values of records are converted to byte arrays by a producer's configured serializers. You can influence the time and space efficiency of your streaming setup by choosing one of the built-in serializers or writing a custom one. The performance consequences of using serializers is not typically significant. 
 
-- For example, if you opt for the JSON serializer, you will have more data to transport with each message because every record will contain its schema in a verbose format, which impacts your compression speeds and network throughput. Alternatively, going with AVRO or Protobuf allows you to only define the schema in one place, while also enabling features like schema evolution.
+- For example, if you opt for the JSON serializer, you will have more data to transport with each record because every record will contain its schema in a verbose format, which impacts your compression speeds and network throughput. Alternatively, going with AVRO or Protobuf allows you to only define the schema in one place, while also enabling features like schema evolution.
 
-The send request may block when being intercepted, serialized, partition-assigned, or compressed. If being batched, a send request won't send a message over the network until the batch is full, the time to wait to coalesce messages has elapsed, another message to the same broker is about to be sent and it has space for this message, or the producer is being flushed.
+The send request may block when being intercepted, serialized, partition-assigned, or compressed. If being batched, a send request won't send a record over the network until the batch is full, the time to wait to coalesce records has elapsed, another record to the same broker is about to be sent and it has space for this record, or the producer is being flushed.
 
-A broker can respond to a send with a success or an error. The returned error can be resolvable or unresolvable with a retry. If resolvable with a retry, and the producer is configured to retry, the producer can resend the message.
+A broker can respond to a send with a success or an error. The returned error can be resolvable or unresolvable with a retry. If resolvable with a retry, and the producer is configured to retry, the producer can resend the record.
 
 
 ### Partitions and replicas
 
-A producer can publish messages for one or more topics. Given that a topic can be partitioned across one or more brokers (with each partition of a topic assigned to a different broker), a producer can publish messages to different partitions in parallel. Adding partitions for a topic can increase throughput.
+A producer can publish records for one or more topics. Given that a topic can be partitioned across one or more brokers (with each partition of a topic assigned to a different broker), a producer can publish records to different partitions in parallel. Adding partitions for a topic can increase throughput.
 
-A producer controls which partitions it publishes to. Messages of a single topic are sent to different partitions, based on a partition index specified when publishing a message, or a partitioning strategy of the producer's _partitioner_. Kafka's built-in partitioner assigns a message to a partition based on the message's key:
+A producer controls which partitions it publishes to. Records of a single topic are sent to different partitions, based on a partition index specified when publishing a record, or a partitioning strategy of the producer's _partitioner_. Kafka's built-in partitioner assigns a record to a partition based on the record's key:
 
-- If a message's key is null, a partitioner assigns partitions in a round-robin fashion (Kafka 2.3 and earlier) or in a sticky fashion (Kafka 2.4 and later).
-  - A round-robin partitioner optimizes for the equal distribution of messages amongst partitions.
-  - A sticky partitioner optimizes for larger message batches, where messages of the same batch are sent to the same "sticky" partition.
-- Otherwise, if a message's key is non-null, the partitioner assigns partitions based on the key's hash. Messages with the same key (hash) are assigned to the the same partition. By default, the partitioner hashes keys with the murmur2 algorithm.
+- If a record's key is null, a partitioner assigns partitions in a round-robin fashion (Kafka 2.3 and earlier) or in a sticky fashion (Kafka 2.4 and later).
+  - A round-robin partitioner optimizes for the equal distribution of records amongst partitions.
+  - A sticky partitioner optimizes for larger record batches, where records of the same batch are sent to the same "sticky" partition.
+- Otherwise, if a record's key is non-null, the partitioner assigns partitions based on the key's hash. Records with the same key (hash) are assigned to the the same partition. By default, the partitioner hashes keys with the murmur2 algorithm.
 
-A partition stores messages in the order they were published, and a consumer reads messages from a partition also in the order they were published. Ordering of messages across producers however is arbitrary.
+A partition stores records in the order they were published, and a consumer reads records from a partition also in the order they were published. Ordering of records across producers however is arbitrary.
 
-Because a partition is usually replicated across different brokers, a producer sends messages to only one broker of the partition, the _leader_. The leader receives messages from the producer, and the other replicas, the _followers_, receive copies of the messages from the leader. A replica that has successfully received all published messages is an _in-sync replica_. A leader is always an in-sync replica, and a follower that hasn't received all published messages is an out-of-sync replica. A leader knows whether a follower is in-sync or out-of-sync.
+Because a partition is usually replicated across different brokers, a producer sends records to only one broker of the partition, the _leader_. The leader receives records from the producer, and the other replicas, the _followers_, receive copies of the records from the leader. A replica that has successfully received all published records is an _in-sync replica_. A leader is always an in-sync replica, and a follower that hasn't received all published records is an out-of-sync replica. A leader knows whether a follower is in-sync or out-of-sync.
 
 
 ## Configure producers
@@ -71,25 +71,25 @@ Learn about producer features and how to configure them in the following topics:
 
 - [Idempotent Producers](../produce-data/idempotent-producers)
 
-    Learn about exactly-once message delivery and how to implement it by enabling idempotent producers.
+    Learn about exactly-once record delivery and how to implement it by enabling idempotent producers.
 
-- [Message Reliablity](../produce-data/message-reliability)
+- [Record Reliablity](../produce-data/record-reliability)
 
-    Learn about message delivery reliability and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged messages.
+    Learn about record delivery reliability and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged records.
 
 - [Batching and Compression](../produce-data/batching-compression)
 
-    Learn about message batching and data compression and how to apply them to increase your throughput. 
+    Learn about record batching and data compression and how to apply them to increase your throughput. 
 
 - [Transactions](../transactions)
 
-    Learn about publishing and consuming messages atomically and with exactly-once semantics by using transactions. 
+    Learn about publishing and consuming records atomically and with exactly-once semantics by using transactions. 
 
 ## Optimize producers
 
-Configure your producer to optimize for system speed or safety.
+Configure your producer to optimize for performance (throughput, latency) or safety.
 
-### Optimizing for speed
+### Throughput and latency
 
 From a producer perspective, when you want to get data into
 Redpanda as quickly as possible, you can maximize throughput in a variety of ways.
@@ -97,33 +97,33 @@ You can set other components’ parameters, like experimenting with the topic
 partition size. You can also test [acks](#producer-acknowledgement-settings) settings.
 
 For example, the quicker a producer receives a reply from the broker that the
-message has been committed, the sooner it can send the next message, which
+record has been committed, the sooner it can send the next record, which
 generally results in higher throughput. Hence, if you set `acks=1`, then the
 leader broker would not have to wait for replication to occur, and it can reply
-as soon as it is finished committing the message. As mentioned earlier, this
+as soon as it is finished committing the record. As mentioned earlier, this
 can result in less durability overall.
 
-Another option to explore is how the producer batches messages. Increasing the
+Another option to explore is how the producer batches records. Increasing the
 value of `batch.size` and `linger.ms` can increase throughput by making the
-producer add more messages into one batch before sending it to the broker and
+producer add more records into one batch before sending it to the broker and
 waiting until the batches can properly fill up. This approach negatively impacts
 latency though. By contrast, if you minimize `linger.ms` (for example, to `0`)
 and `batch.size` to `1`, you can achieve lower latency, but sacrifice throughput.
 
 ### Optimizing for safety
 
-For applications where you must guarantee that there are no lost messages,
+For applications where you must guarantee that there are no lost records,
 duplicates, or service downtime, you can use higher durability `acks` settings.
 If you set `acks=all`, then the producer will wait for a majority of replicas to
-acknowledge the message before it can send the next message, resulting in lower
+acknowledge the record before it can send the next record, resulting in lower
 latency, because there is more communication required between brokers. This
-approach can guarantee higher durability because the message will be replicated
+approach can guarantee higher durability because the record will be replicated
 to all brokers.
 
 You can also increase durability by increasing the number of retries the broker
-is allowed to make in case messages are not delivered successfully. The trade-off
+is allowed to make in case records are not delivered successfully. The trade-off
 is that you may allow duplicates to enter the system and potentially alter the
-ordering of messages.
+ordering of records.
 
 
 ## Producer properties reference
