@@ -49,7 +49,7 @@ To create the JDBC Sink connector:
    | `Password` | Password of the database user to be used when connecting to the database. |
    | `Kafka message key format`     | Format of the key in the Kafka topic. `BYTES` is the default. |
    | `Kafka message value format`   | Format of the value in the Kafka topic. `JSON` is the default. |
-   | `Auto-Create`  | When enabled, automatically creates the destination table (if it is found to be missing) based on the record schema (issues a ``CREATE``). The default is disabled. |
+   | `Auto-create`  | When enabled, automatically creates the destination table (if it is found to be missing) based on the record schema (issues a ``CREATE``). The default is disabled. |
    | `Max Tasks`                    | Maximum number of tasks to use for this connector. The default is `1`. Each task replicates exclusive set of partitions assigned to it. |
    | `Connector name`               | Globally-unique name to use for this connector. |
 4. Click **Next**. Review the connector properties specified, then click **Create**.
@@ -63,20 +63,20 @@ on the **Create Connector** page:
 
 | Property                     | Description |
 | ---------------------------- | ----------- |
-| `Include Fields`  | List of comma-separated record value field names. If empty, all fields from the record value are utilized; otherwise, used to filter for desired fields. Note that ``pk.fields`` is applied independently in the context of which field(s) form the primary key columns in the destination database, while this configuration is applicable for the other columns. |
-| `Topics To Tables Mapping` | Kafka topics to database tables mapping. Comma-separated list of topic to table mapping in the format: `topic_name:table_name`. If the destination table is found in the mapping, then it overrides the generated one defined in `table.name.format`. |
-| `Table Name Format` | A format string for the destination table name, which may contain `${topic}` as a placeholder for the original topic name. For example, `kafka_${topic}` for the topic orders maps to the table name `kafka_orders`. The default is `${topic}`. |
-| `Table Name Normalize` | Specifies whether or not to normalize destination table names for topics. When enabled, the alphanumeric characters `(a-z, A-Z, 0-9)` and `_` remain as is, others (such as `.`) are replaced with `_`. By default, is disabled. |
-| `Quote SQL Identifiers` | Specifies whether or not to delimit (in most databases, a quote with double quotation marks) identifiers (for example, table names and column names) in SQL statements. By default, enabled. |
-| `Auto-Evolve` | Whether to automatically add columns in the table schema when found to be missing relative to the record schema by issuing `ALTER. |
-| `Batch Size` | Specifies how many records to attempt to batch together for insertion into the destination table, when possible. The default is 3000. |
+| `Include fields`  | List of comma-separated record value field names. If empty, all fields from the record value are utilized; otherwise, used to filter for desired fields. Note that ``pk.fields`` is applied independently in the context of which field(s) form the primary key columns in the destination database, while this configuration is applicable for the other columns. |
+| `Topics to tables mapping` | Kafka topics to database tables mapping. Comma-separated list of topic to table mapping in the format: `topic_name:table_name`. If the destination table is found in the mapping, then it overrides the generated one defined in `table.name.format`. |
+| `Table name format` | A format string for the destination table name, which may contain `${topic}` as a placeholder for the original topic name. For example, `kafka_${topic}` for the topic orders maps to the table name `kafka_orders`. The default is `${topic}`. |
+| `Table name normalize` | Specifies whether or not to normalize destination table names for topics. When enabled, the alphanumeric characters `(a-z, A-Z, 0-9)` and `_` remain as is, others (such as `.`) are replaced with `_`. By default, is disabled. |
+| `Quote SQL identifiers` | Specifies whether or not to delimit (in most databases, a quote with double quotation marks) identifiers (for example, table names and column names) in SQL statements. By default, enabled. |
+| `Auto-evolve` | Whether to automatically add columns in the table schema when found to be missing relative to the record schema by issuing `ALTER. |
+| `Batch size` | Specifies how many records to attempt to batch together for insertion into the destination table, when possible. The default is 3000. |
 | `DB time zone` | Name of the JDBC timezone that should be used in the connector when querying with time-based criteria. Default is `UTC`. |
-| `Insert Mode` | The insertion mode to use. The supported modes are: <ul><li>`INSERT`: standard SQL `INSERT` statements</li><li>`MULTI`: multi-row `INSERT` statements</li><li>`UPSERT`: use the appropriate upsert semantics for the target database if it is supported by the connector; for example, `INSERT .. ON CONFLICT .. DO UPDATE SET ..`</li><li>`UPDATE`: use the appropriate update semantics for the target database if it is supported by the connector; for example, `UPDATE`</li></ul>. |
-| `Primary Key Mode` | The primary key mode to use. Supported modes are: <ul><li>`NONE`: no keys utilized</li><li>`kafka`: Kafka coordinates (the topic, partition, and offset) are used as the primary key</li><li>`RECORD_KEY`: fields from the record key are used, which may be a primitive or a struct</li><li>`RECORD_VALUE`: fields from the record value are used, which must be a struct</li></ul>. |
-| `Primary Key Fields` | Comma-separated list of primary key field names. The runtime interpretation of this configuration depends on the `pk.mode`. Supported modes are: <ul><li>`none`: ignored because no fields are used as primary key in this mode.</li><li>`kafka`: must be a trio representing the Kafka coordinates (the topic, partition, and offset). Defaults to `__connect_topic,__connect_partition,__connect_offset` if empty.</li><li>`record_key`: if empty, all fields from the key struct will be used, otherwise used to extract the desired fields. For primitive key, only a single field name must be configured.</li><li>`record_value`: if empty, all fields from the value struct will be used, otherwise used to extract the desired fields.</li></ul>. |
-| `Maximum Retries` | The maximum number of times to retry on errors before failing the task. The default is `10`. |
-| `Retry Backoff (ms)` | The time in milliseconds to wait before a retry attempt is made following an error. The default is `3000`. |
-| `Database Dialect` | The name of the database dialect that should be used for this connector. By default. the connector automatically determines the dialect based upon the JDBC connection URL. Use if you want to override that behavior and specify a specific dialect. |
+| `Insert mode` | The insertion mode to use. The supported modes are: <ul><li>`INSERT`: standard SQL `INSERT` statements</li><li>`MULTI`: multi-row `INSERT` statements</li><li>`UPSERT`: use the appropriate upsert semantics for the target database if it is supported by the connector; for example, `INSERT .. ON CONFLICT .. DO UPDATE SET ..`</li><li>`UPDATE`: use the appropriate update semantics for the target database if it is supported by the connector; for example, `UPDATE`</li></ul>. |
+| `Primary key mode` | The primary key mode to use. Supported modes are: <ul><li>`NONE`: no keys utilized</li><li>`kafka`: Kafka coordinates (the topic, partition, and offset) are used as the primary key</li><li>`RECORD_KEY`: fields from the record key are used, which may be a primitive or a struct</li><li>`RECORD_VALUE`: fields from the record value are used, which must be a struct</li></ul>. |
+| `Primary key fields` | Comma-separated list of primary key field names. The runtime interpretation of this configuration depends on the `pk.mode`. Supported modes are: <ul><li>`none`: ignored because no fields are used as primary key in this mode.</li><li>`kafka`: must be a trio representing the Kafka coordinates (the topic, partition, and offset). Defaults to `__connect_topic,__connect_partition,__connect_offset` if empty.</li><li>`record_key`: if empty, all fields from the key struct will be used, otherwise used to extract the desired fields. For primitive key, only a single field name must be configured.</li><li>`record_value`: if empty, all fields from the value struct will be used, otherwise used to extract the desired fields.</li></ul>. |
+| `Maximum retries` | The maximum number of times to retry on errors before failing the task. The default is `10`. |
+| `Retry backoff (ms)` | The time in milliseconds to wait before a retry attempt is made following an error. The default is `3000`. |
+| `Database dialect` | The name of the database dialect that should be used for this connector. By default. the connector automatically determines the dialect based upon the JDBC connection URL. Use if you want to override that behavior and specify a specific dialect. |
 
 ## Map data
 
@@ -102,8 +102,8 @@ Use the appropriate key or value converter (input data format) for your data as 
 
 After the connector is created, check to ensure that:
 
-- There are no errors in logs and in Redpanda Console
-- Database tables contain data from Redpanda topics
+- There are no errors in logs and in Redpanda Console.
+- Database tables contain data from Redpanda topics.
 
 ## Troubleshoot
 

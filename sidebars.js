@@ -319,6 +319,11 @@ module.exports = {
                       label: "JDBC Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "JDBC Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
+                    },
                   ],
                 },
               ]
