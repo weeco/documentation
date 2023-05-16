@@ -286,33 +286,38 @@ module.exports = {
                   items: [
                     {
                       type: "doc",
-                      label: "Create an AWS S3 Sink Connector",
+                      label: "AWS S3 Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector",
                     },
                     {
                       type: "doc",
-                      label: "Create a BigQuery Sink Connector",
+                      label: "BigQuery Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-gcp-bigquery-connector",
                     },
                     {
                       type: "doc",
-                      label: "Create a GCS Sink Connector",
+                      label: "GCS Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-connector",
                     },
                     {
                       type: "doc",
-                      label: "Create a Snowflake Sink Connector",
+                      label: "Snowflake Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector",
                     },
                     {
                       type: "doc",
-                      label: "Create a MongoDB Sink Connector",
+                      label: "MongoDB Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
                     },
                     {
                       type: "doc",
-                      label: "Create a PostgreSQL (Debezium) Connector",
+                      label: "PostgreSQL (Debezium) Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "JDBC Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector",
                     },
                   ],
                 },
