@@ -82,7 +82,7 @@ on the **Create Connector** page:
    | Property                     | Description |
    | ---------------------------- | ----------- |
    | `Auto create tables` | Automatically create BigQuery tables if they don't already exist. If the table does not exist, then it is created based on the record schema. |
-   | `Topic to table map` | Map of topics to tables. Format: comma-separated tuples, for example `:,:`. |
+   | `Topic to table map` | Map of topics to tables. Format: comma-separated tuples, for example `topic1:table1,topic2:table2`. |
    | `Allow new BigQuery fields` | If true, new fields can be added to BigQuery tables during subsequent schema updates. |
    | `Allow BigQuery required field relaxation` | If true, fields in the BigQuery schema can be changed from `REQUIRED` to `NULLABLE`. |
    | `Upsert enabled` | Enables upsert functionality on the connector. |
@@ -127,8 +127,8 @@ Other issues are reported using a failed task error message.
 | **Not found: Project invalid-project-name** | Check to make sure `Project` contains a valid BigQuery project. |
 | **Not found: Dataset project:invalid-dataset** | Check to make sure `Default dataset` contains a valid BigQuery dataset. |
 | **An unexpected error occurred while validating credentials for BigQuery: Failed to create credentials from input stream** | The credentials given as a JSON file in the `Credentials JSON` property are incorrect. Copy a valid key from the Google Cloud service account. |
-| **JsonConverter with schemas.enable requires "schema" and "payload" fields** | The connector encountered an incorrect message format when reading from a topic. The JSON messages should contain schema in the `schema` field and payload in the `payload` field. |
-| **JsonParseException: Unrecognized token 'test': was expecting JSON** | During reading from a topic the connector encountered a message that is invalid JSON. The JSON messages should contain schema in the `schema` field and payload in the `payload` field. |
+| **JsonConverter with schemas.enable requires "schema" and "payload" fields** | The connector encountered an incorrect message format when reading from a topic. |
+| **JsonParseException: Unrecognized token 'test': was expecting JSON** | During reading from a topic the connector encountered a message that is invalid JSON. |
 
 ## Suggested reading
 

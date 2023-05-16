@@ -70,13 +70,13 @@ on the **Create Connector** page:
 
 Use the appropriate key or value converter (input data format) for your data as follows:
 
-- `JSON` formatted records should use `"com.snowflake.kafka.connector.records.SnowflakeJsonConverter"`.
+- `JSON` formatted records should use `SNOWFLAKE_JSON`.
 
-- `AVRO` formatted records that use Kafka’s Schema Registry Service should use `"com.snowflake.kafka.connector.records.SnowflakeAvroConverter"`.
+- `AVRO` formatted records that use Kafka’s Schema Registry Service should use `SNOWFLAKE_AVRO`.
 
-- `AVRO` formatted records that contain the schema (and therefore do not need Kafka’s Schema Registry Service) should use `"com.snowflake.kafka.connector.records.SnowflakeAvroConverterWithoutSchemaRegistry"`.
+- `AVRO` formatted records that contain the schema (and therefore do not need Kafka’s Schema Registry Service) should use `SNOWFLAKE_AVRO_WITHOUT_SCHEMA_REGISTRY`.
 
-- Plain text formatted records should use `"org.apache.kafka.connect.storage.StringConverter"`.
+- Plain text formatted records should use `STRING`.
 
 ## Test the connection
 

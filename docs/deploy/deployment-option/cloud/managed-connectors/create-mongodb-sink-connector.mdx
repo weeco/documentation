@@ -50,7 +50,7 @@ on the **Create Connector** page:
 | `CDC handler` | The CDC (change data capture) handler to use for processing. The MongoDB handler requires plain JSON or BSON format. The default is `NONE`.|
 | `Key projection type` | The type of key projection to use: either `AllowList` or `BlockList`. |
 | `Key projection list` | A comma-separated list of field names for key projection. |
-| `Type of value projection to use` Use either `AllowList` or `BlockList` | **<---THIS MAKES NO SENSE--NONE appears to be the default, but the description gives two other options. The description is in the property name.** The type of value projection to use: `AllowList` or `BlockList`. The default is `NONE`. |
+| `Type of value projection to use` Use either `AllowList` or `BlockList` | Only use with `Value projection list`. The type of value projection to use: `AllowList` or `BlockList`. The default is `NONE`. |
 | `Value projection list` | A comma-separated list of field names for value projection. |
 | `Field renamer mapping` | An inline JSON array with objects describing field name mappings. For example: `[{"oldName":"key.fieldA","newName":"field1"},{"oldName":"value.xyz","newName":"abc"}]`. |
 | `Field used for time` | Name of the top level field used for time. Inserted documents _must_ specify this field, and it must be of the `BSON datetime` type. |
