@@ -54,6 +54,11 @@ to = "/21.11/:splat"
 status = 301
 
 [[redirects]]
+from = "/docs/api/*"
+to = "/api/:splat"
+status = 301
+
+[[redirects]]
 from = "/docs/*"
 to = "/current/:splat"
 status = 301
