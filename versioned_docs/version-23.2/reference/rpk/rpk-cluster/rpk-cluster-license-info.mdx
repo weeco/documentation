@@ -1,10 +1,12 @@
 ---
 title: rpk cluster license info
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
   <meta name="title" content="rpk cluster license info | Redpanda Docs" />
   <meta name="description" content="rpk cluster license info" />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/rpk-cluster/rpk-cluster-license-info/" />
 </head>
 
 Retrieve license information:
@@ -16,13 +18,13 @@ Retrieve license information:
     Version:         License schema version.
 ```
 
-### Usage
+## Usage
 
-```
+```bash
 rpk cluster license info [flags]
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
@@ -36,6 +38,11 @@ rpk cluster license info [flags]
       <td>
         <strong> Description</strong>
       </td>
+    </tr>
+    <tr>
+      <td>--format</td>
+      <td>string</td>
+      <td>Output format (text, json) (default "text").</td>
     </tr>
     <tr>
       <td>-h, --help</td>
@@ -99,7 +106,7 @@ rpk cluster license info [flags]
     <tr>
       <td>--password</td>
       <td>string</td>
-      <td> SASL password to be used for authentication.</td>
+      <td>SASL password to be used for authentication.</td>
     </tr>
     <tr>
       <td>--sasl-mechanism</td>
@@ -133,12 +140,12 @@ rpk cluster license info [flags]
     <tr>
       <td>--tls-truststore</td>
       <td>string</td>
-      <td> The truststore to be used for TLS communication with the broker.</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
     </tr>
     <tr>
       <td>--user</td>
       <td>string</td>
-      <td> SASL user to be used for authentication.</td>
+      <td>SASL user to be used for authentication.</td>
     </tr>
     <tr>
       <td>-v, --verbose</td>

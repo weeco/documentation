@@ -5,6 +5,7 @@ title: Cluster Maintenance
 <head>
     <meta name="title" content="Cluster Maintenance | Redpanda Docs"/>
     <meta name="description" content="Cluster Maintenance"/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/cluster-maintenance/" />
 </head>
 
 import ConfigureAvailabilityIntro from './shared/_intro-configure-availability.mdx'
@@ -23,9 +24,17 @@ import ManageThroughputIntro from './shared/_intro-manage-throughput.mdx'
 
     Continuous Data Balancing continuously monitors your node and rack availability and disk usage. This enables self-healing clusters that dynamically balance partitions. 
 
+- [Decommission Brokers](../cluster-maintenance/decommission-brokers)
+
+    Remove a broker so that it is no longer considered part of the cluster.
+
 - [Upgrade](../cluster-maintenance/rolling-upgrade)
 
     Learn how to upgrade Redpanda to the latest version.
+
+- [Maintenance Mode](../../manage/node-management)
+
+  Maintenance mode lets you take a Redpanda broker offline temporarily while minimizing disruption to client operations.
 
 - [Manage Disk Space](../cluster-maintenance/disk-utilization)
 
@@ -35,7 +44,7 @@ import ManageThroughputIntro from './shared/_intro-manage-throughput.mdx'
 
     <ManageThroughputIntro/>
 
-- [Configure Availability](../cluster-maintenance/configure-availability)
+- [Configure Client Connections](../cluster-maintenance/configure-availability)
 
     <ConfigureAvailabilityIntro/>
 

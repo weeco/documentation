@@ -1,10 +1,12 @@
 ---
 title: rpk redpanda admin brokers decommission
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
   <meta name="title" content="rpk redpanda admin brokers decommission | Redpanda Docs" />
   <meta name="description" content="rpk redpanda admin brokers decommission" />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission/" />
 </head>
 
 Decommission the given broker.
@@ -14,31 +16,39 @@ Decommissioning a broker removes it from the cluster.
 A decommission request is sent to every broker in the cluster, only the cluster
 leader handles the request.
 
-### Usage
+:::note
+For safety on v22.x clusters, this command will not run if the requested
+broker is in maintenance mode. As of v23.x, Redpanda supports
+decommissioning a node that is currently in maintenance mode. If you are on
+a v22.x cluster and need to bypass the maintenance mode check (perhaps your
+cluster is unreachable), use the hidden `--force` flag.
+:::
 
-```
+## Usage
+
+```bash
 rpk redpanda admin brokers decommission [BROKER ID] [flags]
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
     <tr>
       <td>
-        <strong> Value</strong>
+        <strong>Value</strong>
       </td>
       <td>
-        <strong> Type</strong>
+        <strong>Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
       </td>
     </tr>
     <tr>
       <td>-h, --help</td>
       <td>-</td>
-      <td> Help for decommission.</td>
+      <td>Help for decommission.</td>
     </tr>
     <tr>
       <td>--admin-api-tls-cert</td>

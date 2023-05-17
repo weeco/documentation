@@ -5,15 +5,65 @@ title: Deploy for Production
 <head>
     <meta name="title" content="Deploy for Production | Redpanda Docs"/>
     <meta name="description" content="Steps to deploy a Redpanda production cluster"/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/manual/production/production-deployment/" />
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Versions from '../../../../../shared/_versions.mdx'
 
-To start deploying for production, choose the guide for your deployment type:
+You can deploy Redpanda for production with a default deployment, which uses recommended deployment tools, or with a custom deployment, which uses unsupported deployment tools.
 
-- [**Default deployment**](#default-deployment) - use default supported deployment tools.
-- [**Custom deployment**](#custom-deployment) - use custom unsupported deployment tools.
+:::note
+- See [Automate Deployment for Production](../../production/production-deployment-automation) to use Terraform and Ansible to deploy Redpanda. 
+- See [Redpanda Quickstart](../../../../../../get-started/quick-start) to try out Redpanda in Docker or [Deploy for Development](../../production/dev-deployment). 
+:::
+
+## Prerequisites
+
+### Hardware and software
+
+Follow these requirements and recommendations:
+
+- Operating system
+  - Minimum required version of the Linux kernel: <Versions name="linux-kernel"/>
+  - Minimum version of RHEL/CentOS: 7.9
+  - Minimum version of Ubuntu: 21.1
+- CPU and memory
+  - A minimum of three physical nodes or virtual machines are required. 
+  - Two physical (not virtual) cores are required. Four physical cores are strongly recommended.
+  - x86_64 (Westmere or newer) and AWS Graviton family processors are supported.
+  - 2 GB or more of memory per core is required.
+- Storage
+  - An XFS or ext4 file system for the data directory of Redpanda (`/var/lib/redpanda/data`) or the Tiered Storage cache. XFS is highly recommended. NFS is not supported.
+  - Locally-attached NVMe devices. RAID-0 is required if you use multiple disks.
+  - Ephemeral cloud instance storage is only recommended in combination with Tiered Storage or for Tiered Storage cache. Without Tiered Storage, attached persistent volumes (for example, EBS) are recommended.
+- Object storage providers for Tiered Storage
+  - Amazon Simple Storage Service (S3)
+  - Google Cloud Storage (GCS), using the Google Cloud Platform S3 API
+  - Azure Blob Storage (ABS)
+- Networking
+  - Minimum 10 GigE
+- See [Manage Disk Space](../../../../../../manage/cluster-maintenance/disk-utilization) for guidelines on cluster creation.
+
+#### TCP/IP ports
+
+Redpanda uses the following default ports:
+
+| Port | Purpose |
+|---|---|
+|`9092`|Kafka API|
+|`8082`|HTTP Proxy|
+|`8081`|Schema Registry|
+|`9644`|Admin API and Prometheus|
+|`33145`|internal RPC|
+
+### Select deployment type
+
+To start deploying Redpanda for production, choose your deployment type:
+
+- [**Default deployment**](#default-deployment): Use recommended deployment tools.
+- [**Custom deployment**](#custom-deployment): Use unsupported deployment tools.
 
 ---
 
@@ -21,34 +71,9 @@ To start deploying for production, choose the guide for your deployment type:
 
 This section describes how to set up a production cluster of Redpanda.
 
-See also:
-- [Manage Disk Space](../../../../../../manage/cluster-maintenance/disk-utilization) for guidelines on cluster creation
-- [Redpanda Quickstart](../../../../../../get-started/quick-start) to try out Redpanda
-
-### Prepare infrastructure
-
-Provision hardware according to these requirements:
-
-- XFS for the data directory of Redpanda (`/var/lib/redpanda/data`). NFS is not supported.
-- A kernel that is at least 3.10.0-514, 4.18 or newer
-- Local NVMe, RAID-0 when using multiple disks
-- 2GB of memory per core
-- TCP ports:
-  - `33145` - internal RPC
-  - `9092` - Kafka API
-  - `8082` - HTTP Proxy
-  - `8081` - Schema Registry
-  - `9644` - Prometheus and Admin API
-
-:::note
-You can [use Terraform to deploy Redpanda](../../production/production-deployment-automation).
-:::
-
 ### Install Redpanda
 
 Install Redpanda on each system you want to be part of your cluster. There are binaries available for Fedora/RedHat or Debian systems.
-
-You can also install Redpanda using an [Ansible playbook](../../production/production-deployment-automation).
 
 <Tabs>
   <TabItem value="fedora" label="Fedora/RedHat" default>
@@ -104,17 +129,35 @@ sudo -E bash && sudo apt-get install redpanda-console -y
 
 By default, Redpanda is installed in development mode, which turns off hardware optimization.
 
-To enable hardware optimization, set Redpanda to run in production mode:
+To enable hardware optimization, set Redpanda to run in [production mode](../../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-mode/#production-mode):
 
 ```bash
 sudo rpk redpanda mode production
 ```
 
-To tune the hardware, on each node, run:
+To tune the hardware, run the autotuner on each node:
 
 ```bash
 sudo rpk redpanda tune all
 ```
+
+:::tip
+To run `rpk redpanda tune all` on a Redpanda broker automatically after broker or host restarts, configure the service `redpanda-tuner`, which runs `rpk redpanda tune all`, to run at boot-up:
+
+- For RHEL, after installing the rpm package, run `systemctl` to both start and enable the `redpanda-tuner` service:
+
+  ```bash
+  sudo systemctl start redpanda-tuner
+  sudo systemctl enable redpanda-tuner
+  ```
+
+- For Ubuntu, after installing the apt package, run `systemctl` to start the `redpanda-tuner` service (which is already enabled):
+
+  ```bash
+  sudo systemctl start redpanda-tuner
+  ```
+
+:::
 
 For more details, see the [autotuner reference](../../../../../../reference/rpk/rpk-redpanda/rpk-redpanda-tune).
 
@@ -122,7 +165,7 @@ For more details, see the [autotuner reference](../../../../../../reference/rpk/
 On taller machines, Redpanda recommends benchmarking your SSD. This can be done
 with [rpk iotune](../../../../../../reference/rpk/rpk-iotune). You only need to run this once.
 
-For reference, a local NVMe SSD should yield around 1GB/s sustained writes.
+For reference, a local NVMe SSD should yield around 1 GB/s sustained writes.
 `rpk iotune` captures SSD wear and tear and gives accurate measurements
 of what your hardware is capable of delivering. Run this before benchmarking.
 
@@ -177,10 +220,10 @@ When a Redpanda cluster starts, it instantiates a controller Raft group with all
 
 ### Verify the installation
 
-To verify that the Redpanda cluster is up and running, check the logs:
+To verify that the Redpanda cluster is up and running, use `rpk` to get information about the cluster:
 
 ```bash
-journalctl -u redpanda
+rpk cluster info
 ```
 
 If topics were initially created in a test environment with a replication factor of `1`, use `rpk topic alter-config` to change the topic replication factor: 
@@ -199,11 +242,7 @@ rpk topic create panda
 
 ## Custom deployment
 
-This section provides information for creating your own automation for deploying Redpanda clusters without using any of the tools that Redpanda supports for setting up a cluster:
-
-- Ansible Playbook
-- Helm Chart
-- Kubernetes Operator
+This section provides information for creating your own automation for deploying Redpanda clusters without using any of the tools that Redpanda supports for setting up a cluster, such as Ansible Playbook, Helm Chart, or Kubernetes Operator.
 
 :::tip
 Redpanda strongly recommends using one of these supported deployment tools. See [Automate Deploying for Production](../../production/production-deployment-automation).
@@ -266,7 +305,7 @@ important to think about how you secure it when creating a cluster.
 
 Seed servers help new nodes join a cluster by directing requests from newly-started nodes to an existing cluster. The [seed_servers](../../../../../../reference/node-properties#seed_servers) node configuration property controls how Redpanda finds its peers when initially forming a cluster. It is dependent on the [empty_seed_starts_cluster](../../../../../../reference/node-properties#empty_seed_starts_cluster) node configuration property.
 
-Starting in Redpanda version 22.3, you should explicitly set `empty_seed_starts_cluster` to `false` on every node, and every node in the cluster should have the same value set for `seed_servers`. With this set of configurations, Redpanda clusters form with these guidelines:
+Starting with Redpanda version 22.3, you should explicitly set `empty_seed_starts_cluster` to `false` on every node, and every node in the cluster should have the same value set for `seed_servers`. With this set of configurations, Redpanda clusters form with these guidelines:
 
 - When a node starts and it is a seed server (its address is in the `seed_servers` list), it waits for all other seed servers to start up, and it forms a cluster with all seed servers as members.
 - When a node starts and it is not a seed server, it sends requests to the seed servers to join the cluster. 
@@ -297,24 +336,20 @@ Never reuse node IDs, even for nodes that have been decommissioned and restarted
 
 ### Upgrade considerations
 
-Deployment automation should place each node into maintenance mode and wait for it to drain leaderships before restarting it with a newer version of Redpanda. For information about how to drive a rolling upgrade of a Redpanda cluster, see [Node Maintenance Mode](../../../../../../manage/node-management).
-
-Rolling restarts preserve high availability and reduce
-risk during upgrades. Check the cluster's health after upgrading each node. Rolling
-back an upgrade to an earlier feature release is only supported until the last node
-has been updated, so it's important to identify any issues before that point.
+Deployment automation should place each node into maintenance mode and wait for it to drain leadership before restarting it with a newer version of Redpanda. For more information, see [Upgrade](../../../../../../manage/cluster-maintenance/rolling-upgrade).
 
 If upgrading multiple [feature release versions of Redpanda](../../../../../../manage/kubernetes/rolling-upgrade#find-a-new-version) in succession, make sure to verify that each version upgrades to completion before proceeding to the next version. You can verify by reading the `/v1/features` Admin API endpoint and checking that `cluster_version` has increased. 
 
-  - With Redpanda 23.1 and later, the `/v1/features` endpoint also includes a `node_latest_version` attribute, and installers can verify that the cluster has activated any new functionality from a previous upgrade by checking for `cluster_version` == `node_latest_version`.
+Starting with Redpanda version 23.1, the `/v1/features` endpoint also includes a `node_latest_version` attribute, and installers can verify that the cluster has activated any new functionality from a previous upgrade by checking for `cluster_version` == `node_latest_version`.
+
 ---
 
 ## Next steps
 
-If clients will connect from a different subnet, see [Configuring Listeners](../../../../../../manage/security/listener-configuration).
+If clients connect from a different subnet, see [Configure Listeners](../../../../../../manage/security/listener-configuration).
 
 ## Suggested reading
 
-- [Redpanda Cluster Configuration](../../../../../../manage/cluster-maintenance/configuration)
-- [Redpanda Console configuration](../../../../../../reference/console/config)
-- [Working with Schema Registry](../../../../../../manage/schema-registry)
+- [Cluster Configuration](../../../../../../manage/cluster-maintenance/configuration)
+- [Redpanda Console Configuration](../../../../../../reference/console/config)
+- [Schema Registry](../../../../../../manage/schema-registry)

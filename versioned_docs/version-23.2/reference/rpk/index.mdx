@@ -5,6 +5,7 @@ title: rpk Commands
 <head>
   <meta name="title" content="rpk Commands list | Redpanda Docs" />
   <meta name="description" content="rpk Commands" />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/" />
 </head>
 
 Redpanda Keeper `rpk` is Redpanda's command line interface (CLI) utility.
@@ -51,9 +52,14 @@ This section lists the `rpk` commands in alphabetical order. Each command includ
     - [rpk cluster self-test start](rpk-cluster/rpk-cluster-self-test-start)
     - [rpk cluster self-test status](rpk-cluster/rpk-cluster-self-test-status)
     - [rpk cluster self-test stop](rpk-cluster/rpk-cluster-self-test-stop)   
+  - [rpk cluster storage](rpk-cluster/rpk-cluster-storage)
+    - [rpk cluster storage recovery](rpk-cluster/rpk-cluster-storage-recovery)
+       - [rpk cluster storage recovery start](rpk-cluster/rpk-cluster-storage-recovery-start)
+       - [rpk cluster storage recovery status](rpk-cluster/rpk-cluster-storage-recovery-status)
 - [rpk container](rpk-container)
   - [rpk container purge](rpk-container/rpk-container-purge)
   - [rpk container start](rpk-container/rpk-container-start)
+  - [rpk container status](rpk-container/rpk-container-status)
   - [rpk container stop](rpk-container/rpk-container-stop)
 - [rpk debug](rpk-debug)
   - [rpk debug bundle](rpk-debug/rpk-debug-bundle)
@@ -65,6 +71,7 @@ This section lists the `rpk` commands in alphabetical order. Each command includ
   - [rpk group delete](rpk-group/rpk-group-delete)
   - [rpk group describe](rpk-group/rpk-group-describe)
   - [rpk group list](rpk-group/rpk-group-list)
+  - [rpk group offset delete](rpk-group/rpk-group-offset-delete)
   - [rpk group seek](rpk-group/rpk-group-seek)
 - [rpk help](rpk-help)
 - [rpk iotune](rpk-iotune)
@@ -76,6 +83,7 @@ This section lists the `rpk` commands in alphabetical order. Each command includ
   - [rpk redpanda admin](rpk-redpanda/rpk-redpanda-admin)
     - [rpk redpanda admin brokers](rpk-redpanda/rpk-redpanda-admin-brokers)
       - [rpk redpanda admin brokers decommission](rpk-redpanda/rpk-redpanda-admin-brokers-decommission)
+        - [rpk redpanda admin brokers decommission status](rpk-redpanda/rpk-redpanda-admin-brokers-decommission-status)
       - [rpk redpanda admin brokers list](rpk-redpanda/rpk-redpanda-admin-brokers-list)
       - [rpk redpanda admin brokers recommission](rpk-redpanda/rpk-redpanda-admin-brokers-recommission)
     - [rpk redpanda admin config](rpk-redpanda/rpk-redpanda-admin-config)
@@ -104,10 +112,7 @@ This section lists the `rpk` commands in alphabetical order. Each command includ
   - [rpk topic list](rpk-topic/rpk-topic-list)
   - [rpk topic-produce](rpk-topic/rpk-topic-produce)
 - [rpk version](rpk-version)
-- [rpk wasm](rpk-wasm)
-  - [rpk wasm deploy](rpk-wasm/rpk-wasm-deploy)
-  - [rpk wasm generate](rpk-wasm/rpk-wasm-generate)
-  - [rpk wasm remove](rpk-wasm/rpk-wasm-remove)
+
 
 ## Related topics
 
