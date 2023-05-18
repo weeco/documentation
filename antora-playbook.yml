@@ -42,4 +42,5 @@ asciidoc:
 antora:
   extensions:
   - './extensions/version-fetcher/set-latest-version.js'
+  - './extensions/algolia-indexer/index.js'
 
