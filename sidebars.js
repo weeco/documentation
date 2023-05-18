@@ -311,6 +311,11 @@ module.exports = {
                     },
                     {
                       type: "doc",
+                      label: "MongoDB Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-source-connector",
+                    },
+                    {
+                      type: "doc",
                       label: "PostgreSQL (Debezium) Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
                     },

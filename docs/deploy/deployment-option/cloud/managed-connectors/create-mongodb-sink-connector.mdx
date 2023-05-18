@@ -27,7 +27,7 @@ To create a MongoDB Sink connector:
    | Property                     | Description |
    | ---------------------------- | ----------- |
    | `Topics to export`         | A comma-separated list of the cluster topics you want to export to MongoDB. |`
-   | `MongoDB Connection URI` | The MongoDB connection URI string to connect to your MongoDB instance or cluster. For example, `mongodb://locahost/`. |
+   | `MongoDB Connection URL` | The MongoDB connection URI string to connect to your MongoDB instance or cluster. For example, `mongodb://locahost/`. |
    | `MongoDB username`  | A valid MongoDB user. |
    | `MongoDB password` | The password for the account associated with the MongoDB user. |
    | `MongoDB database name` | The name of an existing MongoDB database to store output files in. |
@@ -68,7 +68,7 @@ Use the appropriate key or value converter (input data format) for your data as 
 - `JSON` when your messages are structured JSON. Select `Message JSON contains schema`,
   with the `schema` and `payload` fields.
 - `AVRO` when your messages contain AVRO-encoded messages, with schema stored in the Schema Registry.
-- `STRING` when your messages contain plaintex JSON.
+- `STRING` when your messages contain plaintext JSON.
 - `BYTES` when your messages contain BSON.
 
 ## Test the connection
@@ -88,7 +88,7 @@ Issues are reported using a failed task error message.
 |---------|--------|
 | **Invalid value wrong_uri for configuration connection.uri: The connection string is invalid. Connection strings must start with either 'mongodb://' or 'mongodb+srv://** | Check to make sure the `Connection URI` is a valid MongoDB URL. |
 | **Unable to connect to the server.** | Check to ensure that the `Connection URI` is valid and that the MongoDB server accepts connections. |
-| **Invalid user permissions authentication failed. Exception authenticating MongoCredential{mechanism=SCRAM-SHA-1, userName='user', source='admin', password=, mechanismProperties=}**. | Check to ensure that you specified valid username and password  credentials. |
+| **Invalid user permissions authentication failed. Exception authenticating MongoCredential{mechanism=SCRAM-SHA-1, userName='user', source='admin', password=, mechanismProperties=}**. | Check to ensure that you specified valid username and password credentials. |
 | **DataException: Could not convert key `` into a BsonDocument.** | Make sure your message keys are valid JSONs or skip configuration for fields that require valid JSON keys.  |
 | **DataException: Error: `operationType` field doc is missing.** | Make sure the input record format is correct (produced by a MongoDB source connector if you use MongoDB CDC handler). |
 | **DataException: Value document is missing or CDC operation is not a string** | Make sure the input record format is correct (produced by a Debezium source connector if you use Debezium CDC handler). |

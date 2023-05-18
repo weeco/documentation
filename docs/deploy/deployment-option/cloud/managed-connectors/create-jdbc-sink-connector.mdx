@@ -49,7 +49,7 @@ To create the JDBC Sink connector:
    | `Password` | Password of the database user to be used when connecting to the database. |
    | `Kafka message key format`     | Format of the key in the Kafka topic. `BYTES` is the default. |
    | `Kafka message value format`   | Format of the value in the Kafka topic. `JSON` is the default. |
-   | `Auto-create`  | When enabled, automatically creates the destination table (if it is found to be missing) based on the record schema (issues a ``CREATE``). The default is disabled. |
+   | `Auto-create`  | When enabled, automatically creates the destination table (if it is missing) based on the record schema (issues a ``CREATE``). The default is disabled. |
    | `Max Tasks`                    | Maximum number of tasks to use for this connector. The default is `1`. Each task replicates exclusive set of partitions assigned to it. |
    | `Connector name`               | Globally-unique name to use for this connector. |
 4. Click **Next**. Review the connector properties specified, then click **Create**.
@@ -63,7 +63,8 @@ on the **Create Connector** page:
 
 | Property                     | Description |
 | ---------------------------- | ----------- |
-| `Include fields`  | List of comma-separated record value field names. If empty, all fields from the record value are utilized; otherwise, used to filter for desired fields. Note that ``pk.fields`` is applied independently in the context of which field(s) form the primary key columns in the destination database, while this configuration is applicable for the other columns. |
+| `Include fields`  | List of comma-separated record value field names. If the value of this property is empty, the connector uses all fields from the record to migrate to a database.
+Otherwise, the connector uses only the record fields that are specified (in a comma-separated format). Note that ``Primary Key Fields`` is applied independently in the context of which fields form the primary key columns in the destination database, while this configuration is applicable for the other columns. |
 | `Topics to tables mapping` | Kafka topics to database tables mapping. Comma-separated list of topic to table mapping in the format: `topic_name:table_name`. If the destination table is found in the mapping, then it overrides the generated one defined in `table.name.format`. |
 | `Table name format` | A format string for the destination table name, which may contain `${topic}` as a placeholder for the original topic name. For example, `kafka_${topic}` for the topic orders maps to the table name `kafka_orders`. The default is `${topic}`. |
 | `Table name normalize` | Specifies whether or not to normalize destination table names for topics. When enabled, the alphanumeric characters `(a-z, A-Z, 0-9)` and `_` remain as is, others (such as `.`) are replaced with `_`. By default, is disabled. |
