@@ -50,7 +50,7 @@ A list of addresses of brokers that can provide the metadata a consumer needs to
 
 ### check.crcs
 
-A flag to enable the consumer to validate the CRC checksums of received messages.
+A flag to enable the consumer to validate the CRC checksums of received records.
 
 --- 
 
@@ -91,7 +91,7 @@ The default timeout duration for all client APIs.
 
 ### enable.auto.commit
 
-A flag to enable automatic committal of a consumer's offset after consuming messages. Messages are committed at the period set by [`auto.commit.interval.ms`](#autocommitintervalms).
+A flag to enable automatic committal of a consumer's offset after consuming records. Records are committed at the period set by [`auto.commit.interval.ms`](#autocommitintervalms).
 
 **Related topics**:
 - [Consumer Offsets](../consumer-offsets)
@@ -106,7 +106,7 @@ A flag to enable excluding internal topics from consumer operations.
 
 ### fetch.max.bytes
 
-The maximum amount of bytes of message data returned in a fetch response.
+The maximum amount of bytes of record data returned in a fetch response.
 
 --- 
 
@@ -118,7 +118,7 @@ The maximum duration in milliseconds to wait for data for a fetch request.
 
 ### fetch.min.bytes
 
-The minimum amount of bytes of message data returned in a fetch response.
+The minimum amount of bytes of record data returned in a fetch response.
 
 --- 
 
@@ -136,29 +136,29 @@ The unique ID of a consumer instance within a group.
 
 ### heartbeat.interval.ms
 
-The period a consumer sends heartbeat messages to assert its liveliness.
+The period a consumer sends heartbeat records to assert its liveliness.
 
 --- 
 
 ### interceptor.classes
 
-A list of classes that intercept messages before they are received from brokers. Can mutate messages and can be used for monitoring.
+A list of classes that intercept records before they are received from brokers. Can mutate records and can be used for monitoring.
 
 --- 
 
 ### isolation.level
 
-A level that determines the messages of transactions that are readable by a consumer.
+A level that determines the records of transactions that are readable by a consumer.
 
 **Valid values**:
-- `read_uncommitted`: a consumer reads all messages of transactions, including uncommitted messages of ongoing transactions.
-- `read_committed`: a consumer reads only committed messages of completed transactions.
+- `read_uncommitted`: a consumer reads all records of transactions, including uncommitted records of ongoing transactions.
+- `read_committed`: a consumer reads only committed records of completed transactions.
 
 --- 
 
 ### key.deserializer
 
-The class used to deserialize the key of a consumed message.
+The class used to deserialize the key of a consumed record.
 
 --- 
 
@@ -170,13 +170,13 @@ The maximum number of bytes returned from one partition in a fetch request.
 
 ### max.poll.interval.ms
 
-The maximum duration a consumer can go without polling for new messages before it is considered unresponsive and removed from a consumer group. 
+The maximum duration a consumer can go without polling for new records before it is considered unresponsive and removed from a consumer group. 
 
 --- 
 
 ### max.poll.records
 
-The maximum number of records (messages) returned in a poll request.
+The maximum number of records (records) returned in a poll request.
 
 --- 
 
@@ -268,4 +268,4 @@ The baseline duration a client waits for a socket connection to be established. 
 
 ### value.deserializer
 
-The class used to deserialize the value of a consumed message.
+The class used to deserialize the value of a consumed record.

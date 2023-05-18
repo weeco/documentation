@@ -12,7 +12,7 @@ Learn about Kafka producers, their features, and how to configure them when deve
 
 ## About Kafka producers
 
-A Kafka _producer_ is a client application that publishes _records_ (also known as events or messages) for one or more Kafka topics. A Redpanda cluster's brokers receive and store records written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published records are consumed from Redpanda by Kafka consumers that subscribe to the topics.
+A Kafka _producer_ is a client application that publishes _records_ (also known as events or records) for one or more Kafka topics. A Redpanda cluster's brokers receive and store records written by producers. Producers communicate with Redpanda through the Kafka Producer API. Published records are consumed from Redpanda by Kafka consumers that subscribe to the topics.
 
 ### Producing records
 
@@ -73,7 +73,7 @@ Learn about producer features and how to configure them in the following topics:
 
     Learn about exactly-once record delivery and how to implement it by enabling idempotent producers.
 
-- [Record Reliablity](../produce-data/record-reliability)
+- [Record Reliablity](../produce-data/producer-acks)
 
     Learn about record delivery reliability and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged records.
 

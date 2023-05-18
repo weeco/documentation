@@ -1,0 +1,104 @@
+---
+title: Reliable Delivery
+---
+
+<head>
+  <meta name="title" content="Reliable Delivery | Redpanda Docs" />
+  <meta
+    name="description"
+    content="Learn about reliable record delivery and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged records."
+  />
+</head>
+
+Learn about reliable record delivery and how to customize a Kafka producer to wait for acknowledgements from Redpanda brokers and to resend unacknowledged records.
+
+## About record reliability
+
+A record published by a producer may or may not be received by a broker. While one producer application may allow records to be dropped and not reach a broker, another producer application may require every record to be logged and fully replicated. 
+
+The levels of reliable record delivery can be categorized as best-effort and reliable:
+
+- A best-effort level of delivery doesn't guarantee successful reception by any broker. A producer writes a record and can immediately write another record, without waiting for an acknowledgement from a broker about the previous record's reception. Either a leader broker receives the sent record, or the record is lost. Use cases that send periodic updates of the latest value can use best-effort, no acknowledgement reliability. Without the overhead of acknowledgements (or record retries), this use case trades-off the risk of data loss for the benefit of higher throughput and lower latency.
+
+- A reliable level of delivery guarantees at least one broker has successfully received a record. A producer writes a record and expects either the leader or all insync-replicas to acknowledge record reception. When a record isn't acknowledged, a producer retries sending it. Use cases that require higher levels of fault tolerance and minimal risk of data loss should configure producers to require acknowledgements from brokers.
+
+## Configuring record reliability
+
+Configure a producer's properties to customize reliable record delivery.
+
+### acks
+
+The `acks` property sets the number of brokers that a producer waits for and expects to acknowledge a sent record.
+
+The valid values of `acks`:
+
+- [`acks=0`](#acks0): don't wait for any acknowledgement.
+- [`acks=1`](#acks1): wait for acknowledgement from the leader broker.
+- [`acks=all`](#acksall): wait for acknowledgments from all in-sync replicas.
+
+If acknowledgements are expected but not received, a producer can be configured to resend a record up to a maximum limit with the [`retries`](#retries) property, and it can be configured to have a maximum number of in-flight resent records with the [`max.in.flight.requests.per.connection`](#maxinflightrequestsperconnection) property.
+
+#### acks=0
+
+The producer doesn’t wait for acknowledgments from the leader and doesn’t retry
+sending records. This increases throughput and lowers latency of the system at
+the expense of durability and data loss.
+
+This option allows a producer to immediately consider a record acknowledged when
+it is sent to the Redpanda broker. This means that a producer does not have to wait
+for any kind of response from the Redpanda broker. This is the least safe option
+because a leader-node crash can cause data loss if the data has not yet
+replicated to the other nodes in the replica set. However, this setting is useful
+in cases where you want to optimize for the highest throughput, and are willing
+to risk some data loss.
+
+Because of the lack of guarantees, this setting is the most network bandwidth-efficient. This makes it useful for use cases like IoT/sensor data collection, where updates are periodic or stateless and you can afford some degree of data loss, but prefer gathering as much data as possible in a given time interval.
+
+#### acks=1
+
+The producer waits for an acknowledgment from the leader, but it doesn’t wait
+for the leader to get acknowledgments from followers. This setting doesn’t
+prioritize throughput, latency, or durability. Instead, `acks=1` attempts to
+provide a balance between all of them.
+
+Replication is not guaranteed with this setting because it happens in the
+background, after the acknowledgement is sent to the producer from the leader
+broker. This setting could result in data loss if the leader broker crashes
+before any followers manage to replicate the record.
+
+#### acks=all
+
+The producer waits for the leader to receive acknowledgements from in-sync replicas. This increases durability at the expense of lower throughput and increased latency.
+
+Sometimes referred to as `acks = -1`, `acks=all` configures a leader to wait for a [quorum of replicas](../../../get-started/architecture/#raft-consensus-algorithm) to successfully copy a record before acknowledging its reception. Replication involves calling `fsync`, so as soon as `fsync` is complete, the record is considered acknowledged.
+
+:::info
+With `acks=all`, a Redpanda broker guarantees that an acknowledged record has been flushed to disk with `fsync()`. This is a stronger data resiliency guarantee than a Kafka broker, which doesn't guarantee flushing to disk on acknowledgement.
+:::
+
+### retries
+
+The `retries` property sets the number of times a record is resent to the broker
+if the broker fails to acknowledge it. This is essentially the same
+as if the client application resends the erroneous record after receiving an
+error response. The default value of `retries` in most client libraries is 0.
+This means that if the send fails, the record is not re-sent at all.
+
+If you increase this number to a higher value, be sure to take a look at the
+`max.in.flight.requests.per.connection` value as well, as leaving that parameter
+at its default value can potentially cause ordering issues in the target topic
+where the records arrive. This occurs if two batches are sent to a single
+partition and the first fails and is retired, but the second succeeds so the
+records in the second batch may appear first.
+
+### max.in.flight.requests.per.connection
+
+The `max.in.flight.requests.per.connection` property sets how many unacknowledged records are allowed
+to be sent to the broker simultaneously at any given time. The default value is 5. If you set this parameter to 1, then the producer will not send any more
+records until the previous one is either acknowledged or an error happens, which
+can prompt a retry. If you set this parameter to a value higher than 1, then the
+producer will send more records at the same time, which can help to increase
+throughput, but add a risk of record reordering if retries are enabled.
+
+In cases when you configure the producer to be [idempotent](../../produce-data/idempotent-producers).
+up to five requests can be guaranteed to be in flight with the order preserved.

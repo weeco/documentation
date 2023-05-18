@@ -24,13 +24,13 @@ The number of acknowledgements that a producer expects to get from a leader brok
 - `acks=all` or `acks=-1`: acknowledgements from a quorum (majority) of replicas
 
 **Related topics**:
-- [Message Reliability](../message-reliability)
+- [Record Reliability](../producer-acks)
 
 ---
 
 ### batch.size
 
-The maximum size in bytes of a batched message in a single send request.
+The maximum size in bytes of a batched record in a single send request.
 
 **Related topics**:
 - [Batching and Compression](../batching-compression)
@@ -45,7 +45,7 @@ A list of addresses of brokers that can provide the metadata a client needs to b
 
 ### buffer.memory
 
-The maximum amount of memory in bytes a producer has to store messages to send.
+The maximum amount of memory in bytes a producer has to store records to send.
 
 **Related topics**:
 - [Batching and Compression](../batching-compression)
@@ -66,7 +66,7 @@ A unique application-specified ID for the producer client.
 
 ### compression.type
 
-The compression type used for all messages published by the producer.
+The compression type used for all records published by the producer.
 
 By default, a Redpanda cluster is configured to use a producer's `compression.type`; refer to the cluster property [`log_compression_type`](../../../reference/cluster-properties#log_compression_type).  
 
@@ -88,7 +88,7 @@ The maximum duration in milliseconds from when a send request returns to when a 
 
 ### enable.idempotence
 
-A flag to enable a producer to publish a message multiple times and for the broker to receive it just once.
+A flag to enable a producer to publish a record multiple times and for the broker to receive it just once.
 
 **Related topics**:
 - [Idempotent Producers](../idempotent-producers)
@@ -97,19 +97,19 @@ A flag to enable a producer to publish a message multiple times and for the brok
 
 ### interceptor.classes
 
-A list of classes that intercept messages before they are sent to brokers. Can mutate messages and can be used for monitoring.
+A list of classes that intercept records before they are sent to brokers. Can mutate records and can be used for monitoring.
 
 ---
 
 ### key.serializer
 
-The serializer class for the keys of messages.
+The serializer class for the keys of records.
 
 ---
 
 ### linger.ms
 
-The duration in milliseconds a producer waits to coalesce messages before sending a batched message.
+The duration in milliseconds a producer waits to coalesce records before sending a batched record.
 
 **Related topics**:
 - [Batching and Compression](../batching-compression)
@@ -127,13 +127,13 @@ The maximum duration in milliseconds that a producer can block. For a send call,
 The maximum number of in-flight unacknowledged requests a producer can make on a connection before blocking.
 
 **Related topics**:
-- [Message Reliability](../message-reliability)
+- [Record Reliability](../producer-acks)
 
 ---
 
 ### max.request.size
 
-The maximum size in bytes of a producer request. Should be at least the size of the largest message to publish.
+The maximum size in bytes of a producer request. Should be at least the size of the largest record to publish.
 
 ---
 
@@ -151,7 +151,7 @@ The maximum duration in milliseconds to keep cached metadata for an idle topic.
 
 ### partitioner.class
 
-A partitioner class that assigns sent messages to partitions.
+A partitioner class that assigns sent records to partitions.
 
 **Related topics**:
 - [Producer concepts](../../produce-data#partitions-and-replicas)
@@ -160,7 +160,7 @@ A partitioner class that assigns sent messages to partitions.
 
 ### partitioner.ignore.keys
 
-A flag to enable the partitioner to ignore the keys of messages when assigning messages to partitions.
+A flag to enable the partitioner to ignore the keys of records when assigning records to partitions.
 
 ---
 
@@ -190,10 +190,10 @@ The maximum duration in milliseconds to wait for a response to a request.
 
 ### retries
 
-The number of times a producer retries sending a message before failing.
+The number of times a producer retries sending a record before failing.
 
 **Related topics**:
-- [Message Reliability](../message-reliability)
+- [Record Reliability](../producer-acks)
 
 ---
 
@@ -239,4 +239,4 @@ An ID that uniquely identifies the producer and its transactions with brokers. R
 
 ### value.serializer
 
-The serializer class for the values of messages.
+The serializer class for the values of records.

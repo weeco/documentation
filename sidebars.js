@@ -94,8 +94,8 @@ module.exports = {
             },
             {
               type: "doc",
-              label: "Message Reliability",
-              id: "develop/produce-data/message-reliability",
+              label: "Reliable Delivery",
+              id: "develop/produce-data/producer-acks",
             },
             {
               type: "doc",

@@ -4,27 +4,26 @@ title: Consumer Offsets
 
 <head>
     <meta name="title" content="Consumer Offsets | Redpanda Docs"/>
-    <meta name="description" content="Learn about consumer offsets, the position of each consumer's last read message, and how Redpanda brokers support them."/>
+    <meta name="description" content="Learn about consumer offsets, the position of each consumer's last read record, and how Redpanda brokers support them."/>
     <link rel="canonical" href="https://docs.redpanda.com/docs/develop/consume-data/consumer-offsets/" />
 </head>
 
-Learn about consumer offsets&mdash;the position of each consumer's last read message&mdash;and how Redpanda brokers support them.
+Learn about consumer offsets&mdash;the position of each consumer's last read record&mdash;and how Redpanda brokers support them.
 
 ## About consumer offsets
 
-A consumer reads messages from a partition sequentially, and the offset of the last message read from a partition by a consumer is the _consumer offset_. A consumer registers its consumer offset with a broker by making a _commit request_ to the broker. A consumer's commit request can be synchronous or asynchronous, and it can be done manually by an application or automatically at a configurable interval. The consumer offset that a new consumer starts with can be configured to be the earliest or latest available offset of a partition (or throw an exception if no offset is available).
+A consumer reads records from a partition sequentially, and the offset of the last record read from a partition by a consumer is the _consumer offset_. A consumer registers its consumer offset with a broker by making a _commit request_ to the broker. A consumer's commit request can be synchronous or asynchronous, and it can be done manually by an application or automatically at a configurable interval. The consumer offset that a new consumer starts with can be configured to be the earliest or latest available offset of a partition (or throw an exception if no offset is available).
 
-A Redpanda broker saves the committed consumer offsets in an internal, compacted topic named `__consumer_offsets` that tracks the consumer offsets of each partition per group. In the event of a group rebalancing or a consumer crash or restart, a consumer knows the next unread message to read for a partition by getting its consumer offset from `__consumer_offsets`.
+Redpanda saves the committed consumer offsets in an internal, compacted topic named `__consumer_offsets` that tracks the consumer offsets of each partition per group. In the event of a group rebalancing or a consumer crash or restart, a member consumer gets the offset of the next unread record from the group [coordinator](../consumer-groups), who in turn gets it from `__consumer_offsets`.
 
-The broker sends a successful offset commit response to the consumer only after all the replicas of the `__consumer_offsets` topic receive the offsets. In case the offsets fail to replicate within a configurable timeout, the offset commit will fail and the consumer may retry the commit after backing off. 
+A group coordinator sends a successful offset commit response to the consumer only after all the replicas of the `__consumer_offsets` topic receive the offsets. In case the offsets fail to replicate within a configurable timeout, the offset commit will fail and the consumer may retry the commit after backing off. 
 
 The brokers periodically compact the offsets topic because it only needs to maintain the most recent offset commit per partition. 
 The coordinator also caches the offsets in an in-memory table to serve offset fetches quickly.
 
 ### Consumer lag
 
-When the rate of message production is faster than the rate of message consumption, the latest offset in a partition can grow larger than the current (largest) offset processed by a consumer. The _consumer lag_ is the difference between a partition's latest offset and a consumer's current offset. An increasing consumer lag can be an indicator of a consumer slowing down for a problematic reason, including low system resources and high network latency.
-
+When the rate of record production is faster than the rate of record consumption, the latest offset in a partition can grow larger than the current (largest) offset processed by a consumer. A consumer can also keep up with producers, but its rate of committal can be irregular. The _consumer lag_ is the difference between a partition's latest offset and a consumer's current offset. An increasing consumer lag can be an indicator of a consumer slowing down for a problematic reason, including low system resources and high network latency.
 
 ## Configuring consumer offsets
 
