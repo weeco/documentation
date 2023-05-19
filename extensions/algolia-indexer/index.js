@@ -21,11 +21,17 @@ function register ({
   }
 }) {
   const logger = this.getLogger('algolia-indexer')
-  // Connect and authenticate with your Algolia app
-  const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
 
-  // Create a new index and add a record
-  const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME);
+  var algoliaIsEnabled = false;
+  if (process.env.ALGOLIA_ADMIN_API_KEY !== '') algoliaIsEnabled = true
+
+  if (algoliaIsEnabled) {
+    // Connect and authenticate with Algolia
+    const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
+
+    // Create a new index and add a record
+    const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME);
+  }
 
   if (Object.keys(unknownOptions).length) {
     const keys = Object.keys(unknownOptions)
@@ -39,8 +45,10 @@ function register ({
     Object.keys(algolia).forEach((c) => {
       Object.keys(algolia[c]).forEach((v) => {
         algoliaCount += algolia[c][v].length
-        // Save all records to the index
-        index.saveObjects(algolia[c][v]).wait();
+        if (algoliaIsEnabled) {
+          // Save all records to the index
+          index.saveObjects(algolia[c][v]).wait();
+        }
         siteCatalog.addFile({
           mediaType: 'application/json',
           contents: Buffer.from(
@@ -52,26 +60,28 @@ function register ({
         })
       })
     })
-    index.setSettings({
-      attributesForFaceting: [
-        'version',
-        'product'
-      ]
-    })
-    console.log(`${chalk.bold(algoliaCount)} Algolia index entries created`)
-    // Get and print the count of all records in the index
-    let recordCount = 0;
-    index
-      .browseObjects({
-        query: '', // for all records
-        batch: batch => {
-          recordCount += batch.length;
-        }
+    if (algoliaIsEnabled) {
+      index.setSettings({
+        attributesForFaceting: [
+          'version',
+          'product'
+        ]
       })
-      .then(() => {
-        console.log('Total Records:', recordCount);
-      })
-      .catch(err => console.log(err));
+      console.log(`${chalk.bold(algoliaCount)} Algolia index entries created`)
+      // Get and print the count of all records in the index
+      let recordCount = 0;
+      index
+        .browseObjects({
+          query: '', // for all records
+          batch: batch => {
+            recordCount += batch.length;
+          }
+        })
+        .then(() => {
+          console.log('Total Records:', recordCount);
+        })
+        .catch(err => console.log(err));
+    }
   })
 }
 
