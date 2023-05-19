@@ -334,6 +334,11 @@ module.exports = {
                       label: "HTTP Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "MySQL (Debezium) Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mysql-source-connector",
+                    },
                   ],
                 },
               ]
