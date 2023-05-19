@@ -341,7 +341,7 @@ module.exports = {
                     },
                     {
                       type: "doc",
-                      label: "MirrorMaker Source Connector",
+                      label: "MirrorMaker2 Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-source-connector",
                     },
                   ],
