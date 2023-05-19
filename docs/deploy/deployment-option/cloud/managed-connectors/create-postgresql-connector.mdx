@@ -93,8 +93,6 @@ Use the appropriate key or value converter (input data format) for your data as 
 
 ## Test the connection
 
-## Test the connection
-
 After the connector is created:
 
 1. Open Redpanda Console, click the **Topics** tab and select a topic.
@@ -120,4 +118,3 @@ Additional errors and corrective actions follow.
 | **Postgres server `wal_level` property is `replica`** | Specify `wal_level` as `logical` for your database. |
 | **Error while fetching metadata with correlation id 3163753:{.....=UNKNOWN_TOPIC_OR_PARTITION}** | **Need a clear/usable description**. |
 | **RecordTooLargeException: The message is 1050766 bytes when serialized, which is larger than 1048576, the value of the max.request.size configuration.** | Increase the max request size to unblock the connector and allow large messages to pass: ```"producer.override.max.request.size": "209715200".``` The connector may be reaching memory limits and failing if the amount of data to pass or your messages are too large. |
-|
