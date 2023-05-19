@@ -117,7 +117,7 @@ so that the cluster can recover from a single-broker failure.
         - 19644:9644
     console:
       container_name: redpanda-console
-      image: docker.redpanda.com/vectorized/console:vVAR::CONSOLE_LATEST_VERSION
+      image: docker.redpanda.com/redpandadata/console:vVAR::CONSOLE_LATEST_VERSION
       networks:
         - redpanda_network
       entrypoint: /bin/sh
