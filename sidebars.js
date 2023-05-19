@@ -339,6 +339,11 @@ module.exports = {
                       label: "MySQL (Debezium) Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-mysql-source-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "MirrorMaker Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-source-connector",
+                    },
                   ],
                 },
               ]
