@@ -329,6 +329,11 @@ module.exports = {
                       label: "JDBC Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
                     },
+                    {
+                      type: "doc",
+                      label: "HTTP Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
+                    },
                   ],
                 },
               ]
