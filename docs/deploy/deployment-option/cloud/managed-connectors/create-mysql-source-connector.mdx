@@ -177,8 +177,4 @@ Additional errors and corrective actions follow.
 | **Unable to connect: Public Key Retrieval is not allowed** | Set `Allow public key retrieval` property to `true`. |
 | **Unable to connect: Communications link failure** | Confirm that `Hostname` and `Port` are correct. |
 | **Access denied for user** | Confirm that `User` and `Password` credentials are valid. |
-| **ConnectException: Error configuring an instance of KafkaSchemaHistory; check the logs for details** | Verify that the schema history configuration properties `schema.history.internal.kafka.topic` and `schema.history.internal.kafka.bootstrap.servers` are set and have valid values. Also check the logs for more details. |
-| **No resolvable bootstrap urls given in bootstrap.servers** | Set valid broker URLs using `schema.history.internal.kafka.bootstrap.servers`. |
 | **Caused by: io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientException: Invalid schema Invalid namespace: from-mysql.db.Persons; error code: 422** | The Schema Registry namespace is incorrect. Consider changing the `Topic prefix` value, remove unallowed characters. |
-| **org.apache.kafka.connect.errors.ConnectException: Error configuring an instance of KafkaSchemaHistory; check the logs for details** | Set the database schema history properties `schema.history.internal.kafka.*`. |
-| **java.lang.IllegalArgumentException: Only a single connector task may be started** | Remove `tasks.max` or set it to `1`. |
