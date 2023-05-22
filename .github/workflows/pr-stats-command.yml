@@ -12,7 +12,7 @@ jobs:
         uses: flowwer-dev/pull-request-stats@master
         with:
           organization: 'redpanda-data'
-          period: 90
+          period: 7
           charts: true
           disable-links: true
           sort-by: 'COMMENTS'
