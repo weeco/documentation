@@ -25,12 +25,15 @@ function register ({
   var algoliaIsEnabled = false;
   if (process.env.ALGOLIA_ADMIN_API_KEY !== '') algoliaIsEnabled = true
 
+  var client;
+  var index;
+
   if (algoliaIsEnabled) {
     // Connect and authenticate with Algolia
-    const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
+    client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_API_KEY);
 
     // Create a new index and add a record
-    const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME);
+    index = client.initIndex(process.env.ALGOLIA_INDEX_NAME);
   }
 
   if (Object.keys(unknownOptions).length) {

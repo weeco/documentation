@@ -69,6 +69,7 @@ function generateIndex (playbook, contentCatalog, { indexLatestOnly = false, exc
     // "current" component version.
     // When indexLatestOnly is set, we only index the current version.
     const component = contentCatalog.getComponent(page.src.component)
+    const home = contentCatalog.getComponent('home')
     const thisVersion = contentCatalog.getComponentVersion(component, page.src.version)
     const latestVersion = component.latest
     const isCurrent = thisVersion === latestVersion
@@ -100,6 +101,26 @@ function generateIndex (playbook, contentCatalog, { indexLatestOnly = false, exc
           t: elem.text
         })
       })
+
+    const images = {
+      'get started': 'get-started-icon.png',
+      'develop': 'develop-icon.png',
+      'deploy': 'deploy-icon.png',
+      'manage': 'manage-icon.png'
+    }
+
+    var image = {}
+
+    if (breadcrumbs.length > 1) {
+      const lowercaseBreadcrumb = breadcrumbs[1].t.toLowerCase()
+      for (let key in images) {
+        if (lowercaseBreadcrumb.includes(key)) {
+          image.src = `${home.url}_images/${images[key]}`
+          image.alt = key
+          break
+        }
+      }
+    }
 
     // Start handling the article content
     const article = root.querySelector('article.doc')
@@ -135,23 +156,9 @@ function generateIndex (playbook, contentCatalog, { indexLatestOnly = false, exc
       article.querySelectorAll(excl).map((e) =>  e.remove())
     })
 
-    // Capture the page preamble.
-    // Since the preamble appears in search results, any relative
-    // URLs need to be rewritten.
-    var preamble = article.querySelector('#preamble .sectionbody')
-    if (!preamble) preamble = article.querySelector('p')
-    if (preamble) {
-      preamble = preamble.toString()
-    }
-
-    /* var preamble = article.querySelector('#preamble');
-    if (!preamble) preamble = article.querySelector('p')
+    var intro = article.querySelector('p');
     // decode any HTML entities
-    preamble = decode(preamble.rawText);
-
-    if (preamble) {
-      console.log(preamble)
-    } */
+    intro = decode(intro.rawText);
 
     // establish structure in the Algolia index
     if (!(cname in algolia)) algolia[cname] = {}
@@ -171,9 +178,10 @@ function generateIndex (playbook, contentCatalog, { indexLatestOnly = false, exc
       title: documentTitle,
       product: component.title,
       version: version,
+      image: image? image: '',
       text: text,
       breadcrumbs: breadcrumbs,
-      preamble: preamble,
+      intro: intro,
       objectID: urlPath + page.pub.url,
       titles: titles,
       keywords: keywords,
