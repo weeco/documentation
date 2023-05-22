@@ -1,0 +1,68 @@
+---
+title: rpk cloud auth create
+rpk_version: (rev )
+---
+
+Create an rpk cloud auth
+
+## Usage
+
+```bash
+rpk cloud auth create [NAME] [flags]
+```
+
+## Flags
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Value</strong>
+      </td>
+      <td>
+        <strong>Type</strong>
+      </td>
+      <td>
+        <strong>Description</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>--description</td>
+      <td>string</td>
+      <td>Optional description of the auth.</td>
+    </tr>
+    <tr>
+      <td>-h, --help</td>
+      <td>-</td>
+      <td>Help for create.</td>
+    </tr>
+    <tr>
+      <td>-s, --set</td>
+      <td>strings</td>
+      <td>A key=value pair to set in the cloud auth.</td>
+    </tr>
+    <tr>
+      <td>--config</td>
+      <td>string</td>
+      <td>
+        Redpanda or rpk config file; default search paths are
+        ~/.config/rpk/rpk.yaml, $PWD, and /etc/redpanda/`redpanda.yaml`.
+      </td>
+    </tr>
+    <tr>
+      <td>-X, --config-opt</td>
+      <td>stringArray</td>
+      <td>
+        Override rpk configuration settings; '-X help' for detail or '-X list'
+        for terser detail.
+      </td>
+    </tr>
+    <tr>
+      <td>-v, --verbose</td>
+      <td>string</td>
+      <td>
+        [="info"] Log level (none, error, warn, info, debug) (default "none").
+      </td>
+    </tr>
+  </tbody>
+</table>
