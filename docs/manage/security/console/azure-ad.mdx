@@ -5,6 +5,7 @@ title: Azure AD SSO Setup
 <head>
     <meta name="title" content="Azure AD SSO Authentication in Redpanda Console | Redpanda Docs"/>
     <meta name="description" content="Configure authentication with external identity providers in Redpanda Console."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/console/azure-ad" />
 </head>
 
 :::info
@@ -13,44 +14,23 @@ This feature requires an [Enterprise license](../../../../get-started/licenses).
 
 By integrating Redpanda Console with Azure AD, your users can sign in to Redpanda Console using their Azure AD login credentials.
 
-These instructions assume you already have an Azure AD account and permissions to create applications within your directory.
+## Prerequisites
+
+You must have:
+
+- An [Azure AD account](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/sign-up-organization) and permissions to create applications within your directory.
+
+- An OpenID Connect (OIDC) provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings) configured for your Azure AD account.
 
 ## Create an OpenID connect application
 
-In the Azure Portal, register your app and generate a client secret.
-
-### Register your app
-
-To register your application, log in to the Azure Portal and provide the following information:
-
-* **Display name** - Choose a descriptive name for your specific Redpanda Console deployment (for example Console Analytics Prod)
-* **Supported account types** - Select the types of accounts that can access the API (choose single tenant, multi-tenant, or personal accounts). If you are unsure, click "Help me choose...".
-* **Redirect URIs** Select Web as the platform and enter `https://console.<your-company>.com/login/callbacks/azure-ad` in the text box. Replace `<your-company>.com` with your company's domain name.
+In the Azure Portal, register your app and generate a client secret. For details, see the [Microsoft Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-credentials).
 
 :::note
-The redirect URI is based on the assumption that you host Redpanda Console so it is accessible from
-`https://console.<your-company>.com`.
+Set the redirect URI to the URI where Redpanda Console is hosted.
 :::
 
 After the app is registered, a summary page opens. This page displays a list of **Essentials**, which you will need when you edit the `redpanda-console-config.yaml file`.
-
-For detailed instructions, see the Microsoft documentation for [configuring an OpenID connect provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
-
-### Generate the client secret
-
-Redpanda Console requires a client secret to validate the connection request from the redirect URI. To generate a client secret:
-
-1. In the **Essentials** section of the summary page, click **Add a certificate or secret** next to **Client credentials**.
-
-2. On the **Certificates & secrets** page, select the **Client secrets** tab.
-
-3. Click **New client secret**.
-
-4. In the **Add a client secret** pane, enter a description that identifies the app associated with the client secret.
-
-5. Choose a time period that determines when the client secret will expire; for example, 180 days.
-
-When the client secret is generated successfully, it appears under the **Client secrets** tab with its description, expiration date, value, and secret ID.
 
 :::important
 Copy the client secret value into the `redpanda-console-config.yaml` file before you leave the **Certificates and secrets** page. After you navigate away from the page, only the first few characters of the client secret value are displayed and you won't be able to copy the value into the configuration file.

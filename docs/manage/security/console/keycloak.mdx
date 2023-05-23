@@ -5,6 +5,7 @@ title: Keycloak SSO Setup
 <head>
     <meta name="title" content="Keycloak SSO Authentication in Redpanda Console | Redpanda Docs"/>
     <meta name="description" content="Configure authentication with external identity providers in Redpanda Console."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/console/keycloak" />
 </head>
 
 :::info
@@ -15,58 +16,20 @@ By integrating Redpanda Console with Keycloak, your users can sign in to Redpand
 
 ## Prerequisites
 
-Install Keycloak and create a super admin user account, which has the necessary permissions for setting up the OAuth application.
+You must:
+
+- Install Keycloak and create a super admin user account, which has the necessary permissions for setting up the OAuth application. For details, see the [Keyclock documentation](https://www.keycloak.org/guides).
+- Create an OpenID Connect (OIDC) client. For details, see the [Keyclock documentation](https://www.keycloak.org/docs/latest/server_admin/index.html#proc-creating-oidc-client_server_administration_guide).
+
+  :::note
+  - Set the valid redirect URIs to the URI where Redpanda Console is hosted.
+  - Copy the client ID and client secret. The console configuration file uses these credentials to establish communication with Keycloak.
+  :::
 
 (Optional) Create at least one realm for managing and authenticating a specific group of users.
 
 :::note
 You can use the master realm, or you can create a realm for managing and authenticating a specific group of users.
-:::
-
-## Create an OpenID connect application
-
-1. Log in to the Keycloak Admin Console.
-
-2. Select the realm where you want to create a client. 
-
-    Clients are applications and services that request user authentication.
-
-3. In the navigation pane, select **Clients**.
-
-4. On the **Clients** page, click **Create client**.
-    The **General Settings** page opens.
-
-5. In **Client ID**, enter a name for your console application, then click **Next**.
-    The **Capability config** page opens.
-
-6. Enable **Client authentication**, then click **Next**.
-    The **Login settings** page opens.
-
-7. In **Valid redirect URIs**, enter the URI where users are redirected after they log in successfully.
-
-    For example, if users access Redpanda Console from `https://console.<your-company>.com`, enter the following URI and replace `<your-company>` with the actual URI:
-
-    ```
-    https://console.<your-company>.com/login/callbacks/keycloak
-    ```
-
-    If you host Redpanda Console on your local machine, for example, you would use the following URI instead:
-    
-    ```
-    https://localhost:8080/login/callbacks/keycloak`
-    ```
-
-8. Click **Save**.
-    A summary page opens.
-
-9. Click the **Credentials** tab.
-
-10. In **Client Authenticator**, select **Client Id and Secret**, then click **Save**.
-
-11. Copy the **Client secret**, which is automatically generated.
-
-:::info
-The console configuration file uses the client secret, which is basically a password, to establish communication with Keycloak.
 :::
 
 ## Edit the console configuration file
