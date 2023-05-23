@@ -173,7 +173,7 @@ const FeedbackForm = (props) => {
         setFeedbackSubmitted(true)
         setTimeout(props.onClose,30000)
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   };
 
   return (

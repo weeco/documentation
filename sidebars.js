@@ -66,8 +66,6 @@
       type: "category",
       label: "Develop",
       link: { type: "doc", id: "develop/index" },
-
-
       items: [
         {
           type: "doc",
@@ -75,11 +73,47 @@
           id: "develop/kafka-clients",
         },
         {
-          type: "doc",
-          label: "Build a Sample Application",
-          id: "develop/code-examples",
+          type: "category",
+          label: "Build a Chat Room Application",
+          link: { type: "doc", id: "develop/code-examples" },
+          items: [ {
+            type: "category",
+            label: "Redpanda Chat Room Application",
+            link: { type: "doc", id: "develop/chat-room" },
+            items: [
+              {
+                type: "doc",
+                label: "Go (Docker)",
+                id: "develop/guide-go",
+              },
+              {
+                type: "doc",
+                label: "Go (Redpanda Cloud)",
+                id: "develop/guide-go-cloud",
+              },
+              {
+                type: "doc",
+                label: "Node.js (Docker)",
+                id: "develop/guide-nodejs",
+              },
+              {
+                type: "doc",
+                label: "Node.js (Redpanda Cloud)",
+                id: "develop/guide-nodejs-cloud",
+              },
+              {
+                type: "doc",
+                label: "Python (Docker)",
+                id: "develop/guide-python",
+              },
+              {
+                type: "doc",
+                label: "Python (Redpanda Cloud)",
+                id: "develop/guide-python-cloud",
+              },
+            ]
+          }]
         },
-        "develop/guide-nodejs",
         "develop/http-proxy",
         "develop/config-topics",
         {
@@ -243,7 +277,7 @@
                 {
                   type: "doc",
                   label: "Quickstart",
-                  id: "get-started/quick-start",
+                  id: "get-started/quick-start-cloud",
                 },
                 {
                   type: "category",
@@ -524,11 +558,7 @@
                 label: "Cluster Maintenance",
                 link: { type: "doc", id: "manage/cluster-maintenance/index" },
                 items: [
-                  {
-                    type: "doc",
-                    label: "Cluster Configuration",
-                    id: "manage/cluster-maintenance/configuration",
-                  },
+                  "manage/cluster-maintenance/cluster-property-configuration",
                   "manage/cluster-maintenance/cluster-balancing",
                   {
                     type: "doc",
@@ -558,11 +588,6 @@
                   },
 
                   "manage/cluster-maintenance/configure-availability",
-                  {
-                    type: "doc",
-                    label: "Cluster Properties",
-                    id: "manage/cluster-maintenance/cluster-property-configuration",
-                  },
                   {
                     type: "doc",
                     label: "Cluster Diagnostics",

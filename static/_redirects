@@ -368,6 +368,7 @@
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
 /docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 /docs/data-management/rack-awareness/                                                 /docs/manage/rack-awareness/  301!
+/docs/manage/cluster-maintenance/configuration                                        /docs/manage/cluster-maintenance/cluster-property-configuration/  301!
 
 #Fixes for blogs
 /docs/data-management/data-transform/                                                 /docs/labs/data-transform 301!

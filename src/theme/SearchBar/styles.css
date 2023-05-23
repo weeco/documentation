@@ -45,6 +45,7 @@
   border-radius: 2rem;
   cursor: text;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-align: left;
+  padding-top: 5px;
 }

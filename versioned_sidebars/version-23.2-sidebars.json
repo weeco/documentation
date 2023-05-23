@@ -89,6 +89,11 @@
               "type": "doc",
               "label": "Consumer Offsets",
               "id": "develop/consume-data/consumer-offsets"
+            },
+            {
+              "type": "doc",
+              "label": "Follower Fetching",
+              "id": "develop/consume-data/follower-fetching"
             }
           ]
         },
