@@ -22,13 +22,13 @@ You must have:
 
 - An OpenID Connect (OIDC) provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings) configured for your Azure AD account.
 
+  :::note
+  Set the redirect URI to the domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad`
+  :::
+
 ## Create an OpenID connect application
 
 In the Azure Portal, register your app and generate a client secret. For details, see the [Microsoft Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-credentials).
-
-:::note
-Set the redirect URI to the domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad`
-:::
 
 After the app is registered, a summary page opens. This page displays a list of **Essentials**, which you will need when you edit the `redpanda-console-config.yaml file`.
 
