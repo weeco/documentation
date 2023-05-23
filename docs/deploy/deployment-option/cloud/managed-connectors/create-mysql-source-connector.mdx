@@ -15,7 +15,7 @@ AmazonRDS, and Amazon Aurora.
 
 - A MySQL database that is accessible from the connector instance.
 - A MySQL user exists. This database user for the Debezium connector must have LOCK TABLES privileges. For details, see [MySQL Creating a user](https://debezium.io/documentation/reference/stable/connectors/mysql.html#mysql-creating-user).
-- There must be a [binlog enabled](https://debezium.io/documentation/reference/stable/connectors/mysql.html#enable-mysql-binlog) for the source MySQL cluster.
+- A [binlog must be enabled](https://debezium.io/documentation/reference/stable/connectors/mysql.html#enable-mysql-binlog) for the source MySQL cluster.
 
 ## Limitations
 
@@ -26,9 +26,9 @@ AmazonRDS, and Amazon Aurora.
 
 To create the MySQL (Debezium) Source connector:
 
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the (Import from) MySQL (Debezium) Source managed connector.
+2. Select **Import from MySQL (Debezium)**.
 3. On the **Create Connector** page, specify the following required connector
    configuration options:
 
@@ -141,7 +141,6 @@ After the connector is created:
 ## Troubleshoot
 
 If the connector configuration is invalid, an error appears upon clicking **Finish**.
-Schema history configuration errors are reported as failed tasks.
 
 - **Topics not created by the connector**
 
@@ -155,7 +154,7 @@ Schema history configuration errors are reported as failed tasks.
   ```
   Or in JSON:
 
-  ```js
+  ```json
   "topic.creation.enable": true,
   "topic.creation.default.partitions": "1",
   "topic.creation.default.replication.factor": "-1"

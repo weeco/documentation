@@ -1,28 +1,28 @@
 ---
-title: Create a GCP BigQuery Sink Connector
+title: Create a Google BigQuery Sink Connector
 ---
 
 <head>
-    <meta name="title" content="Create a BigQuery Sink Connector | Redpanda Docs"/>
-    <meta name="description" content="Use the Redpanda Cloud UI to create a BigQuery Sink Connector."/>
-    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector/" />
+    <meta name="title" content="Create a Google BigQuery Sink Connector | Redpanda Docs"/>
+    <meta name="description" content="Use the Redpanda Cloud UI to create a Google BigQuery Sink Connector."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-gcp-bigquery-connector/" />
 </head>
 
-The GCP BigQuery Sink connector enables you to stream any structured data from
+The Google BigQuery Sink connector enables you to stream any structured data from
 Redpanda to BigQuery for advanced analytics.
 
 ## Prerequisites
 
-Before you can create a GCP BigQuery Sink connector in the Redpanda Cloud, you
+Before you can create a Google BigQuery Sink connector in the Redpanda Cloud, you
 must:
 
 1. Create a [Google Cloud](https://cloud.google.com/) account.
-2. In the **GCP home** page:
+2. In the **Google home** page:
    1. [Select an existing project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#get_an_existing_project)
      or [create a new one](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project).
    2. [Create a new dataset](https://cloud.google.com/bigquery/docs/datasets) for the project.
-   3. (_Optional_) After creating the dataset, [create a new table](https://cloud.google.com/bigquery/docs/tables) to hold the data you intend to stream from Redpanda Cloud topics.
-     Specify a structure for the table using schema values that align with your Redpanda Cloud topic data.
+   3. (_Optional if your data has a schema_) After creating the dataset, [create a new table](https://cloud.google.com/bigquery/docs/tables) to hold the data you intend to stream from Redpanda Cloud topics.
+     Specify a structure for the table using schema values that align with your Redpanda topic data.
      :::note
      This step is mandatory only if the data in Redpanda does not have a schema.
      If the data in Redpanda includes a schema, then the connector automatically
@@ -48,33 +48,31 @@ must:
 
 ## Limitations
 
-The GCP BigQuery Sink connector has the following limitation:
+The Google BigQuery Sink connector doesn’t support schemas with recursion.
 
-- The connector doesn’t support schemas with recursion.
+## Create a Google BigQuery Sink connector
 
-## Create a GCP BigQuery Sink connector
+To create the Google BigQuery Sink connector:
 
-To create the GCP BigQuery Sink connector:
-
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the BigQuery Sink connector, and click **Next**.
+2. Select **Export to Google BigQuery**.
 3. On the **Create Connector** page, specify the following required connector configuration options:
 
    | Property                     | Description |
    | ---------------------------- | ----------- |
-   | `Topics to export`             | A comma-separated list of the cluster topics you want to replicate to GCP BigQuery. |
+   | `Topics to export`             | A comma-separated list of the cluster topics you want to replicate to Google BigQuery. |
    | `Topics regex`                 | A Java regular expression of topics to replicate. For example: specify `.*` to replicate all available topics in the cluster. Applicable only when **Use regular expressions** is selected. |
    | `Credentials JSON`             | A JSON key with BigQuery service account credentials. |
    | `Project`                      | The BigQuery project to which topic data will be written. |
-   | `Default dataset`              | The default GCP BigQuery dataset to be used. |
+   | `Default dataset`              | The default Google BigQuery dataset to be used. |
 4. Click **Next**. Review the connector properties specified, then click **Create**.
 
 
-### Advanced GCP BigQuery Sink connector configuration
+### Advanced Google BigQuery Sink connector configuration
 
 In most instances, the preceding basic configuration properties are sufficient.
-However, if you require any additional property settings (for example, automatically
+If you require any additional property settings (for example, automatically
 create BigQuery tables or map topics to tables), then specify any of the following
 _optional_ advanced connector configuration properties by selecting **Show advanced options**
 on the **Create Connector** page:
@@ -116,7 +114,7 @@ It may take a couple of minutes for the records to be visible in BigQuery.
 
 ## Troubleshoot
 
-GCP credentials are checked for validity during connector creation, upon
+Google credentials are checked for validity during connector creation, upon
 clicking **Finish**. In cases where there are invalid credentials, the connector
 is not created.
 

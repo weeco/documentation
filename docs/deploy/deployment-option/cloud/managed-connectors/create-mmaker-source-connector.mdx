@@ -13,7 +13,7 @@ You can also use it to:
 
 - Replicate messages from an external Kafka or Redpanda cluster.
 - Create topics on the local cluster, with a configuration matching external topics.
-- Replicate topic ACLs.
+- Replicate topic access-control lists (ACLs).
 
 ## Prerequisites
 
@@ -33,9 +33,9 @@ You can also use it to:
 
 To create the MirrorMaker2 Source connector:
 
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the (Import from) Kafka cluster topics managed connector.
+2. Select **Import from Kafka cluster topics**.
 3. On the **Create Connector** page, specify the following required connector
    configuration options:
 
@@ -55,9 +55,9 @@ The value converter does not require any schema; it copies data as bytes.
 
 ## Test the connection
 
-After the connector is created, check to ensure that:
+After the connector is created:
 
-- There are no errors in logs and in Redpanda Console.
+- Ensure that there are no errors in logs and in Redpanda Console.
 - Confirm that Redpanda topics are being replicated. You should see messages coming into the topics.
 
 ## Troubleshoot

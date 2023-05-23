@@ -8,7 +8,7 @@ title: Create a JDBC Sink Connector
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector/" />
 </head>
 
-You can use a JDBC Sink connector to transfer structured data from Redpanda into
+You can use a JDBC Sink connector to export structured data from Redpanda to
 a relational database.
 
 ## Prerequisites
@@ -35,9 +35,9 @@ The JDBC Sink connector has the following limitations:
 
 To create the JDBC Sink connector:
 
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the (Export to) JDBC managed connector.
+2. Select **Export to JDBC**.
 3. On the **Create Connector** page, specify the following required connector
    configuration options:
 
@@ -57,7 +57,7 @@ To create the JDBC Sink connector:
 ### Advanced JDBC Sink connector configuration
 
 In most instances, the preceding basic configuration properties are sufficient.
-However, if you require any additional property settings, then specify any of the following
+If you require additional property settings, then specify any of the following
 _optional_ advanced connector configuration properties by selecting **Show advanced options**
 on the **Create Connector** page:
 
@@ -89,18 +89,16 @@ Use the appropriate key or value converter (input data format) for your data as 
      "schema": {
        "type": "struct",
        "fields": [
-         // fields
        ]
      },
      "payload": {
-         // payload
      }
   }
   ```
 
 ## Test the connection
 
-After the connector is created, check to ensure that:
+After the connector is created, ensure that:
 
 - There are no errors in logs and in Redpanda Console.
 - Database tables contain data from Redpanda topics.

@@ -8,6 +8,9 @@ title: Create a Snowflake Sink Connector
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector/" />
 </head>
 
+You can use the Snowflake Sink connector to ingest and store Redpanda structured data into a
+Snowflake database for analytics and decision-making.
+
 ## Prerequisites
 
 Before you can create a Snowflake Sink connector in the Redpanda Cloud, you
@@ -29,9 +32,9 @@ documentation for details.
 
 To create a Snowflake Sink connector:
 
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the (Export to) Snowflake Sink managed connector.
+2. Select **Export to Snowflake**.
 3. On the **Create Connector** page, specify the following required connector configuration options:
 
    | Property                     | Description |
@@ -52,7 +55,7 @@ To create a Snowflake Sink connector:
 ### Advanced Snowflake Sink connector configuration
 
 In most instances, the preceding basic configuration properties are sufficient.
-However, if you require any additional property settings, then specify any of the following
+If you require additional property settings, then specify any of the following
 _optional_ advanced connector configuration properties by selecting **Show advanced options**
 on the **Create Connector** page:
 

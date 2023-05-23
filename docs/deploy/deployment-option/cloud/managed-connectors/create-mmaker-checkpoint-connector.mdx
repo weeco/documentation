@@ -13,17 +13,17 @@ from other Kafka clusters.
 
 ## Prerequisites
 
-- The external Kafka cluster is accessible
-- A service account with read-only access to the external cluster is available
-- The Kafka cluster topics connector is running for the same source cluster, with a matching configuration
+- The external Kafka cluster is accessible.
+- A service account with read-only access to the external cluster is available.
+- The Kafka cluster topics connector is running for the same source cluster, with a matching configuration.
 
 ## Create a MirrorMaker2 Checkpoint Source connector
 
 To create the MirrorMaker2 Checkpoint Source connector:
 
-1. In Redpanda Console, click **Connectors** in the navigation menu, and then
+1. In Redpanda Cloud, click **Connectors** in the navigation menu, and then
    click **Create Connector**.
-2. Select the (Import from) Kafka cluster offsets managed connector.
+2. Select **Import from Kafka cluster offsets**.
 3. On the **Create Connector** page, specify the following required connector
    configuration options:
 
@@ -39,7 +39,7 @@ To create the MirrorMaker2 Checkpoint Source connector:
 ### Advanced MirrorMaker2 Checkpoint Source connector configuration
 
 In most instances, the preceding basic configuration properties are sufficient.
-However, if you require any additional property settings, then specify any of the following
+If you require additional property settings, then specify any of the following
 _optional_ advanced connector configuration properties by selecting **Show advanced options**
 on the **Create Connector** page:
 
@@ -60,9 +60,9 @@ on the **Create Connector** page:
 
 ## Test the connection
 
-After the connector is created, check to ensure that:
+After the connector is created:
 
-- There are no errors in logs and in Redpanda Console.
+- Ensure that there are no errors in logs and in Redpanda Console.
 - Wait for the Kafka cluster topics connector to catch up. Then check to confirm that the consumer groups are replicated.
 
 ## Troubleshoot

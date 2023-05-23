@@ -8,13 +8,25 @@ title: Managed Connectors
     <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/" />
 </head>
 
-Connectors provide a way to integrate Redpanda data with select data systems, and
-provide a managed alternative to using the Kafka API. More specificially, a connector
-subscribes to specified Kafka topics and collects messages, then shares
-the messages to a specified location, such as an S3 bucket or a GCS bucket.
+Redpanda Connectors provide a way to integrate your Redpanda data with different
+data systems. As managed solutions, connectors offer a simpler way to integrate
+your data than manually creating a solution with the Kafka API. You can set up
+and manage these connectors in Redpanda Console. All connectors are managed by
+Redpanda.
 
-You can create a connector, managed by Redpanda, directly from the Redpanda
-Console. Each connector form is consistent across all connectors.
+Each connector is either a source or a sink:
+
+- A source connector imports data from a source system into a Redpanda cluster.
+  The source could be a cloud storage system such as S3 or GCS. The source connector's
+  main task is to fetch data from these sources and convert them into a format
+  suitable for Redpanda.
+
+- A sink connector exports data from a Redpanda cluster and pushes it into a
+  target system. The target could be a cloud storage system such as S3 or GCS.
+  Sink connectors read the data from Redpanda and transform it into a format
+  that the target system can use.
+
+These sources and sinks work together to create a data pipeline that can move and transform data from one system to another.
 
 - [Amazon S3 Sink Connector](../managed-connectors/create-s3-sink-connector)
 
@@ -81,4 +93,4 @@ Console. Each connector form is consistent across all connectors.
 - [Snowflake Sink Connector](../managed-connectors/create-snowflake-connector)
 
     The Snowflake Sink connector ingests and stores Redpanda structured data into a
-    Snowflake database for analytics and decision-making.    
+    Snowflake database for analytics and decision-making.
