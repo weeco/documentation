@@ -89,34 +89,15 @@ To configure and use Prometheus to monitor Redpanda metrics:
 
 [Grafana](https://grafana.com/oss/grafana/) is a tool to query, visualize, and generate alerts for metrics.
 
-Redpanda supports generating Grafana dashboards from its metrics endpoints with `rpk generate grafana-dashboard`.
+Redpanda supports downloading tailored Grafana dashboards from [redpanda-data/observability](https://github.com/redpanda-data/observability) with `rpk generate grafana-dashboard`.
 
 To generate a comprehensive Grafana dashboard, run the following command and pipe the output to a file that can be imported into Grafana:
 
 ```
-rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url> > <output-file>
+rpk generate grafana-dashboard > <output-file>
 ```
 
-- `<name>` is the name of the Prometheus data source configured in your Grafana instance.
-- `<url>` is the address to a Redpanda node's metrics endpoint (public or internal).
-    
-- For `/public_metrics`, for example, run the following command: 
-
-    ```
-    rpk generate grafana-dashboard \
-    --datasource prometheus \
-    --metrics-endpoint <node-addr>:9644/public_metrics> redpanda-dashboard.json 
-    ```
-
-- For `/metrics`, for example, run the following command: 
-
-    ```
-    rpk generate grafana-dashboard \
-    --datasource prometheus \
-    --metrics-endpoint <node-addr>:9644/metrics> redpanda-dashboard.json 
-    ```
-
-For details about the command, refer to the [rpk generate grafana-dashboard](../../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard) reference.
+For details about the command and the available dashboards, refer to the [rpk generate grafana-dashboard](../../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard) reference.
 
 In Grafana, import the generated JSON file to create a dashboard. Out of the box, Grafana generates panels tracking latency for 50%, 95%, and 99% (based on the maximum latency set), throughput, and error segmentation by type.
 

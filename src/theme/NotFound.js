@@ -3,6 +3,87 @@ import Translate, { translate } from "@docusaurus/Translate";
 import { PageMetadata } from "@docusaurus/theme-common";
 import Layout from "@theme/Layout";
 import styles from "./styles.module.css";
+import sidebar from "../../sidebars"
+
+
+let hasSmartRedirected = false;
+let smartRedirectPath;
+let possibleNewRedirectRule;
+let possibleRedirect;
+
+//function to remove sections that are duplicated. Mainly in index pages. Example reference/rpk-acl/rpk-acl -> reference/rpk-acl
+function removeDuplicateSections(url) {
+  const sections = url.split('/'); // Split the URL into sections
+  const uniqueSections = [...new Set(sections)]; // Remove duplicates using Set and spread syntax
+  const cleanedUrl = uniqueSections.join('/'); // Reconstruct the URL with unique sections
+  return cleanedUrl;
+}
+
+function getDocIds(data) {
+  const docIds = [];
+
+  function iterateDocs(items) {
+    if (Array.isArray(items)) {
+      items.forEach((obj) => {
+        if (obj.type === "doc") {
+          docIds.push(removeDuplicateSections(obj.id));
+        }
+        else if (obj.type === undefined){
+          docIds.push(removeDuplicateSections(obj));
+        }
+        if (obj.items) {
+          iterateDocs(obj.items);
+        }
+      });
+    }
+  }
+
+  iterateDocs(data);
+
+  return docIds;
+}
+
+function mapPathFileToCompleteURL(docIdsArray) {
+  const map = new Map();
+
+  for (let i = 0; i < docIdsArray.length; i++) {
+    const path = docIdsArray[i];
+    const lastIndex = path.lastIndexOf('/');
+    const key = path.substring(lastIndex + 1);
+
+    if(key !== "index"){
+      map.set(key, path);
+    }
+  }
+  return map;
+}
+
+const docIdsArray = getDocIds(sidebar.docsSidebar);
+const urlMap = mapPathFileToCompleteURL(docIdsArray);
+
+function findCloseURL (url){
+  return urlMap.get(url);
+}
+
+function smartRedirect(){
+  const originalPathName = window.location.pathname;
+  const segments = originalPathName.split('/').filter(Boolean);
+  const lastString = segments[segments.length - 1];
+  const closeURL = findCloseURL(lastString);
+  const prefix = window.location.origin + '/docs/';
+  possibleRedirect = prefix + closeURL;
+  const sessionStorageKey = 'smartRedirectHasRun_'+lastString;
+  
+  const hasRun = sessionStorage.getItem(sessionStorageKey);
+  if(hasRun === null){
+    sessionStorage.setItem(sessionStorageKey, true);
+    if(closeURL !== undefined){
+      hasSmartRedirected = true;
+      smartRedirectPath = possibleRedirect;
+      possibleNewRedirectRule = originalPathName + " " + "/docs/" + closeURL + " 301!";
+    }
+  }
+}
 
 function encode(data) {
   return Object.keys(data)
@@ -10,11 +91,23 @@ function encode(data) {
     .join("&");
 }
 
+function executeRedirect (){
+  if(hasSmartRedirected){
+    window.location.href = possibleRedirect;
+  }
+}
+
+
 const NotFoundForm = () => {
   let [formData, setFormData] = useState({});
   const handleSubmit = (e) => {
+    smartRedirect();
     formData.date = new Date();
-    formData.url = window.location.href;
+    formData.originalUrl = window.location.href;
+    formData.hasSmartRedirected = hasSmartRedirected;
+    formData.smartRedirectPath = smartRedirectPath;
+    formData.possibleNewRedirectRule = possibleNewRedirectRule;
+
     setFormData({ ...formData });
     fetch("/", {
       method: "POST",
@@ -25,9 +118,10 @@ const NotFoundForm = () => {
       }),
     })
       .then(() => {
+        executeRedirect();
         console.log("Form successfully submitted");
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -53,8 +147,11 @@ const NotFoundForm = () => {
           Beep-Boop. Bot-field <input name="bot-field" />
         </label>
       </p>
-      <input className={styles.hide} name="url" />
+      <input className={styles.hide} name="originalUrl" />
       <input className={styles.hide} name="date" />
+      <input className={styles.hide} name="hasSmartRedirected" />
+      <input className={styles.hide} name="smartRedirectPath" />
+      <input className={styles.hide} name="possibleNewRedirectRule" />
       <input className={styles.hide} type="submit" />
     </form>
   );

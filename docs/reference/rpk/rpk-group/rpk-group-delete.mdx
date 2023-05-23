@@ -1,5 +1,6 @@
 ---
 title: rpk group delete
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
@@ -27,31 +28,31 @@ You may want to delete groups to clean up offsets sooner than when they
 automatically are cleaned up, such as when you create temporary groups for
 quick investigation or testing. This command helps you do that.
 
-### Usage
+## Usage
 
-```
+```bash
 rpk group delete [GROUPS...] [flags]
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
     <tr>
       <td>
-        <strong> Value</strong>
+        <strong>Value</strong>
       </td>
       <td>
-        <strong> Type</strong>
+        <strong>Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
       </td>
     </tr>
     <tr>
       <td>-h, --help</td>
       <td>-</td>
-      <td> Help for delete</td>
+      <td>Help for delete.</td>
     </tr>
     <tr>
       <td>--brokers</td>
@@ -76,7 +77,7 @@ rpk group delete [GROUPS...] [flags]
     <tr>
       <td>--password</td>
       <td>string</td>
-      <td> SASL password to be used for authentication.</td>
+      <td>SASL password to be used for authentication.</td>
     </tr>
     <tr>
       <td>--sasl-mechanism</td>
@@ -110,12 +111,12 @@ rpk group delete [GROUPS...] [flags]
     <tr>
       <td>--tls-truststore</td>
       <td>string</td>
-      <td> The truststore to be used for TLS communication with the broker.</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
     </tr>
     <tr>
       <td>--user</td>
       <td>string</td>
-      <td> SASL user to be used for authentication.</td>
+      <td>SASL user to be used for authentication.</td>
     </tr>
     <tr>
       <td>-v, --verbose</td>

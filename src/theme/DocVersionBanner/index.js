@@ -12,6 +12,9 @@ import {
   useDocsPreferredVersion,
   useDocsVersion,
 } from '@docusaurus/theme-common/internal';
+import useGlobalData from '@docusaurus/useGlobalData';
+import {useLocation} from '@docusaurus/router';
+
 function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
   return (
     <Translate
@@ -90,10 +93,38 @@ function DocVersionBannerEnabled({className, versionMetadata}) {
   const {savePreferredVersionName} = useDocsPreferredVersion(pluginId);
   const {latestDocSuggestion, latestVersionSuggestion} =
     useDocVersionSuggestions(pluginId);
-  // Try to link to same doc in latest version (not always possible), falling
-  // back to main doc of latest version
-  const latestVersionSuggestedDoc =
-    latestDocSuggestion ?? getVersionMainDoc(latestVersionSuggestion);
+
+  const location = useLocation();
+  const globalData = useGlobalData();
+  const redirects = globalData['parse-redirects-plugin']['default']['redirects'];
+  var latestVersionSuggestedDoc;
+  var mainDoc;
+  const locationPath = location.pathname;
+  var latestLocationPath = locationPath.replace(/\d+\.\d+\/\s?/g, '')
+  latestLocationPath = latestLocationPath.replace(/\/$/, '');
+
+  if (latestDocSuggestion) {
+    latestVersionSuggestedDoc = latestDocSuggestion.path;
+  } else {
+    if (redirects[latestLocationPath]) {
+      // Max iterations in a redirect chain/loop
+      var iter = 8;
+      do {
+        latestVersionSuggestedDoc = redirects[latestLocationPath];
+        latestLocationPath = latestVersionSuggestedDoc;
+
+        //console.log("Iterate: %s -> %s", latestVersionSuggestedDoc, latestLocationPath);
+      } while (redirects[latestLocationPath] && (--iter > 0));
+
+      latestVersionSuggestedDoc = latestVersionSuggestedDoc.replace(/\/index$/, '');
+      //console.log("Updated banner link: %s --> %s", locationPath, latestVersionSuggestedDoc);
+
+    } else {
+      mainDoc = getVersionMainDoc(latestVersionSuggestion);
+      latestVersionSuggestedDoc = mainDoc.path;
+    }
+  }
+  
   return (
     <div
       className={clsx(
@@ -108,7 +139,7 @@ function DocVersionBannerEnabled({className, versionMetadata}) {
       <div className="margin-top--md">
         <LatestVersionSuggestionLabel
           versionLabel={latestVersionSuggestion.label}
-          to={latestVersionSuggestedDoc.path}
+          to={latestVersionSuggestedDoc}
           onClick={() => savePreferredVersionName(latestVersionSuggestion.name)}
         />
       </div>

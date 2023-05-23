@@ -26,8 +26,8 @@ Different components of Redpanda support different authentication methods. You c
 
 See also:
 
-- [Configuring Listeners](../../security/listener-configuration)
-- [Writing Custom Deployment Automation](../../../deploy/deployment-option/self-hosted/manual/production/production-deployment-automation)
+- [Configure Listeners](../../security/listener-configuration)
+- [Write Custom Deployment Automation](../../../deploy/deployment-option/self-hosted/manual/production/production-deployment-automation)
 
 :::caution note
 Passwords are in single quotes to avoid conflicts with special characters. Ensure that all values entered are properly enclosed in quotes and escaped as necessary. 
@@ -151,8 +151,8 @@ redpanda:
   kafka_api_tls:
 // highlight-start
     - name: sasl_tls_listener
-      key_file: server.key
-      cert_file: server.crt
+      key_file: broker.key
+      cert_file: broker.crt
       truststore_file: ca.crt
       enabled: true
       require_client_auth: false
@@ -171,11 +171,11 @@ You configure Kerberos authentication using a keytab, which contains credentials
 
 1. Ensure that host names are fully qualified domain names (FQDN).
 
-2. Ensure that each node has a [Kerberos configuration file](http://web.mit.edu/Kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html) set to use Active Directory or another corporate key distribution center (KDC). Default is at `/etc/krb5.conf`.
+2. Ensure that each broker has a [Kerberos configuration file](http://web.mit.edu/Kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html) set to use Active Directory or another corporate key distribution center (KDC). Default is at `/etc/krb5.conf`.
 
-3. Ensure that the KDC has a valid Kerberos service principal name (SPN) for each node in the form `primary/<FQDN>@<REALM>`.
+3. Ensure that the KDC has a valid Kerberos service principal name (SPN) for each broker in the form `primary/<FQDN>@<REALM>`.
 
-4. Ensure that each node has a keytab containing the SPN for that node. This must be located at an identical file path on each Redpanda node. Default is `/var/lib/redpanda/redpanda.keytab`.
+4. Ensure that each broker has a keytab containing the SPN for that broker. This must be located at an identical file path on each Redpanda broker. Default is `/var/lib/redpanda/redpanda.keytab`.
 
 :::note
 For Kerberos (GSSAPI) authentication, Redpanda requires that SASL/SCRAM be enabled for connectivity by rpk, Redpanda Console, and other Redpanda products. Operating with Kerberos only is not a supported configuration.
@@ -276,7 +276,7 @@ If you're configuring authentication for the first time, you may need to configu
 
 ### Configure Schema Registry and HTTP Proxy to connect to Redpanda with SASL
 
-Schema Registry and HTTP Proxy connect to Redpanda over the Kafka API. For the Kafka username and password, Redpanda uses ephemeral credentials internal to the cluster. Ephemeral credentials are regular SCRAM credentials, but they're only stored in memory and are lost when a node restarts. When the Schema Registry or HTTP Proxy start up, they broadcast an ephemeral credential to other nodes over the internal RPC. If authentication fails to a particular broker, new ephemeral credentials are sent to that broker, and the service reconnects.
+Schema Registry and HTTP Proxy connect to Redpanda over the Kafka API. For the Kafka username and password, Redpanda uses ephemeral credentials internal to the cluster. Ephemeral credentials are regular SCRAM credentials, but they're only stored in memory and are lost when a broker restarts. When the Schema Registry or HTTP Proxy start up, they broadcast an ephemeral credential to other brokers over the internal RPC. If authentication fails to a particular broker, new ephemeral credentials are sent to that broker, and the service reconnects.
 
 :::note
 Schema Registry and HTTP Proxy support SASL/SCRAM but do not support SASL/GSSAPI.
@@ -286,7 +286,7 @@ Schema Registry and HTTP Proxy support SASL/SCRAM but do not support SASL/GSSAPI
 
 You can override the ephemeral credentials and manually configure Schema Registry and HTTP Proxy to connect to Redpanda with SASL.
 
-The Schema Registry configuration node is `schema_registry_client`:
+In `redpanda.yaml`, for `schema_registry_client`, add:
 
 ```yaml
 // highlight-start
@@ -309,8 +309,8 @@ schema_registry_client:
       port: 9092
 // highlight-start
   broker_tls:
-    key_file: server.key
-    cert_file: server.crt
+    key_file: broker.key
+    cert_file: broker.crt
     truststore_file: ca.crt
     enabled: true
 // highlight-end
@@ -319,7 +319,7 @@ schema_registry_client:
   sasl_mechanism: SCRAM-SHA-256
 ```
 
-HTTP Proxy has a similar configuration, but the configuration node is `pandaproxy_client`:
+HTTP Proxy has a similar configuration, but in `redpanda.yaml`, for `pandaproxy_client`, add:
 
 ```yaml
 // highlight-start
@@ -329,8 +329,8 @@ pandaproxy_client:
     - address: 127.0.0.1
       port: 9092
   broker_tls:
-    key_file: server.key
-    cert_file: server.crt
+    key_file: broker.key
+    cert_file: broker.crt
     truststore_file: ca.crt
     enabled: true
   scram_username: <username>
@@ -430,8 +430,8 @@ redpanda:
 // highlight-start
     - name: mtls_listener
 // highlight-end
-      key_file: mtls_server.key
-      cert_file: mtls_server.crt
+      key_file: mtls_broker.key
+      cert_file: mtls_broker.crt
       truststore_file: mtls_ca.crt
 // highlight-start
       enabled: true

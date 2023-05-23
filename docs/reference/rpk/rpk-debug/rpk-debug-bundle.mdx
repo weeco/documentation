@@ -1,5 +1,6 @@
 ---
 title: rpk debug bundle
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
@@ -17,13 +18,14 @@ import TabItem from '@theme/TabItem';
 The `rpk debug bundle` command collects environment data that can help debug and diagnose issues with a Redpanda cluster, a broker, or the machine it`s running on. It
 then bundles the collected data into a ZIP file, called a diagnostics bundle.
 
+
 :::info
 In Kubernetes, you must execute the `rpk debug bundle` command inside a container that's running a Redpanda broker.
 :::
 
 ## Usage
 
-```
+```bash
 rpk debug bundle [flags]
 ```
 
@@ -33,13 +35,13 @@ rpk debug bundle [flags]
   <tbody>
     <tr>
       <td>
-        <strong> Value</strong>
+        <strong>Value</strong>
       </td>
       <td>
-        <strong> Type</strong>
+        <strong>Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
       </td>
     </tr>
     <tr>
@@ -72,7 +74,7 @@ rpk debug bundle [flags]
       </td>
     </tr>
     <tr>
-      <td>--admin-url</td>
+      <td>--api-urls</td>
       <td>string</td>
       <td>
         The address to the broker`s Admin API. Defaults to the one in the config
@@ -98,6 +100,14 @@ rpk debug bundle [flags]
       </td>
     </tr>
     <tr>
+      <td>--controller-logs-size-limit</td>
+      <td>string</td>
+      <td>
+        Sets the limit of the controller log size that can be stored in the
+        bundle. Multipliers are also supported, e.g. 3MB, 1GiB (default "20MB").
+      </td>
+    </tr>
+    <tr>
       <td>-h, --help</td>
       <td>-</td>
       <td> Display documentation for <code>rpk debug bundle</code>.</td>
@@ -108,6 +118,14 @@ rpk debug bundle [flags]
       <td>
         Include log entries on or newer than the specified date in journalctl
         date format, for example YYYY-MM-DD.
+      </td>
+    </tr>
+    <tr>
+      <td>--logs-size-limit</td>
+      <td>string</td>
+      <td>
+        Read the logs until the given size is reached. Multipliers are also
+        supported, e.g. 3MB, 1GiB (default "100MiB").
       </td>
     </tr>
     <tr>
@@ -183,7 +201,7 @@ rpk debug bundle [flags]
     <tr>
       <td>--tls-truststore</td>
       <td>string</td>
-      <td> The truststore to be used for TLS communication with the broker.</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
     </tr>
      <tr>
       <td>--upload-url</td>
@@ -196,7 +214,7 @@ rpk debug bundle [flags]
     <tr>
       <td>--user</td>
       <td>string</td>
-      <td> SASL user to be used for authentication.</td>
+      <td>SASL user to be used for authentication.</td>
     </tr>
     <tr>
       <td>-v, --verbose</td>
