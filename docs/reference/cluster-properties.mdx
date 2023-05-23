@@ -347,7 +347,7 @@ When the disk usage of a node exceeds this threshold, it triggers Redpanda to mo
 
 ### kafka_admin_topic_api_rate
 
-Target quota rate for partition mutations per [default_window_sec](../tunable-properties#default_window_sec). If `null`, the property is disabled, and no quota rate is applied.
+Target quota rate for partition mutations per [`default_window_sec`](../tunable-properties#default_window_sec). If `null`, the property is disabled, and no quota rate is applied.
 
 **Units**: partition mutations per default_window_second
 
@@ -356,6 +356,9 @@ Target quota rate for partition mutations per [default_window_sec](../tunable-pr
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related properties**: 
+- [`default_window_sec`](../tunable-properties#default_window_sec)
 
 ---
 
@@ -904,6 +907,8 @@ A list of supported SASL mechanisms. `SCRAM` and `GSSAPI` are allowed.
 
 Target quota byte rate.
 
+The `target_quota_byte_rate` property applies to a producer client that isn't a member of a client group configured by [`kafka_client_group_byte_rate_quota`](#kafka_client_group_byte_rate_quota). It sets the maximum throughput quota of a client sending to a Redpanda broker node.
+
 **Units**: bytes per second
 
 **Default**: 2147483648 (2 GiB)
@@ -911,6 +916,9 @@ Target quota byte rate.
 **Range**: [1048576 (1 MiB), ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Client throughput limits](../../manage/cluster-maintenance/manage-throughput#client-throughput-limits)
 
 ---
 
