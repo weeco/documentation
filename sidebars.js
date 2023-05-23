@@ -301,23 +301,8 @@ module.exports = {
                     },
                     {
                       type: "doc",
-                      label: "Snowflake Sink Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector",
-                    },
-                    {
-                      type: "doc",
-                      label: "MongoDB Sink Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
-                    },
-                    {
-                      type: "doc",
-                      label: "MongoDB Source Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-source-connector",
-                    },
-                    {
-                      type: "doc",
-                      label: "PostgreSQL (Debezium) Source Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
+                      label: "HTTP Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
                     },
                     {
                       type: "doc",
@@ -328,16 +313,6 @@ module.exports = {
                       type: "doc",
                       label: "JDBC Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
-                    },
-                    {
-                      type: "doc",
-                      label: "HTTP Source Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
-                    },
-                    {
-                      type: "doc",
-                      label: "MySQL (Debezium) Source Connector",
-                      id: "deploy/deployment-option/cloud/managed-connectors/create-mysql-source-connector",
                     },
                     {
                       type: "doc",
@@ -353,6 +328,31 @@ module.exports = {
                       type: "doc",
                       label: "MirrorMaker2 Heartbeat Source Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-heartbeat-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MongoDB Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MongoDB Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MySQL (Debezium) Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mysql-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "PostgreSQL (Debezium) Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Snowflake Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector",
                     },
                   ],
                 },

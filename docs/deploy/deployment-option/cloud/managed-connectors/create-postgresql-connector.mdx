@@ -53,33 +53,6 @@ To create the PostgreSQL (Debezium) Source connector:
    | `Connector name`                     | Globally-unique name to use for this connector. |
 4. Click **Next**. Review the connector properties specified, then click **Create**.
 
-### Advanced PostgreSQL (Debezium) Source connector configuration
-
-In most instances, the preceding basic configuration properties are sufficient.
-However, if you require any additional property settings, then specify any of the following
-_optional_ advanced connector configuration properties by selecting **Show advanced options**
-on the **Create Connector** page:
-
-| Property                     | Description |
-| ---------------------------- | ----------- |
-| `Plugin` | The name of the Postgres logical decoding plugin installed on the server. Supported values are `decoderbufs` and `pgoutput`. Default is `decoderbufs`. |
-| `TCP keep-alive probe` | Enable to avoid dropping the TCP connection. Otherwise, disable. |
-| `Kafka message headers format` | Format of the headers in the Kafka topic. Default is `SIMPLE`. |
-| `Include Schemas` | Comma-separated list of regular expressions that match names of schemas for which you want to capture changes. Any schema name not included here is excluded from being captured. By default, all non-system schemas have their changes captured. |
-| `Exclude Schemas` | Comma-separated list of regular expressions that match the fully-qualified names of columns to exclude from change event record values. Fully-qualified names for columns are of the form `schemaName.tableName.columnName`. If you include this property, do not also specify `Include Columnns`. |
-| `Include Tables` | Comma-separated list of regular expressions that match fully-qualified table identifiers whose changes you want to capture (`schemaName.tableName`). By default, the connector captures changes in every non-system table. |
-| `Exclude Tables` | Comma-separated list of regular expressions that match fully-qualified table identifiers whose changes you do not want to capture. The connector captures changes in any table that is not included here. Each identifier is of the form `schemaName.tableName`. If you include this property, do not also specify `Include Tables`. |
-| `Include Columns` | Comma-separated list of regular expressions that match the fully-qualified names of columns to include in change event record values (`schemaName.tableName.columnName`). |
-| `Exclude Columns` | Comma-separated list of regular expressions that match the fully-qualified names of columns to exclude from change event record values. Fully-qualified names for columns are of the form `schemaName.tableName.columnName`. If you include this property, do not also specify `Include Columnns`. |
-| `Columns PK mapping` | A semicolon-separated list of expressions that match fully-qualified tables and columns to be used as message key. Each expression must match the pattern `<fully-qualified table name>:<key columns>`, where the table names could be defined as `(DB_NAME.TABLE_NAME)` or `(SCHEMA_NAME.TABLE_NAME)`, depending on the specific connector, and the key columns are a comma-separated list of columns representing the custom key. For any table without an explicit key configuration the table's primary key columns will be used as message key (for example, `dbserver1.inventory.orderlines:orderId,orderLineId;dbserver1.inventory.orders:id`). |
-| `Slot` | Name of the PostgreSQL logical decoding slot created for streaming changes from a plugin. Default is `debezium`. |
-| `Drop slot on stop` | Enable to specify not to drop the logical replication slot when the connector finishes orderly. By default, replication is kept so that upon restart progress can resume from the last recorded location. |
-| `Publication` | The name of the PostgreSQL 10+ publication used for streaming changes from a plugin. Default is `dbz_publication`. |
-| `Time Precision` | Time, date, and timestamps can be represented with different kinds of precisions: `adaptive` (default) bases the precision of time, date, and timestamp values on the database column's precision; `adaptive_time_microseconds` is like `adaptive` mode, but TIME fields always use microseconds precision; `connect` always represents time, date, and timestamp values using Kafka Connect's built-in representations for Time, Date, and Timestamp, which uses millisecond precision regardless of the database columns' precision. |
-| `HStore Handling` | Specify how `HSTORE` columns should be represented in change events. `JSON` represents values as JSON strings (default). `MAP` represents values as a key/value map. |
-| `Interval Handling` | Specify how `INTERVAL` columns should be represented in change events. Select `string` to show values as an exact ISO formatted string. Select `numeric` (default) to show values as an inexact conversion into microseconds. |
-| `Change the behaviour of Debezium with regards to delete operations` |
-
 ## Map data
 
 Use the appropriate key or value converter (input data format) for your data as follows:
@@ -114,7 +87,11 @@ Additional errors and corrective actions follow.
 | **non-existing-db** | Make sure the provided database name in `Database` is correct, and that the database exists. |
 | **The connection attempt failed / Connection to postgres:9999 refused** | Check to make sure that `hostname` and `port` are correct. |
 | **Password authentication failed for user** | Make sure that the `User` and `Password` credentials are valid. |
-| **The Plugin name value is invalid** | Make sure that `Plugin` contains a valid value, ewither `decoderbufs` or `pgoutput`. |
+| **The Plugin name value is invalid** | Make sure that `Plugin` contains a [valid value](https://debezium.io/documentation/reference/stable/connectors/postgresql.html#postgresql-property-plugin-name), either `decoderbufs` or `pgoutput`. |
 | **Postgres server `wal_level` property is `replica`** | Specify `wal_level` as `logical` for your database. |
-| **Error while fetching metadata with correlation id 3163753:{.....=UNKNOWN_TOPIC_OR_PARTITION}** | **Need a clear/usable description**. |
+| **Error while fetching metadata with correlation id 3163753:{.....=UNKNOWN_TOPIC_OR_PARTITION}** | Desired topic does not exist. The `auto_create_topics_enabled` property is disabled and should not be enabled in production, so the topic must be created manually. Usually the topic matches `topic_prefix.full DB table name`. The `topic.creation.enable` property requires [additional configuration](https://debezium.io/documentation/reference/stable/configuration/topic-auto-create-config.html). |
 | **RecordTooLargeException: The message is 1050766 bytes when serialized, which is larger than 1048576, the value of the max.request.size configuration.** | Increase the max request size to unblock the connector and allow large messages to pass: ```"producer.override.max.request.size": "209715200".``` The connector may be reaching memory limits and failing if the amount of data to pass or your messages are too large. |
+
+## Suggested reading
+
+* [Debezium connector for PostgreSQL](https://debezium.io/documentation/reference/stable/connectors/postgresql.html)
