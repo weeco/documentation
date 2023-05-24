@@ -22,15 +22,15 @@ You must have:
 
 - A registered OIDC application with Azure AD configured as the OpenID Connect (OIDC) provider. For instructions, see the [Microsoft documentation](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
 
-  When you register the application, you need to:
+  When you register the application, provide the following inputs when you are asked for them:
 
-    - Enter a name for the application.
+    - **Name**: Enter a name for the application
 
-    - Select a supported account type. For details, see the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
+    - **Supported account types**: Select a supported account type. For details, see the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
 
-    - Set the redirect URI to a domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad` or `https://localhost:8080/login/callbacks/azure-ad`.
+    - **Redirect URI**: Enter the domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad` or `https://localhost:8080/login/callbacks/azure-ad`.
 
-  :::note
+  :::info
   When you configure the identity provider, make a note of the client ID and client secret. You must add these credentials to the [console configuration file](#edit-the-console-configuration-file) so that Repanda Console can establish communication with Azure AD.
   :::
 
