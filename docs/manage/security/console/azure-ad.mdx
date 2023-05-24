@@ -1,5 +1,5 @@
 ---
-title: Azure AD SSO Setup
+title: Azure AD SSO Authentication in Redpanda Console
 ---
 
 <head>
@@ -20,21 +20,19 @@ You must have:
 
 - An [Azure AD account](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/sign-up-organization) and permissions to create applications within your directory.
 
-- An OpenID Connect (OIDC) provider](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings) configured for your Azure AD account.
+- A registered OIDC application with Azure AD configured as the OpenID Connect (OIDC) provider. For instructions, see the [Microsoft documentation](https://learn.microsoft.com/en-us/power-apps/maker/portals/configure/configure-openid-settings).
+
+  When you register the application, you need to:
+
+    - Enter a name for the application.
+
+    - Select a supported account type. For details, see the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
+
+    - Set the redirect URI to a domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad` or `https://localhost:8080/login/callbacks/azure-ad`.
 
   :::note
-  Set the redirect URI to the domain where Redpanda Console is hosted followed by the `/login/callbacks/azure-ad` path. For example, `https://console.<your-company>.com/login/callbacks/azure-ad`
+  When you configure the identity provider, make a note of the client ID and client secret. You must add these credentials to the [console configuration file](#edit-the-console-configuration-file) so that Repanda Console can establish communication with Azure AD.
   :::
-
-## Create an OpenID connect application
-
-In the Azure Portal, register your app and generate a client secret. For details, see the [Microsoft Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-credentials).
-
-After the app is registered, a summary page opens. This page displays a list of **Essentials**, which you will need when you edit the `redpanda-console-config.yaml file`.
-
-:::important
-Copy the client secret value into the `redpanda-console-config.yaml` file before you leave the **Certificates and secrets** page. After you navigate away from the page, only the first few characters of the client secret value are displayed and you won't be able to copy the value into the configuration file.
-:::
 
 ## Edit the console configuration file
 

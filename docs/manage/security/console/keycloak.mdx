@@ -1,5 +1,5 @@
 ---
-title: Keycloak SSO Setup
+title: Keycloak SSO Authentication in Redpanda Console
 ---
 
 <head>
@@ -18,19 +18,25 @@ By integrating Redpanda Console with Keycloak, your users can sign in to Redpand
 
 You must:
 
-- Install Keycloak and create a super admin user account, which has the necessary permissions for setting up the OAuth application. For details, see the [Keyclock documentation](https://www.keycloak.org/guides).
-- Create an OpenID Connect (OIDC) client. For details, see the [Keyclock documentation](https://www.keycloak.org/docs/latest/server_admin/index.html#proc-creating-oidc-client_server_administration_guide).
+- Install Keycloak and create a super admin user account, which has permissions for setting up an OAuth application. For details, see the [Keyclock documentation](https://www.keycloak.org/guides).
 
-  :::note
-  - Set the valid redirect URIs to the domain where Redpanda Console is hosted followed by the `/login/callbacks/keycloak` path. For example, `https://console.<your-company>.com/login/callbacks/keycloak`
-  - Copy the client ID and client secret. The console configuration file uses these credentials to establish communication with Keycloak.
-  :::
+- Create an OpenID Connect (OIDC) client. For details, see the [Keyclock documentation](https://www.keycloak.org/docs/latest/server_admin/index.html#proc-creating-oidc-client_server_administration_guide). You'll need to:
 
-(Optional) Create at least one realm for managing and authenticating a specific group of users.
+  - Leave Client type set to OpenID Connect.
 
-:::note
-You can use the master realm, or you can create a realm for managing and authenticating a specific group of users.
-:::
+  - Enter a alphanumeric Client ID that the Keycloak database can use to identify the client.
+
+  - Enter any name for the client.
+
+  - Set the valid redirect URI in **Access Settings** to the domain where Redpanda Console is hosted followed by the `/login/callbacks/keycloak` path. For example, `https://console.<your-company>.com/login/callbacks/keycloak` or `https://localhost:8080/login/callbacks/keycloak`.
+
+  - Copy the client ID and client secret. The [console configuration file](#edit-the-console-configuration-file) uses these credentials to establish communication with Keycloak.
+
+  - (Optional) Create at least one realm for managing and authenticating a specific group of users.
+
+    :::note
+    You can use the master realm, or you can create a realm for managing and authenticating a specific group of users.
+    :::
 
 ## Edit the console configuration file
 
@@ -63,8 +69,8 @@ login:
     clientId: ""
     clientSecret: ""
 
-    # The directory configuration is only required if you want to 
-    # use Keycloak groups in your role bindings. 
+    # The directory configuration is only required if you want to
+    # use Keycloak groups in your role bindings.
     # This is described further in the next section.
     # directory:
     #   adminUser: ""
