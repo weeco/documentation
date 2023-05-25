@@ -629,8 +629,18 @@ module.exports = {
                       },
                       {
                         "type": "doc",
+                        "label": "Azure AD",
+                        "id": "manage/security/console/azure-ad"
+                      },
+                      {
+                        "type": "doc",
                         "label": "GitHub",
                         "id": "manage/security/console/github"
+                      },
+                      {
+                        "type": "doc",
+                        "label": "Generic OIDC",
+                        "id": "manage/security/console/generic-oidc"
                       },
                       {
                         "type": "doc",
@@ -639,13 +649,13 @@ module.exports = {
                       },
                       {
                         "type": "doc",
-                        "label": "Okta",
-                        "id": "manage/security/console/okta"
+                        "label": "Keycloak",
+                        "id": "manage/security/console/keycloak"
                       },
                       {
                         "type": "doc",
-                        "label": "Generic OIDC",
-                        "id": "manage/security/console/generic-oidc"
+                        "label": "Okta",
+                        "id": "manage/security/console/okta"
                       },
                       {
                         "type": "doc",
