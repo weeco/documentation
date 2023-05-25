@@ -1,31 +1,28 @@
 ---
-title: Deploy Manually
+title: Deploy on Linux
 ---
 
 <head>
-    <meta name="title" content="Deploy Manually | Redpanda Docs"/>
-    <meta name="description" content="Deploy Manually."/>
+    <meta name="title" content="Deploy on Linux | Redpanda Docs"/>
+    <meta name="description" content="Deploy Redpanda on Linux."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/manual/" />
 </head>
 
-- [Deploy for Production](../manual/production/production-deployment)
+- [Deployment Options](../manual/production/)
   
-    You can use `rpm` to set up a production cluster of Redpanda using the default deployment or writing a custom deployment script.
-
-- [Automate Deployment for Production](../manual/production/production-deployment-automation)
-  
-    You can use automation tools in your environment, such as Terraform and Ansible to deploy Redpanda for production.
+    Follow the guidelines to deploy for development or production. 
 
 - [Configure Node Properties](../manual/node-property-configuration)
 
-    When you install Redpanda, a `redpanda.yaml` file is installed on each node in `/etc/redpanda`. This file contains node configuration properties. A node property is one that can be set differently from node to node, such as `data_directory` or `node_id` (when specified).
+    Learn how to configure node-specific properties for a Redpanda cluster with the `redpanda.yaml` file.
 
 - [High Availability](../manual/high-availability)
 
-    Redpanda is designed to ensure data integrity and high availability (HA), even at high-throughput levels. This section explains the trade-offs with different configurations.
+    Learn about the trade-offs with different high availabability configurations.
 
 - [Sizing Use Cases](../manual/sizing-use-cases)
   
-    The following scenarios provide estimates and advice for sizing Redpanda clusters for different throughput and retention use cases in your data center and in the cloud.
+    See estimates and advice for sizing Redpanda clusters for different throughput and retention use cases.
 
 - [Sizing Guidelines](../manual/sizing)
 

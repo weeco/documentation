@@ -1,10 +1,11 @@
 ---
-title: Install Redpanda Guide for Kubernetes on Cloud
+title: Install Redpanda for Kubernetes on Cloud
 ---
 
 <head>
     <meta name="title" content="Kubernetes quickstart for cloud | Redpanda Docs"/>
     <meta name="description" content="Kubernetes quickstart for cloud environments."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/reference/redpanda-operator/kubernetes-qs-cloud/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -59,8 +60,8 @@ If you’re using Amazon EKS, you must satisfy the following prerequisites:
 
 Select the cloud provider that you want to use to create your Kubernetes cluster: 
 
-<Tabs>
-  <TabItem  value="GKE" label="GKE" default>
+<Tabs groupId="kubernetes-platforms">
+<TabItem  value="gke" label="Google GKE" default>
 
 Complete the Before You Begin steps in the [Google Kubernetes Engine Quickstart](https://kubernetes.io/docs/contribute/generate-ref-docs/quickstart/). 
 
@@ -73,58 +74,101 @@ gcloud container clusters create redpanda --machine-type n1-standard-4 --num-nod
 You may need to add a `--region` or `--zone` to this command if defaults are not set. The [Google Cloud](https://cloud.google.com/compute../../regions-zones/changing-default-zone-region) documentation explains how to set defaults.
 :::
 
-  </TabItem>
+</TabItem>
 
-  <TabItem  value="Amazon EKS" label="Amazon EKS">
+<TabItem  value="eks" label="Amazon EKS">
 
 Use the [Amazon EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to set up Amazon EKS. After `eksctl` is installed, you can create and delete clusters in Amazon EKS.
 
-Create an Amazon EKS cluster:
+1. Create an Amazon EKS cluster:
 
-```bash
-eksctl create cluster \
---name redpanda \
---nodegroup-name standard-workers \
---node-type m5.xlarge \
---nodes 1 \
---nodes-min 1 \
---nodes-max 1
-```
+    - To create a cluster that's isn't autotuned for running Redpanda, run the following:
 
-Alternatively, to create an Amazon EKS cluster that is auto-tuned for running Redpanda, copy the following text and save it as `eks-bootstrap.yaml`: 
+      ```bash
+      eksctl create cluster \
+      --name redpanda \
+      --nodegroup-name standard-workers \
+      --node-type m5.xlarge \
+      --nodes 1 \
+      --nodes-min 1 \
+      --nodes-max 1
+      ```
 
-  ```yaml
-  apiVersion: eksctl.io/v1alpha5
-  kind: ClusterConfig
-  metadata:
-    name: redpanda-eks
-    region: us-west-1
-  nodeGroups:
-    - name: standard-workers
-      desiredCapacity: 1
-      minSize: 1
-      maxSize: 2
-      instanceType: m5.xlarge
-      preBootstrapCommands:
-        - "curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && sudo yum -y install redpanda"
-        - "sudo rpk mode prod && sudo rpk redpanda tune all"
-        - "sudo yum -y remove redpanda"
+      :::note
+      If your account is configured for OIDC, add the `--with-oidc` flag to the `create cluster` command.
+      :::
+
+    - To create a cluster that is autotuned for running Redpanda, do the following:
+    
+      1. Copy the following text and save it as `eks-bootstrap.yaml`: 
+
+        ```yaml
+        apiVersion: eksctl.io/v1alpha5
+        kind: ClusterConfig
+        metadata:
+          name: redpanda
+          region: us-west-1
+        nodeGroups:
+          - name: standard-workers
+            desiredCapacity: 1
+            minSize: 1
+            maxSize: 2
+            instanceType: m5.xlarge
+            preBootstrapCommands:
+              - "curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.rpm.sh' | sudo -E bash && sudo yum -y install redpanda"
+              - "sudo rpk mode prod && sudo rpk redpanda tune all"
+              - "sudo yum -y remove redpanda"
+        ```
+
+        The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, installs Redpanda, and runs the tuning. This sample file contains the following parameters, which you might want to change: 
+
+          - `instanceType: m5.xlarge`
+          - `desiredCapacity: 1` - This sets the number of nodes that you want to create
+
+      1. Create the cluster: 
+
+        ```bash
+        eksctl create cluster -f eks-bootstrap.yaml
+        ```
+
+        :::note
+        If your account is configured for OIDC, add the `--with-oidc` flag to the `create cluster` command.
+        :::
+
+1. Create the IAM role needed for the Amazon Elastic Block Store (EBS) Cluster Storage Interface (CSI):
+
+  ```bash
+  eksctl create iamserviceaccount \
+      `# Do not change the name. It is required by EKS.` \
+      --name ebs-csi-controller-sa \
+      `# Do not change the namespace. It is required by EKS.` \
+      --namespace kube-system \
+      --cluster redpanda \
+      --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+      --approve \
+      --role-only \
+      --role-name AmazonEKS_EBS_CSI_DriverRole
   ```
 
-The `preBootstrapCommands` in the file downloads the Redpanda RPM on the host, installs Redpanda, and runs the tuning. This sample file contains the following parameters, which you might want to change: 
+1. Get your AWS account ID:
 
-- `instanceType: m5.xlarge`
-- `desiredCapacity: 1` - This sets the number of nodes that you want to create
+  ```bash
+  AWS_ACCOUNT_ID=`aws sts get-caller-identity | jq -r '.Account'`
+  ```
 
-Create the Amazon EKS cluster: 
+1. Add the EBS CSI add-on:
 
-```bash
-eksctl create cluster -f eks-bootstrap.yaml
-```
+  ```bash
+  eksctl create addon \
+      --name aws-ebs-csi-driver \
+      --cluster redpanda \
+      --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
+      --force
+  ```
 
-  </TabItem>
+</TabItem>
 
-  <TabItem  value="DigitalOcean" label="DigitalOcean">
+<TabItem  value="digitalocean" label="DigitalOcean">
 
 Set up your [DigitalOcean account](https://docs.digitalocean.com/products/getting-started/) and install [doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/). Remember to set up your [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/).
 
@@ -135,7 +179,7 @@ Create a cluster for your Redpanda deployment:
 ```bash
 doctl kubernetes cluster create redpanda --wait --size s-4vcpu-8gb
 ```
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ## Configure the kubectl context
@@ -181,28 +225,29 @@ You may have to wait a few minutes for cert-manager to be ready before you conti
 
 1. Add the Redpanda chart repository and update it:
 
-```bash
-helm repo add redpanda https://charts.vectorized.io/ && \
-helm repo update
-```
+  ```bash
+  helm repo add redpanda https://charts.vectorized.io/ && \
+  helm repo update
+  ```
 
 2. Set the `$VERSION` environment variable to the latest operator and Redpanda version: 
 
-```bash
-export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
-```
+  ```bash
+  export VERSION=$(curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | jq -r .tag_name)
+  ```
 
-:::note
-If you prefer to manually enter the Redpanda version, or if you want to verify the version, the following command returns the installed version: 
+  :::note
+  If you prefer to manually enter the Redpanda version, or if you want to verify the version, the following command returns the installed version: 
 
-```bash
-curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | grep tag_name
-```
+  ```bash
+  curl -s https://api.github.com/repos/redpanda-data/redpanda/releases/latest | grep tag_name
+  ```
 
-You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).
-:::
+  You can find information about the versions of the operator in the [list of operator releases](https://github.com/redpanda-data/redpanda/releases).
+  :::
 
 3. Install the Redpanda operator CRD with bash or zsh:
+
     <Tabs>
       <TabItem value="bash" label="bash" default>
 
@@ -222,14 +267,14 @@ You can find information about the versions of the operator in the [list of oper
 
 4. Install the Redpanda operator on your Kubernetes cluster:
 
-```bash
-helm install \
-  redpanda-operator \
-  redpanda/redpanda-operator \
-  --namespace redpanda-system \
-  --create-namespace \
-  --version $VERSION
-```
+  ```bash
+  helm install \
+    redpanda-operator \
+    redpanda/redpanda-operator \
+    --namespace panda-chat \
+    --create-namespace \
+    --version $VERSION
+  ```
 
 ## Install and connect to a Redpanda cluster
 
@@ -241,75 +286,76 @@ Complete the following steps to manage a stream of events from `panda-chat`:
 
 1. Create a namespace for the cluster:
 
-```bash
-kubectl create ns panda-chat
-```
+  ```bash
+  kubectl create ns panda-chat
+  ```
 
 2. Install a single-node cluster:
 
-```bash
-kubectl apply \
--n panda-chat \
--f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
-```
+  ```bash
+  kubectl apply \
+  -n panda-chat \
+  -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
+  ```
 
-You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/vectorizedio/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples). 
+You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/redpanda-data/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples). 
 
 ## Start streaming
 
 Use `rpk` to run commands. `rpk` is a CLI tool you can use to work with your Redpanda nodes. See [rpk Commands](../../rpk/rpk-topic) Here are some sample commands to produce and consume streams:
 
-Check the status of the cluster:
+1. Check the status of the cluster:
 
-```bash
-kubectl -n panda-chat run -ti --rm \
---restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
-cluster info
-```
+  ```bash
+  kubectl -n panda-chat run -ti --rm \
+  --restart=Never \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
+  -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
+  cluster info
+  ```
 
-Next, create a topic in the cluster. This command creates five chat rooms in the `panda-chat` cluster:
+1. Create a topic in the cluster. This command creates five chat rooms in the `panda-chat` cluster:
 
-```bash
-kubectl -n panda-chat run -ti --rm \
---restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
-topic create chat-rooms -p 5
-```
+  ```bash
+  kubectl -n panda-chat run -ti --rm \
+  --restart=Never \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
+  -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
+  topic create chat-rooms -p 5
+  ```
 
-View the list of topics:
+1. View the list of topics:
 
-```bash
-kubectl -n panda-chat run -ti --rm \
---restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
--- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
-topic list
-```
+  ```bash
+  kubectl -n panda-chat run -ti --rm \
+  --restart=Never \
+  --image docker.redpanda.com/redpandadata/redpanda:$VERSION \
+  -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
+  topic list
+  ```
 
-Produce to the topic: 
+1. Produce to the topic: 
 
-```bash
-kubectl -n panda-chat run -ti --rm \
---restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
--- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
-```
+  ```bash
+  kubectl -n panda-chat run -ti --rm \
+  --restart=Never \
+  --image docker.redpanda.com/redpandadata/redpanda \
+  -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
+  ```
 
-Type text into the topic, such as `Pandas are fabulous!`. 
-  * Click Enter to separate between messages. 
-  * Click Ctrl + D to exit the produce command.
+1. Type text into the topic, such as `Pandas are fabulous!`.
 
-Consume (read) from the topic: 
+    - Click <kbd>Enter</kbd> to separate between messages. 
+    - Press <kbd>Ctrl</kbd> + <kbd>D</kbd> to exit the produce command.
 
-```bash
-kubectl -n panda-chat run -ti --rm \
---restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
--- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
-```
+1. Consume (read) from the topic: 
+
+  ```bash
+  kubectl -n panda-chat run -ti --rm \
+  --restart=Never \
+  --image docker.redpanda.com/redpandadata/redpanda \
+  -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
+  ```
 
 In the `rpk topic consume command`, `-n 1` specifies the number of messages to print. If you produced more than one message in the previous step, you can change the number of messages to consume based on the number that you produced. 
 
@@ -317,16 +363,17 @@ In the `rpk topic consume command`, `-n 1` specifies the number of messages to p
 
 Delete the cluster: 
 
-<Tabs>
-  <TabItem value="GKE" label="GKE" default>
+<Tabs groupId="kubernetes-platforms">
+  <TabItem value="gke" label="Google GKE" default>
 
 ```bash
 gcloud container clusters delete redpanda
 ```
+
 For more information, see the GKE [Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster) documentation.
 
   </TabItem>
-  <TabItem value="EKS" label="EKS">
+  <TabItem value="eks" label="Amazon EKS">
 
 ```bash
 eksctl delete cluster --name redpanda
@@ -335,7 +382,7 @@ eksctl delete cluster --name redpanda
 For more information, see [Deleting an Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/delete-cluster.html). 
 
   </TabItem>
-  <TabItem value="DigitalOcean" label="DigitalOcean">
+  <TabItem value="digitalocean" label="DigitalOcean">
 
 ```bash
 doctl kubernetes cluster delete

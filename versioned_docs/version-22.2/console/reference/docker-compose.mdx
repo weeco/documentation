@@ -5,6 +5,7 @@ title: Docker Compose
 <head>
     <meta name="title" content="Console configuration template | Redpanda Docs"/>
     <meta name="description" content="Console configuration template with properties description."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/reference/docker-compose/" />
 </head>
 
 If you want to try Console on your local computer you can use this docker-compose.yml to start
@@ -20,7 +21,7 @@ To run `docker compose` you have to install Docker on your machine. Please refer
 version: '3.7'
 services:
   redpanda:
-    image: docker.redpanda.com/vectorized/redpanda:v22.2.2
+    image: docker.redpanda.com/redpandadata/redpanda:v22.2.2
     command:
       - redpanda start
       - --smp 1
@@ -38,7 +39,7 @@ services:
       - 29092:29092
 
   console:
-    image: docker.redpanda.com/vectorized/console:latest
+    image: docker.redpanda.com/redpandadata/console:latest
     entrypoint: /bin/sh
     command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
     environment:

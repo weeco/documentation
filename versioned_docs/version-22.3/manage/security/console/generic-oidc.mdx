@@ -1,14 +1,18 @@
 ---
 title: Generic OIDC
+linkRoot: ../../../../
 ---
 
 <head>
     <meta name="title" content="SSO with a Generic OIDC provider in Redpanda Console | Redpanda Docs"/>
     <meta name="description" content="Integrate your Redpanda Console authentication with any identity provider that supports an OIDC-compatible protocol."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/console/generic-oidc/" />
 </head>
 
+import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
+
 :::info
-This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+<EnterpriseLicenseNote frontmatter={frontMatter}/>
 :::
 
 If you would like to integrate an OpenID Connect (OIDC) compatible identity provider that is not yet natively supported in Console,
@@ -97,7 +101,7 @@ roleBindings:
 
 ## Troubleshooting
 
-### Used claim key did not exist in user's id token
+### Used claim key did not exist in user's ID token
 
 If the claim key in a role binding does not exist in the ID token, Redpanda Console prints
 an error message in the backend to assist you with this. The error message contains the claim key 

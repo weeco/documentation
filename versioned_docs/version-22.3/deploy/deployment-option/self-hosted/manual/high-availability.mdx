@@ -5,6 +5,7 @@ title: High Availability
 <head>
     <meta name="title" content="Disk Space Management | Redpanda Docs"/>
     <meta name="description" content="How to maintain availability under failure conditions."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/manual/high-availability/" />
 </head>
 
 Redpanda is designed to ensure data integrity and high availability (HA), even at high-throughput levels. This section explains the trade-offs with different configurations. 
@@ -110,7 +111,7 @@ See also: [Cluster Balancing](../../../../../manage/cluster-maintenance/cluster-
 
 ### Tiered Storage and disaster recovery
 
-In a disaster, your secondary cluster may still be available, but you need to quickly restore the original level of redundancy by bringing up a new primary cluster. In a containerized environment such as Kubernetes, all state is lost from pods that use only local storage. HA deployments with Tiered Storage address both these problems, since it offers infinite data retention and topic recovery.
+In a disaster, your secondary cluster may still be available, but you need to quickly restore the original level of redundancy by bringing up a new primary cluster. In a containerized environment such as Kubernetes, all state is lost from pods that use only local storage. HA deployments with Tiered Storage address both these problems, since it offers long-term data retention and topic recovery.
 
 See also: [Tiered Storage](../../../../../manage/tiered-storage)
 

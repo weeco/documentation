@@ -5,6 +5,7 @@ title: Create an S3 Sink Connector
 <head>
     <meta name="title" content="Create an S3 Sink Connector | Redpanda Docs"/>
     <meta name="description" content="Use the Redpanda Cloud UI to create an S3 Sink Connector."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector/" />
 </head>
 
 The Amazon S3 Sink connector stores Apache Kafka messages in an AWS S3 bucket.
@@ -89,6 +90,7 @@ Specify connector properties and list the topics you want to export to the S3 bu
     * `file.name.prefix` (optional)
     * `file.name.template` (optional)
     * `file.compression.type` (default is `none`)
+    * `file.flush.interval.ms` (default is 60000)
     * `file.max.records` (default is 0)
     * `file.name.timestamp.timezone`
     * `file.name.timestamp.source` (default is `WALLCLOCK`)

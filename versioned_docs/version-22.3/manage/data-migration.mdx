@@ -5,6 +5,7 @@ title: Migrate Data to Redpanda with MirrorMaker 2
 <head>
     <meta name="title" content="Migrate data to Redpanda with MirrorMaker 2| Redpanda Docs"/>
     <meta name="description" content="Migrate external data to Redpanda with MirrorMaker 2."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/data-migration/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -25,7 +26,7 @@ For details on MirrorMaker 2 and its options, see the [Kafka documentation](http
 
 To set up the replication, you need:
 
-- 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](../../deploy/deployment-option/self-hosted/kubernetes/get-started-dev), [Docker](../../get-started/quick-start/quick-start-docker), and [Linux](../../deploy/deployment-option/self-hosted/manual).
+- 2 Redpanda clusters - You can set up these clusters in any deployment you like, including [Kubernetes](../../deploy/deployment-option/self-hosted/kubernetes/get-started-dev), [Docker](../../get-started/quick-start), and [Linux](../../deploy/deployment-option/self-hosted/manual).
 
 - MirrorMaker 2 host - You install MirrorMaker 2 on a separate system or on one of the Redpanda clusters, as long as the IP addresses and ports on each cluster are accessible from the MirrorMaker 2 host.
 You must install the [Java Runtime Engine (JRE)](https://docs.oracle.com/javase/10/install/toc.htm) on the MirrorMaker 2 host.

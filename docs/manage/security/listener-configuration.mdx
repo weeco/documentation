@@ -1,11 +1,24 @@
 ---
 title: Configure Listeners
+linkRoot: ../../../
+deployment: Linux
+contextLinks:
+  - name: 'Linux'
+    to: manage/security/listener-configuration
+  - name: 'Kubernetes'
+    to: 'manage/kubernetes/networking/configure-listeners'
 ---
 
 <head>
     <meta name="title" content="Configure listeners | Redpanda Docs"/>
     <meta name="description" content="Steps to configure listeners."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/listener-configuration/" />
 </head>
+
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter}
+/>
 
 Apache Kafka® client libraries must be able to connect to every Redpanda broker
 instance. If the client and broker are on different subnets, advertise the location of the broker in the Redpanda configuration file so other brokers in
@@ -13,7 +26,7 @@ the cluster can be found. If not, clients connecting to brokers outside
 their local network experience connectivity issues.
 
 To try out Redpanda, see the 
-[Redpanda Quickstart](../../../get-started/quick-start/quick-start-docker).
+[Redpanda Quickstart](../../../get-started/quick-start).
 
 ## Anatomy of a listener
 
@@ -87,8 +100,8 @@ redpanda:
       authentication_method: mtls_identity
   kafka_api_tls:
     - name: mtls_listener
-      key_file: mtls_server.key
-      cert_file: mtls_server.crt
+      key_file: mtls_broker.key
+      cert_file: mtls_broker.crt
       truststore_file: mtls_ca.crt
       enabled: true
       require_client_auth: true

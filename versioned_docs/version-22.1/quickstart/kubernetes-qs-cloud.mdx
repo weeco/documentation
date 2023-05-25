@@ -2,6 +2,13 @@
 title: Kubernetes quickstart for cloud
 ---
 
+<head>
+    <meta name="title" content="Redpanda Quickstart | Redpanda Docs"/>
+    <meta name="description" content="Spin up a Redpanda cluster with Docker or Redpanda Cloud, create a basic streaming application, and explore your cluster in Redpanda Console."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/get-started/quick-start/" />
+</head>
+
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -251,7 +258,7 @@ kubectl apply \
 -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
 ```
 
-You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/vectorizedio/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples). 
+You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/redpanda-data/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples). 
 
 ## Step 6: Do some streaming
 
@@ -264,7 +271,7 @@ Follow these steps to start working with the `panda-chat` cluster you created in
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 cluster info
 ```
@@ -274,7 +281,7 @@ cluster info
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic create chat-rooms -p 5
 ```
@@ -284,7 +291,7 @@ topic create chat-rooms -p 5
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda:$VERSION \
+--image docker.redpanda.com/redpandadata/redpanda:$VERSION \
 -- rpk --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092 \
 topic list
 ```
@@ -294,7 +301,7 @@ topic list
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
+--image docker.redpanda.com/redpandadata/redpanda \
 -- rpk topic produce chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 
@@ -307,7 +314,7 @@ kubectl -n panda-chat run -ti --rm \
 ```bash
 kubectl -n panda-chat run -ti --rm \
 --restart=Never \
---image docker.redpanda.com/vectorized/redpanda \
+--image docker.redpanda.com/redpandadata/redpanda \
 -- rpk topic consume -n 1 chat-rooms --brokers one-node-cluster-0.one-node-cluster.panda-chat.svc.cluster.local:9092
 ```
 

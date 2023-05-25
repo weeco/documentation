@@ -5,6 +5,7 @@ title: Install Redpanda Labs
 <head>
     <meta name="title" content="Install Redpanda Labs | Redpanda Docs"/>
     <meta name="description" content="Install a version of Redpanda labs to test lab features that are in development."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/labs/install-preview/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -59,7 +60,7 @@ Install a version of Redpanda labs to test lab features that are in development.
   </summary>
 
   ```bash
-  v22.3.11 (rev 9eefb90)
+  vVAR::REDPANDA_VERSION_22_3 (rev VAR::REDPANDA_SHA_22_3)
   ```
 
   </details>
@@ -68,14 +69,14 @@ Install a version of Redpanda labs to test lab features that are in development.
 <TabItem value="install-docker" label="Docker" default>
 
 
-1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/vectorized/redpanda-unstable/tags). 
+1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/redpandadata/redpanda-unstable/tags). 
 
 1. Run your chosen version of Redpanda labs.
 
   Replace the `<version>` placeholder with a version tag.
 
   ```bash
-  docker run --name=redpanda -d docker.redpanda.com/vectorized/redpanda-unstable:<version>
+  docker run --name=redpanda -d docker.redpanda.com/redpandadata/redpanda-unstable:<version>
   ```
 
 1. Make sure that the installation was successful:
@@ -90,16 +91,16 @@ Install a version of Redpanda labs to test lab features that are in development.
   </summary>
 
   ```bash
-  v22.3.11 (rev 9eefb90)
+  vVAR::REDPANDA_VERSION_22_3 (rev VAR::REDPANDA_SHA_22_3)
   ```
   </details>
 
-For more information about installing Redpanda in Docker, see the [Redpanda Quickstart](../../get-started/quick-start/quick-start-docker).
+For more information about installing Redpanda in Docker, see the [Redpanda Quickstart](../../get-started/quick-start).
   
 </TabItem>
 <TabItem value="install-Kubernetes" label="Kubernetes" default>
 
-1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/vectorized/redpanda-unstable/tags). 
+1. Find a version of Redpanda labs on [DockerHub](https://hub.docker.com/r/redpandadata/redpanda-unstable/tags). 
 
 1. Install your chosen version of Redpanda labs using Helm.
 
@@ -137,7 +138,7 @@ For more information about installing Redpanda in Docker, see the [Redpanda Quic
   </summary>
 
   ```bash
-  v22.3.11 (rev 9eefb90)
+  vVAR::REDPANDA_VERSION_22_3 (rev VAR::REDPANDA_SHA_22_3)
   ```
 
   </details>
@@ -149,7 +150,7 @@ For more information about installing Redpanda in Kubernetes, see [Redpanda in K
 
 ## Share your feedback
 
-Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions).
+Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/redpanda-data/redpanda/discussions).
 
 ## Next steps
 

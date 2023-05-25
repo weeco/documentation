@@ -5,6 +5,7 @@ title: Version upgrade
 <head>
     <meta name="title" content="Version upgrade | Redpanda Docs"/>
     <meta name="description" content="As part of Redpanda's evolution, new versions are released over time to deliver new features, enhancements, and improvements."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/get-started/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -14,7 +15,7 @@ As part of Redpanda's evolution, new versions are released over time to deliver 
 Due to that, it's essential to keep Redpanda up to date. This guide details how to upgrade versions relevant to the environment that Redpanda is currently running in.
 
 :::info
-Before upgrading to alternate versions, refer to the [release notes](https://github.com/vectorizedio/redpanda/releases) to learn about any breaking changes.
+Before upgrading to alternate versions, refer to the [release notes](https://github.com/redpanda-data/redpanda/releases) to learn about any breaking changes.
 :::
 
 ## Checking the current version
@@ -202,7 +203,7 @@ docker rmi <image_id>
 Pull the desired Redpanda's version, or adjust the setting to `latest` in the `version` tag:
 
 ```bash
-docker pull docker.redpanda.com/vectorized/redpanda:<version>
+docker pull docker.redpanda.com/redpandadata/redpanda:<version>
 ```
 
 If you have any questions about how to start Redpanda on Docker, refer to [docker getting started](../../quickstart/quick-start-docker).

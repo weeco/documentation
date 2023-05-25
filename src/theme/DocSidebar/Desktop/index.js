@@ -33,15 +33,15 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
         <SearchBar />
         <div className={styles.searchPlaceholder}></div>
         <div className={styles.topPanelLanguageContainer}>
-          <label>Language:</label> English
+          <label className={styles.label}>Language: English</label> 
         </div>
 
         {!(
               useLocation().pathname.includes("/docs/platform/deployment/cloud")
               ) && (
           <div className={styles.topPanelVersionContainer}>
-            <label>Version:</label>
-            <DocsVersionDropdownNavbarItem
+            <label className={styles.label}>Version:</label>
+            <DocsVersionDropdownNavbarItem className={styles.versionNumber}
               docsPluginId={"default"}
               dropdownItemsBefore={[]}
               dropdownItemsAfter={[]}

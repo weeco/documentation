@@ -4,11 +4,20 @@ title: Monitoring
 <head>
     <meta name="title" content="Monitoring | Redpanda Docs"/>
     <meta name="description" content="Metrics to monitor the health of your system to predict issues and optimize performance."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/monitoring/" />
 </head>
 
 You can monitor the health of your system to optimize performance. The most useful metrics are available on `<node ip>:9644/public_metrics`, which has been available since v22.2. This section describes how to use Prometheus queries to monitor your system (for example, to check consumer group lag or Kafka producer request latency).
 
 For information about the original metrics available on `:9644/metrics`, see [Internal Metrics](../../reference/internal-metrics).
+
+:::note notes
+The `/public_metrics` endpoint exports different metrics than the `/metrics` endpoint.
+
+Use `/public_metrics` for your primary dashboards for system health.
+
+Use `/metrics` for detailed analysis and debugging.
+:::
 
 ## Configure Prometheus
 
@@ -23,8 +32,8 @@ The output is a YAML object that you can add to the `scrape_configs` list.
   static_configs:
   - targets:
     - 172.31.18.239:9644
-    - 172.31.18.238:9643
-    - 172.31.18.237:9642
+    - 172.31.18.238:9644
+    - 172.31.18.237:9644
   metrics_path: /public_metrics
 ```
 
@@ -42,8 +51,8 @@ scrape_configs:
   static_configs:
     - targets:
         - 172.31.18.239:9644
-        - 172.31.18.239:9643
-        - 172.31.18.239:9642
+        - 172.31.18.238:9644
+        - 172.31.18.237:9644
   metrics_path: /public_metrics
 …
 ```
@@ -65,10 +74,38 @@ count(count by (redpanda_topic, redpanda_partition)
  (redpanda_kafka_max_offset{redpanda_topic="<topic_name>"}))
 ```
 
-:::note
-* You can use this [sample Prometheus configuration file](https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus.yml).
-* You can use `rpk` to configure Prometheus, but do not use `rpk` to generate a Grafana dashboard for `public_metrics`.
-:::
+## Generate Grafana dashboard
+
+[Grafana](https://grafana.com/oss/grafana/) is a tool to query, visualize, and generate alerts for metrics.
+
+Redpanda supports generating Grafana dashboards from its metrics endpoints with `rpk generate grafana-dashboard`.
+
+To generate a comprehensive Grafana dashboard, run the following command and pipe the output to a file that can be imported into Grafana:
+
+```
+rpk generate grafana-dashboard --datasource <name> --metrics-endpoint <url> > <output-file>
+```
+
+- `<name>` is the name of the Prometheus data source configured in your Grafana instance.
+- `<url>` is the address to a Redpanda node's metrics endpoint (public or internal).
+    
+For `/public_metrics`, for example, run the following command: 
+
+    ```
+    rpk generate grafana-dashboard \
+    --datasource prometheus \
+    --metrics-endpoint <node-addr>:9644/public_metrics> redpanda-dashboard.json 
+    ```
+
+For details about the command, refer to the [rpk generate grafana-dashboard](../reference/rpk/rpk-generate/rpk-generate-grafana-dashboard.mdx) reference.
+
+In Grafana, import the generated JSON file to create a dashboard. Out of the box, Grafana generates panels tracking latency for 50%, 95%, and 99% (based on the maximum latency set), throughput, and error segmentation by type.
+
+You can use the imported dashboard to create new panels.
+
+1. Click **+** in the left pane, and select **Add a new panel**. 
+1. On the **Query** tab, select **Prometheus** data source. 
+1. Decide which metric you want to monitor, click **Metrics browser**, and type `redpanda` to show available public metrics from the Redpanda cluster.
 
 ## Enable statistics
 
@@ -139,8 +176,8 @@ Kafka producer rate
 | --- | --- | --- | --- |
 | redpanda_io_queue_total_read_ops | Total read operations passed in the queue. | class ("default" \| "compaction" \| "raft"), ioshard, mountpoint, shard | counter |
 | redpanda_io_queue_total_write_ops | Total write operations passed in the queue. | class ("default" \| "compaction" \| "raft"), ioshard, mountpoint, shard | counter |
-| redpanda_storage_disk_free_bytes | Disk storage bytes free. | none | counter |
-| redpanda_storage_disk_total_bytes | Total size of attached storage, in bytes. | none | counter |
+| redpanda_storage_disk_free_bytes | Disk storage bytes free. | none | gauge |
+| redpanda_storage_disk_total_bytes | Total size of attached storage, in bytes. | none | gauge |
 | redpanda_storage_disk_free_space_alert | Status of low storage space alert: 0-OK, 1-low space 2-degraded | none | gauge |
 | redpanda_memory_allocated_memory | Allocated memory size in bytes. | shard | gauge |
 | redpanda_memory_free_memory | Free memory size in bytes. | shard | gauge |

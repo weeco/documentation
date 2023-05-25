@@ -3,6 +3,13 @@ title: Data transformation with WebAssembly
 order: 0
 ---
 
+<head>
+    <meta name="title" content="Data Transforms | Redpanda Docs"/>
+    <meta name="description" content="Working with data transformation in Redpanda."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/labs/data-transform/" />
+</head>
+
+
 :::caution
 
 This feature is in technical preview and is not supported for production. For more information about technical previews, see [Technical Preview](/docs/labs/install-preview).
@@ -213,7 +220,7 @@ const {
   SimpleTransform,
   PolicyError,
   PolicyInjection
-} = require("@vectorizedio/wasm-api");
+} = require("@redpanda-data/wasm-api");
 const transform = new SimpleTransform();
 /* Topics that fire the transform function */
 transform.subscribe([["test-topic", PolicyInjection.Stored]]);
@@ -258,7 +265,7 @@ const {
   SimpleTransform,
   PolicyError,
   PolicyInjection
-} = require("@vectorizedio/wasm-api");
+} = require("@redpanda-data/wasm-api");
 ```
 
 It then creates a constant variable to hold the function `SimpleTransform`. This is the main function that we'll use in the project.
@@ -443,7 +450,7 @@ There is a global control topic for each Redpanda cluster with the name `coproce
 
 You can view the possible export values in Redpanda’s [GitHub repository](https://github.com/redpanda-data/redpanda/blob/dev/src/js/modules/public/Coprocessor.ts).
 
-The [API package](https://www.npmjs.com/package/@vectorizedio/wasm-api) is published under `npm`.
+The [API package](https://www.npmjs.com/package/@redpanda-data/wasm-api) is published under `npm`.
 
 ### Tech preview limitations
 

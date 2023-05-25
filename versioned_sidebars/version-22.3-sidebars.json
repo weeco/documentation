@@ -31,7 +31,7 @@
         {
           "type": "doc",
           "label": "Redpanda Quickstart",
-          "id": "get-started/quick-start/quick-start-docker"
+          "id": "get-started/quick-start"
         },
         {
           "type": "doc",
@@ -133,29 +133,58 @@
                       "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment"
                     },
                     {
-                      "type": "doc",
-                      "label": "Tutorial: Get Started with Kubernetes",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"
+                      "type": "category",
+                      "label": "Production Deployment Workflow",
+                      "link": {"type": "doc", "id": "deploy/deployment-option/self-hosted/kubernetes/production-workflow"},
+                      "items": [
+                        {
+                          "type": "doc",
+                          "label": "Kubernetes Cluster Requirements",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "Best Practices",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "Tune Worker Nodes",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "Deploy Redpanda",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy"
+                        }
+                      ]
                     },
                     {
-                      "type": "doc",
-                      "label": "Kubernetes Cluster Requirements",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements"
-                    },
-                    {
-                      "type": "doc",
-                      "label": "Best Practices",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices"
-                    },
-                    {
-                      "type": "doc",
-                      "label": "Tune Worker Nodes",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers"
-                    },
-                    {
-                      "type": "doc",
-                      "label": "Deploy Redpanda",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy"
+                      "type": "category",
+                      "label": "Guides",
+                      "link": {"type": "doc", "id": "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"},
+                      "items": [
+                        {
+                          "type": "doc",
+                          "label": "AKS",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/aks-guide"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "Amazon EKS",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/eks-guide"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "GKE",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/gke-guide"
+                        },
+                        {
+                          "type": "doc",
+                          "label": "Local (kind and Minikube)",
+                          "id": "deploy/deployment-option/self-hosted/kubernetes/local-guide"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -219,6 +248,11 @@
                   "type": "doc",
                   "label": "Redpanda Cloud Overview",
                   "id": "deploy/deployment-option/cloud/dedicated-byoc"
+                },
+                {
+                  "type": "doc",
+                  "label": "Quickstart",
+                  "id": "get-started/quick-start"
                 },
                 {
                   "type": "category",
@@ -290,8 +324,28 @@
           "items": [
             {
               "type": "doc",
+              "label": "Customize the Helm Chart",
+              "id": "manage/kubernetes/configure-helm-chart"
+            },
+            {
+              "type": "doc",
               "label": "Storage",
               "id": "manage/kubernetes/configure-storage"
+            },
+            {
+              "type": "category",
+              "label": "Tiered Storage",
+              "link": {
+                "type": "doc",
+                "id": "manage/kubernetes/tiered-storage"
+              },
+              "items": [
+                {
+                  "type": "doc",
+                  "label": "Data Archiving",
+                  "id": "manage/kubernetes/data-archiving"
+                }
+              ]
             },
             {
               "type": "category",
@@ -342,6 +396,21 @@
               "type": "doc",
               "label": "Rack Awareness",
               "id": "manage/kubernetes/kubernetes-rack-awareness"
+            },
+            {
+              "type": "doc",
+              "label": "Remote Read Replicas",
+              "id": "manage/kubernetes/remote-read-replicas"
+            },
+            {
+              "type": "doc",
+              "label": "Manage Pod Resources",
+              "id": "manage/kubernetes/manage-resources"
+            },
+            {
+              "type": "doc",
+              "label": "Troubleshoot",
+              "id": "manage/kubernetes/troubleshooting/troubleshoot"
             }
           ]
         },
@@ -366,7 +435,7 @@
             },
             {
               "type": "doc",
-              "label": "Rolling Upgrades",
+              "label": "Upgrade",
               "id": "manage/cluster-maintenance/rolling-upgrade"
             },
             "manage/cluster-maintenance/disk-utilization",
@@ -460,6 +529,11 @@
             }
           ]
         },
+        {
+          "type": "doc",
+          "label": "Remote Read Replicas",
+          "id": "manage/remote-read-replicas"
+        },
         "manage/schema-registry",
         {
           "type": "category",
@@ -487,7 +561,6 @@
           "label": "Rack Awareness",
           "id": "manage/rack-awareness"
         },
-        "manage/remote-read-replicas",
         "manage/monitoring",
         "manage/io-optimization"
       ]
@@ -505,6 +578,26 @@
         "reference/node-properties",
         "reference/node-configuration-sample",
         "reference/api-reference",
+        {
+          "type": "category",
+          "label": "Monitoring Metrics",
+          "link": {
+            "type": "doc",
+            "id": "reference/monitor-metrics"
+          },
+          "items": [
+            {
+              "type": "doc",
+              "label": "Public Metrics Reference",
+              "id": "reference/public-metrics-reference"
+            },
+            {
+              "type": "doc",
+              "label": "Internal Metrics Reference",
+              "id": "reference/internal-metrics-reference"
+            }
+          ]
+        },
         {
           "type": "category",
           "label": "rpk Commands",
@@ -798,7 +891,6 @@
                   },
                   "items": [
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune",
-                    "reference/rpk/rpk-redpanda/rpk-redpanda-tune-help",
                     "reference/rpk/rpk-redpanda/rpk-redpanda-tune-list"
                   ]
                 }
@@ -880,7 +972,6 @@
             "reference/redpanda-operator/crd"
           ]
         },
-        "reference/internal-metrics",
         {
           "type": "link",
           "label": "Release Notes",

@@ -3,16 +3,19 @@ title: Configure External Access through a NodePort Service
 tags:
   - Kubernetes
   - Helm configuration
+description: Expose your Redpanda cluster to clients outside of your Kubernetes cluster using a NodePort Service.
 ---
 
 <head>
     <meta name="title" content="Configure External Access through a NodePort Service | Redpanda Docs"/>
-    <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster using a NodePort Service."/>
+    <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster by using a NodePort Service."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/configure-external-access-nodeport/" />
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import ListenerNodePorts from '../shared/_listener-nodeports.mdx'
+import ValuesYaml from '../shared/_values-yaml.mdx'
 
 By default, Redpanda clusters are exposed through a NodePort Service. When the `external.type` field is set to `NodePort`, the Helm chart creates a NodePort Service that routes external traffic to the following listeners on the Redpanda brokers:
 
@@ -56,7 +59,7 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-domain.yaml
+    --values custom-domain.yaml --reuse-values
   ```
 
   </TabItem>
@@ -72,12 +75,16 @@ You can use a DNS provider to create A/AAAA records that route traffic from the 
   </TabItem>
   </Tabs>
 
+  :::note
+  <ValuesYaml path="external"/>
+  :::
+
 1. Find out on which worker nodes your Redpanda brokers are running.
 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.
@@ -136,7 +143,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain.yaml
+        --values custom-subdomain.yaml --reuse-values
       ```
 
       </TabItem>
@@ -152,6 +159,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       </TabItem>
       </Tabs>
+
+      :::info
+      <ValuesYaml path="external"/>
+      :::
 
     - Or, to use custom subdomains that are suffixed with the index of the StatefulSet replica, do the following.
     
@@ -172,7 +183,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain-ordinal.yaml
+        --values custom-subdomain-ordinal.yaml --reuse-values
       ```
 
       </TabItem>
@@ -189,12 +200,16 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
       </TabItem>
       </Tabs>
 
+      :::info
+      <ValuesYaml path="external"/>
+      :::
+
 1. Find out on which worker nodes your Redpanda brokers are running.
 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.
@@ -232,7 +247,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the IP address of each worker node.
@@ -258,7 +273,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values external-access-ip-addresses.yaml
+    --values external-access-ip-addresses.yaml --reuse-values
   ```
 
   </TabItem>
@@ -275,6 +290,10 @@ You can configure each Redpanda broker to advertise the IP address of the worker
   </TabItem>
   </Tabs>
 
+  :::note
+  <ValuesYaml path="external"/>
+  :::
+
   :::warning
   IP addresses can change. If the IP addresses of your worker nodes change, you must reconfigure the Redpanda brokers and all your external clients with the new IP addresses.
   :::
@@ -287,7 +306,7 @@ You can configure each Redpanda broker to advertise the IP address of the worker
 
 ## Next steps
 
-[Configure individual listeners](#configure-specific-listeners).
+- [Configure security](../../security) for your listeners.
 
-[Configure security](../../security) for your listeners.
+- [Configure listeners](../configure-listeners).
 

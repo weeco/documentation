@@ -45,8 +45,6 @@
   top: 7px;
 }
 
-
-
 .feedBackSection {
   color: var(--ifm-link-color);
 }
@@ -191,12 +189,18 @@ input[type="text"]:focus {
   background-color: var(--v-gray3);
 }
 
-.rightnav{
+.rightNavFeedback{
   max-height: calc(100vh - (var(--ifm-navbar-height) + 2rem));
-  position: sticky;
-  top: calc(var(--ifm-navbar-height) + 1rem);
+  margin-top: 150px;
 }
 
 .alignCenter{
   text-align: center;
+}
+
+.stickyToc {
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+  overflow-y: auto;
+  height: calc(100vh - (var(--ifm-navbar-height) + 2rem));
 }

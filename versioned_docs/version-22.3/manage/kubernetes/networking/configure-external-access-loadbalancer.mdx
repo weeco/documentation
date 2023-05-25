@@ -3,17 +3,20 @@ title: Configure External Access through LoadBalancer Services
 tags:
   - Kubernetes
   - Helm configuration
+description: Expose your Redpanda cluster to clients outside of your Kubernetes cluster using LoadBalancer Services.
 ---
 
 <head>
     <meta name="title" content="Configure External Access through LoadBalancer Services | Redpanda Docs"/>
-    <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster using LoadBalancer Services."/>
+    <meta name="description" content="Expose your Redpanda cluster to clients outside of your Kubernetes cluster by using LoadBalancer Services."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/configure-external-access-loadbalancer/" />
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ValuesYaml from '../shared/_values-yaml.mdx'
 
-To expose your Redpanda cluster externally though load balancers, you must do the following:
+To expose your Redpanda cluster externally through load balancers, you must do the following:
 
 1. [Create the LoadBalancer Services](#create-the-loadbalancer-services), one for each broker.
 1. [Configure each Redpanda broker with an advertised address](#configure-advertised-addresses) that points to its LoadBalancer Service.
@@ -169,12 +172,10 @@ If your load balancer instances have a default DNS name, you can configure each 
   ```bash
   kubectl get pod -n redpanda  \
   -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name -l \
-  app.kubernetes.io/component=redpanda,job-name!=redpanda-post-install,job-name!=redpanda-post-upgrade
+  app.kubernetes.io/component=redpanda-statefulset
   ```
 
 1. Find the DNS names for each of your load balancers.
-
-  If you're using managed Kubernetes,
 
 1. Add the DNS names to the `external.addresses` field in order. For example, the first DNS name in the list is assigned to `redpanda-0`, the second is assigned to `redpanda-1`, and so on.
 
@@ -193,7 +194,7 @@ If your load balancer instances have a default DNS name, you can configure each 
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values load-balancer-dns.yaml
+    --values load-balancer-dns.yaml --reuse-values
   ```
 
   </TabItem>
@@ -208,6 +209,10 @@ If your load balancer instances have a default DNS name, you can configure each 
 
   </TabItem>
   </Tabs>
+
+  :::note
+  <ValuesYaml path="external"/>
+  :::
 
 1. Use the load balancers' DNS names to communicate with the Redpanda cluster from outside the Kubernetes cluster:
 
@@ -237,7 +242,7 @@ You can use a DNS provider to create CNAME records that route traffic from the d
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-domain.yaml
+    --values custom-domain.yaml --reuse-values
   ```
 
   </TabItem>
@@ -253,6 +258,10 @@ You can use a DNS provider to create CNAME records that route traffic from the d
 
   </TabItem>
   </Tabs>
+
+  :::note
+  <ValuesYaml path="external"/>
+  :::
 
 1. Find the DNS names for each of your load balancers.
 
@@ -302,7 +311,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain.yaml
+        --values custom-subdomain.yaml --reuse-values
       ```
 
       </TabItem>
@@ -318,6 +327,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       </TabItem>
       </Tabs>
+
+      :::info
+      <ValuesYaml path="external"/>
+      :::
 
     - Or, to use custom subdomains that are suffixed with the index of the StatefulSet replica, do the following.
     
@@ -338,7 +351,7 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       ```bash
       helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-        --values custom-subdomain-ordinal.yaml
+        --values custom-subdomain-ordinal.yaml --reuse-values
       ```
 
       </TabItem>
@@ -354,6 +367,10 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
       </TabItem>
       </Tabs>
+
+      :::info
+      <ValuesYaml path="external"/>
+      :::
 
 1. Find the DNS names for each of your load balancers.
 
@@ -375,6 +392,6 @@ You can give each Redpanda broker a custom subdomain to advertise instead of the
 
 ## Next steps
 
-[Configure security](../../security) for your listeners.
+- [Configure security](../../security) for your listeners.
 
-[Configure external access to specific listeners](../configure-listeners).
+- [Configure listeners](../configure-listeners).

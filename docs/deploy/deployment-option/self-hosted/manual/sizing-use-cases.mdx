@@ -4,16 +4,17 @@ title: Sizing Use Cases
 
 <head>
     <meta name="title" content="Sizing Use Cases| Redpanda Docs"/>
-    <meta name="description" content="How to size Redpanda clusters for low, medium, and high throughput use cases in your data center or in the cloud."/>
+    <meta name="description" content="How to size Redpanda clusters for low, medium, and high throughput use cases in your data center or in object storage."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/manual/sizing-use-cases/" />
 </head>
 
-The following scenarios provide estimates and advice for sizing Redpanda clusters for different throughput and retention use cases in your data center and in the cloud. For details about sizing considerations, see [Sizing Guidelines](../../manual/sizing).
+The following scenarios provide estimates and advice for sizing Redpanda clusters for different throughput and retention use cases in your data center and in object storage. For details about sizing considerations, see [Sizing Guidelines](../../manual/sizing).
 
 :::note
 These use cases assume a happy path with known metrics and expected outputs, but many other factors can influence performance, such as batch size and other sources of network traffic.
 :::
 
-## Low throughput, short retention
+## Low throughput
 
 | Metric               | Value                   |
 | :------------------- | :---------------------- |
@@ -53,7 +54,7 @@ The following machine specifications provide a minimum for a bare metal cluster 
 | Network | 4 Gbps | Up to 10 Gbps | 10 Gbps | 5 Gbps |
 | Tiered Storage | False | False | False | False |
 
-## Medium throughput, long retention
+## Medium throughput
 
 | Metric               | Value                   |
 | :------------------- | :---------------------- |
@@ -61,11 +62,11 @@ The following machine specifications provide a minimum for a bare metal cluster 
 | Producer rate        | 2,000 messages per second |
 | Consumer throughput  | ~1,000 MB/sec (~8,000 Mbps) |
 | Consumer rate        | 4,000 messages per second |
-| Data retention       | 1 year                  |
+| Data retention       | 24 hours                |
 | Average message size | 250 KB                  |
 | Failure tolerance    | 1 node                  |
 
-This use case requires a long duration of data retention (1 year). Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth for replication traffic. This is attainable but expensive with cloud providers, and these speeds are not as prevalent throughout a typical data center.
+Producing an average of 500 MB/sec and consuming an average of 1,000 MB/sec equates to 2,500 MB/sec (20 Gbps) of network bandwidth for replication traffic. This is attainable but expensive with cloud providers, and these speeds are not as prevalent within a typical data center.
 
 With at least one partition for each core, the 500 MB/sec of data from producers is evenly distributed between the nodes. For example, with three nodes, each node receives approximately 167 MB/sec. However, that bandwidth value increases with data replication.
 
@@ -78,11 +79,9 @@ With at least one partition for each core, the 500 MB/sec of data from producers
 
 The additional 500 MB/sec for consumer throughput is for Tiered Storage and the bandwidth required to archive log segments to object storage. When Tiered Storage is enabled on a topic, it essentially adds another consumer’s worth of bandwidth on the network.
 
-Producing an average of 500 MB every second equates to over 40 TB of data each day. With a retention period of one year, the cluster needs over 14 PB of storage. This is more than can be squeezed into three nodes, so you’re forced to overprovision just to handle the data retention requirements. This isn’t an issue in the cloud with high-performance persistent storage options (like io2 in AWS, Extreme PD in GCP, and Ultra SSD in Azure), but at this scale, it’s very expensive.
+To balance the available local disk, consider exactly how many reads can be serviced from local storage. Different instance types or locally-attached NVMe SSD disks provide different amounts of local storage, and therefore different amounts of available data without going back to object storage.
 
-To balance the available local disk, consider exactly how many reads can be serviced from local storage. Different instance types or locally-attached NVMe SSD disks provide different amounts of local storage, and therefore different amounts of available data without going back to the cloud.
-
-A topic with Tiered Storage enabled can write data to faster local storage managed by local retention settings, and at the same time, it can write data to object storagage managed by different retention settings, or left to grow indefinitely. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store is a backup if a consumer needs to read from an older offset.
+A topic with Tiered Storage enabled can write data to faster local storage managed by local retention settings, and at the same time, it can write data to object storage managed by different retention settings, or left to grow for a longer period. Consumers that generally keep up with producers stream from local storage, but at this velocity that window of opportunity is narrower. The object store enables a consumer to read from an older offset when necessary.
 
 |  | Bare Metal | AWS | GCP | Azure |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
@@ -96,7 +95,7 @@ A topic with Tiered Storage enabled can write data to faster local storage manag
 | Network | 25 Gbps | 25 Gbps | 32 Gbps | 21 Gbps |
 | Tiered Storage | True | True | True | True |
 
-## High throughput, long retention
+## High throughput
 
 | Metric               | Value                   |
 | :------------------- | :---------------------- |
@@ -104,7 +103,7 @@ A topic with Tiered Storage enabled can write data to faster local storage manag
 | Producer rate        | 4,000 messages per second |
 | Consumer throughput  | 2,000 MB/sec (16,000 Mbps) |
 | Consumer rate        | 8,000 messages per second |
-| Data retention       | 1 year                  |
+| Data retention       | 24 hours                  |
 | Average message size | 250 KB                  |
 | Failure tolerance    | 2 nodes                  |
 

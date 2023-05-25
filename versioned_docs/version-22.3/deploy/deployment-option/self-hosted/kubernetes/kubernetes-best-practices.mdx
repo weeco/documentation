@@ -7,6 +7,7 @@ tags:
 <head>
     <meta name="title" content="Best Practices for Redpanda in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="Understand what Redpanda recommends for Kubernetes deployments and why."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -24,7 +25,7 @@ the `helm` command might look something like the following:
 ```bash
 helm upgrade --install redpanda redpanda/redpanda \
     --namespace redpanda --create-namespace \
-    --values custom-storage-class.yaml
+    --values custom-storage-class.yaml --reuse-values
 ```
 
 The `custom-storage-class.yaml` filename gives you a hint about how the Helm chart has been customized.
@@ -35,12 +36,12 @@ You can pass more than one `--values` option in the same command. For example, i
 helm upgrade --install redpanda redpanda/redpanda \
     --namespace redpanda --create-namespace \
     --values custom-storage-class.yaml
-    --values enable-tls.yaml
+    --values enable-tls.yaml --reuse-values
 ```
 
 ## Deploy at least three Pod replicas
 
-It's best practice to deploy at least three Pod replicas (Redpanda brokers).
+Redpanda recommends at least three Pod replicas (Redpanda brokers) to use as _seed servers_. Seed servers are used to bootstrap the gossip process for new brokers joining a cluster. When a new broker joins, it connects to the seed servers to find out the topology of the Redpanda cluster. A larger number of seed servers makes consensus more robust and minimizes the chance of unwanted clusters forming when brokers are restarted without any data.
 
 By default, the Helm chart deploys a StatefulSet with three Redpanda brokers. You can specify the number of Redpanda brokers in the `statefulset.replicas` configuration.
 
@@ -125,16 +126,16 @@ Redpanda recommends using a NodePort Service to expose worker nodes and to give 
 The NodePort Service provides the lowest latency of all the Services because it does not include any unnecessary routing or middleware.
 Client connections go to the Redpanda brokers in the most direct way possible, through the worker nodes.
 
-For security reasons, you may not want to expose worker nodes directly to clients using a NodePort Service.
+Depending on your deployment and security policies, you may not be able to access worker nodes through a NodePort Service.
 If you choose to use another Service, consider the impact on the cost and performance of your deployment:
 
-- LoadBalancer Service - To make each Redpanda broker accessible with LoadBalancer Services, you need one for each Redpanda broker so that requests can be routed to specific brokers rather than balancing requests across all brokers. Load balancers are expensive, add latency and occasional packet loss, and add an unnecessary layer of complexity.
+- LoadBalancer Service - To make each Redpanda broker accessible with LoadBalancer Services, you need one LoadBalancer Service for each Redpanda broker so that requests can be routed to specific brokers rather than balancing requests across all brokers. Load balancers are expensive, add latency and occasional packet loss, and add an unnecessary layer of complexity.
 
 - Ingress - To make each Redpanda broker accessible with Ingress, you need to run an Ingress controller and set up routing to each Redpanda broker. Routing adds latency and can be a throughput bottleneck.
 
 See [Networking and Connectivity](../../../../../manage/kubernetes/networking/networking-and-connectivity).
 
-## Secure yor cluster
+## Secure your cluster
 
 To protect your Kubernetes cluster, do the following:
 
@@ -150,3 +151,45 @@ To protect your Redpanda cluster, enable and configure the following security fe
 
 - [Authentication through SASL](../../../../../manage/kubernetes/security/sasl-kubernetes)
 - [Network encryption through TLS](../../../../../manage/kubernetes/security/kubernetes-tls)
+
+## Set resource requests and limits for memory and CPU
+
+In a production cluster, the resources you allocate to Redpanda should be proportionate to your machine type. Redpanda recommends that you determine and set these values before deploying the cluster, but you can also update the values on a running cluster.
+
+:::info
+In a running Redpanda cluster, you cannot decrease the number of CPU cores. You can only increase the number of CPU cores.
+:::
+
+Redpanda recommends that you allocate the following memory and CPU resources:
+
+- At least 4 CPU cores.
+
+- At least 2GiB (2Gi) of memory per core for Redpanda.
+
+- Memory `min` and `max` configurations set to the same values.
+  
+  Setting the `min` and `max` configurations to the same values makes sure that Kubernetes assigns a `Guaranteed` Quality of Service (QoS) class to your Pods. Kubernetes uses QoS classes to decide which Pods to evict from a node that runs out of resources. When a node runs out of resources, Kubernetes evicts Pods with a `Guaranteed` QoS last. For more details about QoS, see the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#create-a-pod-that-gets-assigned-a-qos-class-of-guaranteed).
+
+For example:
+
+```yaml
+resources:
+  cpu:
+    cores: 4
+  memory:
+    container:
+      min: 8Gi
+      max: 8Gi
+```
+
+:::tip
+If you omit the `resources.memory.container.min` configuration, it is set to the same value as the `resources.memory.container.max` configuration.
+:::
+
+To determine how many resources are available on your worker nodes, run:
+
+```bash
+kubectl describe nodes
+```
+
+For instructions on setting Pod resources, see [Manage Pod Resources in Kubernetes](../../../../../manage/kubernetes/manage-resources).

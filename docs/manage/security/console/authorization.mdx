@@ -1,15 +1,19 @@
 ---
 title: Authorization
+linkRoot: ../../../../
 ---
 
 <head>
     <meta name="title" content="SSO Authentication in Redpanda Console | Redpanda Docs"/>
     <meta name="description" content="Configure authentication with external identity providers such as Google, GitHub or Okta in Redpanda Console."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/console/authorization/" />
 </head>
 
 
+import EnterpriseLicenseNote from '@site/docs/shared/_enterprise-license.mdx'
+
 :::info
-This feature requires an [Enterprise license](../../../../get-started/licenses). To upgrade, contact [Redpanda sales](https://redpanda.com/try-redpanda?section=enterprise-cloud).
+<EnterpriseLicenseNote frontmatter={frontMatter}/>
 :::
 
 Redpanda Console uses role-based access control (RBAC) to restrict system access to authorized users.
@@ -50,10 +54,10 @@ It does not include permissions to view the list of Console users (admin tab) th
 
 The editor role grants all permissions that come with the `viewer` role and additionally includes:
 
-- Managing all topic aspects (create topic, delete topic, publish and delete topic records, ...)
-- Managing all cluster configuration aspects (editing node or cluster configs, ...)
-- Managing all consumer group aspects (edit group offsets, delete group offsets)
-- Managing all Kafka connect aspects (create/update/delete or start/pause/stop connectors)
+- Managing all topic aspects, such as creating topics, editing topic configuration, deleting topics, and publishing and deleting topic records.
+- Managing all cluster configuration aspects, such as editing node or cluster configs.
+- Managing all consumer group aspects, such as editing group offsets or deleting group offsets.
+- Managing all Kafka connect aspects, such as creating/updating/deleting or starting/pausing/stopping connectors.
 
 It does not include the permission to create/remove ACLs or to create or remove a service account.
 
@@ -110,7 +114,7 @@ Each subject has three properties that are configurable to bind a role to one or
 
 `kind`: Supported kinds are: `group` and `user`.
 
-`providers`: One of `Google`, `GitHub`, `Okta` and `OIDC`.
+`providers`: One of `Google`, `GitHub`, `Okta`, `OIDC` and `Plain`.
 
 `name`: Depending on your `kind` and `provider` the `name` property may refer to different things.
 This is an overview to what it refers for each provider:
@@ -124,6 +128,7 @@ This is an overview to what it refers for each provider:
 | `user`  | Okta     | Login handle / email                                                                                                    |
 | `group` | Okta     | Okta Group ID (not name), for example "00gra1ajmZa1G1ks04x9"                                                            |
 | `user`  | OIDC     | Configurable via `login.oidc.userIdentifyingClaimKey` (by default it uses the `sub` claim from the issued access token) |
+| `user`  | Plain    | Username as defined in the `login.plain.credentials` configuration                                                      |
 
 ### Groups sync
 

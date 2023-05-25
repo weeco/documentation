@@ -5,6 +5,7 @@ title: Data Transforms
 <head>
     <meta name="title" content="Data Transforms | Redpanda Docs"/>
     <meta name="description" content="Working with data transformation in Redpanda."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/labs/data-transform/" />
 </head>
 
 :::caution
@@ -222,7 +223,7 @@ const {
   SimpleTransform,
   PolicyError,
   PolicyInjection
-} = require("@vectorizedio/wasm-api");
+} = require("@redpanda-data/wasm-api");
 const transform = new SimpleTransform();
 /* Topics that fire the transform function */
 transform.subscribe([["test-topic", PolicyInjection.Stored]]);
@@ -265,7 +266,7 @@ const {
   SimpleTransform,
   PolicyError,
   PolicyInjection
-} = require("@vectorizedio/wasm-api");
+} = require("@redpanda-data/wasm-api");
 ```
 
 It then creates a constant variable to hold the function `SimpleTransform`. This is the main function to use in the project.
@@ -449,7 +450,7 @@ There's a global control topic for each Redpanda cluster with the name `coproces
 
 You can view the possible export values in Redpanda’s [GitHub repository](https://github.com/redpanda-data/redpanda/blob/dev/src/js/modules/public/Coprocessor.ts).
 
-The [API package](https://www.npmjs.com/package/@vectorizedio/wasm-api) is published under `npm`.
+The [API package](https://www.npmjs.com/package/@redpanda-data/wasm-api) is published under `npm`.
 
 ### Lab limitations
 
@@ -467,7 +468,7 @@ The [API package](https://www.npmjs.com/package/@vectorizedio/wasm-api) is publi
 
 ## Share your feedback
 
-Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/vectorizedio/redpanda/discussions). 
+Send your feedback on our [Slack Community](https://rpnda.co/slack) or [GitHub Discussions](https://github.com/redpanda-data/redpanda/discussions). 
 
 ## Suggested reading
 

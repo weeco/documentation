@@ -5,6 +5,7 @@ title: Schema Registry
 <head>
     <meta name="title" content="Redpanda Schema Registry | Redpanda Docs"/>
     <meta name="description" content="Overview, concepts, and tutorials of the schema registry in Redpanda."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/schema-registry/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -47,6 +48,8 @@ Redpanda's schema registry supports the following data serialization formats for
 Redpanda built the schema registry directly into the Redpanda binary. The schema registry runs out-of-the-box with Redpanda's default configuration, and it requires no new binaries to install and no new services to deploy or maintain.
 
 Every broker allows mutating REST calls, so there is no need to configure leadership or failover strategies. Schema are stored in a compacted topic, and the registry uses optimistic concurrency control at the topic level to detect and avoid collisions.
+
+Schema registry publishes its records' metadata to an internal topic, `_schemas`, as its backend store. By default, `_schemas` is protected from deletion and configuration changes by Kafka clients (see the [kafka_nodelete_topics](../../reference/cluster-properties#kafka_nodelete_topics) cluster property).
 
 ## Use schema registry
 
@@ -91,7 +94,7 @@ To run the sample commands and code in each example, follow these steps to set u
 
         base_uri = "http://localhost:8081"
         ```
-3. [Install Redpanda with Docker](../../get-started/quick-start/quick-start-docker).
+3. [Install Redpanda with Docker](../../get-started/quick-start).
 4. Start Redpanda with Docker:
 
     ```bash
@@ -106,7 +109,7 @@ To run the sample commands and code in each example, follow these steps to set u
     -p 8082:8082 \
     -p 9092:9092 \
     --detach \
-    docker.vectorized.io/vectorized/redpanda start \
+    docker.redpanda.com/redpandadata/redpanda start \
     --overprovisioned \
     --smp 1 \
     --memory 1G \
@@ -430,7 +433,8 @@ You can configure different types of schema compatibility, which are applied to 
 - `BACKWARD_TRANSITIVE` - consumers using the new schema (for example, version 10) can read data from producers using all previous schemas (for example, versions 1-9).
 - `FORWARD` - consumers using the previous schema (for example, version 9) can read data from producers using the new schema (for example, version 10).
 - `FORWARD_TRANSITIVE` - consumers using any previous schema (for example, versions 1-9) can read data from producers using the new schema (for example, version 10).
-- `FULL` - the new schema is compatible with all previous schemas.
+- `FULL` - a new schema and the previous schema (for example, versions 10 and 9) are both backward and forward compatible with each other.
+- `FULL_TRANSITIVE` - each schema is both backward and forward compatible with all registered schemas.
 - `NONE` - no schema compatibility checks are done.
 
 To set the compatibility type for a subject, make a PUT request to `/config/<subject-name>` with the specific compatibility type:

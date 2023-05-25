@@ -2,6 +2,12 @@
 title: Kubernetes quickstart with local access on minikube
 ---
 
+<head>
+    <meta name="title" content="Redpanda Quickstart | Redpanda Docs"/>
+    <meta name="description" content="Spin up a Redpanda cluster with Docker or Redpanda Cloud, create a basic streaming application, and explore your cluster in Redpanda Console."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/get-started/quick-start/" />
+</head>
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -162,7 +168,7 @@ kubectl apply \
 -f https://raw.githubusercontent.com/redpanda-data/redpanda/dev/src/go/k8s/config/samples/one_node_cluster.yaml
 ```
 
-You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/vectorizedio/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/vectorizedio/redpanda/tree/dev/src/go/k8s/config/samples). 
+You can view the resource configuration options, such as storage capacity, network configuration, or TLS configuration in the [cluster_types](https://github.com/redpanda-data/redpanda/blob/dev/src/go/k8s/apis/redpanda/v1alpha1/cluster_types.go) file in GitHub. You can also find additional [sample configuration files](https://github.com/redpanda-data/redpanda/tree/dev/src/go/k8s/config/samples). 
 
 3. Verify that the cluster was created successfully with this command: 
 

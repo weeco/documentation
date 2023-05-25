@@ -5,6 +5,7 @@ title: Introduction to Redpanda
 <head>
     <meta name="title" content="Intro Redpanda events streaming | Redpanda Docs"/>
     <meta name="description" content="Explanation of Redpanda event streaming"/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/get-started/intro-to-events/" />
 </head>
 
 Distributed systems often require data and system updates to happen as quickly as possible. In software architecture, these updates can be handled with either messages or events. 
@@ -26,7 +27,7 @@ Consumers are client applications that subscribe to Redpanda topics to asynchron
 
 Redpanda decouples producers from consumers to allow for asynchronous event processing, event tracking, event manipulation, and event archiving. Producers and consumers interact with Redpanda using the Apache Kafka® API.  
 
-![Producers and consumers in a cluster](../../../static/img/cluster.png)
+![Producers and consumers in a cluster](/img/cluster.png)
 
 | Event-driven architecture (Redpanda) | Message-driven architecture |
 | -------- | ------ |
@@ -49,7 +50,7 @@ Redpanda is less complex and less costly than any other commericial mission-crit
   
 - Redpanda is packaged as a single binary: it doesn't rely on any external systems. 
   
-  It's compatible with the Kafka API, so it works with the full ecosystem of tools and integrations built on Kafka. Redpanda can be deployed on bare metal, containers, or virtual machines in a data center or in the cloud. And Redpanda Console makes it easy to set up, manage, and monitor your clusters. Additionally, Tiered Storage lets you offload log segments to cloud storage in near real time, providing infinite data retention and topic recovery. 
+  It's compatible with the Kafka API, so it works with the full ecosystem of tools and integrations built on Kafka. Redpanda can be deployed on bare metal, containers, or virtual machines in a data center or in the cloud. And Redpanda Console makes it easy to set up, manage, and monitor your clusters. Additionally, Tiered Storage lets you offload log segments to cloud storage in near real time, providing long-term data retention and topic recovery. 
   
 - Redpanda uses the [Raft consensus algorithm](https://raft.github.io/) throughout the platform to coordinate writing data to log files and replicating that data across multiple servers. 
   

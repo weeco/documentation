@@ -3,15 +3,29 @@ title: Configure Listeners in Kubernetes
 tags:
   - Kubernetes
   - Helm configuration
+description: Customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether.
+linkRoot: ../../../../
+deployment: Kubernetes
+contextLinks:
+  - name: 'Linux'
+    to: manage/security/listener-configuration
+  - name: 'Kubernetes'
+    to: 'manage/kubernetes/networking/configure-listeners'
 ---
 
 <head>
     <meta name="title" content="Configure Listeners in Kubernetes | Redpanda Docs"/>
     <meta name="description" content="Customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/kubernetes/networking/configure-listeners/" />
 </head>
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ValuesYaml from '../shared/_values-yaml.mdx'
+import ContextLink from '@site/src/components/ContextButton.js'
+
+<ContextLink frontmatter={frontMatter}
+/>
 
 You can customize the advertised ports for each listener on all Redpanda brokers, or disable listeners altogether.
 
@@ -44,7 +58,7 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-admin-port.yaml
+    --values custom-admin-port.yaml --reuse-values
   ```
 
   </TabItem>
@@ -75,7 +89,7 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-kafka-port.yaml
+    --values custom-kafka-port.yaml --reuse-values
   ```
 
   </TabItem>
@@ -90,7 +104,7 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
   </Tabs>
 
 </TabItem>
-<TabItem value="proxy" label="PandaProxy">
+<TabItem value="proxy" label="HTTP Proxy">
 
   <Tabs groupId="helm-config">
   <TabItem value="values" label="--values">
@@ -106,7 +120,7 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-pandaproxy-port.yaml
+    --values custom-pandaproxy-port.yaml --reuse-values
   ```
 
   </TabItem>
@@ -137,7 +151,7 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-schema-registry-port.yaml
+    --values custom-schema-registry-port.yaml --reuse-values
   ```
 
   </TabItem>
@@ -153,6 +167,10 @@ Redpanda doesn’t validate the configured port numbers. Make sure to verify the
 
 </TabItem>
 </Tabs>
+
+:::note
+<ValuesYaml path="listeners"/>
+:::
 
 ### Disable external access
 
@@ -171,7 +189,7 @@ You can disable external access for all listeners or for individual listeners.
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values disable-external-access.yaml
+    --values disable-external-access.yaml --reuse-values
   ```
 
   </TabItem>
@@ -201,7 +219,7 @@ You can disable external access for all listeners or for individual listeners.
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values disable-external-admin-api.yaml
+    --values disable-external-admin-api.yaml --reuse-values
   ```
 
   </TabItem>
@@ -231,7 +249,7 @@ You can disable external access for all listeners or for individual listeners.
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values disable-external-kafka-api.yaml
+    --values disable-external-kafka-api.yaml --reuse-values
   ```
 
   </TabItem>
@@ -246,7 +264,7 @@ You can disable external access for all listeners or for individual listeners.
   </Tabs>
 
 </TabItem>
-<TabItem value="proxy" label="PandaProxy">
+<TabItem value="proxy" label="HTTP Proxy">
 
   <Tabs groupId="helm-config">
   <TabItem value="values" label="--values">
@@ -261,7 +279,7 @@ You can disable external access for all listeners or for individual listeners.
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values disable-external-pandaproxy.yaml
+    --values disable-external-pandaproxy.yaml --reuse-values
   ```
 
   </TabItem>
@@ -291,7 +309,7 @@ You can disable external access for all listeners or for individual listeners.
 
   ```bash
   helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values disable-external-schema-registry.yaml
+    --values disable-external-schema-registry.yaml --reuse-values
   ```
 
   </TabItem>
@@ -307,6 +325,10 @@ You can disable external access for all listeners or for individual listeners.
 
 </TabItem>
 </Tabs>
+
+:::note
+<ValuesYaml path="listeners"/>
+:::
 
 ## Next steps
 
