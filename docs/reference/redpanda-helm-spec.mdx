@@ -6,7 +6,7 @@ tags:
 description: Find the default values and descriptions of settings in the Redpanda Helm chart.
 ---
 
-![Version: 4.0.23](https://img.shields.io/badge/Version-4.0.23-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.10](https://img.shields.io/badge/AppVersion-v23.1.10-informational?style=flat-square)
+![Version: 4.0.24](https://img.shields.io/badge/Version-4.0.24-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.10](https://img.shields.io/badge/AppVersion-v23.1.10-informational?style=flat-square)
 
 This page describes the official Redpanda Helm Chart. In particular, this page describes the contents of the chart’s [`values.yaml` file](https://github.com/redpanda-data/helm-charts/blob/main/charts/redpanda/values.yaml). Each of the settings is listed and described on this page, along with any default values.
 
@@ -250,7 +250,7 @@ Listener settings.  Override global settings configured above for individual lis
 **Default:**
 
 ```
-{"admin":{"external":{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}},"http":{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}},"kafka":{"external":{"default":{"advertisedPorts":[31092],"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}},"rpc":{"port":33145,"tls":{"cert":"default","requireClientAuth":false}},"schemaRegistry":{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}}
+{"admin":{"external":{"default":{"advertisedPorts":[31644],"port":9645,"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}},"http":{"authenticationMethod":null,"enabled":true,"external":{"default":{"advertisedPorts":[30082],"authenticationMethod":null,"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}},"kafka":{"authenticationMethod":null,"external":{"default":{"advertisedPorts":[31092],"authenticationMethod":null,"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}},"rpc":{"port":33145,"tls":{"cert":"default","requireClientAuth":false}},"schemaRegistry":{"authenticationMethod":null,"enabled":true,"external":{"default":{"advertisedPorts":[30081],"authenticationMethod":null,"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}}
 ```
 
 ### [listeners.admin](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin)
@@ -260,7 +260,7 @@ Admin API listener (only one).
 **Default:**
 
 ```
-{"external":{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}}
+{"external":{"default":{"advertisedPorts":[31644],"port":9645,"tls":{"cert":"external"}}},"port":9644,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.admin.external](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external)
@@ -270,7 +270,7 @@ Optional external access settings.
 **Default:**
 
 ```
-{"default":{"advertisedPorts":[31644],"tls":{"cert":"external"}}}
+{"default":{"advertisedPorts":[31644],"port":9645,"tls":{"cert":"external"}}}
 ```
 
 ### [listeners.admin.external.default](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external.default)
@@ -280,7 +280,7 @@ Name of the external listener.
 **Default:**
 
 ```
-{"advertisedPorts":[31644],"tls":{"cert":"external"}}
+{"advertisedPorts":[31644],"port":9645,"tls":{"cert":"external"}}
 ```
 
 ### [listeners.admin.external.default.tls](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.admin.external.default.tls)
@@ -324,7 +324,7 @@ HTTP API listeners (aka PandaProxy).
 **Default:**
 
 ```
-{"enabled":true,"external":{"default":{"advertisedPorts":[30082],"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}}
+{"authenticationMethod":null,"enabled":true,"external":{"default":{"advertisedPorts":[30082],"authenticationMethod":null,"port":8083,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8082,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.kafka](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.kafka)
@@ -334,7 +334,7 @@ Kafka API listeners.
 **Default:**
 
 ```
-{"external":{"default":{"advertisedPorts":[31092],"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}}
+{"authenticationMethod":null,"external":{"default":{"advertisedPorts":[31092],"authenticationMethod":null,"port":9094,"tls":{"cert":"external"}}},"port":9093,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [listeners.kafka.external.default.advertisedPorts](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=listeners.kafka.external.default.advertisedPorts)
@@ -372,7 +372,7 @@ Schema registry listeners.
 **Default:**
 
 ```
-{"enabled":true,"external":{"default":{"advertisedPorts":[30081],"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}
+{"authenticationMethod":null,"enabled":true,"external":{"default":{"advertisedPorts":[30081],"authenticationMethod":null,"port":8084,"tls":{"cert":"external"}}},"kafkaEndpoint":"default","port":8081,"tls":{"cert":"default","requireClientAuth":false}}
 ```
 
 ### [logging](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=logging)
