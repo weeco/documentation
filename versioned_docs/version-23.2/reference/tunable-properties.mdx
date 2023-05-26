@@ -50,11 +50,11 @@ Flag to auto-enable new feature flags after upgrades.
 
 ### cloud_storage_cache_check_interval
 
-Timeout to check if cache eviction should be triggered.
+Minimum time between trims of tiered storage cache. If a fetch operation requires trimming the cache, and the time interval between the fetch and the most recent trim is less than this property, then trimming will be delayed until this property's interval has elapsed.
 
 **Units**: milliseconds
 
-**Default**: 30000 (30 seconds)
+**Default**: 5000 (5 seconds)
 
 **Restart required**: yes
 
