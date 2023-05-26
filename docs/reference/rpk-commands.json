@@ -678,7 +678,7 @@
         }
     },
     "rpk cloud auth": {
-        "description": "Manage rpk cloud authentications",
+        "description": "Manage rpk cloud authentications.\n\nAn rpk cloud authentication allows you to talk to Redpanda Cloud. Most likely,\nyou will only ever need to use a single SSO based login and you will not need\nthis command space. Multiple authentications can be useful if you have multiple\nRedpanda Cloud accounts for different organizations and want to swap between\nthem, or if you use SSO as well as client credentials. It is recommended to\nonly use a single SSO based login.",
         "usage": "Usage:\n  rpk cloud auth [flags]\n  rpk cloud auth [command]",
         "flags": {
             "-h, --help": {
@@ -700,7 +700,7 @@
         }
     },
     "rpk cloud auth create": {
-        "description": "Create an rpk cloud auth",
+        "description": "Create an rpk cloud auth.\n\nThis command creates a new rpk cloud auth. The default SSO login does not need\nany additional auth values (the token is populated on login) so you can just\ncreate an empty auth. You can also use --set to set key=value pairs for client\ncredentials.\n\nThe --set flag supports autocompletion, suggesting the -X key format. If you\nbegin writing a YAML path, the flag will suggest the rest of the path.\n\nrpk always switches the current cloud auth to the newly created auth.",
         "usage": "Usage:\n  rpk cloud auth create [NAME] [flags]",
         "flags": {
             "--description": {
@@ -730,7 +730,7 @@
         }
     },
     "rpk cloud auth delete": {
-        "description": "Delete an rpk cloud auth",
+        "description": "Delete an rpk cloud auth.\n\nDeleting a cloud auth removes it from the rpk.yaml file. If the deleted\nauth was the current auth, rpk will use a default SSO auth the next time\nyou try to login and, if the login is successful, will safe that auth.",
         "usage": "Usage:\n  rpk cloud auth delete [NAME] [flags]",
         "flags": {
             "-h, --help": {
@@ -752,7 +752,7 @@
         }
     },
     "rpk cloud auth edit": {
-        "description": "Edit an rpk context",
+        "description": "Edit an rpk auth.\n\nThis command opens your default editor to edit the specified cloud auth, or the\ncurrent cloud auth if no cloud auth is specified.",
         "usage": "Usage:\n  rpk cloud auth edit [NAME] [flags]",
         "flags": {
             "-h, --help": {
@@ -922,7 +922,7 @@
         }
     },
     "rpk cloud login": {
-        "description": "Log in to the Redpanda cloud\n\nThis command checks for an existing Redpanda Cloud API token and, if present, \nensures it is still valid. If no token is found or the token is no longer valid, \nthis command will login and save your token along with the client ID used to \nrequest the token.\n\nYou may use any of the following methods to pass the cloud credentials to rpk:\n\nSSO:\n\nThis will automatically launch your default web browser and prompt you to \nauthenticate via our Redpanda Cloud page. Once you have successfully \nauthenticated, you will be ready to use rpk cloud commands.\n\nCLIENT CREDENTIALS:\n\nCloud client credentials can be used to login to Redpanda, they can be created \nin the Clients tab of the Users section in the Redpanda Cloud online interface. \nclient credentials can be provided in three ways, in order of preference:\n\n* In your rpk cloud auth, 'client_id' and 'client_secret' fields\n* Through RPK_CLOUD_CLIENT_ID and RPK_CLOUD_CLIENT_SECRET environment variables\n* Through the --client-id and --client-secret flags\n\nIf none of these are provided, rpk will use the SSO method to login. \nIf you specify environment variables or flags, they will not be synced to the\nrpk.yaml file unless the --save flag is passed. The cloud authorization \ntoken and client ID is always synced.",
+        "description": "Log in to the Redpanda cloud\n\nThis command checks for an existing Redpanda Cloud API token and, if present, \nensures it is still valid. If no token is found or the token is no longer valid, \nthis command will login and save your token along with the client ID used to \nrequest the token.\n\nYou may use either SSO or client credentials to log in.\n\nSSO\n\nThis will automatically launch your default web browser and prompt you to \nauthenticate via our Redpanda Cloud page. Once you have successfully \nauthenticated, you will be ready to use rpk cloud commands.\n\nCLIENT CREDENTIALS\n\nCloud client credentials can be used to login to Redpanda, they can be created \nin the Clients tab of the Users section in the Redpanda Cloud online interface. \nclient credentials can be provided in three ways, in order of preference:\n\n* In your rpk cloud auth, 'client_id' and 'client_secret' fields\n* Through RPK_CLOUD_CLIENT_ID and RPK_CLOUD_CLIENT_SECRET environment variables\n* Through the --client-id and --client-secret flags\n\nIf none of these are provided, rpk will use the SSO method to login. \nIf you specify environment variables or flags, they will not be synced to the\nrpk.yaml file unless the --save flag is passed. The cloud authorization \ntoken and client ID is always synced.\n\nPROFILE SELECTION\n\nThis command by default attempts to populate a new profile that talks to a\ncloud cluster for you. If you have an existing cloud profile, this will select\nit, prompting which to use if you have many. If you have no cloud profile, this\ncommand will prompt you to select one that exists in your organization. If you\nwant to disable automatic profile creation and selection, use --no-profile.",
         "usage": "Usage:\n  rpk cloud login [flags]",
         "flags": {
             "--client-id": {
@@ -3600,7 +3600,7 @@
         }
     },
     "rpk profile": {
-        "description": "Manage rpk profiles",
+        "description": "Manage rpk profiles.\n\nAn rpk profile talks to a single Redpanda cluster. You can create multiple\nprofiles for multiple clusters and swap between them with 'rpk profile use'.\nMultiple profiles may be useful if, for example, you use rpk to talk to\na localhost cluster, a dev cluster, and a prod cluster, and you want to keep\nyour configuration in one place.",
         "usage": "Usage:\n  rpk profile [flags]\n  rpk profile [command]",
         "flags": {
             "-h, --help": {
@@ -3622,7 +3622,7 @@
         }
     },
     "rpk profile create": {
-        "description": "Create an rpk profile",
+        "description": "Create an rpk profile.\n\nThere are multiple ways to create a profile. If no name is provided, the\nname \"default\" is used.\n\n* If you have an older redpanda.yaml, you can use --from-simple to generate\n  a new profile from the existing redpanda.yaml file.\n\n* You can use --from-cloud to generate a profile from an existing cloud cluster\n  id. Note that you must be logged in with 'rpk cloud login' first.\n\n* You can use --set key=value to directly set fields. The key can either be\n  the name of a -X flag or the path to the field in the profile's YAML format.\n  For example, using --set tls.enabled=true OR --set kafka_api.tls.enabled=true\n  is equivalent. The former corresponds to the -X flag tls.enabled, while the\n  latter corresponds to the path kafka_api.tls.enabled in the profile's YAML.\n\nThe --set flag is always applied last and can be used to set additional fields\nin tandem with --from-simple or --from-cloud.\n\nThe --set flag supports autocompletion, suggesting the -X key format. If you\nbegin writing a YAML path, the flag will suggest the rest of the path.\n\nIt is recommended to always use the --description flag; the description is\nprinted in the output of 'rpk profile list'.\n\nrpk always switches to the newly created profile.",
         "usage": "Usage:\n  rpk profile create [NAME] [flags]",
         "flags": {
             "-d, --description": {
@@ -3641,9 +3641,9 @@
                 "type": "-",
                 "description": "Help for create."
             },
-            "-k, --kv": {
+            "-s, --set": {
                 "type": "strings",
-                "description": "Create and switch to a new profile, filling profile fields with key=value pairs."
+                "description": "Create and switch to a new profile, setting profile fields with key=value pairs."
             },
             "--config": {
                 "type": "string",
@@ -3660,7 +3660,7 @@
         }
     },
     "rpk profile delete": {
-        "description": "Delete an rpk profile",
+        "description": "Delete an rpk profile.\n\nDeleting a profile removes it from the rpk.yaml file. If the deleted profile\nwas the selected profile, rpk will use in-memory defaults until a new profile\nis selected.",
         "usage": "Usage:\n  rpk profile delete [NAME] [flags]",
         "flags": {
             "-h, --help": {
@@ -3682,7 +3682,7 @@
         }
     },
     "rpk profile edit": {
-        "description": "Edit an rpk profile",
+        "description": "Edit an rpk profile.\n\nThis command opens your default editor to edit the specified profile, or\nthe current profile if no profile is specified.\n\nIf you are editing the current profile, rpk also populates what you edit\nwith internal defaults, user specified flags, and environment variables.\nIf you want to edit the current raw profile as it exists in rpk.yaml, you\ncan use the --raw flag.",
         "usage": "Usage:\n  rpk profile edit [NAME] [flags]",
         "flags": {
             "-h, --help": {
@@ -3730,7 +3730,7 @@
         }
     },
     "rpk profile print": {
-        "description": "Print rpk profile configuration",
+        "description": "Print rpk profile configuration.\n\nIf no name is specified, this command prints the current profile as it is\nloaded in rpk with internal defaults, user specified flags, and environment\nvariables applied. If you wish to print the current raw profile as it exists\nin rpk.yaml, you can use the --raw flag.",
         "usage": "Usage:\n  rpk profile print [NAME] [flags]",
         "flags": {
             "-h, --help": {
@@ -3778,7 +3778,7 @@
         }
     },
     "rpk profile set": {
-        "description": "Set fields in the current rpk profile",
+        "description": "Set fields in the current rpk profile.\n\nAs in the create command, this command takes a list of key=value pairs to write\nto the current profile.\n\nThe key can either be the name of a -X flag or the path to the field in the\nprofile's yaml format. For example, using --set tls.enabled=true OR --set\nkafka_api.tls.enabled=true is equivalent. The former corresponds to the -X flag\ntls.enabled, while the latter corresponds to the path kafka_api.tls.enabled in\nthe profile's yaml.\n\nThis command supports autocompletion of valid keys, suggesting the -X key\nformat. If you begin writing a YAML path, this command will suggest the rest of\nthe path.\n\nYou can also use the format 'set key value' if you intend to only set one key.",
         "usage": "Usage:\n  rpk profile set [KEY=VALUE]+ [flags]",
         "flags": {
             "-h, --help": {
@@ -4716,7 +4716,7 @@
         }
     },
     "rpk redpanda tune": {
-        "description": "Sets the OS parameters to tune system performance.\n\nAvailable tuners:\n\n  - all.\n  - clocksource\n  - swappiness\n  - disk_write_cache\n  - net\n  - aio_events\n  - fstrim\n  - cpu\n  - transparent_hugepages\n  - coredump\n  - ballast_file\n  - disk_irq\n  - disk_scheduler\n  - disk_nomerges\n\nTo learn more about a tuner, run 'rpk redpanda tune help <tuner name>'.",
+        "description": "Sets the OS parameters to tune system performance.\n\nAvailable tuners:\n\n  - all.\n  - clocksource\n  - swappiness\n  - coredump\n  - disk_write_cache\n  - fstrim\n  - net\n  - aio_events\n  - transparent_hugepages\n  - ballast_file\n  - disk_irq\n  - disk_scheduler\n  - disk_nomerges\n  - cpu\n\nTo learn more about a tuner, run 'rpk redpanda tune help <tuner name>'.",
         "usage": "Usage:\n  rpk redpanda tune [list of elements to tune] [flags]\n  rpk redpanda tune [command]",
         "flags": {
             "--cpu-set": {
