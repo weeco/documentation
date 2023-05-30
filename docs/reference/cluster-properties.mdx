@@ -265,7 +265,7 @@ Flag to enable limiting the write rate for the controller log.
 
 ### enable_leader_balancer
 
-Enable automatic leadership rebalancing.
+Enable automatic leadership rebalancing. Mode is set by [`leader_balancer_mode`](#leader_balancer_mode).
 
 **Type**: boolean
 
@@ -282,6 +282,20 @@ Enable rack-aware replica assignment.
 **Type**: boolean
 
 **Default**: false
+
+**Restart required**: no
+
+---
+
+### leader_balancer_mode
+
+Mode of the leader balancer for optimizing movements of leadership between shards (logical CPU cores). Enabled by [`enable_leader_balancer`](#enable_leader_balancer).
+
+Valid modes:
+- `random_hill_climbing`: a shard is randomly chosen and leadership is moved to it if the load on the original shard is reduced.
+- `greedy_balanced_shards`: leadership movement is based on a greedy heuristic of moving leaders from the most loaded shard to the least loaded shard.
+
+**Default**: `random_hill_climbing`
 
 **Restart required**: no
 
@@ -541,6 +555,11 @@ Maximum number of Kafka client connections per IP address, per broker. If `null`
 
 Flag to require authorization for Kafka connections. If `null`, the property is disabled, and authorization is instead enabled by [enable_sasl](#enable_sasl). 
 
+Valid values:
+- `null`: Ignored. Authorization is enabled with [`enable_sasl`](#enable_sasl): `true`
+- `true`: authorization is required.
+- `false`: authorization is disabled.
+
 **Type**: boolean
 
 **Default**: null
@@ -548,6 +567,18 @@ Flag to require authorization for Kafka connections. If `null`, the property is 
 **Related properties**:
 - [enable_sasl](#enable_sasl)
 - `kafka_api[].authentication_method`
+
+---
+
+### kafka_enable_partition_reassignment
+
+Enable the Kafka partition reassignment API.
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
 
 ---
 
