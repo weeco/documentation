@@ -1113,6 +1113,38 @@ Requires that an empty file named `.redpanda_data_dir` be present in the [data d
 
 ## Support properties
 
+### legacy_permit_unsafe_log_operations
+
+Flag enabling a Redpanda cluster operator to use unsafe control characters within strings such as consumer group names or user names.
+
+This flag applies only for Redpanda clusters v23.1 or earlier that have upgraded to v23.2 or later. Newly created Redpanda clusters v23.2 or later will ignore this property. This flag will be removed in a future version of Redpanda, after which strings containing control characters won't be accepted.
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+**Related properties**: [legacy_unsafe_log_warning_interval_sec](#legacy_unsafe_log_warning_interval_sec)
+
+---
+
+### legacy_unsafe_log_warning_interval_sec
+
+Period at which to log a warning about using unsafe strings containing control characters. 
+
+If unsafe strings are permitted by [`legacy_permit_unsafe_log_operations`](#legacy_permit_unsafe_log_operations), a warning will be logged at an interval specified by this property.
+
+**Units**: seconds
+
+**Default**: 300
+
+**Restart required**: no
+
+**Related properties**: [legacy_permit_unsafe_log_operations](#legacy_permit_unsafe_log_operations)
+
+---
+
 ### metrics_reporter_url
 
 URL of the cluster metrics reporter.

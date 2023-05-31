@@ -49,6 +49,23 @@ Flag to auto-enable new feature flags after upgrades.
 
 ## Object storage properties
 
+### cloud_storage_backend
+
+Optional cloud storage backend variant used to select API capabilities. If `unknown`, will be inferred from other configuration parameters.
+
+**Default**: `unknown`
+
+**Valid values**:
+- `unknown`
+- `aws`
+- `google_s3_compat`
+- `azure`
+- `minio`
+
+**Restart required**: yes
+
+---
+
 ### cloud_storage_cache_check_interval
 
 Timeout to check if cache eviction should be triggered.
@@ -56,6 +73,41 @@ Timeout to check if cache eviction should be triggered.
 **Units**: milliseconds
 
 **Default**: 30000 (30 seconds)
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_credentials_host
+
+Hostname to connect to for retrieving role-based credentials. If `null`, hostname is derived from [`cloud_storage_credentials_source`](#cloud_storage_credentials_source). Only required when using IAM role based access.
+
+**Type**: string
+
+**Default**: null
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_credentials_source
+
+The source of credentials to connect to cloud services. If [`cloud_storage_credentials_host`](#cloud_storage_credentials_host) is `null`, this is used to derive the hostname to connect to retrieve role-based credentials.
+
+Valid values:
+- If deploying on an EC2 VM: `aws_instance_metadata`
+- If deploying on EKS: `sts` (AWS service token service)
+- If deploying on a GCE VM: `gcp_instance_metadata`
+- If deploying on GKE: `gcp_instance_metadata`
+- If using fixed credentials from a configuration file: `config_file`
+
+**Default**: `config_file`
+
+**Valid values**:
+- `config_file`
+- `aws_instance_metadata`
+- `sts`
+- `gcp_instance_metadata`
 
 **Restart required**: yes
 
@@ -116,6 +168,18 @@ Flag to enable adjacent segment merging in cloud object storage. When this prope
 
 ---
 
+### cloud_storage_graceful_transfer_timeout_ms
+
+Maximum duration to wait for uploads to complete before a leadership transfer. If `null`, leadership transfers proceed with no delay.
+
+**Units**: milliseconds
+
+**Default**: 5000 (5 sec)
+
+**Restart required**: no
+
+---
+
 ### cloud_storage_housekeeping_interval_ms
 
 Interval for object storage housekeeping tasks.
@@ -125,6 +189,9 @@ Interval for object storage housekeeping tasks.
 **Default**: 300000 (5 minutes)
 
 **Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
 
 ---
 
@@ -283,6 +350,18 @@ The number of bytes of size-based retention for topics that are created during a
 **Default**: 1073741824 (1 GiB)
 
 **Restart required**: no
+
+---
+
+### cloud_storage_roles_operation_timeout_ms
+
+Timeout for IAM role related operations. While connecting to object storage, failed tasks that refresh the IAM roles token are retried after this timeout elapses.
+
+**Units**: milliseconds
+
+**Default**: 30000 (30 sec)
+
+**Restart required**: yes
 
 ---
 
@@ -899,6 +978,9 @@ Default duration of quota tracking window.
 **Default**: 1000
 
 **Restart required**: no
+
+**Related properties**:
+- [`kafka_admin_topic_api_rate`](../cluster-properties#kafka_admin_topic_api_rate) refers to the number of partition mutations per `default_window_sec`. 
 
 ---
 
@@ -1734,6 +1816,18 @@ Max compacted segment size after consolidation.
 **Units**: bytes
 
 **Default**: 5368709120 (5 GiB)
+
+**Restart required**: no
+
+---
+
+### memory_abort_on_alloc_failure
+
+Flag to enable termination of the Redpanda process when a memory allocation fails. If `false`, a failed memory allocation throws an exception.
+
+**Type**: boolean
+
+**Default**: true
 
 **Restart required**: no
 

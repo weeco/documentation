@@ -51,11 +51,11 @@ Flag to auto-enable new feature flags after upgrades.
 
 ### cloud_storage_cache_check_interval
 
-Timeout to check if cache eviction should be triggered.
+Minimum time between trims of tiered storage cache. If a fetch operation requires trimming the cache, and the time interval between the fetch and the most recent trim is less than this property, then trimming will be delayed until this property's interval has elapsed.
 
 **Units**: milliseconds
 
-**Default**: 30000 (30 seconds)
+**Default**: 5000 (5 seconds)
 
 **Restart required**: yes
 
@@ -1527,6 +1527,20 @@ Timeout for raft's append entries RPC.
 **Default**: 5000
 
 **Restart required**: yes
+
+--------------------------------------------------------------------------------
+
+## Schema properties
+
+### kafka_schema_id_validation_cache_capacity
+
+Cache capacity per shard for validating schema IDs.
+
+**Units**: number of cache entries
+
+**Default**: 128
+
+**Restart required**: no
 
 --------------------------------------------------------------------------------
 
