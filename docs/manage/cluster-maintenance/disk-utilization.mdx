@@ -33,8 +33,8 @@ Set retention properties at the topic level or the cluster level. If a value isn
 | Retention property | Cluster level | Topic level <br /> (overrides cluster configuration) |
 | ---               | ---                                                |  ---                                 |
 | Time-based        | `delete_retention_ms` <br /> Default - `604800000` | `retention.ms` <br /> No default     |
-| Time-based (with Tiered Storage enabled)       | `retention_local_target_ms_default` <br /> Default - `86400000`| `retention.local.target.ms` <br /> No default     |
 | Size-based        | `retention_bytes`  <br /> Default - `null`         | `retention.bytes`  <br /> No default |
+| Time-based (with Tiered Storage enabled)       | `retention_local_target_ms_default` <br /> Default - `86400000`| `retention.local.target.ms` <br /> No default     |
 | Size-based (with Tiered Storage enabled)       | `retention_local_target_bytes_default`  <br /> Default - `null`         | `retention.local.target.bytes`  <br /> No default |
 | Segment size      | `log_segment_size`  <br /> Default - `1073741824`  | `segment.bytes`  <br /> No default |
 

@@ -5,6 +5,7 @@ title: Configure Authorization
 <head>
     <meta name="title" content="Configure Authorization | Redpanda Docs"/>
     <meta name="description" content="ACLs are the main mechanism supported by Redpanda to manage user permissions."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/manage/security/authorization/" />
 </head>
 
 Authorization works in tandem with [authentication](../authentication). Access-control lists (ACLs) provide a way to configure fine-grained access to provisioned users. ACLs work with SASL/SCRAM and with mTLS with principal mapping for authentication. 
@@ -74,7 +75,7 @@ Redpanda supports the following operations:
 
 The following operations are necessary for each individual client request, where **resource** corresponds to the resource flag, and "for xyz" corresponds to the resource names in the request:
 
-```
+```text-nocopy
 
 PRODUCING/CONSUMING
 
@@ -222,7 +223,7 @@ Every `rpk acl` command can use these flags:
 | Flag             | Description   |
 | --------         | ------    |  
 | --admin-api-tls-cert         | The certificate to be used for TLS authentication with the Admin API.    | 
-| --admin-api-tls-enabled         | Enable TLS for the Admin API (not necessary if specifying custom certs). This is assumed as true when passing other --admin-api-tls flags.    |  
+| --admin-api-tls-enabled         | Enable TLS for the Admin API (not necessary if specifying custom certificates). This is assumed as true when passing other --admin-api-tls flags.    |  
 | --admin-api-tls-key         | The certificate key to be used for TLS authentication with the Admin API.    | 
 | --admin-api-tls-truststore         | The truststore to be used for TLS communication with the Admin API.    |  
 | --brokers         | Comma-separated list of broker ip:port pairs (for example, --brokers '192.168.78.34:9092,192.168.78.35:9092,192.179.23.54:9092' ). Alternatively, you can set the REDPANDA_BROKERS environment variable with the comma-separated list of broker addresses.    | 
@@ -231,7 +232,7 @@ Every `rpk acl` command can use these flags:
 | --password         | SASL password to be used for authentication.    |  
 | --sasl-mechanism         | The authentication mechanism to use. Supported values: SCRAM-SHA-256, SCRAM-SHA-512.    | 
 | --tls-cert         | The certificate to be used for TLS authentication with the broker.    |  
-| --tls-enabled         | Enable TLS for the Kafka API (not necessary if specifying custom certs). This is assumed to be true when passing other --tls flags.    | 
+| --tls-enabled         | Enable TLS for the Kafka API (not necessary if specifying custom certificates). This is assumed to be true when passing other --tls flags.    | 
 | --tls-key         | The certificate key to be used for TLS authentication with the broker.    |  
 | --tls-truststore         | The truststore to be used for TLS communication with the broker.    | 
 | --user         | SASL user to be used for authentication.    | 
@@ -324,7 +325,7 @@ You can use the global flags and some other local flags. Following are the avail
 
 ### User
  
-This command manages the SASL users. If SASL is enabled, a SASL user talks to Redpanda, and ACLs control what your user has access to. Using SASL requires setting `enable_sasl: true` in the Redpanda section of your `redpanda.yaml`.
+This command manages the SCRAM users. If SASL is enabled, a SCRAM user talks to Redpanda, and ACLs control what your user has access to. Using SASL requires setting `kafka_enable_authorization: true` in the Redpanda section of your `redpanda.yaml`.
  
 ```bash
 rpk acl user [command] [globalACLFlags] [globalUserFlags]
@@ -334,7 +335,7 @@ Following are the available global user flags:
 
 | Flag             | Description   | Supported Value    |   
 | --------         | ------    | ------    |   
-| --api-urls         | The comma-separated list of Admin API addresses (IP:port). You must specify one for each node.    | strings    |   
+| --api-urls         | The comma-separated list of Admin API addresses (IP:port). You must specify one for each broker.    | strings    |   
 | -h, --help         | -h, --help    | Help.    |   
 
 ### User create

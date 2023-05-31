@@ -518,7 +518,6 @@
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
 /docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 /docs/data-management/rack-awareness/                                                 /docs/manage/rack-awareness/  301!
-/docs/beta/*                                                                          /docs/:splat 301!
 
 
 ## Without platform

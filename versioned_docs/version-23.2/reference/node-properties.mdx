@@ -7,6 +7,7 @@ toc_max_heading_level: 2
 <head>
     <meta name="title" content="Node configuration properties | Redpanda Docs"/>
     <meta name="description" content="Node configuration properties list."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/reference/node-properties/" />
 </head>
 
 Node configuration properties are applied individually to each node in a cluster. The following describes each node configuration property, with its default setting if applicable.
@@ -148,6 +149,20 @@ IP address and port of the Kafka API endpoint that handles requests.
 ### kafka_api_tls
 
 Transport Layer Security (TLS) configuration for the Kafka API endpoint.
+
+**Default**: null
+
+---
+
+### large_allocation_warning_threshold
+
+Enables log warning messages for memory allocations greater than the given threshold size, in bytes.
+
+If set to `null`, the property is disabled, so no log messages are enabled.
+
+If enabled, the log warnings are rate limited: the first warning will be for any allocation greater than or equal to the configured threshold, then for every subsequent warning the threshold is increased by 1.618x the current threshold.
+
+**Units**: bytes per memory allocation
 
 **Default**: null
 
