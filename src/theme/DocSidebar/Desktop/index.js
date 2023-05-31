@@ -33,7 +33,7 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
         <SearchBar />
         <div className={styles.searchPlaceholder}></div>
         <div className={styles.topPanelLanguageContainer}>
-          <label className={styles.label}>Language:</label> English
+          <label className={styles.label}>Language: English</label> 
         </div>
 
         {!(
@@ -41,7 +41,7 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}) {
               ) && (
           <div className={styles.topPanelVersionContainer}>
             <label className={styles.label}>Version:</label>
-            <DocsVersionDropdownNavbarItem
+            <DocsVersionDropdownNavbarItem className={styles.versionNumber}
               docsPluginId={"default"}
               dropdownItemsBefore={[]}
               dropdownItemsAfter={[]}
