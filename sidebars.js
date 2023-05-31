@@ -76,44 +76,67 @@ module.exports = {
           type: "category",
           label: "Build a Chat Room Application",
           link: { type: "doc", id: "develop/code-examples" },
-          items: [ {
-            type: "category",
-            label: "Redpanda Chat Room Application",
-            link: { type: "doc", id: "develop/chat-room" },
-            items: [
-              {
-                type: "doc",
-                label: "Go (Docker)",
-                id: "develop/guide-go",
+          items: [{
+              type: "doc",
+              label: "Chat Room Application",
+              id: "develop/chat-room",
               },
               {
-                type: "doc",
-                label: "Go (Redpanda Cloud)",
-                id: "develop/guide-go-cloud",
+                type: "category",
+                label: "Docker",
+                link: { type: "doc", id: "develop/chat-room-docker" },
+                items: [
+                  {
+                    type: "doc",
+                    label: "Go",
+                    id: "develop/guide-go",
+                  },
+                  {
+                    type: "doc",
+                    label: "Java",
+                    id: "develop/guide-java",
+                  },
+                  {
+                    type: "doc",
+                    label: "Node.js",
+                    id: "develop/guide-nodejs",
+                  },
+                  {
+                    type: "doc",
+                    label: "Python",
+                    id: "develop/guide-python",
+                  },
+                ]
               },
               {
-                type: "doc",
-                label: "Node.js (Docker)",
-                id: "develop/guide-nodejs",
-              },
-              {
-                type: "doc",
-                label: "Node.js (Redpanda Cloud)",
-                id: "develop/guide-nodejs-cloud",
-              },
-              {
-                type: "doc",
-                label: "Python (Docker)",
-                id: "develop/guide-python",
-              },
-              {
-                type: "doc",
-                label: "Python (Redpanda Cloud)",
-                id: "develop/guide-python-cloud",
+                type: "category",
+                label: "Redpanda Cloud",
+                link: { type: "doc", id: "develop/chat-room-cloud" },
+                items: [
+                  {
+                    type: "doc",
+                    label: "Go",
+                    id: "develop/guide-go-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Java",
+                    id: "develop/guide-java-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Node.js",
+                    id: "develop/guide-nodejs-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Python",
+                    id: "develop/guide-python-cloud",
+                  },
+                ]
               },
             ]
-          }]
-        },
+          },
         "develop/http-proxy",
         "develop/config-topics",
         {
@@ -235,7 +258,7 @@ module.exports = {
                       type: "doc",
                       label: "Deploy for Development",
                       id: "deploy/deployment-option/self-hosted/manual/production/dev-deployment",
-                    },                    
+                    },
                     {
                       type: "doc",
                       label: "Automate Deployment for Production",

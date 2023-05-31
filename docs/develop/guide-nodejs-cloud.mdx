@@ -31,6 +31,13 @@ Create a basic chat room application with Redpanda Cloud and Kafka clients devel
 
 [Install Node.js for your platform](https://nodejs.org/en/download/package-manager/).
 
+:::note
+Redpanda Cloud environments use certificates signed by
+[Let's Encrypt](https://letsencrypt.org/). Most programming languages will
+load their root certificate authority (CA), `ISRG Root X1`, by default so you
+shouldn't need to provide a custom CA.
+:::
+
 ## Set up Redpanda Cloud
 
 <SetUpCloud frontmatter={frontMatter}/>
@@ -334,10 +341,9 @@ Build the client chat application, run it from multiple client terminals, and ch
 
     1. When prompted with `Enter user name:`, enter a unique name for the chat room.
 
-1. Use the chat application: enter a message in a terminal, and verify that the message is received in the other terminal(s).
+1. Use the chat application: enter a message in a terminal, and verify that the message is received in the other terminals.
 
-  <details>
-  <summary>Example output from Alice's terminal</summary>
+  For example:
 
   ```
   Enter user name:
@@ -346,21 +352,6 @@ Build the client chat application, run it from multiple client terminals, and ch
   Alice: Hi, I'm Alice
   Bob: Hi Alice, I'm Bob, nice to meet you
   ```
-
-  </details>
-
-    <details>
-  <summary>Example output from Bob's terminal</summary>
-
-  ```
-  Enter user name:
-  Bob
-  Connected, press Ctrl+C to exit
-  Alice: Hi, I'm Alice
-  Bob: Hi Alice, I'm Bob, nice to meet you
-  ```
-
-  </details>
 
 ## Next steps
 

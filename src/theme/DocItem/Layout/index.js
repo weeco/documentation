@@ -27,6 +27,7 @@ function createEditablePlaceholders () {
 
   for (let i = 0; i < codeElements.length; i++) {
     const codeElement = codeElements[i];
+    if (codeElement.parentElement.classList.includes('xml')) return
     addEditableSpan(/&lt;.[^&A-Z]*&gt;/g, codeElement);
   }
 }
