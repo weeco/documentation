@@ -25,10 +25,8 @@ By default, all topics on self-hosted Redpanda clusters keep the last 24 hours o
 Retention properties control how long messages are kept on disk before they're deleted or compacted. Setting message retention properties is the best way to prevent old messages from accumulating on disk to the point that the disk becomes full. You can configure retention properties to delete messages based on the following conditions:
 
 * Message age is exceeded.
-* Aggregate message size in the topic is exceeded.
+* Aggregate message size in the topic is exceeded. 
 * Either message age or aggregate message size in the topic is exceeded.
-
-Set retention properties at the topic level or the cluster level. If a value isn't specified for the topic, then the topic uses the value for the cluster. Note that cluster-level property names use snake-case, while topic-level properties use dots.
 
 | Retention property | Cluster level | Topic level <br /> (overrides cluster configuration) |
 | ---               | ---                                                |  ---                                 |
@@ -39,6 +37,10 @@ Set retention properties at the topic level or the cluster level. If a value isn
 | Segment size      | `log_segment_size`  <br /> Default - `1073741824`  | `segment.bytes`  <br /> No default |
 
 Data expires from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10 GiB, then every partition in the topic has a limit of 10 GiB storage in the cloud. When `retention.bytes` is exceeded by data in object storage, the data in object storage is trimmed. With Tiered Storage enabled, data expires from local storage following `retention.local.target.ms` or `retention.local.target.bytes`. 
+
+:::note
+Both size-based and time-based retention policies are applied simultaneously, so it's possible for your size-based property to override your time-based property, or vice versa. For example, if your size-based property requires removing one segment, and your time-based property requires removing three segments, then three segments are removed. Size-based properties reclaim disk space as close as possible to the maximum size, without exceeding the limit. 
+:::
 
 Based on these properties, Redpanda runs a log cleanup process in the background. If you start to run out of disk space, adjust your retention properties to reduce the amount of disk space used. 
 

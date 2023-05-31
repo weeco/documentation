@@ -4,11 +4,14 @@ Redpanda supports retention limits and compaction for topics using Tiered Storag
 
 Starting in Redpanda version 22.3, object storage is the default storage tier for all streaming data, and retention properties work the same for Tiered Storage topics and local storage topics. Data is retained in object storage until it reaches the configured time or size limit. 
 
-:::note
-During upgrade, Redpanda preserves retention settings for existing topics.
+Data becomes eligible for deletion from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10 GiB, then every partition in the topic has a limit of 10 GiB in object storage. When `retention.bytes` is exceeded by data in object storage, the data in object storage is trimmed. If neither `retention.ms` nor `retention.bytes` is specified, then cluster-level defaults are used. 
+
+:::note notes
+- During upgrade, Redpanda preserves retention settings for existing topics.
+- Both size-based and time-based retention policies are applied simultaneously, so it's possible for your size-based property to override your time-based property, or vice versa. For example, if your size-based property requires removing one segment, and your time-based property requires removing three segments, then three segments are removed. Size-based properties reclaim disk space as close as possible to the maximum size, without exceeding the limit.
 :::
 
-Data becomes eligible for deletion from object storage following `retention.ms` or `retention.bytes`. For example, if `retention.bytes` is set to 10 GiB, then every partition in the topic has a limit of 10 GiB in object storage. When `retention.bytes` is exceeded by data in object storage, the data in object storage is trimmed. If neither `retention.ms` nor `retention.bytes` is specified, then cluster-level defaults are used. For more information, see <Link to={props.frontmatter.linkRoot + 'manage/cluster-maintenance/disk-utilization/#configure-message-retention'}>Configure message retention</Link>.
+For more information, see <Link to={props.frontmatter.linkRoot + 'manage/cluster-maintenance/disk-utilization/#configure-message-retention'}>Configure message retention</Link>.
 
 #### Compacted topics in Tiered Storage
 
