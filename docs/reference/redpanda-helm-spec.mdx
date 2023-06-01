@@ -6,7 +6,7 @@ tags:
 description: Find the default values and descriptions of settings in the Redpanda Helm chart.
 ---
 
-![Version: 4.0.27](https://img.shields.io/badge/Version-4.0.27-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.10](https://img.shields.io/badge/AppVersion-v23.1.10-informational?style=flat-square)
+![Version: 4.0.28](https://img.shields.io/badge/Version-4.0.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v23.1.10](https://img.shields.io/badge/AppVersion-v23.1.10-informational?style=flat-square)
 
 This page describes the official Redpanda Helm Chart. In particular, this page describes the contents of the chart’s [`values.yaml` file](https://github.com/redpanda-data/helm-charts/blob/main/charts/redpanda/values.yaml). Each of the settings is listed and described on this page, along with any default values.
 
@@ -204,7 +204,7 @@ Redpanda Docker image settings.
 **Default:**
 
 ```
-{"pullPolicy":"IfNotPresent","repository":"vectorized/redpanda","tag":""}
+{"pullPolicy":"IfNotPresent","repository":"docker.redpanda.com/redpandadata/redpanda","tag":""}
 ```
 
 ### [image.pullPolicy](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=image.pullPolicy)
@@ -217,7 +217,11 @@ The imagePullPolicy. If `image.tag` is 'latest', the default is `Always`.
 
 Docker repository from which to pull the Redpanda Docker image.
 
-**Default:** `"vectorized/redpanda"`
+**Default:**
+
+```
+"docker.redpanda.com/redpandadata/redpanda"
+```
 
 ### [image.tag](https://artifacthub.io/packages/helm/redpanda-data/redpanda?modal=values&path=image.tag)
 
