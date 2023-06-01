@@ -1,5 +1,5 @@
 ---
-title: Configure Topics
+title: Manage Topics
 ---
 
 <head>
@@ -186,3 +186,18 @@ rpk topic  delete -r '^f.*' '.*r$'
 ```
 
 Note that the first regular expression starts with the `^` symbol, and the last ends with the `$` symbol. This requirement helps prevent accidental deletions.
+
+## Delete records from a topic
+
+To free up disk space, you can use `kafka-delete-records.sh` to delete data from the beginning of a partition up to a requested offset. This DeleteRecords API lets you delete data with precise control up to a point in time or to a specific business event (offset). This can be important for compliance reasons, because the offset represents the true creation time of the event, not when it was stored by Redpanda. The DeleteRecords API is also useful if time-based message retention is storing more data than anticipated. Use this when you know that all consumers have read up to that given point in time and the data is no longer needed.
+
+To delete records, run `kafka-delete-records.sh`:
+
+_NEED EXAMPLE_
+
+:::note notes
+- To delete records, `cleanup.policy` cannot be set to `compact`.
+- Local storage is deleted synchronously, but if a broker is offline during the request, it may retain data until it comes back online. 
+- Object storage is deleted asynchronously. When DeleteRecords returns, the partition's start offset will have advanced, but the work required to garbage collect delete segments may not be complete.
+- After calling DeleteRecords, the Tiered Storage cache may contain data from before the offset. This data is not visible to clients but could be read by someone with access to the local disk of a Redpanda node.
+:::
