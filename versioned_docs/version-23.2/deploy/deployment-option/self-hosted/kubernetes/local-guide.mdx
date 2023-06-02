@@ -5,6 +5,7 @@ title: Deploy a Local Development Cluster with kind or minikube
 <head>
     <meta name="title" content="Deploy a Local Redpanda Cluster for Development | Redpanda Docs"/>
     <meta name="description" content="Deploy a local Redpanda cluster with Redpanda Console using the Helm chart."/>
+    <link rel="canonical" href="https://docs.redpanda.com/docs/deploy/deployment-option/self-hosted/kubernetes/local-guide/" />
 </head>
 
 import Tabs from '@theme/Tabs';
@@ -129,7 +130,8 @@ helm install cert-manager jetstack/cert-manager  --set installCRDs=true --namesp
   helm install redpanda redpanda/redpanda \
     --namespace redpanda \
     --create-namespace \
-    --set external.domain=${DOMAIN}
+    --set external.domain=${DOMAIN} \
+    --set statefulset.initContainers.setDataDirOwnership.enabled=true
   ```
 
   The installation displays some tips for getting started.

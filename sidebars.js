@@ -76,44 +76,67 @@ module.exports = {
           type: "category",
           label: "Build a Chat Room Application",
           link: { type: "doc", id: "develop/code-examples" },
-          items: [ {
-            type: "category",
-            label: "Redpanda Chat Room Application",
-            link: { type: "doc", id: "develop/chat-room" },
-            items: [
-              {
-                type: "doc",
-                label: "Go (Docker)",
-                id: "develop/guide-go",
+          items: [{
+              type: "doc",
+              label: "Chat Room Application",
+              id: "develop/chat-room",
               },
               {
-                type: "doc",
-                label: "Go (Redpanda Cloud)",
-                id: "develop/guide-go-cloud",
+                type: "category",
+                label: "Docker",
+                link: { type: "doc", id: "develop/chat-room-docker" },
+                items: [
+                  {
+                    type: "doc",
+                    label: "Go",
+                    id: "develop/guide-go",
+                  },
+                  {
+                    type: "doc",
+                    label: "Java",
+                    id: "develop/guide-java",
+                  },
+                  {
+                    type: "doc",
+                    label: "Node.js",
+                    id: "develop/guide-nodejs",
+                  },
+                  {
+                    type: "doc",
+                    label: "Python",
+                    id: "develop/guide-python",
+                  },
+                ]
               },
               {
-                type: "doc",
-                label: "Node.js (Docker)",
-                id: "develop/guide-nodejs",
-              },
-              {
-                type: "doc",
-                label: "Node.js (Redpanda Cloud)",
-                id: "develop/guide-nodejs-cloud",
-              },
-              {
-                type: "doc",
-                label: "Python (Docker)",
-                id: "develop/guide-python",
-              },
-              {
-                type: "doc",
-                label: "Python (Redpanda Cloud)",
-                id: "develop/guide-python-cloud",
+                type: "category",
+                label: "Redpanda Cloud",
+                link: { type: "doc", id: "develop/chat-room-cloud" },
+                items: [
+                  {
+                    type: "doc",
+                    label: "Go",
+                    id: "develop/guide-go-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Java",
+                    id: "develop/guide-java-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Node.js",
+                    id: "develop/guide-nodejs-cloud",
+                  },
+                  {
+                    type: "doc",
+                    label: "Python",
+                    id: "develop/guide-python-cloud",
+                  },
+                ]
               },
             ]
-          }]
-        },
+          },
         "develop/http-proxy",
         "develop/config-topics",
         {
@@ -235,7 +258,7 @@ module.exports = {
                       type: "doc",
                       label: "Deploy for Development",
                       id: "deploy/deployment-option/self-hosted/manual/production/dev-deployment",
-                    },                    
+                    },
                     {
                       type: "doc",
                       label: "Automate Deployment for Production",
@@ -249,7 +272,7 @@ module.exports = {
                   ]
                 },
                     "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    "deploy/deployment-option/self-hosted/manual/high-availability",  
+                    "deploy/deployment-option/self-hosted/manual/high-availability",
                     {
                       type: "doc",
                       label: "Sizing Use Cases",
@@ -321,12 +344,77 @@ module.exports = {
                 {
                   type: "category",
                   label: "Managed Connectors",
-                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },  
+                  link: { type: "doc", id: "deploy/deployment-option/cloud/managed-connectors/index" },
                   items: [
                     {
                       type: "doc",
-                      label: "Create an S3 Sink Connector",
+                      label: "AWS S3 Sink Connector",
                       id: "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Google BigQuery Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-gcp-bigquery-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "GCS Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-gcs-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "HTTP Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-http-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "JDBC Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "JDBC Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-jdbc-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MirrorMaker2 Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MirrorMaker2 Checkpoint Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-checkpoint-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MirrorMaker2 Heartbeat Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mmaker-heartbeat-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MongoDB Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-sink-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MongoDB Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mongodb-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "MySQL (Debezium) Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-mysql-source-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "PostgreSQL (Debezium) Source Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-postgresql-connector",
+                    },
+                    {
+                      type: "doc",
+                      label: "Snowflake Sink Connector",
+                      id: "deploy/deployment-option/cloud/managed-connectors/create-snowflake-connector",
                     },
                   ],
                 },
@@ -354,7 +442,7 @@ module.exports = {
                     type: "doc",
                     label: "Cluster Properties",
                     id: "manage/kubernetes/cluster-property-configuration",
-                  },  
+                  },
                   {
                     type: "doc",
                     label: "Storage",
@@ -363,8 +451,8 @@ module.exports = {
                   {
                     type: "category",
                     label: "Tiered Storage",
-                    
-                    
+
+
                     link: {
                       type: "doc",
                       id: "manage/kubernetes/tiered-storage",
@@ -518,22 +606,22 @@ module.exports = {
                     label: "Manage Throughput",
                     id: "manage/cluster-maintenance/manage-throughput",
                   },
-              
+
                   "manage/cluster-maintenance/configure-availability",
                   {
                     type: "doc",
                     label: "Cluster Diagnostics",
                     id: "manage/cluster-maintenance/cluster-diagnostics",
-                  }, 
+                  },
                 ]
               },
-              
+
               {
                 type: "category",
                 label: "Security",
                 link: { type: "doc", id: "manage/security/index" },
-                
-                
+
+
                 items: [
                   {
                     "type": "doc",
@@ -564,8 +652,18 @@ module.exports = {
                       },
                       {
                         "type": "doc",
+                        "label": "Azure AD",
+                        "id": "manage/security/console/azure-ad"
+                      },
+                      {
+                        "type": "doc",
                         "label": "GitHub",
                         "id": "manage/security/console/github"
+                      },
+                      {
+                        "type": "doc",
+                        "label": "Generic OIDC",
+                        "id": "manage/security/console/generic-oidc"
                       },
                       {
                         "type": "doc",
@@ -574,13 +672,13 @@ module.exports = {
                       },
                       {
                         "type": "doc",
-                        "label": "Okta",
-                        "id": "manage/security/console/okta"
+                        "label": "Keycloak",
+                        "id": "manage/security/console/keycloak"
                       },
                       {
                         "type": "doc",
-                        "label": "Generic OIDC",
-                        "id": "manage/security/console/generic-oidc"
+                        "label": "Okta",
+                        "id": "manage/security/console/okta"
                       },
                       {
                         "type": "doc",
@@ -644,8 +742,8 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "reference/index" },
-      
-      
+
+
       items: [
         "reference/cluster-properties",
         "reference/tunable-properties",
@@ -668,7 +766,7 @@ module.exports = {
               type: "doc",
               label: "Internal Metrics Reference",
               id: "reference/internal-metrics-reference",
-            }, 
+            },
           ]
         },
         {
@@ -1088,7 +1186,7 @@ module.exports = {
         {
           type: "category",
           label: "Redpanda Console",
-          link: { type: "doc", id: "reference/console/index" },  
+          link: { type: "doc", id: "reference/console/index" },
           items: [
             {
               type: "doc",
@@ -1116,8 +1214,8 @@ module.exports = {
       type: "category",
       label: "Labs",
       link: { type: "doc", id: "labs/index" },
-      
-      
+
+
       items: ["labs/install-preview", "labs/data-transform"],
     },
   ],

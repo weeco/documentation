@@ -13,7 +13,7 @@ const FeatureList = [
         Quickly get started and try out Redpanda.
       </>
     ),
-    url: '/docs/get-started/quick-start',
+    url: '/docs/beta/get-started/quick-start',
     learnText: true,
   },
   {
@@ -24,7 +24,7 @@ const FeatureList = [
         Browse commands or use rpk to interact with the Redpanda platform.
       </>
     ),
-    url: '/docs/reference/rpk',
+    url: '/docs/beta/reference/rpk',
     learnText: true,
   },
   {
@@ -35,7 +35,7 @@ const FeatureList = [
         Configure Redpanda and deploy for production.
       </>
     ),
-    url: '/docs/deploy',
+    url: '/docs/beta/deploy',
     learnText: true,
   },
   {
@@ -46,7 +46,7 @@ const FeatureList = [
         Use the Redpanda Console dashboard to administer clusters and get visibility into your data streams.
       </>
     ),
-    url: '/docs/manage/console/',
+    url: '/docs/beta/manage/console/',
     learnText: true,
   },
   {
@@ -54,10 +54,10 @@ const FeatureList = [
     image: require('../../../static/img/cloud-first.png').default,
     description: (
       <>
-        Save storage costs by offloading log segments to the cloud.
+        Save storage costs by offloading log segments to object storage.
       </>
     ),
-    url: '/docs/manage/tiered-storage',
+    url: '/docs/beta/manage/tiered-storage',
     learnText: true,
   },
   {
@@ -68,7 +68,7 @@ const FeatureList = [
         Get started with Redpanda on the Kubernetes platform.
       </>
     ),
-    url: '/docs/deploy/deployment-option/self-hosted/kubernetes/',
+    url: '/docs/beta/deploy/deployment-option/self-hosted/kubernetes/',
     learnText: true,
   },
 ];
@@ -81,11 +81,11 @@ const FooterMenuList = [
       size: 'higher',
     },
     items: [
-      { text: 'Introduction to Redpanda', url: "/docs/get-started/intro-to-events/" },
-      { text: 'How Redpanda Works', url: "/docs/get-started/architecture/" },
-      { text: 'Redpanda Licensing', url: "/docs/get-started/licenses/" },
-      { text: 'Redpanda Quickstart', url: "/docs/get-started/quick-start/" },
-      { text: 'Introduction to rpk', url: "/docs/get-started/rpk-install/" },
+      { text: 'Introduction to Redpanda', url: "/docs/beta/get-started/intro-to-events/" },
+      { text: 'How Redpanda Works', url: "/docs/beta/get-started/architecture/" },
+      { text: 'Redpanda Licensing', url: "/docs/beta/get-started/licenses/" },
+      { text: 'Redpanda Quickstart', url: "/docs/beta/get-started/quick-start/" },
+      { text: 'Introduction to rpk', url: "/docs/beta/get-started/rpk-install/" },
     ],
   },
   {
@@ -95,13 +95,13 @@ const FooterMenuList = [
       size: 'wider',
     },
     items: [
-      { text: 'Supported Kafka Clients', url: "/docs/develop/kafka-clients/" },
-      { text: 'Use Redpanda with Kafka Client Libraries', url: "/docs/develop/code-examples/" },
-      { text: 'Use Redpanda with NodeJS', url: "/docs/develop/guide-nodejs/" },
-      { text: 'Use Redpanda with HTTP Proxy API', url: "/docs/develop/http-proxy/" },
-      { text: 'Produce Data', url: "/docs/develop/produce-data/" },
-      { text: 'Consume Data', url: "/docs/develop/consume-data/" },
-      { text: 'Transactions', url: "/docs/develop/transactions" },
+      { text: 'Supported Kafka Clients', url: "/docs/beta/develop/kafka-clients/" },
+      { text: 'Use Redpanda with Kafka Client Libraries', url: "/docs/beta/develop/code-examples/" },
+      { text: 'Use Redpanda with NodeJS', url: "/docs/beta/develop/guide-nodejs/" },
+      { text: 'Use Redpanda with HTTP Proxy API', url: "/docs/beta/develop/http-proxy/" },
+      { text: 'Produce Data', url: "/docs/beta/develop/produce-data/" },
+      { text: 'Consume Data', url: "/docs/beta/develop/consume-data/" },
+      { text: 'Transactions', url: "/docs/beta/develop/transactions" },
     ],
   },
   {
@@ -111,12 +111,11 @@ const FooterMenuList = [
       size: 'wider',
     },
     items: [
-      { text: 'Choose a Deployment Option', url: "/docs/deploy/deployment-option/" },
-      { text: 'Cloud Deployment', url: "/docs/deploy/deployment-option/cloud/" },
-      { text: 'Self-Hosted Deployment', url: "/docs/deploy/deployment-option/self-hosted/" },
-      { text: 'Sizing Guidelines', url: "/docs/deploy/deployment-option/self-hosted/manual/sizing/" },
-      { text: 'Sizing Use Cases', url: "/docs/deploy/deployment-option/self-hosted/manual/sizing-use-cases/" },
-      { text: 'High Availability', url: "/docs/deploy/deployment-option/self-hosted/manual/high-availability/" },
+      { text: 'Cloud Deployment', url: "/docs/beta/deploy/deployment-option/cloud/" },
+      { text: 'Self-Hosted Deployment', url: "/docs/beta/deploy/deployment-option/self-hosted/" },
+      { text: 'Sizing Guidelines', url: "/docs/beta/deploy/deployment-option/self-hosted/manual/sizing/" },
+      { text: 'Sizing Use Cases', url: "/docs/beta/deploy/deployment-option/self-hosted/manual/sizing-use-cases/" },
+      { text: 'High Availability', url: "/docs/beta/deploy/deployment-option/self-hosted/manual/high-availability/" },
       
     ],
   },
@@ -127,12 +126,12 @@ const FooterMenuList = [
       size: 'default',
     },
     items: [
-      { text: 'Redpanda on Kubernetes', url: "/docs/manage/kubernetes/" },
-      { text: 'Redpanda Console', url: "/docs/manage/console/" },
-      { text: 'Security', url: "/docs/manage/security/" },
-      { text: 'Schema Registry', url: "/docs/manage/schema-registry/" },
-      { text: 'Monitor Redpanda', url: "/docs/manage/monitoring/" },
-      { text: 'Continuous Data Balancing', url: "/docs/manage/cluster-maintenance/continuous-data-balancing/" },
+      { text: 'Redpanda on Kubernetes', url: "/docs/beta/manage/kubernetes/" },
+      { text: 'Redpanda Console', url: "/docs/beta/manage/console/" },
+      { text: 'Security', url: "/docs/beta/manage/security/" },
+      { text: 'Schema Registry', url: "/docs/beta/manage/schema-registry/" },
+      { text: 'Monitor Redpanda', url: "/docs/beta/manage/monitoring/" },
+      { text: 'Continuous Data Balancing', url: "/docs/beta/manage/cluster-maintenance/continuous-data-balancing/" },
     ],
   },
 ];

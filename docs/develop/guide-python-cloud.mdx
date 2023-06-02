@@ -31,6 +31,13 @@ Create a basic chat room application with Redpanda Cloud and Kafka clients devel
 
 Download and install Python 3 from [python.org](https://www.python.org/downloads).
 
+:::note
+Redpanda Cloud environments use certificates signed by
+[Let's Encrypt](https://letsencrypt.org/). Most programming languages will
+load their root certificate authority (CA), `ISRG Root X1`, by default so you
+shouldn't need to provide a custom CA.
+:::
+
 ## Set up Redpanda Cloud
 
 <SetUpCloud frontmatter={frontMatter}/>

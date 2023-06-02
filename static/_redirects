@@ -518,7 +518,6 @@
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
 /docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 /docs/data-management/rack-awareness/                                                 /docs/manage/rack-awareness/  301!
-/docs/beta/*                                                                          /docs/:splat 301!
 
 
 ## Without platform
@@ -624,3 +623,4 @@
 /reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/                            /docs/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/ 301!
 /docs/reference/reference/rpk/rpk-cluster/                                            /docs/reference/rpk/rpk-cluster/ 301!
 /docs/deployment/performance-storage-tuning/                                          /docs/deploy/deployment-option/self-hosted/manual/ 301!
+/docs/beta                                                                            /docs/beta/home 301!

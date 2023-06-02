@@ -10,6 +10,7 @@ toc_max_heading_level: 2
     content="Tunable configuration properties | Redpanda Docs"
   />
   <meta name="description" content="Reference of tunable Redpanda cluster properties." />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/tunable-properties/" />
 </head>
 
 import Aliases from '../shared/_aliases.mdx'
@@ -46,17 +47,72 @@ Flag to auto-enable new feature flags after upgrades.
 
 --------------------------------------------------------------------------------
 
-## Cloud storage properties
+## Object storage properties
 
 ### cloud_storage_cache_check_interval
 
-Timeout to check if cache eviction should be triggered.
+Minimum time between trims of tiered storage cache. If a fetch operation requires trimming the cache, and the time interval between the fetch and the most recent trim is less than this property, then trimming will be delayed until this property's interval has elapsed.
 
 **Units**: milliseconds
 
-**Default**: 30000 (30 seconds)
+**Default**: 5000 (5 seconds)
 
 **Restart required**: yes
+
+---
+
+### cloud_storage_cache_chunk_size
+
+Size of chunks of segments downloaded into object (cloud) storage cache. Reduces space usage by only downloading the necessary chunk from a segment.
+
+**Units**: bytes
+
+**Default**: 16777216 (16 MiB)
+
+**Restart required**: yes
+
+**Related topics**:
+- [Caching for Tiered Storage](../../manage/tiered-storage#caching)
+
+---
+
+### cloud_storage_chunk_eviction_strategy
+
+Strategy for evicting unused cache chunks.
+
+Available eviction strategies:
+- `eager`: evicts all chunks which are not in use by any data source.
+- `capped`: evicts chunks up to a preconfigured amount.
+- `predictive`: uses statistics from readers to determine which chunks to evict. 
+
+**Type**: eviction strategy
+
+**Default**: `eager`
+
+**Valid values**:
+- `eager`
+- `capped`
+- `predictive`
+
+**Restart required**: no
+
+**Related topics**:
+- [Chunk eviction strategies for Tiered Storage](../../manage/tiered-storage#chunk-eviction-strategies)
+
+---
+
+### cloud_storage_disable_chunk_reads
+
+Flag for turning off chunk-based reads and enabling full-segment downloads. 
+
+**Type**: boolean
+
+**Default**: false
+
+**Restart required**: no
+
+**Related topics**:
+- [Caching for Tiered Storage](../../manage/tiered-storage#caching)
 
 ---
 
@@ -96,9 +152,28 @@ Default remote write configuration value for new topics.
 
 ---
 
+### cloud_storage_enable_segment_merging
+
+Flag to enable adjacent segment merging in cloud object storage. When this property is enabled, Redpanda merges adjacent segments in object storage that are smaller than the threshold, [`cloud_storage_segment_size_min`](#cloud_storage_segment_size_min). 
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
+
+---
+
 ### cloud_storage_housekeeping_interval_ms
 
-Interval for cloud storage housekeeping tasks.
+Interval for object storage housekeeping tasks.
 
 **Units**: milliseconds
 
@@ -108,15 +183,48 @@ Interval for cloud storage housekeeping tasks.
 
 ---
 
+### cloud_storage_hydrated_chunks_per_segment_ratio
+
+The desired ratio of hydrated to non-hydrated chunks for each segment, where a current ratio above this value results in unused chunks being trimmed (evicted).
+
+**Units**: ratio of hydrated to non-hydrated chunks for a segment
+
+**Default**: 0.7
+
+**Restart required**: no
+
+**Related topics**:
+- [Caching for Tiered Storage](../../manage/tiered-storage#caching)
+
+---
+
+### cloud_storage_idle_threshold_rps
+
+Request rate threshold for idle state detection of cloud object storage. If the average object storage API request rate is lower than this threshold, then the object storage is considered to be idle.
+
+**Units**: object storage API requests per second
+
+**Default**: 1.0
+
+**Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
+
+---
+
 ### cloud_storage_idle_timeout_ms
 
-Timeout used to detect idle state of the cloud storage API. If no API requests are made for at least this timeout's duration, the cloud storage is considered idle.
+Timeout used to detect idle state of the object storage API. If no object storage API requests are made for at least this timeout's duration, the object storage is considered idle.
 
 **Units**: milliseconds
 
 **Default**: 10000 (10 sec)
 
 **Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
 
 ---
 
@@ -186,7 +294,7 @@ Maximum concurrent readers of remote data per shard (CPU core).  If `null`, the 
 
 ### cloud_storage_max_segments_pending_deletion_per_partition
 
-The maximum limit per partition for the number of segments pending deletion from the cloud. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments are orphaned in the cloud and must be removed manually.
+The maximum limit per partition for the number of segments pending deletion from object storage. Segments can be deleted due to retention or compaction. If this limit is breached and deletion fails, then segments are orphaned in object storage and must be removed manually.
 
 **Type**: unsigned integer
 
@@ -207,6 +315,21 @@ Timeout for shadow indexing (SI) metadata synchronization.
 **Default**: 10000 (10 seconds)
 
 **Restart required**: no
+
+---
+
+### cloud_storage_min_chunks_per_segment_threshold
+
+The minimum number of chunks per segment for trimming to be enabled. If the number of chunks in a segment is below this threshold, the segment is small enough that all chunks in it can be hydrated at any given time.
+
+**Units**: number of chunks per segment
+
+**Default**: 5
+
+**Restart required**: no
+
+**Related topics**:
+- [Caching for Tiered Storage](../../manage/tiered-storage#caching)
 
 ---
 
@@ -238,7 +361,7 @@ Interval at which the archival service runs reconciliation.
 
 ### cloud_storage_recovery_temporary_retention_bytes_default
 
-The number of bytes of size-based retention for topics that are created during automated recovery of topics from cloud storage.
+The number of bytes of size-based retention for topics that are created during automated recovery of topics from object storage.
 
 **Units**: bytes
 
@@ -250,7 +373,7 @@ The number of bytes of size-based retention for topics that are created during a
 
 ### cloud_storage_segment_max_upload_interval_sec
 
-Duration that a segment can be kept in local storage without uploading it to remote storage. If `null`, defaults to infinite duration.
+Duration that a segment can be kept in local storage without uploading it to object storage. If `null`, defaults to infinite duration.
 
 **Units**: seconds
 
@@ -262,25 +385,39 @@ Duration that a segment can be kept in local storage without uploading it to rem
 
 ### cloud_storage_segment_size_target
 
-The desired segment size in cloud storage. If `null`, the property is disabled, and the segment size in cloud storage defaults to `segment.bytes`.
+The desired segment size in object storage. If `null`, the property is disabled, and the segment size in object storage defaults to `segment.bytes`.
 
 **Units**: bytes
 
 **Default**: null
 
 **Restart required**: no
+
+**Related properties**:
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
 
 ---
 
 ### cloud_storage_segment_size_min
 
-The minimum segment size in cloud storage. If `null`, the property is disabled, and the minimum segment size defaults to [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)/2.
+The minimum segment size in object storage. If `null`, the property is disabled, and the minimum segment size defaults to [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)/2.
 
 **Units**: bytes
 
 **Default**: null
 
 **Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
 
 ---
 
@@ -1144,6 +1281,9 @@ The maximum delay inserted in the data path of Kafka API requests to throttle th
 
 **Restart required**: no
 
+**Related topics**:
+- [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
 ---
 
 ### quota_manager_gc_sec
@@ -1387,6 +1527,20 @@ Timeout for raft's append entries RPC.
 **Default**: 5000
 
 **Restart required**: yes
+
+--------------------------------------------------------------------------------
+
+## Schema properties
+
+### kafka_schema_id_validation_cache_capacity
+
+Cache capacity per shard for validating schema IDs.
+
+**Units**: number of cache entries
+
+**Default**: 128
+
+**Restart required**: no
 
 --------------------------------------------------------------------------------
 
@@ -2081,64 +2235,6 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 **Restart required**: no
 
 --------------------------------------------------------------------------------
-
-## Wasm properties
-
-:::caution
-[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
-:::
-
-### coproc_max_batch_size
-
-Maximum size of one topic read in coprocessing mode. 
-
-**Units**: bytes
-
-**Default**: 32 KB
-
-**Restart required**: yes
-
----
-
-### coproc_max_inflight_bytes
-
-Maximum size of inflight data when sending to the Wasm engine.
-
-**Type**: unsigned integer 
-
-**Units**: bytes
-
-**Default**: 10485760 (10 MiB)
-
-**Restart required**: yes
-
----
-
-### coproc_max_ingest_bytes
-
-Maximum size of input logs in memory.
-
-**Type**: unsigned integer
-
-**Units**: bytes
-
-**Default**: 655360 (640 KiB)
-
-**Restart required**: yes
-
----
-
-### coproc_offset_flush_interval_ms
-
-Interval for which all coprocessor offsets are flushed to disk.
-
-**Units**: milliseconds
-
-**Default**: 300000 (5 minutes)
-
-**Restart required**: yes
-
-----------------------------------------------------------
 
 ## Related topics
 

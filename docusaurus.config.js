@@ -62,7 +62,7 @@ module.exports = async () => {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['bash', 'docker', 'yaml','docker','powershell','git', 'ini', 'properties', 'javascript', 'python']
+        additionalLanguages: ['bash', 'java','scala','yaml','docker','powershell','git', 'ini', 'properties', 'javascript', 'python']
       },
       algolia: {
         // The application ID provided by Algolia
@@ -100,7 +100,12 @@ module.exports = async () => {
             versions: {
               current: {
                 label: '23.1',
-              }
+              },
+              "23.2": {
+                label: '23.2 Beta',
+                banner: 'unreleased',
+                path: "/beta"
+              },
             },
             beforeDefaultRemarkPlugins: [
                 [variableInjector, {
