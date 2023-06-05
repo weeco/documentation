@@ -46,8 +46,11 @@ asciidoc:
   extensions:
   - '@asciidoctor/tabs'
   - './macros/glossary.js'
+  - './macros/config-ref.js'
+  - './macros/helm-ref.js'
 antora:
   extensions:
   - './extensions/version-fetcher/set-latest-version.js'
   - './extensions/algolia-indexer/index.js'
+  - './extensions/unlisted-pages.js'
 
