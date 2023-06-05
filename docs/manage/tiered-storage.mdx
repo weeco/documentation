@@ -56,6 +56,13 @@ import ContextLink from '@site/src/components/ContextButton.js'
 
 ### Configure object storage
 
+Redpanda natively supports Tiered Storage with Amazon Simple Storage Service (S3), Google Cloud Storage (GCS, which uses the Google Cloud Platform S3 API), and Microsoft Azure Blob Storage (ABS). 
+
+:::info
+- Migrating topics from one object storage provider to another is not supported. 
+- Migrating topics from one bucket or container to another is not supported.
+:::
+
 <Tabs>
     <TabItem value="S3" label="Amazon S3" default>
 

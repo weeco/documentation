@@ -1,10 +1,12 @@
 ---
 title: rpk group seek
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
   <meta name="title" content="rpk group seek | Redpanda Docs" />
   <meta name="description" content="rpk group seek" />
+  <link rel="canonical" href="https://docs.redpanda.com/docs/reference/rpk/rpk-group/rpk-group-seek/" />
 </head>
 
 Modify a group's current offsets.
@@ -82,25 +84,25 @@ Seek group G to the beginning of a topic it was not previously consuming:
 rpk group seek G --to start --topics foo --allow-new-topics
 ```
 
-### Usage
+## Usage
 
-```
+```bash
 rpk group seek [GROUP] --to (start|end|timestamp) --to-group ... --topics ... [flags]
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
     <tr>
       <td>
-        <strong> Value</strong>
+        <strong>Value</strong>
       </td>
       <td>
-        <strong> Type</strong>
+        <strong>Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
       </td>
     </tr>
     <tr>
@@ -114,7 +116,7 @@ rpk group seek [GROUP] --to (start|end|timestamp) --to-group ... --topics ... [f
     <tr>
       <td>-h, --help</td>
       <td>-</td>
-      <td> Help for seek.</td>
+      <td>Help for seek.</td>
     </tr>
     <tr>
       <td>--to</td>
@@ -126,17 +128,17 @@ rpk group seek [GROUP] --to (start|end|timestamp) --to-group ... --topics ... [f
     <tr>
       <td>--to-file</td>
       <td>string</td>
-      <td> Seek to offsets as specified in the file.</td>
+      <td>Seek to offsets as specified in the file.</td>
     </tr>
     <tr>
       <td>--to-group</td>
       <td>string</td>
-      <td> Seek to the commits of another group.</td>
+      <td>Seek to the commits of another group.</td>
     </tr>
     <tr>
       <td>--topics</td>
       <td>strings</td>
-      <td> Only seek these topics, if any are specified.</td>
+      <td>Only seek these topics, if any are specified.</td>
     </tr>
     <tr>
       <td>--brokers</td>
@@ -161,7 +163,7 @@ rpk group seek [GROUP] --to (start|end|timestamp) --to-group ... --topics ... [f
     <tr>
       <td>--password</td>
       <td>string</td>
-      <td> SASL password to be used for authentication.</td>
+      <td>SASL password to be used for authentication.</td>
     </tr>
     <tr>
       <td>--sasl-mechanism</td>
@@ -195,12 +197,12 @@ rpk group seek [GROUP] --to (start|end|timestamp) --to-group ... --topics ... [f
     <tr>
       <td>--tls-truststore</td>
       <td>string</td>
-      <td> The truststore to be used for TLS communication with the broker.</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
     </tr>
     <tr>
       <td>--user</td>
       <td>string</td>
-      <td> SASL user to be used for authentication.</td>
+      <td>SASL user to be used for authentication.</td>
     </tr>
     <tr>
       <td>-v, --verbose</td>

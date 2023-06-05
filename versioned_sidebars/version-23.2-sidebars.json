@@ -34,14 +34,24 @@
           "id": "get-started/quick-start"
         },
         {
-          "type": "doc",
+          "type": "category",
           "label": "Introduction to rpk",
-          "id": "get-started/rpk-install"
-        },
-        {
-          "type": "doc",
-          "label": "Build a Sample Application",
-          "id": "get-started/code-examples"
+          "link": {
+            "type": "doc",
+            "id": "get-started/intro-to-rpk"
+          },
+          "items": [
+            {
+              "type": "doc",
+              "label": "Broker and Admin API Addresses",
+              "id": "get-started/broker-admin"
+            },
+            {
+              "type": "doc",
+              "label": "Install rpk",
+              "id": "get-started/rpk-install"
+            }
+          ]
         }
       ]
     },
@@ -58,9 +68,14 @@
           "label": "Supported Kafka Clients",
           "id": "develop/kafka-clients"
         },
-        "develop/code-examples",
+        {
+          "type": "doc",
+          "label": "Build a Sample Application",
+          "id": "develop/code-examples"
+        },
         "develop/guide-nodejs",
         "develop/http-proxy",
+        "develop/config-topics",
         {
           "type": "category",
           "label": "Produce Data",
@@ -89,6 +104,11 @@
               "type": "doc",
               "label": "Consumer Offsets",
               "id": "develop/consume-data/consumer-offsets"
+            },
+            {
+              "type": "doc",
+              "label": "Follower Fetching",
+              "id": "develop/consume-data/follower-fetching"
             }
           ]
         },
@@ -105,134 +125,82 @@
       "items": [
         {
           "type": "category",
-          "label": " Choose a Deployment Option",
+          "label": "Self-Hosted",
           "link": {
             "type": "doc",
-            "id": "deploy/deployment-option/index"
+            "id": "deploy/deployment-option/self-hosted/index"
           },
           "items": [
             {
               "type": "category",
-              "label": "Self-Hosted",
+              "label": "Kubernetes",
               "link": {
                 "type": "doc",
-                "id": "deploy/deployment-option/self-hosted/index"
+                "id": "deploy/deployment-option/self-hosted/kubernetes/index"
               },
               "items": [
                 {
+                  "type": "doc",
+                  "label": "Redpanda in Kubernetes Overview",
+                  "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment"
+                },
+                {
                   "type": "category",
-                  "label": "Kubernetes",
+                  "label": "Production Deployment Workflow",
                   "link": {
                     "type": "doc",
-                    "id": "deploy/deployment-option/self-hosted/kubernetes/index"
+                    "id": "deploy/deployment-option/self-hosted/kubernetes/production-workflow"
                   },
                   "items": [
                     {
                       "type": "doc",
-                      "label": "Redpanda in Kubernetes Overview",
-                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-production-deployment"
+                      "label": "Kubernetes Cluster Requirements",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements"
                     },
                     {
-                      "type": "category",
-                      "label": "Production Deployment Workflow",
-                      "link": {
-                        "type": "doc",
-                        "id": "deploy/deployment-option/self-hosted/kubernetes/production-workflow"
-                      },
-                      "items": [
-                        {
-                          "type": "doc",
-                          "label": "Kubernetes Cluster Requirements",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-cluster-requirements"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Best Practices",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Tune Worker Nodes",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Deploy Redpanda",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy"
-                        }
-                      ]
+                      "type": "doc",
+                      "label": "Best Practices",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-best-practices"
                     },
                     {
-                      "type": "category",
-                      "label": "Guides",
-                      "link": {
-                        "type": "doc",
-                        "id": "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"
-                      },
-                      "items": [
-                        {
-                          "type": "doc",
-                          "label": "AKS",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/aks-guide"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Amazon EKS",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/eks-guide"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "GKE",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/gke-guide"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Local (kind and Minikube)",
-                          "id": "deploy/deployment-option/self-hosted/kubernetes/local-guide"
-                        }
-                      ]
+                      "type": "doc",
+                      "label": "Tune Worker Nodes",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-tune-workers"
+                    },
+                    {
+                      "type": "doc",
+                      "label": "Deploy Redpanda",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/kubernetes-deploy"
                     }
                   ]
                 },
                 {
                   "type": "category",
-                  "label": "Manual",
+                  "label": "Guides",
                   "link": {
                     "type": "doc",
-                    "id": "deploy/deployment-option/self-hosted/manual/index"
+                    "id": "deploy/deployment-option/self-hosted/kubernetes/get-started-dev"
                   },
                   "items": [
                     {
-                      "type": "category",
-                      "label": "Production Deployment",
-                      "link": {
-                        "type": "doc",
-                        "id": "deploy/deployment-option/self-hosted/manual/production/index"
-                      },
-                      "items": [
-                        {
-                          "type": "doc",
-                          "label": "Deploy for Production",
-                          "id": "deploy/deployment-option/self-hosted/manual/production/production-deployment"
-                        },
-                        {
-                          "type": "doc",
-                          "label": "Automate Deployment for Production",
-                          "id": "deploy/deployment-option/self-hosted/manual/production/production-deployment-automation"
-                        }
-                      ]
-                    },
-                    "deploy/deployment-option/self-hosted/manual/node-property-configuration",
-                    "deploy/deployment-option/self-hosted/manual/high-availability",
-                    {
                       "type": "doc",
-                      "label": "Sizing Use Cases",
-                      "id": "deploy/deployment-option/self-hosted/manual/sizing-use-cases"
+                      "label": "AKS",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/aks-guide"
                     },
                     {
                       "type": "doc",
-                      "label": "Sizing Guidelines",
-                      "id": "deploy/deployment-option/self-hosted/manual/sizing"
+                      "label": "Amazon EKS",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/eks-guide"
+                    },
+                    {
+                      "type": "doc",
+                      "label": "GKE",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/gke-guide"
+                    },
+                    {
+                      "type": "doc",
+                      "label": "Local (kind and Minikube)",
+                      "id": "deploy/deployment-option/self-hosted/kubernetes/local-guide"
                     }
                   ]
                 }
@@ -240,38 +208,99 @@
             },
             {
               "type": "category",
-              "label": "Cloud",
+              "label": "Linux",
               "link": {
                 "type": "doc",
-                "id": "deploy/deployment-option/cloud/index"
+                "id": "deploy/deployment-option/self-hosted/manual/index"
+              },
+              "items": [
+                {
+                  "type": "category",
+                  "label": "Deployment Options",
+                  "link": {
+                    "type": "doc",
+                    "id": "deploy/deployment-option/self-hosted/manual/production/index"
+                  },
+                  "items": [
+                    {
+                      "type": "doc",
+                      "label": "Deploy for Development",
+                      "id": "deploy/deployment-option/self-hosted/manual/production/dev-deployment"
+                    },
+                    {
+                      "type": "doc",
+                      "label": "Automate Deployment for Production",
+                      "id": "deploy/deployment-option/self-hosted/manual/production/production-deployment-automation"
+                    },
+                    {
+                      "type": "doc",
+                      "label": "Deploy for Production",
+                      "id": "deploy/deployment-option/self-hosted/manual/production/production-deployment"
+                    }
+                  ]
+                },
+                "deploy/deployment-option/self-hosted/manual/node-property-configuration",
+                "deploy/deployment-option/self-hosted/manual/high-availability",
+                {
+                  "type": "doc",
+                  "label": "Sizing Use Cases",
+                  "id": "deploy/deployment-option/self-hosted/manual/sizing-use-cases"
+                },
+                {
+                  "type": "doc",
+                  "label": "Sizing Guidelines",
+                  "id": "deploy/deployment-option/self-hosted/manual/sizing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Cloud",
+          "link": {
+            "type": "doc",
+            "id": "deploy/deployment-option/cloud/index"
+          },
+          "items": [
+            {
+              "type": "doc",
+              "label": "Redpanda Cloud Overview",
+              "id": "deploy/deployment-option/cloud/dedicated-byoc"
+            },
+            {
+              "type": "doc",
+              "label": "Quickstart",
+              "id": "get-started/quick-start"
+            },
+            {
+              "type": "category",
+              "label": "Dedicated Cloud",
+              "link": {
+                "type": "doc",
+                "id": "deploy/deployment-option/cloud/dedicated/index"
               },
               "items": [
                 {
                   "type": "doc",
-                  "label": "Redpanda Cloud Overview",
-                  "id": "deploy/deployment-option/cloud/dedicated-byoc"
+                  "label": "Create a Dedicated Cluster on AWS",
+                  "id": "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws"
                 },
                 {
                   "type": "doc",
-                  "label": "Quickstart",
-                  "id": "get-started/quick-start"
-                },
-                {
-                  "type": "category",
-                  "label": "Redpanda Dedicated",
-                  "items": [
-                    {
-                      "type": "doc",
-                      "label": "Create Clusters",
-                      "id": "deploy/deployment-option/cloud/create-dedicated-cloud-cluster-aws"
-                    },
-                    {
-                      "type": "doc",
-                      "label": "VPC Peering",
-                      "id": "deploy/deployment-option/cloud/vpc-peering"
-                    }
-                  ]
-                },
+                  "label": "Add a VPC Peering Connection",
+                  "id": "deploy/deployment-option/cloud/vpc-peering"
+                }
+              ]
+            },
+            {
+              "type": "category",
+              "label": "BYOC",
+              "link": {
+                "type": "doc",
+                "id": "deploy/deployment-option/cloud/byoc/index"
+              },
+              "items": [
                 {
                   "type": "doc",
                   "label": "Create a BYOC Cluster on AWS",
@@ -281,26 +310,26 @@
                   "type": "doc",
                   "label": "Create a BYOC Cluster on GCP",
                   "id": "deploy/deployment-option/cloud/create-byoc-cluster-gcp"
-                },
+                }
+              ]
+            },
+            {
+              "type": "doc",
+              "label": "Create a Topic",
+              "id": "deploy/deployment-option/cloud/create-topic"
+            },
+            {
+              "type": "category",
+              "label": "Managed Connectors",
+              "link": {
+                "type": "doc",
+                "id": "deploy/deployment-option/cloud/managed-connectors/index"
+              },
+              "items": [
                 {
                   "type": "doc",
-                  "label": "Create a Topic",
-                  "id": "deploy/deployment-option/cloud/create-topic"
-                },
-                {
-                  "type": "category",
-                  "label": "Managed Connectors",
-                  "link": {
-                    "type": "doc",
-                    "id": "deploy/deployment-option/cloud/managed-connectors/index"
-                  },
-                  "items": [
-                    {
-                      "type": "doc",
-                      "label": "Create an S3 Sink Connector",
-                      "id": "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector"
-                    }
-                  ]
+                  "label": "Create an S3 Sink Connector",
+                  "id": "deploy/deployment-option/cloud/managed-connectors/create-s3-sink-connector"
                 }
               ]
             }
@@ -374,6 +403,11 @@
                 },
                 {
                   "type": "doc",
+                  "label": "Use Custom Services",
+                  "id": "manage/kubernetes/networking/custom-services"
+                },
+                {
+                  "type": "doc",
                   "label": "Configure Listeners",
                   "id": "manage/kubernetes/networking/configure-listeners"
                 }
@@ -416,8 +450,38 @@
             },
             {
               "type": "doc",
-              "label": "Upgrade",
+              "label": "Scale",
+              "id": "manage/kubernetes/scale"
+            },
+            {
+              "type": "doc",
+              "label": "Decommission Brokers",
+              "id": "manage/kubernetes/decommission-brokers"
+            },
+            {
+              "type": "doc",
+              "label": "Delete a PersistentVolume",
+              "id": "manage/kubernetes/delete-persistentvolume"
+            },
+            {
+              "type": "doc",
+              "label": "Upgrade Redpanda",
               "id": "manage/kubernetes/rolling-upgrade"
+            },
+            {
+              "type": "doc",
+              "label": "Upgrade Kubernetes",
+              "id": "manage/kubernetes/upgrade-kubernetes"
+            },
+            {
+              "type": "doc",
+              "label": "Monitor",
+              "id": "manage/kubernetes/monitor"
+            },
+            {
+              "type": "doc",
+              "label": "Resilience Testing",
+              "id": "manage/kubernetes/resilience-testing"
             },
             {
               "type": "category",
@@ -457,8 +521,18 @@
             },
             {
               "type": "doc",
+              "label": "Decommission Brokers",
+              "id": "manage/cluster-maintenance/decommission-brokers"
+            },
+            {
+              "type": "doc",
               "label": "Upgrade",
               "id": "manage/cluster-maintenance/rolling-upgrade"
+            },
+            {
+              "type": "doc",
+              "label": "Maintenance Mode",
+              "id": "manage/node-management"
             },
             "manage/cluster-maintenance/disk-utilization",
             {
@@ -466,11 +540,7 @@
               "label": "Manage Throughput",
               "id": "manage/cluster-maintenance/manage-throughput"
             },
-            {
-              "type": "doc",
-              "label": "Configure Availability",
-              "id": "manage/cluster-maintenance/configure-availability"
-            },
+            "manage/cluster-maintenance/configure-availability",
             {
               "type": "doc",
               "label": "Cluster Properties",
@@ -493,12 +563,12 @@
           "items": [
             {
               "type": "doc",
-              "label": "Authentication",
+              "label": "Configure Authentication",
               "id": "manage/security/authentication"
             },
             {
               "type": "doc",
-              "label": "Authorization",
+              "label": "Configure Authorization",
               "id": "manage/security/authorization"
             },
             "manage/security/encryption",
@@ -571,7 +641,17 @@
           "label": "Remote Read Replicas",
           "id": "manage/remote-read-replicas"
         },
-        "manage/schema-registry",
+        {
+          "type": "category",
+          "label": "Schema Registry",
+          "link": {
+            "type": "doc",
+            "id": "manage/schema-registry"
+          },
+          "items": [
+            "manage/schema-id-validation"
+          ]
+        },
         {
           "type": "category",
           "label": "Redpanda Console",
@@ -591,11 +671,6 @@
               "id": "manage/console/edit-topic-configuration"
             }
           ]
-        },
-        {
-          "type": "doc",
-          "label": "Node Maintenance Mode",
-          "id": "manage/node-management"
         },
         "manage/data-migration",
         {
@@ -620,6 +695,8 @@
         "reference/node-properties",
         "reference/node-configuration-sample",
         "reference/api-reference",
+        "reference/redpanda-helm-spec",
+        "reference/console-helm-spec",
         {
           "type": "category",
           "label": "Monitoring Metrics",
@@ -786,6 +863,28 @@
                     "reference/rpk/rpk-cluster/rpk-cluster-self-test-status",
                     "reference/rpk/rpk-cluster/rpk-cluster-self-test-stop"
                   ]
+                },
+                {
+                  "type": "category",
+                  "label": "rpk cluster storage",
+                  "link": {
+                    "type": "doc",
+                    "id": "reference/rpk/rpk-cluster/rpk-cluster-storage"
+                  },
+                  "items": [
+                    {
+                      "type": "category",
+                      "label": "rpk cluster storage recovery",
+                      "link": {
+                        "type": "doc",
+                        "id": "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery"
+                      },
+                      "items": [
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-start",
+                        "reference/rpk/rpk-cluster/rpk-cluster-storage-recovery-status"
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -800,6 +899,7 @@
                 "reference/rpk/rpk-container/rpk-container",
                 "reference/rpk/rpk-container/rpk-container-purge",
                 "reference/rpk/rpk-container/rpk-container-start",
+                "reference/rpk/rpk-container/rpk-container-status",
                 "reference/rpk/rpk-container/rpk-container-stop"
               ]
             },
@@ -841,6 +941,7 @@
                 "reference/rpk/rpk-group/rpk-group-delete",
                 "reference/rpk/rpk-group/rpk-group-describe",
                 "reference/rpk/rpk-group/rpk-group-list",
+                "reference/rpk/rpk-group/rpk-group-offset-delete",
                 "reference/rpk/rpk-group/rpk-group-seek"
               ]
             },
@@ -886,8 +987,17 @@
                         "id": "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers"
                       },
                       "items": [
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers",
-                        "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission",
+                        {
+                          "type": "category",
+                          "label": "rpk redpanda admin brokers decommission",
+                          "link": {
+                            "type": "doc",
+                            "id": "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission"
+                          },
+                          "items": [
+                            "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-decommission-status"
+                          ]
+                        },
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-list",
                         "reference/rpk/rpk-redpanda/rpk-redpanda-admin-brokers-recommission"
                       ]
@@ -999,6 +1109,10 @@
             {
               "type": "category",
               "label": "Install",
+              "link": {
+                "type": "doc",
+                "id": "reference/redpanda-operator/operator-install/index"
+              },
               "items": [
                 "reference/redpanda-operator/kubernetes-qs-local-access",
                 "reference/redpanda-operator/kubernetes-qs-minikube",
@@ -1008,6 +1122,10 @@
             {
               "type": "category",
               "label": "Deploy",
+              "link": {
+                "type": "doc",
+                "id": "reference/redpanda-operator/operator-deploy/index"
+              },
               "items": [
                 "reference/redpanda-operator/kubernetes-connectivity",
                 "reference/redpanda-operator/kubernetes-external-connect",
@@ -1018,6 +1136,10 @@
             {
               "type": "category",
               "label": "Security",
+              "link": {
+                "type": "doc",
+                "id": "reference/redpanda-operator/operator-security/index"
+              },
               "items": [
                 "reference/redpanda-operator/security-kubernetes",
                 "reference/redpanda-operator/tls-kubernetes",
@@ -1036,19 +1158,23 @@
         {
           "type": "category",
           "label": "Redpanda Console",
+          "link": {
+            "type": "doc",
+            "id": "reference/console/index"
+          },
           "items": [
             {
               "type": "doc",
               "label": "Redpanda Console Configuration",
               "id": "reference/console/config"
             },
+            "reference/console/programmable-push-filters",
+            "reference/console/record-deserialization",
             {
               "type": "doc",
               "label": "Redpanda Console Role-Binding Configuration",
               "id": "reference/console/role-bindings"
-            },
-            "reference/console/record-deserialization",
-            "reference/console/programmable-push-filters"
+            }
           ]
         },
         {

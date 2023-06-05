@@ -106,6 +106,7 @@
 
 #Tech Preview
 /docs/introduction/tech-preview /docs/platform/install-upgrade/install-preview 301!
+/docs/platform/install-upgrade/install-preview /docs/labs 301!
 
 #Data Management
 /docs/data-management/tiered-storage /docs/platform/data-management/tiered-storage 301!
@@ -367,6 +368,7 @@
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
 /docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 /docs/data-management/rack-awareness/                                                 /docs/manage/rack-awareness/  301!
+/docs/manage/cluster-maintenance/configuration                                        /docs/manage/cluster-maintenance/cluster-property-configuration/  301!
 
 #Fixes for blogs
 /docs/data-management/data-transform/                                                 /docs/labs/data-transform 301!
@@ -516,7 +518,6 @@
 /docs/cluster-administration/cluster-balancing                                        /docs/manage/cluster-maintenance/cluster-balancing 301!
 /docs/introduction/autotune                                                           /docs/reference/rpk/rpk-redpanda/rpk-redpanda-tune/ 301!
 /docs/data-management/rack-awareness/                                                 /docs/manage/rack-awareness/  301!
-/docs/beta/*                                                                          /docs/:splat 301!
 
 
 ## Without platform
@@ -540,6 +541,7 @@
 /docs/quickstart/kubernetes-qs-cloud   /docs/deploy/deployment-option/self-hosted/kubernetes/get-started-dev/  301!
 /docs/quickstart/kubernetes-qs-local-access  /docs/reference/redpanda-operator/kubernetes-qs-local-access  301!
 /docs/quickstart/kubernetes-qs-minikube  /docs/reference/redpanda-operator/kubernetes-qs-minikube  301!
+/docs/get-started/code-examples   /docs/develop/code-examples  301!
 
 
 # Development
@@ -621,3 +623,4 @@
 /reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/                            /docs/reference/rpk/rpk-redpanda/rpk-redpanda-config-bootstrap/ 301!
 /docs/reference/reference/rpk/rpk-cluster/                                            /docs/reference/rpk/rpk-cluster/ 301!
 /docs/deployment/performance-storage-tuning/                                          /docs/deploy/deployment-option/self-hosted/manual/ 301!
+/docs/beta                                                                            /docs/beta/home 301!

@@ -15,16 +15,19 @@ import BrowserOnly from "@docusaurus/BrowserOnly";
 import Icon from "@material-ui/core/Icon";
 import ContributionIcon from "../../../../static/img/contribution.svg";
 
+// Set mouseflow custom variable
+// (See https://help.mouseflow.com/en/articles/4312070-custom-variables)
+function setFeedbackType(type) {
+  window._mfq = window._mfq || [];
+  window._mfq.push(["setVariable", type, "true"]);
+}
+
 function createEditablePlaceholders () {
   const codeElements = document.querySelectorAll("pre > code");
 
   for (let i = 0; i < codeElements.length; i++) {
     const codeElement = codeElements[i];
-    // Don't enable editable code for XML
-    // TODO: selectively enable editable code for markup samples (XML, HTML, ...)
-    if(codeElement.closest('.theme-code-block')?.classList.contains('language-xml')){
-      continue
-    }
+    if (codeElement.parentElement.classList.includes('xml')) return
     addEditableSpan(/&lt;.[^&A-Z]*&gt;/g, codeElement);
   }
 }
@@ -171,7 +174,7 @@ const FeedbackForm = (props) => {
         setFeedbackSubmitted(true)
         setTimeout(props.onClose,30000)
       })
-      .catch((error) => alert(error));
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -343,7 +346,7 @@ export default function DocItemLayout({ children,
                   className={
                     styles.mailIcon + " " + styles.thumbsUpSeparator
                   }
-                  onClick={() => {setShow(true); setPositiveFeedback(true);}}
+                  onClick={() => {setShow(true); setPositiveFeedback(true); setFeedbackType("positive-feedback");}}
                 >
                   <Icon>thumb_up</Icon>
                 </button>
@@ -352,7 +355,7 @@ export default function DocItemLayout({ children,
                   className={
                     styles.mailIcon + " " + styles.thumbsUpSeparator
                   }
-                  onClick={() => {setShow(true); setPositiveFeedback(false);}}
+                  onClick={() => {setShow(true); setPositiveFeedback(false); setFeedbackType("negative-feedback");}}
                 >
                   <Icon>thumb_down</Icon>
                 </button>

@@ -1,5 +1,5 @@
 ---
-title: Configure Encryption
+title: Configure Kafka TLS Encryption
 linkRoot: ../../../
 deployment: Linux
 contextLinks:
@@ -22,21 +22,24 @@ import ContextLink from '@site/src/components/ContextButton.js'
 
 By default, Redpanda data is sent unencrypted. A security best practice is to enable encryption with TLS or mTLS. 
 
-- mTLS, or 2-way TLS, is a protocol that authenticates both the server and the client. In addition to the server certificate required in TLS, mTLS requires the client to give a certificate. This involves more overhead to implement, but it can be useful for environments that require additional security and only have a small number of verified clients.
+- Transport Layer Security (TLS), previously SSL, provides encryption for client-server communication. A server certificate prevents third parties from accessing data transferred between the client and server.
+- mTLS, or 2-way TLS, is a protocol that authenticates both the server and the client. In addition to the server certificate required in TLS, mTLS also requires the client to give a certificate. This involves more overhead to implement, but it can be useful for environments that require additional security and only have a small number of verified clients.
 
-See also: [Security for Redpanda in Kubernetes](../../kubernetes/security)
+For each Redpanda broker, specify the key file (`broker.key`), the certificate file (`broker.crt`), and the truststore file (`ca.crt`). Each broker has its own `broker.key` and `broker.crt`, but all brokers can have the same `ca.crt`.
 
 ## Prerequisites
 
-TLS certificates are necessary for encryption. You can use your own certificates, either self-signed or issued by a trusted certificate authority (CA), or you can follow these steps.
+TLS certificates are necessary for encryption. You can use your own certificates, either self-signed or issued by a trusted certificate authority (CA).
 
 ### Create certificate signing requests
 
-#### Create node certificate configuration (node.cnf)
+This step creates the certificate signing request for the CA to extend trust over the broker's certificates.
 
-Depending on the address the client uses to connect to Redpanda, you might need to create a CNF file for each node to modify the `alt_names` section with organizational details. For production usage, update the `distinguished_name` section with DNS resolutions and IP address.
+#### 1. Create broker configuration file (broker.cnf)
 
-```bash  title="node.cnf"
+A subject alternative name (SAN) indicates all of the domain names and IP addresses that are secured by the certificate. Depending on the address the client uses to connect to Redpanda, you might need to create a CNF file for each broker to modify the `alt_names` section with organizational details. For production usage, edit `alt_names` with DNS resolutions and/or the IP addresses.
+
+```bash  title="broker.cnf"
 [ req ]
 prompt = no
 distinguished_name = distinguished_name
@@ -58,37 +61,49 @@ DNS.4 = connect
 IP.1  = 127.0.0.1
 ```
 
-
-Generate a 2048-bit RSA private key for nodes:
+You could configure alternative names with a single version of `broker.key`/`broker.crt`, as long as you update the certificate for all brokers in the cluster any time you edit an entry. For example:
 
 ```bash
-openssl genrsa -out node.key 2048
+[ alt_names ]
+DNS.1 = broker1.example.com
+DNS.2 = broker2.example.com
+DNS.3 = broker3.example.com
+```
+
+#### 2. Generate broker private key (broker.key)
+
+Generate a 2048-bit RSA private key for brokers:
+
+```bash
+openssl genrsa -out broker.key 2048
 ```
 
 where:
 
 | Output              | Description   |
 | --------            | ------    | 
-| `-out node.key`     | The public key certificate of the CA.    |  
+| `-out broker.key`     | The public key certificate of the CA.    |  
 
 
-Create a public certificate signing request (CSR) for the nodes:
+#### 3. Create a certificate signing request (broker.csr)
+
+Create a public certificate signing request (CSR) for the brokers:
 
 ```bash
-openssl req -new -config node.cnf -key node.key -out node.csr
+openssl req -new -config broker.cnf -key broker.key -out broker.csr
 ```
 
 where:
 
 | Inputs              | Description   |
 | --------            | ------    | 
-| `-new`                | New request.    | 
-| `-config node.cnf`    | Configuration file to use when generating certificates (created above).    | 
-| `-key node.key`         | Private key of the node (created above).    | 
+| `-new`              | New request.    | 
+| `-config broker.cnf`  | Configuration file to use when generating certificates (created above).    | 
+| `-key broker.key`     | Private key of the broker (created above).    | 
 
-| Output             | Description   |
+| Output              | Description   |
 | --------            | ------    | 
-| `-out node.csr`     | The public key certificate of the CA.    |  
+| `-out broker.csr`     | The public key certificate of the CA.    |  
 
 If generated by a corporate CA, these certificate signing requests must be signed with the following extensions:
 
@@ -97,11 +112,21 @@ keyUsage         = critical,digitalSignature,keyEncipherment
 extendedKeyUsage = serverAuth,clientAuth
 ```
 
-### Optional: Create a local CA for self-signed certificates
+### Create a local CA for self-signed certificates
 
-#### 1. Create the CA configuration file (ca.cnf)
+:::note
+This step is required if you want to generate multiple certificates all signed by the same root; for example, you want to use mTLS but issue different certificates to multiple Redpanda brokers and clients.
 
-You can edit the `distinguished_name` section with your own organization details.
+To generate a self-signed certificate in a single command:
+
+```bash
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout broker.key -out broker.crt -subj "/CN=redpanda" -addext "subjectAltName = DNS:localhost, IP: 127.0.0.1"
+```
+:::
+
+#### 1. Create CA configuration file (ca.cnf)
+
+Edit the `distinguished_name` section with your own organization details. For `default_md`, `sha256` is the minimum message digest level. The `subjectAltName` must be accurate for the broker's certificate.
 
 ```bash title="ca.cnf"
 [ ca ]
@@ -124,6 +149,12 @@ commonName       = Redpanda CA
 [ extensions ]
 keyUsage         = critical,digitalSignature,nonRepudiation,keyEncipherment,keyCertSign
 basicConstraints = critical,CA:true,pathlen:1
+subjectAltName   = @alt_names
+
+[ alt_names ]
+DNS.1 = localhost
+IP.1 = 127.0.0.1
+
 ```
 
 #### 2. Generate CA private key and public certificate
@@ -145,12 +176,12 @@ where:
 
 | Inputs              | Description   |
 | --------            | ------    | 
-| `-new`              | New request    | 
-| `-x509`             | Create an X.509 certificate instead of a certificate signing request (CSR).    | 
+| `-new`              | New request.    | 
+| `-x509`             | Create an X.509 certificate, instead of a certificate signing request (CSR).    | 
 | `-config ca.cnf`    | Configuration file to use when generating certificates (created above).    | 
 | `-key ca.key`       | Private key of the CA (created above).    | 
 | `-days 365`         | Number of days signed certificates are valid.    | 
-| `-batch`            | In batch mode, certificates are certified automatically.     | 
+| `-batch`            | Batch mode, where certificates are certified automatically.     | 
 
 | Output             | Description   |
 | --------            | ------    | 
@@ -158,10 +189,10 @@ where:
 
 #### 3. Sign certificates
 
-Sign and generate X.509 certificate for Redpanda node:
+Sign and generate an X.509 certificate for the Redpanda broker:
 
 ```bash
-openssl x509 -req -signkey ca.key -days 365 -extfile node.cnf -extensions extensions -in node.csr -out node.crt
+openssl x509 -req -signkey ca.key -days 365 -extfile broker.cnf -extensions extensions -in broker.csr -out broker.crt
 ```
 
 where: 
@@ -171,13 +202,13 @@ where:
 | `-req`               | Input is a certificate request. Sign and output.    | 
 | `-signkey ca.key`    | Private key of the CA (created above).    | 
 | `-days 365`          | Number of days signed certificates are valid.    | 
-| `-extfile node.cnf`  | Configuration file for CA.    | 
-| `-extensions extensions` | Section in `node.cnf` to use when applying extensions.    | 
-| `-in node.csr`       | Node certificate signing request (CSR generated above).    | 
+| `-extfile broker.cnf`  | Configuration file for CA.    | 
+| `-extensions extensions` | Section in `broker.cnf` to use when applying extensions.    | 
+| `-in broker.csr`       | Broker certificate signing request (CSR generated above).    | 
 
 | Output             | Description   |
 | --------            | ------    | 
-| `-out node.crt`     | The signed public key certificate for the node.    |           
+| `-out broker.crt`     | The signed public key certificate for the broker.    |           
 
 ## Configure TLS
 
@@ -195,8 +226,8 @@ redpanda:
 // highlight-start
   kafka_api_tls:
     - name: tls_listener
-      key_file: server.key
-      cert_file: server.crt
+      key_file: broker.key
+      cert_file: broker.crt
       truststore_file: ca.crt
       enabled: true
       require_client_auth: false
@@ -214,9 +245,24 @@ schema_registry:
 // highlight-end
 ```
 
-All APIs, except `rpc_server_tls`, support multiple listeners. 
 
-See also: [Configure Listeners](../../security/listener-configuration)
+To set the RPC port to encrypt replication, add:
+
+```yaml title="redpanda.yaml"
+redpanda:
+// highlight-start
+  rpc_server_tls:
+    enabled: true
+    require_client_auth: false
+    key_file: broker.key
+    cert_file: broker.crt
+    truststore_file: ca.crt
+// highlight-end
+```
+
+Schema Registry and HTTP Proxy connect to Redpanda over the Kafka API. If you configure a TLS listener for the Kafka API, you must add `schema_registry_client::broker_tls` and `pandaproxy_client::broker_tls`. All APIs, except the internal RPC port, support multiple listeners. See:
+- [Configure Schema Registry and HTTP Proxy to connect to Redpanda with SASL](../authentication/#configure-schema-registry-and-http-proxy-to-connect-to-redpanda-with-sasl) 
+- [Configure Listeners](../../security/listener-configuration)
 
 ## Configure mTLS 
 
@@ -232,8 +278,8 @@ redpanda:
       name: mtls_listener
   kafka_api_tls:
     - name: mtls_listener
-      key_file: mtls_server.key
-      cert_file: mtls_server.crt
+      key_file: mtls_broker.key
+      cert_file: mtls_broker.crt
       truststore_file: mtls_ca.crt
       enabled: true
 // highlight-start
@@ -257,7 +303,9 @@ redpanda:
     port: 9092
 
   advertised_kafka_api:
+  // highlight-start
   - name: internal
+  // highlight-end
     address: <port-clients-connect-to>
     port: 9092
 
@@ -272,10 +320,10 @@ redpanda:
 // highlight-end
 ```
 :::note notes
-- Remember to replace variables in brackets. 
+- Remember to replace placeholders in brackets. 
 - `kafka_api` is the listener declaration. This `name` can have any value.
-- `advertised_kafka_api` is the advertised listeners. This `name` should match the name of a declared listener. This `address` is the host name clients use to connect to the broker.
-- `kafka_api_tls` is the listener's TLS config. This `name` must match the corresponding listener's name.
+- `advertised_kafka_api` is the advertised listener. This `name` should match the name of a declared listener. This `address` is the host name clients use to connect to the broker.
+- `kafka_api_tls` is the listener's TLS configuration. This `name` must match the corresponding listener's name.
 :::
 
 See also: [Configure Listeners](../../security/listener-configuration)
@@ -294,7 +342,7 @@ To interact with the Admin API (for example, to manage users), pass the `--admin
 ```
 
 :::note
-Remember to replace variables in brackets.  
+Remember to replace placeholders in brackets.  
 :::
 
 <details>

@@ -1,5 +1,6 @@
 ---
 title: rpk cluster config force-reset
+rpk_version: v23.1.6 (rev cc47e1ad1)
 ---
 
 <head>
@@ -21,39 +22,40 @@ This command erases a named property from an internal cache of the cluster
 configuration on the local node, so that on next startup redpanda will treat
 the setting as if it was set to the default.
 
-### Usage
 
-```
+## Usage
+
+```bash
 rpk cluster config force-reset [PROPERTY...] [flags]
 ```
 
-### Flags
+## Flags
 
 <table>
   <tbody>
     <tr>
       <td>
-        <strong> Value</strong>
+        <strong>Value</strong>
       </td>
       <td>
-        <strong> Type</strong>
+        <strong>Type</strong>
       </td>
       <td>
-        <strong> Description</strong>
+        <strong>Description</strong>
       </td>
     </tr>
     <tr>
       <td>--cache-file</td>
       <td>string</td>
       <td>
-        Location of configuration cache file (defaults to redpanda data
+        location of configuration cache file (defaults to redpanda data
         directory).
       </td>
     </tr>
     <tr>
       <td>-h, --help</td>
       <td>-</td>
-      <td> Help for force-reset.</td>
+      <td>Help for force-reset.</td>
     </tr>
     <tr>
       <td>--admin-api-tls-cert</td>
@@ -87,7 +89,7 @@ rpk cluster config force-reset [PROPERTY...] [flags]
     <tr>
       <td>--all</td>
       <td>-</td>
-      <td> Include all properties, including tunables.</td>
+      <td>Include all properties, including tunables.</td>
     </tr>
     <tr>
       <td>--api-urls</td>
@@ -117,7 +119,7 @@ rpk cluster config force-reset [PROPERTY...] [flags]
     <tr>
       <td>--password</td>
       <td>string</td>
-      <td> SASL password to be used for authentication.</td>
+      <td>SASL password to be used for authentication.</td>
     </tr>
     <tr>
       <td>--sasl-mechanism</td>
@@ -151,12 +153,12 @@ rpk cluster config force-reset [PROPERTY...] [flags]
     <tr>
       <td>--tls-truststore</td>
       <td>string</td>
-      <td> The truststore to be used for TLS communication with the broker.</td>
+      <td>The truststore to be used for TLS communication with the broker.</td>
     </tr>
     <tr>
       <td>--user</td>
       <td>string</td>
-      <td> SASL user to be used for authentication.</td>
+      <td>SASL user to be used for authentication.</td>
     </tr>
     <tr>
       <td>-v, --verbose</td>

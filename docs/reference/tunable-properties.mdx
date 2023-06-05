@@ -49,6 +49,23 @@ Flag to auto-enable new feature flags after upgrades.
 
 ## Object storage properties
 
+### cloud_storage_backend
+
+Optional cloud storage backend variant used to select API capabilities. If `unknown`, will be inferred from other configuration parameters.
+
+**Default**: `unknown`
+
+**Valid values**:
+- `unknown`
+- `aws`
+- `google_s3_compat`
+- `azure`
+- `minio`
+
+**Restart required**: yes
+
+---
+
 ### cloud_storage_cache_check_interval
 
 Timeout to check if cache eviction should be triggered.
@@ -56,6 +73,41 @@ Timeout to check if cache eviction should be triggered.
 **Units**: milliseconds
 
 **Default**: 30000 (30 seconds)
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_credentials_host
+
+Hostname to connect to for retrieving role-based credentials. If `null`, hostname is derived from [`cloud_storage_credentials_source`](#cloud_storage_credentials_source). Only required when using IAM role based access.
+
+**Type**: string
+
+**Default**: null
+
+**Restart required**: yes
+
+---
+
+### cloud_storage_credentials_source
+
+The source of credentials to connect to cloud services. If [`cloud_storage_credentials_host`](#cloud_storage_credentials_host) is `null`, this is used to derive the hostname to connect to retrieve role-based credentials.
+
+Valid values:
+- If deploying on an EC2 VM: `aws_instance_metadata`
+- If deploying on EKS: `sts` (AWS service token service)
+- If deploying on a GCE VM: `gcp_instance_metadata`
+- If deploying on GKE: `gcp_instance_metadata`
+- If using fixed credentials from a configuration file: `config_file`
+
+**Default**: `config_file`
+
+**Valid values**:
+- `config_file`
+- `aws_instance_metadata`
+- `sts`
+- `gcp_instance_metadata`
 
 **Restart required**: yes
 
@@ -97,6 +149,37 @@ Default remote write configuration value for new topics.
 
 ---
 
+### cloud_storage_enable_segment_merging
+
+Flag to enable adjacent segment merging in cloud object storage. When this property is enabled, Redpanda merges adjacent segments in object storage that are smaller than the threshold, [`cloud_storage_segment_size_min`](#cloud_storage_segment_size_min). 
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
+
+---
+
+### cloud_storage_graceful_transfer_timeout_ms
+
+Maximum duration to wait for uploads to complete before a leadership transfer. If `null`, leadership transfers proceed with no delay.
+
+**Units**: milliseconds
+
+**Default**: 5000 (5 sec)
+
+**Restart required**: no
+
+---
+
 ### cloud_storage_housekeeping_interval_ms
 
 Interval for object storage housekeeping tasks.
@@ -107,17 +190,38 @@ Interval for object storage housekeeping tasks.
 
 **Restart required**: no
 
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
+
+---
+
+### cloud_storage_idle_threshold_rps
+
+Request rate threshold for idle state detection of cloud object storage. If the average object storage API request rate is lower than this threshold, then the object storage is considered to be idle.
+
+**Units**: object storage API requests per second
+
+**Default**: 1.0
+
+**Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
+
 ---
 
 ### cloud_storage_idle_timeout_ms
 
-Timeout used to detect idle state of the object storage API. If no API requests are made for at least this timeout's duration, the object storage is considered idle.
+Timeout used to detect idle state of the object storage API. If no object storage API requests are made for at least this timeout's duration, the object storage is considered idle.
 
 **Units**: milliseconds
 
 **Default**: 10000 (10 sec)
 
 **Restart required**: no
+
+**Related topics**:
+- [Object storage housekeeping for Tiered Storage](../../manage/tiered-storage#object-storage-housekeeping)
 
 ---
 
@@ -249,6 +353,18 @@ The number of bytes of size-based retention for topics that are created during a
 
 ---
 
+### cloud_storage_roles_operation_timeout_ms
+
+Timeout for IAM role related operations. While connecting to object storage, failed tasks that refresh the IAM roles token are retried after this timeout elapses.
+
+**Units**: milliseconds
+
+**Default**: 30000 (30 sec)
+
+**Restart required**: yes
+
+---
+
 ### cloud_storage_segment_max_upload_interval_sec
 
 Duration that a segment can be kept in local storage without uploading it to object storage. If `null`, defaults to infinite duration.
@@ -271,6 +387,13 @@ The desired segment size in object storage. If `null`, the property is disabled,
 
 **Restart required**: no
 
+**Related properties**:
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+- [cloud_storage_segment_size_min](#cloud_storage_segment_size_min)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
+
 ---
 
 ### cloud_storage_segment_size_min
@@ -282,6 +405,13 @@ The minimum segment size in object storage. If `null`, the property is disabled,
 **Default**: null
 
 **Restart required**: no
+
+**Related properties**:
+- [cloud_storage_segment_size_target](#cloud_storage_segment_size_target)
+- [cloud_storage_enable_segment_merging](#cloud_storage_enable_segment_merging)
+
+**Related topics**:
+- [Adjacent segment merging for Tiered Storage](../../manage/tiered-storage#adjacent-segment-merging)
 
 ---
 
@@ -619,7 +749,9 @@ Maximum number of producer IDs that the resource manager state machine caches in
 
 ### members_backend_retry_ms
 
-Duration between members backend reconciliation loop retries.
+Interval at which brokers check and retry partition reallocation requests. 
+
+When brokers (members) of a Redpanda cluster make a request to reallocate partition replicas but they don't succeed immediately or are in progress, the Redpanda cluster management controller (backend) checks on the status of reallocations at an interval set by `members_backend_retry_ms` until the current cluster state is reconciled with the requested partition allocation state.     
 
 **Units**: milliseconds
 
@@ -848,6 +980,9 @@ Default duration of quota tracking window.
 **Default**: 1000
 
 **Restart required**: no
+
+**Related properties**:
+- [`kafka_admin_topic_api_rate`](../cluster-properties#kafka_admin_topic_api_rate) refers to the number of partition mutations per `default_window_sec`. 
 
 ---
 
@@ -1688,6 +1823,18 @@ Max compacted segment size after consolidation.
 
 ---
 
+### memory_abort_on_alloc_failure
+
+Flag to enable termination of the Redpanda process when a memory allocation fails. If `false`, a failed memory allocation throws an exception.
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+---
+
 ### readers_cache_eviction_timeout_ms
 
 Duration after which inactive readers are evicted from the cache of readers.
@@ -2085,64 +2232,6 @@ Size of the log segment of the Kafka broker's transaction coordinator.
 **Restart required**: no
 
 --------------------------------------------------------------------------------
-
-## Wasm properties
-
-:::caution
-[Redpanda Data Transforms](../../labs/data-transform), built on top of Wasm, is a lab feature and is not supported for production deployments.
-:::
-
-### coproc_max_batch_size
-
-Maximum size of one topic read in coprocessing mode. 
-
-**Units**: bytes
-
-**Default**: 32 KB
-
-**Restart required**: yes
-
----
-
-### coproc_max_inflight_bytes
-
-Maximum size of inflight data when sending to the Wasm engine.
-
-**Type**: unsigned integer 
-
-**Units**: bytes
-
-**Default**: 10485760 (10 MiB)
-
-**Restart required**: yes
-
----
-
-### coproc_max_ingest_bytes
-
-Maximum size of input logs in memory.
-
-**Type**: unsigned integer
-
-**Units**: bytes
-
-**Default**: 655360 (640 KiB)
-
-**Restart required**: yes
-
----
-
-### coproc_offset_flush_interval_ms
-
-Interval for which all coprocessor offsets are flushed to disk.
-
-**Units**: milliseconds
-
-**Default**: 300000 (5 minutes)
-
-**Restart required**: yes
-
-----------------------------------------------------------
 
 ## Related topics
 
