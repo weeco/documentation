@@ -53,4 +53,5 @@ antora:
   - './extensions/version-fetcher/set-latest-version.js'
   - './extensions/algolia-indexer/index.js'
   - './extensions/unlisted-pages.js'
+  - './extensions/replace-attributes-in-attachments.js'
 

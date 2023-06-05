@@ -23,7 +23,7 @@ function register ({
   const logger = this.getLogger('algolia-indexer')
 
   var algoliaIsEnabled = false;
-  if (process.env.ALGOLIA_ADMIN_API_KEY !== '') algoliaIsEnabled = true
+  if (process.env.ALGOLIA_ADMIN_API_KEY) algoliaIsEnabled = true
 
   var client;
   var index;
