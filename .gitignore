@@ -1,10 +1,6 @@
-node_modules/
-.docusaurus
-build/*
-!build/_redirects
+/node_modules/
+/build/*
 *.DS_Store
-build/_redirects
 .idea
 .vscode
-poc-docs/
-docs/
+/docs/
