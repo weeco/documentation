@@ -212,9 +212,9 @@ When your brokers are configured to advertise a custom domain, the next step is 
 
   Hostname| IP address
   |---|---
-  <subdomain-0>|`<worker-node-ip-0>`
-  <subdomain-1>|`<worker-node-ip-1>`
-  <subdomain-2>|`<worker-node-ip-2>`
+  `<subdomain-0>`|`<worker-node-ip-0>`
+  `<subdomain-1>`|`<worker-node-ip-1>`
+  `<subdomain-2>`|`<worker-node-ip-2>`
 
   :::warning
   IP addresses can change. If the IP addresses of your worker nodes change, you must reconfigure your DNS records with the new IP addresses.
@@ -238,7 +238,11 @@ ExternalDNS is a tool for Kubernetes that manages DNS records. Whenever you add,
 
 1. Deploy ExternalDNS in your Kubernetes cluster. For an example manifest, see the [ExternalDNS documentation](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/hostport.md#external-dns).
 
-  Set the `--provider` flag to your DNS provider. The `txtOwnerId` and `interval` flags are recommended. The `txtOwnerId` flag prevents DNS record conflicts between different instances of ExternalDNS. The `interval` flag controls the sync period with the DNS provider.
+  Set the `--provider` flag to your DNS provider.
+
+  :::tip
+  The `txtOwnerId` and `interval` flags are recommended. The `txtOwnerId` flag prevents DNS record conflicts between different instances of ExternalDNS. The `interval` flag controls the sync period with the DNS provider.
+  :::
 
 1. Identify the headless ClusterIP Service in your Redpanda deployment:
 
@@ -252,7 +256,7 @@ ExternalDNS is a tool for Kubernetes that manages DNS records. Whenever you add,
 
   ```bash
   kubectl annotate service <service-name> -n redpanda \
-  external-dns.alpha.kubernetes.io/hostname=<custom-domain> \
+  external-dns.alpha.kubernetes.io/hostname=<subdomain>.<custom-domain> \
   external-dns.alpha.kubernetes.io/endpoints-type=<HOSTIP or NodeExternalIP>
   ```
 
