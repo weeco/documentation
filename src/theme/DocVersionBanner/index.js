@@ -30,7 +30,7 @@ function UnreleasedVersionLabel({siteTitle, versionMetadata}) {
         ),
       }}>
       {
-        'This is in-progress documentation for Redpanda {versionLabel}.'
+        'This is in-progress documentation for Redpanda {versionLabel}. Upgrading from beta to production is not supported.'
       }
     </Translate>
   );
