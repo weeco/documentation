@@ -473,45 +473,50 @@ statement {
 The Redpanda agent role for GCP provides the following permissions to manage
 Redpanda cluster resources:
 
-- compute.firewalls.create
-- compute.firewalls.delete
-- compute.firewalls.get
-- compute.globalOperations.get
-- compute.instanceGroupManagers.get
-- compute.networks.updatePolicy
-- compute.projects.get
-- compute.zones.list
-- dns.managedZones.create
-- dns.managedZones.get
-- dns.managedZones.list
-- dns.managedZones.update
-- dns.managedZones.delete
-- dns.resourceRecordSets.create
-- dns.resourceRecordSets.delete
-- dns.resourceRecordSets.get
-- dns.resourceRecordSets.list
-- dns.resourceRecordSets.update
-- dns.changes.create
-- dns.changes.get
-- dns.changes.list
-- dns.projects.get
-- iam.roles.create
-- iam.roles.delete
-- iam.roles.get
-- iam.roles.list
-- iam.roles.undelete
-- iam.roles.update
-- iam.serviceAccountKeys.create
-- iam.serviceAccountKeys.get
-- iam.serviceAccounts.actAs
-- iam.serviceAccounts.create
-- iam.serviceAccounts.delete
-- iam.serviceAccounts.get
-- iam.serviceAccounts.getIamPolicy
-- iam.serviceAccounts.setIamPolicy
-- resourcemanager.projects.get
-- resourcemanager.projects.getIamPolicy
-- resourcemanager.projects.setIamPolicy
+| Permission | Description |
+| -------- | ------ |
+| compute.firewalls.create | Allows a user to create firewall rules to control inbound and outbound traffic for GCP instances. |
+| compute.firewalls.delete | Allows a user or service account to remove existing firewall rules from within a GCP project, modifying the network security configuration. |
+| compute.firewalls.get | Allows a user to view the details and configuration of a specific firewall rule for GCP projects. |
+| compute.globalOperations.get | Allows a user to retrieve information about a specific global operation in a GCP project. |
+| compute.instanceGroupManagers.get | Allows a user or service account to retrieve details like the configuration, status, and properties of an instance group manager within GCP. |
+| compute.networks.updatePolicy | Allows a user to update the configuration of existing GCP network resources. |
+| compute.projects.get | Allows a user or service account to retrieve information (such as project metadata, quotas, and configuration settings) about a specific GCP project. |
+| compute.zones.list | Allows a user to retrieve a list of the available zones in a GCP project. |
+| dns.managedZones.create  | Allows a user to create a new managed zone. A DNS managed zone holds the Domain Name System (DNS) records for the same DNS name suffix. |
+| dns.managedZones.get  | Allows a user or service account to retrieve information about a specific DNS managed zone. This permission is used in the context of Google Cloud DNS, which is a scalable and reliable domain name system (DNS) service. |
+| dns.managedZones.list | Allows a user or service account to list the managed zones within a Google Cloud DNS project.
+| dns.managedZones.update | Allows a user to update or modify the configuration of a managed DNS zone within a Google Cloud DNS project. |
+| dns.managedZones.delete | Allows a user or service account to delete managed zones within the Google Cloud DNS project. |
+| dns.resourceRecordSets.create | Allows a user to create resource record sets within a DNS zone. |
+| dns.resourceRecordSets.delete | Allows a user to delete resource record sets within a DNS zone. |
+| dns.resourceRecordSets.get | Allows a user or service account to retrieve information about resource record sets within a managed DNS zone. |
+| dns.resourceRecordSets.list | Allows a user or service account to retrieve a list of resource record sets that are part of a particular DNS zone. |
+| dns.resourceRecordSets.update | Allows a user or service account to make changes to the resource records in a DNS zone. |
+| dns.changes.create | Allows a user to create and update DNS resource record sets. |
+| dns.changes.get | Allows a user to retrieve the information about an existing DNS change. |
+| dns.changes.list | Allows a user to retrieve a list of changes to DNS resource record sets. |
+| dns.projects.get | Allows a user to retrieve information about an existing GCP DNS project. |
+| iam.roles.create | Allows a user to create a custom role for a GCP project or an organization. |
+| iam.roles.delete | Allows a user to delete a custom role from a GCP project or an organization. |
+| iam.roles.get | Allows a user to retrieve information about a specific role, including its permissions. |
+| iam.roles.list | Allows a user to list predefined roles, or the custom roles for a project or an organization. |
+| iam.roles.undelete  | Allows a user to undelete a custom role from an organization or a project. |
+| iam.roles.update | Allows a user to update an IAM custom role. |
+| iam.serviceAccountKeys.create | Allows a user to create a private key for a service account.|
+| iam.serviceAccountKeys.get | Allows a user or service account to view information about existing service account keys associated with a particular service account. |
+| iam.serviceAccounts.actAs | Allows a service account to act as another service account or user within a GCP project. This permission is used to delegate authority to one service account to impersonate or perform actions on behalf of another service account or user. |
+| iam.serviceAccounts.create | Allows a user to create a service account for a project. |
+| iam.serviceAccounts.delete | Allows a user to delete a service account for a project. |
+| iam.serviceAccounts.get | Allows a user or service account to retrieve metadata and configuration information about a particular service account within a project. This includes information such as the email address, display name, and IAM policies associated with the service account. |
+| iam.serviceAccounts.getIamPolicy | Allows a user to retrieve the IAM policy for a service account. |
+| iam.serviceAccounts.setIamPolicy | Allows a user to set the IAM policy for a service account. |
+| resourcemanager.projects.get | Allows a user or service account to view project details, such as project ID, name, labels, and other project-level settings. This permission controls the ability to retrieve the metadata and configuration of a project in GCP using the Resource Manager API. |
+| resourcemanager.projects.getIamPolicy | Allows a user or service account to retrieve the IAM access control policy for a specified project. Permission is denied if the policy or the resource does not exist. |
+| resourcemanager.projects.setIamPolicy | Allows a user or service account to set the IAM access control policy for the specified project. |
+|
+
+
 - storage.buckets.get
 - storage.buckets.getIamPolicy
 - storage.buckets.setIamPolicy
