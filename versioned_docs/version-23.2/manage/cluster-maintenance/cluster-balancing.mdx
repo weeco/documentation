@@ -48,9 +48,11 @@ In Kubernetes, run the `transfer_leadership` request on the Pod that is running 
 
 While leadership balancing doesn't move any data, partition balancing does move partition replicas to alleviate disk pressure and to honor the configured replication factor across brokers and the additional redundancy across failure domains (such as racks). Depending on the amount of data being transferred, this may take some time. Partition balancing is invoked periodically, determined by the [`partition_autobalancing_tick_interval_ms`](../../../reference/tunable-properties/#partition_autobalancing_tick_interval_ms) property. 
 
-Redpanda ensures that a topic's partitions are evenly distributed across all brokers in a cluster, with predictable and stable performance. The `leader_balancer_mode` property selects random partition movements, and if the movement decreases error, it’s applied to the cluster. This ensures that each shard in a cluster has an equal number of partitions. It allocates brokers to random healthy partitions, to avoid topic hotspots, without needing to wait for a batch of moves to finish before it schedules the next batch.
+Redpanda ensures that a topic's partitions are evenly distributed across all brokers in a cluster with predictable and stable performance. It allocates brokers to random healthy partitions, to avoid topic hotspots, without needing to wait for a batch of moves to finish before it schedules the next batch.
 
-Additionally, Redpanda supports dynamic partitioning of Raft recovery bandwidth. This means that individual partition moves can utilize the full bandwidth, if there are no other moves on that broker. For example, if only one partition is moving, it can use the entire bandwidth for the broker. Total bandwidth is controlled by the `raft_learner_recovery_rate` property. Redpanda detects which shards are idle, so other shards can essentially steal bandwidth from them. 
+The `leader_balancer_mode` property is set to select random partition movements, and if the movement decreases error, it’s applied to the cluster. This ensures that each shard in a cluster has an equal number of partitions. 
+
+Additionally, Redpanda supports dynamic partitioning of Raft recovery bandwidth. This means that individual partition moves can utilize the full bandwidth, if there are no other moves on that broker. For example, if only one partition is moving, it can use the entire bandwidth for the broker. Redpanda detects which shards are idle, so other shards can essentially steal bandwidth from them. Total bandwidth is controlled by the `raft_learner_recovery_rate` property. 
 
 Redpanda's default partition balancing includes the following: 
 
