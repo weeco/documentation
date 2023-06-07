@@ -53,6 +53,8 @@ The name of the Azure storage account to use with Tiered Storage. If `null`, the
 
 **Restart required**: yes
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### cloud_storage_azure_container
@@ -69,6 +71,8 @@ The container must belong to [cloud_storage_azure_storage_account](#cloud_storag
 
 **Restart required**: yes
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### cloud_storage_azure_shared_key
@@ -84,6 +88,8 @@ Redpanda expects this key string to be Base64 encoded.
 **Default**: null
 
 **Restart required**: yes
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -265,7 +271,7 @@ Flag to enable limiting the write rate for the controller log.
 
 ### enable_leader_balancer
 
-Enable automatic leadership rebalancing.
+Enable automatic leadership rebalancing. Mode is set by [`leader_balancer_mode`](#leader_balancer_mode).
 
 **Type**: boolean
 
@@ -284,6 +290,22 @@ Enable rack-aware replica assignment.
 **Default**: false
 
 **Restart required**: no
+
+---
+
+### leader_balancer_mode
+
+Mode of the leader balancer for optimizing movements of leadership between shards (logical CPU cores). Enabled by [`enable_leader_balancer`](#enable_leader_balancer).
+
+Valid modes:
+- `random_hill_climbing`: a shard is randomly chosen and leadership is moved to it if the load on the original shard is reduced.
+- `greedy_balanced_shards`: leadership movement is based on a greedy heuristic of moving leaders from the most loaded shard to the least loaded shard.
+
+**Default**: `random_hill_climbing`
+
+**Restart required**: no
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -347,7 +369,7 @@ When the disk usage of a node exceeds this threshold, it triggers Redpanda to mo
 
 ### kafka_admin_topic_api_rate
 
-Target quota rate for partition mutations per [default_window_sec](../tunable-properties#default_window_sec). If `null`, the property is disabled, and no quota rate is applied.
+Target quota rate for partition mutations per [`default_window_sec`](../tunable-properties#default_window_sec). If `null`, the property is disabled, and no quota rate is applied.
 
 **Units**: partition mutations per default_window_second
 
@@ -356,6 +378,9 @@ Target quota rate for partition mutations per [default_window_sec](../tunable-pr
 **Range**: [1, ...]
 
 **Restart required**: no
+
+**Related properties**: 
+- [`default_window_sec`](../tunable-properties#default_window_sec)
 
 ---
 
@@ -377,6 +402,8 @@ An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota':
 **Related topics**:
 - [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### kafka_client_group_fetch_byte_rate_quota
@@ -396,6 +423,8 @@ An example: `([{'group_name': 'first_group','clients_prefix': 'group_1','quota':
 
 **Related topics**:
 - [Client group throughput limits](../../manage/cluster-maintenance/manage-throughput#client-group-throughput-limits)
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -538,6 +567,11 @@ Maximum number of Kafka client connections per IP address, per broker. If `null`
 
 Flag to require authorization for Kafka connections. If `null`, the property is disabled, and authorization is instead enabled by [enable_sasl](#enable_sasl). 
 
+Valid values:
+- `null`: Ignored. Authorization is enabled with [`enable_sasl`](#enable_sasl): `true`
+- `true`: authorization is required.
+- `false`: authorization is disabled.
+
 **Type**: boolean
 
 **Default**: null
@@ -545,6 +579,20 @@ Flag to require authorization for Kafka connections. If `null`, the property is 
 **Related properties**:
 - [enable_sasl](#enable_sasl)
 - `kafka_api[].authentication_method`
+
+---
+
+### kafka_enable_partition_reassignment
+
+Enable the Kafka partition reassignment API.
+
+**Type**: boolean
+
+**Default**: true
+
+**Restart required**: no
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -582,6 +630,8 @@ A list of topics that are protected from deletion and configuration changes by K
 - [Consumer Offsets](../../develop/consume-data/consumer-offsets)
 - [Schema Registry](../../manage/schema-registry)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### kafka_noproduce_topics
@@ -591,6 +641,8 @@ A list of topics that are protected from being produced to by Kafka clients. Set
 **Default**: `['__audit']`
 
 **Restart required**: no
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -637,6 +689,8 @@ If `0`, the balancer is disabled and all throughput quotas are immutable.
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### kafka_quota_balancer_min_shard_throughput_ratio
@@ -659,6 +713,8 @@ If set to `0.0`, the minimum is disabled. If set to `1.0`, then the balancer won
 
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -684,6 +740,8 @@ If set to `0`, no minimum is enforced.
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### kafka_quota_balancer_window_ms
@@ -700,6 +758,8 @@ Time window used to average the current throughput measurement for the quota bal
 
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -745,6 +805,8 @@ If `null`, the property is disabled, and traffic is not limited.
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### kafka_throughput_limit_node_out_bps
@@ -764,6 +826,8 @@ If `null`, the property is disabled, and traffic is not limited.
 **Related topics**:
 - [Node-wide throughput limits](../../manage/cluster-maintenance/manage-throughput#node-wide-throughput-limits)
 
+**Supported versions**: Redpanda v23.1 or later
+
 ---
 
 ### log_segment_ms
@@ -781,6 +845,8 @@ Default lifetime of log segments for topics which do not set `segment.ms` to ove
 **Related properties**: 
 - [log_segment_ms_min](../tunable-properties#log_segment_ms_min) 
 - [log_segment_ms_max](../tunable-properties#log_segment_ms_max)
+
+**Supported versions**: Redpanda v23.1 or later
 
 ---
 
@@ -904,6 +970,8 @@ A list of supported SASL mechanisms. `SCRAM` and `GSSAPI` are allowed.
 
 Target quota byte rate.
 
+The `target_quota_byte_rate` property applies to a producer client that isn't a member of a client group configured by [`kafka_client_group_byte_rate_quota`](#kafka_client_group_byte_rate_quota). It sets the maximum throughput quota of a client sending to a Redpanda broker node.
+
 **Units**: bytes per second
 
 **Default**: 2147483648 (2 GiB)
@@ -911,6 +979,9 @@ Target quota byte rate.
 **Range**: [1048576 (1 MiB), ...]
 
 **Restart required**: no
+
+**Related topics**:
+- [Client throughput limits](../../manage/cluster-maintenance/manage-throughput#client-throughput-limits)
 
 ---
 
@@ -923,6 +994,8 @@ Target fetch-size quota byte rate. If `null`, the property is disabled, and no q
 **Default**: null
 
 **Restart required**: no
+
+**Supported versions**: Redpanda v23.1 or later
 
 -------------------------------------------------------------------------------
 
@@ -1108,6 +1181,31 @@ Requires that an empty file named `.redpanda_data_dir` be present in the [data d
 
 **Restart required**: no
 
+---
+
+### storage_ignore_timestamps_in_future_sec
+
+The maximum number of seconds that a record's timestamp can be ahead of a Redpanda broker's clock and still be used when deciding whether to clean up the record for data retention. This property makes possible the timely cleanup of records from clients with clocks that are drastically unsynchronized relative to Redpanda.
+
+When determining whether to clean up a record with timestamp more than `storage_ignore_timestamps_in_future_sec` seconds ahead of the broker, Redpanda ignores the record's timestamp and instead uses a valid timestamp of another record in the same segment, or (if another record's valid timestamp is unavailable) the timestamp of when the segment file was last modified (mtime).
+
+By default, `storage_ignore_timestamps_in_future_sec` is disabled (null).
+
+:::tip
+To figure out whether to set `storage_ignore_timestamps_in_future_sec` for your system:
+1. Look for logs with segments that are unexpectedly large and not being cleaned up.
+1. In the logs, search for records with unsynchronized timestamps that are further into the future than tolerable by your data retention and storage settings. For example, timestamps 60 seconds or more into the future can be considered to be too unsynchronized.
+1. If you find unsynchronized timestamps throughout your logs, determine the number of seconds that the timestamps are ahead of their actual time, and set `storage_ignore_timestamps_in_future_sec` to that value so data retention can proceed.
+1. If you only find unsynchronized timestamps that are the result of transient behavior, you can disable `storage_ignore_timestamps_in_future_sec`. 
+:::
+
+**Units**: seconds
+
+**Default**: null
+
+**Restart required**: no
+
+**Supported versions**: Redpanda v22.3 or later
 
 -------------------------------------------------------------------------------
 
@@ -1127,6 +1225,8 @@ This flag applies only for Redpanda clusters v23.1 or earlier that have upgraded
 
 **Related properties**: [legacy_unsafe_log_warning_interval_sec](#legacy_unsafe_log_warning_interval_sec)
 
+**Supported versions**: Redpanda v23.2 or later
+
 ---
 
 ### legacy_unsafe_log_warning_interval_sec
@@ -1142,6 +1242,8 @@ If unsafe strings are permitted by [`legacy_permit_unsafe_log_operations`](#lega
 **Restart required**: no
 
 **Related properties**: [legacy_permit_unsafe_log_operations](#legacy_permit_unsafe_log_operations)
+
+**Supported versions**: Redpanda v23.2 or later
 
 ---
 
