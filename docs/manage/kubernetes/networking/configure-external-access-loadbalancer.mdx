@@ -98,6 +98,47 @@ By default, the Helm chart gives each broker a hostname that consists of the Hel
 
 You can give each Redpanda broker a custom hostname to advertise instead of the default hostnames. Custom hostnames can either be suffixed with the Pod ordinal or they can be fully custom.
 
+#### Advertise custom hostnames suffixed with the Pod ordinal
+
+1. Configure the chart name with your chosen hostname.
+
+  Replace `<custom-domain>` with your domain, and replace `<custom-hostname>` with your hostname.
+
+  <Tabs groupId="helm-config">
+  <TabItem value="values" label="--values">
+
+  ```yaml title="custom-hostname-ordinal.yaml"
+  fullnameOverride: <custom-hostname>
+  external:
+    enabled: true
+    type: LoadBalancer
+    domain: <custom-domain>
+  ```
+
+  ```bash
+  helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
+    --values custom-hostname-ordinal.yaml --reuse-values --wait
+  ```
+
+  </TabItem>
+  <TabItem value="flags" label="--set">
+
+  ```bash
+  helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
+    --set external.enabled=true \
+    --set external.type=LoadBalancer \
+    --set external.domain=<custom-domain> \
+    --set fullnameOverride=<custom-hostname> \
+    --wait
+  ```
+
+  </TabItem>
+  </Tabs>
+
+  This configuration renames your Pods to `<hostname>-<pod-ordinal>`. Your Redpanda brokers will advertise the `<hostname>-<pod-ordinal>.<custom-domain>` address.
+
+1. [Create a DNS record](#create-dns-records) for each of your broker's FQDNs, relative to the zone.
+
 #### Advertise fully custom hostnames
 
 1. Add each hostname to the `external.addresses` setting.
@@ -137,47 +178,6 @@ You can give each Redpanda broker a custom hostname to advertise instead of the 
 
   </TabItem>
   </Tabs>
-
-1. [Create a DNS record](#create-dns-records) for each of your broker's FQDNs, relative to the zone.
-
-#### Advertise custom hostnames suffixed with the Pod ordinal
-
-1. Configure the chart name with your chosen hostname.
-
-  Replace `<custom-domain>` with your domain, and replace `<custom-hostname>` with your hostname.
-
-  <Tabs groupId="helm-config">
-  <TabItem value="values" label="--values">
-
-  ```yaml title="custom-hostname-ordinal.yaml"
-  fullnameOverride: <custom-hostname>
-  external:
-    enabled: true
-    type: LoadBalancer
-    domain: <custom-domain>
-  ```
-
-  ```bash
-  helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --values custom-hostname-ordinal.yaml --reuse-values --wait
-  ```
-
-  </TabItem>
-  <TabItem value="flags" label="--set">
-
-  ```bash
-  helm upgrade --install redpanda redpanda/redpanda -n redpanda --create-namespace \
-    --set external.enabled=true \
-    --set external.type=LoadBalancer \
-    --set external.domain=<custom-domain> \
-    --set fullnameOverride=<custom-hostname> \
-    --wait
-  ```
-
-  </TabItem>
-  </Tabs>
-
-  This configuration renames your Pods to `<hostname>-<pod-ordinal>`. Your Redpanda brokers will advertise the `<hostname>-<pod-ordinal>.<custom-domain>` address.
 
 1. [Create a DNS record](#create-dns-records) for each of your broker's FQDNs, relative to the zone.
 
